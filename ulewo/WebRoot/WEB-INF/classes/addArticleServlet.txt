@@ -1,0 +1,202 @@
+package com.lhl.servlet;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.net.MalformedURLException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+import javax.imageio.ImageIO;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONObject;
+
+import com.lhl.entity.Article;
+import com.lhl.entity.User;
+import com.lhl.service.ArticleService;
+import com.lhl.util.Constant;
+import com.lhl.util.DrowImage;
+import com.lhl.util.StringUtil;
+
+public class addArticleServlet extends HttpServlet
+{
+	public static final String ATTACH_TEMP_DIR = System.getProperty("user.home") + "/temp/";
+
+	public static final int width = 700;
+
+	public static final int height = 700;
+
+	public static final int small_width = 150;
+
+	public static final int small_height = 150;
+
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+	{
+
+		doPost(req, resp);
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
+			IOException
+	{
+
+		String result = "success";
+		String loginType = "login";
+		try
+		{
+			Object userObj = request.getSession().getAttribute("user");
+			User sessionUser = null;
+			if (userObj != null)
+			{
+				sessionUser = (User) userObj;
+			}
+			String content = request.getParameter("content");
+			String tag = request.getParameter("tag");
+			String img = request.getParameter("img");
+			String videoUrl = request.getParameter("videoUrl");
+			Article article = new Article();
+			article.setContent(content);
+			if (sessionUser != null)
+			{
+				article.setAvatar(sessionUser.getAvatar());
+				article.setUid(sessionUser.getUid());
+				article.setStatus(Constant.STATUS_Y);
+			}
+			else
+			{
+				article.setStatus(Constant.STATUS_N);
+				loginType = "nologin";
+			}
+			article.setDown(0);
+			article.setUp(0);
+			article.setPostTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+			article.setSourceFrom(Constant.SOURCEFROM_A);
+			if (StringUtil.isNotEmpty(img))
+			{
+				article.setImgUrl(getPicture(request, img));
+			}
+
+			article.setTag(tag);
+			article.setVideoUrl(videoUrl);
+			ArticleService.getInstance().addArticle(article);
+		}
+		catch (Exception e)
+		{
+			result = "error";
+		}
+		JSONObject obj = new JSONObject();
+		obj.put("result", result);
+		obj.put("loginType", loginType);
+		response.setContentType("text/html;charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		out.println(String.valueOf(obj));
+	}
+
+	private String getPicture(HttpServletRequest request, String imgUrl)
+	{
+
+		String uploadPath = request.getSession().getServletContext().getRealPath("/upload");
+		String bigPath = uploadPath + "/big";
+		String smallPath = uploadPath + "/small";
+		InputStream in = null;
+		OutputStream out = null;
+		String imgName = "";
+		Calendar calendar = Calendar.getInstance();
+		int year = calendar.get(Calendar.YEAR);
+		int month = calendar.get(Calendar.MONTH) + 1;
+		int day = calendar.get(Calendar.DAY_OF_MONTH);
+		String sourceArticleId = String.valueOf(System.currentTimeMillis());
+		String type = imgUrl.substring(imgUrl.lastIndexOf("."));
+		try
+		{
+			String bigDirPath = bigPath + "/" + year + "/" + month + "/" + day;
+			File bigDir = new File(bigDirPath);
+			if (!bigDir.exists())
+			{
+				bigDir.mkdirs();
+			}
+			String bigFilePath = bigDirPath + "/" + sourceArticleId + type;// 大图片存储的位置
+
+			String smallDirPath = smallPath + "/" + year + "/" + month + "/" + day;
+			File smallDir = new File(smallDirPath);
+			if (!smallDir.exists())
+			{
+				smallDir.mkdirs();
+			}
+			String samllFilePath = smallDirPath + "/" + sourceArticleId + type; //小图片存储的位置
+
+			imgName = year + "/" + month + "/" + day + "/" + sourceArticleId + type;
+			createTemp();
+
+			File soruceFile = new File(ATTACH_TEMP_DIR + imgUrl);
+			in = new FileInputStream(soruceFile);
+			BufferedImage srcImage = ImageIO.read(in);
+			//如果上传的图片宽度 或者高度大于700  或者大于500K的 需要重新画原图 和小图
+			if (srcImage.getWidth() > width || soruceFile.length() > 1024 * 500)
+			{
+				DrowImage.saveImageAsJpg(ATTACH_TEMP_DIR + imgUrl, bigFilePath, width, 0, false);
+				DrowImage.saveImageAsJpg(ATTACH_TEMP_DIR + imgUrl, samllFilePath, small_width, small_height, true);
+			}
+			else
+			//如果图片不大，就只画小图，并且把源图片拷贝到指定目录。
+			{
+				in = new FileInputStream(soruceFile);
+				out = new FileOutputStream(new File(bigFilePath));
+				int len = 0;
+				byte[] b = new byte[1024 * 5];
+				while ((len = in.read(b)) != -1)
+				{
+					out.write(b, 0, len);
+				}
+				out.flush();
+				in.close();
+				out.close();
+				DrowImage.saveImageAsJpg(bigFilePath, samllFilePath, small_width, small_height, true);
+			}
+			soruceFile.delete();
+		}
+		catch (MalformedURLException e)
+		{
+			e.printStackTrace();
+		}
+		catch (FileNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		return imgName;
+	}
+
+	private void createTemp()
+	{
+
+		File dir = new File(ATTACH_TEMP_DIR);
+		if (!dir.exists())
+		{
+			dir.mkdirs();
+		}
+	}
+
+	@Override
+	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+	{
+
+		super.service(req, resp);
+	}
+}

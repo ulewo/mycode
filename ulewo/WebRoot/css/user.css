@@ -1,0 +1,13 @@
+@IMPORT url("public.css");
+.avator_con{border:1px solid #DBDBDB;padding:8px 0px;margin-top:17px;}
+.avator{width:72px;float:left;border:1px solid #DBDBDB;-webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px;margin-left:10px;}
+.name{display:inline-block;float:left;margin-left:10px;}
+.menue_tag{margin-top:10px;}
+.menue_tag ul{height:30px;border-bottom:1px solid #DBDBDB;margin:0px;padding:0px;}
+.menue_tag ul li{float:left;padding-top:5px;text-align:center;width:140px;height:24px;list-style:none;border:1px solid #DBDBDB;border-bottom:0px;margin-left:10px;background:#F7F7F7;cursor:pointer;}
+.menue_tag ul li.sel{height:25px;background:white;}
+.cutarea{display:inline-block;float:left;}
+.purviews{display:inline-block;float:left;margin-left:10px;}
+#avatar{display:none;}
+.cutSave{display:inline-block;padding:5px;background:pink;}
+#loadImg{display:none;}
