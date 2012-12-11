@@ -1,0 +1,11 @@
+@IMPORT url("public.css");
+#note_list{padding-top:10px;}
+.note_tr{margin:20px 10px 0px 10px;border-bottom:1px solid #DCDCDC;padding-left:10px;}
+.note_name_time{height:25px;}
+.note_name{display:inline-block;float:left;color:#6FCEF4}
+.note_time{display:inline-block;float:left;margin-left:20px;}
+.note_time a{color:#EC5C01;text-decoration:none;}
+.note_time a:hover{text-decoration:underline;}
+.note_con{padding-bottom:8px;margin-top:5px;text-align:left;}
+.subcon{margin-top:5px;}
+.rearticle_form{padding-left:20px;}

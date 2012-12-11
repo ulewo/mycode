@@ -1,0 +1,51 @@
+body{margin:0px auto;padding:0px;text-align:center;font-size:13px;width:930px;background:#153037}
+input,textarea{outline: none;margin:0px;padding:0px;}
+.clear_float{font-size:0px;height:0px;clear:both;}
+/*��ҳ*/
+.pageArea{height:25px;margin-top:20px;}
+.pageArea ul{height:25px;font-size: 13px;padding:0px;margin:0px;float:right;}
+.pageArea ul li{list-style:none;float:left;text-align: center;}
+.pageArea ul li a{display:inline-block;padding:3px 5px;color:#494949;margin-left:5px;text-decoration:none;border:1px solid #FFFFFF}
+.pageArea ul li span{display:inline-block;padding:3px 5px;color:#A5A5A5;border:1px solid #FFFFFF;}
+.pageArea ul li a:hover{background:#ECEDE8;border:1px solid #D6D6D6}
+#nowPage{display:inline-block;padding:3px 5px;margin-left:5px;border:1px solid #D6D6D6;background:#ECEDE8;}
+/*����*/
+.index_item{background:url("../images/bullet.gif") no-repeat;padding:3px;}
+.index_itemname{float:left;display:inline-block;margin-left:20px;}
+.index_articlecount{float:left;display:inline;margin-left:5px;}
+
+.content{text-align:left;line-height:24px;margin-top:10px;color:#666666;font-family:Tahoma, Helvetica, "Microsoft Yahei", "΢���ź�", Arial, STHeiti}
+.rearticle_form{text-align:left;padding-left:10px;}
+.rearticle_form input{width:200px;margin-top:10px;}
+.rearticle_form textarea{margin-top:10px;width:500px;height:100px;font-size:12px;}
+#rearticle_list{text-align:left;}
+.rearticle_tr{margin-top:20px;border-bottom:1px solid #DCDCDC;padding-left:10px;}
+.re_name_time{height:25px;}
+.re_name{display:inline-block;float:left;color:#6FCEF4}
+.re_time{display:inline-block;float:left;margin-left:20px;}
+.re_time a{color:#EC5C01;text-decoration:none;}
+.re_time a:hover{text-decoration:underline;}
+.re_con{padding-bottom:8px;margin-top:5px;}
+.subcon{margin-top:5px;}
+a.btn{background-color: #E6E6E6;border-bottom: 1px solid #3E6D8E;border-right: 1px solid #7F9FB6;color: #3E6D8E;font-size: 14px;margin: 2px 2px 2px 0;padding: 4px 5px;text-decoration: none;white-space: nowrap;}
+a.btn:hover{background-color: #3E6D8E;color: white}
+
+a.colorbtn{display:inline-block;background-color: #EC5C01;border: 0;color:white;font-size: 14px;margin: 2px 2px 2px 0;padding: 3px 10px;text-decoration: none;white-space: nowrap;-webkit-border-radius:4px;
+-moz-border-radius:4px;
+border-radius: 4px;}
+a.colorbtn:hover{background-color: #F69302;color: white}
+img.imageborder{border:1px solid #E1E1E1;padding:2px;}
+
+.quote{border: 1px dashed #666666;margin:8px 0px;padding:8px;text-align: left;}
+.quote span{display:inline-block;margin-left:8px;font-weight:bold;}
+.quote_name{font-weight:bold;color:blue;}
+.quote_content{margin-top:10px;}
+
+.index_itemname a{color:#494949;text-decoration:none;}
+.index_itemname a:hover{text-decoration:underline;}
+.itemnameselect a{background:#F37C02;color:#FFFFFF}
+
+.note_name_time .adminstyle{color:#F37C02;font-weight:bold;}
+.re_name_time .adminstyle{color:#F37C02;font-weight:bold;}
+.aboutme{text-align:left;background:#ffffff;padding:8px;font-size:14px;line-height:22px;font-family:Tahoma, Helvetica, "Microsoft Yahei", "微软雅黑", Arial, STHeiti}
+.readCount{color:#F07402;}

@@ -1,0 +1,25 @@
+@IMPORT url("admin.public.css");
+.oparea{height:25px;text-align:left;padding-top:10px;}
+.oparea{height:30px;}
+.oparea a{float:left;display:inline-block;}
+.index_select{float:left;display:inline-block;padding-top:2px;margin-left:10px;}
+.index_select select{height:25px;}
+.article_th{height:35px;font-size:14px;border-top:1px solid #CECECE;background:#FAFAFA;margin-top:10px;color:#999;text-align:left;}
+.article_th .article_check{float:left;width:30px;padding-top:6px;}
+.article_th .article_tit{float:left;width:450px;padding-top:8px;padding-left:10px;}
+.article_th .article_time{float:left;width:150px;padding-top:8px;}
+.article_th .article_re{float:left;width:100px;padding-top:8px;}
+.article_th .article_op{float:left;width:100px;padding-top:8px;text-align:center;}
+.article_tr{border:0px;background:#ffffff;margin-top:0px;font-size:13px;border-bottom:1px solid #EEEEEE;padding-top:5px;}
+.article_tr .article_tit{color:#555555;text-overflow : ellipsis; white-space : nowrap; overflow : hidden;}
+.article_tr .article_re{text-align:center;}
+.addtr{height:30px;}
+.addtit{float:left;width:50px;text-align:right;padding-right:10px;padding-top:5px;}
+.addinput{float:left;width:500px;text-align:left;}
+.addinput input{width:400px;padding:0px;margin:0px;height:20px;}
+.article_item input{width:50px;}
+.note_con{float:left;width:500px;padding-top:3px;text-align:left;min-height:60px;}
+.note_username{float:left;width:100px;padding-top:3px;}
+.note_time{float:left;width:150px;padding-top:3px;}
+.note_op{float:left;width:50px;padding:5px 0px 2px 0px;height:25px;}
+.img_panle{float:left;display:inline-block;margin-left:10px;}
