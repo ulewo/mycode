@@ -12,7 +12,7 @@
   </head>
   <body>
   <jsp:include page="menue.jsp"></jsp:include>
-  <div class="body_con">
+  <div class="body_con">  
 	<div class="left">
 		<div style="text-align:center;font-size:14px;color:red;">${message }</div>
 	<div class="register">
