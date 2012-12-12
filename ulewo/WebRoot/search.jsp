@@ -26,7 +26,7 @@
 				<div class="articlePanel">
 					  <div class="top">
 					  	<c:if test="${article.uid!=null}">
-					 	 	<div class="top_user_avator"><img src="upload/avatar/${article.avatar}"></div>
+					 	 	<div class="top_user_avator"><img src="${path}upload/avatar/${article.avatar}"></div>
 					  		<div class="top_user_name"><a href="user?uid=${article.uid}">${article.userName}</a></div>
 				  		</c:if>
 					    <div class="top_user_time">${fn:substring(article.postTime,0,19)}</div>
