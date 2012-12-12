@@ -18,6 +18,7 @@
 %>
 <body>
 <jsp:include page="menue.jsp"></jsp:include>
+<c:set var="path" value="http://pic.ulewo.com/"></c:set>
 <div class="body_con">
 	<div class="left">
 		<div class="pageArea"><p:pager url="<%=url %>" page="${page}" pageTotal = "${pageTotal }"></p:pager></div>
@@ -38,7 +39,7 @@
   					  <div class="content">${article.content}</div>
   					  <c:if test="${article.imgUrl!=null}">
 		  			   <div class="imgArea">
-		  			  	  <img src="upload/small/${article.imgUrl}" class='small hover' type="small" imgUrl="${article.imgUrl}">
+		  			  	  <img src="${path}upload/small/${article.imgUrl}" class='small hover' type="small" imgUrl="${article.imgUrl}">
 		  			    </div>
 	  			 	  </c:if>
 	  			 	  <c:if test="${article.videoUrl!=null&&article.medioType == 'V'}">
