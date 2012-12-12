@@ -13,6 +13,7 @@ function addArticle() {
 		alert("同意投稿需知才能投稿");
 		return;
 	}
+	$("#subCon").html("<img src='images/loading.gif'>");
 	$.ajax({
 		async : true,
 		cache : false,
@@ -38,8 +39,10 @@ function addArticle() {
 			} else if (data.result == "videonotfound") {
 				alert("视频没有找到，请输入正确的视频地址");
 			} else {
-				alsert("系统异常，发布失败");
+				alert("系统异常，发布失败，你可以稍等片刻之后再来发布");
 			}
+			$("#subCon").html(
+					"<a href='javascript:addArticle()' class='subtn'>投递</a>");
 		}
 	});
 }

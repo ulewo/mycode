@@ -35,7 +35,7 @@
 			<input type="checkbox" id="agreement">我已经阅读并同意投稿需知
 		</div>
 		<div class="form_con">
-			<div>
+			<div id="subCon">
 				<a href="javascript:addArticle()" class="subtn">投递</a>
 			</div>
 		</div>
