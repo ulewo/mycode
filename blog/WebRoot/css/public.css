@@ -47,5 +47,5 @@ img.imageborder{border:1px solid #E1E1E1;padding:2px;}
 
 .note_name_time .adminstyle{color:#F37C02;font-weight:bold;}
 .re_name_time .adminstyle{color:#F37C02;font-weight:bold;}
-.aboutme{text-align:left;background:#ffffff;padding:8px;font-size:14px;line-height:22px;font-family:Tahoma, Helvetica, "Microsoft Yahei", "微软雅黑", Arial, STHeiti}
+.aboutme{text-align:left;background:#ffffff;padding:8px 15px;font-size:14px;line-height:25px;font-family:Tahoma, Helvetica, "Microsoft Yahei", "微软雅黑", Arial, STHeiti}
 .readCount{color:#F07402;}
