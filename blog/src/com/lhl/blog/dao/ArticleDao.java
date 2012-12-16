@@ -135,7 +135,7 @@ public class ArticleDao
 				article.setId(rs.getString("id"));
 				article.setItemId(rs.getInt("itemid"));
 				article.setTitle(rs.getString("title"));
-				article.setContent(rs.getString("comment"));
+				article.setComment(rs.getString("comment"));
 				article.setContent(rs.getString("content"));
 				article.setReadCount(rs.getInt("readcount"));
 				article.setPostTime(rs.getString("posttime"));
