@@ -211,3 +211,4 @@ Pager.prototype = {
 		return this.ulPanle;
 	}
 }
+
