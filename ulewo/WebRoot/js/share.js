@@ -33,7 +33,7 @@ function share_qzone(data) {
 	data.content = data.content + share_title;
 	var wburl = "http://ulewo.com/detail?id=" + data.id;
 	var _url = "http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
-	param[0] = "url=" + wburl;
+	param[0] = "url=" + encodeURIComponent(wburl);
 	param[1] = "title=" + data.content;
 	param[2] = "pics=" + realPath + "upload/big/" + data.imgUrl;
 	param[3] = "summary=" + data.content;
@@ -75,7 +75,7 @@ function share_renren(data) {
 	param[1] = "description=" + data.content;
 	param[2] = "title=" + data.content;
 	param[3] = "pic=" + realPath + "upload/big/" + data.imgUrl;
-	var _url = "http://share.renren.com/share/buttonshare.do?";
+	var _url = "http://widget.renren.com/dialog/share?";
 	_url += param.join("&");
 	forward(_url);
 }
