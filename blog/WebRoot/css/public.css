@@ -49,3 +49,11 @@ img.imageborder{border:1px solid #E1E1E1;padding:2px;}
 .re_name_time .adminstyle{color:#F37C02;font-weight:bold;}
 .aboutme{text-align:left;background:#ffffff;padding:8px 15px;font-size:14px;line-height:25px;font-family:Tahoma, Helvetica, "Microsoft Yahei", "微软雅黑", Arial, STHeiti}
 .readCount{color:#F07402;}
+
+.sharecon{width:130px;float:left;height:20px;margin-left:20px;}
+.sharetit{display:inline-block;float:left;padding-top:2px;}
+.qqshare,.qqwbshare,.sinawbshare,.renrenshare{background:url("../images/webbg.png") -5px -78px no-repeat;width:17px;height:17px;display:block;float:left;margin-left:5px;}
+.qqshare{background-position:-5px -78px}
+.qqwbshare{background-position:-32px -78px}
+.sinawbshare{background-position:-59px -78px}
+.renrenshare{background-position:-84px -78px}
