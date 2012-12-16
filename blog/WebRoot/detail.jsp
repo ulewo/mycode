@@ -34,9 +34,16 @@
 									</c:forEach>
 							</span>
 							<span class="detail_readcount">阅读：<span>${article.readCount}</span></span>
+							 <div class="sharecon">
+							      <span class="sharetit">分享:</span>
+							      <a href="javascript:share(0)" class="qqshare" title="分享到QQ空间"/></a>
+							      <a href="javascript:share(1)" class="qqwbshare" title="分享到腾讯微博"/></a>
+							      <a href="javascript:share(2)" class="sinawbshare" title="分享到新浪微博"/></a>
+							      <a href="javascript:share(3)" class="renrenshare" title="分享到人人网"/></a>
+					   		 </div>
 							<div class="clear_float"></div>
 						</div>
-						<div class="description">
+						<div class="description" id="content">
 							${article.content}
 						</div>
 						<div class="comment_tit" id="comment_tit"></div>
@@ -59,6 +66,7 @@
 		<div class="foot"></div>
 </body>
 <script type="text/javascript">
+	var realPath = "http://blog.ulewo.com/";
 	var comment = "${comment}";
 	$(function(){
 		 $(".description pre").each(function () {
@@ -78,7 +86,20 @@
 		loadReArticles('${article.id}');
 		loadItem();
 		loadRecord();
-		
 	});
+	
+	function share(type){
+		var imgUrl = $("img.imageborder");
+		var img = "";
+		for(var i=0;i<imgUrl.length;i++){
+			if(i==imgUrl.length-1){
+				img=img+encodeURIComponent(realPath+$(imgUrl[i]).attr("src"));
+			}else{
+				img=img+encodeURIComponent(realPath+$(imgUrl[i]).attr("src")+"|");
+			}
+			
+		}
+		dispatche(type, "${article.title}", img, "${article.id}");
+	}
 </script>
 </html>
