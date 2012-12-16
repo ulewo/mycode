@@ -99,6 +99,7 @@
 	$(function(){
 		showInitRe(${article.id},$("#relink"));
 	})
+	
 </script>
 </body>
 </html>
