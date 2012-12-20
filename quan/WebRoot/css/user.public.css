@@ -1,0 +1,17 @@
+@import url("public.css");
+.menue{
+width: 1000px;
+height: 41px;
+overflow: hidden;
+margin: 0 auto;
+border: 1px solid #E8E8E8;
+border-bottom: 0;
+background: url(../images/bg.gif) no-repeat;
+background-position: 0 -42px;
+background-repeat: repeat-x;
+}
+.menue ul{margin:0px;padding:0px;margin-left:10px;}
+.menue li{float:left;list-style: none;margin-left:5px;margin-top:9px;}
+.menue a{display:block;width:90px;height:25px;padding-left:5px;padding-top:8px;text-decoration:none;color:#006A92;font-size:14px;text-align:center;}
+.menue a:hover{text-decoration:underline;}
+

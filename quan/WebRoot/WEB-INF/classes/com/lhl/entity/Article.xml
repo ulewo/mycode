@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="article">
+	<cacheModel id="user-cache" type="LRU" readOnly="true"
+		serialize="false">
+		<flushInterval hours="24" />
+		<property value="500" name="size" />
+	</cacheModel>
+	<typeAlias alias="article" type="com.lhl.entity.Article" />
+	
+	<!-- 添加文章-->
+	<insert id="addArticle" parameterClass="article">
+		insert into article (gid,type,itemid,title,content,summary,keyword,authorid,posttime,image)
+		values(#gid#,#type#,#itemId#,#title#,#content#,#summary#,#keyWord#,#authorId#,#postTime#,#image#)
+	</insert>
+	
+	<!--删除文章-->
+	<delete id="deleteBatch"> 
+       delete from article where id in ( 
+        <iterate  conjunction=",">#[]#</iterate>) 
+	</delete> 
+	
+	<!-- 单笔查询文章-->
+	<select id="queryTopicById"  resultClass="article" parameterClass="java.lang.Integer">
+		select * from article where id = #id#
+	</select>
+	
+	<!-- 更新文章 用户只能修改的内容 -->
+	<update id="updateArticle" parameterClass="article">
+		update article set itemid=#itemId#,title=#title#,content=#content#,keyword=#keyWord# where id = #id#
+	</update>
+	
+	<!-- 更新不为空的字段 主要是后台操作更新默写状态 -->
+	<update id="updateArticle_selective" parameterClass="article">
+		update article
+		set id=#id#
+		<isNotEmpty prepend="," property="itemId">
+			itemid=#itemId# 
+    	</isNotEmpty>
+    	<isNotEmpty prepend="," property="titleStyle">
+           titlestyle=#titleStyle# 
+        </isNotEmpty>
+        <isNotEmpty prepend="," property="readNumber">
+          readnumber=#readNumber#
+        </isNotEmpty>
+        <isNotEmpty prepend="," property="grade">
+          grade=#grade#
+        </isNotEmpty>
+        <isNotEmpty prepend="," property="essence">
+			essence=#essence#
+        </isNotEmpty>
+        <isNotEmpty prepend="," property="isValid">
+			isvalid=#isValid#
+        </isNotEmpty>
+        <isNotEmpty prepend="," property="sysCode">
+			syscode=#sysCode#
+        </isNotEmpty>
+        <isNotEmpty prepend="," property="subCode">
+			subcode=#subCode#
+        </isNotEmpty>
+         <isNotEmpty prepend="," property="image">
+			image=#image#
+        </isNotEmpty>
+		where id=#id#
+	</update>
+	
+	<!-- 根据gid,itemid查询主题总数 -->
+	<select id="queryTopicCountByGid"  resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		select count(id) from article
+		<dynamic prepend="where">
+			<isNotEqual prepend="and" property="itemId" compareValue = "0">
+          	   <![CDATA[itemid = #itemId#  ]]>
+			</isNotEqual>
+			<isNotEmpty prepend="and" property="gid">
+          	   <![CDATA[gid =  #gid#  ]]>
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="isValid">
+          	   <![CDATA[isvalid =  #isValid#  ]]>
+			</isNotEmpty>
+		</dynamic>	
+	</select>
+	
+	<!-- 通过群编号查询主题文章  等级和最后回复时间倒叙排列 多笔查询 -->
+	<select id="queryTopicOrderByGradeAndLastReTime"  resultClass="article" parameterClass="java.util.Map">
+		select a.id,a.gid,a.title,a.titlestyle,a.itemid,i.itemname,a.authorid,u.username as authorname,a.posttime,a.readnumber,
+		(select count(r.id) from rearticle r where r.articleid = a.id) as renumber,a.grade,a.essence,
+		(case when (select count(r.id)  from rearticle r where r.articleid = a.id) > 0
+		then (select r.retime from rearticle r where r.articleid = a.id order by retime desc limit 0,1)
+		else a.posttime end
+		) as lastretime from  article a 
+		inner join user u on a.authorid = u.userid
+		left join articleitem i on a.itemid = i.id
+		<dynamic prepend="where">
+		<isNotEqual prepend="and" property="itemId" compareValue = "0">
+         	  <![CDATA[a.itemid =  #itemId#  ]]>
+		</isNotEqual>
+		<isNotEmpty prepend="and" property="gid">
+         	  <![CDATA[a.gid =  #gid#  ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="isValid">
+         	  <![CDATA[a.isvalid =  #isValid#  ]]>
+		</isNotEmpty>
+		</dynamic>
+		order by a.grade desc,lastretime desc limit #offset#,#total#
+	</select>
+	
+	<!-- 查询文章根据时间倒叙排列 -->
+	<select id="queryTopicOrderByPostTime"  resultClass="article">
+		select a.id,a.gid,a.itemid,a.title,a.titlestyle,a.authorid,a.posttime,a.readnumber from article a  
+		<dynamic prepend="where">
+		<isNotEqual prepend="and" property="itemId" compareValue = "0">
+         	  <![CDATA[a.itemid =  #itemId#  ]]>
+		</isNotEqual>
+		<isNotEmpty prepend="and" property="gid">
+         	  <![CDATA[a.gid =  #gid#  ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="isValid">
+         	  <![CDATA[a.isvalid =  #isValid#  ]]>
+		</isNotEmpty>
+		</dynamic>
+		order by posttime desc limit #offset#,#total#
+	</select>
+
+	<!-- 搜索文章 -->
+	<select id="searchTopic"  resultClass="article" parameterClass="java.util.Map">
+		select id,gid,itemid,title,summary,keyword,(select u.username from user u where u.userid = a.authorid) authorName,authorid,subcode,posttime,readnumber,
+		(select count(r.id) from rearticle r where r.articleid = a.id) reNumber,image from article a
+		<dynamic prepend="where"> 
+		<isNotEmpty prepend="and" property="keyWord">
+         	  <![CDATA[(content like #keyWord# or title like #keyWord#) ]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend="and" property="gid">
+         	  <![CDATA[gid =  #gid#  ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="isValid">
+          	   <![CDATA[isvalid =  #isValid#  ]]>
+		</isNotEmpty>
+		</dynamic>
+		order by posttime desc limit  #offset#,#total#
+	</select>
+	
+	<!-- 搜索文章数量 -->
+	<select id="searchTopicCount"  resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		select count(id) from article
+		<dynamic prepend="where"> 
+		<isNotEmpty prepend="and" property="keyWord">
+         	  <![CDATA[(content like #keyWord# or title like #keyWord#) ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="gid">
+         	  <![CDATA[gid =  #gid#  ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="isValid">
+          	   <![CDATA[isvalid =  #isValid#  ]]>
+		</isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<!--根据userId查询主题文章-->
+	<select id="queryTopicByUserId"  resultClass="article" parameterClass="java.util.Map">
+		select a.id,a.gid,a.itemid,i.itemname as itemname,a.title,a.titlestyle,a.authorid,a.posttime,a.readnumber,grade,essence,
+		g.groupname as groupname,(select count(r.id) from rearticle r where r.articleid = a.id) as reNumber 
+		from article a inner join groups g on a.gid=g.id left join articleitem i on a.itemid = i.id where a.isvalid = "Y" and a.authorid = #authorid#
+		order by posttime desc limit #offset#,#total#
+	</select>
+	
+	<!--根据userId查询主题数量-->
+	<select id="queryCountByUserId"  resultClass="java.lang.Integer" parameterClass="java.lang.String">
+		select count(id) from article where isvalid = "Y" and authorid = #authorid#
+	</select>
+	
+	<!--根据userId查询回复的文章主题-->
+	<select id="queryTopicByReUserId"  resultClass="article" parameterClass="java.util.Map">
+		select distinct a.id,a.gid,a.itemid,i.itemname as itemname,a.title,a.titlestyle,a.authorid,a.posttime,a.readnumber,grade,essence,
+		g.groupname as groupname,(select count(r.id) from rearticle r where r.articleid = a.id) as reNumber 
+		from article a inner join rearticle r inner join groups g on a.gid=g.id left join articleitem i on a.itemid = i.id where a.isvalid = "Y" and a.id = r.articleid and r.authorid = #authorid# 
+		order by a.posttime desc limit #offset#,#total#
+	</select>
+	
+	<!--根据userId查询回复的文章主题数-->
+	<select id="queryTopicCountByReUserId"  resultClass="java.lang.Integer" parameterClass="java.lang.String">
+		select count(distinct a.id) from article a,rearticle r where a.isvalid = "Y" and a.id = r.articleid and r.authorid = #authorid# 
+	</select>
+	
+	<!-- 今日发表 -->
+	<select id="queryTopicCountByTime"  resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		select count(a.id) from article a  where a.isvalid = "Y" and gid=#gid# and posttime between #startTime# and #endTime#
+	</select>
+	
+	<!-- 首页推荐文章 -->
+	<select id="queryIndexArticle" resultClass="article" parameterClass="java.util.Map">
+		select id,gid,itemid,title,summary,keyword,authorid,(select u.username from user u where u.userid=a.authorid) authorName,posttime,readnumber,(select count(r.id) from rearticle r where r.articleid = a.id) reNumber,image from article a
+		<dynamic prepend="where"> 
+		<isNotEmpty prepend="and" property="sysCode">
+         	  <![CDATA[ syscode = #sysCode# ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="subCode">
+         	  <![CDATA[subcode =  #subCode#  ]]>
+		</isNotEmpty>
+		</dynamic>
+		order by posttime desc limit  #offset#,#total#
+	</select>
+</sqlMap>

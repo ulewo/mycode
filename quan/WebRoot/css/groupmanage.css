@@ -1,0 +1,9 @@
+body{margin:0px auto;width:1000px;text-align:center;font-size:13px;}
+.head{height:80px;border:1px solid #C9D7EB;}
+.bodycon{margin-top:10px;border:1px solid red;}
+.left{width:200px;float:left;border:1px solid #C9D7EB;}
+.right{width:780px;float:left;border:1px solid #C9D7EB;margin-left:15px;text-align:left;}
+.title{float:left;width:100px;text-align:right;margin-top:4px;border:1px solid red;}
+.inputCon{float:left;width:400px;margin-left:10px;text-align:left;}
+.button{background:#308BCF;height:25px;border:1px solid #B7D7EE;border-right:1px solid #256B9E;border-bottom:1px solid #256B9E}
+.inputstyle{height:16px;border:1px solid #B4B4B4;}

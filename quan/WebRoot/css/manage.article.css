@@ -1,0 +1,16 @@
+@import url("manage.public.css");
+
+.articlecount{font-weight:bold;font-size:13px;height:25px;padding-top:20px;padding-left:15px;}
+.articleop{background:#EAEAEA;padding-top:5px;height:25px;padding-left:10px;}
+.ath{height:25px;font-weight:bold;background:#EFEFEF;padding-top:10px;padding-left:15px;text-align:left;margin-top:8px;color:#333333}
+.atit{width:510px;float:left;height:30px;}
+.aauthor{width:100px;float:left;}
+
+.atr{text-align:left;border-bottom:1px solid #D9D9D9;height:25px;padding-top:10px;padding-left:15px;}
+.atr a{color:#494949;text-decoration:none;font-size:13px;}
+.atr a:hover{color:#FF9603;}
+
+.atit_check{float:left;width:30px;}
+.atit_img{float:left;width:35px;}
+.atit_tit{float:left;width:410px;padding-top:2px;}
+.pagebttom{padding-right:5px;height:25px;margin-top:10px;}

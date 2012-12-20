@@ -1,0 +1,10 @@
+@import url("public.css");
+.new_construct{height:35px;margin-top:10px;}
+.tit{font-size:14px;color:#5C9BCC;float:left;width:100px;text-align:right;padding-top:10px;}
+.inputare{float:left;width:240px;margin-left:5px;text-align:left;}
+.inputare input{height:23px;border:1px solid #DDDDDD;font-size:16px;padding-top:5px;width:230px;}
+.errorinfo{float:left;width:150px;background:#FFEAEA;border:1px solid #DFB9BA;padding-top:8px;margin-left:5px;font-size:13px;padding-left:5px;height:20px;margin-top:1px;color:#CC0000;padding-left:5px;display:none;}
+.showinfor{float:left;width:150px;padding-top:8px;display:none;}
+#warminfor{border:1px solid #EAEADE;background:#FFFCEB;width:200px;position:absolute;padding:10px;text-align:left;display:none;}
+.haveUser{text-align:right;padding-right:300px;}
+

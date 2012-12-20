@@ -1,0 +1,12 @@
+@import url("manage.public.css");
+
+.warinfo{font-weight:bold;font-size:13px}
+.ath{height:20px;background:#F6F6F6;padding-top:10px;padding-left:11px;text-align:left;margin-top:5px;color:#333333}
+.atit{width:300px;float:left;}
+.atit input {padding-left:8px;border:1px solid  #EEC285}
+.aorder{width:100px;float:left;}
+.aorder input{width:30px;text-align:center;border:1px solid  #EEC285}
+.aop{width:200px;float:left;}
+.atr{height:28px;padding-left:2px;padding-top:5px;text-align:left;margin-top:5px;color:#333333;border-bottom:1px solid #E7E7E7;}
+
+.addmore{margin-left:403px;margin-top:5px;width:100px;}

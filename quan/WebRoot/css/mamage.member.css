@@ -1,0 +1,22 @@
+@import url("manage.public.css");
+.reject_info{font-weight:bold;margin-left:20px;margin-top:10px;}
+.op_area{background:#F6F6F6;height:28px;padding-left:10px;margin-left:10px;margin-top:10px;padding-top:5px;}
+.op_area_se{float:left;width:50px;margin-left:10px;padding-top:2px;height:25px;}
+.op_area_se1{float:left;width:28px;padding-top:3px;}
+.op_area_se2{float:left;width:20px;}
+.member{margin-top:2px;margin-left:-8px;}
+.member_con{float:left;width:174px;padding:6px;border:1px solid #EFEFEF;margin-left:20px;margin-top:20px;height:64px;}
+.member_img{width:60px;float:left;border:1px solid #EFEFEF}
+.member_info{width:110px;float:left;}
+.member_info_con{height:30px;}
+.info_con_name{width:80px;float:left;padding-top:10px;padding-left:5px;}
+.info_con_check{width:20px;float:right;padding-top:8px;}
+
+.member_info_op{padding-top:0px;width:110px;padding-top:5px;}
+
+.member_m{margin-left:10px;width:820px;padding:0px 0px 8px 0px ;}
+.member_m_con{float:left;padding:6px;border:1px solid #E9E9E9;width:130px;margin-left:15px;margin-top:10px;height:64px;}
+.member_m_info{width:65px;float:left;}
+.member_m_info div{margin-left:5px;margin-top:8px;}
+.member_tit{margin-left:20px;margin-top:5px;line-height:25px;}
+.pagebttom{height:30px;padding-right:25px;margin-top:5px;}

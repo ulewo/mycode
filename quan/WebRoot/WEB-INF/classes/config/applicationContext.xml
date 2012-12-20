@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:jee="http://www.springframework.org/schema/jee"
+   xmlns:tx="http://www.springframework.org/schema/tx"
+   xmlns:context="http://www.springframework.org/schema/context"
+   xmlns:aop="http://www.springframework.org/schema/aop"
+   xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+                       http://www.springframework.org/schema/tx 
+                       http://www.springframework.org/schema/tx/spring-tx-3.0.xsd 
+                       http://www.springframework.org/schema/jee 
+                       http://www.springframework.org/schema/jee/spring-jee-3.0.xsd 
+                       http://www.springframework.org/schema/context 
+                       http://www.springframework.org/schema/context/spring-context-3.0.xsd
+                       http://www.springframework.org/schema/aop 
+                       http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+   <bean id="propertyConfigurer"
+      class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+      <property name="location">
+         <value>/WEB-INF/classes/config/jdbc.properties</value>
+      </property>
+   </bean>
+
+   <!-- spring c3p0 连接池 -->
+   <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+      <property name="driverClass" value="${jdbc.driverClassName}" />
+      <property name="jdbcUrl" value="${jdbc.url}" />
+      <property name="user" value="${jdbc.username}" />
+      <property name="password" value="${jdbc.password}" />
+      <property name="minPoolSize" value="${c3p0.minPoolSize}" />
+      <property name="maxPoolSize" value="${c3p0.maxPoolSize}" />
+      <property name="maxStatements" value="${c3p0.max_statement}" />
+      <property name="maxIdleTime" value="${c3p0.maxIdleTime}"/>
+      <property name="initialPoolSize" value="${c3p0.initialPoolSize}"/>
+   </bean>
+   <bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+      <property name="configLocation" value="/WEB-INF/classes/config/SqlMapConfig.xml" />
+      <property name="dataSource" ref="dataSource" />
+   </bean>
+   
+   	<!-- 配置ibatis的局部事务管理器，使用DataSourceTransactionManager类-->
+
+	<bean id="transManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+</beans>

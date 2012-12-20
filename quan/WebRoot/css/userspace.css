@@ -1,0 +1,5 @@
+@import url("public.css");
+.bodycon{width:1000px;text-align:center;}
+.left{width:198px;float:left;border:1px solid #AAAAAA;height:400px;}
+.right{width:750px;float:left;border:1px solid #AAAAAA;margin-left:10px;}
+#topictab{text-align:left;}

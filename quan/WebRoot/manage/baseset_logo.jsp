@@ -1,0 +1,52 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>    
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Justlearning 学习，生活，娱乐</title>
+<style>
+#sel_left1 a{background:#34B3E6;font-weight:bold;color:#FFFFFF;background-image:url("../images/sjj2.gif");background-position:right center;background-repeat:no-repeat;}
+#sel_top2{background:url("../images/mtopsel.gif");}
+</style>
+<link rel="stylesheet"  href="../css/manage.group.css" type="text/css"  />
+<link id="artDialog-skin" href="../dialog/skins/default.css" rel="stylesheet" />
+<script type="text/javascript" charset="utf-8" src="../editor/kindeditor-min.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/util.js"></script>
+<script type="text/javascript" src="../js/manage.bassetlogo.js"></script>
+<script src="../dialog/jquery.artDialog.min.js?skin=default"></script>
+<script src="../dialog/plugins/iframeTools.js"></script>
+</head>
+<body>
+<div class="maincon">
+	<div class="left">
+		<jsp:include page="menue.jsp"></jsp:include>
+	</div>
+	<div class="right">
+		<jsp:include page="baseset_top.jsp"></jsp:include>
+			<input type="hidden" name="groupicon" id="groupicon" value="${group.groupIcon}">
+			<div class="logo_con" >
+				<div class="logo_con_img"><img src="../upload/${group.groupIcon}" id="imgcon" width="60"></div>
+				<div id="logo_con_info"></div>
+			</div>
+			<div class="tit_con"><div class="tit_con_radio"><input type="radio" name="iconType" class="iconType" checked="checked" id="cus_img"></div><div class="tit_con_tit">自定义头像:</div></div>
+			<div class="form_are">
+					<iframe src="../imageUpload/avatarUpload.jsp" id="iframupload" height="30" width="310" frameborder="0"></iframe>
+			</div>
+			<div class="tit_con"><div class="tit_con_radio"><input type="radio" name="iconType" class="iconType" id="sys_img"></div><div class="tit_con_tit">推荐头像:</div></div>
+			<div class="sys_logo" id="sys_logo">
+				
+			</div>
+			<div class="saveset">
+				<div class="bbtn1" id="save"><a href="javascript:saveAvatar('${gid}')">保存设置</a></div>
+				<div id="load"><img src="../images/loading.gif"></div>
+			</div>
+	</div>
+	<div class="clear"></div>
+</div>	
+<div class="foot"></div>
+</body>
+</html>

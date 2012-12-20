@@ -1,0 +1,52 @@
+异常：org/apache/commons/lang/exception/NestableRuntimeException
+
+添加：commons-lang-2.5.jar
+json-lib-2.4-jdk15.jar
+ezmorph-1.0.6.jar
+commons-collections-3.2.jar
+commons-beanutils.jar
+
+回复显示：
+<div class="re">
+	<div class="re_image">
+		<img src="../upload/default.gif" width="60">
+	</div>
+	<div class="re_area">
+		<div class="re_area_tit">
+			<div class="u_info">
+				<span class="info_lou">1楼</span> <span class="info_name"><a href="####">时光</a></span><span class="info_time">发表时间：2012-02-15 22:00</span>
+			</div>
+			<div class="re_area_op">
+				<span><a href="####">回复</a></span>
+				<span class="re_op_d"><a href="####">删除</a></span>
+			</div>
+		</div>
+		<div class="re_area_con">
+			<div class="re_area_con1">
+			第三届群内赛对战表已经出来了。第三届群内赛对战表已经出来了。第三届群内赛对战表已经出来了。
+			第三届群内赛对战表已经出来了。第三届群内赛对战表已经出来了。第三届群内赛对战表已经出来了。
+			</div>
+			<div class="re_area_con2">
+				<div class="re_image2">
+					<img src="../upload/default.gif" width="50">
+				</div>
+				<div class="re_area2">
+					<div class="re_area_tit">
+						<div class="u_info2">
+							<span class="info_name2"><a href="####">时光</a></span>
+							<span class="info_time2">发表时间：2012-02-15 22:00</span>
+							<span><a href="####">回复</a></span>
+							<span class="re_op_d2">|&nbsp;<a href="####">删除</a></span>
+						</div>
+					</div>
+					<div class="re_area_con">
+						第三届群内赛对战表已经出来了。第三届群内赛对战表已经出来了。
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+			
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>

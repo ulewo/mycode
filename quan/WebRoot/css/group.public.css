@@ -1,0 +1,11 @@
+@import url("public.css");
+.menue ul{height:37px;background:#CFCFCF;margin:0px;padding:0px;margin-top:10px;}
+.menue li{float:left;list-style:none;border-right:1px solid #FFFFFF;width:128px;}
+.menue li a{display:block;width:128px;height:27px;padding-top:10px;font-weight:bold;color:#FFFFFF;text-decoration:none;}
+.menue li a:hover{background-color:#33B3E6;background-image:url("../images/sjj.gif");background-position:center bottom;background-repeat:no-repeat;}
+.menue li a.selected{background-color:#33B3E6;background-image:url("../images/sjj.gif");background-position:center bottom;background-repeat:no-repeat;}
+
+.itemcon{border-bottom:1px solid #DCDCDC;}
+.item{height:42px;text-align:left;font-size:13px;}
+.item a{display:inline-block;padding-top:5px;padding-bottom:7px;margin-top:12px;text-decoration:none;margin-left:15px;color:#333333;text-align:center;}
+.item a:hover{border-bottom:3px solid #6FCEF4;color: #6FCEF4;}

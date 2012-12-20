@@ -1,0 +1,23 @@
+#topcon{width:100%;height:30px;background:#EEEEEE;border-bottom:1px solid #D9D9D9;margin:0px auto;left:0px;}
+#topcon ul{margin:0px;padding:0px;}
+#topcon ul li{float:left;list-style:none;}
+#topcon a{color:black;text-decoration:none;}
+#topcon a:hover{color:red;text-decoration:underline;}
+.topConleft{float:left;width:400px;}
+.topConRight{float:right;width:200px;}
+.topConRight ul{margin:0px;padding:0px;}
+.topConRight ul li{margin-left:5px;}
+.welcom{width:30px;float:left;padding-top:1px;font-weight:bold;}
+.userDiv{float:left;border:1px solid #EEEEEE;border-bottom:0px;height:20px;text-align:center;cursor:pointer;color:red;}
+#userDiv a{color:red}
+.userDivHover{border:1px solid #666666;border-bottom:0px;float:left;height:20px;text-align:center;cursor:pointer;color:red;text-decoration:underline;}
+.userCancel{width:50px;float:left;}
+#userContent{width:250px;border:1px solid #B4B4B4;position:absolute;z-index:2;background:white;top:30px;left:179px;display:none;padding:8px;text-align:left;}
+.uinfoTit{text-align:left;color:#326A9B;font-weight:bold;padding-top:5px;padding-bottom:5px;}
+.groupLine{height:20px;padding-top:5px;}
+#userContent a{width:120px;display:block;float:left;color:#494949}
+#userContent a:hover{color:red;}
+.new_construct{height:35px;margin-top:10px;}
+.tit{font-size:14px;color:#5C9BCC;float:left;width:100px;text-align:right;padding-top:10px;}
+.inputare{float:left;width:240px;margin-left:5px;text-align:left;}
+.inputare input{height:23px;border:1px solid #DDDDDD;font-size:16px;padding-top:5px;width:230px;}

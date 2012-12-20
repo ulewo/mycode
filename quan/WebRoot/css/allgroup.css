@@ -1,0 +1,24 @@
+@import url("public.css");
+.left{float:left;width:700px;}
+.group{margin-top:15px;padding:5px;}
+.allgroupleft{width:50px;float:left;}
+.allgroupright{width:630px;float:left;text-align:left;margin-left:10px;}
+.groupinfo{background:#BBE5F1;padding-left:8px;padding-top:5px;height:20px;}
+.groupinfo a{color:#494949;text-decoration:none;}
+.groupinfo a:hover{background:#003399;color:white;}
+.desc{margin-top:10px;line-height:22px;font-size:14px;}
+.right{float:right;width:275px;}
+
+.usersTitle{padding-left:20px;font-size:16px;font-weight:bold;border-bottom:2px solid #C2C2C2;color:#656567;margin-top:20px;text-align:left;}
+.newgroup{text-align:left;height:75px;padding-top:10px;}
+.groupioc{float:left;width:70px;height:70px;text-align:center;margin-left:3px;font-weight:bolder;padding-top:3px;}
+.groupcon{float:left;width:170px;margin-left:8px;}
+.grouptitle{font-weight:bold;margin-top:1px;}
+.grouptitle a{color:#336699;text-decoration:none;}
+.grouptitle a:hover{background:#003190;color:#FFFFFF}
+.groupdesc{margin-top:3px;line-height:18px;}
+.membericon{background:url("../images/membericon.gif");width:70px;height:70px;}
+.membericon img{margin-top:10px;}
+.membericon a img{border:1px solid white;}
+.membericon a img:hover{border:1px solid #2F599F;}
+.groupTitle{font-size:20px;font-weight:bold;padding-left:8px;margin-top:15px;text-align:left;;border-bottom:2px solid #C2C2C2;color:#686868}

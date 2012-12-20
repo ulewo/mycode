@@ -1,0 +1,14 @@
+@import url("public.css");
+body{width:1000px;margin: 0px auto;text-align:left;font-size:12px;}
+.left{width:155px;float:left;}
+.right{width:830px;float:left;font-size:12px;margin-left:15px;}
+.menue{padding:0px;margin:0px;background:#F6F6F6}
+.menue li{list-style:none;text-align:center;font-size:12px;margin-top:1px;}
+.menue li a{display:block;height:25px;padding-top:10px;text-decoration:none;color:#333333}
+.menue li a:hover{background:#34B3E6;font-weight:bold;color:#FFFFFF;background-image:url("../images/sjj2.gif");background-position:right center;background-repeat:no-repeat;}
+
+.base_top{height:34px;border-bottom:1px solid #E8E8E8;padding-left:10px;}
+.base_top a{width:94px;float:left;height:21px;padding-top:13px;;background:url("../images/mtop.gif");margin-left:3px;text-align:center;text-decoration:none;color:#333333}
+.base_top a:hover{background:url("../images/mtopsel.gif");}
+
+.mbt a{width:50px;height:17px;padding-top:5px;margin-left:5px;display:inline-block;text-align:center;background:url("../images/sbt.gif");text-decoration:none;color:#333333}

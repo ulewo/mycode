@@ -1,0 +1,70 @@
+@import url("public.css");
+.bannergroupname{float:left;width:200px;padding-left:20px;}
+.banner{height:30px;background:#2D76C5;}
+.bannerMenue{float:left;width:200px;}
+.bannerUserInof{float:left;width:400px;}
+.bannerMenue ul {margin:0px;padding:0px;}
+.bannerMenue ul li{float:left;list-style:none;}	
+	
+.partOne,.partThree{height:130px;border:1px solid #B1BFCD;}
+.members{height:90px;padding-left:18px;}
+.member{float:left;height:85px;padding:5px;}
+.membericon{background:url("../images/membericon.gif");width:70px;height:70px;}
+.membericon img{margin-top:10px;}
+.membericon a:hover{border:1px solid #2F599F;}
+.partOneLeft{height:200px;width:600px;border:1px solid #B1BFCD;float:left;}
+.partOneright{height:200px;width:380px;margin-left:10px;border:1px solid #B1BFCD;float:left;}
+.partTitle{background:url("../images/bg1.jpg");background-repeat:repeat-x;margin:1px;height:20px;padding-top:5px;padding-left:8px;font-weight:bold;text-align:left;}
+.group{width:82px;width:82px;float:left;margin-left:10px;}
+.groupIoc{border:1px solid #B1BFCD;}
+
+/*�����б�*/
+.addTopicCon{height:20px;margin-top:10px;}
+.addTopicCon div{float:right;width:150px;}
+.partTwo{border:1px solid #CDDAED;margin-top:3px;}
+.partTwo a{color:#3572A1;text-decoration:none;}
+.partTwo a:hover,.partTwo a:active{color:#3572A1;text-decoration:underline;color:red;}
+.bigTitleBig,.bigTitle{height:35px;}
+.topTitle{width:415px;padding-top:8px;float:left;height:27px;padding-left:20px;text-align:left;}
+.topTitle a{color:#0072BD;font-size:13px;text-decoration:none;}
+.topTitle a:hover,.topTitle a:active{color:red;text-decoration:underline;}
+.groupName{width:100px;float:left;padding-top:5px;height:27px;}
+.topAuthor{width:180px;text-align:center;float:left;padding-top:2px;height:33px;}
+.topRead{width:100px;padding-top:8px;float:left;height:27px;}
+.topRe{width:180px;float:left;height:35px;}
+
+/*��������*/
+.topic_content{border:1px solid #5D6F8D;background:#f2f2f3;margin-top:5px;}
+.topic_contitle{height:33px;background:url("../images/bbs_tbg.gif");text-align: left;padding-left: 20px;color: #DF7A24;font-size:16px;}
+.topic_left{float:left;width:170px;}
+.topic_username{border-bottom:1px solid #B7B7B7;width:157px;padding:5px;padding-bottom:6px;font-weight:bolder;};
+.topic_userinfor{margin-top:8px;text-align:left;padding-left:15px;}
+.topic_right{float:left;width:828px;}
+.topic_showtime{border-bottom:1px solid #B7B7B7;text-align:left;padding:5px;font-size:13px;height:16px;}
+.topicset1{width:200px;float:left;}
+.topicset2{width:100px;float:left;margin-left:320px;}
+.topic_showarticlecon{text-align:left;min-height:300px;height:auto !important;height:300px;word-break:break-all;
+overflow-x:hidden;padding-top:20px;padding-bottom:30px;background:white;padding-left:10px;padding-right:10px;line-height:22px;font-size:14px;}
+.topic_charstyle{border-top: 1px solid #B7B7B7;text-align: left;padding:5px;padding-left:10px;background: white;}
+
+.bannergroupname{float:left;width:100px;text-align:left;padding-top:5px;}
+.groupadmin{float:left;width:880px;}
+.admin{width:100px;float:left;padding-top:5px}
+.addGroup{float:left;width:100px;margin-left:380px;}
+.itemcon{height:30px;}
+.itemcon ul{height:26px;border-bottom:3px solid #3A7BCB;margin:0px;padding:0px;}
+.itemcon li{float:left;list-style: none;text-align:center;margin-left:10px;}
+.itemcon a{text-decoration:none;color:#306FA3;display:block;height:20px;padding-left:10px;padding-right:10px;padding-top:5px;border:1px solid #C9D7EB;border-bottom:0px;background:url("../images/bg1.jpg");}
+.itemcon a:hover,itemcon a:active{color:white;background:#8AC4FC;}
+.item{float:left;border:1px solid #B1BFCD;margin-left:10px;}
+.desccon{height:150px;border:1px solid #B1BFCD;text-align:left;margin-top:10px;}
+.desc{height:120px;overflow-Y:auto;}
+
+/*��������*/
+.addcon{border:1px solid #B1BFCD;text-align:left;}
+.addcontitle{background:#CDDAED;margin:1px;padding-top:5px;color:#583117;font-weight:bold;height:20px;}
+.ad-part{height:30px;}
+.ad-title{float:left;width:70px;text-align:right;padding-top:5px;}
+.ad-input{float:left;width:200px;}
+.ad-input input{height:15px;width:500px;}
+

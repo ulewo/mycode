@@ -1,0 +1,47 @@
+@import url("group.public.css");
+
+.itemcon{height:42px;font-size:12px;}
+.itemcon_item{width:800px;float:left;}
+.itemcon_btn{float:right;text-align:center;width:190px;}
+.itemcon_btn div{float:left;margin-top:12px;width:80px;}
+
+.ath{height:25px;font-weight:bold;background:#EFEFEF;padding-top:10px;padding-left:12px;text-align:left;margin-top:8px;color:#333333}
+.atit{width:746px;float:left;}
+.aauthor{width:120px;float:left;font-size:13px;}
+
+.ordercon{height:25px;margin-top:15px;font-size:12px;}
+.ordercon_order{float:left;width:400px;text-align:left;padding-left:20px;padding-top:5px;}
+.ordercon_page{float:right;width:460px;padding-right:20px;}
+.pagebttom{padding-right:20px;height:25px;}
+.atr{text-align:left;border-bottom:1px solid #D9D9D9;height:33px;padding-top:7px;padding-left:8px;}
+.atit .atit_img{margin-top:4px;float:left;width:29px}
+.atit .atit_img2{margin-left:4px;margin-top:4px;float:left;width:29px}
+.atit .atit_tit{height:34px;padding-top:6px;float:left;}
+.atr a{color:#494949;text-decoration:none;font-size:13px;}
+.atr a:hover{color:#FF9603;}
+.timestyle{color:#ACACCF;font-size:12px;}
+
+.clear{clear:both;}
+
+/*新增文章*/
+.ad_con{text-align:left;margin-top:10px;}
+.ad_line{height:30px;}
+.ad_quto{border-bottom: #666666 1px dashed; text-align: left; border-left: #666666 1px dashed; padding-bottom: 8px; background-color: #ffffff; margin:0px 0px 8px 0px; padding-left: 8px; padding-right: 8px; border-top: #666666 1px dashed; border-right: #666666 1px dashed; padding-top: 8px;}
+.ad_quto2{border-bottom: #666666 1px dashed; text-align: left; border-left: #666666 1px dashed; padding-bottom: 8px; background-color: #ffffff; margin:5px; padding-left: 8px; padding-right: 8px; border-top: #666666 1px dashed; border-right: #666666 1px dashed; padding-top: 8px;margin:0px 0px 8px 0px;}
+div.ad_quto2{filter:alpha(opacity=70); opacity:0.7; background-color:none;}
+.ad_item{float:left;width:100px;}
+.ad_item select {width:100px;}
+.ad_title{float:left;width:400px;}
+.ad_title input{width:335px;}
+.ad_content{height:auto;}
+
+
+/*成员列表*/
+.members{font-size:12px;text-align:left;margin-bottom:10px;}
+.g_gcon{float:left;margin-left:10px;height:70px;width:220px;margin-top:15px;}
+.g_gon_img{float:left;width:60px;height:60px;border:1px solid #EFEFEF}
+.g_gon_info{float:left;width:140px;height:60px;margin-left:3px;}
+.g_gon_info a{color:#006A92;text-decoration:none;font-size:13px;}
+.g_gon_info a:hover{color:#FF9603;}
+.g_gon_info div{margin-top:3px;}
+

@@ -1,0 +1,13 @@
+.title{float:left;width:100px;text-align:right;margin-top:4px;}
+.inputCon{float:left;width:400px;margin-left:10px;text-align:left;}
+.inputstyle{height:20px;background:#CDDAED;padding-top:5px;color:white;}
+.parttitlex{height:20px;background:#CDDAED;padding-top:5px;text-align:left;font-weight:bold;padding-left:10px;}
+.itemname{float:left;width:300px;text-align:center;}
+.itemcode{float:left;width:150px;text-align:center;}
+.oper{float:left;width:200px;text-align:center;}
+.itemrow{margin-top:2px;height:25px;}
+.operU,.operD{width:100px;float:left;text-align:center;}
+.buttonU,.buttonD{background:#308BCF;height:25px;border:1px solid #B7D7EE;border-right:1px solid #256B9E;border-bottom:1px solid #256B9E;color:white;}
+
+.noEdit{border:0px;text-align:center;}
+.edit{border:1px solid #B4B4B4;text-align:center;}

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMapConfig      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+   <settings useStatementNamespaces="true"
+             cacheModelsEnabled="true"
+             maxSessions="30"
+             maxTransactions="100"
+             maxRequests="1000"
+             defaultStatementTimeout="15"/>
+   <sqlMap resource="com/lhl/entity/Article.xml" />
+   <sqlMap resource="com/lhl/entity/ReArticle.xml" />
+   <sqlMap resource="com/lhl/entity/Group.xml" />
+   <sqlMap resource="com/lhl/entity/ArticleItem.xml" />
+   <sqlMap resource="com/lhl/entity/FriendGroup.xml" />
+   <sqlMap resource="com/lhl/entity/Member.xml" />
+   <sqlMap resource="com/lhl/entity/User.xml" />
+   <sqlMap resource="com/lhl/entity/Message.xml" />
+</sqlMapConfig>
+

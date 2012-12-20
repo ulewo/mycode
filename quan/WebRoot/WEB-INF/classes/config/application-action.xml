@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd">
+     <bean id="index" class="com.lhl.quan.action.IndexAction" scope="prototype">
+    	 <property name="adminArticleService" ref="adminArticleService"/>
+    	 <property name="articleService" ref="articleService"/>
+    	 <property name="groupService" ref="groupService"/>
+    	 <property name="userService" ref="userService"/>
+    </bean>       
+    <bean id="user" class="com.lhl.quan.action.UserSpaceAction" scope="prototype">
+    	 <property name="userService" ref="userService"/>
+    	 <property name="messageService" ref="messageService"/>
+    	 <property name="groupService" ref="groupService"/>
+    	 <property name="articleService" ref="articleService"/>
+    </bean>
+ 
+	<bean id="group" class="com.lhl.quan.action.GroupAction" scope="prototype">
+	 	<property name="groupService" ref="groupService"/>
+	 	<property name="articleService" ref="articleService"/>
+	 	<property name="memberService" ref="memberService"/>
+	 	<property name="articleItemService" ref="articleItemService"/>
+	 	<property name="friendGroupService" ref="friendGroupService"/>
+	 	
+	</bean>  
+	
+	<bean id="article" class="com.lhl.quan.action.ArticleAction" scope="prototype">
+	 	<property name="groupService" ref="groupService"/>
+	 	<property name="articleService" ref="articleService"/>
+	 	<property name="articleItemService" ref="articleItemService"/>
+	 	<property name="reArticleService" ref="reArticleService"/>
+	 	<property name="memberService" ref="memberService"/>
+	 	<property name="adminArticleService" ref="adminArticleService"/>
+	 	
+	</bean> 
+	
+	<bean id="mangeGroup" class="com.lhl.quan.action.ManageGroupAction" scope="prototype">
+	 	<property name="groupService" ref="groupService"/>
+	</bean> 
+	
+	<bean id="manageArticle" class="com.lhl.quan.action.ManageArticleAction" scope="prototype">
+	 	<property name="articleService" ref="articleService"/>
+	 	<property name="articleItemService" ref="articleItemService"/>
+	</bean> 
+	
+	<bean id="manageMember" class="com.lhl.quan.action.ManageMemberAction" scope="prototype">
+	 	<property name="memberService" ref="memberService"/>
+	</bean>
+	
+	<bean id="manageItem" class="com.lhl.quan.action.ManageItemAction" scope="prototype">
+	 	<property name="articleItemService" ref="articleItemService"/>
+	</bean>
+	
+	<!--后台管理-->
+	<bean id="adminArticle" class="com.lhl.admin.action.AdminArticleAction" scope="prototype">
+	 	<property name="adminArticleService" ref="adminArticleService"/>
+	</bean>
+	
+	<bean id="adminGroup" class="com.lhl.admin.action.AdminGroupAction" scope="prototype">
+	 	<property name="adminGroupService" ref="adminGroupService"/>
+	</bean>
+	
+	<bean id="adminUser" class="com.lhl.admin.action.AdminUserAction" scope="prototype">
+	 	<property name="adminUserService" ref="adminUserService"/>
+	</bean>
+	
+	<!-- 图片上传 -->
+	<bean id="avatarUpload" class="com.lhl.upload.AvatarUploadAction" scope="prototype">
+	</bean>
+		
+		
+	<bean id="headImgUpload" class="com.lhl.upload.HeadIconUploadAction" scope="prototype">
+	</bean>
+		
+
+	<bean id="imageUpload" class="com.lhl.upload.ImageUploadAction" scope="prototype">
+	</bean>
+
+</beans>

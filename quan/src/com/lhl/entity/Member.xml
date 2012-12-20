@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="member">
+	<cacheModel id="user-cache" type="LRU" readOnly="true"
+		serialize="false">
+		<flushInterval hours="24" />
+		<property value="500" name="size" />
+	</cacheModel>
+	
+	<typeAlias alias="member" type="com.lhl.entity.Member" />
+	
+	<!-- 增加成员-->
+	<insert id="addMember" parameterClass="member">
+		insert into member (gid,userid,ismember,grade,jointime)
+		values(#gid#,#userId#,#isMember#,#grade#,#joinTime#);
+	</insert>
+	
+	<!-- 删除成员 -->
+	<delete id="deleteMember" parameterClass="java.lang.Integer">
+		delete from member where id = #id#
+	</delete>
+	
+	<!-- 非空更新群成员信息 -->
+	<!-- 更新群非空信息 -->
+	<update id="updateMember_selective" parameterClass="member">
+		update member
+		set id=#id#
+		<isNotEmpty prepend="," property="isMember">
+			ismember=#isMember# 
+    	</isNotEmpty>
+		<isNotEmpty prepend="," property="grade">
+			grade=#grade#
+        </isNotEmpty>
+		where id=#id#
+	</update>
+	
+	<!-- 通过id单笔查询成员 -->
+	<select id="getMember"  resultClass="member" parameterClass="java.lang.Integer">
+		select * from member where id = #id#
+	</select>
+	
+	<!--通过gid 成员userId-->
+	<select id="queryMemberByGidAndUserId"  resultClass="member" parameterClass="java.util.Map">
+		select * from member where gid= #gid# and userid = #userId#
+	</select>
+	
+	<!-- 查询群组成员 -->
+	<select id="queryMembers" resultClass="member" parameterClass="java.util.Map">
+		select m.*,(select count(a.id) from article a where a.authorid=m.userid and a.isvalid='Y') as topiccount from member m
+		<dynamic prepend="where">
+		<isNotEmpty prepend="and" property="gid">
+         	  <![CDATA[gid =  #gid#  ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="grade">
+         	  <![CDATA[grade =  #grade#  ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="ismember">
+         	  <![CDATA[ismember =  #ismember#  ]]>
+		</isNotEmpty>
+		</dynamic>
+		<isEqual prepend=" " property="order" compareValue = "asc">
+         	  order by jointime asc
+		</isEqual>
+		<isEqual prepend=" " property="order" compareValue = "desc">
+         	  order by jointime desc
+		</isEqual>
+		limit #offset#,#total#
+	</select>	
+	
+		<!-- 根据发帖量查询成员 -->
+	<select id="queryActiveMembers" resultClass="member" parameterClass="java.util.Map">
+		select m.* from member m where m.gid = #gid# and m.ismember =  #ismember# order by (select count(a.id) from article a where a.authorid=m.userid) desc 
+		limit #offset#,#total#
+	</select>
+	
+		<!-- 查询群组成员数量 -->
+	<select id="queryCount" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		select count(id) from member
+		<dynamic prepend="where">
+		<isNotEmpty prepend="and" property="gid">
+         	  <![CDATA[gid =  #gid#  ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="ismember">
+         	  <![CDATA[ismember =  #ismember#  ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="grade">
+         	  <![CDATA[grade =  #grade#  ]]>
+		</isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<!-- 根据等级查询群成员 -->
+	<select id="queryMembersByGrade" resultClass="member" parameterClass="java.util.Map">
+		select * from member m
+		<dynamic prepend="where">
+		<isNotEmpty prepend="and" property="gid">
+         	  <![CDATA[gid =  #gid#  ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="grade">
+         	  <![CDATA[grade =  #grade#  ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="ismember">
+         	  <![CDATA[ismember =  #ismember#  ]]>
+		</isNotEmpty>
+		</dynamic>
+		order by jointime desc limit #offset#,#total#
+	</select>
+	
+	<select id="queryAdmins" resultClass="member" parameterClass="java.lang.String">
+		select * from member where gid = #gid#  and grade>0 order by grade desc
+	</select>
+	
+	<select id="queryAllAdmins" resultClass="member" parameterClass="java.lang.String">
+		select * from member where grade>0 
+	</select>
+	
+	<!--查询成员userid -->
+	<select id="queryMemberUserIdByGrade" resultClass="java.lang.String" parameterClass="java.util.Map">
+		select userid from member
+		<dynamic prepend="where">
+		<isNotEmpty prepend="and" property="gid">
+         	  <![CDATA[gid =  #gid#  ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="grade">
+         	  <![CDATA[grade =  #grade#  ]]>
+		</isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<!-- 根据等级查询群成员数量 -->
+	<select id="queryCountByGrade" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		select count(id) from member
+		<dynamic prepend="where">
+		<isNotEmpty prepend="and" property="gid">
+         	  <![CDATA[gid =  #gid#  ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="grade">
+         	  <![CDATA[grade =  #grade#  ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="isMember">
+         	  <![CDATA[ismember =  #isMember#  ]]>
+		</isNotEmpty>
+		</dynamic>
+	</select>
+	
+	
+</sqlMap>

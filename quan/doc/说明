@@ -1,0 +1,13 @@
+commons-lang-2.5.jar
+commons-collections-3.2.jar
+ezmorph-1.0.6.jar
+commons-beanutils.jar
+json-lib-2.4-jdk15.jar
+使用json时必须使用这几个包
+
+在使用ibatis查询赋值时，当数据为int型，但是数据库中是空的时候，要添加
+<resultMap id="result-user" class="user">  
+		<result property="age" column="age" nullValue="0"/>  
+		<result property="mark" column="mark" nullValue="0"/>  
+</resultMap> 
+否则系统无法进行强制转换从而导致出错。

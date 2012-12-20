@@ -1,0 +1,42 @@
+@import url("public.css");
+.bodycon{width:1000px;text-align:center;margin-top:10px;}
+.left{float:left;border:1px solid #B1BFCD;width:120px;}
+.partTitle{border-bottom:1px solid #B1BFCD;padding-top:10px;font-weight:bold;height:20px;}
+.menue a{display:block;width:120px;height:20px;text-decoration:none;padding-top:10px;color: #295394}
+.menue a:hover,.menue a:active{background:#E8EDF1;color:red;}
+.menue{list-style:none;margin:0px;padding:0px;}
+.right{float:left;width:868px;margin-left:10px;}
+.userimag{width:120px;}
+.userinfor{float:left;width:744px;}
+.partCon{height:30px;margin-top:15px;}
+.formTile{float:left;width:100px;font-weight:bold;text-align:right;}
+
+.form-title{float:left;color:#626262;width:150px;text-align:right;padding-top:4px;}
+.form-input{float:left;text-align:left;}
+.form-input input{width:250px;}
+.form-part{height:40px;}
+.formCon{float:left;width:500px;text-align:left;}
+.partTwo{margin-top:3px;}
+.partTwo a{color:#3572A1;text-decoration:none;}
+.partTwo a:hover,.partTwo a:active{color:#3572A1;text-decoration:underline;color:red;}
+
+.itemcon ul{list-style: none;height:33px;background:url("../images/nav.gif") 0px -30px;margin:0px;padding:0px;padding-left:10px;border-bottom:6px solid #F0F0F0}
+.itemcon ul li{float:left;}
+.itemcon ul li a{text-decoration:none;color:#494949;width:85px;display:block;margin-top:3px;padding-top:8px;text-align:center;color:white;font-size:14px;}
+.itemcon ul li a:hover{background:url("../images/nav.gif") no-repeat 0px -63px;font-weight:bolder;height:22px;color:#494949}
+
+.bigTitleBig{background:#BBE5F1;font-weight:bold;color:white;height:27px;padding-top:10px;}
+.bigTitle div{padding-top:10px;}
+.topTitle{width:455px;padding-left:20px;text-align:left;float:left;}
+.groupName{width:100px;float:left;}
+.topAuthor{width:100px;text-align:center;float:left;}
+.topRead{width:100px;float:left;}
+.topRe{width:150px;float:left;}
+
+.groupioc{width:70px;margin-left:15px;float:left;margin-top:20px;text-align:center;height:100px;}
+.membericon{background:url("../images/membericon.gif");width:70px;height:70px;}
+.membericon img{margin-top:10px;}
+.membericon a img{border:1px solid white;}
+.membericon a img:hover{border:1px solid #2F599F;}
+.memberTitle a{color:#494949;text-decoration:none;}
+.memberTitle a:hover{color:red;text-decoration:none;text-decoration:underline;}

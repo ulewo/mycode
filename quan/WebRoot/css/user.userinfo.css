@@ -1,0 +1,69 @@
+@import url("user.public.css");
+.user_main{text-align:left;margin-top:10px;}
+.left{float:left;width:150px;background:#F4F4F4;border-right:1px solid #E6E6E6;height:600px;}
+.left_userimg{width:150px;text-align:center;margin-top:10px;}
+.left_userid{margin-top:15px;text-align:center;font-size:13px;}
+.left_userid span{font-weight:bold;color: #32B2E6}
+.left_userid span a{font-weight:bold;color: #32B2E6;text-decoration:none;}
+.left_userid span a:hover{text-decoration:underline;}
+.left_editinfo{text-align:center;margin-top:10px;padding-left:25px;}
+.right{float:left;width:800px;margin-left:10px;padding-left:20px;}
+.baseinfo{line-height:30px;}
+.g_gcon{float:left;margin-left:10px;height:70px;width:220px;}
+.g_gon_img{float:left;width:60px;height:60px;border:1px solid #EFEFEF}
+.g_gon_info{float:left;width:140px;height:60px;margin-left:3px;}
+.g_gon_info a{color:#006A92;text-decoration:none;font-size:13px;}
+.g_gon_info a:hover{color:#FF9603;}
+.g_gon_info div{margin-top:3px;}
+
+.ath{height:25px;font-weight:bold;background:#EFEFEF;padding-top:10px;padding-left:12px;text-align:left;margin-top:8px;color:#333333}
+.atit{width:746px;float:left;}
+.aauthor{width:120px;float:left;font-size:13px;}
+.atr .aauthor{padding-top:8px;}
+.atr{text-align:left;border-bottom:1px solid #D9D9D9;height:33px;padding-top:7px;padding-left:8px;}
+.atit .atit_img{margin-top:4px;float:left;width:29px}
+.atit .atit_img2{margin-left:4px;margin-top:4px;float:left;width:29px}
+.atit .atit_tit{height:34px;padding-top:6px;float:left;}
+.atr a{color:#494949;text-decoration:none;font-size:13px;}
+.atr a:hover{color:#FF9603;}
+.timestyle{color:#ACACCF;font-size:12px;}
+
+.safeInfo{border-top:1px solid #E6E6E6;padding-top:10px;margin-top:5px;}
+.safeInfo a{display:inline-block;height:25px;padding-top:8px;background:#E0DADA;width:150px;margin-top:1px;text-align:center;color:#494949;text-decoration:none;}
+.safeInfo a:hover{background:#5A5A5A;color:white;font-weight:bold;}
+
+.tit_con{margin-left:20px;margin-top:10px;height:25px;width:200px;cursor:pointer;}
+.tit_con_radio{float:left;width:25px;}
+.tit_con_tit{float:left;width:100px;height:20px;padding-top:2px;}
+.sys_logo{margin-top:0px;filter:alpha(opacity=50);-moz-opacity:0.5;-khtml-opacity: 0.5; opacity: 0.5;padding-top:0px;}
+.sys_logo2{filter:alpha(opacity=100);-moz-opacity:1;-khtml-opacity:1; opacity:1;}
+.sys_icon{float:left;width:100px;height:80px;margin-left:20px;border:1px solid #DCDCDC;margin-top:15px;cursor:pointer;text-align:center;padding-top:20px;}
+.sys_icon2{float:left;width:100px;height:80px;margin-left:20px;border:1px solid #FFB941;margin-top:15px;cursor:pointer;text-align:center;padding-top:20px;background:url("../images/ok.png") no-repeat left bottom;}
+.saveset{width:100px;margin-left:15px;margin-top:25px;height:25px;}
+
+
+.form_are{text-align:left;margin-top:5px;margin-left:10px;}
+.upload_con{float:left;width:230px;}
+.upload_sub{float:left;margin-left:10px;width:60px;height:25px;}
+#upload{width:100px;}
+#load{display:none;}
+.main_message{border-bottom:1px solid #DCDCDC;margin-top:10px;}
+.message_name{color:#6FCEF4;}
+.message_name a{color:#6FCEF4;text-decoration:underline;}
+.message_con{margin-top:10px;word-break:break-all;line-height:18px}
+.content{margin-top:10px}
+.erroinfo{color:red;padding-left:10px;}
+.checkcode{height:30px;margin-top:10px;}
+.checkcode .tit{float:left;width:60px;padding-top:5px;}
+.checkcode .check_con{float:left;width:90px;}
+.check_con input{width: 80px;}
+.check_img{float:left;width:90px;margin-left:10px;}
+.checkcode .changecode{float:left;width:50px;}
+.subbtn{height:30px;margin-top:5px;}
+.messagetit{background:#F5F5F5;margin-top:10px;}
+
+/*Í¼Æ¬ÇÐ¸î*/
+.imgCut{display:inherit;margin-left:10px;display:none;}
+.cutarea{width:680px;float:left;}
+.ferret{width:100px;float:left;margin-left:10px;display:inherit;}
+#preview{float:left;position:relative;overflow: hidden; width:100px;height:100px}

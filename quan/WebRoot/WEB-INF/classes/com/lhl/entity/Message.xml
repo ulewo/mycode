@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="message">
+	<cacheModel id="user-cache" type="LRU" readOnly="true"
+		serialize="false">
+		<flushInterval hours="24" />
+		<property value="500" name="size" />
+	</cacheModel>
+	
+	
+	<typeAlias alias="message" type="com.lhl.entity.Message" />
+	
+	<!-- 添加留言 -->
+	<insert id="addMessage" parameterClass="message">
+		insert into message(userid,reuserid,reusername,message,posttime) 
+		values(#userId#,#reUserId#,#reUserName#,#message#,#postTime#)
+	</insert>
+	
+	<!-- 根据userId查询留言 -->
+	<select id="queryMessageByUserId"  resultClass="message" parameterClass="java.util.Map">
+		select * from message where userId = #userId# order by postTime desc
+	</select>
+
+	<!-- 根据userId查询留言条数 -->
+	<select id="queryCountByUserId"  resultClass="message" parameterClass="java.util.Map">
+		select count(id) from message where userId = #userId#
+	</select>
+</sqlMap>

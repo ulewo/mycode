@@ -1,0 +1,55 @@
+@import url("group.public.css");
+.main_con{margin-top:10px;}
+.main_left{width:770px;float:left;}
+
+.itemcon{height:42px;font-size:12px;}
+.itemcon_item{width:800px;float:left;}
+.itemcon_btn{float:right;text-align:center;width:190px;}
+.itemcon_btn div{float:right;margin-top:12px;width:80px;padding-right:20px}
+
+.left_sum{text-align:left;background:#F8F8F8;padding:10px;color:#333333;font-size:12px;}
+.left_ginfo{border-bottom:1px solid #DFDFDF;text-align:left;height:65px;}
+.glogo{float:left;width:60px;height:60px;margin:2px 5px 15px 10px;}
+.ginfo{width:450px;float:left;}
+.ginfo div{margin-top:10px;}
+.ginfo .gname{font-weight:bold;}
+.gzhu a{text-decoration:none;color:#30B1E5;}
+.gzhu a:hover{text-decoration:underline}
+
+.addg{float:right;text-align:center;width:190px;}
+.addg div{float:left;margin-top:25px;width:80px;}
+.g_sum{padding-top:15px;}
+
+.ath{height:25px;font-weight:bold;background:#EFEFEF;padding-top:10px;padding-left:12px;text-align:left;margin-top:20px;color:#333333}
+.atit{width:535px;float:left;}
+.aauthor{width:107px;float:left;font-size:13px;}
+
+.atr{text-align:left;border-bottom:1px solid #D9D9D9;height:33px;padding-top:7px;padding-left:8px;}
+.atit .atit_img{margin-top:4px;float:left;width:29px}
+.atit .atit_img2{margin-left:4px;margin-top:4px;float:left;width:29px}
+.atit .atit_tit{height:34px;padding-top:6px;float:left;}
+.atr a{color:#494949;text-decoration:none;font-size:13px;}
+.atr a:hover{color:#FF9603;}
+.timestyle{color:#ACACCF;font-size:12px;}
+
+
+.main_right{width:216px;float:right;}
+.main_right a{color:#006A92;text-decoration:none;font-size:13px;}
+.main_right a:hover{color:#FF9603;}
+.right_tit{background:#33B3E6;color:#FFFFFF;padding:8px 0px 8px 15px;font-weight:bold;text-align:left;margin-top:12px;}
+.g_admin{border:1px solid #EFEFEF;border-top:0px;padding-bottom:10px;text-align:center;}
+.g_admin_c{height:20px;font-size:12px;text-align:left;padding-top:5px;}
+.g_admin_c div{float:left;}
+.g_admin_icon{width:20px;margin-left:10px;}
+.g_admin_title{width:50px;padding-top:3px;}
+.g_admin_name{width:100px;padding-top:3px;}
+
+.g_mem{float:left;width:62px;font-size:12px;margin-left:7px;margin-top:10px;}
+.g_men_img{border:1px solid #E0E0E0;}
+.g_men_name{margin-top:5px;}
+
+.g_friend{width:200px;height:75px;padding-top:10px;text-align:left;font-size:12px;border-bottom:1px solid #E0E0E0;margin:0 auto;}
+.g_friend_img{float:left;width:60px;border:1px solid #E0E0E0;margin-left:3px;}
+.g_friend_info{float:left;width:120px;margin-left:8px;}
+.g_friend_info div{margin-top:11px;}
+.clear{clear:both;}

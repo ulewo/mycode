@@ -1,0 +1,40 @@
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<include file="struts-default.xml" />
+	<package name="default" extends="struts-default">
+		<!-- 去掉自动英文验证 -->
+		<interceptors>
+			<interceptor-stack name="strutsStack">
+				<interceptor-ref name="exception" />
+				<interceptor-ref name="alias" />
+				<interceptor-ref name="servlet-config" />
+				<interceptor-ref name="prepare" />
+				<interceptor-ref name="i18n" />
+				<interceptor-ref name="chain" />
+				<interceptor-ref name="debugging" />
+				<interceptor-ref name="profiling" />
+				<interceptor-ref name="scoped-model-driven" />
+				<interceptor-ref name="model-driven" />
+				<interceptor-ref name="fileUpload" />
+				<interceptor-ref name="checkbox" />
+				<interceptor-ref name="static-params" />
+				<interceptor-ref name="params" />
+
+				<interceptor-ref name="validation">
+					<param name="excludeMethods">
+						input,back,cancel,browse
+					</param>
+				</interceptor-ref>
+				<interceptor-ref name="workflow">
+					<param name="excludeMethods">
+						input,back,cancel,browse
+					</param>
+				</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<!-- 自定义使用Struts2默认拦截器 -->
+		<default-interceptor-ref name="strutsStack" />
+	</package>
+	<include file="struts-config.xml" />
+</struts>

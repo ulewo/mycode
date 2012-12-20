@@ -1,0 +1,48 @@
+@import url("public.css");
+.mainfirst{height:250px;width:1000px;}
+.mainimg{float:left;width:750px;height:250px;}
+.rollcon{width:680px;padding:10px;background:#F3F3F3;height:250px;}
+.imagecon{width:545px;float:left;height:248px;background:url("../images/loading.gif") 220px 100px no-repeat;border:1px solid #F1F1F1}
+.rightBody{width:200px;height:250px;background:url("../images/titinfbg.jpg");float:left;}
+.rightcon{width:207px;height:250px;margin-left:-5px;background:url("../images/titinfq.gif") no-repeat;margin-left:-7px;}
+.titinf{height:38px;cursor:pointer;display:block;text-align:left;padding:6px;padding-left:15px;font-size:14px;color:#494949;overflow:hidden;}
+
+.commend{float:left;width:240px;margin-left:8px;}
+.maincommendtit{color:#555555;text-align:left;height:30px;font-size:14px;}
+.maincommend{margin-left:10px;text-align:left;}
+.maincommend_list{height:28px;}
+.maincommend_list a{color:#336699;text-decoration:none;}
+.maincommend_list a:hover{text-decoration:underline;}
+.mainlisttit{color:#555555;text-align:left;margin-top:10px;font-size:14px;}
+.mainlist{text-align:left;margin-top:10px;}
+.mainlist_img{float:left;width:120px;padding:10px;text-align:center;border:1px solid #E9E9E9}
+.mainlist_img img{max-width:110px;width:expression(this.width>110?"110":width)}
+.mainlist_con{float:left;width:605px;margin-left:20px;}
+.mainlist_con_title{margin-top:5px;}
+.mainlist_con_title a{font-size:14px;color:#336699;text-decoration:none;}
+.mainlist_con_title a:hover{text-decoration:underline;}
+.mainlist_con_username{color:#999999;margin-top:10px;}
+.mainlist_con_username a{font-size:13px;color:#336699;text-decoration:none;}
+.mainlist_con_username a:hover{text-decoration:underline;}
+.mainlist_con_summary{margin-top:10px;color:#666666;line-height:20px;}
+.maincon{width:1000px;margin-top:10px;}
+.mainleft{width:770px;float:left}
+.mainright{width:216px;float:left;margin-left:14px;}
+.right_tit{background:#33B3E6;color:#FFFFFF;padding:8px 0px 8px 15px;font-weight:bold;text-align:left;margin-top:12px;}
+.g_admin{border:1px solid #EFEFEF;border-top:0px;padding-bottom:10px;text-align:center;}
+.g_admin_c{height:20px;font-size:12px;text-align:left;padding-top:5px;}
+.g_admin_c div{float:left;}
+.g_admin_icon{width:20px;margin-left:10px;}
+.g_admin_title{width:50px;padding-top:3px;}
+.g_admin_name{width:100px;padding-top:3px;}
+.g_mem{float:left;width:62px;font-size:12px;margin-left:7px;margin-top:10px;}
+.g_men_img{border:1px solid #E0E0E0;}
+.g_men_name{margin-top:5px;}
+.g_mem a{font-size:14px;color:#336699;text-decoration:none;font-size:13px;}
+.g_mem a:hover{text-decoration:underline;}
+
+.groupmain{padding-top:8px;}
+.groupimg{float:left;border:1px solid #E0E0E0;width:50px;margin-left:8px}
+.groupinfo{float:left;width:140px;margin-left:10px;text-align:left;color:#999999}
+.groupinfo a{font-size:14px;color:#336699;text-decoration:none;font-size:13px;}
+.groupinfo a:hover{text-decoration:underline;}
