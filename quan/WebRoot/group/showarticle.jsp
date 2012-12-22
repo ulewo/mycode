@@ -16,7 +16,6 @@
 <script type="text/javascript" src="../js/util.js"></script>
 <script type="text/javascript" src="../js/article.showArticle.js"></script>
 <script src="../dialog/jquery.artDialog.min.js?skin=default"></script>
-<script src="../dialog/artDialog.ext.js"></script>
 <script type="text/javascript" src="../js/group.index.js"></script>
 <script type="text/javascript" src="../scripts/shCore.js"></script>
 <link type="text/css" rel="stylesheet" href="../styles/SyntaxHighlighter.css"/>
@@ -33,7 +32,7 @@
 		$(document).ready(function () {
             $(".showarticle pre").each(function () {
                 var $this = $(this);
-                if ($this.attr("class").indexOf("brush:") != -1) {
+                if ($this.attr("class")!=null&&$this.attr("class").indexOf("brush:") != -1) {
                     var lang = $this.attr("class").split(';')[0].split(':')[1];
                     $this.attr('name', 'code');
                     $this.attr('class', lang);
@@ -82,7 +81,7 @@
 			<div class="share_con">
 				<div class="share_backlist"><a href="topics.jspx?gid=${gid}&itemId=${itemId}">返回文章列表</a></div>
 				<div class="share_share">
-				<!-- Baidu Button BEGIN -->
+				<!-- Baidu Button BEGIN 
 				    <div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare">
 				        <a class="bds_qzone"></a>
 				        <a class="bds_tsina"></a>
@@ -95,7 +94,7 @@
 				<script type="text/javascript">
 					document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + new Date().getHours();
 				</script>
-				<!-- Baidu Button END -->
+				Baidu Button END -->
 				</div>				
 			</div>
 			<div class="about_title">
