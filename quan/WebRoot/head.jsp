@@ -21,7 +21,7 @@
 		<div class="user">
 			<c:if test="${user!=null}">
 				<ul id="userName">
-					<li><a href="javascript:void()" title="${user.userName}">
+					<li><a href="javascript:void(0)" title="${user.userName}">
 						<script>
 							document.write("${user.userName}".cutString(6));
 						</script>
@@ -40,7 +40,7 @@
 			</c:if>
 			<c:if test="${user==null}">
 				<ul id="userName">
-					<li><a href="javascript:void()">游客</a>
+					<li><a href="javascript:void(0)">游客</a>
 						<ul>
 							<li><a href="javascript:void(0)" onclick="showLoginDilog('user/login.jsp')">登录</a></li>
 							<li><a href="user/register.jsp">注册</a></li>
