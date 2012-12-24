@@ -1,6 +1,7 @@
 package com.lhl.filter;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,13 +24,16 @@ import com.lhl.quan.service.UserService;
 import com.lhl.quan.service.impl.UserServiceImpl;
 import com.lhl.util.Tools;
 
-public class AuthFilter extends HttpServlet implements Filter {
-	public void destroy() {
+public class AuthFilter extends HttpServlet implements Filter
+{
+	public void destroy()
+	{
 
 	}
 
 	public void doFilter(ServletRequest req, ServletResponse rep, FilterChain chain) throws IOException,
-			ServletException {
+			ServletException
+	{
 
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) rep;
@@ -41,25 +45,32 @@ public class AuthFilter extends HttpServlet implements Filter {
 				return;
 			}
 		}*/
-		/*if (currentURL.contains("jspx")) {
-			if (userObj == null) {
+		if (currentURL.contains("jspx"))
+		{
+			if (userObj == null)
+			{
 				autoLogin(request);
 			}
-		}*/
+		}
 		if ((currentURL.contains("reArticle") || currentURL.contains("subReArticle") || currentURL.contains("manage"))
-				&& null == userObj) {
+				&& null == userObj)
+		{
 			response.sendRedirect("../error/error.jsp");
 			return;
 		}
 
-		if (currentURL.contains("admin")) {
-			if (null == userObj) {
+		if (currentURL.contains("admin"))
+		{
+			if (null == userObj)
+			{
 				response.sendRedirect("../error/error.jsp");
 				return;
 			}
-			else {
+			else
+			{
 				User user = (User) userObj;
-				if (!"10000".equals(user.getUserId())) {
+				if (!"10000".equals(user.getUserId()))
+				{
 					response.sendRedirect("../error/error.jsp");
 					return;
 				}
@@ -77,54 +88,68 @@ public class AuthFilter extends HttpServlet implements Filter {
 		chain.doFilter(request, rep);
 	}
 
-	public void init(FilterConfig filterConfig) throws ServletException {
+	public void init(FilterConfig filterConfig) throws ServletException
+	{
 
 	}
 
-	private void autoLogin(HttpServletRequest req) {
+	private void autoLogin(HttpServletRequest req)
+	{
 
-		try {
+		try
+		{
 			Cookie cookieInfo = getCookieByName(req, "cookieInfo");
-			if (cookieInfo != null) {
-				String info = cookieInfo.getValue();
-				if (info != null && !"".equals(info)) {
+			if (cookieInfo != null)
+			{
+				String info = URLDecoder.decode(cookieInfo.getValue(), "utf-8");
+				if (info != null && !"".equals(info))
+				{
 					String infos[] = info.split(",");
 					WebApplicationContext webApplicationContext = WebApplicationContextUtils
 							.getWebApplicationContext(req.getSession().getServletContext());
 					UserService userService = (UserServiceImpl) webApplicationContext.getBean("userService");
 					User user = userService.login(infos[0]);
-					if (user != null && Tools.encodeByMD5(infos[1]).equals(user.getPassword())) {
+					if (user != null && Tools.encodeByMD5(infos[1]).equals(user.getPassword()))
+					{
 						User loginUser = new User();
 						loginUser.setUserId(user.getUserId());
 						loginUser.setUserName(user.getUserName());
+						loginUser.setUserLittleIcon(user.getUserLittleIcon());
 						req.getSession().setAttribute("user", loginUser);
 					}
 				}
 			}
 		}
-		catch (Exception e) {
+		catch (Exception e)
+		{
 		}
 
 	}
 
-	public Cookie getCookieByName(HttpServletRequest request, String name) {
+	public Cookie getCookieByName(HttpServletRequest request, String name)
+	{
 
 		Map<String, Cookie> cookieMap = ReadCookieMap(request);
-		if (cookieMap.containsKey(name)) {
+		if (cookieMap.containsKey(name))
+		{
 			Cookie cookie = (Cookie) cookieMap.get(name);
 			return cookie;
 		}
-		else {
+		else
+		{
 			return null;
 		}
 	}
 
-	private Map<String, Cookie> ReadCookieMap(HttpServletRequest request) {
+	private Map<String, Cookie> ReadCookieMap(HttpServletRequest request)
+	{
 
 		Map<String, Cookie> cookieMap = new HashMap<String, Cookie>();
 		Cookie[] cookies = request.getCookies();
-		if (null != cookies) {
-			for (Cookie cookie : cookies) {
+		if (null != cookies)
+		{
+			for (Cookie cookie : cookies)
+			{
 				cookieMap.put(cookie.getName(), cookie);
 			}
 		}
