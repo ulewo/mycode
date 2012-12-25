@@ -6,9 +6,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>圈子、群组 -友吧中国</title>
-<meta name="description" content="圈子、群组 -友吧中国">
-<meta name="keywords" content="圈子、群组 -友吧中国">
+<title>圈子、群组 -有乐窝</title>
+<meta name="description" content="圈子、群组 -有乐窝">
+<meta name="keywords" content="圈子、群组 -有乐窝">
 <link rel="stylesheet"  href="../css/allgroup.css" type="text/css"  />
 <link id="artDialog-skin" href="../dialog/skins/default.css" rel="stylesheet" />
 <script type="text/javascript" src="../js/dialog.js"></script>

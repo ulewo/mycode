@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>${group.groupName} — 友吧中国</title>
+<title>${group.groupName} — 有乐窝</title>
 <meta name="description" content="${summary}">
 <meta name="keywords" content="${group.groupName}">
 <link rel="stylesheet"  href="../css/group.index.css" type="text/css"  />

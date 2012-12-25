@@ -7,8 +7,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>${article.title}-友吧中国</title>
-<meta name="description" content="${article.title}-友吧中国">
+<title>${article.title}-有乐窝</title>
+<meta name="description" content="${article.title}-有乐窝">
 <meta name="keywords" content="${article.keyWord}">
 <link rel="stylesheet"  href="../css/article.showarticle.css" type="text/css"  />
 <script type="text/javascript" src="../js/jquery.min.js"></script>

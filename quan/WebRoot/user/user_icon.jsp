@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>友吧中国</title>
+<title>有乐窝</title>
 <link rel="stylesheet" type="text/css" href="../css/user.userinfo.css">
    <link rel="stylesheet" type="text/css" href="../imgcutcss/imgareaselect-default.css" />
 <link id="artDialog-skin" href="../dialog/skins/default.css" rel="stylesheet" />
