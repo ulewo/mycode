@@ -223,9 +223,25 @@ public class UserSpaceAction extends BaseAction
 				userId = userService.register(user);
 				if (null != userId)
 				{
+					//保存Cookie
+					String infor = URLEncoder.encode(userName, "utf-8") + "," + passWord;
+
+					//清除之前的Cookie 信息
+					Cookie cookie = new Cookie("cookieInfo", null);
+					cookie.setPath("/");
+					cookie.setMaxAge(0);
+
+					// 建用户信息保存到Cookie中
+					Cookie cookieInfo = new Cookie("cookieInfo", infor);
+					cookieInfo.setPath("/");
+					// 设置最大生命周期为1年。
+					cookieInfo.setMaxAge(31536000);
+					getResponse().addCookie(cookieInfo);
+
 					User loginUser = new User();
 					loginUser.setUserId(userId);
 					loginUser.setUserName(userName);
+					loginUser.setUserLittleIcon(user.getUserLittleIcon());
 					getSession().setAttribute("user", loginUser);
 					return SUCCESS;
 				}
