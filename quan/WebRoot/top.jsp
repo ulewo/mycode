@@ -24,7 +24,7 @@
 					<div class="welcom">您好</div><div class="userDiv" id="userDiv"><a href="javascript:showInfor('${user.userId}')">${user.userName}</a></div><div class="userCancel">！<a href="javascript:loginout('${user.userId}')">退出</a></div>
 				</c:if>
 				<c:if test="${user==null}">
-					您好，欢迎来友吧中国!&nbsp;<a href="javascript:login();">登录</a>&nbsp;或&nbsp;<a href="register.jsp">注册</a>
+					您好，欢迎来有乐窝!&nbsp;<a href="javascript:login();">登录</a>&nbsp;或&nbsp;<a href="register.jsp">注册</a>
 				</c:if>
 				</li>
 			</ul>
