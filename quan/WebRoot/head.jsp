@@ -13,6 +13,7 @@
 			<li><a href="index.jspx" class="selected1" onFocus="this.blur()">首&nbsp;页</a></li>
 			<li><a  href="groups.jspx"  class="selected2" onFocus="this.blur()">友&nbsp;吧</a></li>
 			<li><a href="square.jspx" class="selected3" onFocus="this.blur()">广&nbsp;场</a></li>
+			<li><a href="http://blog.ulewo.com" class="selected4" onFocus="this.blur()">乐哈哈</a></li>
 		</ul>
 		<div class="search">
 			<input type="text" class="inputTxtNew" id="searchInput" name="keyWord">

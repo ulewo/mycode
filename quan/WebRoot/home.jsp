@@ -10,7 +10,7 @@
 <script type="text/javascript" src="js/util.js"></script>
 <script type="text/javascript" src="js/jquery.backgroundPosition.js"></script>
 <link rel="stylesheet" type="text/css" href="css/index.css">
-<title>友吧中国</title>
+<title>有乐窝</title>
 <script type="text/javascript">
 	document.location.href="index.jspx";
 </script>

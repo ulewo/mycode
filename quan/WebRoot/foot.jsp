@@ -8,7 +8,7 @@
 			<li style="margin-left:10px;"><a href="square.jspx">广场</a></li>
 		</ul>
 	</div>
-	<div id="footright">&copy; 2011-2012&nbsp;&nbsp;u8china.net 友吧中国 All rights reserved.</div>
+	<div id="footright">&copy; 2011-2012&nbsp;&nbsp;ulewo.com 有乐窝 All rights reserved.</div>
 	<div style="margin-top:15px;">
 	</div>
 </div>

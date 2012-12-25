@@ -12,7 +12,7 @@
 %>
 <html>
   <head>
-    <title>搜索 --友吧中国</title>
+    <title>搜索 --有乐窝</title>
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    

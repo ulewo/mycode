@@ -6,7 +6,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
   <head>
-    <title>友吧广场--友吧中国</title>
+    <title>友吧广场--有乐窝</title>
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/u8.square.css">
 	<style>
