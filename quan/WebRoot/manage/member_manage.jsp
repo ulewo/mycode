@@ -9,8 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Justlearning 学习，生活，娱乐</title>
 <style>
-#sel_left2 a{background:#34B3E6;font-weight:bold;color:#FFFFFF;background-image:url("../images/sjj2.gif");background-position:right center;background-repeat:no-repeat;}
-#sel_top1{background:url("../images/mtopsel.gif");}	
+#selected6 a{background:#FFFFFF;}
 </style>
 <link rel="stylesheet"  href="../css/mamage.member.css" type="text/css"  />
 <script type="text/javascript" charset="utf-8" src="../editor/kindeditor-min.js"></script>
@@ -24,7 +23,6 @@
 		<jsp:include page="menue.jsp"></jsp:include>
 	</div>
 	<div class="right">
-		<jsp:include page="member_top.jsp"></jsp:include>
 		<div class="reject_info">所有成员（${adminCount+countNumber}）</div>	
 		<div class="op_area">
 			<div class="op_area_se">

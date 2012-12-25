@@ -16,7 +16,7 @@
 <body>
   <div class="bodycon">
   	你请求的页面不存在<br>
-  	<a href="http://www.u8china.net">返回首页</a>
+  	<a href="http://ulewo.com">返回首页</a>
   </div>
 </body>
 </html>

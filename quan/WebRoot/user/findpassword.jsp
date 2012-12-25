@@ -39,7 +39,7 @@
 		</div>
 		<div class="input_area">
 			<div class="tit"></div>
-			<div class="sub_con" id="subBtn">
+			<div class="bbtn1" id="subBtn">
 				<a href="javascript:nextSetp()">下一步</a>
 			</div>
 		</div>

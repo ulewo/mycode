@@ -10,8 +10,7 @@
 <link rel="stylesheet"  href="../css/mamage.member.css" type="text/css"  />
 <title>Justlearning 学习，生活，娱乐</title>
 <style>
-#sel_left2 a{background:#34B3E6;font-weight:bold;color:#FFFFFF;background-image:url("../images/sjj2.gif");background-position:right center;background-repeat:no-repeat;}
-#sel_top2{background:url("../images/mtopsel.gif");}		
+#selected7 a{background:#FFFFFF;}
 </style>
 <script type="text/javascript" charset="utf-8" src="../editor/kindeditor-min.js"></script>
 <script type="text/javascript" charset="utf-8" src="../js/jquery.min.js"></script>
@@ -24,7 +23,6 @@
 		<jsp:include page="menue.jsp"></jsp:include>
 	</div>
 	<div class="right">
-		<jsp:include page="member_top.jsp"></jsp:include>
 		<div class="reject_info">未处理的请求（8）</div>	
 		<div class="op_area">
 			<div class="op_area_se">

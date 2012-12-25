@@ -55,7 +55,7 @@
 		</div>
 		<div class="input_area">
 			<div class="tit"></div>
-			<div class="sub_con" id="subBtn">
+			<div class="bbtn1" id="subBtn">
 				<a href="javascript:login()">登录</a>
 			</div>
 			<div class="findpsw"><a href="findpassword.jsp">忘记密码?</a></div>

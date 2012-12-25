@@ -76,16 +76,17 @@ a.prePage,a.nextPage{width:60px;}
 .smallButon a:active{background-image:url("../images/butclick.jpg");}
 
 
-.sbtn{float:left;width:62px;text-align:center;}
-.sbtn a{text-align:center;width:62px;display:block;padding-top:5px;height:21px;text-decoration:none;color:#FFFFFF;background-image:url("../images/but.jpg");}
-.sbtn a:hover{background-image:url("../images/butclick.jpg");}
+.sbtn{float:left;width:100px;text-align:left;}
+.sbtn a{text-align:center;width:62px;display:block;padding-top:5px;height:21px;text-decoration:none;color:#FFFFFF;background:#4682B4}
+.sbtn a:hover{background-image:url("../images/butclick.jpg");background:#38678F}
 
 .bbtn1{font-size:12px;float:left;width:80px;margin-left:5px;text-align:center;}
-.bbtn1 a{text-align:center;width:80px;display:block;padding-top:5px;height:19px;text-decoration:none;color:#FFFFFF;background-image:url("../images/fbht_1.gif");}
-.bbtn1 a:hover{background-image:url("../images/fbht_2.gif");}
+.bbtn1 a{text-align:center;width:80px;display:block;padding-top:5px;height:19px;text-decoration:none;color:#FFFFFF;background:#4682B4}
+.bbtn1 a:hover{background:#38678F}
 
 .bbtn2{font-size:12px;float:left;width:80px;margin-left:5px;text-align:center;}
-.bbtn2 a{text-align:center;width:80px;display:block;padding-top:5px;height:19px;text-decoration:none;color:#FFFFFF;background-image:url("../images/jrqz_1.gif");}
-.bbtn2 a:hover{background-image:url("../images/jrqz_2.gif");}
+.bbtn2 a{text-align:center;width:80px;display:block;padding-top:5px;height:19px;text-decoration:none;color:#FFFFFF;background:#FCA01F}
+.bbtn2 a:hover{background:#EE8700}
 
 .clear{clear:both;}
+input.button{text-align:center;width:62px;color:#FFFFFF;background:#4682B4;border:1px solid #4682B4}

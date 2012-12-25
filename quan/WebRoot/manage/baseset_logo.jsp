@@ -8,8 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Justlearning 学习，生活，娱乐</title>
 <style>
-#sel_left1 a{background:#34B3E6;font-weight:bold;color:#FFFFFF;background-image:url("../images/sjj2.gif");background-position:right center;background-repeat:no-repeat;}
-#sel_top2{background:url("../images/mtopsel.gif");}
+#selected2 a{background:#FFFFFF;}
 </style>
 <link rel="stylesheet"  href="../css/manage.group.css" type="text/css"  />
 <link id="artDialog-skin" href="../dialog/skins/default.css" rel="stylesheet" />
@@ -26,7 +25,6 @@
 		<jsp:include page="menue.jsp"></jsp:include>
 	</div>
 	<div class="right">
-		<jsp:include page="baseset_top.jsp"></jsp:include>
 			<input type="hidden" name="groupicon" id="groupicon" value="${group.groupIcon}">
 			<div class="logo_con" >
 				<div class="logo_con_img"><img src="../upload/${group.groupIcon}" id="imgcon" width="60"></div>

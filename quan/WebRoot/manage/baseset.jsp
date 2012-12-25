@@ -9,8 +9,7 @@
 <link rel="stylesheet"  href="../css/manage.group.css" type="text/css"  />
 <title>Justlearning 学习，生活，娱乐</title>
 <style>
-#sel_left1 a{background:#34B3E6;font-weight:bold;color:#FFFFFF;background-image:url("../images/sjj2.gif");background-position:right center;background-repeat:no-repeat;}
-#sel_top1{background:url("../images/mtopsel.gif");}
+#selected1 a{background:#FFFFFF;}
 </style>
 <script type="text/javascript" charset="utf-8" src="../editor/kindeditor-min.js"></script>
 <script type="text/javascript" charset="utf-8" src="../js/jquery.min.js"></script>
@@ -39,8 +38,8 @@
 				alert("群组名称不能为空");
 				$("#groupName").focus();
 				return;
-			}else if(groupName.realLength()>10){
-				alert("群组名称不能超过10");
+			}else if(groupName.realLength()>20){
+				alert("群组名称不能超过20");
 				$("#groupName").focus();
 				return;
 			}else{
@@ -63,11 +62,10 @@
 		<jsp:include page="menue.jsp"></jsp:include>
 	</div>
 	<div class="right">
-		<jsp:include page="baseset_top.jsp"></jsp:include>
 			<form action="updateGroup.jspx" method="post" id="myform">
 			<div class="form_name">
 				<div class="form_name_tit">群名称：</div>
-				<div class="form_name_input"><input type="text" value="${group.groupName }" name="groupName" id="groupName"/> &nbsp;&nbsp;<span style="color:red;">用户名长度1-10位字符，由中文、_、数字、字母组成</span></div>
+				<div class="form_name_input"><input type="text" value="${group.groupName }" name="groupName" id="groupName"/> &nbsp;&nbsp;<span style="color:red;">用户名长度1-20位字符，由中文、_、数字、字母组成</span></div>
 			</div>
 			<div class="form_desc">	
 				<div class="form_desc_tit">群简介：</div>

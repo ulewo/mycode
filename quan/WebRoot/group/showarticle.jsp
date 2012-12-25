@@ -39,6 +39,12 @@
                 }
             });
             dp.SyntaxHighlighter.HighlightAll('code');
+            $("#subBtn").bind("mouseover",function(){
+            	$(this).css({"background":"#38678F"});
+            });
+            $("#subBtn").bind("mouseout",function(){
+            	$(this).css({"background":"#4682B4"});
+            });
         });
 	
 		function changeImage(){
@@ -190,8 +196,8 @@
 	  						</div>
   						</c:if>
 						<div class="reform_submit">
-							<div class="submit_btn sbtn">
-								<a href="javascript:subReForm('${user.userId}','${id}','${gid }')">回复</a>
+							<div class="submit_btn sbtn" id="subBtn_con">
+								<input type="button" class="button" onclick="subReForm('${user.userId}','${id}','${gid }')" value="回复" id="subBtn">
 							</div>
 							<div style="margin-left:20px;padding-top:8px;float:left;">最多输入500字符</div>
 						</div>

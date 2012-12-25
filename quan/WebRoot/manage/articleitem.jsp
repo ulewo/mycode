@@ -16,7 +16,7 @@
 <script type="text/javascript" src="../js/util.js"></script>
 <link rel="stylesheet"  href="../css/manage.item.css" type="text/css"  />
 <style type="text/css">
-#sel_left4 a{background:#34B3E6;font-weight:bold;color:#FFFFFF;background-image:url("../images/sjj2.gif");background-position:right center;background-repeat:no-repeat;}
+#selected5 a{background:#FFFFFF;}
 </style>
 <script type="text/javascript">
 </script>

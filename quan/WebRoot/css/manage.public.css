@@ -1,14 +1,15 @@
 @import url("public.css");
 body{width:1000px;margin: 0px auto;text-align:left;font-size:12px;}
-.left{width:155px;float:left;}
-.right{width:830px;float:left;font-size:12px;margin-left:15px;}
-.menue{padding:0px;margin:0px;background:#F6F6F6}
-.menue li{list-style:none;text-align:center;font-size:12px;margin-top:1px;}
-.menue li a{display:block;height:25px;padding-top:10px;text-decoration:none;color:#333333}
-.menue li a:hover{background:#34B3E6;font-weight:bold;color:#FFFFFF;background-image:url("../images/sjj2.gif");background-position:right center;background-repeat:no-repeat;}
+.left{width:160px;float:left;background:#EAEAEA;padding:5px 10px;font-size:14px;}
+.right{width:790px;float:left;margin-left:10px;}
+.manage_tit{background:#4682B4;height:40px;padding:5px;margin-top:10px;}
+.manage_tit1{float:left;display:inline-block;}
+.manage_tit2{float:left;display:inline-block;color:#FFFFFF;padding:10px 5px;}
+.manage_back a{color:#4466BB;display:inline-block;}
+.menue_tit{color:#666;font-size:16px;border-bottom:2px solid #6E7B8B;padding-bottom:10px;font-weight:bolder;margin-top:10px;}
+ul.menue{list-style:none;margin:0px;padding:0px;margin-top:10px;}
+ul.menue li a{display:block;padding:5px;text-decoration:none;color:#46B;}
+ul.menue li a:hover{color:#0000AA}
 
-.base_top{height:34px;border-bottom:1px solid #E8E8E8;padding-left:10px;}
-.base_top a{width:94px;float:left;height:21px;padding-top:13px;;background:url("../images/mtop.gif");margin-left:3px;text-align:center;text-decoration:none;color:#333333}
-.base_top a:hover{background:url("../images/mtopsel.gif");}
-
-.mbt a{width:50px;height:17px;padding-top:5px;margin-left:5px;display:inline-block;text-align:center;background:url("../images/sbt.gif");text-decoration:none;color:#333333}
+.mbt a{padding:5px 8px;margin-left:5px;display:inline-block;text-align:center;text-decoration:none;color:#333333;background:#4682B4;color:#ffffff}
+.mbt a:hover{background:#38678F;}

@@ -17,7 +17,7 @@
 <script type="text/javascript" src="../js/manage.article.js"></script>
 <link rel="stylesheet"  href="../css/manage.article.css" type="text/css"  />
 <style type="text/css">
-#sel_left3 a{background:#34B3E6;font-weight:bold;color:#FFFFFF;background-image:url("../images/sjj2.gif");background-position:right center;background-repeat:no-repeat;}
+#selected4 a{background:#FFFFFF;}
 </style>
 <script type="text/javascript">
 </script>
@@ -42,9 +42,9 @@
 				<div class="atit_check"><input type="checkbox" id="checkAll"></div>
 				<div class="atit_tit">帖子主题</div>
 			</div>	
-			<div class="aauthor">分类</div>
-			<div class="aauthor">回复/人气</div>
-			<div class="aauthor">最后回应</div>
+			<div class="aauthor1">分类</div>
+			<div class="aauthor2">回复/人气</div>
+			<div class="aauthor3">最后回应</div>
 		</div>
 		<form action="" method="post" id="subForm">
 		<input type="hidden" name="opType" id="opType" value="">
@@ -60,13 +60,13 @@
 						<a href="../group/post.jspx?id=${article.id}" ${article.titleStyle}>${article.title}</a>
 						</div>
 					</div>
-					<div class="aauthor">
+					<div class="aauthor1">
 						${article.itemName}
 					</div>
-					<div class="aauthor">
-						&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#999999">${article.reNumber }/${article.readNumber}</span>
+					<div class="aauthor2">
+						<span style="color:#999999">${article.reNumber }/${article.readNumber}</span>
 					</div>
-					<div class="aauthor">
+					<div class="aauthor3">
 						<span class="timestyle">${fn:substring(article.postTime,0,16)}</span>
 					</div>
 					<div class="clear"></div>
