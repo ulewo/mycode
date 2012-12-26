@@ -6,7 +6,7 @@
 	<div class="manage_back"><a href="../group/group.jspx?gid=${gid}">&lt;&lt;返回窝窝首页</a></div>
 	<div class="manage_tit">
 		<span class="manage_tit1"><img src="../upload/${user.userLittleIcon}" width="40"></span>
-		<span class="manage_tit2">${user.userName}</span>
+		<span class="manage_tit2"><a href="../user/userInfo.jspx?userId=${user.userId}">${user.userName}</a></span>
 	</div>
 </div>
 <div class="menue_tit">

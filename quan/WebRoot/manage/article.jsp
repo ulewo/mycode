@@ -23,6 +23,7 @@
 </script>
 </head>
 <body>
+
 <div class="maincon">
 	<div class="left">
 		<jsp:include page="menue.jsp"></jsp:include>
@@ -43,8 +44,8 @@
 				<div class="atit_tit">帖子主题</div>
 			</div>	
 			<div class="aauthor1">分类</div>
-			<div class="aauthor2">回复/人气</div>
 			<div class="aauthor3">最后回应</div>
+			<div class="aauthor2">操作</div>
 		</div>
 		<form action="" method="post" id="subForm">
 		<input type="hidden" name="opType" id="opType" value="">
@@ -57,17 +58,18 @@
 						<c:if test="${article.grade==1}"><div class="atit_img"><img src="../images/ico-top.gif"></div></c:if>
 						<c:if test="${article.essence=='Y'}"><div class="atit_img"><img src="../images/ico-ess.gif"></div></c:if>
 						<div class="atit_tit">
-						<a href="../group/post.jspx?id=${article.id}" ${article.titleStyle}>${article.title}</a>
+							<a href="../group/post.jspx?id=${article.id}" ${article.titleStyle}>${article.title}</a>
+							<span class="atit_tit_num">${article.reNumber }/${article.readNumber}</span>
 						</div>
 					</div>
 					<div class="aauthor1">
 						${article.itemName}
 					</div>
-					<div class="aauthor2">
-						<span style="color:#999999">${article.reNumber }/${article.readNumber}</span>
-					</div>
 					<div class="aauthor3">
 						<span class="timestyle">${fn:substring(article.postTime,0,16)}</span>
+					</div>
+					<div class="aauthor2">
+						<a href="editArticle.jspx?id=${article.id}&gid=${gid}">修改</a>
 					</div>
 					<div class="clear"></div>
 				</div>
@@ -80,7 +82,7 @@
 	</div>
 	</div>
 	<div class="clear"></div>
+	<jsp:include page="../common/foot2.jsp"></jsp:include>
 </div>
-<div class="foot"></div>
 </body>
 </html>
