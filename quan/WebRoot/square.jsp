@@ -17,6 +17,12 @@
   <body>
   <jsp:include page="head.jsp"/>
   <div class="bodycon">
+  	<div style="margin-top:10px;padding-right:8px;height:25px;">
+  		<div  class="pagination">
+			<p:pager url="square.jspx" page="${page}" pageTotal = "${pageTotal }"></p:pager> 
+ 		</div>
+  	</div>
+  	<div>
   	<div class="part">
 	  	<c:forEach var="article" items="${square1}">
 	  		<div class="single">
@@ -81,10 +87,11 @@
 	  		</div>
 	  	</c:forEach>
   	</div>
-  	<div  class="pagination">
+  	<div class="clear"></div>
+  	</div>
+  	<div  class="pagination" style="margin-top:10px;padding-right:8px;">
 		<p:pager url="square.jspx" page="${page}" pageTotal = "${pageTotal }"></p:pager> 
  	</div>
-  	<div style="clear:left;"></div>
   </div>
   <jsp:include page="foot.jsp"/>
   </body>
