@@ -78,7 +78,7 @@
 			<tr>
 				<td><input type="file" name="upload" class="fileUpload"></td>
 				<td><a href="javascript:addFileInput()"><img src="../images/001_01.png" border="0" title="继续添加"></a></td>
-				<td style="padding-left:10px;"><span id="subbutton" class="smallButon" ><a href="####"  id="sub" onFocus="this.blur()" >上传</a></span></td>
+				<td style="padding-left:10px;"><span id="subbutton" class="bbtn1" ><a href="####"  id="sub" onFocus="this.blur()" >上传</a></span></td>
 			</tr>
 		</table>
 		<span id="loadingimage"><img src="../images/loading.gif" width="20"></span>

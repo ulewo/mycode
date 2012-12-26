@@ -63,7 +63,7 @@
 		<table cellpadding="0" cellspacing="0" width="40%" id="uploadTab">
 			<tr>
 				<td><input type="file" name="upload" id="fileUpload"></td>
-				<td style="padding-left:10px;"><span id="subbutton" class="smallButon" ><a href="####"  id="sub" onFocus="this.blur()" >上传</a></span></td>
+				<td style="padding-left:10px;"><span id="subbutton" class="bbtn1" ><a href="####"  id="sub" onFocus="this.blur()" >上传</a></span></td>
 			</tr>
 		</table>
 		<span id="loadingimage"><img src="../images/loading.gif" width="20"></span>

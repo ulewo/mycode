@@ -1,10 +1,11 @@
 @import url("public.css");
 body{width:1000px;margin: 0px auto;text-align:left;font-size:12px;}
-.left{width:160px;float:left;background:#EAEAEA;padding:5px 10px;font-size:14px;}
+.left{width:160px;float:left;background:#EAEAEA;padding:5px 10px;font-size:14px;text-align:left;}
 .right{width:790px;float:left;margin-left:10px;}
 .manage_tit{background:#4682B4;height:40px;padding:5px;margin-top:10px;}
 .manage_tit1{float:left;display:inline-block;}
 .manage_tit2{float:left;display:inline-block;color:#FFFFFF;padding:10px 5px;}
+.manage_tit2 a{color:#FFFFFF;}
 .manage_back a{color:#4466BB;display:inline-block;}
 .menue_tit{color:#666;font-size:16px;border-bottom:2px solid #6E7B8B;padding-bottom:10px;font-weight:bolder;margin-top:10px;}
 ul.menue{list-style:none;margin:0px;padding:0px;margin-top:10px;}
