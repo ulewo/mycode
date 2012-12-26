@@ -326,7 +326,17 @@
 			<result name="success" type="redirect">articleManage.jspx?gid=${gid}&amp;page=${page}</result>
 			<result name="error">../error/error.jsp</result>
 		</action>
-			
+		
+		<!-- 更新文章获取内容 -->
+		<action name="editArticle" class="manageArticle" method="editArticle">
+			<result name="success">editarticle.jsp</result>
+			<result name="error">../error/error.jsp</result>
+		</action>
+		<!-- 更新文章 -->
+		<action name="updateArticle" class="manageArticle" method="updateArticle">
+			<result name="success" type="redirect">articleManage.jspx?gid=${gid}&amp;page=${page}</result>
+			<result name="error">../error/error.jsp</result>
+		</action>
 		<!-- 删除文章-->
 		<action name="deleteArticle" class="manageArticle" method="deleteArticle">
 			<result name="success" type="redirect">articleManage.jspx?gid=${gid}&amp;page=${page}</result>

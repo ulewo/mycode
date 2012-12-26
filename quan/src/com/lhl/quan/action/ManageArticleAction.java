@@ -14,7 +14,8 @@ import com.lhl.quan.service.ArticleService;
 import com.lhl.util.Constant;
 import com.lhl.util.Pagination;
 
-public class ManageArticleAction extends BaseAction {
+public class ManageArticleAction extends BaseAction
+{
 	private static final long serialVersionUID = 1L;
 
 	private ArticleService articleService;
@@ -47,46 +48,57 @@ public class ManageArticleAction extends BaseAction {
 
 	private String opType;
 
+	private String title;
+
+	private String content;
+
+	private String keyWord;
+
 	/**
 	 * 
 	 * description:管理文章
 	 * @return
 	 * @author luohl
 	 */
-	public String article() {
+	public String article()
+	{
 
-		try {
+		try
+		{
 			/*在过滤器中已经验证是否登录*/
-			User sessionUser = (User) getSession().getAttribute("user");
-			int grade = CheckRole.getMemberGrade(gid, sessionUser.getUserId());
-			if (Constant.grade1 == grade || Constant.grade2 == grade
-					|| Constant.SUPERADMIN.equals(sessionUser.getUserId())) {
+			if (isAdmin())
+			{
 				//itemList = articleItemService.queryItemByGid(gid);
 				countNumber = articleService.queryTopicCountByGid(gid, itemId, Constant.ISVALIDY);
 				Pagination.setPageSize(Constant.pageSize15);
 				int pageSize = Pagination.getPageSize();
 				pageTotal = Pagination.getPageTotal(countNumber);
-				if (page > pageTotal) {
+				if (page > pageTotal)
+				{
 					page = pageTotal;
 				}
-				if (page < 1) {
+				if (page < 1)
+				{
 					page = 1;
 				}
 				int noStart = (page - 1) * pageSize;
 				articleList = articleService.queryTopicOrderByGradeAndLastReTime(gid, itemId, Constant.ISVALIDY,
 						noStart, pageSize);
 			}
-			else {
+			else
+			{
 				errMsg = ErrMsgConfig.getErrMsg(10002);
 				return ERROR;
 			}
 		}
-		catch (BaseException e) {
+		catch (BaseException e)
+		{
 			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
 			e.printStackTrace();
 			return ERROR;
 		}
-		catch (Exception e) {
+		catch (Exception e)
+		{
 			errMsg = ErrMsgConfig.getErrMsg(10000);
 			e.printStackTrace();
 			return ERROR;
@@ -94,38 +106,44 @@ public class ManageArticleAction extends BaseAction {
 		return SUCCESS;
 	}
 
-	public String setTop() {
+	public String setTop()
+	{
 
-		try {
-			User sessionUser = (User) getSession().getAttribute("user");
-			int grade = CheckRole.getMemberGrade(gid, sessionUser.getUserId());
-			if (Constant.grade1 == grade || Constant.grade2 == grade
-					|| Constant.SUPERADMIN.equals(sessionUser.getUserId())) {
+		try
+		{
+			if (isAdmin())
+			{
 				Article article = null;
-				for (int i = 0; i < ids.length; i++) {
+				for (int i = 0; i < ids.length; i++)
+				{
 					article = new Article();
 					article.setGid(gid);
 					article.setId(ids[i]);
-					if ("set".equals(opType)) {
+					if ("set".equals(opType))
+					{
 						article.setGrade(1);
 					}
-					else if ("cancel".equals(opType)) {
+					else if ("cancel".equals(opType))
+					{
 						article.setGrade(0);
 					}
 					articleService.updateArticleSelective(article);
 				}
 			}
-			else {
+			else
+			{
 				errMsg = ErrMsgConfig.getErrMsg(10002);
 				return ERROR;
 			}
 		}
-		catch (BaseException e) {
+		catch (BaseException e)
+		{
 			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
 			e.printStackTrace();
 			return ERROR;
 		}
-		catch (Exception e) {
+		catch (Exception e)
+		{
 			errMsg = ErrMsgConfig.getErrMsg(10000);
 			e.printStackTrace();
 			return ERROR;
@@ -133,38 +151,44 @@ public class ManageArticleAction extends BaseAction {
 		return SUCCESS;
 	}
 
-	public String setGood() {
+	public String setGood()
+	{
 
-		try {
-			User sessionUser = (User) getSession().getAttribute("user");
-			int grade = CheckRole.getMemberGrade(gid, sessionUser.getUserId());
-			if (Constant.grade1 == grade || Constant.grade2 == grade
-					|| Constant.SUPERADMIN.equals(sessionUser.getUserId())) {
+		try
+		{
+			if (isAdmin())
+			{
 				Article article = null;
-				for (int i = 0; i < ids.length; i++) {
+				for (int i = 0; i < ids.length; i++)
+				{
 					article = new Article();
 					article.setGid(gid);
 					article.setId(ids[i]);
-					if ("set".equals(opType)) {
+					if ("set".equals(opType))
+					{
 						article.setEssence(Constant.essenceY);
 					}
-					else if ("cancel".equals(opType)) {
+					else if ("cancel".equals(opType))
+					{
 						article.setEssence(Constant.essenceN);
 					}
 					articleService.updateArticleSelective(article);
 				}
 			}
-			else {
+			else
+			{
 				errMsg = ErrMsgConfig.getErrMsg(10002);
 				return ERROR;
 			}
 		}
-		catch (BaseException e) {
+		catch (BaseException e)
+		{
 			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
 			e.printStackTrace();
 			return ERROR;
 		}
-		catch (Exception e) {
+		catch (Exception e)
+		{
 			errMsg = ErrMsgConfig.getErrMsg(10000);
 			e.printStackTrace();
 			return ERROR;
@@ -172,15 +196,16 @@ public class ManageArticleAction extends BaseAction {
 		return SUCCESS;
 	}
 
-	public String setTitle() {
+	public String setTitle()
+	{
 
-		try {
-			User sessionUser = (User) getSession().getAttribute("user");
-			int grade = CheckRole.getMemberGrade(gid, sessionUser.getUserId());
-			if (Constant.grade1 == grade || Constant.grade2 == grade
-					|| Constant.SUPERADMIN.equals(sessionUser.getUserId())) {
+		try
+		{
+			if (isAdmin())
+			{
 				Article article = null;
-				for (int i = 0; i < ids.length; i++) {
+				for (int i = 0; i < ids.length; i++)
+				{
 					article = new Article();
 					article.setGid(gid);
 					article.setId(ids[i]);
@@ -188,17 +213,20 @@ public class ManageArticleAction extends BaseAction {
 					articleService.updateArticleSelective(article);
 				}
 			}
-			else {
+			else
+			{
 				errMsg = ErrMsgConfig.getErrMsg(10002);
 				return ERROR;
 			}
 		}
-		catch (BaseException e) {
+		catch (BaseException e)
+		{
 			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
 			e.printStackTrace();
 			return ERROR;
 		}
-		catch (Exception e) {
+		catch (Exception e)
+		{
 			errMsg = ErrMsgConfig.getErrMsg(10000);
 			e.printStackTrace();
 			return ERROR;
@@ -206,14 +234,82 @@ public class ManageArticleAction extends BaseAction {
 		return SUCCESS;
 	}
 
-	public String deleteArticle() {
+	//获取更新信息
+	public String editArticle()
+	{
 
-		try {
-			User sessionUser = (User) getSession().getAttribute("user");
-			int grade = CheckRole.getMemberGrade(gid, sessionUser.getUserId());
-			if (Constant.grade2 == grade || Constant.SUPERADMIN.equals(sessionUser.getUserId())) {
+		try
+		{
+			article = articleService.queryTopicById(id);
+			itemList = articleItemService.queryItemByGid(gid);
+		}
+		catch (BaseException e)
+		{
+			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
+			e.printStackTrace();
+			return ERROR;
+		}
+		catch (Exception e)
+		{
+			errMsg = ErrMsgConfig.getErrMsg(10000);
+			e.printStackTrace();
+			return ERROR;
+		}
+		return SUCCESS;
+	}
+
+	/**
+	 * 
+	 * description: 更新文章
+	 * @return
+	 * @author luohl
+	 */
+	public String updateArticle()
+	{
+
+		try
+		{
+			if (isAdmin())
+			{
+				article = articleService.queryTopicById(id);
+				article.setTitle(title);
+				article.setKeyWord(keyWord);
+				article.setContent(content);
+				article.setItemId(itemId);
+				articleService.updateArticleSelective(article);
+			}
+			else
+			{
+				errMsg = ErrMsgConfig.getErrMsg(10002);
+				return ERROR;
+			}
+
+		}
+		catch (BaseException e)
+		{
+			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
+			e.printStackTrace();
+			return ERROR;
+		}
+		catch (Exception e)
+		{
+			errMsg = ErrMsgConfig.getErrMsg(10000);
+			e.printStackTrace();
+			return ERROR;
+		}
+		return SUCCESS;
+	}
+
+	public String deleteArticle()
+	{
+
+		try
+		{
+			if (isAdmin())
+			{
 				Article article = null;
-				for (int i = 0; i < ids.length; i++) {
+				for (int i = 0; i < ids.length; i++)
+				{
 					article = new Article();
 					article.setGid(gid);
 					article.setId(ids[i]);
@@ -221,17 +317,20 @@ public class ManageArticleAction extends BaseAction {
 					articleService.updateArticleSelective(article);
 				}
 			}
-			else {
+			else
+			{
 				errMsg = ErrMsgConfig.getErrMsg(10002);
 				return ERROR;
 			}
 		}
-		catch (BaseException e) {
+		catch (BaseException e)
+		{
 			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
 			e.printStackTrace();
 			return ERROR;
 		}
-		catch (Exception e) {
+		catch (Exception e)
+		{
 			errMsg = ErrMsgConfig.getErrMsg(10000);
 			e.printStackTrace();
 			return ERROR;
@@ -239,94 +338,148 @@ public class ManageArticleAction extends BaseAction {
 		return SUCCESS;
 	}
 
-	public int getPage() {
+	private boolean isAdmin()
+	{
+
+		User sessionUser = (User) getSession().getAttribute("user");
+		int grade = CheckRole.getMemberGrade(gid, sessionUser.getUserId());
+		if (Constant.grade2 == grade || Constant.SUPERADMIN.equals(sessionUser.getUserId()))
+		{
+			return true;
+		}
+		return false;
+	}
+
+	public int getPage()
+	{
 
 		return page;
 	}
 
-	public void setPage(int page) {
+	public void setPage(int page)
+	{
 
 		this.page = page;
 	}
 
-	public int getPageTotal() {
+	public int getPageTotal()
+	{
 
 		return pageTotal;
 	}
 
-	public void setId(int id) {
+	public void setId(int id)
+	{
 
 		this.id = id;
 	}
 
-	public Group getGroup() {
+	public Group getGroup()
+	{
 
 		return group;
 	}
 
-	public List<ArticleItem> getItemList() {
+	public List<ArticleItem> getItemList()
+	{
 
 		return itemList;
 	}
 
-	public String getGid() {
+	public String getGid()
+	{
 
 		return gid;
 	}
 
-	public void setGid(String gid) {
+	public void setGid(String gid)
+	{
 
 		this.gid = gid;
 	}
 
-	public int getItemId() {
+	public int getItemId()
+	{
 
 		return itemId;
 	}
 
-	public void setItemId(int itemId) {
+	public void setItemId(int itemId)
+	{
 
 		this.itemId = itemId;
 	}
 
-	public List<Article> getArticleList() {
+	public List<Article> getArticleList()
+	{
 
 		return articleList;
 	}
 
-	public String getErrMsg() {
+	public String getErrMsg()
+	{
 
 		return errMsg;
 	}
 
-	public Article getArticle() {
+	public Article getArticle()
+	{
 
 		return article;
 	}
 
-	public void setArticleService(ArticleService articleService) {
+	public void setArticleService(ArticleService articleService)
+	{
 
 		this.articleService = articleService;
 	}
 
-	public void setArticleItemService(ArticleItemService articleItemService) {
+	public void setArticleItemService(ArticleItemService articleItemService)
+	{
 
 		this.articleItemService = articleItemService;
 	}
 
-	public int getCountNumber() {
+	public int getCountNumber()
+	{
 
 		return countNumber;
 	}
 
-	public void setOpType(String opType) {
+	public void setOpType(String opType)
+	{
 
 		this.opType = opType;
 	}
 
-	public void setIds(int[] ids) {
+	public void setIds(int[] ids)
+	{
 
 		this.ids = ids;
+	}
+
+	public void setTitle(String title)
+	{
+
+		this.title = title;
+	}
+
+	public void setContent(String content)
+	{
+
+		this.content = content;
+	}
+
+	public void setKeyWord(String keyWord)
+	{
+
+		this.keyWord = keyWord;
+	}
+
+	public int getId()
+	{
+
+		return id;
 	}
 
 }

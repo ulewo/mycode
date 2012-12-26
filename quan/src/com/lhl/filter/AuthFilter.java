@@ -55,8 +55,8 @@ public class AuthFilter extends HttpServlet implements Filter
 		if ((currentURL.contains("reArticle") || currentURL.contains("subReArticle") || currentURL.contains("manage"))
 				&& null == userObj)
 		{
-			response.sendRedirect("../error/error.jsp");
-			return;
+			//response.sendRedirect("../error/error.jsp");
+			//return;
 		}
 
 		if (currentURL.contains("admin"))
