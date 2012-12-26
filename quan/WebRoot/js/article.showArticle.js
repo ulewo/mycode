@@ -66,13 +66,13 @@ function callBackReArticle(data) {
 	var recon_con = $("<div class='recon_con'><div>").appendTo($("#reCon"));
 	if (authorid == "") {
 		$(
-				"<div class='recon_img'><img src='../upload/default.gif' width='60'><div>")
+				"<div class='recon_img'><img src='../upload/default.gif' width='50'><div>")
 				.appendTo(recon_con);
 	} else {
 		$(
 				"<div class='recon_img'><a href='../user/userInfo.jspx?userId="
 						+ authorid + "'><img src='../upload/" + reUserImg
-						+ "' width='60' border='0'></a><div>").appendTo(
+						+ "' width='50' border='0'></a><div>").appendTo(
 				recon_con);
 	}
 	var recon_info = $("<div class='recon_info'></div>").appendTo(recon_con);
@@ -95,8 +95,9 @@ function callBackReArticle(data) {
 			"<div class='recon_info_info_op'>"
 					+ "<span><a href='javascript:void(0)' onclick='quote("
 					+ data.reArticle.id
-					+ ")'>引用</a></span><span class='re_op_d'><a href='####'>删除</a></span>"
-					+ "</div>").appendTo(recon_info_re);
+					+ ")'>引用</a></span><span class='re_op_d'>" +
+					// "<a href='####'>删除</a>" +
+					"</span>" + "</div>").appendTo(recon_info_re);
 
 }
 

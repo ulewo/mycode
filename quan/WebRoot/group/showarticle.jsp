@@ -87,20 +87,7 @@
 			<div class="share_con">
 				<div class="share_backlist"><a href="topics.jspx?gid=${gid}&itemId=${itemId}">返回文章列表</a></div>
 				<div class="share_share">
-				<!-- Baidu Button BEGIN 
-				    <div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare">
-				        <a class="bds_qzone"></a>
-				        <a class="bds_tsina"></a>
-				        <a class="bds_tqq"></a>
-				        <a class="bds_renren"></a>
-				        <span class="bds_more">更多</span>
-				    </div>
-				<script type="text/javascript" id="bdshare_js" data="type=tools&amp;mini=1&amp;uid=200378" ></script>
-				<script type="text/javascript" id="bdshell_js"></script>
-				<script type="text/javascript">
-					document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + new Date().getHours();
-				</script>
-				Baidu Button END -->
+				<a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&amp;style=3&amp;fs=4&amp;textcolor=#fff&amp;bgcolor=#9C3&amp;text=分享到"></script>
 				</div>				
 			</div>
 			<div class="about_title">
@@ -126,7 +113,7 @@
 							<img src="../upload/user_default.gif" width='60'>
 						</c:if>
 						<c:if test="${reArticle.authorIcon!=''}">
-							<a href='../user/userInfo.jspx?userId=${reArticle.authorid}'><img src="../upload/${reArticle.authorIcon}" width='60'></a>
+							<a href='../user/userInfo.jspx?userId=${reArticle.authorid}'><img src="../upload/${reArticle.authorIcon}" width='50'></a>
 						</c:if>
 					</div>
 					<div class="recon_info">
@@ -145,7 +132,9 @@
 							</div>
 							<div class="recon_info_info_op">
 								<c:if test="${user!=null}"><span><a href='javascript:void(0)' onclick="quote('${reArticle.id}')">引用</a></span></c:if>
-							<c:if test="${showDelete=='Y'}"><span class='re_op_d'><a href='####'>删除</a></span></c:if>
+							<c:if test="${showDelete=='Y'}"><span class='re_op_d'>
+							<!-- <a href='####'>删除</a> -->
+							</span></c:if>
 							</div>
 						</div>
 						<div class="recon_info_con">
@@ -167,10 +156,10 @@
 				<div class="fast_re">
 					<div class="faset_re_img">
 						<c:if test="${user!=null}">
-							<img src="../upload/${user.userLittleIcon}" width="60">
+							<img src="../upload/${user.userLittleIcon}" width="50">
 						</c:if>
 						<c:if test="${user==null}">
-							<img src="../upload/default.gif" width="60">
+							<img src="../upload/default.gif" width="50">
 						</c:if>
 					</div>
 					<div class="fast_re_reform">
