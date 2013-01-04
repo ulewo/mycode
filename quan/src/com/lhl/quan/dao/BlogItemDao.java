@@ -62,19 +62,19 @@ public class BlogItemDao extends SqlMapClientDaoSupport
 	public List<BlogItem> queryItemByUserId(String userId)
 	{
 
-		return (List<BlogItem>) getSqlMapClientTemplate().queryForList("BlogItem.queryBlogItemByUserId", userId);
+		return (List<BlogItem>) getSqlMapClientTemplate().queryForList("blogItem.queryBlogItemByUserId", userId);
 	}
 
 	public List<BlogItem> queryBlogItemAndCountByUserId(String userId)
 	{
 
 		return (List<BlogItem>) getSqlMapClientTemplate()
-				.queryForList("BlogItem.queryBlogItemAndCountByUserId", userId);
+				.queryForList("blogItem.queryBlogItemAndCountByUserId", userId);
 	}
 
 	public BlogItem queryBlogItemById(int id)
 	{
 
-		return (BlogItem) getSqlMapClientTemplate().queryForObject("BlogItem.queryBlogItemById", id);
+		return (BlogItem) getSqlMapClientTemplate().queryForObject("blogItem.queryBlogItemById", id);
 	}
 }
