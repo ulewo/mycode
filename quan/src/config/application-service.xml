@@ -78,6 +78,10 @@
 	    <bean name="blogArticleService" class="com.lhl.quan.service.impl.BlogArticleServiceImpl">
 	    	 <property name="blogArticleDao" ref="blogArticleDao"/>
 	    </bean>
+	    <bean name="blogItemService" class="com.lhl.quan.service.impl.BlogItemServiceImpl">
+	    	 <property name="blogItemDao" ref="blogItemDao"/>
+	    </bean>
+	    
      <!-- service 层 end--> 
      <bean name="articleDao" class="com.lhl.quan.dao.ArticleDao">
     	 <property name="sqlMapClient" ref="sqlMapClient"/>
@@ -121,5 +125,9 @@
      <bean name="blogArticleDao" class="com.lhl.quan.dao.BlogArticleDao">
     	 <property name="sqlMapClient" ref="sqlMapClient"/>
     </bean>
+    <bean name="blogItemDao" class="com.lhl.quan.dao.BlogItemDao">
+    	 <property name="sqlMapClient" ref="sqlMapClient"/>
+    </bean>
+    
     
 </beans>

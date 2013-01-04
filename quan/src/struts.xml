@@ -142,9 +142,19 @@
 			<result name="error">../error/error.jsp</result>
 		</action>
 		
-		<!-- 回复的文章 -->
+		<!--博客 -->
 		<action name="blog" class="blog" method="blog">
 			<result name="success">blog.jsp</result>
+			<result name="error">../error/error.jsp</result>
+		</action>
+		<!--博客分类-->
+		<action name="addBlog" class="blog" method="addBlog">
+			<result name="success">addblog.jsp</result>
+			<result name="error">../error/error.jsp</result>
+		</action>
+		<!--添加文章-->
+		<action name="saveBlog" class="blog" method="saveBlog">
+			<result name="success" type="redirect">blog.jspx?userId=${userId}</result>
 			<result name="error">../error/error.jsp</result>
 		</action>
 	</package>

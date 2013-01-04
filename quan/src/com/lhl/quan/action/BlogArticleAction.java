@@ -1,13 +1,8 @@
 package com.lhl.quan.action;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
-
-import net.sf.json.JSONObject;
 
 import com.lhl.common.action.BaseAction;
 import com.lhl.entity.BlogArticle;
@@ -27,6 +22,8 @@ public class BlogArticleAction extends BaseAction
 	private BlogItemService blogItemService;
 
 	private List<BlogArticle> blogList = new ArrayList<BlogArticle>();
+
+	private List<BlogItem> itemList = new ArrayList<BlogItem>();
 
 	private int pageTotal;
 
@@ -72,7 +69,7 @@ public class BlogArticleAction extends BaseAction
 		return SUCCESS;
 	}
 
-	public String addBlog()
+	public String saveBlog()
 	{
 
 		try
@@ -80,13 +77,18 @@ public class BlogArticleAction extends BaseAction
 			User sessionUser = getSessionUser();
 			if (sessionUser != null)
 			{
+				userId = sessionUser.getUserId();
 				BlogArticle blogArticle = new BlogArticle();
-				blogArticle.setUserId(sessionUser.getUserId());
+				blogArticle.setUserId(userId);
 				blogArticle.setItemId(itemId);
 				blogArticle.setTitle(title);
 				blogArticle.setContent(content);
 				blogArticle.setKeyWord(keyWord);
 				blogArticleService.addBlog(blogArticle);
+			}
+			else
+			{
+				return ERROR;
 			}
 		}
 		catch (Exception e)
@@ -96,28 +98,34 @@ public class BlogArticleAction extends BaseAction
 		return SUCCESS;
 	}
 
-	public void queryItem() throws IOException
+	/**
+	 * 
+	 * description: 发表文章获取分类信息
+	 * @return
+	 * @throws IOException
+	 * @author luohl
+	 */
+	public String addBlog()
 	{
 
-		JSONObject obj = new JSONObject();
 		try
 		{
 			User sessionUser = getSessionUser();
 			if (sessionUser != null)
 			{
 				userId = sessionUser.getUserId();
-				List<BlogItem> list = blogItemService.queryBlogItemByUserId(userId);
-				obj.put("list", list);
+				itemList = blogItemService.queryBlogItemByUserId(userId);
+			}
+			else
+			{
+				return ERROR;
 			}
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			return ERROR;
 		}
-		HttpServletResponse response = getResponse();
-		response.setContentType("text/html;charset=UTF-8");
-		PrintWriter out = response.getWriter();
-		out.println(String.valueOf(obj));
+		return SUCCESS;
 	}
 
 	public void setBlogArticleService(BlogArticleService blogArticleService)
@@ -166,6 +174,36 @@ public class BlogArticleAction extends BaseAction
 	{
 
 		this.userId = userId;
+	}
+
+	public void setTitle(String title)
+	{
+
+		this.title = title;
+	}
+
+	public void setContent(String content)
+	{
+
+		this.content = content;
+	}
+
+	public void setItemId(int itemId)
+	{
+
+		this.itemId = itemId;
+	}
+
+	public void setKeyWord(String keyWord)
+	{
+
+		this.keyWord = keyWord;
+	}
+
+	public List<BlogItem> getItemList()
+	{
+
+		return itemList;
 	}
 
 }
