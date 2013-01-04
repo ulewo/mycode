@@ -1,12 +1,20 @@
 package com.lhl.quan.action;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONObject;
+
 import com.lhl.common.action.BaseAction;
 import com.lhl.entity.BlogArticle;
+import com.lhl.entity.BlogItem;
 import com.lhl.entity.User;
 import com.lhl.quan.service.BlogArticleService;
+import com.lhl.quan.service.BlogItemService;
 import com.lhl.util.Constant;
 import com.lhl.util.Pagination;
 
@@ -15,6 +23,8 @@ public class BlogArticleAction extends BaseAction
 	private static final long serialVersionUID = 1L;
 
 	private BlogArticleService blogArticleService;
+
+	private BlogItemService blogItemService;
 
 	private List<BlogArticle> blogList = new ArrayList<BlogArticle>();
 
@@ -86,10 +96,40 @@ public class BlogArticleAction extends BaseAction
 		return SUCCESS;
 	}
 
+	public void queryItem() throws IOException
+	{
+
+		JSONObject obj = new JSONObject();
+		try
+		{
+			User sessionUser = getSessionUser();
+			if (sessionUser != null)
+			{
+				userId = sessionUser.getUserId();
+				List<BlogItem> list = blogItemService.queryBlogItemByUserId(userId);
+				obj.put("list", list);
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		HttpServletResponse response = getResponse();
+		response.setContentType("text/html;charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		out.println(String.valueOf(obj));
+	}
+
 	public void setBlogArticleService(BlogArticleService blogArticleService)
 	{
 
 		this.blogArticleService = blogArticleService;
+	}
+
+	public void setBlogItemService(BlogItemService blogItemService)
+	{
+
+		this.blogItemService = blogItemService;
 	}
 
 	public int getPage()
