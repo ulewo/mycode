@@ -24,72 +24,71 @@
   </head>
   <body>
   <jsp:include page="../common/head.jsp"/>
-  <div class="bodycon">
-  <jsp:include page="menue.jsp"></jsp:include>
-  <div class="user_main">
-	  <div class="left"><jsp:include page="user_left.jsp"></jsp:include></div>
-	  <div class="right">
-	  	<div class="baseinfo">
-		  	性别：${userInfo.sex }<br>
-		  	年龄：${userInfo.age }<br>
-		  	个人签名:${userInfo.characters}<br>
-		  	职业：${userInfo.work}<br>
-		  	地址：${userInfo.address }<br>
-		  	注册时间：${fn:substring(userInfo.registerTime,0,10) }<br>
-	  	</div>
-	  	<div>
-	  		<form>
-	  		<input type="hidden" name="userId" value="${userId }" id="userId">
-	  		<div class="u_name">用户名：
-	  			<c:if test="${user==null}">
-	  				<input type="text" name="reUserName" id="name">
-	  			</c:if>
-	  			<c:if test="${user!=null}">
-	  				<input type="text" name="reUserName" id="name" value="${user.userName}" disabled="disabled" > 
-	  			</c:if>
-	  		</div>
-	  		<div class="content"><textarea rows="10" cols="80" name="content" id="content"></textarea></div>
-	  		<c:if test="${user==null}">
-		  		<div class="checkcode">
-		  			<div class="tit">验证码：</div>
-					<div class="check_con">
-						<input type="text" class="long_input" name="checkCode" id="checkCode"/>
-					</div>
-					<div class="check_img">
-						<a href="JavaScript:refreshcode();" onfocus="this.blur();"><img id="checkCodeImage" src="../common/image.jsp" border="0"/></a>
-					</div>
-					<div class="changecode">
-						<a href="javascript:refreshcode()">换一张</a>
-					</div>
-		  		</div>
-	  		</c:if>
-	  		<div class="subbtn">
-	  			<div class="bbtn1"><a href="javascript:submitForm()" onfocus="this.blur()">发表留言</a></div>
-	  			<div style="margin-left:20px;padding-top:8px;float:left;">最多输入500字符</div>
-	  		</div>
-	  		
-	  		</form>
-	  	</div>
-	  	<div class="messagetit">留言</div>
-	  	<div class="messagelist"  id="messagelist">
-		  	<c:forEach var="message" items="${messageList}">
-		  	<div class="main_message">
-		  		<div><span class="message_name">
-		  				<c:if test="${message.reUserId!=null&&message.reUserId!=''}">
-							<a href="userInfo.jspx?userId=${message.reUserId}">${message.reUserName }</a>
-						</c:if>
-		  				<c:if test="${message.reUserId==null||message.reUserId==''}">
-		  					${message.reUserName }
-		  				</c:if>
-		  			</span>&nbsp;&nbsp;&nbsp;&nbsp;发表于：${fn:substring(message.postTime,0,10)}
-		  			</div>
-		  		<div class="message_con">${message.message }</div>
-		  	</div>	
-		  	</c:forEach>
-	  	</div>
+  <div class="main">
+	  <div class="left">
+	  	<jsp:include page="left.jsp"></jsp:include>
 	  </div>
- 	 <div style="clear:left;"></div>
-  </div>
+	  <div class="right">
+		  	<div class="baseinfo">
+			  	性别：${userInfo.sex }<br>
+			  	年龄：${userInfo.age }<br>
+			  	个人签名:${userInfo.characters}<br>
+			  	职业：${userInfo.work}<br>
+			  	地址：${userInfo.address }<br>
+			  	注册时间：${fn:substring(userInfo.registerTime,0,10) }<br>
+		  	</div>
+		  	<div>
+		  		<form>
+		  		<input type="hidden" name="userId" value="${userId }" id="userId">
+		  		<div class="u_name">用户名：
+		  			<c:if test="${user==null}">
+		  				<input type="text" name="reUserName" id="name">
+		  			</c:if>
+		  			<c:if test="${user!=null}">
+		  				<input type="text" name="reUserName" id="name" value="${user.userName}" disabled="disabled" > 
+		  			</c:if>
+		  		</div>
+		  		<div class="content"><textarea rows="10" cols="80" name="content" id="content"></textarea></div>
+		  		<c:if test="${user==null}">
+			  		<div class="checkcode">
+			  			<div class="tit">验证码：</div>
+						<div class="check_con">
+							<input type="text" class="long_input" name="checkCode" id="checkCode"/>
+						</div>
+						<div class="check_img">
+							<a href="JavaScript:refreshcode();" onfocus="this.blur();"><img id="checkCodeImage" src="../common/image.jsp" border="0"/></a>
+						</div>
+						<div class="changecode">
+							<a href="javascript:refreshcode()">换一张</a>
+						</div>
+			  		</div>
+		  		</c:if>
+		  		<div class="subbtn">
+		  			<div class="bbtn1"><a href="javascript:submitForm()" onfocus="this.blur()">发表留言</a></div>
+		  			<div style="margin-left:20px;padding-top:8px;float:left;">最多输入500字符</div>
+		  		</div>
+		  		
+		  		</form>
+		  	</div>
+		  	<div class="messagetit">留言</div>
+		  	<div class="messagelist"  id="messagelist">
+			  	<c:forEach var="message" items="${messageList}">
+			  	<div class="main_message">
+			  		<div><span class="message_name">
+			  				<c:if test="${message.reUserId!=null&&message.reUserId!=''}">
+								<a href="userInfo.jspx?userId=${message.reUserId}">${message.reUserName }</a>
+							</c:if>
+			  				<c:if test="${message.reUserId==null||message.reUserId==''}">
+			  					${message.reUserName }
+			  				</c:if>
+			  			</span>&nbsp;&nbsp;&nbsp;&nbsp;发表于：${fn:substring(message.postTime,0,10)}
+			  			</div>
+			  		<div class="message_con">${message.message }</div>
+			  	</div>	
+			  	</c:forEach>
+		  	</div>
+		</div>
+	<div style="clear:left;"></div>
   </div>
    <jsp:include page="../common/foot.jsp"/>
   </body>

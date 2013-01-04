@@ -135,9 +135,9 @@
 				<textarea id="content" name="content"  style="width:1000px;height:400px;visibility:hidden;"></textarea>
 		</div>
 		<div>
-			<input type="radio" name="allowReplay" checked="checked"/>
-			<input type="radio" name="allowReplay"/>
-			<input type="radio" name="allowReplay"/>
+			<input type="radio" name="allowReplay" checked="checked" value="0"/>允许所有人评论
+			<input type="radio" name="allowReplay" value="1"/>只允许登录用户评论
+			<input type="radio" name="allowReplay" value="2"/>禁止评论
 		</div>
 		<div class="ad-part" style="height:200px;">
 			<div class="ad-title">上传图片：</div>
