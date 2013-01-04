@@ -22,7 +22,7 @@ public class BlogArticleDao extends SqlMapClientDaoSupport
 	 * @param item
 	 * @author luohl
 	 */
-	public void addBlog(BlogArticle blogArticle) throws Exception
+	public void addBlog(BlogArticle blogArticle)
 	{
 
 		this.getSqlMapClientTemplate().insert("blogArticle.addBlogArticle", blogArticle);
@@ -36,7 +36,7 @@ public class BlogArticleDao extends SqlMapClientDaoSupport
 	 * @throws Exception
 	 * @author luohl
 	 */
-	public BlogArticle queryBlogById(int id) throws Exception
+	public BlogArticle queryBlogById(int id)
 	{
 
 		return (BlogArticle) this.getSqlMapClientTemplate().queryForObject("blogArticle.queryTopicById", id);
@@ -47,10 +47,21 @@ public class BlogArticleDao extends SqlMapClientDaoSupport
 	 * @param item
 	 * @author luohl
 	 */
-	public void update(BlogArticle blogArticle) throws Exception
+	public void update(BlogArticle blogArticle)
 	{
 
 		this.getSqlMapClientTemplate().update("blogArticle.updateArticle_selective", blogArticle);
+	}
+
+	/**
+	 * description: 更新阅读数
+	 * @param item
+	 * @author luohl
+	 */
+	public void updateReadCount(BlogArticle blogArticle)
+	{
+
+		this.getSqlMapClientTemplate().update("blogArticle.updatReadCount", blogArticle);
 	}
 
 	/**
@@ -60,10 +71,16 @@ public class BlogArticleDao extends SqlMapClientDaoSupport
 	 * @throws Exception
 	 * @author luohl
 	 */
-	public void deleteBatch(int[] ids) throws Exception
+	public void deleteBatch(int[] ids)
 	{
 
 		this.getSqlMapClientTemplate().delete("blogArticle.deleteArticleItem", ids);
+	}
+
+	public void delete(int id)
+	{
+
+		this.getSqlMapClientTemplate().delete("blogArticle.deleteArticle", id);
 	}
 
 	/**
@@ -73,7 +90,7 @@ public class BlogArticleDao extends SqlMapClientDaoSupport
 	 * @throws Exception
 	 * @author luohl
 	 */
-	public List<BlogArticle> queryBlogByUserId(String userId, int offset, int total) throws Exception
+	public List<BlogArticle> queryBlogByUserId(String userId, int offset, int total)
 	{
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
@@ -91,7 +108,7 @@ public class BlogArticleDao extends SqlMapClientDaoSupport
 	 * @throws Exception
 	 * @author luohl
 	 */
-	public int queryCountByUserId(String userId) throws Exception
+	public int queryCountByUserId(String userId)
 	{
 
 		return (Integer) this.getSqlMapClientTemplate().queryForObject("blogArticle.queryCountByUserId", userId);

@@ -21,7 +21,7 @@ public class BlogItemDao extends SqlMapClientDaoSupport
 	 * @param item
 	 * @author luohl
 	 */
-	public void addItem(BlogItem blogItem) throws Exception
+	public void addItem(BlogItem blogItem)
 	{
 
 		this.getSqlMapClientTemplate().insert("blogItem.addBlogItem", blogItem);
@@ -33,7 +33,7 @@ public class BlogItemDao extends SqlMapClientDaoSupport
 	 * @param item
 	 * @author luohl
 	 */
-	public void update(BlogItem blogItem) throws Exception
+	public void update(BlogItem blogItem)
 	{
 
 		this.getSqlMapClientTemplate().update("blogItem.updateBlogItem", blogItem);
@@ -46,7 +46,7 @@ public class BlogItemDao extends SqlMapClientDaoSupport
 	 * @throws Exception
 	 * @author luohl
 	 */
-	public void delete(int id) throws Exception
+	public void delete(int id)
 	{
 
 		this.getSqlMapClientTemplate().delete("blogItem.deleteBlogItem", id);
@@ -59,16 +59,22 @@ public class BlogItemDao extends SqlMapClientDaoSupport
 	 * @throws Exception
 	 * @author luohl
 	 */
-	public List<BlogItem> queryItemByUserId(String userId) throws Exception
+	public List<BlogItem> queryItemByUserId(String userId)
 	{
 
 		return (List<BlogItem>) getSqlMapClientTemplate().queryForList("BlogItem.queryBlogItemByUserId", userId);
 	}
 
-	public List<BlogItem> queryBlogItemAndCountByUserId(String userId) throws Exception
+	public List<BlogItem> queryBlogItemAndCountByUserId(String userId)
 	{
 
 		return (List<BlogItem>) getSqlMapClientTemplate()
 				.queryForList("BlogItem.queryBlogItemAndCountByUserId", userId);
+	}
+
+	public BlogItem queryBlogItemById(int id)
+	{
+
+		return (BlogItem) getSqlMapClientTemplate().queryForObject("BlogItem.queryBlogItemById", id);
 	}
 }
