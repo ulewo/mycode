@@ -36,4 +36,8 @@
 		delete from blog_item where id = #id#
 	</delete>
 	
+	<select id="queryBlogItemById"  resultClass="blogItem" parameterClass="java.lang.Integer">
+		select * from blog_item  where id = #id#
+	</select>
+	
 </sqlMap>

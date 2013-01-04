@@ -15,7 +15,12 @@
 	</insert>
 	
 	<!--删除文章-->
-	<delete id="deleteBatch"> 
+	<delete id="delete"> 
+       delete from blog_article where id=#id#
+	</delete> 
+	
+	<!--批量删除文章-->
+	<delete id="deleteArticle"> 
        delete from blog_article where id in ( 
         <iterate  conjunction=",">#[]#</iterate>) 
 	</delete> 
@@ -62,4 +67,10 @@
         </isNotEmpty>
 		where id=#id#
 	</update>
+	
+	<!-- 更新阅读数 -->
+	<update id="updatReadCount" parameterClass="blogArticle">
+		update blog_article set readcount = #readCount# where id=#id#
+	</update>
+	
 </sqlMap>
