@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="blogArticle">
+	<cacheModel id="user-cache" type="LRU" readOnly="true"
+		serialize="false">
+		<flushInterval hours="24" />
+		<property value="500" name="size" />
+	</cacheModel>
+	<typeAlias alias="blogArticle" type="com.lhl.entity.BlogArticle" />
+	
+	<!-- 添加文章-->
+	<insert id="addBlogArticle" parameterClass="blogArticle">
+		insert into blog_article (userid,itemid,title,comment,content,readcount,posttime,keyword,allowreplay)
+		values(#userid#,#itemid#,#title#,#comment#,#content#,#readCount#,#postTime#,#keyWord#,#allowReplay#)
+	</insert>
+	
+	<!--删除文章-->
+	<delete id="deleteBatch"> 
+       delete from blog_article where id in ( 
+        <iterate  conjunction=",">#[]#</iterate>) 
+	</delete> 
+	
+	<!-- 单笔查询文章-->
+	<select id="queryTopicById"  resultClass="blogArticle" parameterClass="java.lang.Integer">
+		select * from blog_article where id = #id#
+	</select>
+	
+	<!--通过用户查询文章-->
+	<select id="queryBlogByUserId"  resultClass="blogArticle" parameterClass="java.util.Map">
+		select * from blog_article where userid = #userId# order by posttime desc limit #offset#,#total#
+	</select>
+	
+	<!--通过用户查询文章-->
+	<select id="queryCountByUserId"  resultClass="blogArticle" parameterClass="java.lang.String">
+		select count(id) from blog_article where userid = #userId#
+	</select>
+	
+	<!-- 更新不为空的字段 主要是后台操作更新默写状态 -->
+	<update id="updateArticle_selective" parameterClass="blogArticle">
+		update blog_article
+		set id=#id#
+		<isNotEmpty prepend="," property="itemId">
+			itemid=#itemId# 
+    	</isNotEmpty>
+    	<isNotEmpty prepend="," property="title">
+           title=#title# 
+        </isNotEmpty>
+        <isNotEmpty prepend="," property="comment">
+          comment=#comment#
+        </isNotEmpty>
+        <isNotEmpty prepend="," property="content">
+          content=#content#
+        </isNotEmpty>
+        <isNotEmpty prepend="," property="essence">
+			readcount=#readcount#
+        </isNotEmpty>
+        <isNotEmpty prepend="," property="keyWord">
+			keyword=#keyWord#
+        </isNotEmpty>
+        <isNotEmpty prepend="," property="allowReplay">
+			allowreplay=#allowReplay#
+        </isNotEmpty>
+		where id=#id#
+	</update>
+</sqlMap>
