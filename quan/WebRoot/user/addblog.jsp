@@ -107,25 +107,6 @@
 		}
 		$("#subForm").submit();
 	}
-
-	$(function(){
-		var userId = "${user.userId}";
-		$.ajax({
-			async : true,
-			cache : false,
-			type : 'GET',
-			dataType : "json",
-			url : 'queryItem.jspx',// 请求的action路径
-			success : function(data) {
-				var items =data.list;
-				var select = $("<select name='itemId' id='itemId'></select>").appendTo("#item");
-				$("<option value='0'>全部分类</option>").appendTo(select);
-				for(var i = 0;i<items.length;i++){
-					$("<option value='"+items[i].id+"'>"+items[i].itemName+"</option>").appendTo(select);
-				}
-			}
-		});
-	});
 </script>
   </head>
   <body>
@@ -133,15 +114,18 @@
 <div class="bodycon">
   <jsp:include page="menue.jsp"></jsp:include>
   <div class="user_main">
-  		<form action="subArticle.jspx" method="post"  name="example" id="subForm">
-		<input type="hidden" name="image" id="faceImg" value="">
-		<input type="hidden" name="gid" value="${gid}"  />
+  		<form action="saveBlog.jspx" method="post"  name="example" id="subForm">
 		<div class="ad_line">
 			<div class="ad_title">
 				<input type="text" name="title" id="title">&nbsp;&nbsp;发表在
 			</div>
-			<div class="ad_item" id="item">
-				
+			<div class="ad_item">
+				<select name="itemId">
+					<option value="0">全部文章</option>
+  					<c:forEach var="item" items="${itemList}">
+						<option value="${item.id}">${item.itemName}</option>
+					</c:forEach>
+				</select>
 			</div>
 		</div>
 		<div class="ad_line">
@@ -149,6 +133,11 @@
 		</div>
 		<div class="ad_content">
 				<textarea id="content" name="content"  style="width:1000px;height:400px;visibility:hidden;"></textarea>
+		</div>
+		<div>
+			<input type="radio" name="allowReplay" checked="checked"/>
+			<input type="radio" name="allowReplay"/>
+			<input type="radio" name="allowReplay"/>
 		</div>
 		<div class="ad-part" style="height:200px;">
 			<div class="ad-title">上传图片：</div>
