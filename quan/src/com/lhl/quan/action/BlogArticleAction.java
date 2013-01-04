@@ -13,8 +13,7 @@ import com.lhl.quan.service.BlogItemService;
 import com.lhl.util.Constant;
 import com.lhl.util.Pagination;
 
-public class BlogArticleAction extends BaseAction
-{
+public class BlogArticleAction extends BaseAction {
 	private static final long serialVersionUID = 1L;
 
 	private BlogArticleService blogArticleService;
@@ -41,42 +40,34 @@ public class BlogArticleAction extends BaseAction
 
 	private int allowReplay;
 
-	public String blog()
-	{
+	public String blog() {
 
-		try
-		{
+		try {
 			int countNumber = blogArticleService.queryCountByUserId(userId);
 			Pagination.setPageSize(Constant.pageSize50);
 			int pageSize = Pagination.getPageSize();
 			pageTotal = Pagination.getPageTotal(countNumber);
-			if (page > pageTotal)
-			{
+			if (page > pageTotal) {
 				page = pageTotal;
 			}
-			if (page < 1)
-			{
+			if (page < 1) {
 				page = 1;
 			}
 			int noStart = (page - 1) * pageSize;
-			blogList = blogArticleService.queryBlogByUserId(userId, noStart, pageSize);
-		}
-		catch (Exception e)
-		{
+			blogList = blogArticleService.queryBlogByUserId(userId, noStart,
+					pageSize);
+		} catch (Exception e) {
 			e.printStackTrace();
 			return ERROR;
 		}
 		return SUCCESS;
 	}
 
-	public String saveBlog()
-	{
+	public String saveBlog() {
 
-		try
-		{
+		try {
 			User sessionUser = getSessionUser();
-			if (sessionUser != null)
-			{
+			if (sessionUser != null) {
 				userId = sessionUser.getUserId();
 				BlogArticle blogArticle = new BlogArticle();
 				blogArticle.setUserId(userId);
@@ -84,15 +75,12 @@ public class BlogArticleAction extends BaseAction
 				blogArticle.setTitle(title);
 				blogArticle.setContent(content);
 				blogArticle.setKeyWord(keyWord);
+				blogArticle.setAllowReplay(allowReplay);
 				blogArticleService.addBlog(blogArticle);
-			}
-			else
-			{
+			} else {
 				return ERROR;
 			}
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			return ERROR;
 		}
 		return SUCCESS;
@@ -101,109 +89,94 @@ public class BlogArticleAction extends BaseAction
 	/**
 	 * 
 	 * description: 发表文章获取分类信息
+	 * 
 	 * @return
 	 * @throws IOException
 	 * @author luohl
 	 */
-	public String addBlog()
-	{
+	public String addBlog() {
 
-		try
-		{
+		try {
 			User sessionUser = getSessionUser();
-			if (sessionUser != null)
-			{
+			if (sessionUser != null) {
 				userId = sessionUser.getUserId();
 				itemList = blogItemService.queryBlogItemByUserId(userId);
-			}
-			else
-			{
+			} else {
 				return ERROR;
 			}
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			return ERROR;
 		}
 		return SUCCESS;
 	}
 
-	public void setBlogArticleService(BlogArticleService blogArticleService)
-	{
+	public void setBlogArticleService(BlogArticleService blogArticleService) {
 
 		this.blogArticleService = blogArticleService;
 	}
 
-	public void setBlogItemService(BlogItemService blogItemService)
-	{
+	public void setBlogItemService(BlogItemService blogItemService) {
 
 		this.blogItemService = blogItemService;
 	}
 
-	public int getPage()
-	{
+	public int getPage() {
 
 		return page;
 	}
 
-	public void setPage(int page)
-	{
+	public void setPage(int page) {
 
 		this.page = page;
 	}
 
-	public List<BlogArticle> getBlogList()
-	{
+	public List<BlogArticle> getBlogList() {
 
 		return blogList;
 	}
 
-	public int getPageTotal()
-	{
+	public int getPageTotal() {
 
 		return pageTotal;
 	}
 
-	public String getUserId()
-	{
+	public String getUserId() {
 
 		return userId;
 	}
 
-	public void setUserId(String userId)
-	{
+	public void setUserId(String userId) {
 
 		this.userId = userId;
 	}
 
-	public void setTitle(String title)
-	{
+	public void setTitle(String title) {
 
 		this.title = title;
 	}
 
-	public void setContent(String content)
-	{
+	public void setContent(String content) {
 
 		this.content = content;
 	}
 
-	public void setItemId(int itemId)
-	{
+	public void setItemId(int itemId) {
 
 		this.itemId = itemId;
 	}
 
-	public void setKeyWord(String keyWord)
-	{
+	public void setKeyWord(String keyWord) {
 
 		this.keyWord = keyWord;
 	}
 
-	public List<BlogItem> getItemList()
-	{
+	public List<BlogItem> getItemList() {
 
 		return itemList;
+	}
+
+	public void setAllowReplay(int allowReplay) {
+		this.allowReplay = allowReplay;
 	}
 
 }
