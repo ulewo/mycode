@@ -12,17 +12,11 @@ public class BlogItem
 {
 	private int id;
 
-	private int blogId;
-
-	private String content;
-
-	private String postTime;
-
 	private String userId;
 
-	private String userName;
+	private String itemName;
 
-	private int articleCount;
+	private int itemRang;
 
 	public int getId()
 	{
@@ -34,42 +28,6 @@ public class BlogItem
 	{
 
 		this.id = id;
-	}
-
-	public int getBlogId()
-	{
-
-		return blogId;
-	}
-
-	public void setBlogId(int blogId)
-	{
-
-		this.blogId = blogId;
-	}
-
-	public String getContent()
-	{
-
-		return content;
-	}
-
-	public void setContent(String content)
-	{
-
-		this.content = content;
-	}
-
-	public String getPostTime()
-	{
-
-		return postTime;
-	}
-
-	public void setPostTime(String postTime)
-	{
-
-		this.postTime = postTime;
 	}
 
 	public String getUserId()
@@ -84,28 +42,28 @@ public class BlogItem
 		this.userId = userId;
 	}
 
-	public String getUserName()
+	public String getItemName()
 	{
 
-		return userName;
+		return itemName;
 	}
 
-	public void setUserName(String userName)
+	public void setItemName(String itemName)
 	{
 
-		this.userName = userName;
+		this.itemName = itemName;
 	}
 
-	public int getArticleCount()
+	public int getItemRang()
 	{
 
-		return articleCount;
+		return itemRang;
 	}
 
-	public void setArticleCount(int articleCount)
+	public void setItemRang(int itemRang)
 	{
 
-		this.articleCount = articleCount;
+		this.itemRang = itemRang;
 	}
 
 }

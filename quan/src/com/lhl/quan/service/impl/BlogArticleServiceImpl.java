@@ -1,10 +1,14 @@
 package com.lhl.quan.service.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import com.lhl.entity.BlogArticle;
 import com.lhl.quan.dao.BlogArticleDao;
 import com.lhl.quan.service.BlogArticleService;
+import com.lhl.util.Constant;
+import com.lhl.util.Tools;
 
 public class BlogArticleServiceImpl implements BlogArticleService
 {
@@ -16,12 +20,22 @@ public class BlogArticleServiceImpl implements BlogArticleService
 		this.blogArticleDao = blogArticleDao;
 	}
 
+	private final static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
 	@Override
 	public boolean addBlog(BlogArticle blogArticle)
 	{
 
 		try
 		{
+			String summary = Tools.clearHtml(blogArticle.getContent());
+			int length = Tools.getRealLength(summary);
+			if (length > Constant.commentLength400)
+			{
+				summary = summary.substring(0, Constant.commentLength400);
+			}
+			blogArticle.setSummary(summary);
+			blogArticle.setPostTime(format.format(new Date()));
 			blogArticleDao.addBlog(blogArticle);
 		}
 		catch (Exception e)

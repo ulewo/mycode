@@ -1,6 +1,7 @@
 package com.lhl.util;
 
-public class Constant {
+public class Constant
+{
 
 	public static final String SUPERADMIN = "10000";
 
@@ -72,5 +73,7 @@ public class Constant {
 	public static int summaryLength200 = 200;
 
 	public static int summaryLength100 = 100;
+
+	public static int commentLength400 = 400;
 
 }

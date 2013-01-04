@@ -10,13 +10,20 @@ package com.lhl.entity;
  */
 public class BlogReArticle
 {
+
 	private int id;
+
+	private int blogId;
+
+	private String content;
+
+	private String postTime;
 
 	private String userId;
 
-	private String itemName;
+	private String userName;
 
-	private int itemRang;
+	private int articleCount;
 
 	public int getId()
 	{
@@ -28,6 +35,42 @@ public class BlogReArticle
 	{
 
 		this.id = id;
+	}
+
+	public int getBlogId()
+	{
+
+		return blogId;
+	}
+
+	public void setBlogId(int blogId)
+	{
+
+		this.blogId = blogId;
+	}
+
+	public String getContent()
+	{
+
+		return content;
+	}
+
+	public void setContent(String content)
+	{
+
+		this.content = content;
+	}
+
+	public String getPostTime()
+	{
+
+		return postTime;
+	}
+
+	public void setPostTime(String postTime)
+	{
+
+		this.postTime = postTime;
 	}
 
 	public String getUserId()
@@ -42,28 +85,28 @@ public class BlogReArticle
 		this.userId = userId;
 	}
 
-	public String getItemName()
+	public String getUserName()
 	{
 
-		return itemName;
+		return userName;
 	}
 
-	public void setItemName(String itemName)
+	public void setUserName(String userName)
 	{
 
-		this.itemName = itemName;
+		this.userName = userName;
 	}
 
-	public int getItemRang()
+	public int getArticleCount()
 	{
 
-		return itemRang;
+		return articleCount;
 	}
 
-	public void setItemRang(int itemRang)
+	public void setArticleCount(int articleCount)
 	{
 
-		this.itemRang = itemRang;
+		this.articleCount = articleCount;
 	}
 
 }

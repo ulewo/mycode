@@ -141,6 +141,12 @@
 			<result name="success">reTopics.jsp</result>
 			<result name="error">../error/error.jsp</result>
 		</action>
+		
+		<!-- 回复的文章 -->
+		<action name="blog" class="blog" method="blog">
+			<result name="success">blog.jsp</result>
+			<result name="error">../error/error.jsp</result>
+		</action>
 	</package>
 	
 	<package name="group" namespace="/group" extends="struts-default">

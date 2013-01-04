@@ -18,5 +18,7 @@
    <sqlMap resource="com/lhl/entity/Member.xml" />
    <sqlMap resource="com/lhl/entity/User.xml" />
    <sqlMap resource="com/lhl/entity/Message.xml" />
+   <sqlMap resource="com/lhl/entity/BlogArticle.xml" />
+   <sqlMap resource="com/lhl/entity/BlogItem.xml" />
 </sqlMapConfig>
 

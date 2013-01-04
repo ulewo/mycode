@@ -18,9 +18,9 @@ public class BlogArticle
 
 	private String title;
 
-	private String coment;
+	private String summary;
 
-	private String conent;
+	private String content;
 
 	private String readCount;
 
@@ -80,28 +80,28 @@ public class BlogArticle
 		this.title = title;
 	}
 
-	public String getComent()
+	public String getSummary()
 	{
 
-		return coment;
+		return summary;
 	}
 
-	public void setComent(String coment)
+	public void setSummary(String summary)
 	{
 
-		this.coment = coment;
+		this.summary = summary;
 	}
 
-	public String getConent()
+	public String getContent()
 	{
 
-		return conent;
+		return content;
 	}
 
-	public void setConent(String conent)
+	public void setContent(String conent)
 	{
 
-		this.conent = conent;
+		this.content = conent;
 	}
 
 	public String getReadCount()

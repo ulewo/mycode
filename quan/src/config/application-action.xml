@@ -18,6 +18,10 @@
     	 <property name="articleService" ref="articleService"/>
     </bean>
  
+    <bean id="blog" class="com.lhl.quan.action.BlogArticleAction" scope="prototype">
+    	 <property name="blogArticleService" ref="blogArticleService"/>
+    </bean>
+ 
 	<bean id="group" class="com.lhl.quan.action.GroupAction" scope="prototype">
 	 	<property name="groupService" ref="groupService"/>
 	 	<property name="articleService" ref="articleService"/>
@@ -78,5 +82,6 @@
 
 	<bean id="imageUpload" class="com.lhl.upload.ImageUploadAction" scope="prototype">
 	</bean>
+
 
 </beans>
