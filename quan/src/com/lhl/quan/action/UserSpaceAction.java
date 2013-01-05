@@ -22,6 +22,7 @@ import net.sf.json.JSONObject;
 
 import org.apache.struts2.ServletActionContext;
 
+import com.lhl.UserVo;
 import com.lhl.common.action.BaseAction;
 import com.lhl.config.ErrMsgConfig;
 import com.lhl.entity.Article;
@@ -82,7 +83,7 @@ public class UserSpaceAction extends BaseAction
 
 	private String content;
 
-	private User userInfo;
+	private UserVo userVo;
 
 	private String userIcon;
 
@@ -585,11 +586,19 @@ public class UserSpaceAction extends BaseAction
 		}
 		try
 		{
-			userInfo = userService.getUserInfo(userId);
+			User userInfo = userService.getUserInfo(userId);
 			if (null == userInfo)
 			{
 				return ERROR;
 			}
+			userVo.setUserId(userId);
+			userVo.setUserLittleIcon(userInfo.getUserLittleIcon());
+			userVo.setUserName(userInfo.getUserName());
+			userVo.setAddress(userInfo.getAddress());
+			userVo.setAge(userInfo.getAge());
+			userVo.setCharacters(userInfo.getCharacters());
+			userVo.setRegisterTime(userInfo.getRegisterTime());
+			userVo.setSex(sex);
 			messageList = messageService.queryMessage(userId, 0, 10);
 		}
 		catch (BaseException e)
@@ -686,7 +695,7 @@ public class UserSpaceAction extends BaseAction
 		}
 		try
 		{
-			userInfo = userService.getUserInfo(userId);
+			User userInfo = userService.getUserInfo(userId);
 			if (null == userInfo)
 			{
 				return ERROR;
@@ -720,7 +729,7 @@ public class UserSpaceAction extends BaseAction
 		}
 		try
 		{
-			userInfo = userService.getUserInfo(userId);
+			User userInfo = userService.getUserInfo(userId);
 			if (null == userInfo)
 			{
 				return ERROR;
@@ -768,7 +777,7 @@ public class UserSpaceAction extends BaseAction
 		}
 		try
 		{
-			userInfo = userService.getUserInfo(userId);
+			User userInfo = userService.getUserInfo(userId);
 			if (null == userInfo)
 			{
 				return ERROR;
@@ -887,7 +896,7 @@ public class UserSpaceAction extends BaseAction
 		}
 		try
 		{
-			userInfo = userService.getUserInfo(userId);
+			User userInfo = userService.getUserInfo(userId);
 			if (null == userInfo)
 			{
 				return ERROR;
@@ -1152,12 +1161,6 @@ public class UserSpaceAction extends BaseAction
 		this.userId = userId;
 	}
 
-	public User getUserInfo()
-	{
-
-		return userInfo;
-	}
-
 	public void setSex(String sex)
 	{
 
@@ -1294,6 +1297,12 @@ public class UserSpaceAction extends BaseAction
 	{
 
 		this.imgtype = imgtype;
+	}
+
+	public UserVo getUserVo()
+	{
+
+		return userVo;
 	}
 
 }

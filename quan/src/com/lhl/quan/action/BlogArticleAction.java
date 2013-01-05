@@ -1,24 +1,34 @@
 package com.lhl.quan.action;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONObject;
 
 import com.lhl.common.action.BaseAction;
 import com.lhl.entity.BlogArticle;
 import com.lhl.entity.BlogItem;
+import com.lhl.entity.BlogReply;
 import com.lhl.entity.User;
 import com.lhl.quan.service.BlogArticleService;
 import com.lhl.quan.service.BlogItemService;
+import com.lhl.quan.service.BlogReplyService;
 import com.lhl.util.Constant;
 import com.lhl.util.Pagination;
 
-public class BlogArticleAction extends BaseAction {
+public class BlogArticleAction extends BaseAction
+{
 	private static final long serialVersionUID = 1L;
 
 	private BlogArticleService blogArticleService;
 
 	private BlogItemService blogItemService;
+
+	private BlogReplyService blogReplyService;
 
 	private List<BlogArticle> blogList = new ArrayList<BlogArticle>();
 
@@ -40,34 +50,42 @@ public class BlogArticleAction extends BaseAction {
 
 	private int allowReplay;
 
-	public String blog() {
+	public String blog()
+	{
 
-		try {
+		try
+		{
 			int countNumber = blogArticleService.queryCountByUserId(userId);
 			Pagination.setPageSize(Constant.pageSize50);
 			int pageSize = Pagination.getPageSize();
 			pageTotal = Pagination.getPageTotal(countNumber);
-			if (page > pageTotal) {
+			if (page > pageTotal)
+			{
 				page = pageTotal;
 			}
-			if (page < 1) {
+			if (page < 1)
+			{
 				page = 1;
 			}
 			int noStart = (page - 1) * pageSize;
-			blogList = blogArticleService.queryBlogByUserId(userId, noStart,
-					pageSize);
-		} catch (Exception e) {
+			blogList = blogArticleService.queryBlogByUserId(userId, noStart, pageSize);
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
 			return ERROR;
 		}
 		return SUCCESS;
 	}
 
-	public String saveBlog() {
+	public String saveBlog()
+	{
 
-		try {
+		try
+		{
 			User sessionUser = getSessionUser();
-			if (sessionUser != null) {
+			if (sessionUser != null)
+			{
 				userId = sessionUser.getUserId();
 				BlogArticle blogArticle = new BlogArticle();
 				blogArticle.setUserId(userId);
@@ -77,10 +95,14 @@ public class BlogArticleAction extends BaseAction {
 				blogArticle.setKeyWord(keyWord);
 				blogArticle.setAllowReplay(allowReplay);
 				blogArticleService.addBlog(blogArticle);
-			} else {
+			}
+			else
+			{
 				return ERROR;
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			return ERROR;
 		}
 		return SUCCESS;
@@ -94,88 +116,128 @@ public class BlogArticleAction extends BaseAction {
 	 * @throws IOException
 	 * @author luohl
 	 */
-	public String addBlog() {
+	public String addBlog()
+	{
 
-		try {
+		try
+		{
 			User sessionUser = getSessionUser();
-			if (sessionUser != null) {
+			if (sessionUser != null)
+			{
 				userId = sessionUser.getUserId();
 				itemList = blogItemService.queryBlogItemByUserId(userId);
-			} else {
+			}
+			else
+			{
 				return ERROR;
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			return ERROR;
 		}
 		return SUCCESS;
 	}
 
-	public void setBlogArticleService(BlogArticleService blogArticleService) {
+	public void queryBlogReply(int blogId) throws IOException
+	{
+
+		List<BlogReply> list = blogReplyService.queryBlogReplyByBlogId(blogId);
+		JSONObject obj = new JSONObject();
+		obj.put("list", list);
+		HttpServletResponse response = getResponse();
+		response.setContentType("text/html;charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		out.println(String.valueOf(obj));
+	}
+
+	public void setBlogArticleService(BlogArticleService blogArticleService)
+	{
 
 		this.blogArticleService = blogArticleService;
 	}
 
-	public void setBlogItemService(BlogItemService blogItemService) {
+	public void setBlogItemService(BlogItemService blogItemService)
+	{
 
 		this.blogItemService = blogItemService;
 	}
 
-	public int getPage() {
+	public void setBlogReplyService(BlogReplyService blogReplyService)
+	{
+
+		this.blogReplyService = blogReplyService;
+	}
+
+	public int getPage()
+	{
 
 		return page;
 	}
 
-	public void setPage(int page) {
+	public void setPage(int page)
+	{
 
 		this.page = page;
 	}
 
-	public List<BlogArticle> getBlogList() {
+	public List<BlogArticle> getBlogList()
+	{
 
 		return blogList;
 	}
 
-	public int getPageTotal() {
+	public int getPageTotal()
+	{
 
 		return pageTotal;
 	}
 
-	public String getUserId() {
+	public String getUserId()
+	{
 
 		return userId;
 	}
 
-	public void setUserId(String userId) {
+	public void setUserId(String userId)
+	{
 
 		this.userId = userId;
 	}
 
-	public void setTitle(String title) {
+	public void setTitle(String title)
+	{
 
 		this.title = title;
 	}
 
-	public void setContent(String content) {
+	public void setContent(String content)
+	{
 
 		this.content = content;
 	}
 
-	public void setItemId(int itemId) {
+	public void setItemId(int itemId)
+	{
 
 		this.itemId = itemId;
 	}
 
-	public void setKeyWord(String keyWord) {
+	public void setKeyWord(String keyWord)
+	{
 
 		this.keyWord = keyWord;
 	}
 
-	public List<BlogItem> getItemList() {
+	public List<BlogItem> getItemList()
+	{
 
 		return itemList;
 	}
 
-	public void setAllowReplay(int allowReplay) {
+	public void setAllowReplay(int allowReplay)
+	{
+
 		this.allowReplay = allowReplay;
 	}
 
