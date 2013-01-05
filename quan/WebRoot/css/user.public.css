@@ -4,7 +4,7 @@
 .avatar_con{height:85px;background:#4682B4}
 .user_avatar{float:left;width:60px;margin:10px;background:#FFFFFF;padding:3px;}
 .user_edit{float:left;width:100px;}
-.resume{background: #6E7B8B url('../images/resume24.png') no-repeat left bottom;margin: 3px 0 0 0;color: white;padding: 18px 10px 18px 40px;word-wrap: break-word;overflow: hidden;}
+.resume{background: #6E7B8B url('../images/resume24.png') no-repeat left bottom;margin: 3px 0 0 0;color: white;padding: 18px 10px 18px 40px;word-wrap: break-word;overflow: hidden;text-align:left;}
 .opts{margin-top:10px;}
 .opts a{text-decoration:none;}
 .opts .blog{background:#6495ED;display:block;width:105px;float:left;}
@@ -15,3 +15,19 @@
 .opts .manage .manage_icon{background:url('../images/space-opts.png');background-position: 0 -201px;width:67px;height:67px;display:block;margin-left:15px;}
 .opts .manage .manage_tit{display:block;color:#FFFFFF;padding:5px;text-decoration:none;}
 .right{float:left;width:770px;margin-left:10px;text-align:left;}
+.baseinfo{border:1px solid #EEEEEE;padding:10px;}
+.base_tit{font-weight:bold;font-size:13px;}
+.base_tit{font-size:13px}
+.topblog{border:1px solid #EEEEEE;padding:10px;margin-top:10px}
+.topblog_titcon{height:30px;}
+.topblog_tit{display:inline-block;float:left;font-size:14px;color: #666666;font-weight:bold;}
+.topblog_link{display:inline-block;float:right;}
+.blog_link a{color:#4466BB;text-decoration:none;}
+.blog_link a:hover{color:#0000AA}
+.blog_link span{color:#999999;margin-left:15px;}
+.blogCatalogs{background:#EAEAEA;}
+.blogCatalogs_tit{border-bottom:2px solid #7798CB;color:#666666;font-size:15px;font-weight:bold;text-align:left;padding:5px;margin-top:10px;}
+.createwo,.joinwo,.topic,.reply{background:#6E7B8B;height:30px;margin-top:10px;padding-top:20px;font-size:14px;color:#FFFFFF;}
+.joinwo{background:#4682B4;}
+.topic{background:#5CACEE;}
+.reply{background:#6495ED;}
