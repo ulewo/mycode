@@ -16,6 +16,7 @@
     	 <property name="messageService" ref="messageService"/>
     	 <property name="groupService" ref="groupService"/>
     	 <property name="articleService" ref="articleService"/>
+    	 <property name="blogArticleService" ref="blogArticleService"/>
     </bean>
  
     <bean id="blog" class="com.lhl.quan.action.BlogArticleAction" scope="prototype">
