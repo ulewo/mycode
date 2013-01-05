@@ -30,12 +30,20 @@
 	  </div>
 	  <div class="right">
 		  	<div class="baseinfo">
-			  	性别：${userInfo.sex }<br>
-			  	年龄：${userInfo.age }<br>
-			  	个人签名:${userInfo.characters}<br>
-			  	职业：${userInfo.work}<br>
-			  	地址：${userInfo.address }<br>
-			  	注册时间：${fn:substring(userInfo.registerTime,0,10) }<br>
+			  	<span class="base_tit">加入时间：</span><span class="base_info">${fn:substring(userVo.registerTime,0,10) }</span><br>
+			  	<span class="base_tit">地址：</span><span class="base_info">${userVo.work}</span><br>
+			  	<span class="base_tit">性别：</span><span class="base_info">${userVo.sex}</span>
+		  	</div>
+		  	<div class="topblog">
+		  		<div class="topblog_titcon"><span class="topblog_tit">最新博文</span><span class="topblog_link">进入博客</span></div>
+		  		<c:forEach var="blog" items="${blogList}">
+		  			<div class="blog_link">
+		  				<a href="###">${blog.title}</a><span>${blog.reCount}/${blog.readCount}</span>
+		  			</div>
+		  		</c:forEach>
+		  		<c:if test="${empty blogList}">
+		  			<span>尚无发表博文</span>
+		  		</c:if>
 		  	</div>
 		  	<div>
 		  		<form>
