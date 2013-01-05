@@ -18,6 +18,8 @@ public class BlogItem
 
 	private int itemRang;
 
+	private int articleCount;
+
 	public int getId()
 	{
 
@@ -64,6 +66,18 @@ public class BlogItem
 	{
 
 		this.itemRang = itemRang;
+	}
+
+	public int getArticleCount()
+	{
+
+		return articleCount;
+	}
+
+	public void setArticleCount(int articleCount)
+	{
+
+		this.articleCount = articleCount;
 	}
 
 }

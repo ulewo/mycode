@@ -8,7 +8,7 @@ package com.lhl.entity;
  * @date 2013-1-4
  * @version V1.0
  */
-public class BlogReArticle
+public class BlogReply
 {
 
 	private int id;
@@ -22,8 +22,6 @@ public class BlogReArticle
 	private String userId;
 
 	private String userName;
-
-	private int articleCount;
 
 	public int getId()
 	{
@@ -95,18 +93,6 @@ public class BlogReArticle
 	{
 
 		this.userName = userName;
-	}
-
-	public int getArticleCount()
-	{
-
-		return articleCount;
-	}
-
-	public void setArticleCount(int articleCount)
-	{
-
-		this.articleCount = articleCount;
 	}
 
 }
