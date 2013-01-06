@@ -139,10 +139,29 @@ public class BlogArticleAction extends BaseAction
 		return SUCCESS;
 	}
 
+	/**
+	 * 
+	 * description: 查询回复
+	 * @param blogId
+	 * @throws IOException
+	 * @author luohl
+	 */
 	public void queryBlogReply(int blogId) throws IOException
 	{
 
 		List<BlogReply> list = blogReplyService.queryBlogReplyByBlogId(blogId);
+		JSONObject obj = new JSONObject();
+		obj.put("list", list);
+		HttpServletResponse response = getResponse();
+		response.setContentType("text/html;charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		out.println(String.valueOf(obj));
+	}
+
+	public void queryItem() throws IOException
+	{
+
+		List<BlogItem> list = blogItemService.queryBlogItemAndCountByUserId(userId);
 		JSONObject obj = new JSONObject();
 		obj.put("list", list);
 		HttpServletResponse response = getResponse();

@@ -45,7 +45,7 @@ public interface BlogItemService
 	 * @throws Exception
 	 * @author luohl
 	 */
-	public List<BlogItem> queryBlogItemByUserId(String userId) throws Exception;
+	public List<BlogItem> queryBlogItemByUserId(String userId);
 
 	/**
 	 * 
@@ -55,6 +55,6 @@ public interface BlogItemService
 	 * @throws Exception
 	 * @author luohl
 	 */
-	public List<BlogItem> queryBlogItemAndCountByUserId(String userId) throws Exception;
+	public List<BlogItem> queryBlogItemAndCountByUserId(String userId);
 
 }

@@ -157,6 +157,15 @@
 			<result name="success" type="redirect">blog.jspx?userId=${userId}</result>
 			<result name="error">../error/error.jsp</result>
 		</action>
+		
+		<!--博客分类-->
+		<action name="queryItem" class="blog" method="queryItem">
+		</action>
+		
+		<!--用户基本信息-->
+		<action name="getUserInfoAjax" class="user" method="getUserInfoAjax">
+		</action>
+		
 	</package>
 	
 	<package name="group" namespace="/group" extends="struts-default">

@@ -57,14 +57,14 @@ public class BlogItemServiceImpl implements BlogItemService
 	}
 
 	@Override
-	public List<BlogItem> queryBlogItemByUserId(String userId) throws Exception
+	public List<BlogItem> queryBlogItemByUserId(String userId)
 	{
 
 		return blogItemDao.queryItemByUserId(userId);
 	}
 
 	@Override
-	public List<BlogItem> queryBlogItemAndCountByUserId(String userId) throws Exception
+	public List<BlogItem> queryBlogItemAndCountByUserId(String userId)
 	{
 
 		return blogItemDao.queryBlogItemAndCountByUserId(userId);
