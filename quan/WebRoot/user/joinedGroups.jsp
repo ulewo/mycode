@@ -19,22 +19,27 @@
   </head>
   <body>
   <jsp:include page="../common/head.jsp"/>
-<div class="bodycon">
-  <jsp:include page="menue.jsp"></jsp:include>
-  <div class="user_main">
-  	<c:forEach var="group" items="${joinGroups}">
-	  	<div class="g_gcon">
-  			<div class="g_gon_img"><a href="../group/group.jspx?gid=${group.id}"><img src="../upload/${group.groupIcon}" width="60" border="0"></a></div>
-  			<div class="g_gon_info">
-  				<div><a href="../group/group.jspx?gid=${group.id}">${group.groupName}</a></div>
-  				<div>成员:${group.members}</div>
-  				<div>人气:${group.visitCount}</div>
-  			</div>
-  		</div>
-  	</c:forEach>
-  	<div style="clear:left;"></div>
-  </div>
- </div> 
+ 	<div class="main">
+	  <div class="left">
+	  	<jsp:include page="left.jsp"></jsp:include>
+	  </div>
+	  <div class="right">
+	  	  <div class="user_main">
+		  	<c:forEach var="group" items="${joinGroups}">
+		  		<div class="g_gcon">
+		  			<div class="g_gon_img"><a href="../group/group.jspx?gid=${group.id}"><img src="../upload/${group.groupIcon}" width="60" border="0"></a></div>
+		  			<div class="g_gon_info">
+		  				<div><a href="../group/group.jspx?gid=${group.id}">${group.groupName}</a></div>
+		  				<div>成员:${group.members}</div>
+		  				<div>人气:${group.visitCount}</div>
+		  			</div>
+		  		</div>
+		  	</c:forEach>
+  		   	<div style="clear:left;"></div>
+  		  </div>
+	  </div>
+	  <div class="clear"></div>
+	 </div>
     <jsp:include page="../common/foot.jsp"/>
   </body>
 </html>

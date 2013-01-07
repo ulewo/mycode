@@ -1,24 +1,22 @@
 @import url("user.public.css");
-/*
+
 .user_main{text-align:left;margin-top:10px;}
-.left{float:left;width:150px;background:#F4F4F4;border-right:1px solid #E6E6E6;height:600px;}
 .left_userimg{width:150px;text-align:center;margin-top:10px;}
 .left_userid{margin-top:15px;text-align:center;font-size:13px;}
 .left_userid span{font-weight:bold;color: #32B2E6}
 .left_userid span a{font-weight:bold;color: #32B2E6;text-decoration:none;}
 .left_userid span a:hover{text-decoration:underline;}
 .left_editinfo{text-align:center;margin-top:10px;padding-left:25px;}
-.right{float:left;width:800px;margin-left:10px;padding-left:20px;}
 .baseinfo{line-height:30px;}
-.g_gcon{float:left;margin-left:10px;height:70px;width:220px;}
+.g_gcon{float:left;margin-left:10px;height:70px;width:180px;}
 .g_gon_img{float:left;width:60px;height:60px;border:1px solid #EFEFEF}
-.g_gon_info{float:left;width:140px;height:60px;margin-left:3px;}
+.g_gon_info{float:left;width:100px;height:60px;margin-left:3px;}
 .g_gon_info a{color:#006A92;text-decoration:none;font-size:13px;}
 .g_gon_info a:hover{color:#FF9603;}
 .g_gon_info div{margin-top:3px;}
 
 .ath{height:25px;font-weight:bold;background:#EFEFEF;padding-top:10px;padding-left:12px;text-align:left;margin-top:8px;color:#333333}
-.atit{width:746px;float:left;}
+.atit{width:515px;float:left;}
 .aauthor{width:120px;float:left;font-size:13px;}
 .atr .aauthor{padding-top:8px;}
 .atr{text-align:left;border-bottom:1px solid #D9D9D9;height:33px;padding-top:7px;padding-left:8px;}
@@ -68,4 +66,4 @@
 .cutarea{width:680px;float:left;}
 .ferret{width:100px;float:left;margin-left:10px;display:inherit;}
 #preview{float:left;position:relative;overflow: hidden; width:100px;height:100px}
-*/
+

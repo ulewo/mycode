@@ -20,40 +20,45 @@
   </head>
   <body>
   <jsp:include page="../common/head.jsp"/>
-<div class="bodycon">
-  <jsp:include page="menue.jsp"></jsp:include>
-   <div class="user_main">
-   <div class="ath">
-		<div class="atit">话题</div>
-		<div class="aauthor">群组</div>
-		<div class="aauthor">发表</div>
-	</div>
-	<c:forEach var="article" items="${articleList}">
-		<div class="atr">
-			<div class="atit">
-				<c:if test="${article.grade==1}"><div class="atit_img"><img src="../images/ico-top.gif"></div></c:if>
-				<c:if test="${article.essence=='Y'}"><div class="atit_img2"><img src="../images/ico-ess.gif"></div></c:if>
-				<div class="atit_tit">
-				<c:if test="${article.itemName!=null}">【<a href="../group/topics.jspx?gid=${article.gid}&itemId=${article.itemId }">${article.itemName }</a>】</c:if>
-				<c:if test="${article.itemName==null}">【<a href="../group/topics.jspx?gid=${article.gid}">全部话题</a>】</c:if>
-				<a href="../group/post.jspx?id=${article.id}" ${article.titleStyle}>${article.title }</a>
-				&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#999999">${article.reNumber }/${article.readNumber}</span>
+  <div class="main">
+	  <div class="left">
+	  	<jsp:include page="left.jsp"></jsp:include>
+	  </div>
+	  <div class="right">
+	  	  <div class="user_main">
+		  	<div class="ath">
+				<div class="atit">话题</div>
+				<div class="aauthor">群组</div>
+				<div class="aauthor">发表</div>
+			</div>
+			<c:forEach var="article" items="${articleList}">
+				<div class="atr">
+					<div class="atit">
+						<c:if test="${article.grade==1}"><div class="atit_img"><img src="../images/ico-top.gif"></div></c:if>
+						<c:if test="${article.essence=='Y'}"><div class="atit_img2"><img src="../images/ico-ess.gif"></div></c:if>
+						<div class="atit_tit">
+						<c:if test="${article.itemName!=null}">【<a href="../group/topics.jspx?gid=${article.gid}&itemId=${article.itemId }">${article.itemName }</a>】</c:if>
+						<c:if test="${article.itemName==null}">【<a href="../group/topics.jspx?gid=${article.gid}">全部话题</a>】</c:if>
+						<a href="../group/post.jspx?id=${article.id}" ${article.titleStyle}>${article.title }</a>
+						&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#999999">${article.reNumber }/${article.readNumber}</span>
+						</div>
+					</div>
+					<div class="aauthor">
+						<a href="../group/group.jspx?gid=${article.gid}">${article.groupName}</a>
+					</div>
+					<div class="aauthor">
+						<span class="timestyle">${fn:substring(article.postTime,0,16)}</span>
+					</div>
 				</div>
+			</c:forEach>
+			<div  class="pagination">
+				<p:pager url="postTopics.jspx?userId=${userId}" page="${page}" pageTotal = "${pageTotal }"></p:pager> 
 			</div>
-			<div class="aauthor">
-				<a href="../group/group.jspx?gid=${article.gid}">${article.groupName}</a>
-			</div>
-			<div class="aauthor">
-				<span class="timestyle">${fn:substring(article.postTime,0,16)}</span>
-			</div>
-			<div class="clear"></div>
-		</div>
-	</c:forEach>
-  	<div  class="pagination">
-			<p:pager url="reTopics.jspx?userId=${userId}" page="${page}" pageTotal = "${pageTotal }"></p:pager> 
-	</div>
-  	</div>
-  	</div>
+  		   	<div style="clear:left;"></div>
+  		  </div>
+	  </div>
+	  <div class="clear"></div>
+	 </div>
   	  <jsp:include page="../common/foot.jsp"/>
   </body>
 </html>
