@@ -56,10 +56,10 @@ border-radius: 2px 0 0 2px;
 .pagination{height:25px;width:510px;float:right;}
 .pagination ul{padding:0px;margin:0px;float:right;text-align:center;}
 .pagination li{float:left;margin-left:5px;list-style:none;}
-.pagination a{display:block;width:20px;height:17px;border:1px solid #D6D6D6;text-decoration:none;color:#2B4A78;padding-top:3px;text-align:center;}
-.pagination a:hover,.pagination a:active{background:#EFEFEF;}
+.pagination a{display:block;width:20px;height:17px;text-decoration:none;color:#2B4A78;padding-top:3px;text-align:center;border: 1px solid #999;border-top: 1px solid #DDD;border-left: 1px solid #DDD;}
+.pagination a:hover,.pagination a:active{border:1px solid #DDD;border-top:1px solid #AAA;border-left:1px solid #AAA;background-color:#D0D3C8;}
 a.prePage,a.nextPage{width:60px;}
-#nowPage{width:20px;height:20px;font-weight:bold;padding-top:3px;border:1px solid #D6D6D6;background:#33B3E6;color:#FFFFFF;height:17px;}
+#nowPage{width:20px;height:20px;font-weight:bold;padding-top:4px;border: 1px solid #999;border-left: 1px solid #DDD;height:17px;font-weight: bold;border-top: 1px none #CCC;background: #CCC;color: #666}
 .partTitle{text-align:left;padding-left:10px;font-size:16px;}
 #login{background:#F7F7F7;width:400px;position:absolute;left:100px;top:400px;z-index:100;display:none;}
 .logincon{margin:15px;background:white;border:1px solid #DDDDDD;height:300px;}
