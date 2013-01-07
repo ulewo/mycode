@@ -1,5 +1,6 @@
 @import url("public.css");
-.main{background:#F9F9F9;width:1000px;margin:0px auto;}
+body{background:#F9F9F9}
+.main{width:1000px;margin:0px auto;}
 .left{width:220px;float:left;}
 .avatar_con{height:85px;background:#4682B4}
 .avatar_con img{border:0px;}
@@ -16,10 +17,10 @@
 .opts .manage .manage_icon{background:url('../images/space-opts.png');background-position: 0 -201px;width:67px;height:67px;display:block;margin-left:15px;}
 .opts .manage .manage_tit{display:block;color:#FFFFFF;padding:5px;text-decoration:none;}
 .right{float:left;width:770px;margin-left:10px;text-align:left;}
-.baseinfo{border:1px solid #EEEEEE;padding:10px;}
+.baseinfo{border:1px solid #EEEEEE;padding:10px;background:#FFFFFF;}
 .base_tit{font-weight:bold;font-size:13px;}
 .base_tit{font-size:13px}
-.topblog{border:1px solid #EEEEEE;padding:10px;margin-top:10px}
+.topblog{border:1px solid #EEEEEE;padding:10px;margin-top:10px;background:#FFFFFF;}
 .topblog_titcon{height:30px;}
 .topblog_tit{display:inline-block;float:left;font-size:14px;color: #666666;font-weight:bold;}
 .topblog_link{display:inline-block;float:right;}
