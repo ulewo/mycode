@@ -111,10 +111,12 @@
   </head>
   <body>
   <jsp:include page="../common/head.jsp"/>
-<div class="bodycon">
-  <jsp:include page="menue.jsp"></jsp:include>
-  <div class="user_main">
-  		<form action="saveBlog.jspx" method="post"  name="example" id="subForm">
+  <div class="main">
+	  <div class="left">
+	  	<jsp:include page="left.jsp"></jsp:include>
+	  </div>
+	  <div class="right">
+	  	<form action="saveBlog.jspx" method="post"  name="example" id="subForm">
 		<div class="ad_line">
 			<div class="ad_title">
 				<input type="text" name="title" id="title">&nbsp;&nbsp;发表在
@@ -132,7 +134,7 @@
 			<input type="text" name="keyWord" id="keyWord">&nbsp;&nbsp;<span style="color:#999999">好的关键字可以让别人更容易找到此篇文章（可选）多个关键字用半角逗号隔开</span>
 		</div>
 		<div class="ad_content">
-				<textarea id="content" name="content"  style="width:1000px;height:400px;visibility:hidden;"></textarea>
+				<textarea id="content" name="content"  style="width:750px;height:400px;visibility:hidden;"></textarea>
 		</div>
 		<div>
 			<input type="radio" name="allowReplay" checked="checked" value="0"/>允许所有人评论
@@ -154,8 +156,9 @@
 			<a href="javascript:submitForm()" onfocus="this.blur()" >发表话题</a>
 		</div>
 		</form>
-  </div>
- </div> 
+	  </div>
+	  <div style="clear:left;"></div>
+ </div>
     <jsp:include page="../common/foot.jsp"/>
   </body>
 </html>

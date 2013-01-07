@@ -19,15 +19,19 @@
   </head>
   <body>
   <jsp:include page="../common/head.jsp"/>
-<div class="bodycon">
-  <jsp:include page="menue.jsp"></jsp:include>
-  <div class="user_main">
-  	<c:forEach var="blog" items="${blogList}">
-	  	<div>${blog.title}</div>
-  	</c:forEach>
-  	<div style="clear:left;"></div>
-  </div>
- </div> 
+   <div class="main">
+	  <div class="left">
+	  	<jsp:include page="left.jsp"></jsp:include>
+	  </div>
+  	<div class="right">
+  		<c:forEach var="blog" items="${blogList}">
+  			<div class="blog_link">
+  				<a href="###">${blog.title}</a><span>${blog.reCount}/${blog.readCount}</span>
+  			</div>
+		 </c:forEach>
+ 	</div>
+ 	<div style="clear:left;"></div>
+ 	</div>
     <jsp:include page="../common/foot.jsp"/>
   </body>
 </html>

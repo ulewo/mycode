@@ -11,7 +11,7 @@
 	</div>
 	<div class="opts">
 		<c:if test="${user!=null&&user.userId==userId}">
-			<a href="####" class="blog">
+			<a href="addBlog.jspx?userId=${userId}" class="blog">
 				<span class="blog_icon"></span>
 				<span class="blog_tit">发表博文</span>
 			</a>
