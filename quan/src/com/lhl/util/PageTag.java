@@ -53,8 +53,7 @@ public class PageTag extends BodyTagSupport {
 		if (page - pageNum / 2 < 1) {
 			beginNum = 1;
 			endNum = pageNum;
-		}
-		else {
+		} else {
 			beginNum = page - pageNum / 2 + 1;
 			endNum = page + pageNum / 2;
 		}
@@ -70,32 +69,37 @@ public class PageTag extends BodyTagSupport {
 		}
 		sb.append("<ul>");
 		if (page > 1) {
-			sb.append("<li><a href='" + url + "1' class='prePage'>首&nbsp;&nbsp;页</a></li>");
+			sb.append("<li><a href='" + url
+					+ "1' class='prePage'>首&nbsp;&nbsp;页</a></li>");
 			sb.append("<li><a href='" + url + (page - 1) + "'><</a></li>");
 		}
 		for (int i = beginNum; i <= endNum; i++) {
 			if (pageTotal > 1) {
 				if (i == page) {
 					sb.append("<li id='nowPage'>" + page + "</li>");
-				}
-				else {
-					sb.append("<li><a href='" + url + i + " '>" + i + "</a></li>");
+				} else {
+					sb.append("<li><a href='" + url + i + " '>" + i
+							+ "</a></li>");
 				}
 			}
 		}
 		if (page < pageTotal) {
 			sb.append("<li><a href='" + url + (page + 1) + "'>></a></li>");
-			sb.append("<li><a href='" + url + pageTotal + " ' class='prePage'>尾&nbsp;&nbsp;页</a></li>");
+			sb.append("<li><a href='" + url + pageTotal
+					+ " ' class='prePage'>尾&nbsp;&nbsp;页</a></li>");
 		}
 		sb.append("</ul>");
-		sb.append("<div style='float:right;width:50px;padding-top:5px'>" + page + "/" + pageTotal + "</div>");
+		if (pageTotal > 1) {
+			sb.append("<div style='float:right;width:50px;padding-top:5px'>"
+					+ page + "/" + pageTotal + "</div>");
+		}
+
 		try {
 			if (pageTotal > 0) {
 				pageContext.getOut().println(sb.toString());
 			}
 
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return super.doStartTag();
@@ -110,8 +114,7 @@ public class PageTag extends BodyTagSupport {
 
 		if (url.indexOf("?") > 0) {
 			this.url = url + "&page=";
-		}
-		else {
+		} else {
 			this.url = url + "?page=";
 		}
 	}
