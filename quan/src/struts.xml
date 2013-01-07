@@ -166,6 +166,12 @@
 		<action name="getUserInfoAjax" class="user" method="getUserInfoAjax">
 		</action>
 		
+		<!--留言板-->
+		<action name="message" class="user" method="message">
+			<result name="success">message.jsp</result>
+			<result name="error">../error/error.jsp</result>
+		</action>
+		
 	</package>
 	
 	<package name="group" namespace="/group" extends="struts-default">

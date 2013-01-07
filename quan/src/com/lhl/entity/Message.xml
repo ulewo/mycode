@@ -22,7 +22,7 @@
 	</select>
 
 	<!-- 根据userId查询留言条数 -->
-	<select id="queryCountByUserId"  resultClass="message" parameterClass="java.util.Map">
+	<select id="queryCountByUserId"  resultClass="java.lang.Integer" parameterClass="java.util.Map">
 		select count(id) from message where userId = #userId#
 	</select>
 </sqlMap>
