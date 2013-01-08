@@ -53,7 +53,7 @@
 				</div>
 			</c:forEach>
 			<div  class="pagination">
-				<p:pager url="postTopics.jspx?userId=${userId}" page="${page}" pageTotal = "${pageTotal }"></p:pager> 
+				<p:pager url="reTopics.jspx?userId=${userId}" page="${page}" pageTotal = "${pageTotal }"></p:pager> 
 			</div>
   		   	<div style="clear:left;"></div>
   		  </div>

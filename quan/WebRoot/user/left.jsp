@@ -16,13 +16,14 @@
 				<span class="blog_tit">发表博文</span>
 			</a>
 			<a href="manage.jspx" class="manage">
-				<span class="manage_icon"></span>
-				<span class="manage_tit">空间管理</span>
+				空间管理
 			</a>
 			<div class="clear"></div>
 		</c:if>
 		<c:if test="${user==null||user.userId!=userId}">
-		
+			<a href="message.jspx?userId=${userId}" class="sendMsg">
+				发送留言
+			</a>
 		</c:if>
 	</div>
 	<div class="blogCatalogs">
