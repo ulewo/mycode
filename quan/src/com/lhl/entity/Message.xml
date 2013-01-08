@@ -25,4 +25,13 @@
 	<select id="queryCountByUserId"  resultClass="java.lang.Integer" parameterClass="java.util.Map">
 		select count(id) from message where userId = #userId#
 	</select>
+	
+	<!--根据ID获取留言-->
+	<select id="queryMessageById"  resultClass="message" parameterClass="java.lang.Integer">
+		select * from message where id = #id#
+	</select>
+	
+	<delete id="deleteMessage"  parameterClass="java.lang.Integer">
+		delete from  message where id = #id#
+	</delete>
 </sqlMap>
