@@ -106,7 +106,7 @@
 		</action>
 		
 		<!-- 更新用户信息获取用户信息 -->
-		<action name="getInfo" class="user" method="getInfo">
+		<action name="manage" class="user" method="getInfo">
 			<result name="success">ediUserInfo.jsp</result>
 			<result name="error">../error/error.jsp</result>
 		</action>
@@ -147,11 +147,32 @@
 			<result name="success">blog.jsp</result>
 			<result name="error">../error/error.jsp</result>
 		</action>
+		
+		<!--博客 -->
+		<action name="blogdetail" class="blog" method="blogdetail">
+			<result name="success">blogdetail.jsp</result>
+			<result name="error">../error/error.jsp</result>
+		</action>
+		
 		<!--博客分类-->
 		<action name="addBlog" class="blog" method="addBlog">
 			<result name="success">addblog.jsp</result>
 			<result name="error">../error/error.jsp</result>
 		</action>
+		
+		<!--分类管理-->
+		<action name="manageItem" class="blog" method="manageItem">
+			<result name="success">blogitem.jsp</result>
+			<result name="error">../error/error.jsp</result>
+		</action>
+		
+		<!--新增,更新分类-->
+		<action name="saveItem" class="blog" method="saveItem">
+		</action>
+		<!--删除分类-->
+		<action name="deleteItem" class="blog" method="deleteItem">
+		</action>
+		
 		<!--添加文章-->
 		<action name="saveBlog" class="blog" method="saveBlog">
 			<result name="success" type="redirect">blog.jspx?userId=${userId}</result>
