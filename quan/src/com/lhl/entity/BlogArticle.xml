@@ -35,9 +35,19 @@
 		select * from blog_article where userid = #userId# order by posttime desc limit #offset#,#total#
 	</select>
 	
+	<!--通过分类查询文章-->
+	<select id="queryBlogByItemId"  resultClass="blogArticle" parameterClass="java.util.Map">
+		select * from blog_article where itemid = #itemId# order by posttime desc limit #offset#,#total#
+	</select>
+	
 	<!--通过用户查询文章-->
 	<select id="queryCountByUserId"  resultClass="java.lang.Integer" parameterClass="java.lang.String">
 		select count(id) from blog_article where userid = #userId#
+	</select>
+	
+	<!--通过分类查询文章总数-->
+	<select id="queryCountByItemId"  resultClass="java.lang.Integer" parameterClass="java.lang.Integer">
+		select count(id) from blog_article where itemid = #itemId#
 	</select>
 	
 	<!-- 更新不为空的字段 主要是后台操作更新默写状态 -->

@@ -14,20 +14,12 @@ import com.lhl.entity.BlogItem;
 public interface BlogItemService
 {
 	/**
-	 * 新增分类
+	 * 保存分类
 	 * description: 函数的目的/功能
 	 * @param item
 	 * @author luohl
 	 */
-	public void addItem(BlogItem item);
-
-	/**
-	 * 更新分类
-	 * description: 函数的目的/功能
-	 * @param item
-	 * @author luohl
-	 */
-	public boolean update(BlogItem item);
+	public int saveItem(BlogItem item);
 
 	/**
 	 * 
@@ -46,6 +38,15 @@ public interface BlogItemService
 	 * @author luohl
 	 */
 	public List<BlogItem> queryBlogItemByUserId(String userId);
+
+	/**
+	 * 
+	 * description: 通过ID查询分类
+	 * @param itemId
+	 * @return
+	 * @author luohl
+	 */
+	public BlogItem queryBlogItemById(int itemId);
 
 	/**
 	 * 

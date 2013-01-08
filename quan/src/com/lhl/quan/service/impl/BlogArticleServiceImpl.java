@@ -91,17 +91,33 @@ public class BlogArticleServiceImpl implements BlogArticleService
 	}
 
 	@Override
-	public List<BlogArticle> queryBlogByUserId(String userId, int offset, int total)
+	public List<BlogArticle> queryBlogByUserIdOrItem(String userId, int itemId, int offset, int total)
 	{
 
-		return blogArticleDao.queryBlogByUserId(userId, offset, total);
+		if (itemId == 0)
+		{
+			return blogArticleDao.queryBlogByUserId(userId, offset, total);
+		}
+		else
+		{
+			return blogArticleDao.queryBlogByItemId(itemId, offset, total);
+		}
+
 	}
 
 	@Override
-	public int queryCountByUserId(String userId)
+	public int queryCountByUserIdOrItem(String userId, int itemId)
 	{
 
-		return blogArticleDao.queryCountByUserId(userId);
+		if (itemId == 0)
+		{
+			return blogArticleDao.queryCountByUserId(userId);
+		}
+		else
+		{
+			return blogArticleDao.queryCountByItemId(itemId);
+		}
+
 	}
 
 	private boolean isCurUser(String userId, int id)

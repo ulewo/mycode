@@ -50,12 +50,30 @@ public class BlogArticleAction extends BaseAction
 
 	private int allowReplay;
 
+	private int id;
+
+	private BlogArticle blogArticle;
+
+	private String itemName;
+
+	private int itemRang;
+
+	private BlogItem blogItem;
+
 	public String blog()
 	{
 
 		try
 		{
-			int countNumber = blogArticleService.queryCountByUserId(userId);
+			if (itemId != 0)
+			{
+				blogItem = blogItemService.queryBlogItemById(itemId);
+				if (blogItem == null || !blogItem.getUserId().equals(userId))
+				{
+					return ERROR;
+				}
+			}
+			int countNumber = blogArticleService.queryCountByUserIdOrItem(userId, itemId);
 			Pagination.setPageSize(Constant.pageSize50);
 			int pageSize = Pagination.getPageSize();
 			pageTotal = Pagination.getPageTotal(countNumber);
@@ -68,7 +86,7 @@ public class BlogArticleAction extends BaseAction
 				page = 1;
 			}
 			int noStart = (page - 1) * pageSize;
-			blogList = blogArticleService.queryBlogByUserId(userId, noStart, pageSize);
+			blogList = blogArticleService.queryBlogByUserIdOrItem(userId, itemId, noStart, pageSize);
 		}
 		catch (Exception e)
 		{
@@ -170,6 +188,81 @@ public class BlogArticleAction extends BaseAction
 		out.println(String.valueOf(obj));
 	}
 
+	public String blogdetail()
+	{
+
+		try
+		{
+
+			blogArticle = blogArticleService.queryBlogById(id);
+			if (null == blogArticle)
+			{
+				return ERROR;
+			}
+			else
+			{
+				userId = blogArticle.getUserId();
+				blogItem = blogItemService.queryBlogItemById(blogArticle.getItemId());
+			}
+		}
+		catch (Exception e)
+		{
+			return ERROR;
+		}
+		return SUCCESS;
+	}
+
+	public String manageItem() throws IOException
+	{
+
+		try
+		{
+			User sessionUser = getSessionUser();
+			if (sessionUser != null)
+			{
+				itemList = blogItemService.queryBlogItemByUserId(sessionUser.getUserId());
+			}
+			else
+			{
+				return ERROR;
+			}
+		}
+		catch (Exception e)
+		{
+			return ERROR;
+		}
+		return SUCCESS;
+	}
+
+	public void saveItem() throws IOException
+	{
+
+		BlogItem item = new BlogItem();
+		item.setId(id);
+		item.setItemName(itemName);
+		item.setItemRang(itemRang);
+		int id = blogItemService.saveItem(item);
+		JSONObject obj = new JSONObject();
+		obj.put("id", id);
+		HttpServletResponse response = getResponse();
+		response.setContentType("text/html;charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		out.println(String.valueOf(obj));
+	}
+
+	public void deleteItem() throws IOException
+	{
+
+		User sessionUser = getSessionUser();
+		blogItemService.delete(sessionUser.getUserId(), id);
+		JSONObject obj = new JSONObject();
+		obj.put("result", "ok");
+		HttpServletResponse response = getResponse();
+		response.setContentType("text/html;charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		out.println(String.valueOf(obj));
+	}
+
 	public void setBlogArticleService(BlogArticleService blogArticleService)
 	{
 
@@ -260,4 +353,33 @@ public class BlogArticleAction extends BaseAction
 		this.allowReplay = allowReplay;
 	}
 
+	public void setId(int id)
+	{
+
+		this.id = id;
+	}
+
+	public BlogArticle getBlogArticle()
+	{
+
+		return blogArticle;
+	}
+
+	public BlogItem getBlogItem()
+	{
+
+		return blogItem;
+	}
+
+	public void setItemName(String itemName)
+	{
+
+		this.itemName = itemName;
+	}
+
+	public void setItemRang(int itemRang)
+	{
+
+		this.itemRang = itemRang;
+	}
 }

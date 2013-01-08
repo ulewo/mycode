@@ -12,8 +12,19 @@
 	
 	<!-- 添加博客分类 -->
 	<insert id="addBlogItem" parameterClass="blogItem">
-		insert into blog_item (userid,itemname,itemrang)
-		values(#userId#,#itemName#,#itemRang#);
+		
+		<selectKey resultClass="java.lang.Integer" type="pre"
+            keyProperty="id">
+            select SEQ_TMG_ID.nextval val from dual
+            </selectKey>
+        <![CDATA[
+           insert into blog_item (userid,itemname,itemrang)
+		   values(#userId#,#itemName#,#itemRang#);
+        ]]>
+         <selectKey resultClass="int" keyProperty="id">
+            SELECT
+            S_SGS_REMARK.CURRVAL AS ID FROM DUAL 
+         </selectKey>
 	</insert>
 	
 	<!-- 通过userid查询博客分类 -->

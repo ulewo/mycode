@@ -18,26 +18,19 @@ public class BlogItemServiceImpl implements BlogItemService
 	}
 
 	@Override
-	public void addItem(BlogItem item)
+	public int saveItem(BlogItem item)
 	{
 
-		blogItemDao.addItem(item);
-
-	}
-
-	@Override
-	public boolean update(BlogItem item)
-	{
-
-		if (isCurUser(item.getUserId(), item.getId()))
+		int id = item.getId();
+		if (item.getId() != 0)
 		{
 			blogItemDao.update(item);
-			return true;
 		}
 		else
 		{
-			return false;
+			id = blogItemDao.addItem(item);
 		}
+		return id;
 	}
 
 	@Override
@@ -82,6 +75,12 @@ public class BlogItemServiceImpl implements BlogItemService
 		{
 			return false;
 		}
+	}
+
+	public BlogItem queryBlogItemById(int itemId)
+	{
+
+		return blogItemDao.queryBlogItemById(itemId);
 	}
 
 }

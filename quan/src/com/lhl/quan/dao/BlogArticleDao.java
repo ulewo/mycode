@@ -100,6 +100,16 @@ public class BlogArticleDao extends SqlMapClientDaoSupport
 		return (List<BlogArticle>) getSqlMapClientTemplate().queryForList("blogArticle.queryBlogByUserId", parmMap);
 	}
 
+	public List<BlogArticle> queryBlogByItemId(int itemId, int offset, int total)
+	{
+
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("itemId", itemId);
+		parmMap.put("offset", offset);
+		parmMap.put("total", total);
+		return (List<BlogArticle>) getSqlMapClientTemplate().queryForList("blogArticle.queryBlogByItemId", parmMap);
+	}
+
 	/**
 	 * 
 	 * description: 根据用户ID查询总数
@@ -112,5 +122,19 @@ public class BlogArticleDao extends SqlMapClientDaoSupport
 	{
 
 		return (Integer) this.getSqlMapClientTemplate().queryForObject("blogArticle.queryCountByUserId", userId);
+	}
+
+	/**
+	 * 
+	 * description: 根据分类Id查询总数
+	 * @param userId
+	 * @return
+	 * @throws Exception
+	 * @author luohl
+	 */
+	public int queryCountByItemId(int itemId)
+	{
+
+		return (Integer) this.getSqlMapClientTemplate().queryForObject("blogArticle.queryCountByItemId", itemId);
 	}
 }

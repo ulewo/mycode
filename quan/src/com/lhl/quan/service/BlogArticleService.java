@@ -57,7 +57,7 @@ public interface BlogArticleService
 	 * @return
 	 * @author luohl
 	 */
-	public List<BlogArticle> queryBlogByUserId(String userId, int offset, int total);
+	public List<BlogArticle> queryBlogByUserIdOrItem(String userId, int itemId, int offset, int total);
 
 	/**
 	 * 
@@ -66,5 +66,5 @@ public interface BlogArticleService
 	 * @return
 	 * @author luohl
 	 */
-	public int queryCountByUserId(String userId);
+	public int queryCountByUserIdOrItem(String userId, int itemId);
 }
