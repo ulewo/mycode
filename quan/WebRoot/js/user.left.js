@@ -65,9 +65,9 @@ function loadItem(itemId) {
 function ArticleItem(item) {
 	this.itemPanel = $("<div class='blog_item'></div>");
 	this.index_itemname = $(
-			"<div class='blog_itemname'><a href='article?itemId=" + item.id
-					+ "'>" + item.itemName + "</a></div>").appendTo(
-			this.itemPanel);
+			"<div class='blog_itemname'><a href='blog.jspx?userId=" + userId
+					+ "&itemId=" + item.id + "'>" + item.itemName
+					+ "</a></div>").appendTo(this.itemPanel);
 	this.countSpan = $(
 			"<div class='blog_articlecount'>(" + item.articleCount + ")</div>")
 			.appendTo(this.itemPanel);

@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<style>
-</style>    
 <div style="padding-top:10px;">
 	<div class="manage_back"><a href="../group/group.jspx?gid=${gid}">&lt;&lt;返回窝窝首页</a></div>
 	<div class="manage_tit">
