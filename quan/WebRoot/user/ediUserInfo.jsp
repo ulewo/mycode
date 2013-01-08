@@ -26,9 +26,6 @@
 	   </div>
 	   <div class="right">
 		  	<div class="user_main">
-				  <div class="left">
-				  	<jsp:include page="user_left.jsp"></jsp:include>
-				  </div>
 				  <div class="right">
 				  	<form action="updateUserInfo.jspx" method="post">
 				    <input type="hidden" name="userId" value="${user.userId }"/>

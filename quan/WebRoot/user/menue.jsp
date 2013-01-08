@@ -21,5 +21,4 @@
 <ul class="menue">
 	<li id="selected4"><a href="addBlog.jspx">发表博文</a></li>
 	<li id="selected5"><a href="manageItem.jspx">分类管理</a></li>
-	<li id="selected6"><a href="replyManage.jspx?gid=${gid}">博客评论管理</a></li>
 </ul>
