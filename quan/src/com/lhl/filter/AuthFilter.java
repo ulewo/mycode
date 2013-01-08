@@ -2,8 +2,11 @@ package com.lhl.filter;
 
 import java.io.IOException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -22,13 +25,37 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import com.lhl.entity.User;
 import com.lhl.quan.service.UserService;
 import com.lhl.quan.service.impl.UserServiceImpl;
+import com.lhl.util.Constant;
 import com.lhl.util.Tools;
 
 public class AuthFilter extends HttpServlet implements Filter
 {
+	private List<String> notCheckURLList = new ArrayList<String>();
+
+	protected FilterConfig filterConfig = null;
+
+	public void init(FilterConfig filterConfig) throws ServletException
+	{
+
+		this.filterConfig = filterConfig;
+
+		String notCheckURLListStr = filterConfig.getInitParameter("mustlogin");
+
+		if (notCheckURLListStr != null)
+		{
+			StringTokenizer st = new StringTokenizer(notCheckURLListStr, ";");
+			notCheckURLList.clear();
+			while (st.hasMoreTokens())
+			{
+				notCheckURLList.add(st.nextToken());
+			}
+		}
+	}
+
 	public void destroy()
 	{
 
+		notCheckURLList.clear();
 	}
 
 	public void doFilter(ServletRequest req, ServletResponse rep, FilterChain chain) throws IOException,
@@ -37,60 +64,36 @@ public class AuthFilter extends HttpServlet implements Filter
 
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) rep;
-		String currentURL = request.getRequestURI();
 		Object userObj = request.getSession().getAttribute("user");
-		/*if (currentURL.contains("cms")) {
-			if (user == null || !"10000".equals(user.getUserId())) {
-				response.sendRedirect("../index.jspx");
-				return;
-			}
-		}*/
-		if (currentURL.contains("jspx"))
-		{
-			if (userObj == null)
-			{
-				autoLogin(request);
-			}
-		}
-		if ((currentURL.contains("reArticle") || currentURL.contains("subReArticle") || currentURL.contains("manage"))
-				&& null == userObj)
-		{
-			//response.sendRedirect("../error/error.jsp");
-			//return;
-		}
 
-		if (currentURL.contains("admin"))
+		String uri = request.getServletPath() + (request.getPathInfo() == null ? "" : request.getPathInfo());
+		if (!uri.contains("error.jsp"))
 		{
-			if (null == userObj)
+			if (null == userObj && (checkRequestURIIntNotFilterList(request) || uri.contains("manage")))
 			{
 				response.sendRedirect("../error/error.jsp");
 				return;
 			}
 			else
 			{
+				autoLogin(request);
 				User user = (User) userObj;
-				if (!"10000".equals(user.getUserId()))
+				if (uri.contains("admin") && !Constant.SUPERADMIN.equals(user.getUserId()))
 				{
 					response.sendRedirect("../error/error.jsp");
 					return;
 				}
-			}
 
+			}
 		}
-		/*
-		 * if (currentURL.contains("vsgame")) { if
-		 * (currentURL.contains("/vsgame/vsgame.jspx") ||
-		 * currentURL.contains("/vsgame/relation.jspx")) { if (user == null) {
-		 * response.sendRedirect("../common/nologin.jsp"); return; } } else { if
-		 * (user == null || !"Y".equals(user.getIsRelatVs())) {
-		 * response.sendRedirect("../index.jspx"); return; } } }
-		 */
 		chain.doFilter(request, rep);
 	}
 
-	public void init(FilterConfig filterConfig) throws ServletException
+	private boolean checkRequestURIIntNotFilterList(HttpServletRequest request)
 	{
 
+		String uri = request.getServletPath() + (request.getPathInfo() == null ? "" : request.getPathInfo());
+		return notCheckURLList.contains(uri);
 	}
 
 	private void autoLogin(HttpServletRequest req)
