@@ -4,7 +4,8 @@ import java.util.List;
 
 import com.lhl.entity.Message;
 
-public interface MessageService {
+public interface MessageService
+{
 
 	/**
 	 * 查询留言
@@ -31,4 +32,14 @@ public interface MessageService {
 	 * @throws Exception
 	 */
 	public Message addMessage(Message message) throws Exception;
+
+	/**
+	 * 
+	 * description: 删除评论
+	 * @param message
+	 * @return
+	 * @throws Exception
+	 * @author luohl
+	 */
+	public boolean deletMessage(String userId, String curUserId, int id);
 }

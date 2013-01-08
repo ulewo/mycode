@@ -124,7 +124,7 @@ public class BlogArticleServiceImpl implements BlogArticleService
 	{
 
 		BlogArticle article = blogArticleDao.queryBlogById(id);
-		if (article != null && article.getUserId().equals(userId))
+		if (article != null && (article.getUserId().equals(userId)))
 		{
 			return true;
 		}

@@ -45,14 +45,16 @@ public class BlogReplyServiceImpl implements BlogReplyService
 	public boolean delete(String userId, int id)
 	{
 
+		//userId，当前用户的userId
 		BlogReply reply = blogReplyDao.queryBlogReplyById(id);
 		//通过ID查询回复
 		if (null != reply)
 		{
 			//通过回复获取博客ID
 			BlogArticle article = blgoArticleDao.queryBlogById(reply.getBlogId());
-			//如果博客的发布人和当前用户id匹配，那么就可以删除。
-			if (null != article && article.getUserId().equals(userId))
+			//删除 1,博主可以删除评论  article.getUserId()  博主ID
+			//    2,发布评论的人可以删除评论   评论人Id ;
+			if (null != article && (article.getUserId().equals(userId) || reply.getUserId().equals(userId)))
 			{
 				blogReplyDao.delete(id);
 				return true;

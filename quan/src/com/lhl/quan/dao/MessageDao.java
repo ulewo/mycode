@@ -8,7 +8,8 @@ import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 import com.lhl.entity.Message;
 
-public class MessageDao extends SqlMapClientDaoSupport {
+public class MessageDao extends SqlMapClientDaoSupport
+{
 
 	/**
 	 * 查询所有留言
@@ -18,7 +19,8 @@ public class MessageDao extends SqlMapClientDaoSupport {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<Message> queryMessage(String userId, int offset, int total) throws Exception {
+	public List<Message> queryMessage(String userId, int offset, int total) throws Exception
+	{
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("userId", userId);
@@ -33,22 +35,37 @@ public class MessageDao extends SqlMapClientDaoSupport {
 	 * @return
 	 * @throws Exception
 	 */
-	public int getCount(String userId) throws Exception {
+	public int getCount(String userId) throws Exception
+	{
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("userId", userId);
 		return (Integer) getSqlMapClientTemplate().queryForObject("message.queryCountByUserId", parmMap);
 	}
 
-	public List<Message> queryReMessage(int id) throws Exception {
+	public List<Message> queryReMessage(int id) throws Exception
+	{
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("id", id);
 		return (List<Message>) getSqlMapClientTemplate().queryForList("message.queryMessageByUserId", parmMap);
 	}
 
-	public void addMessage(Message message) throws Exception {
+	public void addMessage(Message message) throws Exception
+	{
 
 		getSqlMapClientTemplate().insert("message.addMessage", message);
+	}
+
+	public Message queryMessageById(int id)
+	{
+
+		return (Message) getSqlMapClientTemplate().queryForObject("message.queryMessageById", id);
+	}
+
+	public void deleteMessage(int id)
+	{
+
+		getSqlMapClientTemplate().delete("message.deleteMessage");
 	}
 }
