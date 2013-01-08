@@ -23,15 +23,12 @@
   </head>
   <body>
   <jsp:include page="../common/head.jsp"/>
-  <div class="bodycon">
-  <jsp:include page="menue.jsp"></jsp:include>
-  <div class="user_main">
-  <div class="left">
-  	<jsp:include page="user_left.jsp"></jsp:include>
-  </div>
-  <div class="right">
-  	<div id="loginerror"></div>
-		<form action="resetPassword.jspx" method="post" id="subform">
+   <div class="main">
+	   <div class="left">
+	  	<jsp:include page="menue.jsp"></jsp:include>
+	   </div>
+	   <div class="right">
+		  	<form action="resetPassword.jspx" method="post" id="subform">
 		<input type="hidden" name="account" value="${account}"/>
 		<input type="hidden" name="code" value="${code}"/>
 		<div class="input_area">
@@ -65,8 +62,8 @@
 			</div>
 		</div>
 		</form>
-  </div>
-  </div>
+  		</div>
+  		<div class="clear"></div>
   </div>
   </body>
 </html>

@@ -13,34 +13,24 @@
 	<script type="text/javascript" src="../js/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="../css/user.userinfo.css">
 	<style type="text/css">
-		#sel_left2 a{background:url(../images/bg.gif) 0px -85px;}
-		#sel_left2 a:hover{text-decoration:none;}
+		#sel_left6 a{background:url(../images/bg.gif) 0px -85px;}
+		#sel_left6 a:hover{text-decoration:none;}
 	</style>
   </head>
   <body>
   <jsp:include page="../common/head.jsp"/>
-<div class="main">
+   <div class="main">
 	  <div class="left">
 	  	<jsp:include page="left.jsp"></jsp:include>
 	  </div>
-	  <div class="right">
-	  	  <div><a href="userInfo.jspx?userId=${userId}">空间</a>&gt;&gt;创建的窝窝</div>
-	  	  <div class="user_main">
-		  	<c:forEach var="group" items="${createGroups}">
-		  		<div class="g_gcon">
-		  			<div class="g_gon_img"><a href="../group/group.jspx?gid=${group.id}"><img src="../upload/${group.groupIcon}" width="60" border="0"></a></div>
-		  			<div class="g_gon_info">
-		  				<div><a href="../group/group.jspx?gid=${group.id}">${group.groupName}</a></div>
-		  				<div>成员:${group.members}</div>
-		  				<div>人气:${group.visitCount}</div>
-		  			</div>
-		  		</div>
-		  	</c:forEach>
-  		   	<div style="clear:left;"></div>
-  		  </div>
-	  </div>
-	  <div class="clear"></div>
-</div>
- <jsp:include page="../common/foot.jsp"/>
-</body>
+  	<div class="right">
+  		<a href="userInfo.jspx?userId=${userId}">空间</a>&gt;&gt;<a href="blog.jspx?userId=${userId}">博客</a>
+  			&gt;&gt;<a href="blog.jspx?userId=${userId}&itemId=${blogItem.id}">${blogItem.itemName}</a>&gt;&gt;博客正文
+  		<div>${blogArticle.content}</div>
+  		
+ 	</div>
+ 	<div style="clear:left;"></div>
+ 	</div>
+    <jsp:include page="../common/foot.jsp"/>
+  </body>
 </html>

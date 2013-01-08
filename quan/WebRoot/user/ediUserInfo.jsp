@@ -20,30 +20,35 @@
   </head>
   <body>
   <jsp:include page="../common/head.jsp"/>
-  <div class="bodycon">
-  	  <jsp:include page="menue.jsp"></jsp:include>
-	  <div class="user_main">
-		  <div class="left">
-		  	<jsp:include page="user_left.jsp"></jsp:include>
-		  </div>
-		  <div class="right">
-		  	<form action="updateUserInfo.jspx" method="post">
-		    <input type="hidden" name="userId" value="${user.userId }"/>
-		  	ID:${user.userId}<br>
-		  	昵称：${user.userName }<br>
-		  	性别：
-		  	<input type="radio" value="M" name="sex" <c:if test="${user.age=='靓仔'}">checked="checked" </c:if>>靓仔&nbsp;&nbsp;&nbsp;&nbsp;
-		  	<input type="radio" value="F" name="sex" <c:if test="${user.age=='美女'}">checked="checked" </c:if>>美女<br>
-		  		  
-		  	年龄：<input type="text" value="${user.age }" name="age"><br>
-		  	职业：<input type="text" value="${user.work}" name="work"><br>
-		  	地址：<input type="text" value="${user.address }" name="address"><br>
-		  	个人签名:<input type="text" value="${user.characters}" name="characters"><br>
-		  	注册时间：${fn:substring(user.registerTime,0,10) }<br>
-		  	<input type="submit" value="提交">
-		  	</form>
-		  </div>
-	  </div>
+  <div class="main">
+	   <div class="left">
+	  	<jsp:include page="menue.jsp"></jsp:include>
+	   </div>
+	   <div class="right">
+		  	<div class="user_main">
+				  <div class="left">
+				  	<jsp:include page="user_left.jsp"></jsp:include>
+				  </div>
+				  <div class="right">
+				  	<form action="updateUserInfo.jspx" method="post">
+				    <input type="hidden" name="userId" value="${user.userId }"/>
+				  	ID:${user.userId}<br>
+				  	昵称：${user.userName }<br>
+				  	性别：
+				  	<input type="radio" value="M" name="sex" <c:if test="${user.age=='靓仔'}">checked="checked" </c:if>>靓仔&nbsp;&nbsp;&nbsp;&nbsp;
+				  	<input type="radio" value="F" name="sex" <c:if test="${user.age=='美女'}">checked="checked" </c:if>>美女<br>
+				  		  
+				  	年龄：<input type="text" value="${user.age }" name="age"><br>
+				  	职业：<input type="text" value="${user.work}" name="work"><br>
+				  	地址：<input type="text" value="${user.address }" name="address"><br>
+				  	个人签名:<input type="text" value="${user.characters}" name="characters"><br>
+				  	注册时间：${fn:substring(user.registerTime,0,10) }<br>
+				  	<input type="submit" value="提交">
+				  	</form>
+				  </div>
+			 </div>
+  		</div>
+  		<div class="clear"></div>
   </div>
   </body>
 </html>

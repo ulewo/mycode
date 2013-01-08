@@ -27,14 +27,12 @@
 </head>
 <body>
 <jsp:include page="../common/head.jsp"/>
-<div class="bodycon">
-	<jsp:include page="menue.jsp"></jsp:include>
-	<div class="user_main">
-	<div class="left">
-		<jsp:include page="user_left.jsp"></jsp:include>
-	</div>
-	<div class="right">
-			<input type="hidden" id="x1" name="x1" value="" />
+<div class="main">
+	   <div class="left">
+	  	<jsp:include page="menue.jsp"></jsp:include>
+	   </div>
+	   <div class="right">
+		  	<input type="hidden" id="x1" name="x1" value="" />
 			<input type="hidden" id="y1" name="y1" value="" />
 			<input type="hidden" id="w" name="y2" value="" />
 			<input type="hidden" id="h" name="y2" value="" />
@@ -65,10 +63,8 @@
 				<div class="bbtn1" id="save"><a href="javascript:saveUserIcon('${userId}',0)">保存设置</a></div>
 				<div id="load"><img src="../images/loading.gif"></div>
 			</div>
-	</div>
-	<div class="clear"></div>
-	</div>
-</div>	
-<div class="foot"></div>
+  		</div>
+  		<div class="clear"></div>
+  </div>
 </body>
 </html>

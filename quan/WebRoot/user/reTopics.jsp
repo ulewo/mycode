@@ -25,6 +25,7 @@
 	  	<jsp:include page="left.jsp"></jsp:include>
 	  </div>
 	  <div class="right">
+	  	  <div><a href="userInfo.jspx?userId=${userId}">空间</a>&gt;&gt;回复的文章</div>
 	  	  <div class="user_main">
 		  	<div class="ath">
 				<div class="atit">话题</div>

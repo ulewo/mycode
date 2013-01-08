@@ -14,5 +14,4 @@
 		<a href="userIcon.jspx?userId=${userId }" class="sel2">修改图像</a>
 		<a href="changePassword.jspx?userId=${userId }" class="sel3">修改密码</a>
 	</div>
-	
 </c:if>

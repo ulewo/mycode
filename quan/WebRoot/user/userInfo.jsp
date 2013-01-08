@@ -38,7 +38,7 @@
 		  		<div class="topblog_titcon"><span class="topblog_tit">最新博文</span><span class="topblog_link"><a href="blog.jspx?userId=${userId}">进入博客</a></span></div>
 		  		<c:forEach var="blog" items="${blogList}">
 		  			<div class="blog_link">
-		  				<a href="###">${blog.title}</a><span>${blog.reCount}/${blog.readCount}</span>
+		  				<a href="blogdetail.jspx?id=${blog.id}">${blog.title}</a><span>${blog.reCount}/${blog.readCount}</span>
 		  			</div>
 		  		</c:forEach>
 		  		<c:if test="${empty blogList}">

@@ -113,9 +113,10 @@
   <jsp:include page="../common/head.jsp"/>
   <div class="main">
 	  <div class="left">
-	  	<jsp:include page="left.jsp"></jsp:include>
+	  	<jsp:include page="menue.jsp"></jsp:include>
 	  </div>
 	  <div class="right">
+	    <div><a href="userInfo.jspx?userId=${user.userId}">空间</a>&gt;&gt;<a href="manage.jspx">空间管理</a>&gt;&gt;发表博文</div>
 	  	<form action="saveBlog.jspx" method="post"  name="example" id="subForm">
 		<div class="ad_line">
 			<div class="ad_title">

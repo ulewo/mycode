@@ -1,13 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<div class="menue">
-	<ul>
-		<li class="blank" id="sel_left1"><a href="userInfo.jspx?userId=${userId}" id="selected1">个人中心</a></li>
-		<li class="blank" id="sel_left2"><a href="createdGroups.jspx?userId=${userId}" id="selected2">Ta创建的友吧</a></li>
-		<li class="blank" id="sel_left3"><a href="joinedGroups.jspx?userId=${userId}" id="selected3">Ta加入的友吧</a></li>
-		<li class="blank" id="sel_left4"><a href="postTopics.jspx?userId=${userId}" id="selected4">Ta发起的话题</a></li>
-		<li class="blank" id="sel_left5"><a href="reTopics.jspx?userId=${userId}" id="selected5">Ta参与的话题</a></li>
-		<li class="blank" id="sel_left6"><a href="blog.jspx?userId=${userId}" id="selected6">博客</a></li>
-		<li class="blank" id="sel_left7"><a href="addBlog.jspx" id="selected7">发表博文</a></li>
-	</ul>
+<link rel="stylesheet"  href="../css/manage.article.css" type="text/css"  />   
+<div style="padding-top:10px;">
+	<div class="manage_tit">
+		<span class="manage_tit1"><img src="../upload/${user.userLittleIcon}" width="40"></span>
+		<span class="manage_tit2"><a href="../user/userInfo.jspx?userId=${user.userId}">${user.userName}</a></span>
+	</div>
 </div>
+<div class="menue_tit">
+	个人信息管理
+</div>
+<ul class="menue">
+	<li id="selected1"><a href="manage.jspx">编辑个人资料</a></li>
+	<li id="selected2"><a href="changePassword.jspx">修改登录密码</a></li>
+	<li id="selected3"><a href="userIcon.jspx">修改头像</a></li>
+</ul>
+<div class="menue_tit">
+	 博客管理
+</div>
+<ul class="menue">
+	<li id="selected4"><a href="addBlog.jspx">发表博文</a></li>
+	<li id="selected5"><a href="manageItem.jspx">分类管理</a></li>
+	<li id="selected6"><a href="replyManage.jspx?gid=${gid}">博客评论管理</a></li>
+</ul>

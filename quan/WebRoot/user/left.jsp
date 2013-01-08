@@ -15,7 +15,7 @@
 				<span class="blog_icon"></span>
 				<span class="blog_tit">发表博文</span>
 			</a>
-			<a href="####" class="manage">
+			<a href="manage.jspx" class="manage">
 				<span class="manage_icon"></span>
 				<span class="manage_tit">空间管理</span>
 			</a>

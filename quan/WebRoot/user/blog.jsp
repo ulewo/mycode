@@ -24,11 +24,18 @@
 	  	<jsp:include page="left.jsp"></jsp:include>
 	  </div>
   	<div class="right">
+  		<div>
+  			<a href="userInfo.jspx?userId=${userId}">空间</a>&gt;&gt;<a href="blog.jspx?userId=${userId}">博客</a>
+  			<c:if test="${blogItem!=null}">&gt;&gt;${blogItem.itemName}</c:if>
+  		</div>
+  		<div>
   		<c:forEach var="blog" items="${blogList}">
   			<div class="blog_link">
-  				<a href="###">${blog.title}</a><span>${blog.reCount}/${blog.readCount}</span>
+  				<a href="blogdetail.jspx?id=${blog.id}">${blog.title}</a><span>${blog.reCount}/${blog.readCount}</span>
   			</div>
 		 </c:forEach>
+  		</div>
+  		
  	</div>
  	<div style="clear:left;"></div>
  	</div>
