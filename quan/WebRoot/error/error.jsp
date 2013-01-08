@@ -14,7 +14,6 @@
 	<script type="text/javascript" charset="utf-8" src="../js/util.js"></script>
 </head>
 <body>
-	<div><img src="../images/error.gif"></div>
 	<div>
 		<c:if test="${errMsg!=null}">
 			${errMsg}
