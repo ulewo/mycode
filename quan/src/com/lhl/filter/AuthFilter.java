@@ -42,9 +42,7 @@ public class AuthFilter extends HttpServlet implements Filter
 	{
 
 		this.filterConfig = filterConfig;
-
 		String notCheckURLListStr = filterConfig.getInitParameter("mustlogin");
-
 		if (notCheckURLListStr != null)
 		{
 			StringTokenizer st = new StringTokenizer(notCheckURLListStr, ";");
