@@ -33,24 +33,24 @@
 		  	<div class="topblog">
 		  		<div class="topblog_titcon"><span class="topblog_tit">留言板</span></div>
 		  		<div class="messagelist"  id="messagelist">
-			  	<c:forEach var="message" items="${messageList}">
-			  	<div class="main_message">
-			  		<div><span class="message_name">
-			  				<c:if test="${message.reUserId!=null&&message.reUserId!=''}">
-								<a href="userInfo.jspx?userId=${message.reUserId}">${message.reUserName }</a>
-							</c:if>
-			  				<c:if test="${message.reUserId==null||message.reUserId==''}">
-			  					${message.reUserName }
-			  				</c:if>
-			  			</span>&nbsp;&nbsp;&nbsp;&nbsp;发表于：${fn:substring(message.postTime,0,10)}
-			  			</div>
-			  		<div class="message_con">${message.message }</div>
-			  	</div>	
-			  	</c:forEach>
-		  	</div>
-	  		<c:if test="${empty messageList}">
-	  			<span>尚无任何留言</span>
-	  		</c:if>
+				  	<c:forEach var="message" items="${messageList}">
+				  	<div class="main_message">
+				  		<div><span class="message_name">
+				  				<c:if test="${message.reUserId!=null&&message.reUserId!=''}">
+									<a href="userInfo.jspx?userId=${message.reUserId}">${message.reUserName }</a>
+								</c:if>
+				  				<c:if test="${message.reUserId==null||message.reUserId==''}">
+				  					${message.reUserName }
+				  				</c:if>
+				  			</span>&nbsp;&nbsp;&nbsp;&nbsp;发表于：${fn:substring(message.postTime,0,10)}
+				  			</div>
+				  		<div class="message_con">${message.message }</div>
+				  	</div>	
+				  	</c:forEach>
+		  		</div>
+		  		<c:if test="${empty messageList}" >
+		  			<span class="nomessage">尚无任何留言</span>
+		  		</c:if>
 		  	</div>
 		  	<div  class="pagination" style="height:30px;float:none;margin-top:10px;">
 				<p:pager url="message.jspx?userId=${userId}" page="${page}" pageTotal = "${pageTotal }"></p:pager> 
