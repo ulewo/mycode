@@ -48,6 +48,7 @@ function submitForm() {
 				art.dialog.tips("出现错误，稍后重试!");
 			} else {
 				art.dialog.tips("发表成功");
+				$(".nomessage").remove();
 				var reUserId = data.msg.reUserId;
 				var userName = data.msg.reUserName;
 				var content = data.msg.message;
