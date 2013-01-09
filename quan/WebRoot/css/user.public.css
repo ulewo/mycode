@@ -18,6 +18,8 @@ body{background:#F9F9F9}
 .opts .sendMsg:hover{background: #2E94E9;background-image:url('../images/space-opts.png');background-position: 15px -140px;background-repeat:no-repeat;}
 
 .right{float:left;width:770px;margin-left:10px;text-align:left;}
+.navPath{color:#999999}
+.navPath a{color:#4466BB}
 .baseinfo{border:1px solid #EEEEEE;padding:10px;background:#FFFFFF;}
 .base_tit{font-weight:bold;font-size:13px;}
 .base_tit{font-size:13px}
@@ -39,3 +41,5 @@ body{background:#F9F9F9}
 .blog_itemname a:hover{text-decoration:underline;}
 .blog_itemname{float:left;width:150px;}
 .blog_articlecount{float:left;width:50px;color: #666}
+.aop{width:100px;}
+.atr2{height:30px;}
