@@ -8,6 +8,7 @@ margin: 0px auto;
 font-size: 13px;
 text-align: center;
 width: 100%;}
+.right{border:1px solid #EEEEEE;padding:5px;}
 -->
 </style>
 <div style="padding-top:10px;">

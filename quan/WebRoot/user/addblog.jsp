@@ -19,8 +19,7 @@
 	<script type="text/javascript" charset="utf-8" src="../js/user.blog.js"></script>
 	<script type="text/javascript" charset="utf-8" src="../js/util.js"></script>
 	<style type="text/css">
-		#sel_left7 a{background:url(../images/bg.gif) 0px -85px;}
-		#sel_left7 a:hover{text-decoration:none;}
+		#selected4 a{background:#FFFFFF;}
 	</style>
 	<script type="text/javascript">
 	var isHaveImg = false;
@@ -116,7 +115,11 @@
 	  	<jsp:include page="menue.jsp"></jsp:include>
 	  </div>
 	  <div class="right">
-	    <div class="navPath"><a href="userInfo.jspx?userId=${user.userId}">空间</a>&nbsp;&gt;&gt;&nbsp;<a href="manage.jspx">空间管理</a>&nbsp;&gt;&gt;&nbsp;发表博文</div>
+	    <div class="navPath"><a href="userInfo.jspx?userId=${user.userId}">空间</a>&nbsp;&gt;&gt;&nbsp;发表博文</div>
+	  	<div class="ad-part bbtn1" style="text-align:center;margin-top:10px;float:none;margin-left:0px;">
+			<a href="javascript:submitForm()" onfocus="this.blur()" >发表话题</a>
+		</div>
+		<div>
 	  	<form action="saveBlog.jspx" method="post"  name="example" id="subForm">
 		<div class="ad_line">
 			<div class="ad_title">
@@ -153,10 +156,12 @@
 				&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:insertImage()">插入图片</a>
 			</div>
 		</div>
-		<div class="ad-part bigButon" style="text-align:center;margin-top:10px;">
-			<a href="javascript:submitForm()" onfocus="this.blur()" >发表话题</a>
+		<div class="ad-part bbtn1" style="text-align:center;margin-top:10px;">
+		<a href="javascript:submitForm()" onfocus="this.blur()" >发表话题</a>
 		</div>
+		
 		</form>
+		</div>
 	  </div>
 	  <div style="clear:left;"></div>
  </div>

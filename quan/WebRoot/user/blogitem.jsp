@@ -18,6 +18,8 @@
 <link rel="stylesheet"  href="../css/user.public.css" type="text/css"  />
 <style type="text/css">
 #selected5 a{background:#FFFFFF;}
+.atr .aop a{color:#ffffff}
+.atr .aop a:hover{color:#ffffff}
 </style>
 <script type="text/javascript">
 </script>
@@ -29,7 +31,7 @@
 		<jsp:include page="menue.jsp"></jsp:include>
 	</div>
 	<div class="right">
-		<div class="warinfo">最多可以添加8个分类</div>
+		<div class="navPath"><a href="userInfo.jspx?userId=${user.userId}">空间</a>&nbsp;&gt;&gt;&nbsp;修改头像</div>
 		<div class="ath">
 			<div class="atit">分类名称</div>
 			<div class="aorder">排&nbsp;序</div>

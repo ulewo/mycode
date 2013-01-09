@@ -13,16 +13,12 @@
 <script type="text/javascript" charset="utf-8" src="../editor/kindeditor-min.js"></script>
 <script type="text/javascript" charset="utf-8" src="../js/jquery.min.js"></script>
 <script type="text/javascript" src="../js/util.js"></script>
-<script type="text/javascript" src="../js/manage.bassetlogo.js"></script>
 <script type="text/javascript" src="../js/userspace.js"></script>
 <script src="../dialog/jquery.artDialog.min.js?skin=default"></script>
 <script src="../dialog/plugins/iframeTools.js"></script>
 <script type="text/javascript" src="../imgcutscripts/jquery.imgareaselect.pack.js"></script>
 <style type="text/css">
-	#sel_left1 a{background:url(../images/bg.gif) 0px -85px;}
-	#sel_left1 a:hover{text-decoration:none;}
-	a.sel2{background:#5A5A5A;color:white;font-weight:bold;}
-	.sys_logo{display:none;}
+	#selected3 a{background:#FFFFFF;}
 </style>
 </head>
 <body>
@@ -32,6 +28,7 @@
 	  	<jsp:include page="menue.jsp"></jsp:include>
 	   </div>
 	   <div class="right">
+		  	<div class="navPath"><a href="userInfo.jspx?userId=${user.userId}">空间</a>&nbsp;&gt;&gt;&nbsp;修改头像</div>
 		  	<input type="hidden" id="x1" name="x1" value="" />
 			<input type="hidden" id="y1" name="y1" value="" />
 			<input type="hidden" id="w" name="y2" value="" />

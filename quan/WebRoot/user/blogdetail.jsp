@@ -29,8 +29,9 @@
   			&nbsp;&gt;&gt;&nbsp;<a href="blog.jspx?userId=${userId}&itemId=${blogItem.id}">${blogItem.itemName}</a>&nbsp;&gt;&gt;&nbsp;博客正文
   		</div>
   		
-  		<div>${blogArticle.content}</div>
-  		
+  		<div class="blog_title">${blogArticle.title}</div>
+  		<div class="blogdetail">${blogArticle.content}</div>
+  		 
  	</div>
  	<div style="clear:left;"></div>
  	</div>

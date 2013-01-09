@@ -16,9 +16,7 @@
 	<link rel="stylesheet" type="text/css" href="../css/user.register.css">
 	<link rel="stylesheet" type="text/css" href="../css/user.userinfo.css">
 	<style type="text/css">
-	#sel_left1 a{background:url(../images/bg.gif) 0px -85px;}
-	#sel_left1 a:hover{text-decoration:none;}
-	a.sel3{background:#5A5A5A;color:white;font-weight:bold;}
+	#selected2 a{background:#FFFFFF;}
 	</style>
   </head>
   <body>
@@ -28,6 +26,7 @@
 	  	<jsp:include page="menue.jsp"></jsp:include>
 	   </div>
 	   <div class="right">
+		<div class="navPath"><a href="userInfo.jspx?userId=${user.userId}">空间</a>&nbsp;&gt;&gt;&nbsp;修改登录密码</div>
 		<form method="post" id="subform">
 			<div class="input_area">
 			<div class="tit">旧密码</div>

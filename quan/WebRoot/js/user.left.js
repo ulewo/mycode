@@ -41,23 +41,20 @@ function loadItem(itemId) {
 			var item = {};
 			item.id = "0";
 			item.itemName = "全部文章";
-			item.articleCount = "0";
+			item.articleCount = data.allcount;
 			var allItem = new ArticleItem(item);
 			if (item.id == itemId || itemId == "") {
 				allItem.getItemNamePanle().addClass("itemnameselect");
 			}
 			allItem.asHtml().appendTo($("#item"));
 			var items = data.list;
-			var count = 0;
 			for ( var i = 0; i < items.length; i++) {
-				var articleItem = new ArticleItem(items[i])
+				var articleItem = new ArticleItem(items[i]);
 				if (items[i].id == itemId) {
 					articleItem.getItemNamePanle().addClass("itemnameselect");
 				}
 				articleItem.asHtml().appendTo($("#item"));
-				count = count + items[i].articleCount;
 			}
-			allItem.setCount(count);
 		}
 	});
 }
