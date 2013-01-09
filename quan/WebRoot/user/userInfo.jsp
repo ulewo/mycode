@@ -32,8 +32,10 @@
 		  	<div class="baseinfo">
 			  	<span class="base_tit">加入时间：</span><span class="base_info">${fn:substring(userVo.registerTime,0,10) }</span><br>
 			  	<span class="base_tit">最近登录：</span><span class="base_info">${fn:substring(userVo.registerTime,0,10) }</span><br>
-			  	<span class="base_tit">地址：</span><span class="base_info">${userVo.work}</span><br>
-			  	<span class="base_tit">性别：</span><span class="base_info">${userVo.sex}</span>
+			  	<span class="base_tit">性别：</span><span class="base_info">${userVo.sex}</span><br>
+			  	<span class="base_tit">职业：</span><span class="base_info">${userVo.work}</span><br>
+			  	<span class="base_tit">地址：</span><span class="base_info">${userVo.address}</span><br>
+			  	
 		  	</div>
 		  	<div class="topblog">
 		  		<div class="topblog_titcon"><span class="topblog_tit">最新博文</span><span class="topblog_link"><a href="blog.jspx?userId=${userId}">进入博客</a></span></div>

@@ -24,7 +24,7 @@
 	  	<jsp:include page="left.jsp"></jsp:include>
 	  </div>
 	  <div class="right">
-	  	  <div><a href="userInfo.jspx?userId=${userId}">空间</a>&gt;&gt;创建的窝窝</div>
+	  	  <div class="navPath"><a href="userInfo.jspx?userId=${userId}">空间</a>&nbsp;&gt;&gt;&nbsp;创建的窝窝</div>
 	  	  <div class="user_main">
 		  	<c:forEach var="group" items="${createGroups}">
 		  		<div class="g_gcon">

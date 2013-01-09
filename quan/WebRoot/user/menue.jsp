@@ -12,8 +12,8 @@
 </div>
 <ul class="menue">
 	<li id="selected1"><a href="manage.jspx">编辑个人资料</a></li>
-	<li id="selected2"><a href="changePassword.jspx">修改登录密码</a></li>
-	<li id="selected3"><a href="userIcon.jspx">修改头像</a></li>
+	<li id="selected2"><a href="repassword.jsp">修改登录密码</a></li>
+	<li id="selected3"><a href="user_icon.jsp">修改头像</a></li>
 </ul>
 <div class="menue_tit">
 	 博客管理

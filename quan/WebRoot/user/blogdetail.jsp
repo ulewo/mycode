@@ -24,8 +24,11 @@
 	  	<jsp:include page="left.jsp"></jsp:include>
 	  </div>
   	<div class="right">
-  		<a href="userInfo.jspx?userId=${userId}">空间</a>&gt;&gt;<a href="blog.jspx?userId=${userId}">博客</a>
-  			&gt;&gt;<a href="blog.jspx?userId=${userId}&itemId=${blogItem.id}">${blogItem.itemName}</a>&gt;&gt;博客正文
+  		<div class="navPath">
+  			<a href="userInfo.jspx?userId=${userId}">空间</a>&nbsp;&gt;&gt;&nbsp;<a href="blog.jspx?userId=${userId}">博客</a>
+  			&nbsp;&gt;&gt;&nbsp;<a href="blog.jspx?userId=${userId}&itemId=${blogItem.id}">${blogItem.itemName}</a>&nbsp;&gt;&gt;&nbsp;博客正文
+  		</div>
+  		
   		<div>${blogArticle.content}</div>
   		
  	</div>

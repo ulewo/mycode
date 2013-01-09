@@ -12,7 +12,7 @@
 	<meta http-equiv="description" content="This is my page">
 	<script type="text/javascript" src="../js/jquery.min.js"></script>
 		<script type="text/javascript" src="../js/util.js"></script>
-	<script type="text/javascript" src="../js/user.repassword.js"></script>
+	<script type="text/javascript" src="../js/user.userinfo.js"></script>
 	<link rel="stylesheet" type="text/css" href="../css/user.register.css">
 	<link rel="stylesheet" type="text/css" href="../css/user.userinfo.css">
 	<style type="text/css">
@@ -28,13 +28,17 @@
 	  	<jsp:include page="menue.jsp"></jsp:include>
 	   </div>
 	   <div class="right">
-		  	<form action="resetPassword.jspx" method="post" id="subform">
-		<input type="hidden" name="account" value="${account}"/>
-		<input type="hidden" name="code" value="${code}"/>
+		<form method="post" id="subform">
+			<div class="input_area">
+			<div class="tit">旧密码</div>
+			<div class="input_con">
+				<input type="password" class="long_input" name="oldPwd" value="" id="oldPwd"/>
+			</div>
+		</div>
 		<div class="input_area">
 			<div class="tit">新密码</div>
 			<div class="input_con">
-				<input type="password" class="long_input" name="passWord" value="" id="passWord"/>
+				<input type="password" class="long_input" name="newPwd" value="" id="newPwd"/>
 			</div>
 		</div>
 		<div class="input_area">
@@ -44,21 +48,10 @@
 			</div>
 		</div>
 		<div class="input_area">
-			<div class="tit">验证码</div>
-			<div class="check_con">
-				<input type="text" class="long_input" name="checkCode" id="checkCode"/>
-			</div>
-			<div class="checkcode">
-				<a href="JavaScript:refreshImage();" onfocus="this.blur();"><img id="codeImage" src="../common/image.jsp" border="0"/></a>
-			</div>
-			<div class="changecode">
-				<a href="javascript:refreshImage()">换一张</a>
-			</div>
-		</div>
-		<div class="input_area">
 			<div class="tit"></div>
-			<div class="sub_con" id="subBtn">
-				<a href="javascript:repassword()">登录</a>
+			<div>
+		  		<div><input type="button" class="button" id="subBtn" value="修改密码" onclick="repassword()"><img id="loadImg" style="display:none;" src="../images/loading.gif" width="20"></div>
+		  		<div id="resultInfo" style="display:none;"></div>
 			</div>
 		</div>
 		</form>

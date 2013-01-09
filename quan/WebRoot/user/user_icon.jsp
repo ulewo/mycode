@@ -36,7 +36,7 @@
 			<input type="hidden" id="y1" name="y1" value="" />
 			<input type="hidden" id="w" name="y2" value="" />
 			<input type="hidden" id="h" name="y2" value="" />
-			<input type="hidden" name="groupicon" id="groupicon" value="${user.userLittleIcon}">
+			<input type="hidden" name="groupicon" id="groupicon" value="">
 			<!-- <div>
 				<div class="tit_con_user" style="cursor:pointer;"><div class="tit_con_radio"><input type="radio" name="iconType" class="iconType" checked="checked" id="cus_img"></div><div class="tit_con_tit">自定义头像</div></div>
 				<div class="tit_con_user" style="margin-top:10px;cursor:pointer;"><div class="tit_con_radio"><input type="radio" name="iconType" class="iconType" id="sys_img"></div><div class="tit_con_tit">推荐头像</div></div>

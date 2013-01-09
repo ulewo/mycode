@@ -11,6 +11,7 @@
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
 	<script type="text/javascript" src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/user.userinfo.js"></script>
 	<link rel="stylesheet" type="text/css" href="../css/user.userinfo.css">
 	<style type="text/css">
 		#sel_left1 a{background:url(../images/bg.gif) 0px -85px;}
@@ -27,20 +28,22 @@
 	   <div class="right">
 		  	<div class="user_main">
 				  <div class="right">
-				  	<form action="updateUserInfo.jspx" method="post">
+				  	<form  method="post" id="baseInfo">
 				    <input type="hidden" name="userId" value="${user.userId }"/>
 				  	ID:${user.userId}<br>
 				  	昵称：${user.userName }<br>
 				  	性别：
-				  	<input type="radio" value="M" name="sex" <c:if test="${user.age=='靓仔'}">checked="checked" </c:if>>靓仔&nbsp;&nbsp;&nbsp;&nbsp;
-				  	<input type="radio" value="F" name="sex" <c:if test="${user.age=='美女'}">checked="checked" </c:if>>美女<br>
-				  		  
-				  	年龄：<input type="text" value="${user.age }" name="age"><br>
-				  	职业：<input type="text" value="${user.work}" name="work"><br>
-				  	地址：<input type="text" value="${user.address }" name="address"><br>
-				  	个人签名:<input type="text" value="${user.characters}" name="characters"><br>
-				  	注册时间：${fn:substring(user.registerTime,0,10) }<br>
-				  	<input type="submit" value="提交">
+				  	<input type="radio" value="M" name="sex" <c:if test="${userVo.sex=='M'}">checked="checked" </c:if>>靓仔&nbsp;&nbsp;&nbsp;&nbsp;
+				  	<input type="radio" value="F" name="sex" <c:if test="${userVo.sex=='F'}">checked="checked" </c:if>>美女<br>
+				  	年龄：<input type="text" value="${userVo.age }" name="age"><br>
+				  	职业：<input type="text" value="${userVo.work}" name="work"><br>
+				  	地址：<input type="text" value="${userVo.address }" name="address"><br>
+				  	个人签名:<input type="text" value="${userVo.characters}" name="characters"><br>
+				  	注册时间：${fn:substring(userVo.registerTime,0,10) }<br>
+				  	<div>
+				  		<div><input type="button" class="button" id="subBtn" value="提交" onclick="saveBaseInfo()"><img id="loadImg" style="display:none;" src="../images/loading.gif" width="20"></div>
+				  		<div id="resultInfo" style="display:none;"></div>
+				  	</div>
 				  	</form>
 				  </div>
 			 </div>

@@ -116,7 +116,7 @@
 	  	<jsp:include page="menue.jsp"></jsp:include>
 	  </div>
 	  <div class="right">
-	    <div><a href="userInfo.jspx?userId=${user.userId}">空间</a>&gt;&gt;<a href="manage.jspx">空间管理</a>&gt;&gt;发表博文</div>
+	    <div class="navPath"><a href="userInfo.jspx?userId=${user.userId}">空间</a>&nbsp;&gt;&gt;&nbsp;<a href="manage.jspx">空间管理</a>&nbsp;&gt;&gt;&nbsp;发表博文</div>
 	  	<form action="saveBlog.jspx" method="post"  name="example" id="subForm">
 		<div class="ad_line">
 			<div class="ad_title">
