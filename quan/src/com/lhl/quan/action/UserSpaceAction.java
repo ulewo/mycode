@@ -625,6 +625,7 @@ public class UserSpaceAction extends BaseAction
 			userVo.setCharacters(userInfo.getCharacters());
 			userVo.setRegisterTime(userInfo.getRegisterTime());
 			userVo.setSex(userInfo.getSex());
+			userVo.setPrevisitTime(userInfo.getPrevisitTime());
 			messageList = messageService.queryMessage(userId, 0, 10);
 			blogList = blogArticleService.queryBlogByUserIdOrItem(userId, 0, 0, 10);
 		}
@@ -805,6 +806,7 @@ public class UserSpaceAction extends BaseAction
 			userVo.setAge(userInfo.getAge());
 			userVo.setCharacters(userInfo.getCharacters());
 			userVo.setRegisterTime(userInfo.getRegisterTime());
+			userVo.setPrevisitTime(userInfo.getPrevisitTime());
 			userVo.setSex(userInfo.getSex());
 		}
 		catch (BaseException e)

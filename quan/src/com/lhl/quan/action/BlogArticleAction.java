@@ -237,13 +237,26 @@ public class BlogArticleAction extends BaseAction
 	public void saveItem() throws IOException
 	{
 
-		BlogItem item = new BlogItem();
-		item.setId(id);
-		item.setItemName(itemName);
-		item.setItemRang(itemRang);
-		int id = blogItemService.saveItem(item);
+		String msg = "ok";
 		JSONObject obj = new JSONObject();
-		obj.put("id", id);
+		try
+		{
+			BlogItem item = new BlogItem();
+			User sessionUser = getSessionUser();
+			item.setId(id);
+			item.setUserId(sessionUser.getUserId());
+			item.setItemName(itemName);
+			item.setItemRang(itemRang);
+			int id = blogItemService.saveItem(item);
+			obj.put("id", id);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			msg = "error";
+		}
+
+		obj.put("msg", msg);
 		HttpServletResponse response = getResponse();
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
@@ -253,10 +266,15 @@ public class BlogArticleAction extends BaseAction
 	public void deleteItem() throws IOException
 	{
 
-		User sessionUser = getSessionUser();
-		blogItemService.delete(sessionUser.getUserId(), id);
 		JSONObject obj = new JSONObject();
 		obj.put("result", "ok");
+		User sessionUser = getSessionUser();
+		blogItemService.delete(sessionUser.getUserId(), id);
+		int count = blogArticleService.queryCountByUserIdOrItem(userId, id);
+		if (count > 0)
+		{
+			obj.put("result", "havearticle");
+		}
 		HttpServletResponse response = getResponse();
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();

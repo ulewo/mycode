@@ -20,6 +20,20 @@ public class UserVo
 
 	private String registerTime; // 注册时间
 
+	private String previsitTime;
+
+	public String getPrevisitTime()
+	{
+
+		return previsitTime;
+	}
+
+	public void setPrevisitTime(String previsitTime)
+	{
+
+		this.previsitTime = previsitTime;
+	}
+
 	public String getUserId()
 	{
 

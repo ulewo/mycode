@@ -130,7 +130,7 @@ public class AuthFilter extends HttpServlet implements Filter
 						req.getSession().setAttribute("user", loginUser);
 
 						user.setPrevisitTime(formate.format(new Date()));
-						userService.updateUserSelective(loginUser);
+						userService.updateUserSelective(user);
 					}
 				}
 			}
