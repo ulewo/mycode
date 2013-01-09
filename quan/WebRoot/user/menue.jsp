@@ -1,6 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <link rel="stylesheet"  href="../css/manage.article.css" type="text/css"  />   
+<style>
+<!--
+body{
+margin: 0px auto;
+font-size: 13px;
+text-align: center;
+width: 100%;}
+-->
+</style>
 <div style="padding-top:10px;">
 	<div class="manage_tit">
 		<span class="manage_tit1"><img src="../upload/${user.userLittleIcon}" width="40"></span>

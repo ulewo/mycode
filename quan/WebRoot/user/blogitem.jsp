@@ -23,7 +23,8 @@
 </script>
 </head>
 <body>
-<div class="maincon">
+<jsp:include page="../common/head.jsp"/>
+<div class="main">
 	<div class="left">
 		<jsp:include page="menue.jsp"></jsp:include>
 	</div>
