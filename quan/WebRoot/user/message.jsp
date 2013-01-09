@@ -58,12 +58,9 @@
 		  	<div>
 		  		<form>
 		  		<input type="hidden" name="userId" value="${userId }" id="userId">
-		  		<div class="u_name">用户名：
+		  		<div class="u_name">
 		  			<c:if test="${user==null}">
-		  				<input type="text" name="reUserName" id="name">
-		  			</c:if>
-		  			<c:if test="${user!=null}">
-		  				<input type="text" name="reUserName" id="name" value="${user.userName}" disabled="disabled" > 
+		  				用户名：<input type="text" name="reUserName" id="name">
 		  			</c:if>
 		  		</div>
 		  		<div class="content"><textarea rows="10" cols="80" name="content" id="content"></textarea></div>
