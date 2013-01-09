@@ -12,6 +12,8 @@ public class Message {
 
 	private String reUserName;
 
+	private String reUserIcon;
+
 	private String message;
 
 	private String postTime;
@@ -82,6 +84,14 @@ public class Message {
 
 	public void setReUserName(String reUserName) {
 		this.reUserName = reUserName;
+	}
+
+	public String getReUserIcon() {
+		return reUserIcon;
+	}
+
+	public void setReUserIcon(String reUserIcon) {
+		this.reUserIcon = reUserIcon;
 	}
 
 }
