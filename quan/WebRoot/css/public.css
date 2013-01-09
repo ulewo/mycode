@@ -3,7 +3,7 @@ input{outline:none;}
 #head{background:#64C5E8;height:40px;width:100%;}
 .head_con {margin:0px auto;width:1000px;height:40px;text-align:center;}
 .head_con .logo{float:left;width:90px;text-align:left;}
-.head_con ul.left{width:600px;float:left;margin:0px;padding:0px;height:35px;background:#64C5E8;border:0px;}
+.head_con ul.left{width:600px;float:left;margin:0px;padding:0px;height:35px;background:#64C5E8;border:0px;text-align:center;}
 .head_con ul.left li{float:left;width:100px;list-style:none;margin-left:1px}
 .head_con ul.left li a{text-decoration:none;display:block;padding-top:11px;color:white;height:29px;font-size:14px;}
 .head_con ul.left li a:hover{text-decoration:none;background:#1C91BE;}

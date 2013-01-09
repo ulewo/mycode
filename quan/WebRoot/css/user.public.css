@@ -1,5 +1,5 @@
 @import url("public.css");
-body{background:#F9F9F9}
+body{background:#F9F9F9;}
 .main{width:1000px;margin:0px auto;}
 .left{width:220px;float:left;}
 .avatar_con{height:85px;background:#4682B4}
@@ -41,5 +41,5 @@ body{background:#F9F9F9}
 .blog_itemname a:hover{text-decoration:underline;}
 .blog_itemname{float:left;width:150px;}
 .blog_articlecount{float:left;width:50px;color: #666}
-.aop{width:100px;}
+.aop{width:120px;}
 .atr2{height:30px;}
