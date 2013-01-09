@@ -85,5 +85,6 @@
 	<bean id="imageUpload" class="com.lhl.upload.ImageUploadAction" scope="prototype">
 	</bean>
 
-
+	<bean id="userAvatarUpload" class="com.lhl.upload.UserAvatarAction" scope="prototype">
+	</bean>
 </beans>

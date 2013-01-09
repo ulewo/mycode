@@ -2,9 +2,13 @@ package com.lhl.quan.action;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -47,6 +51,12 @@ public class UserSpaceAction extends BaseAction
 {
 	private static final long serialVersionUID = 1L;
 
+	private final SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+	private static final int SMALL_WIDTH = 60;
+
+	private static final int SMALL_HEIGHT = 60;
+
 	private UserService userService;
 
 	private MessageService messageService;
@@ -88,6 +98,10 @@ public class UserSpaceAction extends BaseAction
 	private String characters;
 
 	private String content;
+
+	private String oldPwd;
+
+	private String newPwd;
 
 	private UserVo userVo = new UserVo();
 
@@ -334,6 +348,9 @@ public class UserSpaceAction extends BaseAction
 						loginUser.setUserName(user.getUserName());
 						loginUser.setUserLittleIcon(user.getUserLittleIcon());
 						getSession().setAttribute("user", loginUser);
+						//更新最后登录时间
+						user.setPrevisitTime(formate.format(new Date()));
+						userService.updateUserSelective(loginUser);
 					}
 					// 密码错误
 					else
@@ -535,7 +552,7 @@ public class UserSpaceAction extends BaseAction
 	}
 
 	// 检查邮箱链接是否正确
-	public String resetPassword()
+	public String checkEmail()
 	{
 
 		if (Tools.isEmpty(account) || Tools.isEmpty(code))
@@ -601,14 +618,13 @@ public class UserSpaceAction extends BaseAction
 			{
 				return ERROR;
 			}
-			userVo.setUserId(userId);
-			userVo.setUserLittleIcon(userInfo.getUserLittleIcon());
 			userVo.setUserName(userInfo.getUserName());
+			userVo.setWork(userInfo.getWork());
 			userVo.setAddress(userInfo.getAddress());
 			userVo.setAge(userInfo.getAge());
 			userVo.setCharacters(userInfo.getCharacters());
 			userVo.setRegisterTime(userInfo.getRegisterTime());
-			userVo.setSex(sex);
+			userVo.setSex(userInfo.getSex());
 			messageList = messageService.queryMessage(userId, 0, 10);
 			blogList = blogArticleService.queryBlogByUserIdOrItem(userId, 0, 0, 10);
 		}
@@ -782,7 +798,14 @@ public class UserSpaceAction extends BaseAction
 			{
 				return ERROR;
 			}
-
+			userVo.setUserId(userId);
+			userVo.setUserName(userInfo.getUserName());
+			userVo.setWork(userInfo.getWork());
+			userVo.setAddress(userInfo.getAddress());
+			userVo.setAge(userInfo.getAge());
+			userVo.setCharacters(userInfo.getCharacters());
+			userVo.setRegisterTime(userInfo.getRegisterTime());
+			userVo.setSex(userInfo.getSex());
 		}
 		catch (BaseException e)
 		{
@@ -803,21 +826,17 @@ public class UserSpaceAction extends BaseAction
 	 * 
 	 * @return
 	 * @author luohl
+	 * @throws IOException 
 	 */
-	public String updateUserInfo()
+	public void updateUserInfo()
 	{
 
-		if (Tools.isEmpty(userId))
-		{
-			return ERROR;
-		}
+		JSONObject obj = new JSONObject();
+		String result = "ok";
 		try
 		{
-			User userInfo = userService.getUserInfo(userId);
-			if (null == userInfo)
-			{
-				return ERROR;
-			}
+			User sesionUser = getSessionUser();
+			userId = sesionUser.getUserId();
 			User updateUser = new User();
 			updateUser.setUserId(userId);
 			updateUser.setSex(sex);
@@ -827,30 +846,14 @@ public class UserSpaceAction extends BaseAction
 			updateUser.setCharacters(characters);
 			userService.updateInfo(updateUser);
 		}
-		catch (BaseException e)
-		{
-			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
-			e.printStackTrace();
-			return ERROR;
-		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
+			result = "error";
 		}
-		return SUCCESS;
-	}
 
-	/**
-	 * 
-	 * description: 修改密码
-	 * 
-	 * @return
-	 * @author luohl
-	 */
-	public String changePasswordDo()
-	{
-
-		return null;
+		obj.put("result", result);
+		getOut().println(String.valueOf(obj));
 	}
 
 	public String userIcon()
@@ -878,22 +881,21 @@ public class UserSpaceAction extends BaseAction
 		return SUCCESS;
 	}
 
-	// 更新群图标
+	// 更新用户头像
 	public void updateUserIcon()
 	{
 
 		String result = "ok";
 		try
 		{
-			User user = new User();
-			user.setUserId(userId);
+			User sessionUser = getSessionUser();
 			if (imgtype == 0)
 			{
 				userIcon = cutImg();
 			}
-			user.setUserLittleIcon(userIcon);
-			user.setUserBigIcon(userIcon);
-			userService.updateUserSelective(user);
+			sessionUser.setUserLittleIcon(userIcon);
+			sessionUser.setUserBigIcon(userIcon);
+			userService.updateUserSelective(sessionUser);
 			result = userIcon;
 		}
 		catch (Exception e)
@@ -909,18 +911,25 @@ public class UserSpaceAction extends BaseAction
 	private String cutImg()
 	{
 
-		SimpleDateFormat yearMonthFormat = new SimpleDateFormat("yyyyMM");
-		String yearMonth = yearMonthFormat.format(new Date());
-		// 这里的img就是前段传过来的图片的路径
-		String srcpath = ServletActionContext.getServletContext().getRealPath("/") + "upload/" + userIcon;
-		FileInputStream in = null;
-		String tempPath = "";
 		String resultPath = "";
+		InputStream tempIn = null;
+		ByteArrayOutputStream out = null;
+		OutputStream imgOut = null;
+		String imgType = "jpg";
+		if (userIcon != null && !"".equals(userIcon))
+		{
+			int idx = userIcon.lastIndexOf(".");
+			if (idx >= 0)
+			{
+				imgType = userIcon.substring(idx + 1);
+			}
+		}
+		String srcpath = ServletActionContext.getServletContext().getRealPath("/") + "upload/" + userIcon;
 		try
 		{
 
 			// 截取图片 生成临时图片
-			String current = String.valueOf(System.currentTimeMillis());
+			/*String current = String.valueOf(System.currentTimeMillis());
 			in = new FileInputStream(srcpath);
 			BufferedImage img = ImageIO.read(in);
 			BufferedImage subimg = img.getSubimage(x1, y1, width, height);
@@ -938,7 +947,33 @@ public class UserSpaceAction extends BaseAction
 			String okPath = ServletActionContext.getServletContext().getRealPath("/") + "/upload/" + yearMonth + "/"
 					+ current + ".jpg";
 			resultPath = yearMonth + "/" + current + ".jpg";
-			ImageIO.write(okimg, "jpg", new File(okPath));
+			ImageIO.write(okimg, "jpg", new File(okPath));*/
+			User sessionUser = getSessionUser();
+			File tempfile = new File(srcpath);
+			tempIn = new FileInputStream(tempfile);
+			BufferedImage img = ImageIO.read(tempIn);
+			//裁剪图片
+			BufferedImage subimg = img.getSubimage(x1, y1, width, height);
+			//放大缩小图片
+			BufferedImage okimg = new BufferedImage(SMALL_WIDTH, SMALL_HEIGHT, BufferedImage.TYPE_INT_RGB);
+			Graphics2D g = okimg.createGraphics();
+			g.drawImage(subimg, 0, 0, SMALL_WIDTH, SMALL_HEIGHT, null);
+
+			//将图片转为字节数组
+			out = new ByteArrayOutputStream();
+			ImageIO.write(okimg, imgType, out);
+			byte[] data = out.toByteArray();
+			String okSrcPath = ServletActionContext.getServletContext().getRealPath("/") + "upload/avatars/";
+			File imagePathFile = new File(okSrcPath);
+			if (!imagePathFile.exists())
+			{
+				imagePathFile.mkdirs();
+			}
+			File okfile = new File(okSrcPath + sessionUser.getUserId() + "." + imgType);
+			imgOut = new FileOutputStream(okfile);
+			imgOut.write(data);
+			imgOut.flush();
+			resultPath = "avatars/" + sessionUser.getUserId() + "." + imgType;
 		}
 		catch (Exception e)
 		{
@@ -949,16 +984,25 @@ public class UserSpaceAction extends BaseAction
 		{
 			try
 			{
-				in.close();
-				File file = new File(srcpath);
-				file.delete();
-				File file2 = new File(tempPath);
-				file2.delete();
+				if (null != tempIn)
+				{
+					tempIn.close();
+					tempIn = null;
+				}
+				if (null != out)
+				{
+					out.close();
+					out = null;
+				}
+				if (imgOut != null)
+				{
+					imgOut.close();
+				}
 			}
-			catch (IOException e)
+			catch (Exception e)
 			{
-				e.printStackTrace();
 			}
+			new File(srcpath).delete();
 		}
 		return resultPath;
 	}
@@ -992,6 +1036,44 @@ public class UserSpaceAction extends BaseAction
 			e.printStackTrace();
 		}
 		return SUCCESS;
+	}
+
+	/**
+	 * 
+	 * description: 修改密码
+	 * 
+	 * @return
+	 * @author luohl
+	 */
+	public void resetPassword()
+	{
+
+		String result = "ok";
+		User sessionUser = getSessionUser();
+		User userInfo;
+		try
+		{
+			userInfo = userService.getUserInfo(sessionUser.getUserId());
+			if (userInfo != null)
+			{
+				if (Tools.encodeByMD5(oldPwd).equals(userInfo.getPassword()))
+				{
+					userInfo.setPassword(Tools.encodeByMD5(newPwd));
+					userService.updateUserSelective(userInfo);
+				}
+				else
+				{
+					result = "pwdError";
+				}
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		JSONObject obj = new JSONObject();
+		obj.put("result", result);
+		getOut().print(String.valueOf(obj));
 	}
 
 	/**
@@ -1398,6 +1480,18 @@ public class UserSpaceAction extends BaseAction
 	{
 
 		this.blogArticleService = blogArticleService;
+	}
+
+	public void setOldPwd(String oldPwd)
+	{
+
+		this.oldPwd = oldPwd;
+	}
+
+	public void setNewPwd(String newPwd)
+	{
+
+		this.newPwd = newPwd;
 	}
 
 }

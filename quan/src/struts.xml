@@ -73,13 +73,13 @@
 			<result name="error">../error/error.jsp</result>
 		</action>
 		
-		<!-- 重置密码 -->
+		<!-- 重置密码
 		<action name="resetPassword" class="user" method="resetPassword">
 			<result name="success">findpwdSuccess.jsp</result>
 			<result name="input">repassword.jsp</result>
 			<result name="error">../error/error.jsp</result>
 		</action>
-		
+		 -->
 		<!-- 查看用户信息 -->
 		<action name="userInfo" class="user" method="userInfo">
 			<result name="success">userInfo.jsp</result>
@@ -101,6 +101,10 @@
 			<result name="error">../error/error.jsp</result>
 		</action>
 		
+		<!-- 重置密码 -->
+		<action name="resetPassword" class="user" method="resetPassword">
+		</action>
+		
 		<!-- 留言 -->
 		<action name="addMessage" class="user" method="addMessage">
 		</action>
@@ -113,9 +117,6 @@
 		
 		<!-- 更新用户信息 -->
 		<action name="updateUserInfo" class="user" method="updateUserInfo">
-			<result name="success" type="redirect">userInfo.jspx?userId=${userId}</result>
-			<result name="input">getInfo.jspx</result>
-			<result name="error">../error/error.jsp</result>
 		</action>
 		
 		<!-- 创建的群组 -->
@@ -468,7 +469,7 @@
 			<result name="error">imageUpload.jsp</result>
 		</action>
 		
-		<action name="userAvatarUpload" class="imageUpload" method="imageUpload">
+		<action name="userAvatarUpload" class="userAvatarUpload" method="imageUpload">
 			<result name="success">userAvatarUpload.jsp</result>
 			<result name="error">userAvatarUpload.jsp</result>
 		</action>

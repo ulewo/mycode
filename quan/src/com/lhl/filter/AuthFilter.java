@@ -2,7 +2,9 @@ package com.lhl.filter;
 
 import java.io.IOException;
 import java.net.URLDecoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +35,8 @@ public class AuthFilter extends HttpServlet implements Filter
 	private List<String> notCheckURLList = new ArrayList<String>();
 
 	protected FilterConfig filterConfig = null;
+
+	private final SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	public void init(FilterConfig filterConfig) throws ServletException
 	{
@@ -67,6 +71,12 @@ public class AuthFilter extends HttpServlet implements Filter
 		Object userObj = request.getSession().getAttribute("user");
 
 		String uri = request.getServletPath() + (request.getPathInfo() == null ? "" : request.getPathInfo());
+		if (!uri.contains("error.jsp") && null == userObj)
+		{
+			autoLogin(request);
+			//登录后重新给对象赋值
+			userObj = request.getSession().getAttribute("user");
+		}
 		if (!uri.contains("error.jsp"))
 		{
 			if (null == userObj && (checkRequestURIIntNotFilterList(request) || uri.contains("manage")))
@@ -76,7 +86,6 @@ public class AuthFilter extends HttpServlet implements Filter
 			}
 			else
 			{
-				autoLogin(request);
 				User user = (User) userObj;
 				if (uri.contains("admin") && !Constant.SUPERADMIN.equals(user.getUserId()))
 				{
@@ -119,6 +128,9 @@ public class AuthFilter extends HttpServlet implements Filter
 						loginUser.setUserName(user.getUserName());
 						loginUser.setUserLittleIcon(user.getUserLittleIcon());
 						req.getSession().setAttribute("user", loginUser);
+
+						user.setPrevisitTime(formate.format(new Date()));
+						userService.updateUserSelective(loginUser);
 					}
 				}
 			}
