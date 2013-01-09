@@ -47,7 +47,8 @@
 	    <init-param>
 	    	<param-name>mustlogin</param-name>
 	    	<param-value>
-				/group/addArticle.jspx;/group/subArticle.jspx;/group/addGroup.jspx;/group/createGroup.jspx;/user/userIcon.jspx;/user/updateUserIcon.jspx;/user/changePassword.jspx;/user/manage.jspx;/user/updateUserInfo.jspx;/user/addBlog.jspx;/user/saveBlog.jspx;/user/manageItem.jspx;/user/saveItem.jspx;/user/deleteItem.jspx;/user/repassword.jsp;/user/user_icon.jsp;/user/manageItem.jspx;/user/saveItem.jspx;/user/deleteItem.jspx
+				/group/addArticle.jspx;/group/subArticle.jspx;/group/addGroup.jspx;/group/createGroup.jspx;/user/userIcon.jspx;/user/updateUserIcon.jspx;/user/changePassword.jspx;/user/manage.jspx;/user/updateUserInfo.jspx;/user/addBlog.jspx;/user/saveBlog.jspx;
+				/user/manageItem.jspx;/user/saveItem.jspx;/user/deleteItem.jspx;/user/repassword.jsp;/user/user_icon.jsp;/user/manageItem.jspx;/user/saveItem.jspx;/user/deleteItem.jspx
 	    	</param-value>
 	    </init-param>
    	</filter>
