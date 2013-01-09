@@ -11,10 +11,11 @@
 <style>
 	
 </style>
-<script type="text/javascript" charset="utf-8" src="../js/manage.item.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/user.itemmanage.js"></script>
 <script type="text/javascript" charset="utf-8" src="../js/jquery.min.js"></script>
 <script type="text/javascript" src="../js/util.js"></script>
 <link rel="stylesheet"  href="../css/manage.item.css" type="text/css"  />
+<link rel="stylesheet"  href="../css/user.public.css" type="text/css"  />
 <style type="text/css">
 #selected5 a{background:#FFFFFF;}
 </style>
@@ -35,9 +36,9 @@
 		<c:forEach var="item" items="${itemList}">
 			<form action="" method="post">
 			<input type="hidden" name="id" value="${item.id}">
-			<div class="atr">
+			<div class="atr atr2">
 				<div class="atit"><input type="text" value="${item.itemName}" name="itemName" style="border:0px" readonly="readonly"></div>
-				<div class="aorder"><input type="text" value="${item.itemRang}" name="itemCode" style="border:0px"  readonly="readonly"></div>
+				<div class="aorder"><input type="text" value="${item.itemRang}" name="itemRang" style="border:0px"  readonly="readonly"></div>
 				<div class="aop mbt">
 					<a href="javascript:void(0)" onclick="editeItem(this)">修改</a>
 					<a href="javascript:void(0)" onclick="deleteItem(this)">删除</a>

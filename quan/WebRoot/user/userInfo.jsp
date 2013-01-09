@@ -31,7 +31,7 @@
 	  <div class="right">
 		  	<div class="baseinfo">
 			  	<span class="base_tit">加入时间：</span><span class="base_info">${fn:substring(userVo.registerTime,0,10) }</span><br>
-			  	<span class="base_tit">最近登录：</span><span class="base_info">${fn:substring(userVo.registerTime,0,10) }</span><br>
+			  	<span class="base_tit">最近登录：</span><span class="base_info">${fn:substring(userVo.previsitTime,0,10) }</span><br>
 			  	<span class="base_tit">性别：</span><span class="base_info">${userVo.sex}</span><br>
 			  	<span class="base_tit">职业：</span><span class="base_info">${userVo.work}</span><br>
 			  	<span class="base_tit">地址：</span><span class="base_info">${userVo.address}</span><br>
