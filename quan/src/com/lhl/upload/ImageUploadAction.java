@@ -65,18 +65,15 @@ public class ImageUploadAction extends ActionSupport {
 			}
 			out.flush();
 			result = true;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			result = false;
-		}
-		finally {
+		} finally {
 			if (null != fin) {
 				try {
 					fin.close();
 					fin = null;
-				}
-				catch (IOException e) {
+				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
@@ -84,8 +81,7 @@ public class ImageUploadAction extends ActionSupport {
 				try {
 					fout.close();
 					fout = null;
-				}
-				catch (IOException e) {
+				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
@@ -93,8 +89,7 @@ public class ImageUploadAction extends ActionSupport {
 				try {
 					in.close();
 					in = null;
-				}
-				catch (IOException e) {
+				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
@@ -102,8 +97,7 @@ public class ImageUploadAction extends ActionSupport {
 				try {
 					out.close();
 					out = null;
-				}
-				catch (IOException e) {
+				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
@@ -117,10 +111,12 @@ public class ImageUploadAction extends ActionSupport {
 		String filePath = request.getParameter("filePath");
 		String fileName = request.getParameter("fileName");
 		if (filePath != null && fileName != null) {
-			File file = new File(ServletActionContext.getServletContext().getRealPath("/") + "/" + filePath);
+			File file = new File(ServletActionContext.getServletContext()
+					.getRealPath("/") + "/" + filePath);
 			if (file.exists() && file.isFile()) {
 				file.delete();
-				ServletActionContext.getRequest().setAttribute("fileName", fileName);
+				ServletActionContext.getRequest().setAttribute("fileName",
+						fileName);
 				return SUCCESS;
 			}
 		}
@@ -141,34 +137,48 @@ public class ImageUploadAction extends ActionSupport {
 					}
 					String srcName = uploadFileName[i].toLowerCase();
 					// 判断文件类型是否符合(.jpg,.gif,.png,.bmp)
-					if (!srcName.endsWith(".jpg") && !srcName.endsWith(".gif") && !srcName.endsWith(".png")
+					if (!srcName.endsWith(".jpg") && !srcName.endsWith(".gif")
+							&& !srcName.endsWith(".png")
 							&& !srcName.endsWith(".bmp")) {
 						message = "error";
 						uploadFileName = null;
 						return SUCCESS;
 					}
-					SimpleDateFormat yearMonthFormat = new SimpleDateFormat("yyyyMM");
+					SimpleDateFormat yearMonthFormat = new SimpleDateFormat(
+							"yyyyMM");
 					String yearMonth = yearMonthFormat.format(new Date());
-					String imagePath = ServletActionContext.getServletContext().getRealPath("/") + "/upload/"
-							+ yearMonth;
+					String imagePath = ServletActionContext.getServletContext()
+							.getRealPath("/") + "/upload/" + yearMonth;
 					File imagePathFile = new File(imagePath);
 					if (!imagePathFile.exists()) {
 						imagePathFile.mkdirs();
 					}
 					String current = String.valueOf(System.currentTimeMillis());
 					// 根据服务器的文件保存地址和原文件名创建目录文件全路径
-					String destPath = imagePathFile + "/" + current
-							+ uploadFileName[i].substring(uploadFileName[i].length() - 4, uploadFileName[i].length());
+					String destPath = imagePathFile
+							+ "/"
+							+ current
+							+ uploadFileName[i].substring(
+									uploadFileName[i].length() - 4,
+									uploadFileName[i].length());
 					destFile = new File(destPath);
 					if (!copy(srcFiles, destFile)) {
 						message = "error";
 						uploadFileName = null;
 						return SUCCESS;
 					}
-					String imageName = yearMonth + "/" + current
-							+ uploadFileName[i].substring(uploadFileName[i].length() - 4, uploadFileName[i].length());
-					String destImage = ServletActionContext.getServletContext().getRealPath("/") + "upload/"
-							+ yearMonth + "/" + current + "x.jpg";
+					String imageName = yearMonth
+							+ "/"
+							+ current
+							+ uploadFileName[i].substring(
+									uploadFileName[i].length() - 4,
+									uploadFileName[i].length());
+					String destImage = ServletActionContext.getServletContext()
+							.getRealPath("/")
+							+ "upload/"
+							+ yearMonth
+							+ "/"
+							+ current + "x.jpg";
 					// 获取图片的长宽
 					File fromFile = new File(destPath);
 					BufferedImage srcImage = ImageIO.read(fromFile);
@@ -176,24 +186,23 @@ public class ImageUploadAction extends ActionSupport {
 					int height = srcImage.getHeight();
 					int w = 800;
 					int h = 800;
-					if (destFile.length() > 200 * 1024 || width > 800 || height > 800) {
-						if (destFile.length() > 200 * 1024 && width < 800 && height < 800) {//图片太大，长宽不大的情况
+					if (destFile.length() > 200 * 1024 || width > 800) {
+						if (destFile.length() > 200 * 1024 && width < 800) {// 图片太大，长宽不大的情况
 							w = width;
 							h = height;
 						}
-						DrowImage.saveImageAsJpg(destPath, destImage, w, h, false);
+						DrowImage.saveImageAsJpg(destPath, destImage, w, h,
+								false);
 						destFile.delete();
 						imageName = yearMonth + "/" + current + "x.jpg";
 					}
 					if (i < upload.length - 1) {
 						resultFileName = resultFileName + imageName + "|";
-					}
-					else {
+					} else {
 						resultFileName = resultFileName + imageName;
 					}
 				}
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				destFile.delete();
 				uploadFileName = null;
 				message = "error";
