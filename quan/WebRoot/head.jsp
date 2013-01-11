@@ -29,7 +29,6 @@
 						</a>
 						<ul>
 							<li><a href="user/userInfo.jspx?userId=${user.userId}">个人中心</a></li>
-							<li><a href="user/getInfo.jspx?userId=${user.userId}">设置</a></li>
 							<li><a href="user/createdGroups.jspx?userId=${user.userId}">我的圈子</a></li>
 							<li><a href="user/joinedGroups.jspx?userId=${user.userId}">加入的圈子</a></li>
 							<li><a href="group/creategroup.jsp">创建圈子</a></li>

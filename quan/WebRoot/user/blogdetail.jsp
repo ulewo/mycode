@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib uri="/WEB-INF/pager.tld" prefix="p"%> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>  
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -11,6 +12,7 @@
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
 	<script type="text/javascript" src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/user.userinfo.js"></script>
 	<link rel="stylesheet" type="text/css" href="../css/user.userinfo.css">
 	<style type="text/css">
 		#sel_left6 a{background:url(../images/bg.gif) 0px -85px;}
@@ -30,7 +32,64 @@
   		</div>
   		
   		<div class="blog_title">${blogArticle.title}</div>
+  		<div class="blogsta">发表于(${fn:substring(blogArticle.postTime,0,19)})， 已有<span>${blogArticle.readCount}</span>次阅读 ，共<span>${blogArticle.reCount}</span>个评论</div>
   		<div class="blogdetail">${blogArticle.content}</div>
+  		 
+  		 <div class="topblog">
+		  		<div class="topblog_titcon"><span class="topblog_tit">评论</span></div>
+		  		<div class="messagelist"  id="messagelist">
+				  	<c:forEach var="reply" items="${replyList}">
+				  	<div class="main_message">
+				  		<div><span class="message_name">
+				  				<c:if test="${reply.userId!=null&&reply.userId!=''}">
+									<a href="userInfo.jspx?userId=${reply.userId}">${reply.userName }</a>
+								</c:if>
+				  				<c:if test="${reply.userId==null||reply.userId==''}">
+				  					${reply.userName }
+				  				</c:if>
+				  			</span>&nbsp;&nbsp;&nbsp;&nbsp;发表于：${fn:substring(reply.postTime,0,10)}
+				  			</div>
+				  		<div class="message_con">${reply.content }</div>
+				  	</div>	
+				  	</c:forEach>
+		  		</div>
+		  		<c:if test="${empty replyList}" >
+		  			<span class="nomessage">尚无任何留言</span>
+		  		</c:if>
+		  	</div>
+		  	<div  class="pagination" style="height:30px;float:none;margin-top:10px;">
+				<p:pager url="message.jspx?userId=${userId}" page="${page}" pageTotal = "${pageTotal }"></p:pager> 
+			</div>
+		  	<div>
+		  		<form>
+		  		<input type="hidden" name="userId" value="${userId }" id="userId">
+		  		<div class="u_name">
+		  			<c:if test="${user==null}">
+		  				用户名：<input type="text" name="reUserName" id="name">
+		  			</c:if>
+		  		</div>
+		  		<div class="content"><textarea rows="10" cols="80" name="content" id="content"></textarea></div>
+		  		<c:if test="${user==null}">
+			  		<div class="checkcode">
+			  			<div class="tit">验证码：</div>
+						<div class="check_con">
+							<input type="text" class="long_input" name="checkCode" id="checkCode"/>
+						</div>
+						<div class="check_img">
+							<a href="JavaScript:refreshcode();" onfocus="this.blur();"><img id="checkCodeImage" src="../common/image.jsp" border="0"/></a>
+						</div>
+						<div class="changecode">
+							<a href="javascript:refreshcode()">换一张</a>
+						</div>
+			  		</div>
+		  		</c:if>
+		  		<div class="subbtn">
+		  			<div class="bbtn1"><a href="javascript:subReply('${param.id}')" onfocus="this.blur()">发表留言</a></div>
+		  			<div style="margin-left:20px;padding-top:8px;float:left;">最多输入500字符</div>
+		  		</div>
+		  		
+		  		</form>
+		  	</div>
   		 
  	</div>
  	<div style="clear:left;"></div>

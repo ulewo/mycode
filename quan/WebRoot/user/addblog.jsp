@@ -145,9 +145,9 @@
 			<input type="radio" name="allowReplay" value="1"/>只允许登录用户评论
 			<input type="radio" name="allowReplay" value="2"/>禁止评论
 		</div>
-		<div class="ad-part" style="height:200px;">
+		<div class="ad-part" style="height:70px;">
 			<div class="ad-title">上传图片：</div>
-			<div class="ad-input"><iframe src="../imageUpload/imageUpload.jsp" height="200" width="800" frameborder="0" style="text-align:left;"></iframe></div>
+			<div class="ad-input"><iframe src="../imageUpload/imageUpload.jsp" height="70" width="800" frameborder="0" style="text-align:left;"></iframe></div>
 		</div>
 		<div id="images" style="display:none;">
 			<div id="imagecon"></div>
