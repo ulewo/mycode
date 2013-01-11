@@ -54,7 +54,7 @@
 				  	</c:forEach>
 		  		</div>
 		  		<c:if test="${empty replyList}" >
-		  			<span class="nomessage">尚无任何留言</span>
+		  			<span class="nomessage">尚无任何评论</span>
 		  		</c:if>
 		  	</div>
 		  	<div  class="pagination" style="height:30px;float:none;margin-top:10px;">
