@@ -12,8 +12,13 @@
 	
 	<!-- 添加留言 -->
 	<insert id="addMessage" parameterClass="message">
-		insert into message(userid,reuserid,reusername,message,posttime) 
+		<selectKey keyProperty="id" resultClass="java.lang.Integer" type="post">
+      		SELECT LAST_INSERT_ID()
+    	 </selectKey>
+        <![CDATA[
+           insert into message(userid,reuserid,reusername,message,posttime) 
 		values(#userId#,#reUserId#,#reUserName#,#message#,#postTime#)
+        ]]>
 	</insert>
 	
 	<!-- 根据userId查询留言 -->

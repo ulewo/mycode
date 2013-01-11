@@ -23,6 +23,8 @@ public class BlogReply
 
 	private String userName;
 
+	private String reUserIcon;
+
 	public int getId()
 	{
 
@@ -93,6 +95,18 @@ public class BlogReply
 	{
 
 		this.userName = userName;
+	}
+
+	public String getReUserIcon()
+	{
+
+		return reUserIcon;
+	}
+
+	public void setReUserIcon(String reUserIcon)
+	{
+
+		this.reUserIcon = reUserIcon;
 	}
 
 }

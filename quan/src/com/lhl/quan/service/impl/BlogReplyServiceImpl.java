@@ -1,5 +1,7 @@
 package com.lhl.quan.service.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import com.lhl.entity.BlogArticle;
@@ -15,6 +17,8 @@ public class BlogReplyServiceImpl implements BlogReplyService
 
 	private BlogArticleDao blgoArticleDao;
 
+	private final SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
 	public void setBlogReplyDao(BlogReplyDao blogReplyDao)
 	{
 
@@ -28,10 +32,13 @@ public class BlogReplyServiceImpl implements BlogReplyService
 	}
 
 	@Override
-	public void addReply(BlogReply blogReply)
+	public BlogReply addReply(BlogReply blogReply)
 	{
 
-		blogReplyDao.addReply(blogReply);
+		blogReply.setPostTime(formate.format(new Date()));
+		int id = blogReplyDao.addReply(blogReply);
+		blogReply.setId(id);
+		return blogReply;
 	}
 
 	@Override

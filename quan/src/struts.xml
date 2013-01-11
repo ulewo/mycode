@@ -154,6 +154,9 @@
 			<result name="success">blogdetail.jsp</result>
 			<result name="error">../error/error.jsp</result>
 		</action>
+		<action name="savaReply" class="blog" method="savaReply">
+		</action>
+
 		
 		<!--博客分类-->
 		<action name="addBlog" class="blog" method="addBlog">

@@ -21,10 +21,10 @@ public class BlogReplyDao extends SqlMapClientDaoSupport
 	 * @param item
 	 * @author luohl
 	 */
-	public void addReply(BlogReply blogReply)
+	public int addReply(BlogReply blogReply)
 	{
 
-		this.getSqlMapClientTemplate().insert("blogReply.addPeply", blogReply);
+		return (Integer) this.getSqlMapClientTemplate().insert("blogReply.addPeply", blogReply);
 	}
 
 	/**
@@ -37,7 +37,7 @@ public class BlogReplyDao extends SqlMapClientDaoSupport
 	public List<BlogReply> queryReplyByBlogId(int blogId)
 	{
 
-		return (List<BlogReply>) getSqlMapClientTemplate().queryForList("blogReply.queryPeplyByBlogId", blogId);
+		return (List<BlogReply>) getSqlMapClientTemplate().queryForList("blogReply.queryReplyByBlogId", blogId);
 	}
 
 	/**

@@ -8,17 +8,28 @@
 	</cacheModel>
 	
 	
-	<typeAlias alias="blogReply" type="com.lhl.entity.BlogRePly" />
+	<typeAlias alias="blogReply" type="com.lhl.entity.BlogReply" />
 	
 	<!-- 添加博客分类 -->
 	<insert id="addPeply" parameterClass="blogReply">
-		insert into blog_reply (blogid,content,posttime,userid,username)
+		<selectKey keyProperty="id" resultClass="java.lang.Integer" type="post">
+      		SELECT LAST_INSERT_ID()
+    	 </selectKey>
+        <![CDATA[
+        insert into blog_reply (blogid,content,posttime,userid,username)
 		values(#blogId#,#content#,#postTime#,#userId#,#userName#);
+        ]]>
+		
 	</insert>
 	
 	<!-- 通过博客ID查询回复 -->
-	<select id="queryPeplyByBlogId"  resultClass="blogReply" parameterClass="java.lang.Integer">
-		select * from blog_reply  where blogid = #blogId#
+	<select id="queryReplyByBlogId"  resultClass="blogReply" parameterClass="java.lang.Integer">
+		select m.id,m.userid,m.blogid,m.content,
+		(case when m.userid is not null then u.username else m.username end)as userName,
+		(case when m.userid is not null then u.userlittleicon else '' end)as reUserIcon,
+		m.posttime 
+		from blog_reply m left join user u on m.userid = u.userid where m.blogid = #blogId#
+		
 	</select>
 	
 	<!-- 通过ID查询回复 -->

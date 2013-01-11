@@ -22,6 +22,8 @@
     <bean id="blog" class="com.lhl.quan.action.BlogArticleAction" scope="prototype">
     	 <property name="blogArticleService" ref="blogArticleService"/>
     	 <property name="blogItemService" ref="blogItemService"/>
+    	 <property name="blogReplyService" ref="blogReplyService"/>
+    	 
     </bean>
  
 	<bean id="group" class="com.lhl.quan.action.GroupAction" scope="prototype">

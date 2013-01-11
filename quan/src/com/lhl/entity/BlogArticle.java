@@ -22,7 +22,7 @@ public class BlogArticle
 
 	private String content;
 
-	private String readCount;
+	private int readCount;
 
 	private int reCount;
 
@@ -104,13 +104,13 @@ public class BlogArticle
 		this.content = conent;
 	}
 
-	public String getReadCount()
+	public int getReadCount()
 	{
 
 		return readCount;
 	}
 
-	public void setReadCount(String readCount)
+	public void setReadCount(int readCount)
 	{
 
 		this.readCount = readCount;
