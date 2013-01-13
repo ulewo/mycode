@@ -40,6 +40,9 @@
     	<isNotEmpty prepend="," property="titleStyle">
            titlestyle=#titleStyle# 
         </isNotEmpty>
+        <isNotEmpty prepend="," property="content">
+           content=#content# 
+        </isNotEmpty>
         <isNotEmpty prepend="," property="readNumber">
           readnumber=#readNumber#
         </isNotEmpty>

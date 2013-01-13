@@ -85,7 +85,7 @@ public class ArticleAction extends BaseAction {
 
 	private String title;
 
-	//显示删除
+	// 显示删除
 	private String showDelete = "N";
 
 	/**
@@ -100,14 +100,16 @@ public class ArticleAction extends BaseAction {
 		try {
 			group = groupService.queryGorup(gid);
 			if (itemId != 0) {
-				ArticleItem articlItem = articleItemService.getArticleItem(itemId);
+				ArticleItem articlItem = articleItemService
+						.getArticleItem(itemId);
 				if (null == articlItem || !gid.equals(articlItem.getGid())) {
 					errMsg = ErrMsgConfig.getErrMsg(40001);
 					return ERROR;
 				}
 			}
 			itemList = articleItemService.queryItemByGid(gid);
-			int countNumber = articleService.queryTopicCountByGid(gid, itemId, Constant.ISVALIDY);
+			int countNumber = articleService.queryTopicCountByGid(gid, itemId,
+					Constant.ISVALIDY);
 			Pagination.setPageSize(Constant.pageSize20);
 			int pageSize = Pagination.getPageSize();
 			pageTotal = Pagination.getPageTotal(countNumber);
@@ -118,17 +120,15 @@ public class ArticleAction extends BaseAction {
 				page = 1;
 			}
 			int noStart = (page - 1) * pageSize;
-			articleList = articleService.queryTopicOrderByGradeAndLastReTime(gid, itemId, Constant.ISVALIDY, noStart,
-					pageSize);
+			articleList = articleService.queryTopicOrderByGradeAndLastReTime(
+					gid, itemId, Constant.ISVALIDY, noStart, pageSize);
 			// latestArticles = articleService.queryLatestArticles(0, 20);
 			showType = "2";
-		}
-		catch (BaseException e) {
+		} catch (BaseException e) {
 			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
 			e.printStackTrace();
 			return ERROR;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			errMsg = ErrMsgConfig.getErrMsg(10000);
 			e.printStackTrace();
 			return ERROR;
@@ -150,19 +150,18 @@ public class ArticleAction extends BaseAction {
 			article = articleService.showArticle(id);
 			article.setReadNumber(article.getReadNumber() + 1);
 			gid = article.getGid();
-			//判断权限，删除回复
+			// 判断权限，删除回复
 			Object obj = getSession().getAttribute("user");
 			if (null == obj) {
 				showDelete = "N";
-			}
-			else {
+			} else {
 				User sessionUser = (User) getSession().getAttribute("user");
-				int grade = CheckRole.getMemberGrade(gid, sessionUser.getUserId());
+				int grade = CheckRole.getMemberGrade(gid,
+						sessionUser.getUserId());
 				if (Constant.grade1 == grade || Constant.grade2 == grade
 						|| Constant.SUPERADMIN.equals(sessionUser.getUserId())) {
 					showDelete = "Y";
-				}
-				else {
+				} else {
 					showDelete = "N";
 				}
 			}
@@ -181,16 +180,15 @@ public class ArticleAction extends BaseAction {
 				page = 1;
 			}
 			int noStart = (page - 1) * pageSize;
-			reArticleList = reArticleService.queryReArticles(id, noStart, pageSize);
+			reArticleList = reArticleService.queryReArticles(id, noStart,
+					pageSize);
 			showType = "2";
 			articleService.updateArticleSelective(article);
-		}
-		catch (BaseException e) {
+		} catch (BaseException e) {
 			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
 			e.printStackTrace();
 			return ERROR;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			errMsg = ErrMsgConfig.getErrMsg(10000);
 			e.printStackTrace();
 			return ERROR;
@@ -203,15 +201,14 @@ public class ArticleAction extends BaseAction {
 		JSONArray ja = new JSONArray();
 		JSONObject obj = new JSONObject();
 		try {
-			List<Article> articleList = articleService.aboutArticle(keyWord, gid);
+			List<Article> articleList = articleService.aboutArticle(keyWord,
+					gid);
 			ja.addAll(articleList);
 
-		}
-		catch (BaseException e) {
+		} catch (BaseException e) {
 			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
 
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 		}
 		obj.put("articleList", ja);
 		getOut().print(String.valueOf(obj));
@@ -222,46 +219,27 @@ public class ArticleAction extends BaseAction {
 	 * 
 	 * @author lhl
 	 */
-	/*public void reArticles()
-	{
-
-		try
-		{
-			int countNumber = reArticleService.queryReArticleCount(articleid);
-			Pagination.setPageSize(Constant.pageSize20);
-			int pageSize = Pagination.getPageSize();
-			pageTotal = Pagination.getPageTotal(countNumber);
-			if (page > pageTotal)
-			{
-				page = pageTotal;
-			}
-			if (page < 1)
-			{
-				page = 1;
-			}
-			int noStart = (page - 1) * pageSize;
-			List<ReArticle> rejsonArticleList = reArticleService.queryReArticles(articleid, noStart, pageSize);
-			JSONArray ja = new JSONArray();
-			ja.addAll(rejsonArticleList);
-			JSONObject obj = new JSONObject();
-			obj.put("total", countNumber);
-			obj.put("reArticles", ja);
-			getOut().print(String.valueOf(obj));
-		}
-		catch (BaseException e)
-		{
-			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
-			e.printStackTrace();
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-	}*/
+	/*
+	 * public void reArticles() {
+	 * 
+	 * try { int countNumber = reArticleService.queryReArticleCount(articleid);
+	 * Pagination.setPageSize(Constant.pageSize20); int pageSize =
+	 * Pagination.getPageSize(); pageTotal =
+	 * Pagination.getPageTotal(countNumber); if (page > pageTotal) { page =
+	 * pageTotal; } if (page < 1) { page = 1; } int noStart = (page - 1) *
+	 * pageSize; List<ReArticle> rejsonArticleList =
+	 * reArticleService.queryReArticles(articleid, noStart, pageSize); JSONArray
+	 * ja = new JSONArray(); ja.addAll(rejsonArticleList); JSONObject obj = new
+	 * JSONObject(); obj.put("total", countNumber); obj.put("reArticles", ja);
+	 * getOut().print(String.valueOf(obj)); } catch (BaseException e) { errMsg =
+	 * ErrMsgConfig.getErrMsg(e.getCode()); e.printStackTrace(); } catch
+	 * (Exception e) { e.printStackTrace(); } }
+	 */
 
 	/**
 	 * 
 	 * description: 快速回复
+	 * 
 	 * @author lhl
 	 */
 	public void addReArticle() {
@@ -277,10 +255,11 @@ public class ArticleAction extends BaseAction {
 			if (sessionObj != null) {
 				User sessionUser = (User) sessionObj;
 				reArticle.setAuthorid(sessionUser.getUserId());
-			}
-			else {//如果用户名为空那么名字就用访客
-				String sessionCcode = (String) getSession().getAttribute("checkCode");
-				if (Tools.isEmpty(checkCode) || !checkCode.equalsIgnoreCase(sessionCcode)) {
+			} else {// 如果用户名为空那么名字就用访客
+				String sessionCcode = (String) getSession().getAttribute(
+						"checkCode");
+				if (Tools.isEmpty(checkCode)
+						|| !checkCode.equalsIgnoreCase(sessionCcode)) {
 					msg = "checkCodeErr";
 					obj.put("reArticle", msg);
 					getOut().print(String.valueOf(obj));
@@ -288,20 +267,17 @@ public class ArticleAction extends BaseAction {
 				}
 				if ("".equals(reUserName)) {
 					reArticle.setAuthorName("访客");
-				}
-				else {
+				} else {
 					reArticle.setAuthorName(Tools.formateHtml(reUserName));
 				}
 			}
 			ReArticle re = reArticleService.addReArticle(reArticle);
 			obj.put("reArticle", re);
 			getOut().print(String.valueOf(obj));
-		}
-		catch (BaseException e) {
+		} catch (BaseException e) {
 			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
 			e.printStackTrace();
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -329,13 +305,11 @@ public class ArticleAction extends BaseAction {
 			group = groupService.queryGorup(gid);
 			itemList = articleItemService.queryItemByGid(gid);
 			showType = "2";
-		}
-		catch (BaseException e) {
+		} catch (BaseException e) {
 			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
 			e.printStackTrace();
 			return ERROR;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			errMsg = ErrMsgConfig.getErrMsg(10000);
 			e.printStackTrace();
 			return ERROR;
@@ -365,6 +339,9 @@ public class ArticleAction extends BaseAction {
 			}
 			Article article = new Article();
 			article.setItemId(itemId);
+			if (Tools.isNotEmpty(image)) {
+				image = image.substring(10);
+			}
 			article.setImage(image);
 			article.setTitle(title);
 			article.setKeyWord(keyWord);
@@ -373,13 +350,11 @@ public class ArticleAction extends BaseAction {
 			article.setAuthorId(sessionUser.getUserId());
 			article.setType("0");
 			articleService.addArticle(article);
-		}
-		catch (BaseException e) {
+		} catch (BaseException e) {
 			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
 			e.printStackTrace();
 			return ERROR;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			errMsg = ErrMsgConfig.getErrMsg(10000);
 			e.printStackTrace();
 			return ERROR;
@@ -387,7 +362,8 @@ public class ArticleAction extends BaseAction {
 		return SUCCESS;
 	}
 
-	private boolean checkAddPermission(String gid, String userId) throws Exception {
+	private boolean checkAddPermission(String gid, String userId)
+			throws Exception {
 
 		if (StringUtils.isEmpty(gid) || StringUtils.isEmpty(userId)) {
 			return false;
@@ -395,8 +371,8 @@ public class ArticleAction extends BaseAction {
 		Group group = groupService.queryGorup(gid);
 		if (Constant.ALL_PERA.equals(group.getPostPerm())) {
 			return true;
-		}
-		else if (Constant.MEMBER_PERM.equals(group.getPostPerm()) && memberService.isMember(gid, userId)) {
+		} else if (Constant.MEMBER_PERM.equals(group.getPostPerm())
+				&& memberService.isMember(gid, userId)) {
 			return true;
 		}
 		return false;
@@ -416,13 +392,11 @@ public class ArticleAction extends BaseAction {
 			gid = article.getGid();
 			group = groupService.queryGorup(gid);
 			showType = "2";
-		}
-		catch (BaseException e) {
+		} catch (BaseException e) {
 			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
 			e.printStackTrace();
 			return ERROR;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			errMsg = ErrMsgConfig.getErrMsg(10000);
 			e.printStackTrace();
 			return ERROR;
@@ -433,6 +407,7 @@ public class ArticleAction extends BaseAction {
 	/**
 	 * 
 	 * description: 发表回复
+	 * 
 	 * @return
 	 * @author luohl
 	 */
@@ -452,13 +427,11 @@ public class ArticleAction extends BaseAction {
 			rearticle.setContent(content);
 			rearticle.setAuthorid(sessionUser.getUserId());
 			reArticleService.addReArticle(rearticle);
-		}
-		catch (BaseException e) {
+		} catch (BaseException e) {
 			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
 			e.printStackTrace();
 			return ERROR;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			errMsg = ErrMsgConfig.getErrMsg(10000);
 			e.printStackTrace();
 			return ERROR;
@@ -480,13 +453,11 @@ public class ArticleAction extends BaseAction {
 			gid = reArticle.getGid();
 			group = groupService.queryGorup(gid);
 			showType = "2";
-		}
-		catch (BaseException e) {
+		} catch (BaseException e) {
 			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
 			e.printStackTrace();
 			return ERROR;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			errMsg = ErrMsgConfig.getErrMsg(10000);
 			e.printStackTrace();
 			return ERROR;
@@ -497,6 +468,7 @@ public class ArticleAction extends BaseAction {
 	/**
 	 * 
 	 * description: 提交引用
+	 * 
 	 * @return
 	 * @author 35sz
 	 */
@@ -510,10 +482,13 @@ public class ArticleAction extends BaseAction {
 			}
 			User sessionUser = (User) userObj;
 			ReArticle quote = reArticleService.getReArticle(id);
-			String qutoStr = "<div class='ad_quto2'>" + "<img border='0' src='../images/quto.gif'>" + "<b>引用&nbsp;"
-					+ "<span style='color:blue'>" + quote.getAuthorName() + "</span>" + "&nbsp;在&nbsp;"
-					+ quote.getReTime().substring(0, 16) + "&nbsp;的发表</b>" + "<div style='margin-top:5px;'>"
-					+ quote.getContent() + "</div></div>";
+			String qutoStr = "<div class='ad_quto2'>"
+					+ "<img border='0' src='../images/quto.gif'>"
+					+ "<b>引用&nbsp;" + "<span style='color:blue'>"
+					+ quote.getAuthorName() + "</span>" + "&nbsp;在&nbsp;"
+					+ quote.getReTime().substring(0, 16) + "&nbsp;的发表</b>"
+					+ "<div style='margin-top:5px;'>" + quote.getContent()
+					+ "</div></div>";
 			String quoteStr = qutoStr + "<div>" + content + "</div>";
 			ReArticle rearticle = new ReArticle();
 			gid = quote.getGid();
@@ -523,13 +498,11 @@ public class ArticleAction extends BaseAction {
 			rearticle.setContent(quoteStr);
 			rearticle.setAuthorid(sessionUser.getUserId());
 			reArticleService.addReArticle(rearticle);
-		}
-		catch (BaseException e) {
+		} catch (BaseException e) {
 			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
 			e.printStackTrace();
 			return ERROR;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			errMsg = ErrMsgConfig.getErrMsg(10000);
 			e.printStackTrace();
 			return ERROR;
@@ -553,13 +526,11 @@ public class ArticleAction extends BaseAction {
 			itemId = article.getItemId();
 			itemList = articleItemService.queryItemByGid(gid);
 			showType = "2";
-		}
-		catch (BaseException e) {
+		} catch (BaseException e) {
 			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
 			e.printStackTrace();
 			return ERROR;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			errMsg = ErrMsgConfig.getErrMsg(10000);
 			e.printStackTrace();
 			return ERROR;
@@ -583,13 +554,11 @@ public class ArticleAction extends BaseAction {
 			article.setTitle(title);
 			articleService.updateArticleSelective(article);
 			gid = article.getGid();
-		}
-		catch (BaseException e) {
+		} catch (BaseException e) {
 			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
 			e.printStackTrace();
 			return ERROR;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			errMsg = ErrMsgConfig.getErrMsg(10000);
 			e.printStackTrace();
 			return ERROR;
@@ -607,32 +576,29 @@ public class ArticleAction extends BaseAction {
 	public String deleteReArticle() {
 
 		try {
-			//判断权限，删除回复
+			// 判断权限，删除回复
 			Object obj = getSession().getAttribute("user");
 			if (null == obj) {
 				errMsg = ErrMsgConfig.getErrMsg(10002);
 				return ERROR;
-			}
-			else {
+			} else {
 				User sessionUser = (User) getSession().getAttribute("user");
-				int grade = CheckRole.getMemberGrade(gid, sessionUser.getUserId());
+				int grade = CheckRole.getMemberGrade(gid,
+						sessionUser.getUserId());
 				if (Constant.grade1 == grade || Constant.grade2 == grade
 						|| Constant.SUPERADMIN.equals(sessionUser.getUserId())) {
 					reArticleService.deleteReArticle(id);
-				}
-				else {
+				} else {
 					errMsg = ErrMsgConfig.getErrMsg(10002);
 					return ERROR;
 				}
 			}
 
-		}
-		catch (BaseException e) {
+		} catch (BaseException e) {
 			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
 			e.printStackTrace();
 			return ERROR;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			errMsg = ErrMsgConfig.getErrMsg(10000);
 			e.printStackTrace();
 			return ERROR;
