@@ -36,7 +36,7 @@ import sun.misc.BASE64Decoder;
 public class Uploader
 {
 
-	private static final int width = 600;
+	private static final int width = 650;
 
 	private static final int height = 250;
 
@@ -66,8 +66,7 @@ public class Uploader
 	private String savePath = "upload";
 
 	// 文件允许格式
-	private String[] allowFiles = { ".rar", ".doc", ".docx", ".zip", ".pdf", ".txt", ".swf", ".wmv", ".gif", ".png",
-			".jpg", ".jpeg", ".bmp" };
+	private String[] allowFiles = { ".gif", ".png", ".jpg", ".jpeg", ".bmp" };
 
 	// 文件大小限制，单位KB
 	private int maxSize = 10000;
