@@ -53,7 +53,8 @@
 		  		<div class="messagelist"  id="messagelist">
 			  	<c:forEach var="message" items="${messageList}">
 			  	<div class="main_message">
-			  		<div><span class="message_name">
+			  		<div>
+			  			<span class="message_name">
 			  				<c:if test="${message.reUserId!=null&&message.reUserId!=''}">
 								<a href="userInfo.jspx?userId=${message.reUserId}">${message.reUserName }</a>
 							</c:if>
@@ -61,7 +62,7 @@
 			  					${message.reUserName }
 			  				</c:if>
 			  			</span>&nbsp;&nbsp;&nbsp;&nbsp;发表于：${fn:substring(message.postTime,0,10)}
-			  			</div>
+			  		</div>
 			  		<div class="message_con">${message.message }</div>
 			  	</div>	
 			  	</c:forEach>

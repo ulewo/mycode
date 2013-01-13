@@ -11,6 +11,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<script type="text/javascript">
+<!--
+	window.UEDITOR_HOME_URL = "/quan/ueditor/";
+//-->
+</script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet"  href="../css/usergroup.css" type="text/css"  />
 <title>Justlearning 学习，生活，娱乐</title>
@@ -18,9 +23,10 @@
 	#se3{color:white;background:#8AC4FC;}
 	#seleft2{background:#E8EDF1;color:red;}
 </style>
-<script type="text/javascript" charset="utf-8" src="../editor/kindeditor-min.js"></script>
 <script type="text/javascript" src="../js/jquery.min.js"></script>
 <script type="text/javascript" src="../js/util.js"></script>
+<script type="text/javascript" src="../ueditor/editor_config.js"></script>
+<script type="text/javascript" src="../ueditor/editor.js"></script>
 <script>
 <%
 	String message = request.getParameter("message");
@@ -32,72 +38,6 @@
 	}
  %>
  </script>
-<script type="text/javascript">
-		KE.show({
-			id : 'content',
-			allowFileManager : true,
-			resizeMode : 1,
-			newlineTag : 'br',
-			urlType : 'relative',
-			afterCreate : function(id) {
-				KE.event.ctrl(document, 13, function() {
-					KE.util.setData(id);
-					document.forms['example'].submit();
-				});
-				KE.event.ctrl(KE.g[id].iframeDoc, 13, function() {
-					KE.util.setData(id);
-					document.forms['example'].submit();
-				});
-			}
-		});
-		function getImage(imageName){
-			$("#iconImage").css("display","inline");
-			$("#icon").val(imageName);
-			$("#iconImage").attr("src","../upload/"+imageName);
-		}
-		function getheadIconImage(imageName){
-			$("#headiconImage").css("display","inline");
-			$("#headicon").val(imageName);
-			$("#headiconImage").attr("src","../upload/"+imageName);
-		    getImageDimension("../upload/"+imageName,showImageDimensions);  
-		}
-		//通过图片路径获取图片大小
-		function getImageDimension (imgURL,loadHandler) {  
-		  var img = new Image();  
-		  img.onload = loadHandler;  
-		  img.src = imgURL;  
-		}  
-		function showImageDimensions () {  
-			if(this.width>800) {  
-			  $("#headiconImage").attr("width","800");
-			}else{
-			  $("#headiconImage").attr("width",this.width);
-			}
-		} 
-		
-		function submitForm(){
-			var groupName = $("#groupName").val();
-			if(groupName.trim()==""){
-				alert("群组名称不能为空");
-				$("#groupName").focus();
-				return;
-			}else if(groupName.realLength()>20){
-				alert("群组名称不能超过10");
-				$("#groupName").focus();
-				return;
-			}else{
-				groupName = groupName.replaceHtml();
-				$("#groupName").val(groupName);
-			}
-			if(KE.util.isEmpty('content')){
-				alert("群组简介不能为空");
-				KE.util.focus('content')
-				return;
-			}
-			
-			$("#myform").submit();
-		}
-	</script>
 </head>
 <body>
 <jsp:include page="../common/head.jsp"/>
@@ -105,14 +45,14 @@
 		<div class="right">
 			<div>
 				<form action="createGroup.jspx" method="post" id="myform">
+					<input type="hidden" id="content" name="groupDesc">
 					<div class="partCon">
 						<div class="formTile">群名称：</div>
 						<div class="formCon" style="width:600px;"><input class="inputstyle" type="text" name="groupName" id="groupName"/> &nbsp;&nbsp;&nbsp;<span style="color:red;">长度不能超过20，一个中文占2字符，数字，字母占1个字符。</span> </div>
 					</div>	
 					<div>
 						<div class="formTile">群简介：</div>
-						<div class="formCon">
-						<textarea id="content" name="groupDesc" cols="100" rows="8" style="width:700px;height:300px;visibility:hidden;">${group.groupDesc }</textarea>
+						<div id="editor" style="text-align:left;" class="formCon">
 						</div>
 						<div style="clear:left;"></div>
 					</div>
@@ -158,5 +98,61 @@
 		<div style="clear:left;"></div>
 	</div>	
 <jsp:include page="../common/foot.jsp"/>
+<script type="text/javascript">
+window.UEDITOR_CONFIG.initialFrameWidth = 700;
+var editor = new UE.ui.Editor();
+editor.render("editor");
+editor.ready(function(){
+    editor.setContent('${group.groupDesc}');
+});
+function getImage(imageName){
+	$("#iconImage").css("display","inline");
+	$("#icon").val(imageName);
+	$("#iconImage").attr("src","../upload/"+imageName);
+}
+function getheadIconImage(imageName){
+	$("#headiconImage").css("display","inline");
+	$("#headicon").val(imageName);
+	$("#headiconImage").attr("src","../upload/"+imageName);
+    getImageDimension("../upload/"+imageName,showImageDimensions);  
+}
+//通过图片路径获取图片大小
+function getImageDimension (imgURL,loadHandler) {  
+  var img = new Image();  
+  img.onload = loadHandler;  
+  img.src = imgURL;  
+}  
+function showImageDimensions () {  
+	if(this.width>800) {  
+	  $("#headiconImage").attr("width","800");
+	}else{
+	  $("#headiconImage").attr("width",this.width);
+	}
+} 
+
+function submitForm(){
+	var groupName = $("#groupName").val();
+	if(groupName.trim()==""){
+		alert("群组名称不能为空");
+		$("#groupName").focus();
+		return;
+	}else if(groupName.realLength()>20){
+		alert("群组名称不能超过10");
+		$("#groupName").focus();
+		return;
+	}else{
+		groupName = groupName.replaceHtml();
+		$("#groupName").val(groupName);
+	}
+	if(editor.getContent()==""){
+		alert("内容不能为空");
+		return ;
+	}else{
+		$("#content").val(editor.getContent());
+	}
+	
+	$("#myform").submit();
+}
+</script>
 </body>
 </html>

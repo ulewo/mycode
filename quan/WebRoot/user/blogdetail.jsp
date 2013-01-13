@@ -36,7 +36,7 @@
   		<div class="blogdetail">${blogArticle.content}</div>
   		 
   		 <div class="topblog">
-		  		<div class="topblog_titcon"><span class="topblog_tit">评论</span></div>
+		  		<div class="topblog_titcon" style="height:20px;"><span class="topblog_tit">评论</span></div>
 		  		<div class="messagelist"  id="messagelist">
 				  	<c:forEach var="reply" items="${replyList}">
 				  	<div class="main_message">
@@ -48,8 +48,10 @@
 				  					${reply.userName }
 				  				</c:if>
 				  			</span>&nbsp;&nbsp;&nbsp;&nbsp;发表于：${fn:substring(reply.postTime,0,10)}
+				  			<span>&nbsp;&nbsp;&nbsp;&nbsp;<a href="">回复此评论</a></span>
 				  			</div>
 				  		<div class="message_con">${reply.content }</div>
+				  		
 				  	</div>	
 				  	</c:forEach>
 		  		</div>

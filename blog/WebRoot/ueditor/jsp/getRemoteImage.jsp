@@ -3,7 +3,7 @@
     <%@ page import="java.net.*"%>
     <%@ page import="java.util.*"%>
     <%@ page import="java.text.SimpleDateFormat"%>
-    <%@ page import="com.lhl.blog.util.Uploader" %>
+    <%@ page import="com.lhl.util.Uploader" %>
     <%
     	request.setCharacterEncoding("utf-8");
     	response.setCharacterEncoding("utf-8");

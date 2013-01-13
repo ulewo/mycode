@@ -13,7 +13,6 @@
             <div id="tabHeads" class="tabhead">
                 <span tabSrc="remote"><var id="lang_tab_remote"></var></span>
                 <span tabSrc="local" class="focus"><var id="lang_tab_local"></var></span>
-                <span tabSrc="imgManager"><var id="lang_tab_imgManager"></var></span>
                 <span tabSrc="imgSearch"><var id="lang_tab_imgSearch"></var></span>
             </div>
             <div id="tabBodys" class="tabbody">
@@ -92,8 +91,8 @@
 
         editor.setOpt({
             imageFieldName:"upfile",
-            compressSide:0,
-            maxImageSideLength:900
+            compressSide:1,
+            maxImageSideLength:650
         });
         utils.domReady(function(){
             var flashOptions = {
@@ -152,6 +151,7 @@
                 // 全部上传完成时的回调
                 allCompleteCallback: function(){
                     dialog.buttons[0].setDisabled(false);    //上传完毕后点亮按钮
+                    parent.initImg(imageUrls);
                 }
                 // 文件超出限制的最大体积时的回调
                 //exceedFileCallback: 'exceedFileCallback',

@@ -5,56 +5,21 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<script type="text/javascript">
+<!--
+	window.UEDITOR_HOME_URL = "/quan/ueditor/";
+//-->
+</script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet"  href="../css/manage.group.css" type="text/css"  />
 <title>Justlearning 学习，生活，娱乐</title>
 <style>
 #selected1 a{background:#FFFFFF;}
 </style>
-<script type="text/javascript" charset="utf-8" src="../editor/kindeditor-min.js"></script>
 <script type="text/javascript" charset="utf-8" src="../js/jquery.min.js"></script>
 <script type="text/javascript" src="../js/util.js"></script>
-<script type="text/javascript">
-		KE.show({
-			id : 'content',
-			allowFileManager : true,
-			resizeMode : 1,
-			newlineTag : 'br',
-			urlType : 'relative',
-			afterCreate : function(id) {
-				KE.event.ctrl(document, 13, function() {
-					KE.util.setData(id);
-					document.forms['example'].submit();
-				});
-				KE.event.ctrl(KE.g[id].iframeDoc, 13, function() {
-					KE.util.setData(id);
-					document.forms['example'].submit();
-				});
-			}
-		});
-		function submitForm(){
-			var groupName = $("#groupName").val();
-			if(groupName.trim()==""){
-				alert("群组名称不能为空");
-				$("#groupName").focus();
-				return;
-			}else if(groupName.realLength()>20){
-				alert("群组名称不能超过20");
-				$("#groupName").focus();
-				return;
-			}else{
-				groupName = groupName.replaceHtml();
-				$("#groupName").val(groupName);
-			}
-			if(KE.util.isEmpty('content')){
-				alert("群组简介不能为空");
-				KE.util.focus('content')
-				return;
-			}
-			$("#myform").submit();
-		}
-		
-	</script>
+<script type="text/javascript" src="../ueditor/editor_config.js"></script>
+<script type="text/javascript" src="../ueditor/editor.js"></script>
 </head>
 <body>
 <div class="maincon">
@@ -63,14 +28,14 @@
 	</div>
 	<div class="right">
 			<form action="updateGroup.jspx" method="post" id="myform">
+			<input type="hidden" id="content" name="groupDesc">
 			<div class="form_name">
 				<div class="form_name_tit">群名称：</div>
 				<div class="form_name_input"><input type="text" value="${group.groupName }" name="groupName" id="groupName"/> &nbsp;&nbsp;<span style="color:red;">用户名长度1-20位字符，由中文、_、数字、字母组成</span></div>
 			</div>
 			<div class="form_desc">	
 				<div class="form_desc_tit">群简介：</div>
-				<div class="form_desc_area">
-					<textarea id="content" name="groupDesc" cols="100" rows="8" style="width:700px;height:200px;visibility:hidden;">${group.groupDesc }</textarea>
+				<div id="editor" style="text-align:left;" class="form_desc_area">
 				</div>
 				<div style="clear:left;"></div>
 			</div>	
@@ -98,4 +63,35 @@
 </div>
 <div class="foot"></div>
 </body>
+<script type="text/javascript">
+window.UEDITOR_CONFIG.initialFrameWidth = 700;
+var editor = new UE.ui.Editor();
+editor.render("editor");
+editor.ready(function(){
+    editor.setContent('${group.groupDesc}');
+});
+
+function submitForm(){
+	var groupName = $("#groupName").val();
+	if(groupName.trim()==""){
+		alert("群组名称不能为空");
+		$("#groupName").focus();
+		return;
+	}else if(groupName.realLength()>20){
+		alert("群组名称不能超过20");
+		$("#groupName").focus();
+		return;
+	}else{
+		groupName = groupName.replaceHtml();
+		$("#groupName").val(groupName);
+	}
+	if(editor.getContent()==""){
+		alert("内容不能为空");
+		return ;
+	}else{
+		$("#content").val(editor.getContent());
+	}
+	$("#myform").submit();
+}
+</script>
 </html>

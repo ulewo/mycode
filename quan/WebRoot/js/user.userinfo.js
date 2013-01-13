@@ -213,3 +213,38 @@ function repassword() {
 		}
 	});
 }
+
+function NotePanle(note) {
+	this.noteCon = $("<div class='note_tr'></div>");
+	var re_name_time = $("<div class='note_name_time'></div>").appendTo(
+			this.noteCon);
+	$("<div class='note_name'>" + note.userName + "</div>").appendTo(
+			re_name_time);
+	$("<div class='note_time'>" + note.postTime.substring(0, 19) + "</div>")
+			.appendTo(re_name_time);
+	$("<a href='javascript:void(0)'>引用</a>").bind("click", this.quote)
+			.appendTo($("<div class='re_time'></div>").appendTo(re_name_time));
+	$("<div class='note_con'>" + note.content + "</div>")
+			.appendTo(this.noteCon);
+}
+NotePanle.prototype = {
+	asHtml : function() {
+		return this.noteCon;
+	},
+	quote : function() {
+		$("#quote_panle").remove();
+		var name = $(this).parent().parent().children().eq(0).html();
+		var time = $(this).parent().parent().children().eq(1).html();
+		var content = $(this).parent().parent().parent().children().eq(1)
+				.html();
+		var quote_panle = $("<div id='quote_panle'></div>");
+		$("#userName").before(quote_panle);
+		var quote = $("<div class='quote'></div>").appendTo(quote_panle);
+		var quote_tit = $("<div class='quote_tit'></div>").appendTo(quote);
+		$("<img src='images/qbar_iconb24.gif'><span>引用</span>").appendTo(
+				quote_tit);
+		$("<span class='quote_name'>" + name + "</span>").appendTo(quote_tit);
+		$("<span>在" + time + "的发表</span>").appendTo(quote_tit);
+		$("<div class='quote_content'>" + content + "</div>").appendTo(quote);
+	}
+}

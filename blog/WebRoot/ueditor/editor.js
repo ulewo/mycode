@@ -580,7 +580,7 @@ var dtd = dom.dtd = (function() {
         J = X( _({iframe:1}), H, B ),
         K = _({img:1,embed:1,noscript:1,br:1,kbd:1,center:1,button:1,basefont:1,h5:1,h4:1,samp:1,h6:1,ol:1,h1:1,h3:1,h2:1,form:1,font:1,'#':1,select:1,menu:1,ins:1,abbr:1,label:1,code:1,table:1,script:1,cite:1,input:1,iframe:1,strong:1,textarea:1,noframes:1,big:1,small:1,span:1,hr:1,sub:1,bdo:1,'var':1,div:1,object:1,sup:1,strike:1,dir:1,map:1,dl:1,applet:1,del:1,isindex:1,fieldset:1,ul:1,b:1,acronym:1,a:1,blockquote:1,i:1,u:1,s:1,tt:1,address:1,q:1,pre:1,p:1,em:1,dfn:1}),
 
-        L = X( _({a:0}), J ),//a不能被切开，所以把他
+        L = X( _({a:0}), J ),// a不能被切开，所以把他
         M = _({tr:1}),
         N = _({'#':1}),
         O = X( _({param:1}), K ),
@@ -1214,7 +1214,7 @@ var domUtils = dom.domUtils = {
     mergeToParent:function (node) {
         var parent = node.parentNode;
         while (parent && dtd.$removeEmpty[parent.tagName]) {
-            if (parent.tagName == node.tagName || parent.tagName == 'A') {//针对a标签单独处理
+            if (parent.tagName == node.tagName || parent.tagName == 'A') {// 针对a标签单独处理
                 domUtils.trimWhiteTextNode(parent);
                 if (parent.tagName == 'SPAN' && !domUtils.isSameStyle(parent, node)
                     || (parent.tagName == 'A' && node.tagName == 'SPAN')) {
@@ -1911,7 +1911,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
                 return me.collapse(true);
             }
             if (!ignoreEnd) {
-                while (me.endContainer.nodeType == 1//是element
+                while (me.endContainer.nodeType == 1// 是element
                     && me.endOffset > 0
                     && (child = me.endContainer.childNodes[me.endOffset - 1])
                     && check(child)) {
@@ -2715,7 +2715,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
             textarea:'editorValue',
             focus:false,
             initialFrameWidth:800,
-            initialFrameHeight:me.options.minFrameHeight||320,//兼容老版本配置项
+            initialFrameHeight:me.options.minFrameHeight||320,// 兼容老版本配置项
             minFrameWidth:800,
             minFrameHeight:220,
             autoClearEmptyNode:true,
@@ -2974,7 +2974,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
             }
 
             if ( ie && isPreview ) {
-                html = html//.replace(/<\s*br\s*\/?\s*>/gi,'<br/><br/>')
+                html = html// .replace(/<\s*br\s*\/?\s*>/gi,'<br/><br/>')
                         .replace( /<p>\s*?<\/p>/g, '<p>&nbsp;</p>' );
             } else {
                 html = html.replace( /(&nbsp;)+/g, function ( s ) {
@@ -3000,7 +3000,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
         
         getPlainTxt:function () {
             var reg = new RegExp( domUtils.fillChar, 'g' ),
-                    html = this.body.innerHTML.replace( /[\n\r]/g, '' );//ie要先去了\n在处理
+                    html = this.body.innerHTML.replace( /[\n\r]/g, '' );// ie要先去了\n在处理
             html = html.replace( /<(p|div)[^>]*>(<br\/?>|&nbsp;)<\/\1>/gi, '\n' )
                     .replace( /<br\/?>/gi, '\n' )
                     .replace( /<[^>/]+>/g, '' )
@@ -3025,7 +3025,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
             html = html
                     .replace( /^[ \t\r\n]*?</, '<' )
                     .replace( />[ \t\r\n]*?$/, '>' )
-                    .replace( />[\t\r\n]*?</g, '><' )//代码高量的\n不能去除
+                    .replace( />[\t\r\n]*?</g, '><' )// 代码高量的\n不能去除
                     .replace( /[\s\/]?(\w+)?>[ \t\r\n]*?<\/?(\w+)/gi, function ( a, b, c ) {
                         if ( b ) {
                             lastTagName = c;
@@ -3433,7 +3433,7 @@ UE.ajax = function() {
                     method:"POST",
                     timeout:5000,
                     async:true,
-                    data:{},//需要传递对象的话只能覆盖
+                    data:{},// 需要传递对象的话只能覆盖
                     onsuccess:function() {
                     },
                     onerror:function() {
@@ -9806,7 +9806,7 @@ UE.plugins['keystrokes'] = function() {
 
 
         }
-        if (keyCode == 8 ) {//|| keyCode == 46
+        if (keyCode == 8 ) {// || keyCode == 46
 
 
             var range = me.selection.getRange(),
@@ -10039,7 +10039,7 @@ UE.plugins['keystrokes'] = function() {
             }
         }
 
-        if (keyCode == 8 ) {//|| keyCode == 46
+        if (keyCode == 8 ) {// || keyCode == 46
             if(browser.gecko){
                 for(var i=0,li,lis = domUtils.getElementsByTagName(this.body,'li');li=lis[i++];){
                     if(domUtils.isEmptyNode(li) && !li.previousSibling){
@@ -10439,7 +10439,7 @@ UE.plugins['serialize'] = function () {
             'li':'p',
             'tr':'p',
             'br':'br',
-            'p':'p'//trace:1398 碰到p标签自己要加上p,否则transHtml[tag]是undefined
+            'p':'p'// trace:1398 碰到p标签自己要加上p,否则transHtml[tag]是undefined
 
         };
 
@@ -10566,7 +10566,7 @@ UE.plugins['serialize'] = function () {
             case 'td':
                 optStyle( node );
                 break;
-            case 'a'://锚点，a==>img
+            case 'a':// 锚点，a==>img
                 if ( node.attributes['anchorname'] ) {
                     node.tag = 'img';
                     node.attributes = {
@@ -10711,7 +10711,7 @@ UE.plugins['serialize'] = function () {
                     delete node.attributes['class']
                 }
                 break;
-            case 'img'://锚点，img==>a
+            case 'img':// 锚点，img==>a
                 if ( node.attributes.anchorname ) {
                     node.tag = 'a';
                     node.attributes = {
@@ -10847,7 +10847,8 @@ UE.plugins['serialize'] = function () {
 
                 }
                 if(node.type == 'text' && !dtd.$notTransContent[node.parent.tag]){
-                    node.data = node.data.replace(/[\r\t\n]*/g,'')//.replace(/[ ]*$/g,'')
+                    node.data = node.data.replace(/[\r\t\n]*/g,'')// .replace(/[
+																	// ]*$/g,'')
                 }
                 return node;
             }
@@ -11013,7 +11014,7 @@ UE.plugins['serialize'] = function () {
                         try{
                             var node =  f.transformInput(
                                         f.parseHTML(
-                                            f.word(html)//, true
+                                            f.word(html)// , true
                                         ),word_img_flag
                                     );
                             node = f.filter(node,pasteplain ? {
@@ -11156,7 +11157,7 @@ UE.plugins['enterkey'] = function() {
 
     me.addListener('keydown', function(type, evt) {
         var keyCode = evt.keyCode || evt.which;
-        if (keyCode == 13) {//回车
+        if (keyCode == 13) {// 回车
             if (me.undoManger) {
                 me.undoManger.save();
             }
@@ -11464,16 +11465,16 @@ UE.commands['delete'] = {
 UE.plugins['shortcutkeys'] = function(){
     var me = this,
         shortcutkeys = {
-    		"ctrl+66" : "Bold" ,//^B
-        	"ctrl+90" : "Undo" ,//undo
+    		"ctrl+66" : "Bold" ,// ^B
+        	"ctrl+90" : "Undo" ,// undo
         	"ctrl+89" : "Redo",
        		"ctrl+73" : "Italic",
-       		"ctrl+85" : "Underline" ,//^U
+       		"ctrl+85" : "Underline" ,// ^U
         	"ctrl+shift+67" : "removeformat",
         	"ctrl+shift+76" : "justify:left",
         	"ctrl+shift+82" : "justify:right",
         	"ctrl+65" : "selectAll",
-            "ctrl+13" : "autosubmit"//手动提交
+            "ctrl+13" : "autosubmit"// 手动提交
     	};
     me.addListener('keydown',function(type,e){
 
