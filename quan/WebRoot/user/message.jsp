@@ -98,5 +98,6 @@
   	$(function(){
   		initMessage("${param.userId}");
   	});
+  	var sessionUserId ="${user.userId}";
   </script>
 </html>

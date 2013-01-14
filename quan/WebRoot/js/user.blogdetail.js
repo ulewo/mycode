@@ -23,6 +23,10 @@ function subReply(blogId) {
 		art.dialog.tips("留言内容不能超过500字符!");
 		return;
 	}
+	var quote = ""
+	if ($("#quote_panle").html() != null) {
+		quote = "<div class='quote_panle'>" + $("#infocon").html() + "</div>";
+	}
 	$.ajax({
 		async : true,
 		cache : false,
@@ -33,6 +37,7 @@ function subReply(blogId) {
 			content : content,
 			checkCode : checkCode,
 			blogId : blogId,
+			quote : quote,
 			"time" : new Date()
 		},
 		url : "savaReply.jspx",// 请求的action路径
@@ -48,28 +53,9 @@ function subReply(blogId) {
 			} else {
 				art.dialog.tips("发表成功");
 				$(".nomessage").remove();
-				var reUserId = data.msg.userId;
-				var userName = data.msg.userName;
-				var content = data.msg.content;
-				var posttime = data.msg.postTime;
-				var main = $("<div class='main_message'></div>");
-				if ($(".main_message").length > 0) {
-					$(".main_message").eq($(".main_message").length - 1).after(
-							main);
-				} else {
-					main.appendTo($("#messagelist"));
-				}
-				var nameHtml = userName;
-				if (reUserId != "") {
-					nameHtml = "<a href='userInfo.jspx?userId=" + reUserId
-							+ "'>" + userName + "</a>";
-				}
-				var namecon = $(
-						"<div><span class='message_name'>" + nameHtml
-								+ "</span>&nbsp;&nbsp;&nbsp;&nbsp;发表于："
-								+ posttime + "</div>").appendTo(main);
-				var con = $("<div class='message_con'>" + content + "</div>")
-						.appendTo(main);
+				$("#quote_panle").remove();
+				$(".nomessage").remove();
+				new NotePanle(data.note).asHtml().appendTo($("#messagelist"));
 				resetForm();
 			}
 			refreshcode();
@@ -140,7 +126,7 @@ function NotePanle(note) {
 	// 姓名，时间，回复
 	var re_name_time = $("<div class='note_name_time'></div>")
 			.appendTo(re_info);
-	if (note.reUserId != "") {
+	if (note.userId != "") {
 		$(
 				"<span class='note_name'><a href='userInfo.jspx?userId="
 						+ note.userId + "'>" + note.userName + "</a></span>")
@@ -155,10 +141,18 @@ function NotePanle(note) {
 			re_name_time);
 	var re_span = $("<span class='nofirst'></span>").appendTo(re_name_time);
 	$("<a href='javascript:void(0)'>回复</a>").bind("click", {
-		name : note.reUserName,
+		name : note.userName,
 		time : note.postTime.substring(0, 19),
-		content : note.message
+		content : note.content
 	}, this.quote).appendTo(re_span);
+	if (userId == sessionUserId) {
+		var del_span = $("<span class='nofirst'></span>")
+				.appendTo(re_name_time);
+		$("<a href='javascript:void(0)'>删除</a>").bind("click", {
+			id : note.id,
+			message : this.noteCon
+		}, this.del).appendTo(del_span);
+	}
 	// 回复的内容
 	$("<div class='re_content'>" + note.content + "</div>").appendTo(re_info);
 	// 清除浮动
@@ -189,6 +183,28 @@ NotePanle.prototype = {
 				.appendTo(b);
 		$("<div style='margin-top:5px;'>" + content + "</div>").appendTo(
 				infocon);
+	},
+	del : function(event) {
+		var id = event.data.id;
+		var message = event.data.message;
+		$.ajax({
+			async : true,
+			cache : false,
+			type : 'GET',
+			dataType : "json",
+			url : "deleteReply.jspx?id=" + id,// 请求的action路径
+			success : function(data) {
+				if (data.msg == "ok") {
+					message.remove();
+					art.dialog.tips("删除成功");
+				} else if (data.msg == "noperm") {
+					art.dialog.tips("你无权进行此操作");
+				} else {
+					art.dialog.tips("网络异常，请稍后再试");
+				}
+			}
+		});
+
 	}
 }
 

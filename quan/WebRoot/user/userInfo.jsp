@@ -53,17 +53,29 @@
 		  		<div class="messagelist"  id="messagelist">
 			  	<c:forEach var="message" items="${messageList}">
 			  	<div class="main_message">
-			  		<div>
-			  			<span class="message_name">
-			  				<c:if test="${message.reUserId!=null&&message.reUserId!=''}">
-								<a href="userInfo.jspx?userId=${message.reUserId}">${message.reUserName }</a>
-							</c:if>
-			  				<c:if test="${message.reUserId==null||message.reUserId==''}">
-			  					${message.reUserName }
-			  				</c:if>
-			  			</span>&nbsp;&nbsp;&nbsp;&nbsp;发表于：${fn:substring(message.postTime,0,10)}
+			  		<div class="re_icon">
+				  		<c:if test="${message.reUserId!=null&&message.reUserId!=''}">
+							<img src="../upload/${message.reUserIcon }" width="35">
+						</c:if>
+		  				<c:if test="${message.reUserId==null||message.reUserId==''}">
+		  					<img src="../upload/default.gif" width="35">
+		  				</c:if>
 			  		</div>
-			  		<div class="message_con">${message.message }</div>
+			  		<div class="re_info">
+			  			<div class="note_name_time">
+			  				<span class="message_name">
+				  				<c:if test="${message.reUserId!=null&&message.reUserId!=''}">
+									<a href="userInfo.jspx?userId=${message.reUserId}">${message.reUserName }</a>
+								</c:if>
+				  				<c:if test="${message.reUserId==null||message.reUserId==''}">
+				  					${message.reUserName }
+				  				</c:if>
+			  				</span>
+			  				<span class="note_time nofirst">发表于：${fn:substring(message.postTime,0,10)}</span>
+			  			</div>
+			  			<div class="re_content">${message.message }</div>
+			  		</div>
+			  		<div class="clear"></div>
 			  	</div>	
 			  	</c:forEach>
 		  	</div>

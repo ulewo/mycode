@@ -46,7 +46,7 @@
 				<p:pager url="message.jspx?userId=${userId}" page="${page}" pageTotal = "${pageTotal }"></p:pager> 
 			</div>
 		  	<div>
-		  		<form>
+		  		<form id="subform"> 
 		  		<input type="hidden" name="userId" value="${userId }" id="userId">
 		  		<div class="u_name">
 		  			<c:if test="${user==null}">
@@ -81,10 +81,11 @@
  	</div>
     <jsp:include page="../common/foot.jsp"/>
     <script type="text/javascript">
+    var userId = "${userId}"
+    var sessionUserId ="${user.userId}";
     $(function(){
     	loadReply("${param.id}");
     })
-    	
     </script>
   </body>
 </html>
