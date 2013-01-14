@@ -22,7 +22,6 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONObject;
 
@@ -112,6 +111,8 @@ public class UserSpaceAction extends BaseAction
 	private int pageTotal; // 总页数
 
 	private String errMsg;
+
+	private String quote;
 
 	private int x1;
 
@@ -643,17 +644,19 @@ public class UserSpaceAction extends BaseAction
 		return SUCCESS;
 	}
 
-	public String message()
+	public void message()
 	{
 
+		String msg = "ok";
+		JSONObject obj = new JSONObject();
 		if (Tools.isEmpty(userId))
 		{
-			return ERROR;
+			msg = "error";
 		}
 		try
 		{
 			int countNumber = messageService.getCount(userId);
-			Pagination.setPageSize(Constant.pageSize20);
+			Pagination.setPageSize(5);
 			int pageSize = Pagination.getPageSize();
 			pageTotal = Pagination.getPageTotal(countNumber);
 			if (page > pageTotal)
@@ -665,21 +668,19 @@ public class UserSpaceAction extends BaseAction
 				page = 1;
 			}
 			int noStart = (page - 1) * pageSize;
-			messageList = messageService.queryMessage(userId, noStart, pageSize);
-
-		}
-		catch (BaseException e)
-		{
-			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
-			e.printStackTrace();
-			return ERROR;
+			List<Message> list = messageService.queryMessage(userId, noStart, pageSize);
+			obj.put("totalPage", pageTotal);
+			obj.put("page", page);
+			obj.put("list", list);
 		}
 		catch (Exception e)
 		{
+			msg = "error";
 			e.printStackTrace();
-			return ERROR;
 		}
-		return SUCCESS;
+		obj.put("msg", msg);
+		PrintWriter out = getOut();
+		out.println(String.valueOf(obj));
 	}
 
 	public void getUserInfoAjax() throws IOException
@@ -710,9 +711,7 @@ public class UserSpaceAction extends BaseAction
 		JSONObject obj = new JSONObject();
 		obj.put("result", msg);
 		obj.put("userBaesInfo", userBaesInfo);
-		HttpServletResponse response = getResponse();
-		response.setContentType("text/html;charset=UTF-8");
-		PrintWriter out = response.getWriter();
+		PrintWriter out = getOut();
 		out.println(String.valueOf(obj));
 	}
 
@@ -731,6 +730,7 @@ public class UserSpaceAction extends BaseAction
 				User sessionUser = (User) sessionObj;
 				message.setReUserId(sessionUser.getUserId());
 				message.setReUserName(sessionUser.getUserName());
+				message.setReUserIcon(sessionUser.getUserLittleIcon());
 			}
 			else
 			{// 如果用户名为空那么名字就用访客
@@ -766,11 +766,13 @@ public class UserSpaceAction extends BaseAction
 			}
 			else
 			{
-				message.setMessage(Tools.formateHtml(content));
+				message.setMessage(quote + Tools.formateHtml(content));
 			}
 			message.setUserId(userId);
 			Message result = messageService.addMessage(message);
-			obj.put("msg", result);
+			message.setPostTime(result.getPostTime());
+			message.setId(result.getId());
+			obj.put("note", message);
 			getOut().print(String.valueOf(obj));
 		}
 		catch (Exception e)
@@ -1497,6 +1499,12 @@ public class UserSpaceAction extends BaseAction
 	{
 
 		this.newPwd = newPwd;
+	}
+
+	public void setQuote(String quote)
+	{
+
+		this.quote = quote;
 	}
 
 }

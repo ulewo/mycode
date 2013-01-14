@@ -27,7 +27,7 @@
 		(case when m.reuserid is not null then u.username else m.reusername end)as reUserName,
 		(case when m.reuserid is not null then u.userlittleicon else '' end)as reUserIcon,
 		m.posttime 
-		from message m left join user u on m.userid = u.userid where m.userid = #userId#  limit #offset#,#total#
+		from message m left join user u on m.reuserid = u.userid where m.userid = #userId#  limit #offset#,#total#
 	</select>
 
 	<!-- 根据userId查询留言条数 -->
