@@ -13,6 +13,7 @@
 	<meta http-equiv="description" content="This is my page">
 	<script type="text/javascript" src="../js/jquery.min.js"></script>
 	<script type="text/javascript" src="../js/user.userinfo.js"></script>
+	<script type="text/javascript" src="../js/user.blogdetail.js"></script>
 	<link rel="stylesheet" type="text/css" href="../css/user.userinfo.css">
 	<style type="text/css">
 		#sel_left6 a{background:url(../images/bg.gif) 0px -85px;}
@@ -38,26 +39,8 @@
   		 <div class="topblog">
 		  		<div class="topblog_titcon" style="height:20px;"><span class="topblog_tit">评论</span></div>
 		  		<div class="messagelist"  id="messagelist">
-				  	<c:forEach var="reply" items="${replyList}">
-				  	<div class="main_message">
-				  		<div><span class="message_name">
-				  				<c:if test="${reply.userId!=null&&reply.userId!=''}">
-									<a href="userInfo.jspx?userId=${reply.userId}">${reply.userName }</a>
-								</c:if>
-				  				<c:if test="${reply.userId==null||reply.userId==''}">
-				  					${reply.userName }
-				  				</c:if>
-				  			</span>&nbsp;&nbsp;&nbsp;&nbsp;发表于：${fn:substring(reply.postTime,0,10)}
-				  			<span>&nbsp;&nbsp;&nbsp;&nbsp;<a href="">回复此评论</a></span>
-				  			</div>
-				  		<div class="message_con">${reply.content }</div>
-				  		
-				  	</div>	
-				  	</c:forEach>
+				  	
 		  		</div>
-		  		<c:if test="${empty replyList}" >
-		  			<span class="nomessage">尚无任何评论</span>
-		  		</c:if>
 		  	</div>
 		  	<div  class="pagination" style="height:30px;float:none;margin-top:10px;">
 				<p:pager url="message.jspx?userId=${userId}" page="${page}" pageTotal = "${pageTotal }"></p:pager> 
@@ -97,5 +80,11 @@
  	<div style="clear:left;"></div>
  	</div>
     <jsp:include page="../common/foot.jsp"/>
+    <script type="text/javascript">
+    $(function(){
+    	loadReply("${param.id}");
+    })
+    	
+    </script>
   </body>
 </html>
