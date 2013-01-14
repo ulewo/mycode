@@ -49,12 +49,10 @@ public class MessageServiceImpl implements MessageService {
 		return message;
 	}
 
-	public boolean deletMessage(String userId, String curUserId, int id) {
+	public boolean deletMessage(String curUserId, int id) {
 
 		Message message = messageDao.queryMessageById(id);
-		if (null != message
-				&& (message.getUserId().equals(curUserId) || curUserId
-						.equals(userId))) {
+		if (null != message && message.getUserId().equals(curUserId)) {
 			messageDao.deleteMessage(id);
 			return true;
 		} else {

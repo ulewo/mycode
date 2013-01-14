@@ -108,6 +108,9 @@
 		<!-- 留言 -->
 		<action name="addMessage" class="user" method="addMessage">
 		</action>
+		<!--删除留言-->
+		<action name="deleteMessage" class="user" method="deleteMessage">
+		</action>
 		
 		<!-- 更新用户信息获取用户信息 -->
 		<action name="manage" class="user" method="getInfo">
@@ -157,7 +160,9 @@
 		<!--保存-->
 		<action name="savaReply" class="blog" method="savaReply">
 		</action>
-		
+		<!--删除评论-->
+		<action name="deleteReply" class="blog" method="deleteReply">
+		</action>
 		<!--查询回复-->
 		<action name="loadReply" class="blog" method="loadReply">
 		</action>

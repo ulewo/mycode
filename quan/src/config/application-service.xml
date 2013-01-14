@@ -83,6 +83,7 @@
 	    </bean>
 	     <bean name="blogReplyService" class="com.lhl.quan.service.impl.BlogReplyServiceImpl">
 	    	 <property name="blogReplyDao" ref="blogReplyDao"/>
+	    	 <property name="blogArticleDao" ref="blogArticleDao"/>
 	    </bean>
 	    
 	    
