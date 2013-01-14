@@ -31,7 +31,11 @@
 	  </div>
 	  <div class="right">
 		  	<div class="topblog">
+		  		
 		  		<div class="topblog_titcon"><span class="topblog_tit">留言板</span></div>
+		  		<div class="messagelist"  id="messagelist">
+		  		</div>
+		  		<!-- 
 		  		<div class="messagelist"  id="messagelist">
 				  	<c:forEach var="message" items="${messageList}">
 				  	<div class="main_message">
@@ -51,13 +55,13 @@
 		  		<c:if test="${empty messageList}" >
 		  			<span class="nomessage">尚无任何留言</span>
 		  		</c:if>
+		  		 -->
 		  	</div>
-		  	<div  class="pagination" style="height:30px;float:none;margin-top:10px;">
-				<p:pager url="message.jspx?userId=${userId}" page="${page}" pageTotal = "${pageTotal }"></p:pager> 
+		  	<div  class="pagination" style="float:none;margin-top:10px;width:auto;display:none;">
 			</div>
-		  	<div>
-		  		<form>
-		  		<input type="hidden" name="userId" value="${userId }" id="userId">
+		  	<div class="subArea">
+		  		<form id="subform">
+		  		<input type="hidden" name="userId" value="${param.userId }" id="userId">
 		  		<div class="u_name">
 		  			<c:if test="${user==null}">
 		  				用户名：<input type="text" name="reUserName" id="name">
@@ -90,4 +94,9 @@
   </div>
    <jsp:include page="../common/foot.jsp"/>
   </body>
+  <script type="text/javascript">
+  	$(function(){
+  		initMessage("${param.userId}");
+  	});
+  </script>
 </html>

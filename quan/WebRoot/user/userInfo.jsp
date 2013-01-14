@@ -49,7 +49,7 @@
 		  		</c:if>
 		  	</div>
 		  	<div class="topblog">
-		  		<div class="topblog_titcon"><span class="topblog_tit">最新留言</span><span class="topblog_link"><a href="message.jspx?userId=${userId}">进入留言板</a></span></div>
+		  		<div class="topblog_titcon"><span class="topblog_tit">最新留言</span><span class="topblog_link"><a href="message.jsp?userId=${userId}">进入留言板</a></span></div>
 		  		<div class="messagelist"  id="messagelist">
 			  	<c:forEach var="message" items="${messageList}">
 			  	<div class="main_message">

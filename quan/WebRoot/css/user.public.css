@@ -47,3 +47,13 @@ body{background:#F9F9F9;}
 .blog_title{font-weight:bold;font-size:18px;}
 .blogsta{color:#666;margin-top:10px;}
 .blogsta span{color:#A00;font-weight:bold;}
+/*回复信息*/
+.re_icon{width:50px;float:left;}
+.re_info{float:left;width:690px;}
+.note_name{color:#666}
+.note_name_time span.nofirst{padding-left:10px;}
+.note_time{color:#666}
+.re_content{margin-top:10px;line-height:20px;}
+.subArea{margin-top:5px;}
+.quote_panle{border-bottom: #666 1px dashed;text-align: left;border-left: #666 1px dashed;padding-bottom: 8px;background-color: white;padding-left: 8px;padding-right: 8px;border-top: #666 1px dashed;border-right: #666 1px dashed;padding-top: 8px;margin: 0px 0px 8px 0px;position:relative;}
+.quote_panle .close_icon{position:absolute;top:0px;right:0px;cursor:pointer;}
