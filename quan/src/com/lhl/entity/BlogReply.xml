@@ -28,13 +28,18 @@
 		(case when m.userid is not null then u.username else m.username end)as userName,
 		(case when m.userid is not null then u.userlittleicon else '' end)as reUserIcon,
 		m.posttime 
-		from blog_reply m left join user u on m.userid = u.userid where m.blogid = #blogId#
+		from blog_reply m left join user u on m.userid = u.userid where m.blogid = #blogId# order by posttime desc
 		
 	</select>
 	
 	<!-- 通过ID查询回复 -->
 	<select id="queryPeplyById"  resultClass="blogReply" parameterClass="java.lang.Integer">
 		select * from blog_reply  where id = #id#
+	</select>
+	
+	<!-- 查询数量 -->
+	<select id="queryReplyCountByBlogId"  resultClass="java.lang.Integer" parameterClass="java.lang.Integer">
+		select count(id) from blog_reply  where id = #blogId#
 	</select>
 	
 	<!-- 删除回复 -->

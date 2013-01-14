@@ -154,7 +154,12 @@
 			<result name="success">blogdetail.jsp</result>
 			<result name="error">../error/error.jsp</result>
 		</action>
+		<!--保存-->
 		<action name="savaReply" class="blog" method="savaReply">
+		</action>
+		
+		<!--查询回复-->
+		<action name="loadReply" class="blog" method="loadReply">
 		</action>
 
 		

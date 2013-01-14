@@ -65,4 +65,10 @@ public class BlogReplyDao extends SqlMapClientDaoSupport
 
 		this.getSqlMapClientTemplate().delete("blogReply.deletePeply", id);
 	}
+
+	public int queryReplyCountByBlogId(int blogId)
+	{
+
+		return (Integer) this.getSqlMapClientTemplate().delete("blogReply.queryReplyCountByBlogId", blogId);
+	}
 }

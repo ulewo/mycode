@@ -49,6 +49,13 @@ public class BlogReplyServiceImpl implements BlogReplyService
 	}
 
 	@Override
+	public int queryBlogReplyCountByBlogId(int blogId)
+	{
+
+		return blogReplyDao.queryReplyCountByBlogId(blogId);
+	}
+
+	@Override
 	public boolean delete(String userId, int id)
 	{
 

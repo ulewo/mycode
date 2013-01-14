@@ -31,6 +31,15 @@ public interface BlogReplyService
 
 	/**
 	 * 
+	 * description: 查询博客数量
+	 * @param blogId
+	 * @return
+	 * @author luohl
+	 */
+	public int queryBlogReplyCountByBlogId(int blogId);
+
+	/**
+	 * 
 	 * description: 删除回复
 	 * @param id
 	 * @throws Exception

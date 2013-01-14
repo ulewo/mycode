@@ -166,26 +166,6 @@ public class BlogArticleAction extends BaseAction
 		return SUCCESS;
 	}
 
-	/**
-	 * 
-	 * description: 查询回复
-	 * 
-	 * @param blogId
-	 * @throws IOException
-	 * @author luohl
-	 */
-	public void queryBlogReply(int blogId) throws IOException
-	{
-
-		List<BlogReply> list = blogReplyService.queryBlogReplyByBlogId(blogId);
-		JSONObject obj = new JSONObject();
-		obj.put("list", list);
-		HttpServletResponse response = getResponse();
-		response.setContentType("text/html;charset=UTF-8");
-		PrintWriter out = response.getWriter();
-		out.println(String.valueOf(obj));
-	}
-
 	public void queryItem() throws IOException
 	{
 
@@ -217,7 +197,6 @@ public class BlogArticleAction extends BaseAction
 				blogArticleService.updateReadCount(blogArticle);
 				userId = blogArticle.getUserId();
 				blogItem = blogItemService.queryBlogItemById(blogArticle.getItemId());
-				replyList = blogReplyService.queryBlogReplyByBlogId(blogArticle.getId());
 			}
 		}
 		catch (Exception e)
@@ -226,6 +205,26 @@ public class BlogArticleAction extends BaseAction
 			return ERROR;
 		}
 		return SUCCESS;
+	}
+
+	public void loadReply()
+	{
+
+		String msg = "ok";
+		JSONObject obj = new JSONObject();
+		try
+		{
+			List<BlogReply> list = blogReplyService.queryBlogReplyByBlogId(blogId);
+			obj.put("list", list);
+		}
+		catch (Exception e)
+		{
+			msg = "error";
+			e.printStackTrace();
+		}
+		obj.put("msg", msg);
+		PrintWriter out = getOut();
+		out.println(String.valueOf(obj));
 	}
 
 	public void savaReply()
