@@ -24,6 +24,10 @@ function submitForm() {
 		art.dialog.tips("留言内容不能超过500字符!");
 		return;
 	}
+	var quote = ""
+	if ($("#quote_panle").html() != null) {
+		quote = "<div class='quote_panle'>" + $("#infocon").html() + "</div>";
+	}
 	$.ajax({
 		async : true,
 		cache : false,
@@ -34,6 +38,7 @@ function submitForm() {
 			content : content,
 			checkCode : checkCode,
 			userId : userId,
+			quote : quote,
 			"time" : new Date()
 		},
 		url : "addMessage.jspx",// 请求的action路径
@@ -48,30 +53,10 @@ function submitForm() {
 				art.dialog.tips("出现错误，稍后重试!");
 			} else {
 				art.dialog.tips("发表成功");
+				$("#quote_panle").remove();
 				$(".nomessage").remove();
-				var reUserId = data.msg.reUserId;
-				var userName = data.msg.reUserName;
-				var content = data.msg.message;
-				var posttime = data.msg.postTime;
-				var main = $("<div class='main_message'></div>");
-				if ($(".main_message").length > 0) {
-					$(".main_message").eq(0).before(main);
-				} else {
-					main.appendTo($("#messagelist"));
-				}
-
-				var nameHtml = userName;
-				if (reUserId != "") {
-					nameHtml = "<a href='userInfo.jspx?userId=" + reUserId
-							+ "'>" + userName + "</a>";
-				}
-				var namecon = $(
-						"<div><span class='message_name'>" + nameHtml
-								+ "</span>&nbsp;&nbsp;&nbsp;&nbsp;发表于："
-								+ posttime + "</div>").appendTo(main);
-				var con = $("<div class='message_con'>" + content + "</div>")
-						.appendTo(main);
-				resetForm(reUserId);
+				new NotePanle(data.note).asHtml().appendTo($("#messagelist"));
+				resetForm();
 			}
 			refreshcode();
 		}
@@ -145,19 +130,20 @@ function subReply(blogId) {
 								+ posttime + "</div>").appendTo(main);
 				var con = $("<div class='message_con'>" + content + "</div>")
 						.appendTo(main);
-				resetForm(reUserId);
+				resetForm();
 			}
 			refreshcode();
 		}
 	});
 }
 
-function resetForm(reUserId) {
-	if (reUserId == "") {
+function resetForm() {
+	if ($("#name") != null) {
 		$("#name").val("");
 	}
-
-	$("#checkCode").val("");
+	if ($("#checkCode") != null) {
+		$("#checkCode").val("");
+	}
 	$("#content").val("");
 }
 
@@ -213,38 +199,181 @@ function repassword() {
 		}
 	});
 }
+this.userId = "";
+function initMessage(userId) {
+	this.userId = userId;
+	loadMessage(1);
+}
+
+function loadMessage(i) {
+	$("<img src='../images/load.gif'>").appendTo($("#messagelist"));
+	$.ajax({
+		async : true,
+		cache : false,
+		type : 'GET',
+		dataType : "json",
+		url : "message.jspx?page=" + i + "&userId=" + this.userId,// 请求的action路径
+		success : function(data) {
+			$("#messagelist").html("");
+			$(".pagination").html("");
+			if (data.msg == "ok") {
+				if (data.list.length > 0) {
+					for ( var i = 0; i < data.list.length; i++) {
+						new NotePanle(data.list[i]).asHtml().appendTo(
+								"#messagelist");
+					}
+					if (data.totalPage > 1) {
+						$(".pagination").show();
+						new Pager(data.totalPage, 10, data.page).asHtml()
+								.appendTo($(".pagination"));
+					}
+
+				} else {
+					$("<span class='nomessage'>尚无任何留言</span>").appendTo(
+							"#messagelist");
+				}
+
+			} else {
+				alert("请求路径不正确!");
+				document.location.href = "../index.jspx";
+			}
+		}
+	});
+}
 
 function NotePanle(note) {
-	this.noteCon = $("<div class='note_tr'></div>");
-	var re_name_time = $("<div class='note_name_time'></div>").appendTo(
-			this.noteCon);
-	$("<div class='note_name'>" + note.userName + "</div>").appendTo(
+	var reUserIcon = note.reUserIcon || "default.gif";
+	// 最外层div
+	this.noteCon = $("<div class='main_message'></div>");
+	// 头像
+	$(
+			"<div class='re_icon'><img src='../upload/" + reUserIcon
+					+ "' width='35'></div>").appendTo(this.noteCon);
+	// 留言信息
+	var re_info = $("<div class='re_info'></div>").appendTo(this.noteCon);
+	// 姓名，时间，回复
+	var re_name_time = $("<div class='note_name_time'></div>")
+			.appendTo(re_info);
+	if (note.reUserId != "") {
+		$(
+				"<span class='note_name'><a href='userInfo.jspx?userId="
+						+ note.reUserId + "'>" + note.reUserName
+						+ "</a></span>").appendTo(re_name_time);
+	} else {
+		$("<span class='note_name'>" + note.reUserName + "</span>").appendTo(
+				re_name_time);
+	}
+	$(
+			"<span class='note_time nofirst'>发表于"
+					+ note.postTime.substring(0, 19) + "</span>").appendTo(
 			re_name_time);
-	$("<div class='note_time'>" + note.postTime.substring(0, 19) + "</div>")
-			.appendTo(re_name_time);
-	$("<a href='javascript:void(0)'>引用</a>").bind("click", this.quote)
-			.appendTo($("<div class='re_time'></div>").appendTo(re_name_time));
-	$("<div class='note_con'>" + note.content + "</div>")
-			.appendTo(this.noteCon);
+	var re_span = $("<span class='nofirst'></span>").appendTo(re_name_time);
+	$("<a href='javascript:void(0)'>回复</a>").bind("click", {
+		name : note.reUserName,
+		time : note.postTime.substring(0, 19),
+		content : note.message
+	}, this.quote).appendTo(re_span);
+	// 回复的内容
+	$("<div class='re_content'>" + note.message + "</div>").appendTo(re_info);
+	// 清除浮动
+	$("<div class='clear'></div>").appendTo(this.noteCon);
 }
 NotePanle.prototype = {
 	asHtml : function() {
 		return this.noteCon;
 	},
-	quote : function() {
+	quote : function(event) {
 		$("#quote_panle").remove();
-		var name = $(this).parent().parent().children().eq(0).html();
-		var time = $(this).parent().parent().children().eq(1).html();
-		var content = $(this).parent().parent().parent().children().eq(1)
-				.html();
-		var quote_panle = $("<div id='quote_panle'></div>");
-		$("#userName").before(quote_panle);
-		var quote = $("<div class='quote'></div>").appendTo(quote_panle);
-		var quote_tit = $("<div class='quote_tit'></div>").appendTo(quote);
-		$("<img src='images/qbar_iconb24.gif'><span>引用</span>").appendTo(
-				quote_tit);
-		$("<span class='quote_name'>" + name + "</span>").appendTo(quote_tit);
-		$("<span>在" + time + "的发表</span>").appendTo(quote_tit);
-		$("<div class='quote_content'>" + content + "</div>").appendTo(quote);
+		var name = event.data.name;
+		var time = event.data.time;
+		var content = event.data.content;
+		var quote_panle = $("<div id='quote_panle' class='quote_panle'></div>");
+		$("#subform").before(quote_panle);
+		$(
+				"<a href='javascript:delquote()'><img src='../images/001_02.png' width='18' border=0 class='close_icon'></a>")
+				.appendTo(quote_panle);
+		var infocon = $("<div id='infocon'></div>").appendTo(quote_panle);
+		$("<img src='../images/qbar_iconb24.gif' border=0 />")
+				.appendTo(infocon);
+		var b = $("<b></b>").appendTo(infocon);
+		$("<span>&nbsp;回复</span>").appendTo(b);
+		$("<span style='color:#46B'>&nbsp;" + name + "&nbsp;</span>").appendTo(
+				b);
+		$("<span >在<span style='color:#666'>" + time + "</span>的发表</span>")
+				.appendTo(b);
+		$("<div style='margin-top:5px;'>" + content + "</div>").appendTo(
+				infocon);
+	}
+}
+
+function delquote() {
+	$("#quote_panle").remove();
+}
+
+function Pager(totalPage, pageNum, page) {
+	this.ulPanle = $("<ul style='float:none'></ul>");
+	if (totalPage <= 1) {
+		return;
+	}
+	// 起始页
+	var beginNum = 0;
+	// 结尾页
+	var endNum = 0;
+
+	if (pageNum > totalPage) {
+		beginNum = 1;
+		endNum = totalPage;
+	}
+
+	if (page - pageNum / 2 < 1) {
+		beginNum = 1;
+		endNum = pageNum;
+	} else {
+		beginNum = page - pageNum / 2 + 1;
+		endNum = page + pageNum / 2;
+	}
+
+	if (totalPage - page < pageNum / 2) {
+		beginNum = totalPage - pageNum + 1;
+	}
+	if (beginNum < 1) {
+		beginNum = 1;
+	}
+	if (endNum > totalPage) {
+		endNum = totalPage;
+	}
+	if (page > 1) {
+		$(
+				"<li><a href='javascript:loadMessage(1)' class='prePage'>第一页</a></li>")
+				.appendTo(this.ulPanle);
+		$(
+				"<li><a class='prePage' href='javascript:loadMessage("
+						+ (page - 1) + ")'>上一页</a></li>")
+				.appendTo(this.ulPanle);
+	}
+	for ( var i = beginNum; i <= endNum; i++) {
+		if (totalPage > 1) {
+			if (i == page) {
+				$("<li id='nowPage'>" + page + "</li>").appendTo(this.ulPanle);
+			} else {
+				$(
+						"<li><a href='javascript:loadMessage(" + i + ")'>" + i
+								+ "</a></li>").appendTo(this.ulPanle);
+			}
+		}
+	}
+	if (page < totalPage) {
+		$(
+				"<li><a class='prePage' href='javascript:loadMessage("
+						+ (page + 1) + ")'>下一页</a></li>")
+				.appendTo(this.ulPanle);
+		$(
+				"<li><a class='prePage' href='javascript:loadMessage("
+						+ totalPage + ")'>最后页</a></li>").appendTo(this.ulPanle);
+	}
+}
+Pager.prototype = {
+	asHtml : function() {
+		return this.ulPanle;
 	}
 }
