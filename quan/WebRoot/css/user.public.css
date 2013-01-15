@@ -16,7 +16,7 @@ body{background:#F9F9F9;}
 .opts .manage:hover{background: #2E94E9;background-image:url('../images/space-opts.png');background-position: 18px -205px;background-repeat:no-repeat;}
 .opts .sendMsg{background:#5CACEE;display:block;height:40px;background-image:url('../images/space-opts.png');background-position: 15px -140px;background-repeat:no-repeat;color:#ffffff;padding-top:20px;padding-left:30px;font-size:14px;}
 .opts .sendMsg:hover{background: #2E94E9;background-image:url('../images/space-opts.png');background-position: 15px -140px;background-repeat:no-repeat;}
-.right{float:left;width:770px;margin-left:10px;text-align:left;background:#ffffff;}
+.right{float:left;width:750px;margin-left:10px;text-align:left;background:#ffffff;padding:10px;}
 .navPath{color:#999999;height:25px;}
 .navPath a{color:#4466BB}
 .baseinfo{border:1px solid #EEEEEE;padding:10px;background:#FFFFFF;}
@@ -47,9 +47,13 @@ body{background:#F9F9F9;}
 .blog_title{font-weight:bold;font-size:18px;}
 .blogsta{color:#666;margin-top:10px;}
 .blogsta span{color:#A00;font-weight:bold;}
+.blogsta_info{float:left;width:500px;}
+.blogsta_op{display:inline-block;float:right;margin-right:10px;}
+.blogsta_op a{color:#A00;display:inline-block;}
+.blogsta_op a:hover{color:#FFFFFF;background:#A00;}
 /*回复信息*/
 .re_icon{width:50px;float:left;}
-.re_info{float:left;width:690px;}
+.re_info{float:left;width:675px;}
 .note_name{color:#666}
 .note_name_time span.nofirst{padding-left:10px;}
 .note_time{color:#666}
