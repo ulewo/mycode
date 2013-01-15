@@ -76,4 +76,6 @@ public class Constant
 
 	public static int commentLength400 = 400;
 
+	public static int CUT_LENTH = 400;
+
 }

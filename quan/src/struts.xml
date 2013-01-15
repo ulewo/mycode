@@ -160,6 +160,24 @@
 		<!--保存-->
 		<action name="savaReply" class="blog" method="savaReply">
 		</action>
+		
+		<!--修改博客，获取信息 -->
+		<action name="getEditinfo" class="blog" method="getEditinfo">
+			<result name="success">editblog.jsp</result>
+			<result name="error">../error/error.jsp</result>
+		</action>
+		<!--修改博客 -->
+		<action name="editBlog" class="blog" method="editBlog">
+			<result name="success" type="redirect">blog.jspx?userId=${userId}</result>
+			<result name="error">../error/error.jsp</result>
+		</action>
+		
+		<!--删除博客 -->
+		<action name="deleteBlog" class="blog" method="deleteBlog">
+			<result name="success" type="redirect">blog.jspx?userId=${userId}</result>
+			<result name="error">../error/error.jsp</result>
+		</action>
+		
 		<!--删除评论-->
 		<action name="deleteReply" class="blog" method="deleteReply">
 		</action>

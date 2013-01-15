@@ -19,10 +19,9 @@
        delete from blog_article where id=#id#
 	</delete> 
 	
-	<!--批量删除文章-->
+	<!--删除文章-->
 	<delete id="deleteArticle"> 
-       delete from blog_article where id in ( 
-        <iterate  conjunction=",">#[]#</iterate>) 
+       delete from blog_article where id=#id#
 	</delete> 
 	
 	<!-- 单笔查询文章-->
@@ -66,8 +65,8 @@
         <isNotEmpty prepend="," property="content">
           content=#content#
         </isNotEmpty>
-        <isNotEmpty prepend="," property="essence">
-			readcount=#readcount#
+        <isNotEmpty prepend="," property="readCount">
+			readcount=#readCount#
         </isNotEmpty>
         <isNotEmpty prepend="," property="keyWord">
 			keyword=#keyWord#

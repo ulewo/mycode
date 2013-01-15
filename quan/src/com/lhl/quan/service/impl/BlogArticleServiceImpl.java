@@ -75,18 +75,10 @@ public class BlogArticleServiceImpl implements BlogArticleService
 	}
 
 	@Override
-	public boolean deleteArticle(String userId, int id)
+	public void deleteArticle(int id)
 	{
 
-		if (isCurUser(userId, id))
-		{
-			blogArticleDao.delete(id);
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		blogArticleDao.delete(id);
 
 	}
 

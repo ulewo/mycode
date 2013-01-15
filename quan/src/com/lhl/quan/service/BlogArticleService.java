@@ -46,7 +46,7 @@ public interface BlogArticleService
 	 * @return
 	 * @author luohl
 	 */
-	public boolean deleteArticle(String userId, int id);
+	public void deleteArticle(int id);
 
 	/**
 	 * 

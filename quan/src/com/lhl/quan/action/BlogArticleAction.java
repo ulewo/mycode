@@ -19,9 +19,11 @@ import com.lhl.quan.service.BlogItemService;
 import com.lhl.quan.service.BlogReplyService;
 import com.lhl.util.Constant;
 import com.lhl.util.Pagination;
+import com.lhl.util.SubStringHTML;
 import com.lhl.util.Tools;
 
-public class BlogArticleAction extends BaseAction {
+public class BlogArticleAction extends BaseAction
+{
 	private static final long serialVersionUID = 1L;
 
 	private BlogArticleService blogArticleService;
@@ -70,54 +72,68 @@ public class BlogArticleAction extends BaseAction {
 
 	private List<BlogReply> replyList = new ArrayList<BlogReply>();
 
-	public String blog() {
+	public String blog()
+	{
 
-		try {
-			if (itemId != 0) {
+		try
+		{
+			if (itemId != 0)
+			{
 				blogItem = blogItemService.queryBlogItemById(itemId);
-				if (blogItem == null || !blogItem.getUserId().equals(userId)) {
+				if (blogItem == null || !blogItem.getUserId().equals(userId))
+				{
 					return ERROR;
 				}
 			}
-			int countNumber = blogArticleService.queryCountByUserIdOrItem(
-					userId, itemId);
+			int countNumber = blogArticleService.queryCountByUserIdOrItem(userId, itemId);
 			Pagination.setPageSize(Constant.pageSize50);
 			int pageSize = Pagination.getPageSize();
 			pageTotal = Pagination.getPageTotal(countNumber);
-			if (page > pageTotal) {
+			if (page > pageTotal)
+			{
 				page = pageTotal;
 			}
-			if (page < 1) {
+			if (page < 1)
+			{
 				page = 1;
 			}
 			int noStart = (page - 1) * pageSize;
-			blogList = blogArticleService.queryBlogByUserIdOrItem(userId,
-					itemId, noStart, pageSize);
-		} catch (Exception e) {
+			blogList = blogArticleService.queryBlogByUserIdOrItem(userId, itemId, noStart, pageSize);
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
 			return ERROR;
 		}
 		return SUCCESS;
 	}
 
-	public String saveBlog() {
+	public String saveBlog()
+	{
 
-		try {
+		try
+		{
 			User sessionUser = getSessionUser();
-			if (sessionUser != null) {
+			if (sessionUser != null)
+			{
 				userId = sessionUser.getUserId();
 				BlogArticle blogArticle = new BlogArticle();
 				blogArticle.setUserId(userId);
 				blogArticle.setItemId(itemId);
 				blogArticle.setTitle(title);
 				blogArticle.setContent(content);
+				blogArticle.setSummary(SubStringHTML.subStringHTML(content, Constant.CUT_LENTH, "......"));
 				blogArticle.setKeyWord(keyWord);
 				blogArticle.setAllowReplay(allowReplay);
 				blogArticleService.addBlog(blogArticle);
-			} else {
+			}
+			else
+			{
 				return ERROR;
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			return ERROR;
 		}
 		return SUCCESS;
@@ -131,26 +147,133 @@ public class BlogArticleAction extends BaseAction {
 	 * @throws IOException
 	 * @author luohl
 	 */
-	public String addBlog() {
+	public String addBlog()
+	{
 
-		try {
+		try
+		{
 			User sessionUser = getSessionUser();
-			if (sessionUser != null) {
+			if (sessionUser != null)
+			{
 				userId = sessionUser.getUserId();
 				itemList = blogItemService.queryBlogItemByUserId(userId);
-			} else {
+			}
+			else
+			{
 				return ERROR;
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			return ERROR;
 		}
 		return SUCCESS;
 	}
 
-	public void queryItem() throws IOException {
+	public String getEditinfo()
+	{
 
-		List<BlogItem> list = blogItemService
-				.queryBlogItemAndCountByUserId(userId);
+		try
+		{
+			User sessionUser = getSessionUser();
+			blogArticle = blogArticleService.queryBlogById(id);
+			if (null == blogArticle)
+			{
+				return ERROR;
+			}
+			else
+			{
+				userId = blogArticle.getUserId();
+				if (!userId.equals(sessionUser.getUserId()))
+				{
+					return ERROR;
+				}
+				else
+				{
+					itemList = blogItemService.queryBlogItemByUserId(userId);
+				}
+
+			}
+		}
+		catch (Exception e)
+		{
+			return ERROR;
+		}
+		return SUCCESS;
+	}
+
+	public String editBlog()
+	{
+
+		try
+		{
+			User sessionUser = getSessionUser();
+			blogArticle = blogArticleService.queryBlogById(id);
+			if (null == blogArticle)
+			{
+				return ERROR;
+			}
+			else
+			{
+				userId = blogArticle.getUserId();
+				if (!userId.equals(sessionUser.getUserId()))
+				{
+					return ERROR;
+				}
+				else
+				{
+					blogArticle.setTitle(title);
+					blogArticle.setItemId(itemId);
+					blogArticle.setContent(content);
+					blogArticle.setSummary(SubStringHTML.subStringHTML(content, Constant.CUT_LENTH, "......"));
+					blogArticle.setKeyWord(keyWord);
+					blogArticle.setAllowReplay(allowReplay);
+					blogArticleService.update(blogArticle);
+				}
+			}
+		}
+		catch (Exception e)
+		{
+			return ERROR;
+		}
+		return SUCCESS;
+	}
+
+	public String deleteBlog()
+	{
+
+		try
+		{
+			User sessionUser = getSessionUser();
+			blogArticle = blogArticleService.queryBlogById(id);
+			if (null == blogArticle)
+			{
+				return ERROR;
+			}
+			else
+			{
+				userId = blogArticle.getUserId();
+				if (!userId.equals(sessionUser.getUserId()))
+				{
+					return ERROR;
+				}
+				else
+				{
+					blogArticleService.deleteArticle(id);
+				}
+			}
+		}
+		catch (Exception e)
+		{
+			return ERROR;
+		}
+		return SUCCESS;
+	}
+
+	public void queryItem() throws IOException
+	{
+
+		List<BlogItem> list = blogItemService.queryBlogItemAndCountByUserId(userId);
 		int count = blogArticleService.queryCountByUserIdOrItem(userId, 0);
 		JSONObject obj = new JSONObject();
 		obj.put("list", list);
@@ -161,36 +284,45 @@ public class BlogArticleAction extends BaseAction {
 		out.println(String.valueOf(obj));
 	}
 
-	public String blogdetail() {
+	public String blogdetail()
+	{
 
-		try {
+		try
+		{
 
 			blogArticle = blogArticleService.queryBlogById(id);
-			if (null == blogArticle) {
+			if (null == blogArticle)
+			{
 				return ERROR;
-			} else {
+			}
+			else
+			{
 				blogArticle.setReadCount(blogArticle.getReadCount() + 1);
 				blogArticleService.updateReadCount(blogArticle);
 				userId = blogArticle.getUserId();
-				blogItem = blogItemService.queryBlogItemById(blogArticle
-						.getItemId());
+				blogItem = blogItemService.queryBlogItemById(blogArticle.getItemId());
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
 			return ERROR;
 		}
 		return SUCCESS;
 	}
 
-	public void loadReply() {
+	public void loadReply()
+	{
 
 		String msg = "ok";
 		JSONObject obj = new JSONObject();
-		try {
-			List<BlogReply> list = blogReplyService
-					.queryBlogReplyByBlogId(blogId);
+		try
+		{
+			List<BlogReply> list = blogReplyService.queryBlogReplyByBlogId(blogId);
 			obj.put("list", list);
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			msg = "error";
 			e.printStackTrace();
 		}
@@ -199,34 +331,41 @@ public class BlogArticleAction extends BaseAction {
 		out.println(String.valueOf(obj));
 	}
 
-	public void savaReply() {
+	public void savaReply()
+	{
 
 		String msg = "ok";
 		JSONObject obj = new JSONObject();
-		try {
+		try
+		{
 			// 检测用户名
 			Object sessionObj = getSession().getAttribute("user");
 			BlogReply reply = new BlogReply();
-			if (sessionObj != null) {
+			if (sessionObj != null)
+			{
 				User sessionUser = (User) sessionObj;
 				reply.setUserId(sessionUser.getUserId());
 				reply.setUserName(sessionUser.getUserName());
 				reply.setReUserIcon(sessionUser.getUserLittleIcon());
-			} else {// 如果用户名为空那么名字就用访客
+			}
+			else
+			{// 如果用户名为空那么名字就用访客
 
-				if ("".equals(reUserName)) {
+				if ("".equals(reUserName))
+				{
 					msg = "noUserName";
 					obj.put("msg", msg);
 					getOut().print(String.valueOf(obj));
 					return;
-				} else {
+				}
+				else
+				{
 					reply.setUserName(Tools.formateHtml(reUserName));
 				}
 				// 检测checkCode
-				String sessionCcode = (String) getSession().getAttribute(
-						"checkCode");
-				if (Tools.isEmpty(checkCode)
-						|| !checkCode.equalsIgnoreCase(sessionCcode)) {
+				String sessionCcode = (String) getSession().getAttribute("checkCode");
+				if (Tools.isEmpty(checkCode) || !checkCode.equalsIgnoreCase(sessionCcode))
+				{
 					msg = "checkCodeErr";
 					obj.put("msg", msg);
 					getOut().print(String.valueOf(obj));
@@ -234,12 +373,15 @@ public class BlogArticleAction extends BaseAction {
 				}
 			}
 			// 检测内容
-			if (Tools.isEmpty(content)) {
+			if (Tools.isEmpty(content))
+			{
 				msg = "noContent";
 				obj.put("msg", msg);
 				getOut().print(String.valueOf(obj));
 				return;
-			} else {
+			}
+			else
+			{
 				reply.setContent(quote + Tools.formateHtml(content));
 			}
 			reply.setBlogId(blogId);
@@ -248,53 +390,72 @@ public class BlogArticleAction extends BaseAction {
 			reply.setPostTime(result.getPostTime());
 			obj.put("note", reply);
 			getOut().print(String.valueOf(obj));
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			msg = "error";
 			obj.put("msg", msg);
 			getOut().print(String.valueOf(obj));
 		}
 	}
 
-	public void deleteReply() {
+	public void deleteReply()
+	{
+
 		User sessionUser = getSessionUser();
 		String msg = "ok";
 		JSONObject obj = new JSONObject();
-		try {
-			if (sessionUser == null) {
+		try
+		{
+			if (sessionUser == null)
+			{
 				msg = "noperm";
-			} else {
-				if (!blogReplyService.delete(sessionUser.getUserId(), id)) {
+			}
+			else
+			{
+				if (!blogReplyService.delete(sessionUser.getUserId(), id))
+				{
 					msg = "noperm";
 				}
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			msg = "error";
 		}
 		obj.put("msg", msg);
 		getOut().print(String.valueOf(obj));
 	}
 
-	public String manageItem() throws IOException {
+	public String manageItem() throws IOException
+	{
 
-		try {
+		try
+		{
 			User sessionUser = getSessionUser();
-			if (sessionUser != null) {
-				itemList = blogItemService.queryBlogItemByUserId(sessionUser
-						.getUserId());
-			} else {
+			if (sessionUser != null)
+			{
+				itemList = blogItemService.queryBlogItemByUserId(sessionUser.getUserId());
+			}
+			else
+			{
 				return ERROR;
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			return ERROR;
 		}
 		return SUCCESS;
 	}
 
-	public void saveItem() throws IOException {
+	public void saveItem() throws IOException
+	{
 
 		String msg = "ok";
 		JSONObject obj = new JSONObject();
-		try {
+		try
+		{
 			BlogItem item = new BlogItem();
 			User sessionUser = getSessionUser();
 			item.setId(id);
@@ -303,7 +464,9 @@ public class BlogArticleAction extends BaseAction {
 			item.setItemRang(itemRang);
 			int id = blogItemService.saveItem(item);
 			obj.put("id", id);
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
 			msg = "error";
 		}
@@ -315,14 +478,16 @@ public class BlogArticleAction extends BaseAction {
 		out.println(String.valueOf(obj));
 	}
 
-	public void deleteItem() throws IOException {
+	public void deleteItem() throws IOException
+	{
 
 		JSONObject obj = new JSONObject();
 		obj.put("result", "ok");
 		User sessionUser = getSessionUser();
 		blogItemService.delete(sessionUser.getUserId(), id);
 		int count = blogArticleService.queryCountByUserIdOrItem(userId, id);
-		if (count > 0) {
+		if (count > 0)
+		{
 			obj.put("result", "havearticle");
 		}
 		HttpServletResponse response = getResponse();
@@ -331,127 +496,153 @@ public class BlogArticleAction extends BaseAction {
 		out.println(String.valueOf(obj));
 	}
 
-	public void setBlogArticleService(BlogArticleService blogArticleService) {
+	public void setBlogArticleService(BlogArticleService blogArticleService)
+	{
 
 		this.blogArticleService = blogArticleService;
 	}
 
-	public void setBlogItemService(BlogItemService blogItemService) {
+	public void setBlogItemService(BlogItemService blogItemService)
+	{
 
 		this.blogItemService = blogItemService;
 	}
 
-	public void setBlogReplyService(BlogReplyService blogReplyService) {
+	public void setBlogReplyService(BlogReplyService blogReplyService)
+	{
 
 		this.blogReplyService = blogReplyService;
 	}
 
-	public int getPage() {
+	public int getPage()
+	{
 
 		return page;
 	}
 
-	public void setPage(int page) {
+	public void setPage(int page)
+	{
 
 		this.page = page;
 	}
 
-	public List<BlogArticle> getBlogList() {
+	public List<BlogArticle> getBlogList()
+	{
 
 		return blogList;
 	}
 
-	public int getPageTotal() {
+	public int getPageTotal()
+	{
 
 		return pageTotal;
 	}
 
-	public String getUserId() {
+	public String getUserId()
+	{
 
 		return userId;
 	}
 
-	public void setUserId(String userId) {
+	public void setUserId(String userId)
+	{
 
 		this.userId = userId;
 	}
 
-	public void setTitle(String title) {
+	public void setTitle(String title)
+	{
 
 		this.title = title;
 	}
 
-	public void setContent(String content) {
+	public void setContent(String content)
+	{
 
 		this.content = content;
 	}
 
-	public void setItemId(int itemId) {
+	public void setItemId(int itemId)
+	{
 
 		this.itemId = itemId;
 	}
 
-	public void setKeyWord(String keyWord) {
+	public void setKeyWord(String keyWord)
+	{
 
 		this.keyWord = keyWord;
 	}
 
-	public List<BlogItem> getItemList() {
+	public List<BlogItem> getItemList()
+	{
 
 		return itemList;
 	}
 
-	public void setAllowReplay(int allowReplay) {
+	public void setAllowReplay(int allowReplay)
+	{
 
 		this.allowReplay = allowReplay;
 	}
 
-	public void setId(int id) {
+	public void setId(int id)
+	{
 
 		this.id = id;
 	}
 
-	public BlogArticle getBlogArticle() {
+	public BlogArticle getBlogArticle()
+	{
 
 		return blogArticle;
 	}
 
-	public BlogItem getBlogItem() {
+	public BlogItem getBlogItem()
+	{
 
 		return blogItem;
 	}
 
-	public void setItemName(String itemName) {
+	public void setItemName(String itemName)
+	{
 
 		this.itemName = itemName;
 	}
 
-	public void setItemRang(int itemRang) {
+	public void setItemRang(int itemRang)
+	{
 
 		this.itemRang = itemRang;
 	}
 
-	public List<BlogReply> getReplyList() {
+	public List<BlogReply> getReplyList()
+	{
 
 		return replyList;
 	}
 
-	public void setBlogId(int blogId) {
+	public void setBlogId(int blogId)
+	{
 
 		this.blogId = blogId;
 	}
 
-	public void setReUserName(String reUserName) {
+	public void setReUserName(String reUserName)
+	{
 
 		this.reUserName = reUserName;
 	}
 
-	public void setCheckCode(String checkCode) {
+	public void setCheckCode(String checkCode)
+	{
 
 		this.checkCode = checkCode;
 	}
 
-	public void setQuote(String quote) {
+	public void setQuote(String quote)
+	{
+
 		this.quote = quote;
 	}
 
