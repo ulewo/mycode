@@ -6,8 +6,12 @@
 <html>
 <head>
 <script type="text/javascript">
+<%
+String patch = request.getContextPath();
+%>
+<script type="text/javascript">
 <!--
-	window.UEDITOR_HOME_URL = "/quan/ueditor/";
+window.UEDITOR_HOME_URL = "<%=patch%>/ueditor/";
 //-->
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

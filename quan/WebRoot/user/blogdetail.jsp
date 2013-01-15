@@ -33,7 +33,16 @@
   		</div>
   		
   		<div class="blog_title">${blogArticle.title}</div>
-  		<div class="blogsta">发表于(${fn:substring(blogArticle.postTime,0,19)})， 已有<span>${blogArticle.readCount}</span>次阅读 ，共<span>${blogArticle.reCount}</span>个评论</div>
+  		<div class="blogsta">
+  			<div class="blogsta_info">发表于(${fn:substring(blogArticle.postTime,0,19)})， 已有<span>${blogArticle.readCount}</span>次阅读 ，共<span>${blogArticle.reCount}</span>个评论
+  			</div>
+  			<c:if test="${user!=null&&userId==user.userId}">
+	  			<div class="blogsta_op">
+	  				<a href="getEditinfo.jspx?id=${blogArticle.id}">编辑</a>&nbsp;|&nbsp;<a href="javascript:confirmDel()">删除</a>
+	  			</div>
+  			</c:if>
+  			<div class="clear"></div>
+  		</div>	
   		<div class="blogdetail">${blogArticle.content}</div>
   		 
   		 <div class="topblog">
@@ -86,6 +95,11 @@
     $(function(){
     	loadReply("${param.id}");
     })
+    function confirmDel(){
+    	if(confirm("文章删除后无法回复，你确定要删除此文章？")){
+    		document.location.href="deleteBlog.jspx?id=${blogArticle.id}";
+    	}
+    }
     </script>
   </body>
 </html>

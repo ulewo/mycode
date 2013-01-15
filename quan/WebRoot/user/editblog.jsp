@@ -36,16 +36,17 @@
 	  	<jsp:include page="menue.jsp"></jsp:include>
 	  </div>
 	  <div class="right">
-	    <div class="navPath"><a href="userInfo.jspx?userId=${user.userId}">空间</a>&nbsp;&gt;&gt;&nbsp;发表博文</div>
+	    <div class="navPath"><a href="userInfo.jspx?userId=${user.userId}">空间</a>&nbsp;&gt;&gt;&nbsp;修改博文</div>
 	  	<div class="ad-part bbtn1" style="text-align:center;margin-top:10px;float:none;margin-left:0px;">
 			<a href="javascript:submitForm()" onfocus="this.blur()" >发表话题</a>
 		</div>
 		<div>
-	  	<form action="saveBlog.jspx" method="post"  name="example" id="subForm">
+	  	<form action="editBlog.jspx" method="post"  name="example" id="subForm">
+	  	<input type="hidden"  name="id" value="${blogArticle.id}">
 	  	<input type="hidden" id="content" name="content">
 		<div class="ad_line">
 			<div class="ad_title">
-				<input type="text" name="title" id="title">&nbsp;&nbsp;发表在
+				<input type="text" name="title" value="${blogArticle.title}" id="title">&nbsp;&nbsp;发表在
 			</div>
 			<div class="ad_item">
 				<select name="itemId">
@@ -57,14 +58,14 @@
 			</div>
 		</div>
 		<div class="ad_line">
-			<input type="text" name="keyWord" id="keyWord">&nbsp;&nbsp;<span style="color:#999999">好的关键字可以让别人更容易找到此篇文章（可选）多个关键字用半角逗号隔开</span>
+			<input type="text" name="keyWord" id="keyWord" value="${blogArticle.keyWord}">&nbsp;&nbsp;<span style="color:#999999">好的关键字可以让别人更容易找到此篇文章（可选）多个关键字用半角逗号隔开</span>
 		</div>
 		<div id="editor" style="text-align:left;">
 		</div>
 		<div>
-			<input type="radio" name="allowReplay" checked="checked" value="0"/>允许所有人评论
-			<input type="radio" name="allowReplay" value="1"/>只允许登录用户评论
-			<input type="radio" name="allowReplay" value="2"/>禁止评论
+			<input type="radio" name="allowReplay"  value="0" <c:if test="${blogArticle.allowReplay==0}">checked</c:if> />允许所有人评论
+			<input type="radio" name="allowReplay" value="1" <c:if test="${blogArticle.allowReplay==1}">checked</c:if> />只允许登录用户评论
+			<input type="radio" name="allowReplay" value="2" <c:if test="${blogArticle.allowReplay==2}">checked</c:if> />禁止评论
 		</div>
 		<div class="ad-part bbtn1" style="text-align:center;margin-top:10px;">
 		<a href="javascript:submitForm()" onfocus="this.blur()" >发表话题</a>
@@ -82,7 +83,7 @@
     var editor = new UE.ui.Editor();
     editor.render("editor");
     editor.ready(function(){
-        editor.setContent("");
+        editor.setContent('${blogArticle.content}');
     });
     
     function submitForm(){

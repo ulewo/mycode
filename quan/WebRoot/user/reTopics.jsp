@@ -30,7 +30,7 @@
 		  	<div class="ath">
 				<div class="atit">话题</div>
 				<div class="aauthor">群组</div>
-				<div class="aauthor">发表</div>
+				<div class="atime">发表</div>
 			</div>
 			<c:forEach var="article" items="${articleList}">
 				<div class="atr">
@@ -47,7 +47,7 @@
 					<div class="aauthor">
 						<a href="../group/group.jspx?gid=${article.gid}">${article.groupName}</a>
 					</div>
-					<div class="aauthor">
+					<div class="atime">
 						<span class="timestyle">${fn:substring(article.postTime,0,16)}</span>
 					</div>
 				</div>
