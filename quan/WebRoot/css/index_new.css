@@ -1,0 +1,49 @@
+.main{font-size:14px;width:1000px;margin:0px auto;text-align:left;margin-top:10px;}
+.main img{border:0px;}
+.main a{color:#333;text-decoration:none;font-size:14px;}
+.main a:hover{color:#FF6600;}
+
+.selected1{background:#1C91BE;}
+.left{width:680px;float:left;}
+.right{width:260px;margin-left:20px;float:left;}
+.titinfo{border-bottom:2px solid #38A2DB;font-size:18px;color:#38A2DB;padding:5px;margin-top:10px;}
+ul{margin:0px;padding:0px;}
+ul li{margin:0px;padding:0px;list-style:none;}
+.new_list{float:left;margin-left:5px;width:330px;}
+.new_list li{margin-top:10px;}
+.new_list2{float:right;margin-right:10px;}
+
+
+.new_article_list{margin-top:10px;}
+.new_article_list li{margin-top:7px;height:30px;list-style:none;margin:0px;padding:0px;margin-left:5px;}
+.new_article_list li span{color:#888;font-size:13px;}
+.new_article_list li a{color:#333;text-decoration:none;}
+.new_article_list li a:hover{color:#FF6600;}
+.article_tit{float:left;display:inline-block;}
+.article_user,.article_read{float:right;display:inline-block;padding-right:10px;}
+.sec_span{padding-left:10px;}
+.new_blog{margin-top:10px;margin-left:5px;}
+.new_blog li{margin-top:5px;height:25px;}
+.new_blog li span{color:#888;font-size:13px;}
+
+.create_wo{background:#38A3DB;height:30px;color:#FFFFFF;text-align:center;padding-top:10px;}
+.create_wo a{color:#FFFFFF;}
+.create_wo a:hover{color:#FFFFFF;}
+.day_pic{float:left;width:120px;margin-left:10px;margin-top:8px;}
+.day_pic_img{height:120px;width:120px;overflow:hidden;}
+.day_pic img{width:120px;}
+.day_pic_tit{text-align:center;padding-top:2px;}
+.day_pic_tit a{color:#333;text-decoration:none;font-size:13px;display:block;width:120px;overflow:hidden;white-space:nowrap;}
+.day_pic_tit a:hover{color:#FF6600;}
+
+.recommend_wo{margin-top:10px;}
+.wo_img{width:65px;float:left;margin-left:10px;border:1px solid #C0C0C0;padding:2px;}
+.wo_img img{width:60px;height:60px;}
+.wo_info{color:#888;width:155px;margin-left:20px;float:left;font-size:13px;}
+.wo_info a{color:#333;text-decoration:none;font-size:13px;}
+.wo_info a:hover{color:#FF6600;}
+.wo_info div{padding-top:5px;}
+
+.user_img{float:left;width:60px;float:left;margin-left:20px;margin-top:10px;}
+.user_img img{width:60px;height:60px;}
+.user_img_name a{font-size:13px;display:block;text-align:center;margin-top:3px;width:60px;overflow:hidden;white-space:nowrap;}
