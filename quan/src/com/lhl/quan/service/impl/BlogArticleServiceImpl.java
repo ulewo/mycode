@@ -7,8 +7,6 @@ import java.util.List;
 import com.lhl.entity.BlogArticle;
 import com.lhl.quan.dao.BlogArticleDao;
 import com.lhl.quan.service.BlogArticleService;
-import com.lhl.util.Constant;
-import com.lhl.util.Tools;
 
 public class BlogArticleServiceImpl implements BlogArticleService
 {
@@ -26,22 +24,8 @@ public class BlogArticleServiceImpl implements BlogArticleService
 	public boolean addBlog(BlogArticle blogArticle)
 	{
 
-		try
-		{
-			String summary = Tools.clearHtml(blogArticle.getContent());
-			int length = Tools.getRealLength(summary);
-			if (length > Constant.commentLength400)
-			{
-				summary = summary.substring(0, Constant.commentLength400);
-			}
-			blogArticle.setSummary(summary);
-			blogArticle.setPostTime(format.format(new Date()));
-			blogArticleDao.addBlog(blogArticle);
-		}
-		catch (Exception e)
-		{
-			return false;
-		}
+		blogArticle.setPostTime(format.format(new Date()));
+		blogArticleDao.addBlog(blogArticle);
 		return true;
 	}
 
