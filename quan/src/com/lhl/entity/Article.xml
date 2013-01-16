@@ -191,16 +191,25 @@
 	</select>
 	
 	<!-- 首页推荐文章 -->
-	<select id="queryIndexArticle" resultClass="article" parameterClass="java.util.Map">
-		select id,gid,itemid,title,summary,keyword,authorid,(select u.username from user u where u.userid=a.authorid) authorName,posttime,readnumber,(select count(r.id) from rearticle r where r.articleid = a.id) reNumber,image from article a
+	<select id="queryComendArticle" resultClass="article" parameterClass="java.util.Map">
+		select id,title from article a
 		<dynamic prepend="where"> 
 		<isNotEmpty prepend="and" property="sysCode">
          	  <![CDATA[ syscode = #sysCode# ]]>
 		</isNotEmpty>
-		<isNotEmpty prepend="and" property="subCode">
-         	  <![CDATA[subcode =  #subCode#  ]]>
-		</isNotEmpty>
 		</dynamic>
 		order by posttime desc limit  #offset#,#total#
+	</select>
+	
+	<!-- 首页有图片的文章 -->
+	<select id="queryImageArticle" resultClass="article" parameterClass="java.util.Map">
+		select id,title,image from article a where image !="" and a.isvalid = "Y" order by posttime desc limit  #offset#,#total#
+	</select>
+	
+	<!-- 首页最新的文章 -->
+	<select id="queryLatestArticle" resultClass="article" parameterClass="java.util.Map">
+		select id,title,posttime,gid,(select groupname from groups g where g.id = a.gid) groupname,
+		(select username from user u where u.userid=a.authorid) authorName
+		from article a where image="" and a.isvalid = "Y" order by posttime desc limit  #offset#,#total#
 	</select>
 </sqlMap>

@@ -67,4 +67,6 @@ public interface BlogArticleService
 	 * @author luohl
 	 */
 	public int queryCountByUserIdOrItem(String userId, int itemId);
+
+	public List<BlogArticle> indexLatestBlog(int offset, int total);
 }

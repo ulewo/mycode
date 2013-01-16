@@ -82,4 +82,10 @@
 		update blog_article set readcount = #readCount# where id=#id#
 	</update>
 	
+	<select id="indexLatestBlog" resultClass="blogArticle" parameterClass="java.util.Map">
+		select id,title,posttime,readCount,(select count(r.id) from blog_reply r where r.blogid=b.id) as reCount,
+		(select username from user u where u.userid=b.userid) userName 
+		from blog_article b order by posttime desc limit  #offset#,#total#
+	</select>
+	
 </sqlMap>

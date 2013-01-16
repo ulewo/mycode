@@ -10,6 +10,7 @@
     	 <property name="articleService" ref="articleService"/>
     	 <property name="groupService" ref="groupService"/>
     	 <property name="userService" ref="userService"/>
+    	 <property name="blogArticleService" ref="blogArticleService"/>
     </bean>       
     <bean id="user" class="com.lhl.quan.action.UserSpaceAction" scope="prototype">
     	 <property name="userService" ref="userService"/>

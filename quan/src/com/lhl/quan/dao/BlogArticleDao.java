@@ -137,4 +137,14 @@ public class BlogArticleDao extends SqlMapClientDaoSupport
 
 		return (Integer) this.getSqlMapClientTemplate().queryForObject("blogArticle.queryCountByItemId", itemId);
 	}
+
+	public List<BlogArticle> indexLatestBlog(int offset, int total)
+	{
+
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("offset", offset);
+		parmMap.put("total", total);
+		return (List<BlogArticle>) getSqlMapClientTemplate().queryForList("blogArticle.indexLatestBlog", parmMap);
+	}
+
 }

@@ -125,4 +125,10 @@ public class BlogArticleServiceImpl implements BlogArticleService
 			return false;
 		}
 	}
+
+	public List<BlogArticle> indexLatestBlog(int offset, int total)
+	{
+
+		return blogArticleDao.indexLatestBlog(offset, total);
+	}
 }

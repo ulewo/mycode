@@ -4,7 +4,8 @@ import java.util.List;
 
 import com.lhl.entity.Article;
 
-public interface ArticleService {
+public interface ArticleService
+{
 	/**
 	 * 新增文章
 	 * description: 添加文章
@@ -180,6 +181,10 @@ public interface ArticleService {
 
 	public List<Article> queryList(String keyWord, String isValid, int offset, int total) throws Exception;
 
-	public List<Article> queryIndexArticle(String sysCode, String subCode, int offset, int total) throws Exception;
+	public List<Article> queryComendArticle(String sysCode, String subCode, int offset, int total) throws Exception;
+
+	public List<Article> queryImageArticle(int offset, int total);
+
+	public List<Article> queryLatestArticle(int offset, int total);
 
 }

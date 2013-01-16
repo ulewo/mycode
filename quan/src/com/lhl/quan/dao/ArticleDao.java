@@ -17,7 +17,8 @@ import com.lhl.entity.Article;
  * @version V1.0
  */
 
-public class ArticleDao extends SqlMapClientDaoSupport {
+public class ArticleDao extends SqlMapClientDaoSupport
+{
 
 	/**
 	 * 新增文章
@@ -25,7 +26,8 @@ public class ArticleDao extends SqlMapClientDaoSupport {
 	 * @param article
 	 * @author luohl
 	 */
-	public void addArticle(Article article) throws Exception {
+	public void addArticle(Article article) throws Exception
+	{
 
 		this.getSqlMapClientTemplate().insert("article.addArticle", article);
 	}
@@ -37,7 +39,8 @@ public class ArticleDao extends SqlMapClientDaoSupport {
 	 * @throws Exception
 	 * @author luohl
 	 */
-	public Article queryTopicById(int id) throws Exception {
+	public Article queryTopicById(int id) throws Exception
+	{
 
 		return (Article) this.getSqlMapClientTemplate().queryForObject("article.queryTopicById", id);
 	}
@@ -49,7 +52,8 @@ public class ArticleDao extends SqlMapClientDaoSupport {
 	 * @throws Exception
 	 * @author luohl
 	 */
-	public void updateArticle(Article article) throws Exception {
+	public void updateArticle(Article article) throws Exception
+	{
 
 		this.getSqlMapClientTemplate().update("article.updateArticle", article);
 	}
@@ -61,7 +65,8 @@ public class ArticleDao extends SqlMapClientDaoSupport {
 	 * @throws Exception
 	 * @author luohl
 	 */
-	public void updateArticleSelective(Article article) throws Exception {
+	public void updateArticleSelective(Article article) throws Exception
+	{
 
 		this.getSqlMapClientTemplate().update("article.updateArticle_selective", article);
 	}
@@ -75,7 +80,8 @@ public class ArticleDao extends SqlMapClientDaoSupport {
 	 * @return
 	 * @author lhl
 	 */
-	public int queryTopicCountByGid(String gid, int itemId, String isValid) throws Exception {
+	public int queryTopicCountByGid(String gid, int itemId, String isValid) throws Exception
+	{
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("gid", gid);
@@ -95,7 +101,8 @@ public class ArticleDao extends SqlMapClientDaoSupport {
 	 * @author lhl
 	 */
 	public List<Article> queryTopicOrderByGradeAndLastReTime(String gid, int itemId, String isValid, int offset,
-			int total) throws Exception {
+			int total) throws Exception
+	{
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("gid", gid);
@@ -117,7 +124,8 @@ public class ArticleDao extends SqlMapClientDaoSupport {
 	 * @author lhl
 	 */
 	public List<Article> queryTopicOrderByPostTime(String gid, int itemId, String isValid, int offset, int total)
-			throws Exception {
+			throws Exception
+	{
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("gid", gid);
@@ -137,7 +145,8 @@ public class ArticleDao extends SqlMapClientDaoSupport {
 	 * @return
 	 * @author lhl
 	 */
-	public int searchTopicCount(String keyWord, String gid, String isValid) {
+	public int searchTopicCount(String keyWord, String gid, String isValid)
+	{
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("keyWord", "%" + keyWord + "%");
@@ -159,7 +168,8 @@ public class ArticleDao extends SqlMapClientDaoSupport {
 	 * @author lhl
 	 */
 	public List<Article> searchTopic(String keyWord, String gid, String isValid, int offset, int total)
-			throws Exception {
+			throws Exception
+	{
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("keyWord", "%" + keyWord + "%");
@@ -179,7 +189,8 @@ public class ArticleDao extends SqlMapClientDaoSupport {
 	 * @return
 	 * @author luohl
 	 */
-	public List<Article> queryTopicByUserId(String userId, int offset, int total) throws Exception {
+	public List<Article> queryTopicByUserId(String userId, int offset, int total) throws Exception
+	{
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("authorid", userId);
@@ -196,7 +207,8 @@ public class ArticleDao extends SqlMapClientDaoSupport {
 	 * @throws Exception
 	 * @author luohl
 	 */
-	public int queryCountByUserId(String userId) throws Exception {
+	public int queryCountByUserId(String userId) throws Exception
+	{
 
 		return (Integer) this.getSqlMapClientTemplate().queryForObject("article.queryCountByUserId", userId);
 	}
@@ -211,7 +223,8 @@ public class ArticleDao extends SqlMapClientDaoSupport {
 	 * @throws Exception
 	 * @author luohl
 	 */
-	public List<Article> queryTopicByReUserId(String userId, int offset, int total) throws Exception {
+	public List<Article> queryTopicByReUserId(String userId, int offset, int total) throws Exception
+	{
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("authorid", userId);
@@ -228,12 +241,14 @@ public class ArticleDao extends SqlMapClientDaoSupport {
 	 * @throws Exception
 	 * @author luohl
 	 */
-	public int queryTopicCountByReUserId(String userId) throws Exception {
+	public int queryTopicCountByReUserId(String userId) throws Exception
+	{
 
 		return (Integer) this.getSqlMapClientTemplate().queryForObject("article.queryTopicCountByReUserId", userId);
 	}
 
-	public int queryTopicCountByTime(String startTime, String endTime, String gid) throws Exception {
+	public int queryTopicCountByTime(String startTime, String endTime, String gid) throws Exception
+	{
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("startTime", startTime);
@@ -242,13 +257,32 @@ public class ArticleDao extends SqlMapClientDaoSupport {
 		return (Integer) this.getSqlMapClientTemplate().queryForObject("article.queryTopicCountByTime", parmMap);
 	}
 
-	public List<Article> queryIndexArticle(String sysCode, String subCode, int offset, int total) throws Exception {
+	public List<Article> queryComendArticle(String sysCode, String subCode, int offset, int total) throws Exception
+	{
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("sysCode", sysCode);
 		parmMap.put("subCode", subCode);
 		parmMap.put("offset", offset);
 		parmMap.put("total", total);
-		return this.getSqlMapClientTemplate().queryForList("article.queryIndexArticle", parmMap);
+		return this.getSqlMapClientTemplate().queryForList("article.queryComendArticle", parmMap);
+	}
+
+	public List<Article> queryImageArticle(int offset, int total)
+	{
+
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("offset", offset);
+		parmMap.put("total", total);
+		return this.getSqlMapClientTemplate().queryForList("article.queryImageArticle", parmMap);
+	}
+
+	public List<Article> queryLatestArticle(int offset, int total)
+	{
+
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("offset", offset);
+		parmMap.put("total", total);
+		return this.getSqlMapClientTemplate().queryForList("article.queryLatestArticle", parmMap);
 	}
 }

@@ -14,6 +14,8 @@ public class BlogArticle
 
 	private String userId;
 
+	private String userName;
+
 	private int itemId;
 
 	private String title;
@@ -162,6 +164,18 @@ public class BlogArticle
 	{
 
 		this.allowReplay = allowReplay;
+	}
+
+	public String getUserName()
+	{
+
+		return userName;
+	}
+
+	public void setUserName(String userName)
+	{
+
+		this.userName = userName;
 	}
 
 }

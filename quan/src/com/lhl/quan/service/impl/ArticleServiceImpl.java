@@ -19,7 +19,8 @@ import com.lhl.quan.service.ArticleService;
 import com.lhl.util.Constant;
 import com.lhl.util.Tools;
 
-public class ArticleServiceImpl implements ArticleService {
+public class ArticleServiceImpl implements ArticleService
+{
 
 	private ArticleDao articleDao;
 
@@ -31,22 +32,26 @@ public class ArticleServiceImpl implements ArticleService {
 
 	private final SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-	public void setArticleItemDao(ArticleItemDao articleItemDao) {
+	public void setArticleItemDao(ArticleItemDao articleItemDao)
+	{
 
 		this.articleItemDao = articleItemDao;
 	}
 
-	public void setReArticleDao(ReArticleDao reArticleDao) {
+	public void setReArticleDao(ReArticleDao reArticleDao)
+	{
 
 		this.reArticleDao = reArticleDao;
 	}
 
-	public void setUserDao(UserDao userDao) {
+	public void setUserDao(UserDao userDao)
+	{
 
 		this.userDao = userDao;
 	}
 
-	public void setArticleDao(ArticleDao articleDao) {
+	public void setArticleDao(ArticleDao articleDao)
+	{
 
 		this.articleDao = articleDao;
 	}
@@ -55,13 +60,16 @@ public class ArticleServiceImpl implements ArticleService {
 	 * 新增文章
 	 */
 	@Override
-	public void addArticle(Article article) throws Exception {
+	public void addArticle(Article article) throws Exception
+	{
 
 		String summary = Tools.clearHtml(article.getContent());
-		if (summary.length() > Constant.summaryLength200) {
+		if (summary.length() > Constant.summaryLength200)
+		{
 			summary = summary.substring(0, Constant.summaryLength200);
 		}
-		else if (summary.length() == 0) {
+		else if (summary.length() == 0)
+		{
 			summary = article.getTitle();
 		}
 		article.setSummary(summary + "......");
@@ -74,10 +82,12 @@ public class ArticleServiceImpl implements ArticleService {
 	 * 查询主题文章
 	 */
 	@Override
-	public Article queryTopicById(int id) throws Exception {
+	public Article queryTopicById(int id) throws Exception
+	{
 
 		Article article = articleDao.queryTopicById(id);
-		if (null == article) {
+		if (null == article)
+		{
 			throw new BaseException(30000);
 		}
 		return article;
@@ -87,7 +97,8 @@ public class ArticleServiceImpl implements ArticleService {
 	 * 更新文章
 	 */
 	@Override
-	public void updateArticle(Article article) throws Exception {
+	public void updateArticle(Article article) throws Exception
+	{
 
 		articleDao.updateArticle(article);
 
@@ -97,18 +108,22 @@ public class ArticleServiceImpl implements ArticleService {
 	 * 展示文章详情
 	 */
 	@Override
-	public Article showArticle(int id) throws Exception {
+	public Article showArticle(int id) throws Exception
+	{
 
 		Article article = articleDao.queryTopicById(id);
-		if (article != null && !Constant.ISVALID01.equals(article.getIsValid())) {
+		if (article != null && !Constant.ISVALID01.equals(article.getIsValid()))
+		{
 			//文章作者信息
 			User author = userDao.queryUserDetail(article.getAuthorId());
-			if (null == author) {
+			if (null == author)
+			{
 				throw new BaseException(30000);
 			}
 
 			//设置关键字
-			if (Tools.isEmpty(article.getKeyWord())) {
+			if (Tools.isEmpty(article.getKeyWord()))
+			{
 				article.setKeyWord(article.getTitle());
 			}
 
@@ -116,7 +131,8 @@ public class ArticleServiceImpl implements ArticleService {
 			//设置回复数
 			article.setReNumber(reArticleDao.queryReArticleCount(article.getId()));
 		}
-		else {
+		else
+		{
 			throw new BaseException(30000);
 		}
 		return article;
@@ -126,17 +142,22 @@ public class ArticleServiceImpl implements ArticleService {
 	 * 更新非空字段
 	 */
 	@Override
-	public void updateArticleSelective(Article article) throws Exception {
+	public void updateArticleSelective(Article article) throws Exception
+	{
 
 		Article result = articleDao.queryTopicById(article.getId());
-		if (null == result) {
+		if (null == result)
+		{
 			throw new BaseException(30000);
 		}
-		else {
-			if (!result.getGid().equals(article.getGid())) {
+		else
+		{
+			if (!result.getGid().equals(article.getGid()))
+			{
 				throw new BaseException(10002);
 			}
-			else {
+			else
+			{
 				articleDao.updateArticleSelective(article);
 			}
 		}
@@ -147,7 +168,8 @@ public class ArticleServiceImpl implements ArticleService {
 	 * 查询圈子文章总数
 	 */
 	@Override
-	public int queryTopicCountByGid(String gid, int itemId, String isValid) throws Exception {
+	public int queryTopicCountByGid(String gid, int itemId, String isValid) throws Exception
+	{
 
 		return articleDao.queryTopicCountByGid(gid, itemId, isValid);
 	}
@@ -157,7 +179,8 @@ public class ArticleServiceImpl implements ArticleService {
 	 */
 	@Override
 	public List<Article> queryTopicOrderByGradeAndLastReTime(String gid, int itemId, String isValid, int offset,
-			int total) throws Exception {
+			int total) throws Exception
+	{
 
 		List<Article> list = articleDao.queryTopicOrderByGradeAndLastReTime(gid, itemId, isValid, offset, total);
 		setArticleListInfo(list);
@@ -169,33 +192,39 @@ public class ArticleServiceImpl implements ArticleService {
 	 */
 	@Override
 	public List<Article> queryTopicOrderByPostTime(String gid, int itemId, String isValid, int offset, int total)
-			throws Exception {
+			throws Exception
+	{
 
 		List<Article> list = articleDao.queryTopicOrderByPostTime(gid, itemId, isValid, offset, total);
 		setArticleListInfo(list);
 		return list;
 	}
 
-	private void setArticleListInfo(List<Article> list) throws Exception {
+	private void setArticleListInfo(List<Article> list) throws Exception
+	{
 
 		ReArticle lastReArticle = null; //最后回复的文章
 		String lastReAuthorId = null; //最后回复人id
 		String lastReAuthorName = Constant.USER_DEFAULT_NAME; //最后回复人名称
 		String lastReTime = null; //最后回复时间
-		for (Article article : list) {
+		for (Article article : list)
+		{
 			//最后回复的文章
 			lastReArticle = reArticleDao.queryLatestReArticle(article.getId());
-			if (null == lastReArticle) {//无最后回复，最后回复就是作者
+			if (null == lastReArticle)
+			{//无最后回复，最后回复就是作者
 				lastReAuthorId = article.getAuthorId();
 				lastReAuthorName = article.getAuthorName();
 				lastReTime = article.getPostTime();
 			}
-			else {
+			else
+			{
 				lastReTime = lastReArticle.getReTime();
 				lastReAuthorName = lastReArticle.getAuthorName();
 				lastReAuthorId = lastReArticle.getAuthorid();
 			}
-			if (Tools.isEmpty(article.getItemName())) {
+			if (Tools.isEmpty(article.getItemName()))
+			{
 				article.setItemName("全部分类");
 			}
 			article.setLastReAuthorId(lastReAuthorId);
@@ -205,62 +234,75 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public int queryPostTopicCount(String userId) throws Exception {
+	public int queryPostTopicCount(String userId) throws Exception
+	{
 
 		return articleDao.queryCountByUserId(userId);
 	}
 
 	@Override
-	public List<Article> queryPostTopic(String userId, int offset, int total) throws Exception {
+	public List<Article> queryPostTopic(String userId, int offset, int total) throws Exception
+	{
 
 		List<Article> list = articleDao.queryTopicByUserId(userId, offset, total);
 		return list;
 	}
 
 	@Override
-	public int queryReTopicCount(String userId) throws Exception {
+	public int queryReTopicCount(String userId) throws Exception
+	{
 
 		return articleDao.queryTopicCountByReUserId(userId);
 	}
 
 	@Override
-	public List<Article> queryReTopic(String userId, int offset, int total) throws Exception {
+	public List<Article> queryReTopic(String userId, int offset, int total) throws Exception
+	{
 
 		List<Article> list = articleDao.queryTopicByReUserId(userId, offset, total);
 		return list;
 	}
 
 	@Override
-	public List<Article> aboutArticle(String keyWord, String gid) throws Exception {
+	public List<Article> aboutArticle(String keyWord, String gid) throws Exception
+	{
 
 		List<Article> list = new ArrayList<Article>();
-		if (null == keyWord) {
+		if (null == keyWord)
+		{
 			return list;
 		}
 		String[] keyWords = null;
-		if (keyWord.contains(",")) {
+		if (keyWord.contains(","))
+		{
 			keyWords = keyWord.split(",");
 		}
-		else if (keyWord.contains("，")) {
+		else if (keyWord.contains("，"))
+		{
 			keyWords = keyWord.split("，");
 		}
 		Map<String, String> map = new HashMap<String, String>();
-		for (int i = 0; i < keyWords.length; i++) {
+		for (int i = 0; i < keyWords.length; i++)
+		{
 			List<Article> aboutList = articleDao.searchTopic(keyWords[i], gid, Constant.ISVALIDY, 0, 5);
-			for (Article article : aboutList) {
-				if (null == map.get(article.getTitle()) && !keyWord.equals(article.getKeyWord())) {
+			for (Article article : aboutList)
+			{
+				if (null == map.get(article.getTitle()) && !keyWord.equals(article.getKeyWord()))
+				{
 					list.add(article);
 					map.put(article.getTitle(), article.getTitle());
 				}
 			}
-			if (list.size() >= 5) {
+			if (list.size() >= 5)
+			{
 				break;
 			}
 		}
 		return list;
 	}
 
-	public int queryTopicCountByTime(String gid) throws Exception {
+	public int queryTopicCountByTime(String gid) throws Exception
+	{
 
 		String endTime = formate.format(new Date());
 		String startTime = endTime.substring(0, 10) + " 00:00:00";
@@ -268,27 +310,47 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public int searchTopicCount(String keyWord, String gid, String isValid) {
+	public int searchTopicCount(String keyWord, String gid, String isValid)
+	{
 
 		return articleDao.searchTopicCount(keyWord, gid, isValid);
 	}
 
 	@Override
 	public List<Article> searchTopic(String keyWord, String gid, String isValid, int offset, int total)
-			throws Exception {
+			throws Exception
+	{
 
 		List<Article> list = articleDao.searchTopic(keyWord, gid, isValid, offset, total);
 		return list;
 	}
 
-	public List<Article> queryList(String keyWord, String isValid, int offset, int total) throws Exception {
+	public List<Article> queryList(String keyWord, String isValid, int offset, int total) throws Exception
+	{
 
 		return null;
 	}
 
-	public List<Article> queryIndexArticle(String sysCode, String subCode, int offset, int total) throws Exception {
+	public List<Article> queryComendArticle(String sysCode, String subCode, int offset, int total) throws Exception
+	{
 
-		List<Article> list = articleDao.queryIndexArticle(sysCode, subCode, offset, total);
+		List<Article> list = articleDao.queryComendArticle(sysCode, subCode, offset, total);
+		return list;
+	}
+
+	@Override
+	public List<Article> queryImageArticle(int offset, int total)
+	{
+
+		List<Article> list = articleDao.queryImageArticle(offset, total);
+		return list;
+	}
+
+	@Override
+	public List<Article> queryLatestArticle(int offset, int total)
+	{
+
+		List<Article> list = articleDao.queryLatestArticle(offset, total);
 		return list;
 	}
 
