@@ -5,18 +5,25 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>小友吧 大世界 小智慧 大财富 --有乐窝</title>
-<meta name="description" content="有乐窝 大型服务社区，让你的生活更精彩 学习经验交流，网络文摘分享 ，游戏娱乐 ......">
-<meta name="keywords" content="小友吧 大世界 小智慧 大财富 — 有乐窝">
+<title>出错啦!  -有乐窝</title>
 <link rel="stylesheet" type="text/css" href="css/index.css">
-<style>
-	.selected1{background:#1C91BE;}
-</style>
 </head>
 <body>
+   <jsp:include page="head.jsp"/>
   <div class="bodycon">
-  	你请求的页面不存在<br>
-  	<a href="http://ulewo.com">返回首页</a>
+		<div>
+			<div class="error_img"><img src="images/error.jpg"></div>
+			<div class="error_info">
+				<span class="tit">出现此页面可能是由于以下原因引起的：</span>
+				<span>1、登录超时</span>
+				<span>2、你访问的内容被删除</span>
+				<span>3、你没有权限进行此操作</span>
+				<span>4、服务器异常</span>
+				<span><a href="index.jspx">返回首页</a></span>
+			</div>
+			<div class="clear"></div>
+		</div>
   </div>
+   <jsp:include page="foot.jsp"/>
 </body>
 </html>
