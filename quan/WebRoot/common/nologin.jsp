@@ -7,7 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet"  href="../css/group.css" type="text/css"  />
-<title>Justlearning 学习，生活，娱乐</title>
+<title>学习，生活，娱乐</title>
 	<script type="text/javascript" charset="utf-8" src="../editor/kindeditor-min.js"></script>
 	<script type="text/javascript" charset="utf-8" src="../js/jquery.min.js"></script>
 	<script type="text/javascript" charset="utf-8" src="../js/addarticle.js"></script>

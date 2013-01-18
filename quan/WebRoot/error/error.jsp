@@ -7,21 +7,25 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet"  href="../css/group.css" type="text/css"  />
-<title>Justlearning 学习，生活，娱乐</title>
-	<script type="text/javascript" charset="utf-8" src="../editor/kindeditor-min.js"></script>
-	<script type="text/javascript" charset="utf-8" src="../js/jquery.min.js"></script>
-	<script type="text/javascript" charset="utf-8" src="../js/addarticle.js"></script>
-	<script type="text/javascript" charset="utf-8" src="../js/util.js"></script>
+<title>出错啦!  -有乐窝</title>
+<link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
 <body>
-	<div>
-		<c:if test="${errMsg!=null}">
-			${errMsg}
-		</c:if>
-		<c:if test="${errMsg==null}">
-			session失效或者未登陆
-		</c:if>
-	</div>
-	<div><a href="../index.jspx">返回首页</a></div>
+  <jsp:include page="../common/head.jsp"/>
+  <div class="bodycon">
+  		<div>
+  			<div class="error_img"><img src="../images/error.jpg"></div>
+  			<div class="error_info">
+  				<span class="tit">出现此页面可能是由于以下原因引起的：</span>
+				<span>1、登录超时</span>
+				<span>2、你访问的内容被删除</span>
+				<span>3、你没有权限进行此操作</span>
+				<span>4、服务器异常</span>
+				<span><a href="../index.jspx">返回首页</a></span>
+  			</div>
+  			<div class="clear"></div>
+  		</div>
+  </div>
+  <jsp:include page="../common/foot.jsp"/>
 </body>
 </html>

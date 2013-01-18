@@ -9,7 +9,7 @@
 </c:if>
 <div class="leftmain">
 	<div class="avatar_con">
-		<div class="user_avatar"><a href="userInfo.jspx?userId=${uid}"><img src="" id="imgcon" style="display:none;"></a></div>
+		<div class="user_avatar"><a href="userInfo.jspx?userId=${uid}"><img src="" id="imgcon" style="display:none;" width="60px;" height="60px;"></a></div>
 		<div class="user_edit"><a href="userInfo.jspx?userId=${uid}" id="user_name"></a></div>
 	</div>
 	<div class="resume" id="resume">

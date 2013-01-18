@@ -14,7 +14,8 @@
 	<link rel="stylesheet" type="text/css" href="../css/user.register.css">
   </head>
   <body>
-  <div style="text-align:center;font-size:14px;color:red;">${message }</div>
+  <jsp:include page="../common/head.jsp"/>
+  	<div class="bodycon">
 	<div class="register">
 		<div id="loginerror"></div>
 		<form action="showFetch.jspx" method="post" id="subform">
@@ -45,5 +46,7 @@
 		</div>
 		</form>
 	</div>
+	</div>
+	 <jsp:include page="../common/foot.jsp"/>
   </body>
 </html>

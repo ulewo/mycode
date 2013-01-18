@@ -8,7 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet"  href="../css/mamage.member.css" type="text/css"  />
-<title>Justlearning 学习，生活，娱乐</title>
+<title>小窝窝 大世界 小智慧 大财富 --有乐窝</title>
 <style>
 #selected7 a{background:#FFFFFF;}
 </style>

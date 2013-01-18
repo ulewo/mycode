@@ -100,6 +100,25 @@ function saveBaseInfo() {
 }
 
 function repassword() {
+	var oldPwd = $("#oldPwd").val().trim();
+	var newPwd = $("#newPwd").val().trim();
+	var rePassWord = $("#newPwd").val().trim();
+	if (oldPwd == "") {
+		alert("旧密码不能为空");
+		return;
+	}
+	if (newPwd == "") {
+		alert("新密码不能为空");
+		return;
+	}
+	if (rePassWord == "") {
+		alert("确认密码不能为空");
+		return;
+	}
+	if (newPwd != rePassWord) {
+		alert("两次输入的密码不一致");
+		return;
+	}
 	$("#subBtn").hide();
 	$("#loadImg").show();
 	$.ajax({
@@ -112,7 +131,7 @@ function repassword() {
 		success : function(data) {
 			var msg = "";
 			if (data.result == "ok") {
-				msg = "密码修改成功，点击<a href='login.jsp'>这里</a>重新登录";
+				msg = "密码修改成功，点击<a href='login2.jsp'>这里</a>重新登录";
 			} else if (data.result == "pwdError") {
 				msg = "密码错误";
 			} else {
@@ -125,6 +144,48 @@ function repassword() {
 		}
 	});
 }
+
+function resetpassword() {
+	var newPwd = $("#newPwd").val().trim();
+	var rePassWord = $("#newPwd").val().trim();
+	if (newPwd == "") {
+		alert("新密码不能为空");
+		return;
+	}
+	if (rePassWord == "") {
+		alert("确认密码不能为空");
+		return;
+	}
+	if (newPwd != rePassWord) {
+		alert("两次输入的密码不一致");
+		return;
+	}
+	$("#subBtn").hide();
+	$("#loadImg").show();
+	$.ajax({
+		async : true,
+		cache : false,
+		type : 'POST',
+		dataType : "json",
+		data : $("#subform").serialize(),
+		url : "resetPasswordOuter.jspx",// 请求的action路径
+		success : function(data) {
+			var msg = "";
+			if (data.result == "ok") {
+				msg = "密码修改成功，点击<a href='login2.jsp'>这里</a>重新登录";
+			} else if (data.result == "pwdErpwerrorrror") {
+				msg = "修改密码失败";
+			} else {
+				msg = "网络出现故障，请稍候再试";
+			}
+			$("#subBtn").show();
+			$("#loadImg").hide();
+			$("#resultInfo").html(msg);
+			$("#resultInfo").show();
+		}
+	});
+}
+
 this.userId = "";
 function initMessage(userId) {
 	this.userId = userId;
