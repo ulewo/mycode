@@ -516,7 +516,7 @@ public class UserSpaceAction extends BaseAction
 	private String MailAdress(String email) throws Exception
 	{
 
-		String maillAdress = "http://www.justlearning.cn";
+		String maillAdress = "www.ulewo.com";
 		int start = email.indexOf("@");
 		int end = email.indexOf(".");
 		String web = email.substring(start + 1, end);
