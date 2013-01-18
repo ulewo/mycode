@@ -9,20 +9,24 @@ import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 import com.lhl.entity.Group;
 import com.lhl.util.Constant;
 
-public class GroupDao extends SqlMapClientDaoSupport {
+public class GroupDao extends SqlMapClientDaoSupport
+{
 
 	/**
 	 * 获取最大的id
 	 * @return
 	 * @throws Exception
 	 */
-	public int getMaxGId() throws Exception {
+	public int getMaxGId() throws Exception
+	{
 
 		Object obj = getSqlMapClientTemplate().queryForObject("group.getMaxGId");
-		if (null == obj) {
+		if (null == obj)
+		{
 			return 10000;
 		}
-		else {
+		else
+		{
 			return (Integer) obj;
 		}
 
@@ -32,7 +36,8 @@ public class GroupDao extends SqlMapClientDaoSupport {
 	 * 创建群组
 	 * @param group
 	 */
-	public void createGroup(Group group) throws Exception {
+	public void createGroup(Group group) throws Exception
+	{
 
 		getSqlMapClientTemplate().insert("group.createGroup", group);
 	}
@@ -42,7 +47,8 @@ public class GroupDao extends SqlMapClientDaoSupport {
 	 * @param gid
 	 * @return
 	 */
-	public Group getGroup(String gid) throws Exception {
+	public Group getGroup(String gid)
+	{
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("gid", gid);
@@ -53,7 +59,8 @@ public class GroupDao extends SqlMapClientDaoSupport {
 	 * 更新群组(全更新)
 	 * @param group
 	 */
-	public void updateGroup(Group group) throws Exception {
+	public void updateGroup(Group group) throws Exception
+	{
 
 		getSqlMapClientTemplate().update("group.updateGroup", group);
 	}
@@ -62,7 +69,8 @@ public class GroupDao extends SqlMapClientDaoSupport {
 	 * 更新群组非空信息
 	 * @param group
 	 */
-	public void updateGroupSelective(Group group) throws Exception {
+	public void updateGroupSelective(Group group) throws Exception
+	{
 
 		getSqlMapClientTemplate().update("group.updateGroup_selective", group);
 	}
@@ -77,7 +85,8 @@ public class GroupDao extends SqlMapClientDaoSupport {
 	 * @return
 	 * @author luohl
 	 */
-	public List<Group> queryGroupsByArticleCount(int offset, int total) throws Exception {
+	public List<Group> queryGroupsByArticleCount(int offset, int total) throws Exception
+	{
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("offset", offset);
@@ -93,7 +102,8 @@ public class GroupDao extends SqlMapClientDaoSupport {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<Group> queryGroupsByMemberCount(int offset, int total) throws Exception {
+	public List<Group> queryGroupsByMemberCount(int offset, int total) throws Exception
+	{
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("offset", offset);
@@ -109,7 +119,8 @@ public class GroupDao extends SqlMapClientDaoSupport {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<Group> queryGroups(String orderBy, int offset, int total) throws Exception {
+	public List<Group> queryGroups(String orderBy, int offset, int total) throws Exception
+	{
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("offset", offset);
@@ -127,7 +138,8 @@ public class GroupDao extends SqlMapClientDaoSupport {
 	 * @throws Exception
 	 * @author lhl
 	 */
-	public List<Group> queryCreatedGroups(String userId) throws Exception {
+	public List<Group> queryCreatedGroups(String userId) throws Exception
+	{
 
 		return this.getSqlMapClientTemplate().queryForList("group.queryCreatedGroups", userId);
 	}
@@ -140,7 +152,8 @@ public class GroupDao extends SqlMapClientDaoSupport {
 	 * @throws Exception
 	 * @author lhl
 	 */
-	public List<Group> queryJoinedGroups(String userId) throws Exception {
+	public List<Group> queryJoinedGroups(String userId) throws Exception
+	{
 
 		return this.getSqlMapClientTemplate().queryForList("group.queryJoinedGroups", userId);
 	}
@@ -150,7 +163,8 @@ public class GroupDao extends SqlMapClientDaoSupport {
 	 * @return
 	 * @throws Exception
 	 */
-	public int queryGroupsCount() throws Exception {
+	public int queryGroupsCount() throws Exception
+	{
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("isValid", Constant.ISVALIDY);
@@ -167,7 +181,8 @@ public class GroupDao extends SqlMapClientDaoSupport {
 	 * @throws Exception
 	 * @author luohl
 	 */
-	public List<Group> queryCreateGroupsByAuthorId(String userId, int offset, int total) throws Exception {
+	public List<Group> queryCreateGroupsByAuthorId(String userId, int offset, int total) throws Exception
+	{
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("userid", userId);
@@ -186,7 +201,8 @@ public class GroupDao extends SqlMapClientDaoSupport {
 	 * @throws Exception
 	 * @author luohl
 	 */
-	public List<Group> queryJoinGroupsByAuthorId(String userId, int offset, int total) throws Exception {
+	public List<Group> queryJoinGroupsByAuthorId(String userId, int offset, int total) throws Exception
+	{
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("userid", userId);
@@ -196,7 +212,8 @@ public class GroupDao extends SqlMapClientDaoSupport {
 	}
 
 	/*搜索群组*/
-	public List<Group> searchGroup(String keyWord, int offset, int total) throws Exception {
+	public List<Group> searchGroup(String keyWord, int offset, int total) throws Exception
+	{
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("keyWord", keyWord);
@@ -207,7 +224,8 @@ public class GroupDao extends SqlMapClientDaoSupport {
 	}
 
 	/*搜索群组数*/
-	public int searchGroupCount(String keyWord) throws Exception {
+	public int searchGroupCount(String keyWord) throws Exception
+	{
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("keyWord", keyWord);

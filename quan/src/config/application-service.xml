@@ -51,6 +51,7 @@
    	  <bean name="memberService" class="com.lhl.quan.service.impl.MemberServiceImp">
 		 <property name="memberDao" ref="memberDao"/>
 	  	 <property name="userDao" ref="userDao"/>
+	  	 <property name="groupDao" ref="groupDao"/>
    	  </bean>
    	  
    	  <!-- 友情圈子 -->

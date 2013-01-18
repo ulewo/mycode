@@ -9,7 +9,8 @@ import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 import com.lhl.entity.Member;
 import com.lhl.util.Constant;
 
-public class MemberDao extends SqlMapClientDaoSupport {
+public class MemberDao extends SqlMapClientDaoSupport
+{
 
 	/**
 	 * 添加成员
@@ -17,7 +18,8 @@ public class MemberDao extends SqlMapClientDaoSupport {
 	 * @param member
 	 * @throws Exception
 	 */
-	public void addMember(Member member) throws Exception {
+	public void addMember(Member member) throws Exception
+	{
 
 		this.getSqlMapClientTemplate().insert("member.addMember", member);
 	}
@@ -27,7 +29,8 @@ public class MemberDao extends SqlMapClientDaoSupport {
 	 * 
 	 * @param id
 	 */
-	public void deleteMember(int id) throws Exception {
+	public void deleteMember(int id) throws Exception
+	{
 
 		this.getSqlMapClientTemplate().delete("member.deleteMember", id);
 	}
@@ -37,14 +40,16 @@ public class MemberDao extends SqlMapClientDaoSupport {
 	 * 
 	 * @param member
 	 */
-	public void updateMemberSelective(Member member) throws Exception {
+	public void updateMemberSelective(Member member) throws Exception
+	{
 
 		this.getSqlMapClientTemplate().update("member.updateMember_selective", member);
 	}
 
-	public Member getMember(int id) throws Exception {
+	public Member getMember(int id) throws Exception
+	{
 
-		return (Member) this.getSqlMapClientTemplate().queryForObject("member.queryCount", id);
+		return (Member) this.getSqlMapClientTemplate().queryForObject("member.getMember", id);
 	}
 
 	/**
@@ -63,7 +68,8 @@ public class MemberDao extends SqlMapClientDaoSupport {
 	 * @author luohl
 	 */
 	public List<Member> queryMembers(String gid, String isMember, String grade, String order, int offset, int total)
-			throws Exception {
+			throws Exception
+	{
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("gid", gid);
@@ -84,7 +90,8 @@ public class MemberDao extends SqlMapClientDaoSupport {
 	 * @param total
 	 * @return
 	 */
-	public List<Member> queryActiveMembers(String gid, String status, int offset, int total) throws Exception {
+	public List<Member> queryActiveMembers(String gid, String status, int offset, int total) throws Exception
+	{
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("gid", gid);
@@ -103,7 +110,8 @@ public class MemberDao extends SqlMapClientDaoSupport {
 	 * @param groupNum
 	 * @return
 	 */
-	public int queryMemberCount(String gid, String ismember, String grade) throws Exception {
+	public int queryMemberCount(String gid, String ismember, String grade) throws Exception
+	{
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("gid", gid);
@@ -128,7 +136,8 @@ public class MemberDao extends SqlMapClientDaoSupport {
 	 * @return
 	 */
 	public List<Member> queryMembersByGrade(String gid, String status, String grade, int offset, int total)
-			throws Exception {
+			throws Exception
+	{
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("gid", gid);
@@ -142,7 +151,8 @@ public class MemberDao extends SqlMapClientDaoSupport {
 	/**
 	 * 查询群管理员
 	 */
-	public List<Member> queryAdmins(String gid) throws Exception {
+	public List<Member> queryAdmins(String gid)
+	{
 
 		return this.getSqlMapClientTemplate().queryForList("member.queryAdmins", gid);
 	}
@@ -151,7 +161,8 @@ public class MemberDao extends SqlMapClientDaoSupport {
 	 * 查询成员userid
 	 */
 
-	public List<String> queryMembersIdByGrade(String gid, int grade) {
+	public List<String> queryMembersIdByGrade(String gid, int grade)
+	{
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("gid", gid);
@@ -167,7 +178,8 @@ public class MemberDao extends SqlMapClientDaoSupport {
 	 * @param grade
 	 * @return
 	 */
-	public int queryMemberCountByGrade(String gid, int grade) throws Exception {
+	public int queryMemberCountByGrade(String gid, int grade) throws Exception
+	{
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("gid", gid);
@@ -176,12 +188,14 @@ public class MemberDao extends SqlMapClientDaoSupport {
 		return (Integer) this.getSqlMapClientTemplate().queryForObject("member.queryCountByGrade", parmMap);
 	}
 
-	public List<Member> queryAllAdmins() throws Exception {
+	public List<Member> queryAllAdmins() throws Exception
+	{
 
 		return this.getSqlMapClientTemplate().queryForList("member.queryAllAdmins");
 	}
 
-	public Member queryMemberByGidAndUserId(String gid, String userId) throws Exception {
+	public Member queryMemberByGidAndUserId(String gid, String userId) throws Exception
+	{
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("gid", gid);

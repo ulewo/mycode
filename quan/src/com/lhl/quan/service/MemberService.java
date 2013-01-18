@@ -11,7 +11,8 @@ import com.lhl.entity.Member;
  * @date 2012-3-29
  * @version V1.0
 */
-public interface MemberService {
+public interface MemberService
+{
 	public void addMember(Member member) throws Exception;
 
 	/**
@@ -155,4 +156,6 @@ public interface MemberService {
 	public boolean isMember(String gid, String userId) throws Exception;
 
 	public Member getMember(String gid, String userId) throws Exception;
+
+	public boolean isAdmin(String gid, String curUserId, String type);
 }

@@ -78,4 +78,8 @@ public class Constant
 
 	public static int CUT_LENTH = 400;
 
+	public static String ADMIN_TYPE_A = "A"; //普通管理员
+
+	public static String ADMIN_TYPE_S = "S"; //超级管理员
+
 }

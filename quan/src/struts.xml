@@ -9,7 +9,7 @@
 	<package name="index" extends="struts-default">
 		<action name="index" class="index" method="index">
 			<result name="success">index.jsp</result>
-			<result name="error">error.jsp</result>
+			<result name="error" type="redirect">error/error.jsp</result>
 		</action>
 	</package>
 	
@@ -17,14 +17,14 @@
 	<package name="square" extends="struts-default">
 		<action name="square" class="index" method="square">
 			<result name="success">square.jsp</result>
-			<result name="error">error.jsp</result>
+			<result name="error" type="redirect">error/error.jsp</result>
 		</action>
 	</package>	
 	<!-- 群组 -->
 	<package name="groups" extends="struts-default">
 		<action name="groups" class="index" method="groups">
 			<result name="success">groups.jsp</result>
-			<result name="error">error.jsp</result>
+			<result name="error" type="redirect">error/error.jsp</result>
 		</action>
 	</package>	
 	
@@ -32,7 +32,7 @@
 	<package name="search" extends="struts-default">
 		<action name="search" class="index" method="search">
 			<result name="success">search.jsp</result>
-			<result name="error">error.jsp</result>
+			<result name="error" type="redirect">error/error.jsp</result>
 		</action>
 	</package>	
 	
@@ -49,7 +49,7 @@
 		<!-- 注册 -->
 		<action name="register" class="user" method="register">
 			<result name="success" type="redirect">/user/userInfo.jspx?userId=${userId}</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 			<result name="input">register.jsp</result>
 		</action>
 		<!-- 登录 -->
@@ -63,14 +63,14 @@
 		<!-- 找回密码 -->
 		<action name="showFetch" class="user" method="showFetch">
 			<result name="success">showFetchInfo.jsp</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 			<result name="input">findpassword.jsp</result>
 		</action>
 		
 		<!-- 检测用户找回密码邮箱链接 -->
 		<action name="findPwd" class="user" method="checkFindPwd">
-			<result name="success">repassword.jsp</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="success">resetpassword.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!-- 重置密码
@@ -83,13 +83,13 @@
 		<!-- 查看用户信息 -->
 		<action name="userInfo" class="user" method="userInfo">
 			<result name="success">userInfo.jsp</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!-- 用户图像 -->
 		<action name="userIcon" class="user" method="userIcon">
 			<result name="success">user_icon.jsp</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		<!-- 修改用户图像 -->
 		<action name="updateUserIcon" class="user" method="updateUserIcon">
@@ -98,11 +98,14 @@
 		<!-- 修改密码 -->
 		<action name="changePassword" class="user" method="changePassword">
 			<result name="success">repassword.jsp</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!-- 重置密码 -->
 		<action name="resetPassword" class="user" method="resetPassword">
+		</action>
+		
+		<action name="resetPasswordOuter" class="user" method="resetPasswordOuter">
 		</action>
 		
 		<!-- 留言 -->
@@ -115,7 +118,7 @@
 		<!-- 更新用户信息获取用户信息 -->
 		<action name="manage" class="user" method="getInfo">
 			<result name="success">ediUserInfo.jsp</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!-- 更新用户信息 -->
@@ -125,37 +128,37 @@
 		<!-- 创建的群组 -->
 		<action name="createdGroups" class="user" method="createdGroups">
 			<result name="success">createGroups.jsp</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!-- 参加的群组 -->
 		<action name="joinedGroups" class="user" method="joinedGroups">
 			<result name="success">joinedGroups.jsp</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!-- 发布的文章 -->
 		<action name="postTopics" class="user" method="postTopics">
 			<result name="success">postTopics.jsp</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!-- 回复的文章 -->
 		<action name="reTopics" class="user" method="reTopics">
 			<result name="success">reTopics.jsp</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!--博客 -->
 		<action name="blog" class="blog" method="blog">
 			<result name="success">blog.jsp</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!--博客 -->
 		<action name="blogdetail" class="blog" method="blogdetail">
 			<result name="success">blogdetail.jsp</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		<!--保存-->
 		<action name="savaReply" class="blog" method="savaReply">
@@ -164,18 +167,18 @@
 		<!--修改博客，获取信息 -->
 		<action name="getEditinfo" class="blog" method="getEditinfo">
 			<result name="success">editblog.jsp</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		<!--修改博客 -->
 		<action name="editBlog" class="blog" method="editBlog">
 			<result name="success" type="redirect">blog.jspx?userId=${userId}</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!--删除博客 -->
 		<action name="deleteBlog" class="blog" method="deleteBlog">
 			<result name="success" type="redirect">blog.jspx?userId=${userId}</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!--删除评论-->
@@ -189,13 +192,13 @@
 		<!--博客分类-->
 		<action name="addBlog" class="blog" method="addBlog">
 			<result name="success">addblog.jsp</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!--分类管理-->
 		<action name="manageItem" class="blog" method="manageItem">
 			<result name="success">blogitem.jsp</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!--新增,更新分类-->
@@ -208,7 +211,7 @@
 		<!--添加文章-->
 		<action name="saveBlog" class="blog" method="saveBlog">
 			<result name="success" type="redirect">blog.jspx?userId=${userId}</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!--博客分类-->
@@ -230,18 +233,18 @@
 		<!-- 创建群组 -->
 		<action name="createGroup" class="group" method="createGroup">
 			<result name="success" type="redirect">../manage/manage.jspx?gid=${gid}</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		<!-- 群首页 -->
 		<action name="group" class="group" method="group">
 			<result name="success">group.jsp</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!-- 群成员 -->
 		<action name="members" class="group" method="members">
 			<result name="success">members.jsp</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!-- 加入群 -->
@@ -255,13 +258,13 @@
 		<!-- 群文章 -->
 		<action name="topics" class="article" method="article">
 			<result name="success">articles.jsp</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!--展示文章-->
 		<action name="post" class="article" method="showArticle">
 			<result name="success">showarticle.jsp</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<action name="aboutArticles" class="article" method="aboutArticles">
@@ -276,37 +279,37 @@
 		<!-- 添加文章 -->
 		<action name="addArticle" class="article" method="addArticle">
 			<result name="success">addarticle.jsp</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!-- 发表文章 -->
 		<action name="subArticle" class="article" method="subArticle">
 			<result name="success" type="redirect">topics.jspx?gid=${gid}&amp;itemId=${itemId}</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!-- 回复文章 -->
 		<action name="reArticle" class="article" method="reArticle">
 			<result name="success">rearticle.jsp</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!-- 发表回复 -->
 		<action name="subReArticle" class="article" method="subReArticle">
 			<result name="success" type="redirect">post.jspx?id=${id}&amp;gid=${gid}</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!-- 引用文章 -->
 		<action name="quote" class="article" method="quote">
 			<result name="success">qutoarticle.jsp</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!-- 提交引用 -->
 		<action name="subQuote" class="article" method="subQuote">
 			<result name="success" type="redirect">post.jspx?id=${articleid}&amp;gid=${gid}</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 	</package>	
 	
@@ -314,19 +317,19 @@
 		<!-- 编辑群组 -->
 		<action name="manage" class="mangeGroup" method="groupManage">
 			<result name="success">baseset.jsp</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!-- 更新群组 -->
 		<action name="updateGroup" class="mangeGroup" method="updateGroup">
 			<result name="success" type="redirect">manage.jspx?gid=${gid}</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!-- 编辑群logo -->
 		<action name="getLogo" class="mangeGroup" method="getLogo">
 			<result name="success">baseset_logo.jsp</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!-- 更新群logo -->
@@ -336,7 +339,7 @@
 		<!-- 编辑群图标 -->
 		<action name="getHeadImag" class="mangeGroup" method="getHeadImag">
 			<result name="success">baseset_topimage.jsp</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!-- 更新群图标 -->
@@ -346,107 +349,107 @@
 		<!-- 成员管理 -->
 		<action name="manageMember" class="manageMember" method="manageMember">
 			<result name="success">member_manage.jsp</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!-- 设为管理员 -->
 		<action name="set2Admin" class="manageMember" method="set2Admin">
 			<result name="success" type="redirect">manageMember.jspx?gid=${gid}&amp;page=${page}</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!-- 取消管理员 -->
 		<action name="cancelAdmin" class="manageMember" method="cancelAdmin">
 			<result name="success" type="redirect">manageMember.jspx?gid=${gid}&amp;page=${page}</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!-- 删除成员 -->
 		<action name="deleteMember" class="manageMember" method="deleteMember">
 			<result name="success" type="redirect">manageMember.jspx?gid=${gid}&amp;page=${page}</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!-- 成员审批 -->
 		<action name="applyMember" class="manageMember" method="applyMember">
 			<result name="success">member_apply.jsp</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!--拒绝成员 -->
 		<action name="refuseMember" class="manageMember" method="refuseMember">
 			<result name="success" type="redirect">applyMember.jspx?gid=${gid}&amp;page=${page}</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!--接受成员 -->
 		<action name="acceptMember" class="manageMember" method="acceptMember">
 			<result name="success" type="redirect">applyMember.jspx?gid=${gid}&amp;page=${page}</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!-- 获取群文章 -->
 		<action name="articleManage" class="manageArticle" method="article">
 			<result name="success">article.jsp</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!-- 设置置顶 -->
 		<action name="setTop" class="manageArticle" method="setTop">
 			<result name="success" type="redirect">articleManage.jspx?gid=${gid}&amp;page=${page}</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!-- 设置精华 -->
 		<action name="setGood" class="manageArticle" method="setGood">
 			<result name="success" type="redirect">articleManage.jspx?gid=${gid}&amp;page=${page}</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!-- 个性标题 -->
 		<action name="setTitle" class="manageArticle" method="setTitle">
 			<result name="success" type="redirect">articleManage.jspx?gid=${gid}&amp;page=${page}</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!-- 更新文章获取内容 -->
 		<action name="editArticle" class="manageArticle" method="editArticle">
 			<result name="success">editarticle.jsp</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		<!-- 更新文章 -->
 		<action name="updateArticle" class="manageArticle" method="updateArticle">
 			<result name="success" type="redirect">articleManage.jspx?gid=${gid}&amp;page=${page}</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		<!-- 删除文章-->
 		<action name="deleteArticle" class="manageArticle" method="deleteArticle">
 			<result name="success" type="redirect">articleManage.jspx?gid=${gid}&amp;page=${page}</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!-- 获取所有分类 -->
 		<action name="itemManage" class="manageItem" method="items">
 			<result name="success">articleitem.jsp</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!-- 新增分类 -->
 		<action name="createItem" class="manageItem" method="createItem">
 			<result name="success" type="redirect">itemManage.jspx?gid=${gid}</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!-- 删除分类 -->
 		<action name="deleteItem" class="manageItem" method="deleteItem">
 			<result name="success" type="redirect">itemManage.jspx?gid=${gid}</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!-- 修改分类 -->
 		<action name="updateItem" class="manageItem" method="updateItem">
 			<result name="success" type="redirect">itemManage.jspx?gid=${gid}</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 	</package>
 	
@@ -455,7 +458,7 @@
 		<!-- 文章管理 -->
 		<action name="queryArticles" class="adminArticle" method="queryArticles">
 			<result name="success">article_index.jsp</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		<!-- 推荐文章 -->
 		<action name="commendArticle" class="adminArticle" method="commendArticle">
@@ -464,19 +467,19 @@
 		<!--群组管理-->
 		<action name="queryGroups" class="adminGroup" method="queryGroups">
 			<result name="success">group_index.jsp</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 		<!--用户管理-->
 		<action name="queryUsers" class="adminUser" method="queryUsers">
 			<result name="success">user_index.jsp</result>
-			<result name="error">error.jsp</result>
+			<result name="error" type="redirect">error.jsp</result>
 		</action>
 		
 		<!-- 回收站 -->
 		<action name="recycleArticle" class="adminArticle" method="recycleArticle">
 			<result name="success">article_recycle.jsp</result>
-			<result name="error">../error/error.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
 	</package>
@@ -485,23 +488,22 @@
 		<!-- 上传头像 -->
 		<action name="avatarUpload" class="avatarUpload" method="avatarUpload">
 			<result name="success">avatarUpload.jsp</result>
-			<result name="error">avatarUpload.jsp</result>
+			<result name="error" type="redirect">avatarUpload.jsp</result>
 		</action>
 		
 		<action name="headImgUpload" class="headImgUpload" method="headImgUpload">
 			<result name="success">headIconupload.jsp</result>
-			<result name="error">headIconupload.jsp</result>
+			<result name="error" type="redirect">headIconupload.jsp</result>
 		</action>
 		
 		<action name="imageUpload" class="imageUpload" method="imageUpload">
 			<result name="success">imageUpload.jsp</result>
-			<result name="error">imageUpload.jsp</result>
+			<result name="error" type="redirect">imageUpload.jsp</result>
 		</action>
 		
 		<action name="userAvatarUpload" class="userAvatarUpload" method="imageUpload">
 			<result name="success">userAvatarUpload.jsp</result>
-			<result name="error">userAvatarUpload.jsp</result>
+			<result name="error" type="redirect">userAvatarUpload.jsp</result>
 		</action>
-		
 	</package>
 </struts>

@@ -36,7 +36,7 @@ import sun.misc.BASE64Decoder;
 public class Uploader
 {
 
-	private static final int width = 650;
+	private static final int width = 700;
 
 	private static final int height = 250;
 
