@@ -499,15 +499,15 @@ public class UserSpaceAction extends BaseAction
 	{
 
 		String url = "http://www.ulewo.com/user/findPwd.jspx?account=" + email + "&code=" + activationCode;
-		String title = "justlearning邮箱找回密码邮件";
+		String title = "ulewo邮箱找回密码邮件";
 		StringBuffer content = new StringBuffer("亲爱的" + email + "<br><br>");
-		content.append("欢迎使用justlearning找回密码功能。(www.justlearning.cn)!<br><br>");
+		content.append("欢迎使用ulewo找回密码功能。(www.ulewo.com)!<br><br>");
 		content.append("请点击链接重置密码：<br><br>");
 		content.append("<a href=\"" + url + "\">" + url + "</a><br><br>");
 		content.append("如果你的email程序不支持链接点击，请将上面的地址拷贝至你的浏览器(如IE)的地址栏进入。<br><br>");
 		content.append("您的注册邮箱是:" + email + "<br><br>");
-		content.append("希望你在圈圈网的体验有益和愉快！<br><br>");
-		content.append("- 圈圈网(www.justlearning.cn)");
+		content.append("希望你在有乐窝社区的体验有益和愉快！<br><br>");
+		content.append("- 有乐窝社区(www.ulewo.com)");
 		String[] address = new String[] { email };
 		SendMail.sendEmail(title, String.valueOf(content), address);
 	}
