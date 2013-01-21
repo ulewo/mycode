@@ -21,7 +21,10 @@ function loadBaseInfo() {
 					resume = data.userBaesInfo.characters;
 				}
 				$("#resume").html(resume);
-				document.title = data.userBaesInfo.userName + "的空间";
+				var url = window.location.href;
+				if (url.indexOf("blogdetail") == -1) {
+					document.title = data.userBaesInfo.userName + "的空间";
+				}
 			} else {
 				alert("获取用户信息失败");
 				document.location.href = "../index.jspx";
