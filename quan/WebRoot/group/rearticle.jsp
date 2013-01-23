@@ -18,8 +18,6 @@ window.UEDITOR_HOME_URL = "<%=patch%>/ueditor/";
 <meta name="description" content="${group.groupName}-有乐窝">
 <meta name="keywords" content="${group.groupName}">
 <link rel="stylesheet"  href="../css/group.article.css" type="text/css"  />
-<script type="text/javascript" src="../js/jquery.min.js"></script>
-<script type="text/javascript" src="../js/group.addarticle.js"></script>
 
 <script type="text/javascript" charset="utf-8" src="../js/jquery.min.js"></script>
 <script type="text/javascript" charset="utf-8" src="../js/group.article.js"></script>

@@ -104,7 +104,7 @@
 				<div class="recon_con">
 					<div class="recon_img">
 						<c:if test="${reArticle.authorIcon==''}">
-							<img src="../upload/user_default.gif" width='60'>
+							<img src="../upload/user_default.gif" width='50'>
 						</c:if>
 						<c:if test="${reArticle.authorIcon!=''}">
 							<a href='../user/userInfo.jspx?userId=${reArticle.authorid}'><img src="../upload/${reArticle.authorIcon}" width='50'></a>
