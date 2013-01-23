@@ -107,8 +107,17 @@ function clearValue() {
 	$("#checkCode").val("");
 }
 
-function reArticle(id) {
-	document.location.href = "reArticle.jspx?id=" + id;
+function reArticle(userId, id) {
+	if (userId != "") {
+		document.location.href = "reArticle.jspx?id=" + id;
+	} else {
+		art.dialog.open('../user/login.jsp', {
+			title : '用户登录',
+			width : 500,
+			height : 300
+		});
+	}
+
 }
 
 function quote(id) {

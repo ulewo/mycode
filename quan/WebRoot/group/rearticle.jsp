@@ -9,7 +9,6 @@
 <%
 String patch = request.getContextPath();
 %>
-<script type="text/javascript">
 <!--
 window.UEDITOR_HOME_URL = "<%=patch%>/ueditor/";
 //-->

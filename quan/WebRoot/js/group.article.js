@@ -1,5 +1,0 @@
-
-function subQutoForm(){
-	$("#subForm").submit();
-}
-

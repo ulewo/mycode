@@ -11,32 +11,25 @@
 <meta name="description" content="${group.groupName}-有乐窝">
 <meta name="keywords" content="${group.groupName}">
 <link rel="stylesheet"  href="../css/group.article.css" type="text/css"  />
+<script type="text/javascript">
+<%
+String patch = request.getContextPath();
+%>
+<!--
+window.UEDITOR_HOME_URL = "<%=patch%>/ueditor/";
+//-->
+</script>
+
+
 <script type="text/javascript" src="../js/jquery.min.js"></script>
 <script type="text/javascript" src="../js/group.addarticle.js"></script>
 
-<script type="text/javascript" charset="utf-8" src="../editor/kindeditor-min.js"></script>
 <script type="text/javascript" charset="utf-8" src="../js/jquery.min.js"></script>
 <script type="text/javascript" charset="utf-8" src="../js/group.article.js"></script>
 <script type="text/javascript" charset="utf-8" src="../js/util.js"></script>
-<script type="text/javascript">
-KE.show({
-	id : 'content',
-	allowFileManager : true,
-	resizeMode : 1,
-	newlineTag : 'br',
-	urlType : 'relative',
-	afterCreate : function(id) {
-		KE.event.ctrl(document, 13, function() {
-			KE.util.setData(id);
-			document.forms['example'].submit();
-		});
-		KE.event.ctrl(KE.g[id].iframeDoc, 13, function() {
-			KE.util.setData(id);
-			document.forms['example'].submit();
-		});
-	}
-});
-</script>
+<script type="text/javascript" src="../ueditor/editor_config.js"></script>
+<script type="text/javascript" src="../ueditor/editor.js"></script>
+
 </head>
 <body>
 <jsp:include page="../common/head.jsp"/>
@@ -45,6 +38,7 @@ KE.show({
 	<div class="ad_con">
 		<form action="subQuote.jspx" method="post"  name="example" id="subForm">
 		<input type="hidden" name="id" value="${id}"  />
+		<input type="hidden" name="content" id="content">
 		<div class="ad_quto">
 			<img border="0" src="../images/quto.gif">
 			<b>引用&nbsp;
@@ -52,20 +46,7 @@ KE.show({
 			&nbsp;在&nbsp;${fn:substring(reArticle.reTime,0,16)}&nbsp;的发表</b>
 			<div style="margin-top:5px;">${reArticle.content}</div>
 		</div>
-		<div class="ad_content">
-			<textarea id="content" name="content"  style="width:1000px;height:400px;visibility:hidden;"></textarea>
-		</div>
-		<div class="ad-part" style="height:200px;">
-			<div class="ad-title">上传图片：</div>
-			<div class="ad-input">
-			</div>
-		</div>
-		<div id="images" style="display:none;">
-			<div id="imagecon"></div>
-			<div style="clear:left;"></div>
-			<div><input type="checkbox" onclick="selectAll()" id="selectall">全选
-				&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:insertImage()">插入图片</a>
-			</div>
+		<div id="editor" style="text-align:left;">
 		</div>
 		<div class="ad-part bigButon" style="text-align:center;margin-top:10px;">
 			<a href="javascript:subQutoForm()" onfocus="this.blur()" >发表话题</a>
@@ -73,6 +54,27 @@ KE.show({
 		</form>
 	</div>
 </div>	
+<script type="text/javascript">
+window.UEDITOR_CONFIG.initialFrameWidth = 1000;
+var editor = new UE.ui.Editor();
+editor.render("editor");
+editor.ready(function(){
+    editor.setContent("");
+});
+
+function subQutoForm(){
+	if(editor.getContent()==""){
+		alert("内容不能为空");
+		return ;
+	}else{
+		$("#content").val(editor.getContent());
+	}
+	$("#subForm").submit();
+}
+
+function initImg(imageUrls){
+}
+</script>
 <jsp:include page="../common/foot.jsp"/>
 </body>
 </html>

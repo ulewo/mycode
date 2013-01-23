@@ -55,7 +55,7 @@
 				<div class="atr">
 					<div class="atit">
 						<div class="atit_check"><input type="checkbox" name="ids" value="${article.id}" class="checkId"></div>
-						<c:if test="${article.grade==1}"><div class="atit_img"><img src="../images/ico-top.gif"></div></c:if>
+						<c:if test="${article.grade==2}"><div class="atit_img"><img src="../images/ico-top.gif"></div></c:if>
 						<c:if test="${article.essence=='Y'}"><div class="atit_img"><img src="../images/ico-ess.gif"></div></c:if>
 						<div class="atit_tit">
 							<a href="../group/post.jspx?id=${article.id}" ${article.titleStyle}>${article.title}</a>

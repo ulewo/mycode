@@ -58,7 +58,7 @@
 			<div class="bbtn1" id="subBtn">
 				<a href="javascript:login()">登录</a>
 			</div>
-			<div class="findpsw"><a href="javascript:gotofindpaw()">忘记密码?</a></div>
+			<div class="findpsw" style="width:200px;text-align:left;"><a href="javascript:gotofindpaw()">忘记密码?</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:goToRegister()">帐号注册</a></div>
 		</div>
 		</form>
 	</div>
@@ -66,6 +66,9 @@
   <script type="text/javascript">
   	function gotofindpaw(){
   		parent.document.location.href="findpassword.jsp";
+  	}
+  	function goToRegister(){
+  		parent.document.location.href="register.jsp";
   	}
   </script>
 </html>

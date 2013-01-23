@@ -84,12 +84,6 @@
 				</div>
 			</div>
 			<div class="showarticle" id="${article.id }">${article.content }</div>
-			<div class="share_con">
-				<div class="share_backlist"><a href="topics.jspx?gid=${gid}&itemId=${itemId}">返回文章列表</a></div>
-				<div class="share_share">
-				<a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&amp;style=3&amp;fs=4&amp;textcolor=#fff&amp;bgcolor=#9C3&amp;text=分享到"></script>
-				</div>				
-			</div>
 			<div class="about_title">
 				你可能也喜欢
 			</div>
@@ -99,7 +93,7 @@
 				</script>
 			</div>
 			<div class="page_con">
-				<div class="bbtn1"><a href="javascript:reArticle('${article.id}')">☆回复帖子</a></div>
+				<div class="bbtn1"><a href="javascript:reArticle('${user.userId}','${article.id}')">☆回复帖子</a></div>
 				<div class="bbtn1"><a href="javascript:addArticle('${user.userId}','${gid}')">◎发表话题</a></div>
 			</div>
 			
@@ -168,7 +162,7 @@
 								<input type="text" id="reUserName">
 							</div>
 						</c:if>
-						<div>
+						<div style="margin-top:10px;">
 							<textarea class="reform_erea" id="reContent"></textarea>
 						</div>
 						<c:if test="${user==null}">

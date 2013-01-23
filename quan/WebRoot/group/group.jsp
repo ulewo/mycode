@@ -50,7 +50,7 @@ function cutString(str){
 						<div>
 							<span>成员${group.members}个</span>&nbsp;/
 							<span>话题:${group.topicCount}</span>&nbsp;/
-							<span>人气:${group.visitCount}</span>&nbsp;/
+							<!-- <span>人气:${group.visitCount}</span>&nbsp;/ -->
 							<span>今日发表:<span style="color:red;font-weight:bold;">${todayCount}</span></span>
 						</div>
 					</div>
@@ -73,7 +73,7 @@ function cutString(str){
 				<c:forEach var="article" items="${articleList}">
 					<div class="atr">
 						<div class="atit">
-							<c:if test="${article.grade==1}"><div class="atit_img"><img src="../images/ico-top.gif"></div></c:if>
+							<c:if test="${article.grade==2}"><div class="atit_img"><img src="../images/ico-top.gif"></div></c:if>
 							<c:if test="${article.essence=='Y'}"><div class="atit_img2"><img src="../images/ico-ess.gif"></div></c:if>
 							<div class="atit_tit">
 							<c:if test="${article.itemName!=null}">【<a href="topics.jspx?gid=${group.id}&itemId=${article.itemId }">${article.itemName }</a>】</c:if>
