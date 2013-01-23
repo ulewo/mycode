@@ -34,21 +34,21 @@
 	<update id="updateArticle_selective" parameterClass="article">
 		update article
 		set id=#id#
-		<isNotEmpty prepend="," property="itemId">
+		<isNotEqual prepend="," property="itemId" compareValue="0">
 			itemid=#itemId# 
-    	</isNotEmpty>
+    	</isNotEqual>
     	<isNotEmpty prepend="," property="titleStyle">
            titlestyle=#titleStyle# 
         </isNotEmpty>
         <isNotEmpty prepend="," property="content">
            content=#content# 
         </isNotEmpty>
-        <isNotEmpty prepend="," property="readNumber">
+        <isNotEqual prepend="," property="readNumber" compareValue="0">
           readnumber=#readNumber#
-        </isNotEmpty>
-        <isNotEmpty prepend="," property="grade">
+        </isNotEqual>
+        <isNotEqual prepend="," property="grade" compareValue="0">
           grade=#grade#
-        </isNotEmpty>
+        </isNotEqual>
         <isNotEmpty prepend="," property="essence">
 			essence=#essence#
         </isNotEmpty>

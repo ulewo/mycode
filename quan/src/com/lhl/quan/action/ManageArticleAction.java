@@ -121,11 +121,11 @@ public class ManageArticleAction extends BaseAction
 					article.setId(ids[i]);
 					if ("set".equals(opType))
 					{
-						article.setGrade(1);
+						article.setGrade(2);
 					}
 					else if ("cancel".equals(opType))
 					{
-						article.setGrade(0);
+						article.setGrade(1);
 					}
 					articleService.updateArticleSelective(article);
 				}
