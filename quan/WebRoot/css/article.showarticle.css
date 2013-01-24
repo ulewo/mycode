@@ -35,9 +35,9 @@
 .recon_con{border-top:1px solid #DCDCDC;margin-top:10px;padding-top:15px;padding-left:20px;}
 .recon_img{float:left;width:50px;border:1px solid #DCDCDC}
 .recon_img a img{border:0px;}
-.recon_info{float:left;width:875px;margin-left:20px;font-size:12px;}
+.recon_info{float:left;width:875px;margin-left:20px;font-size:13px;}
 .recon_info_re{height:30px;}
-.recon_info_con{line-height:20px;}
+.recon_info_con{line-height:22px;font-size:14px;}
 .recon_info_re a{color:#6FCEF4;text-decoration:none;}
 .recon_info_info{width:815px;float:left;}
 .recon_info_info .info_lou{font-weight:bold;color:#333333;}
