@@ -4,6 +4,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.BeanFactoryAware;
+
 import com.lhl.entity.Article;
 import com.lhl.entity.Group;
 import com.lhl.entity.User;
@@ -13,8 +17,11 @@ import com.lhl.quan.dao.UserDao;
 import com.lhl.quan.service.UserService;
 import com.lhl.util.Tools;
 
-public class UserServiceImpl implements UserService
+public class UserServiceImpl implements UserService, BeanFactoryAware
 {
+	private static BeanFactory beanFactory = null;
+
+	private static UserServiceImpl userServiceImplAt = null;
 
 	private UserDao userDao;
 
@@ -23,6 +30,26 @@ public class UserServiceImpl implements UserService
 	private GroupDao groupDao;
 
 	private final SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+	public void setBeanFactory(BeanFactory factory) throws BeansException
+	{
+
+		this.beanFactory = factory;
+	}
+
+	public BeanFactory getBeanFactory()
+	{
+
+		return beanFactory;
+	}
+
+	public static UserServiceImpl getInstance()
+	{
+
+		if (userServiceImplAt == null)
+			userServiceImplAt = (UserServiceImpl) beanFactory.getBean("userServiceImplAt");
+		return userServiceImplAt;
+	}
 
 	public void setUserDao(UserDao userDao)
 	{
@@ -50,7 +77,7 @@ public class UserServiceImpl implements UserService
 	}
 
 	@Override
-	public User checkUserName(String userName) throws Exception
+	public User checkUserName(String userName)
 	{
 
 		return userDao.queryUser(null, userName, null);

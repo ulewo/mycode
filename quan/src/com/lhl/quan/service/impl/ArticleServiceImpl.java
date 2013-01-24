@@ -17,6 +17,7 @@ import com.lhl.quan.dao.ReArticleDao;
 import com.lhl.quan.dao.UserDao;
 import com.lhl.quan.service.ArticleService;
 import com.lhl.util.Constant;
+import com.lhl.util.FormatAt;
 import com.lhl.util.Tools;
 
 public class ArticleServiceImpl implements ArticleService
@@ -63,7 +64,8 @@ public class ArticleServiceImpl implements ArticleService
 	public void addArticle(Article article) throws Exception
 	{
 
-		String summary = Tools.clearHtml(article.getContent());
+		String content = article.getContent();
+		String summary = Tools.clearHtml(content);
 		if (summary.length() > Constant.summaryLength200)
 		{
 			summary = summary.substring(0, Constant.summaryLength200);
@@ -73,7 +75,12 @@ public class ArticleServiceImpl implements ArticleService
 			summary = article.getTitle();
 		}
 		article.setSummary(summary + "......");
+
 		article.setPostTime(formate.format(new Date()));
+
+		List<String> referers = new ArrayList<String>();
+		String formatContent = FormatAt.getInstance().GenerateRefererLinks(userDao, content, referers);
+		article.setContent(formatContent);
 		articleDao.addArticle(article);
 
 	}

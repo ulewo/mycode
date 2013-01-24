@@ -6,7 +6,8 @@ import com.lhl.entity.Article;
 import com.lhl.entity.Group;
 import com.lhl.entity.User;
 
-public interface UserService {
+public interface UserService
+{
 	/**
 	 * 用户注册
 	 * @param user
@@ -19,7 +20,7 @@ public interface UserService {
 	 * @param userName
 	 * @throws Exception
 	 */
-	public User checkUserName(String userName) throws Exception;
+	public User checkUserName(String userName);
 
 	/**
 	 * 检测用户邮箱是否占用
