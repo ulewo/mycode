@@ -18,6 +18,8 @@ window.UEDITOR_HOME_URL = "<%=patch%>/ueditor/";
 <meta name="description" content="${group.groupName}-有乐窝">
 <meta name="keywords" content="${group.groupName}">
 <link rel="stylesheet"  href="../css/group.article.css" type="text/css"  />
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/group.addarticle.js"></script>
 
 <script type="text/javascript" charset="utf-8" src="../js/jquery.min.js"></script>
 <script type="text/javascript" charset="utf-8" src="../js/group.article.js"></script>
@@ -39,7 +41,7 @@ window.UEDITOR_HOME_URL = "<%=patch%>/ueditor/";
 		</div>
 		<div id="editor" style="text-align:left;">
 		</div>
-		<div class="ad-part bigButon" style="text-align:center;margin-top:10px;">
+		<div class="ad-part bbtn1" style="text-align:center;margin-top:10px;" id="subtn">
 			<a href="javascript:submitForm()" onfocus="this.blur()" >发表话题</a>
 		</div>
 		</form>
@@ -62,6 +64,7 @@ function submitForm(){
 	}else{
 		$("#content").val(editor.getContent());
 	}
+	$("#subtn").html("<img src='../images/load.gif'/>");
 	$("#subForm").submit();
 }
 

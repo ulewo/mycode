@@ -48,7 +48,7 @@ window.UEDITOR_HOME_URL = "<%=patch%>/ueditor/";
 		</div>
 		<div id="editor" style="text-align:left;">
 		</div>
-		<div class="ad-part bigButon" style="text-align:center;margin-top:10px;">
+		<div class="ad-part bbtn1" style="text-align:center;margin-top:10px;" id="subtn">
 			<a href="javascript:subQutoForm()" onfocus="this.blur()" >发表话题</a>
 		</div>
 		</form>
@@ -69,6 +69,7 @@ function subQutoForm(){
 	}else{
 		$("#content").val(editor.getContent());
 	}
+	$("#subtn").html("<img src='../images/load.gif'/>");
 	$("#subForm").submit();
 }
 

@@ -52,7 +52,7 @@
 		</div>
 		<div id="editor" style="text-align:left;">
 		</div>
-		<div class="ad-part bigButon" style="text-align:center;margin-top:10px;">
+		<div class="ad-part bbtn1" style="text-align:center;margin-top:10px;" id="subtn">
 			<a href="javascript:submitForm()" onfocus="this.blur()" >发表话题</a>
 		</div>
 		</form>
@@ -91,6 +91,7 @@ window.UEDITOR_CONFIG.initialFrameWidth = 1000;
 		}else{
 			$("#content").val(editor.getContent());
 		}
+    	$("#subtn").html("<img src='../images/load.gif'/>");
     	$("#subForm").submit();
     }
     
