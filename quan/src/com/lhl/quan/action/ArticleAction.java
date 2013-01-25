@@ -400,7 +400,7 @@ public class ArticleAction extends BaseAction
 			article.setGid(gid);
 			article.setAuthorId(sessionUser.getUserId());
 			article.setType("0");
-			articleService.addArticle(article);
+			articleService.addArticle(article, sessionUser);
 		}
 		catch (BaseException e)
 		{

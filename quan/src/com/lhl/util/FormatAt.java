@@ -1,9 +1,13 @@
 package com.lhl.util;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.lhl.entity.Notice;
 import com.lhl.entity.User;
 import com.lhl.quan.dao.UserDao;
 
@@ -16,7 +20,9 @@ public class FormatAt
 
 	private static FormatAt instance = null;
 
-	private static Pattern referer_pattern = Pattern.compile("@([^@^\\s^:]{1,})([\\s\\:\\,\\;\\<]{0,1})");//@.+?[\\s:]
+	private static Pattern referer_pattern = Pattern.compile("@([^@\\s\\:\\;\\,\\\\.\\<\\?\\？\\{\\}]{1,})");//@.+?[\\s:]
+
+	private final SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	private String userUrl = "../user/userInfo.jspx?userId=";
 
@@ -89,5 +95,36 @@ public class FormatAt
 		}
 		html.append(msg.substring(lastIdx));
 		return html.toString();
+	}
+
+	public Notice formateNotic(String userId, int type, int id, String content)
+	{
+
+		Notice notice = new Notice();
+		notice.setUrl(getUrl(type) + id);
+		notice.setUserId(userId);
+		notice.setPostTime(formate.format(new Date()));
+		notice.setContent(content);
+		notice.setType(type);
+		notice.setStatus("N");
+		return notice;
+	}
+
+	private String getUrl(int type)
+	{
+
+		ResourceBundle rb = ResourceBundle.getBundle("config.noticeurl");
+		String url = "";
+		switch (type)
+		{
+		case 1:
+			url = rb.getString("addArticle");
+			break;
+		case 2:
+			url = rb.getString("reArticle");
+		default:
+			break;
+		}
+		return url;
 	}
 }

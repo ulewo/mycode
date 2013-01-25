@@ -3,6 +3,7 @@ package com.lhl.quan.service;
 import java.util.List;
 
 import com.lhl.entity.Article;
+import com.lhl.entity.User;
 
 public interface ArticleService
 {
@@ -12,7 +13,7 @@ public interface ArticleService
 	 * @param article
 	 * @author luohl
 	 */
-	public void addArticle(Article article) throws Exception;
+	public void addArticle(Article article, User user) throws Exception;
 
 	/**
 	 * description: 根据ID查询文章

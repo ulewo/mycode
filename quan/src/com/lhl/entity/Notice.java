@@ -6,13 +6,15 @@ public class Notice
 
 	private String userId;
 
-	private String type;
+	private int type;
 
-	private int status;
+	private String status;
 
 	private String url;
 
 	private String content;
+
+	private String postTime;
 
 	public int getId()
 	{
@@ -38,25 +40,25 @@ public class Notice
 		this.userId = userId;
 	}
 
-	public String getType()
+	public int getType()
 	{
 
 		return type;
 	}
 
-	public void setType(String type)
+	public void setType(int type)
 	{
 
 		this.type = type;
 	}
 
-	public int getStatus()
+	public String getStatus()
 	{
 
 		return status;
 	}
 
-	public void setStatus(int status)
+	public void setStatus(String status)
 	{
 
 		this.status = status;
@@ -84,6 +86,18 @@ public class Notice
 	{
 
 		this.content = content;
+	}
+
+	public String getPostTime()
+	{
+
+		return postTime;
+	}
+
+	public void setPostTime(String postTime)
+	{
+
+		this.postTime = postTime;
 	}
 
 }

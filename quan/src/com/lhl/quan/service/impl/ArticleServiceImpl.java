@@ -8,11 +8,13 @@ import java.util.List;
 import java.util.Map;
 
 import com.lhl.entity.Article;
+import com.lhl.entity.Notice;
 import com.lhl.entity.ReArticle;
 import com.lhl.entity.User;
 import com.lhl.exception.BaseException;
 import com.lhl.quan.dao.ArticleDao;
 import com.lhl.quan.dao.ArticleItemDao;
+import com.lhl.quan.dao.NoticeDao;
 import com.lhl.quan.dao.ReArticleDao;
 import com.lhl.quan.dao.UserDao;
 import com.lhl.quan.service.ArticleService;
@@ -31,7 +33,15 @@ public class ArticleServiceImpl implements ArticleService
 
 	private ReArticleDao reArticleDao;
 
+	private NoticeDao noticeDao;
+
 	private final SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+	public void setNoticeDao(NoticeDao noticeDao)
+	{
+
+		this.noticeDao = noticeDao;
+	}
 
 	public void setArticleItemDao(ArticleItemDao articleItemDao)
 	{
@@ -61,7 +71,7 @@ public class ArticleServiceImpl implements ArticleService
 	 * 新增文章
 	 */
 	@Override
-	public void addArticle(Article article) throws Exception
+	public void addArticle(Article article, User user) throws Exception
 	{
 
 		String content = article.getContent();
@@ -80,9 +90,16 @@ public class ArticleServiceImpl implements ArticleService
 
 		List<String> referers = new ArrayList<String>();
 		String formatContent = FormatAt.getInstance().GenerateRefererLinks(userDao, content, referers);
-		article.setContent(formatContent);
-		articleDao.addArticle(article);
 
+		article.setContent(formatContent);
+		int id = articleDao.addArticle(article);
+		//发送消息
+		String noticeCon = user.getUserName() + "在" + article.getTitle() + "中提到了你";
+		for (String userId : referers)
+		{
+			Notice notice = FormatAt.getInstance().formateNotic(userId, Constant.NOTICE_TYPE1, id, noticeCon);
+			noticeDao.createNotice(notice);
+		}
 	}
 
 	/**

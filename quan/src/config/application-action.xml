@@ -20,6 +20,10 @@
     	 <property name="blogArticleService" ref="blogArticleService"/>
     </bean>
  
+ 	<bean id="notice" class="com.lhl.quan.action.NoticeAction" scope="prototype">
+ 		 <property name="noticeService" ref="noticeService"/>
+ 	</bean>
+ 
     <bean id="blog" class="com.lhl.quan.action.BlogArticleAction" scope="prototype">
     	 <property name="blogArticleService" ref="blogArticleService"/>
     	 <property name="blogItemService" ref="blogItemService"/>

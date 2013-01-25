@@ -26,10 +26,10 @@ public class ArticleDao extends SqlMapClientDaoSupport
 	 * @param article
 	 * @author luohl
 	 */
-	public void addArticle(Article article) throws Exception
+	public int addArticle(Article article) throws Exception
 	{
 
-		this.getSqlMapClientTemplate().insert("article.addArticle", article);
+		return (Integer) this.getSqlMapClientTemplate().insert("article.addArticle", article);
 	}
 
 	/**

@@ -82,4 +82,14 @@ public class Constant
 
 	public static String ADMIN_TYPE_S = "S"; //超级管理员
 
+	public static int NOTICE_TYPE1 = 1; //论坛主题
+
+	public static int NOTICE_TYPE2 = 2; //论坛回复
+
+	public static int NOTICE_TYPE3 = 3; // 博客主题
+
+	public static int NOTICE_TYPE4 = 4; //回复博客
+
+	public static int NOTICE_TYPE5 = 5; //留言
+
 }

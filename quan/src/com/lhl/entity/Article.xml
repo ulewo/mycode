@@ -12,6 +12,9 @@
 	<insert id="addArticle" parameterClass="article">
 		insert into article (gid,type,itemid,title,content,summary,keyword,authorid,posttime,image)
 		values(#gid#,#type#,#itemId#,#title#,#content#,#summary#,#keyWord#,#authorId#,#postTime#,#image#)
+		<selectKey resultClass="int" keyProperty="id">  
+   	 		select max(id) from article  
+  	 	</selectKey>  
 	</insert>
 	
 	<!--删除文章-->
