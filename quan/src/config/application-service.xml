@@ -39,6 +39,7 @@
    	  <bean name="reArticleService" class="com.lhl.quan.service.impl.ReArticleServiceImpl">
     	 <property name="reArticleDao" ref="reArticleDao"/>
     	 <property name="userDao" ref="userDao"/>
+    	 <property name="noticeDao" ref="noticeDao"/>
    	  </bean> 
    	  
        <!-- 文章分类 --> 

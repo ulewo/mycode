@@ -88,9 +88,10 @@ public class ArticleServiceImpl implements ArticleService {
 		// 发送消息
 		String noticeCon = user.getUserName() + "在\"" + article.getTitle()
 				+ "\"中提到了你";
+		String url = "../group/post.jspx?id=" + id;
 		for (String userId : referers) {
-			Notice notice = FormatAt.getInstance().formateNotic(userId,
-					Constant.NOTICE_TYPE1, id, noticeCon);
+			Notice notice = FormatAt.getInstance().formateNotic(userId, url,
+					Constant.NOTICE_TYPE1, noticeCon);
 			noticeDao.createNotice(notice);
 		}
 	}
