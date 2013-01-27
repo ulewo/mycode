@@ -2,6 +2,8 @@ function subReForm(userId, id, gid) {
 	var reUserName = $("#reUserName").val();
 	var recontent = $("#reContent").val();
 	var checkCode = $("#checkCode").val();
+	var authorId = $("#authorId").val();
+	var articleTit = $("#articleTit").val();
 	if (userId == "" && reUserName.trim() == "") {
 		art.dialog.tips("请填写用户名");
 		return;
@@ -33,7 +35,9 @@ function subReForm(userId, id, gid) {
 			"reUserName" : reUserName,
 			"reContent" : recontent,
 			"checkCode" : checkCode,
-			"gid" : gid
+			"gid" : gid,
+			"authorId" : authorId,
+			"title" : articleTit
 		},
 		url : 'addReArticle.jspx',// 请求的action路径
 		success : function(data) {

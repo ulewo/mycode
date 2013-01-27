@@ -108,6 +108,7 @@
 			<div class="reCon" id="reCon">
 				<c:set var="num" value="${(page-1)*15}"></c:set>
 				<c:forEach var="reArticle" items="${reArticleList}">
+				<a name="re${reArticle.id}"></a>
 				<c:set var="num" value="${num+1}"></c:set>
 				<div class="recon_con">
 					<div class="recon_img">
@@ -155,6 +156,8 @@
  			</div>
 			<div class="fast_re_tit">快速回复:（无需登录）</div>	
 			<form action="fastReArticle.jspx" method="post">
+				<input type="hidden" value="${article.authorId}" id="authorId">
+				<input type="hidden" value="${article.title}" id="articleTit">
 				<div class="fast_re">
 					<div class="faset_re_img">
 						<c:if test="${user!=null}">
