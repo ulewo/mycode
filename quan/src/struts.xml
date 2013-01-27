@@ -226,6 +226,20 @@
 		<action name="message" class="user" method="message">
 		</action>
 		
+		<!-- 查询消息 -->
+		<action name="checkNotice" class="notice" method="queryNotice">
+		</action>
+		
+		<action name="notice" class="notice" method="notice">
+			<result name="success">notice.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
+		</action>
+		
+		<action name="noticeDetail" class="notice" method="noticeDetail">
+			<result name="success" type="redirect">${redirectUrl}</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
+		</action>
+		
 	</package>
 	
 	<package name="group" namespace="/group" extends="struts-default">

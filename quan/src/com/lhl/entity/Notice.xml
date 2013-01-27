@@ -12,8 +12,8 @@
 	
 	<!-- 创建消息 -->
 	<insert id="createNotice" parameterClass="notice">
-		insert into notice(userid,type,url,content)
-		values(#userId#,#type#,#url#,#content#)
+		insert into notice(userid,type,url,content,status,posttime)
+		values(#userId#,#type#,#url#,#content#,#status#,#postTime#)
 	</insert>
 	
 	<!-- 通过userId查询通知 -->
@@ -44,4 +44,7 @@
 		delete from notice where id = #id#
 	</delete>
 
+	<select id="getNotice" resultClass="notice" parameterClass="java.lang.Integer">
+		select * from notice where id = #id#
+	</select>
 </sqlMap>

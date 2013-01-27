@@ -8,8 +8,7 @@ import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 import com.lhl.entity.Notice;
 
-public class NoticeDao extends SqlMapClientDaoSupport
-{
+public class NoticeDao extends SqlMapClientDaoSupport {
 
 	/**
 	 * 创建消息
@@ -17,8 +16,7 @@ public class NoticeDao extends SqlMapClientDaoSupport
 	 * @param member
 	 * @throws Exception
 	 */
-	public void createNotice(Notice notice)
-	{
+	public void createNotice(Notice notice) {
 
 		this.getSqlMapClientTemplate().insert("notice.createNotice", notice);
 	}
@@ -28,8 +26,7 @@ public class NoticeDao extends SqlMapClientDaoSupport
 	 * 
 	 * @param id
 	 */
-	public void deleteNotice(int id) throws Exception
-	{
+	public void deleteNotice(int id) {
 
 		this.getSqlMapClientTemplate().delete("notice.deleteNotice", id);
 	}
@@ -39,8 +36,7 @@ public class NoticeDao extends SqlMapClientDaoSupport
 	 * 
 	 * @param member
 	 */
-	public void updateNotice(Notice notice)
-	{
+	public void updateNotice(Notice notice) {
 
 		this.getSqlMapClientTemplate().update("notice.updateNotice", notice);
 	}
@@ -60,16 +56,19 @@ public class NoticeDao extends SqlMapClientDaoSupport
 	 * @return
 	 * @author luohl
 	 */
-	public List<Notice> queryNoticeByUserId(String userId, String status)
-	{
+	public List<Notice> queryNoticeByUserId(String userId, String status) {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("userId", userId);
 		parmMap.put("status", status);
-		return this.getSqlMapClientTemplate().queryForList("notice.queryNoticeByUserId", parmMap);
+		return this.getSqlMapClientTemplate().queryForList(
+				"notice.queryNoticeByUserId", parmMap);
 	}
 
-	/**
+	public Notice getNotice(int id) {
+		return (Notice) this.getSqlMapClientTemplate().queryForObject(
+				"notice.getNotice", id);
+	}
 
 	/**
 	 * 查询消息数
@@ -80,12 +79,12 @@ public class NoticeDao extends SqlMapClientDaoSupport
 	 * @param groupNum
 	 * @return
 	 */
-	public int queryNoticeCountByUserId(String userId, String status)
-	{
+	public int queryNoticeCountByUserId(String userId, String status) {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("userId", userId);
 		parmMap.put("status", status);
-		return (Integer) this.getSqlMapClientTemplate().queryForObject("notice.queryNoticeCountByUserId", parmMap);
+		return (Integer) this.getSqlMapClientTemplate().queryForObject(
+				"notice.queryNoticeCountByUserId", parmMap);
 	}
 }
