@@ -17,7 +17,7 @@
 <link rel="stylesheet"  href="../css/manage.item.css" type="text/css"  />
 <link rel="stylesheet"  href="../css/user.public.css" type="text/css"  />
 <style type="text/css">
-#selected5 a{background:#FFFFFF;}
+#selected6 a{background:#FFFFFF;}
 .atr .aop a{color:#ffffff}
 .atr .aop a:hover{color:#ffffff}
 </style>
@@ -31,27 +31,21 @@
 		<jsp:include page="menue.jsp"></jsp:include>
 	</div>
 	<div class="right">
-		<div class="navPath"><a href="userInfo.jspx?userId=${user.userId}">空间</a>&nbsp;&gt;&gt;&nbsp;分类管理</div>
-		<div class="ath">
-			<div class="atit">分类名称</div>
-			<div class="aorder">排&nbsp;序</div>
-		</div>
-		<c:forEach var="item" items="${itemList}">
-			<form action="" method="post">
-			<input type="hidden" name="id" value="${item.id}">
-			<div class="atr atr2">
-				<div class="atit"><input type="text" value="${item.itemName}" name="itemName" style="border:0px" readonly="readonly"></div>
-				<div class="aorder"><input type="text" value="${item.itemRang}" name="itemRang" style="border:0px"  readonly="readonly"></div>
-				<div class="aop mbt">
-					<a href="javascript:void(0)" onclick="editeItem(this)">修改</a>
-					<a href="javascript:void(0)" onclick="deleteItem(this)">删除</a>
-				</div>
-			</div>
-			</form>
-		</c:forEach>
-		<div class="addmore">
-			<div class="bbtn1"><a href="javascript:void(0)" onclick="addMore(this,'${gid}')">添加分类</a></div>
-		</div>
+		<div class="navPath"><a href="userInfo.jspx?userId=${user.userId}">空间</a>&nbsp;&gt;&gt;&nbsp;消息</div>
+		<c:choose>
+			<c:when test="${empty list}">
+				<div>没有未处理的消息。</div>
+			</c:when>
+			<c:otherwise>
+				<c:forEach var="notice" items="${list}">
+					<div class="notice_list">
+						<div><a href="noticeDetail.jspx?id=${notice.id}">${notice.content}</a></div>
+						<span>${fn:substring(notice.postTime,0,16)}</span>
+					</div>
+				</c:forEach>
+			</c:otherwise>
+		</c:choose>
+		
 	</div>
 	<div class="clear"></div>
 </div>

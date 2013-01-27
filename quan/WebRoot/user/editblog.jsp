@@ -43,7 +43,7 @@
 		<div>
 	  	<form action="editBlog.jspx" method="post"  name="example" id="subForm">
 	  	<input type="hidden"  name="id" value="${blogArticle.id}">
-	  	<input type="hidden" id="content" name="content">
+	  	<input type="hidden" id="content" name="content" value='${blogArticle.content}'>
 		<div class="ad_line">
 			<div class="ad_title">
 				<input type="text" name="title" value="${blogArticle.title}" id="title">&nbsp;&nbsp;发表在
@@ -83,7 +83,7 @@
     var editor = new UE.ui.Editor();
     editor.render("editor");
     editor.ready(function(){
-        editor.setContent('${blogArticle.content}');
+        editor.setContent($("#content").val());
     });
     
     function submitForm(){

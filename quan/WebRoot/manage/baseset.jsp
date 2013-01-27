@@ -25,6 +25,7 @@
 <script type="text/javascript" src="../ueditor/editor.js"></script>
 </head>
 <body>
+<jsp:include page="../common/head.jsp"/>
 <div class="maincon">
 	<div class="left">
 		<jsp:include page="menue.jsp"></jsp:include>
@@ -64,7 +65,7 @@
 	</div>
 	<div class="clear"></div>
 </div>
-<div class="foot"></div>
+	<jsp:include page="../common/foot.jsp"></jsp:include>
 </body>
 <script type="text/javascript">
 window.UEDITOR_CONFIG.initialFrameWidth = 700;

@@ -35,7 +35,7 @@
 	</script>
   </head>
   <body>
-  <jsp:include page="head.jsp"/>
+   <jsp:include page="common/head.jsp"/>
   <div class="bodycon">
   	 	<div class="searchArea">
   	 		<div class="searchInput"><input type="text" name="keyWord" id="keyWord" class="keyWordInput" value="${keyWord}"></div>
@@ -61,6 +61,6 @@
   	 	</div>
   	 	<div style="clear:right;"></div>
   </div>
-  <jsp:include page="foot.jsp"/>
+  <jsp:include page="common/foot.jsp"/>
   </body>
 </html>

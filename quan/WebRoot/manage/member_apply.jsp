@@ -18,12 +18,13 @@
 <script type="text/javascript" src="../js/util.js"></script>
 </head>
 <body>
+<jsp:include page="../common/head.jsp"/>
 <div class="maincon">
 	<div class="left">
 		<jsp:include page="menue.jsp"></jsp:include>
 	</div>
 	<div class="right">
-		<div class="reject_info">未处理的请求（8）</div>	
+		<!-- <div class="reject_info">未处理的请求（8）</div>	 -->
 		<div class="op_area">
 			<div class="op_area_se">
 				<div class="op_area_se1">全选</div>
@@ -60,6 +61,6 @@
 	</div>
 	<div class="clear"></div>
 </div>
-<div class="foot"></div>
+	<jsp:include page="../common/foot.jsp"></jsp:include>
 </body>
 </html>

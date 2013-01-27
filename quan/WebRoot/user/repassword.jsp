@@ -57,5 +57,6 @@
   		</div>
   		<div class="clear"></div>
   </div>
+   <jsp:include page="../common/foot.jsp"/>
   </body>
 </html>

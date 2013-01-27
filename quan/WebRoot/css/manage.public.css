@@ -1,7 +1,8 @@
 @import url("public.css");
-body{width:1000px;margin: 0px auto;text-align:left;font-size:12px;}
+body{margin: 0px auto;text-align:left;font-size:12px;}
 .left{width:160px;float:left;background:#EAEAEA;padding:5px 10px;font-size:14px;text-align:left;}
 .right{width:790px;float:left;margin-left:10px;}
+.maincon{width:1000px;margin: 0px auto;margin-top:10px;}
 .manage_tit{background:#4682B4;height:40px;padding:5px;margin-top:10px;}
 .manage_tit1{float:left;display:inline-block;}
 .manage_tit2{float:left;display:inline-block;color:#FFFFFF;padding:10px 5px;}

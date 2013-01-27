@@ -1,5 +1,8 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%
+String realPath1 = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath()+"/";  
+%>
 <html>
   <head>
     <title>有乐窝</title>
@@ -8,16 +11,15 @@
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-	<script type="text/javascript" src="../js/jquery.min.js"></script>
-	<script type="text/javascript" src="../js/util.js"></script>
-	<script type="text/javascript" src="../js/user.login.js"></script>
-	<link rel="stylesheet" type="text/css" href="../css/user.register.css">
-	<link id="artDialog-skin" href="../dialog/skins/default.css" rel="stylesheet" />
-	<script src="../dialog/jquery.artDialog.min.js?skin=default"></script>
-	<script src="../dialog/plugins/iframeTools.js"></script>
+	<script type="text/javascript" src="<%=realPath1 %>js/jquery.min.js"></script>
+	<script type="text/javascript" src="<%=realPath1 %>js/util.js"></script>
+	<script type="text/javascript" src="<%=realPath1 %>js/user.login.js"></script>
+	<link rel="stylesheet" type="text/css" href="<%=realPath1 %>css/user.register.css">
   </head>
   <body>
-  <div style="text-align:center;font-size:14px;color:red;">${message }</div>
+  <jsp:include page="../common/head.jsp"/>
+  <div class="bodycon">
+  	<div style="text-align:center;font-size:14px;color:red;">${message }</div>
 	<div class="register">
 		<div id="loginerror"></div>
 		<form action="register.jspx" method="post" id="subform">
@@ -56,19 +58,21 @@
 		<div class="input_area">
 			<div class="tit"></div>
 			<div class="bbtn1" id="subBtn">
-				<a href="javascript:login()">登录</a>
+				<a href="javascript:loginDo('${param.redirectUrl}')">登录</a>
 			</div>
 			<div class="findpsw" style="width:200px;text-align:left;"><a href="javascript:gotofindpaw()">忘记密码?</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:goToRegister()">帐号注册</a></div>
 		</div>
 		</form>
 	</div>
+	</div>
+	<jsp:include page="../common/foot.jsp"/>
   </body>
   <script type="text/javascript">
   	function gotofindpaw(){
-  		parent.document.location.href="findpassword.jsp";
+  		document.location.href="findpassword.jsp";
   	}
   	function goToRegister(){
-  		parent.document.location.href="register.jsp";
+  		document.location.href="register.jsp";
   	}
   </script>
 </html>

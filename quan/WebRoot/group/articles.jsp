@@ -24,8 +24,8 @@
 	<div class="itemcon">
 		<div class="itemcon_item"><jsp:include page="items.jsp"/></div>
 		<div class="itemcon_btn">
-			<div class="bbtn2"><a href="javascript:addGroup('${user.userId}','${gid}')">+加入圈子</a></div>
-			<div class="bbtn1"><a href="javascript:addArticle('${user.userId}','${gid}')">◎发表话题</a></div>
+			<div class="bbtn2"><a href="javascript:addGroup()">+加入圈子</a></div>
+			<div class="bbtn1"><a href="javascript:addArticle()">◎发表话题</a></div>
 		</div>
 	</div>
 	<div class="ordercon">
@@ -78,5 +78,11 @@
 	</div>
 </div>	
 <jsp:include page="../common/foot.jsp"/>
+<%
+String realPath1 = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath()+"/"; 
+%>
+<script type="text/javascript">
+	initGroupParam("<%=realPath1%>","${user.userId}","${gid}");
+</script>
 </body>
 </html>

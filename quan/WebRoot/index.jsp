@@ -22,7 +22,7 @@
 </script>
 </head>
 <body>
-	<jsp:include page="head.jsp"/>
+	<jsp:include page="common/head.jsp"/>
   	<div class="main">
   		<div class="left">
   			<div class="titinfo">本周热点</div>
@@ -93,6 +93,6 @@
   			</div>
   			<div class="clear"></div>
   		</div>
-  	 <jsp:include page="foot.jsp"/>
+  	 <jsp:include page="common/foot.jsp"/>
 </body>
 </html>

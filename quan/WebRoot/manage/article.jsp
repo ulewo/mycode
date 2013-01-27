@@ -23,7 +23,7 @@
 </script>
 </head>
 <body>
-
+<jsp:include page="../common/head.jsp"/>
 <div class="maincon">
 	<div class="left">
 		<jsp:include page="menue.jsp"></jsp:include>
@@ -82,7 +82,7 @@
 	</div>
 	</div>
 	<div class="clear"></div>
-	<jsp:include page="../common/foot2.jsp"></jsp:include>
+	<jsp:include page="../common/foot.jsp"></jsp:include>
 </div>
 </body>
 </html>

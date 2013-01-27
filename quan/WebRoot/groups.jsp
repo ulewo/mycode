@@ -18,7 +18,7 @@
   </head>
   
   <body>
-  <jsp:include page="head.jsp"/>
+   <jsp:include page="common/head.jsp"/>
   <div class="bodycon">
 	  	<c:forEach var="group" items="${groupList}">
 	  		<div class="group">
@@ -33,10 +33,12 @@
 	  			<div style="clear:left;"></div>
 	  		</div>
 	  	</c:forEach>
+	 <div style="height:30px;">
   	 <div  class="pagination" style="margin-top:20px;">
 		<p:pager url="groups.jspx" page="${page}" pageTotal = "${pageTotal }"></p:pager> 
   	 </div>
+  	 </div>
   </div>
-  <jsp:include page="foot.jsp"/>
+  <jsp:include page="common/foot.jsp"/>
   </body>
 </html>

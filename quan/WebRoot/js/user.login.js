@@ -32,7 +32,7 @@ $(function() {
 	});
 })
 
-function login(outer) {
+function loginDo(redirectUrl) {
 	var userName = $("#userName").val();
 	var passWord = $("#passWord").val();
 	var checkCode = $("#checkCode").val();
@@ -73,13 +73,7 @@ function login(outer) {
 			refreshImage();
 			if (data.result == "success") {// 登录成功
 				$("#subBtn").html("<a href='javascript:login()'>登录</a>");
-				// art.dialog.tips("登录成功！");
-				if (outer == "outer") {
-					document.location.href = "../index.jspx";
-				} else {
-					parent.location.reload();
-				}
-
+				document.location.href = redirectUrl || "../index.jspx";
 			} else {
 				$("#loginerror").html(
 						"<img src='../images/error.png'/>" + data.msg);

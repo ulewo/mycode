@@ -59,3 +59,9 @@ body{background:#F9F9F9;}
 .subArea{margin-top:5px;}
 .quote_panle{border-bottom: #666 1px dashed;text-align: left;border-left: #666 1px dashed;padding-bottom: 8px;background-color: white;padding-left: 8px;padding-right: 8px;border-top: #666 1px dashed;border-right: #666 1px dashed;padding-top: 8px;margin: 0px 0px 8px 0px;position:relative;}
 .quote_panle .close_icon{position:absolute;top:0px;right:0px;cursor:pointer;}
+
+/*消息列表*/
+.notice_list{padding:8px;height:15px;}
+.notice_list a{color:#4466BB;font-weight:bold;}
+.notice_list div{display:inline-block;float:left;}
+.notice_list span{display:inline-block;float:right;padding-right:10px;color:#666666}

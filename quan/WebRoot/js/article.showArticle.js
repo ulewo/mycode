@@ -37,7 +37,7 @@ function subReForm(userId, id, gid) {
 		},
 		url : 'addReArticle.jspx',// 请求的action路径
 		success : function(data) {
-			callBackReArticle(data);
+			callBackReArticle(data, userId);
 			$("#reCount").html(parseInt($("#reCount").html()) + 1);
 			clearValue();
 			$("#subBtn").attr("disabled", false);
@@ -46,7 +46,7 @@ function subReForm(userId, id, gid) {
 	});
 }
 
-function callBackReArticle(data) {
+function callBackReArticle(data, userId) {
 	if (data.reArticle == "checkCodeErr") {
 		art.dialog.tips("验证码错误");
 		refreshcode();
@@ -85,19 +85,21 @@ function callBackReArticle(data) {
 		reUserName = "<a href='../user/userInfo.jspx?userId=" + authorid + "'>"
 				+ reUserName + "</a>";
 	}
-	var recon_info_info = $(
+	$(
 			"<div class='recon_info_info'>" + "<span class='info_lou'>"
 					+ ($(".recon_con").length) + "楼</span>"
 					+ "<span class='info_name'>" + reUserName + "</span>"
 					+ "<span class='info_time'>发表时间：" + reTime + "</span>"
 					+ "</div>").appendTo(recon_info_re);
-	var recon_info_info_op = $(
-			"<div class='recon_info_info_op'>"
-					+ "<span><a href='javascript:void(0)' onclick='quote("
-					+ data.reArticle.id
-					+ ")'>引用</a></span><span class='re_op_d'>" +
-					// "<a href='####'>删除</a>" +
-					"</span>" + "</div>").appendTo(recon_info_re);
+	if (userId != "") {
+		recon_info_info_op = $(
+				"<div class='recon_info_info_op'>"
+						+ "<span><a href='javascript:void(0)' onclick='quote("
+						+ data.reArticle.id
+						+ ")'>回复</a></span><span class='re_op_d'>" +
+						// "<a href='####'>删除</a>" +
+						"</span>" + "</div>").appendTo(recon_info_re);
+	}
 
 }
 
@@ -106,20 +108,6 @@ function clearValue() {
 	$("#reContent").val("");
 	$("#checkCode").val("");
 }
-
-function reArticle(userId, id) {
-	if (userId != "") {
-		document.location.href = "reArticle.jspx?id=" + id;
-	} else {
-		art.dialog.open('../user/login.jsp', {
-			title : '用户登录',
-			width : 500,
-			height : 300
-		});
-	}
-
-}
-
 function quote(id) {
 	document.location.href = "quote.jspx?id=" + id;
 }

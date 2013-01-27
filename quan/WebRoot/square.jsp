@@ -15,7 +15,7 @@
   </head>
   
   <body>
-  <jsp:include page="head.jsp"/>
+  <jsp:include page="common/head.jsp"/>
   <div class="bodycon">
   	<div style="margin-top:10px;padding-right:8px;height:25px;">
   		<div  class="pagination">
@@ -93,6 +93,6 @@
 		<p:pager url="square.jspx" page="${page}" pageTotal = "${pageTotal }"></p:pager> 
  	</div>
   </div>
-  <jsp:include page="foot.jsp"/>
+   <jsp:include page="common/foot.jsp"/>
   </body>
 </html>

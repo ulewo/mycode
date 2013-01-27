@@ -67,8 +67,8 @@
 	<div class="itemcon">
 		<div class="itemcon_item"><jsp:include page="items.jsp"/></div>
 		<div class="itemcon_btn">
-			<div class="bbtn2"><a href="javascript:addGroup('${user.userId}','${gid}')">+加入圈子</a></div>
-			<div class="bbtn1"><a href="javascript:addArticle('${user.userId}','${gid}')">◎发表话题</a></div>
+			<div class="bbtn2"><a href="javascript:addGroup()">+加入圈子</a></div>
+			<div class="bbtn1"><a href="javascript:addArticle()">◎发表话题</a></div>
 		</div>
 	</div>
 		<div class="main">
@@ -101,8 +101,8 @@
 				</script>
 			</div>
 			<div class="page_con">
-				<div class="bbtn1"><a href="javascript:reArticle('${user.userId}','${article.id}')">☆回复帖子</a></div>
-				<div class="bbtn1"><a href="javascript:addArticle('${user.userId}','${gid}')">◎发表话题</a></div>
+				<div class="bbtn1"><a href="javascript:reArticle('${article.id}')">☆回复帖子</a></div>
+				<div class="bbtn1"><a href="javascript:addArticle()">◎发表话题</a></div>
 			</div>
 			
 			<div class="reCon" id="reCon">
@@ -112,7 +112,7 @@
 				<div class="recon_con">
 					<div class="recon_img">
 						<c:if test="${reArticle.authorIcon==''}">
-							<img src="../upload/user_default.gif" width='60'>
+							<img src="../upload/user_default.gif" width='50'>
 						</c:if>
 						<c:if test="${reArticle.authorIcon!=''}">
 							<a href='../user/userInfo.jspx?userId=${reArticle.authorid}'><img src="../upload/${reArticle.authorIcon}" width='50'></a>
@@ -133,7 +133,7 @@
 								<span class='info_time'>发表时间：${fn:substring(reArticle.reTime,0, 16)}</span>
 							</div>
 							<div class="recon_info_info_op">
-								<c:if test="${user!=null}"><span><a href='javascript:void(0)' onclick="quote('${reArticle.id}')">引用</a></span></c:if>
+								<c:if test="${user!=null}"><span><a href='javascript:void(0)' onclick="quote('${reArticle.id}')">回复</a></span></c:if>
 							<c:if test="${showDelete=='Y'}"><span class='re_op_d'>
 							<!-- <a href='####'>删除</a> -->
 							</span></c:if>
@@ -200,5 +200,11 @@
 	</div>
 </div>
 <jsp:include page="../common/foot.jsp"/>
+<%
+String realPath1 = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath()+"/"; 
+%>
+<script type="text/javascript">
+	initGroupParam("<%=realPath1%>","${user.userId}","${gid}");
+</script>
 </body>
 </html>

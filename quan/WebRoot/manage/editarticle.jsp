@@ -20,10 +20,6 @@
 <meta name="keywords" content="${group.groupName}">
 <link rel="stylesheet"  href="../css/manage.article.css" type="text/css"  />
 <script type="text/javascript" src="../js/jquery.min.js"></script>
-<script type="text/javascript" charset="utf-8" src="../editor/kindeditor-min.js"></script>
-<script type="text/javascript" charset="utf-8" src="../editor/lang/zh_CN.js"></script>
-<script type="text/javascript" charset="utf-8" src="../editor/swfupload.js"></script>
-<script type="text/javascript" src="../editor/handler.js"></script>
 <script type="text/javascript" charset="utf-8" src="../js/jquery.min.js"></script>
 <script type="text/javascript" charset="utf-8" src="../js/group.article.js"></script>
 <script type="text/javascript" charset="utf-8" src="../js/util.js"></script>
@@ -46,7 +42,7 @@
 			<input type="hidden" name="image" id="faceImg" value="">
 			<input type="hidden" name="gid" value="${gid}"  />
 			<input type="hidden" name="id" value="${id}"  />
-			<input type="hidden" id="content" name="content">
+			<input type="hidden" id="content" name="content" value='${article.content}'>
 			<div class="ad_line">
 				<div class="ad_title">
 					<input type="text" name="title" id="title" value="${article.title}">&nbsp;&nbsp;发表在
@@ -72,13 +68,16 @@
 	</div>
 	<div class="clear"></div>
 </div>	
+	<jsp:include page="../common/foot.jsp"></jsp:include>
 </body>
 <script type="text/javascript">
 window.UEDITOR_CONFIG.initialFrameWidth = 800;
+	var setint;
     var editor = new UE.ui.Editor();
     editor.render("editor");
     editor.ready(function(){
-        editor.setContent('${article.content}');
+    	//alert(UE.utils.html());
+       editor.setContent($("#content").val());
     });
     
     function submitForm(){

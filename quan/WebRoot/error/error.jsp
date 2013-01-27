@@ -8,6 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet"  href="../css/group.css" type="text/css"  />
 <title>出错啦!  -有乐窝</title>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
 <body>

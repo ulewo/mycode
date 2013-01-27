@@ -32,3 +32,10 @@ width: 100%;}
 	<li id="selected4"><a href="addBlog.jspx">发表博文</a></li>
 	<li id="selected5"><a href="manageItem.jspx">分类管理</a></li>
 </ul>
+
+<div class="menue_tit">
+	 消息管理
+</div>
+<ul class="menue">
+	<li id="selected6"><a href="notice.jspx">未处理的消息</a></li>
+</ul>

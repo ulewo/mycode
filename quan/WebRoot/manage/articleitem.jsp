@@ -22,6 +22,7 @@
 </script>
 </head>
 <body>
+<jsp:include page="../common/head.jsp"/>
 <div class="maincon">
 	<div class="left">
 		<jsp:include page="menue.jsp"></jsp:include>
@@ -52,6 +53,6 @@
 	</div>
 	<div class="clear"></div>
 </div>
-<div class="foot"></div>
+	<jsp:include page="../common/foot.jsp"></jsp:include>
 </body>
 </html>

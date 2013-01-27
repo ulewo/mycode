@@ -3,16 +3,20 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>  
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+<%
+String realPath = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath()+"/"; 
+%>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>出错啦!  -有乐窝</title>
-<link rel="stylesheet" type="text/css" href="css/index.css">
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="<%=realPath %>css/index.css">
 </head>
 <body>
-   <jsp:include page="head.jsp"/>
+   <jsp:include page="common/head.jsp"/>
   <div class="bodycon">
 		<div>
-			<div class="error_img"><img src="images/error.jpg"></div>
+			<div class="error_img"><img src="<%=realPath %>images/error.jpg"></div>
 			<div class="error_info">
 				<span class="tit">出现此页面可能是由于以下原因引起的：</span>
 				<span>1、登录超时</span>
@@ -24,6 +28,6 @@
 			<div class="clear"></div>
 		</div>
   </div>
-   <jsp:include page="foot.jsp"/>
+   <jsp:include page="common/foot.jsp"/>
 </body>
 </html>
