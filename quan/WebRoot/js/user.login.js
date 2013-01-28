@@ -77,7 +77,7 @@ function loginDo(redirectUrl) {
 			} else {
 				$("#loginerror").html(
 						"<img src='../images/error.png'/>" + data.msg);
-				$("#subBtn").html("<a href='javascript:login()'>登录</a>");
+				$("#subBtn").html("<a href='javascript:loginDo(\""+redirectUrl+"\")'>登录</a>");
 			}
 		},
 		error : function() {
