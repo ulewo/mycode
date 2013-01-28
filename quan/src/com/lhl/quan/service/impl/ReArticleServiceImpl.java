@@ -22,7 +22,8 @@ import com.lhl.util.FormatAt;
  * @date 2012-3-30
  * @version V1.0
  */
-public class ReArticleServiceImpl implements ReArticleService {
+public class ReArticleServiceImpl implements ReArticleService
+{
 
 	private ReArticleDao reArticleDao;
 
@@ -30,31 +31,34 @@ public class ReArticleServiceImpl implements ReArticleService {
 
 	private NoticeDao noticeDao;
 
-	private SimpleDateFormat format = new SimpleDateFormat(
-			"yyyy-MM-dd HH:mm:ss");
+	private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-	public void setReArticleDao(ReArticleDao reArticleDao) {
+	public void setReArticleDao(ReArticleDao reArticleDao)
+	{
 
 		this.reArticleDao = reArticleDao;
 	}
 
-	public void setUserDao(UserDao userDao) {
+	public void setUserDao(UserDao userDao)
+	{
 
 		this.userDao = userDao;
 	}
 
-	public void setNoticeDao(NoticeDao noticeDao) {
+	public void setNoticeDao(NoticeDao noticeDao)
+	{
+
 		this.noticeDao = noticeDao;
 	}
 
 	@Override
-	public ReArticle addReArticle(ReArticle reArticle, String authorId,
-			String articleTitle) throws Exception {
+	public ReArticle addReArticle(ReArticle reArticle, String authorId, String articleTitle) throws Exception
+	{
 
 		reArticle.setReTime(format.format(new Date()));
 		int id = reArticleDao.addReArticle(reArticle);
-		if (!"".equals(reArticle.getAuthorid())
-				&& reArticle.getAuthorid() != null) {
+		if (!"".equals(reArticle.getAuthorid()) && reArticle.getAuthorid() != null)
+		{
 			User user = userDao.queryUser("", "", reArticle.getAuthorid());
 			User reUser = new User();
 			reUser.setUserLittleIcon(user.getUserLittleIcon());
@@ -62,13 +66,11 @@ public class ReArticleServiceImpl implements ReArticleService {
 			reArticle.setAuthor(reUser);
 		}
 		reArticle.setId(id);
-		if (!authorId.equals(reArticle.getAuthorid())) {
-			String noticeCon = reArticle.getAuthorName() + "在\"" + articleTitle
-					+ "\"中回复了你";
-			String url = "../group/post.jspx?id=" + reArticle.getArticleId()
-					+ "#re" + id;
-			Notice notice = FormatAt.getInstance().formateNotic(authorId, url,
-					Constant.NOTICE_TYPE1, noticeCon);
+		if (authorId != null && !authorId.equals(reArticle.getAuthorid()))
+		{
+			String noticeCon = reArticle.getAuthorName() + "在\"" + articleTitle + "\"中回复了你";
+			String url = "../group/post.jspx?id=" + reArticle.getArticleId() + "#re" + id;
+			Notice notice = FormatAt.getInstance().formateNotic(authorId, url, Constant.NOTICE_TYPE1, noticeCon);
 			noticeDao.createNotice(notice);
 		}
 
@@ -76,31 +78,36 @@ public class ReArticleServiceImpl implements ReArticleService {
 	}
 
 	@Override
-	public void deleteReArticle(int id) throws Exception {
+	public void deleteReArticle(int id) throws Exception
+	{
 
 		reArticleDao.deleteReArticle(id);
 
 	}
 
 	@Override
-	public ReArticle getReArticle(int id) throws Exception {
+	public ReArticle getReArticle(int id) throws Exception
+	{
 
 		ReArticle reArticle = reArticleDao.getReArticle(id);
-		if (null == reArticle) {
+		if (null == reArticle)
+		{
 			throw new BaseException(30000);
 		}
 		return reArticle;
 	}
 
 	@Override
-	public void updateReArticle(ReArticle reArticle) throws Exception {
+	public void updateReArticle(ReArticle reArticle) throws Exception
+	{
 
 		reArticleDao.updateReArticle(reArticle);
 
 	}
 
 	@Override
-	public int queryReArticleCount(int articleid) throws Exception {
+	public int queryReArticleCount(int articleid) throws Exception
+	{
 
 		return reArticleDao.queryReArticleCount(articleid);
 	}
@@ -109,11 +116,10 @@ public class ReArticleServiceImpl implements ReArticleService {
 	 * 回复的文章
 	 */
 	@Override
-	public List<ReArticle> queryReArticles(int articleid, int offset, int total)
-			throws Exception {
+	public List<ReArticle> queryReArticles(int articleid, int offset, int total) throws Exception
+	{
 
-		List<ReArticle> list = reArticleDao.queryReArticles(articleid, offset,
-				total);
+		List<ReArticle> list = reArticleDao.queryReArticles(articleid, offset, total);
 		/*
 		 * User author = null; User sAuthor = null; List<ReArticle> reList =
 		 * null; for (ReArticle reParticle : list) { if
