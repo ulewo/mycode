@@ -117,7 +117,7 @@ function loadNotice() {
 	if (myParam.user != "") {
 		$.ajax({
 			async : true,
-			cache : false,
+			cache : true,
 			type : 'GET',
 			dataType : "json",
 			url : url,// 请求的action路径
