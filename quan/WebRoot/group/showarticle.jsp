@@ -100,11 +100,6 @@
 					showAboutArticle('${article.keyWord}','${gid}');
 				</script>
 			</div>
-			<div class="page_con">
-				<div class="bbtn1"><a href="javascript:reArticle('${article.id}')">☆回复帖子</a></div>
-				<div class="bbtn1"><a href="javascript:addArticle()">◎发表话题</a></div>
-			</div>
-			
 			<div class="reCon" id="reCon">
 				<c:set var="num" value="${(page-1)*15}"></c:set>
 				<c:forEach var="reArticle" items="${reArticleList}">
@@ -154,6 +149,10 @@
 	 			</div>
 	 			<div style="clear:both;"></div>
  			</div>
+ 			<div class="page_con">
+				<div class="bbtn1"><a href="javascript:reArticle('${article.id}')">☆高级回复</a></div>
+				<div class="bbtn1"><a href="javascript:addArticle()">◎发表话题</a></div>
+			</div>
 			<div class="fast_re_tit">快速回复:（无需登录）</div>	
 			<form action="fastReArticle.jspx" method="post">
 				<input type="hidden" value="${article.authorId}" id="authorId">

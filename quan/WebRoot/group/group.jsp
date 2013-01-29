@@ -83,12 +83,12 @@ function cutString(str){
 							</div>
 						</div>
 						<div class="aauthor">
-							<a href="../userspace/userInfor.jspx?userId=${article.authorId}">${article.authorName}</a><br>
+							<a href="../user/userInfo.jspx?userId=${article.authorId}">${article.authorName}</a><br>
 							<span class="timestyle">${fn:substring(article.postTime,0,16)}</span>
 						</div>
 						<div class="aauthor">
 							<c:if test="${article.lastReAuthorId!=null}">
-								<a href="../userspace/userInfor.jspx?userId=${article.lastReAuthorId}">${article.lastReAuthorName}</a><br>
+								<a href="../user/userInfo.jspx?userId=${article.lastReAuthorId}">${article.lastReAuthorName}</a><br>
 							</c:if>
 							<c:if test="${article.lastReAuthorId==null}">
 								${article.lastReAuthorName }<br>

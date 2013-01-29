@@ -38,7 +38,7 @@
 		<input type="hidden" name="gid" value="${gid}">
 			<c:forEach var="member" items="${memberList}">
 				<div class="member_con">
-					<div class="member_img"><a href="../userspace/userid=${member.userId}"><img src="../upload/${member.userIcon}" width="60" border="0"></a></div>
+					<div class="member_img"><a href="../user/userid=${member.userId}"><img src="../upload/${member.userIcon}" width="60" border="0"></a></div>
 					<div class="member_info">
 						<div class="member_info_con">
 							<div class="info_con_name">${member.userName}</div>	

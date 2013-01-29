@@ -45,7 +45,7 @@
 					<div class="groupinfo">
 						<a href="group.jspx?groupNumber=${group.groupNumber }">${group.groupName }</a>
 						&nbsp;&nbsp;创建于：${fn:substring(group.createTime,0,16)}
-						&nbsp;&nbsp;创建者：<a href="../userspace/userInfor.jspx?userId=${group.groupAuthor}">${group.authorName}</a>
+						&nbsp;&nbsp;创建者：<a href="../user/userInfo.jspx?userId=${group.groupAuthor}">${group.authorName}</a>
 						&nbsp;&nbsp;共${group.members}人
 						&nbsp;&nbsp;主题${group.topicCount}
 					</div>

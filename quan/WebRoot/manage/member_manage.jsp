@@ -42,7 +42,7 @@
 			<c:forEach var="member" items="${adminList}">
 			<c:set var="num" value="${num+1}"></c:set>
 				<div class="member_m_con">
-					<div class="member_img"><a href="../userspace/userid=${member.userId}"><img src="../upload/${member.userIcon}" width="60" border="0"></a></div>
+					<div class="member_img"><a href="../user/userid=${member.userId}"><img src="../upload/${member.userIcon}" width="60" border="0"></a></div>
 					<div class="member_m_info">
 						<div class="m_info_con">
 							${member.userName}
@@ -64,7 +64,7 @@
 			<input type="hidden" name="gid" value="${gid}">
 			<c:forEach var="member" items="${memberList}">
 				<div class="member_m_con">
-					<div class="member_img"><a href="../userspace/userid=${member.userId}"><img src="../upload/${member.userIcon}" width="60" border="0"></a></div>
+					<div class="member_img"><a href="../user/userid=${member.userId}"><img src="../upload/${member.userIcon}" width="60" border="0"></a></div>
 					<div class="member_m_info">
 						<div class="m_info_con">
 							${member.userName}
