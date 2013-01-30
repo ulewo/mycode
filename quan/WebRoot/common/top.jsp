@@ -9,7 +9,7 @@
 <div id='userContent'>
 	<div style="text-align:right;"><a href="javascript:hidenUserCon()" style="width:10px;float:right;"><img src="../images/tabs_close.gif" border="0"/></a></div>
 	<div class="uinfoTit">个人信息</div>
-	<div style="height:20px;padding-top:5px;"><a href="../userspace/userInfor.jspx?userId=${user.userId}">信息中心</a></div>
+	<div style="height:20px;padding-top:5px;"><a href="../user/userInfo.jspx?userId=${user.userId}">信息中心</a></div>
 	<div class="uinfoTit">我的群组</div>
 	<div id="umyGroup"></div>
 	<div class="uinfoTit">参与的群组</div>
