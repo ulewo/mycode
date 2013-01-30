@@ -11,39 +11,41 @@ import com.lhl.entity.Notice;
 import com.lhl.entity.User;
 import com.lhl.quan.dao.UserDao;
 
-public class FormatAt {
-	private FormatAt() {
+public class FormatAt
+{
+	private FormatAt()
+	{
 
 	};
 
 	private static FormatAt instance = null;
 
-	private static Pattern referer_pattern = Pattern
-			.compile("@([^@\\s\\:\\;\\,\\\\.\\<\\?\\？\\{\\}]{1,})");// @.+?[\\s:]
+	private static Pattern referer_pattern = Pattern.compile("@([^@\\s\\:\\;\\,\\\\.\\<\\?\\？\\{\\}\\&]{1,})");// @.+?[\\s:]
 
-	private final SimpleDateFormat formate = new SimpleDateFormat(
-			"yyyy-MM-dd HH:mm:ss");
+	private final SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	private String userUrl = "../user/userInfo.jspx?userId=";
 
-	public static FormatAt getInstance() {
+	public static FormatAt getInstance()
+	{
 
-		if (instance == null) {
+		if (instance == null)
+		{
 			instance = new FormatAt();
 		}
 		return instance;
 	}
 
-	public String GenerateRefererLinks(UserDao userDao, String msg,
-			List<String> referers) {
+	public String GenerateRefererLinks(UserDao userDao, String msg, List<String> referers)
+	{
 
 		StringBuilder html = new StringBuilder();
 		int lastIdx = 0;
 		Matcher matchr = referer_pattern.matcher(msg);
-		while (matchr.find()) {
+		while (matchr.find())
+		{
 			String origion_str = matchr.group();
-			String userName = origion_str.substring(1, origion_str.length())
-					.trim();
+			String userName = origion_str.substring(1, origion_str.length()).trim();
 			html.append(msg.substring(lastIdx, matchr.start()));
 			// System.out.println(str + "...............");
 			User user = userDao.queryUser(null, userName, null);
@@ -64,13 +66,15 @@ public class FormatAt {
 			 * null && !referers.contains(u.getId())) referers.add(u.getId()); }
 			 * else { html.append(origion_str); }
 			 */
-			if (null != user) {
-				html.append("<a href='" + userUrl + user.getUserId()
-						+ "' class='referer' target='_blank'>@");
+			if (null != user)
+			{
+				html.append("<a href='" + userUrl + user.getUserId() + "' class='referer' target='_blank'>@");
 				html.append(userName.trim());
 				html.append("</a> ");
 				referers.add(user.getUserId());
-			} else {
+			}
+			else
+			{
 				html.append(origion_str);
 			}
 			lastIdx = matchr.end();
@@ -79,8 +83,8 @@ public class FormatAt {
 		return html.toString();
 	}
 
-	public Notice formateNotic(String userId, String url, int type,
-			String content) {
+	public Notice formateNotic(String userId, String url, int type, String content)
+	{
 
 		Notice notice = new Notice();
 		notice.setUrl(url);
@@ -92,11 +96,13 @@ public class FormatAt {
 		return notice;
 	}
 
-	private String getUrl(int type) {
+	private String getUrl(int type)
+	{
 
 		ResourceBundle rb = ResourceBundle.getBundle("config.noticeurl");
 		String url = "";
-		switch (type) {
+		switch (type)
+		{
 		case 1:
 			url = rb.getString("addArticle");
 			break;

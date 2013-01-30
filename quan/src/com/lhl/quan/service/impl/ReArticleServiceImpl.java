@@ -1,6 +1,7 @@
 package com.lhl.quan.service.impl;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -56,7 +57,18 @@ public class ReArticleServiceImpl implements ReArticleService
 	{
 
 		reArticle.setReTime(format.format(new Date()));
+		String content = reArticle.getContent();
+		String quote = reArticle.getQuote();
+		List<String> referers = new ArrayList<String>();
+		String formatContent = FormatAt.getInstance().GenerateRefererLinks(userDao, content, referers);
+		String subCon = formatContent;
+		if (quote != null && !"".equals(quote))
+		{
+			subCon = quote + formatContent;
+		}
+		reArticle.setContent(subCon);
 		int id = reArticleDao.addReArticle(reArticle);
+
 		if (!"".equals(reArticle.getAuthorid()) && reArticle.getAuthorid() != null)
 		{
 			User user = userDao.queryUser("", "", reArticle.getAuthorid());
@@ -66,10 +78,20 @@ public class ReArticleServiceImpl implements ReArticleService
 			reArticle.setAuthor(reUser);
 		}
 		reArticle.setId(id);
+
+		// 发送消息
+		String noticeCon = reArticle.getAuthorName() + "在\"" + articleTitle + "\"中提到了你";
+		String url = "../group/post.jspx?id=" + reArticle.getArticleId() + "#re" + id;
+		for (String userId : referers)
+		{
+			Notice notice = FormatAt.getInstance().formateNotic(userId, url, Constant.NOTICE_TYPE1, noticeCon);
+			noticeDao.createNotice(notice);
+		}
+
 		if (authorId != null && !authorId.equals(reArticle.getAuthorid()))
 		{
-			String noticeCon = reArticle.getAuthorName() + "在\"" + articleTitle + "\"中回复了你";
-			String url = "../group/post.jspx?id=" + reArticle.getArticleId() + "#re" + id;
+			noticeCon = reArticle.getAuthorName() + "在\"" + articleTitle + "\"中回复了你";
+			url = "../group/post.jspx?id=" + reArticle.getArticleId() + "#re" + id;
 			Notice notice = FormatAt.getInstance().formateNotic(authorId, url, Constant.NOTICE_TYPE1, noticeCon);
 			noticeDao.createNotice(notice);
 		}

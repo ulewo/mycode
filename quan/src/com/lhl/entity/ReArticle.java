@@ -9,10 +9,13 @@ import java.util.List;
  * @date 2012-3-30
  * @version V1.0
  */
-public class ReArticle {
+public class ReArticle
+{
 	private int id;
 
 	private int articleId; // 主题帖Id
+
+	private String quote; //引用
 
 	private String content; // 回复内容
 
@@ -30,104 +33,136 @@ public class ReArticle {
 
 	List<ReArticle> reArticles; // 回复的回复列表
 
-	public int getId() {
+	public int getId()
+	{
 
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(int id)
+	{
 
 		this.id = id;
 	}
 
-	public int getArticleId() {
+	public int getArticleId()
+	{
 
 		return articleId;
 	}
 
-	public void setArticleId(int articleId) {
+	public void setArticleId(int articleId)
+	{
 
 		this.articleId = articleId;
 	}
 
-	public String getContent() {
+	public String getContent()
+	{
 
 		return content;
 	}
 
-	public void setContent(String content) {
+	public void setContent(String content)
+	{
 
 		this.content = content;
 	}
 
-	public String getAuthorid() {
+	public String getAuthorid()
+	{
 
 		return authorid;
 	}
 
-	public void setAuthorid(String authorid) {
+	public void setAuthorid(String authorid)
+	{
 
 		this.authorid = authorid;
 	}
 
-	public String getReTime() {
+	public String getReTime()
+	{
 
 		return reTime;
 	}
 
-	public void setReTime(String reTime) {
+	public void setReTime(String reTime)
+	{
 
 		this.reTime = reTime;
 	}
 
-	public String getAuthorName() {
+	public String getAuthorName()
+	{
 
 		return authorName;
 	}
 
-	public void setAuthorName(String authorName) {
+	public void setAuthorName(String authorName)
+	{
 
 		this.authorName = authorName;
 	}
 
-	public List<ReArticle> getReArticles() {
+	public List<ReArticle> getReArticles()
+	{
 
 		return reArticles;
 	}
 
-	public void setReArticles(List<ReArticle> reArticles) {
+	public void setReArticles(List<ReArticle> reArticles)
+	{
 
 		this.reArticles = reArticles;
 	}
 
-	public User getAuthor() {
+	public User getAuthor()
+	{
 
 		return author;
 	}
 
-	public void setAuthor(User author) {
+	public void setAuthor(User author)
+	{
 
 		this.author = author;
 	}
 
-	public String getGid() {
+	public String getGid()
+	{
 
 		return gid;
 	}
 
-	public void setGid(String gid) {
+	public void setGid(String gid)
+	{
 
 		this.gid = gid;
 	}
 
-	public String getAuthorIcon() {
+	public String getAuthorIcon()
+	{
 
 		return authorIcon;
 	}
 
-	public void setAuthorIcon(String authorIcon) {
+	public void setAuthorIcon(String authorIcon)
+	{
 
 		this.authorIcon = authorIcon;
+	}
+
+	public String getQuote()
+	{
+
+		return quote;
+	}
+
+	public void setQuote(String quote)
+	{
+
+		this.quote = quote;
 	}
 
 }
