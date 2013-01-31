@@ -10,8 +10,13 @@
 	
 	<!-- 添加文章-->
 	<insert id="addBlogArticle" parameterClass="blogArticle">
-		insert into blog_article (userid,itemid,title,summary,content,posttime,keyword,allowreplay)
+		<selectKey keyProperty="id" resultClass="java.lang.Integer" type="post">
+      		SELECT LAST_INSERT_ID()
+    	 </selectKey>
+        <![CDATA[
+        insert into blog_article (userid,itemid,title,summary,content,posttime,keyword,allowreplay)
 		values(#userId#,#itemId#,#title#,#summary#,#content#,#postTime#,#keyWord#,#allowReplay#)
+        ]]>
 	</insert>
 	
 	<!--删除文章-->

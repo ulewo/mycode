@@ -3,6 +3,7 @@ package com.lhl.quan.service;
 import java.util.List;
 
 import com.lhl.entity.BlogArticle;
+import com.lhl.entity.User;
 
 public interface BlogArticleService
 {
@@ -12,7 +13,7 @@ public interface BlogArticleService
 	 * @param blogArticle
 	 * @author luohl
 	 */
-	public boolean addBlog(BlogArticle blogArticle);
+	public boolean addBlog(BlogArticle blogArticle, User user);
 
 	/**
 	 * 

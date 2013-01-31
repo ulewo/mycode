@@ -4,7 +4,8 @@ import java.util.List;
 
 import com.lhl.entity.Message;
 
-public interface MessageService {
+public interface MessageService
+{
 
 	/**
 	 * 查询留言
@@ -15,8 +16,7 @@ public interface MessageService {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<Message> queryMessage(String userId, int offset, int total)
-			throws Exception;
+	public List<Message> queryMessage(String userId, int offset, int total) throws Exception;
 
 	/**
 	 * 查询留言条数
@@ -34,7 +34,7 @@ public interface MessageService {
 	 * @return TODO
 	 * @throws Exception
 	 */
-	public Message addMessage(Message message) throws Exception;
+	public Message addMessage(Message message, String userId) throws Exception;
 
 	/**
 	 * 

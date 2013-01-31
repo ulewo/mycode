@@ -2,7 +2,8 @@ package com.lhl.entity;
 
 import java.util.List;
 
-public class Message {
+public class Message
+{
 
 	private int id;
 
@@ -18,79 +19,115 @@ public class Message {
 
 	private String postTime;
 
+	private String quote;
+
+	public String getQuote()
+	{
+
+		return quote;
+	}
+
+	public void setQuote(String quote)
+	{
+
+		this.quote = quote;
+	}
+
 	private List<Message> reMessages;
 
-	public int getId() {
+	public int getId()
+	{
 
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(int id)
+	{
 
 		this.id = id;
 	}
 
-	public String getUserId() {
+	public String getUserId()
+	{
 
 		return userId;
 	}
 
-	public void setUserId(String userId) {
+	public void setUserId(String userId)
+	{
 
 		this.userId = userId;
 	}
 
-	public String getMessage() {
+	public String getMessage()
+	{
 
 		return message;
 	}
 
-	public void setMessage(String message) {
+	public void setMessage(String message)
+	{
 
 		this.message = message;
 	}
 
-	public String getPostTime() {
+	public String getPostTime()
+	{
 
 		return postTime;
 	}
 
-	public void setPostTime(String postTime) {
+	public void setPostTime(String postTime)
+	{
 
 		this.postTime = postTime;
 	}
 
-	public List<Message> getReMessages() {
+	public List<Message> getReMessages()
+	{
 
 		return reMessages;
 	}
 
-	public void setReMessages(List<Message> reMessages) {
+	public void setReMessages(List<Message> reMessages)
+	{
 
 		this.reMessages = reMessages;
 	}
 
-	public String getReUserId() {
+	public String getReUserId()
+	{
+
 		return reUserId;
 	}
 
-	public void setReUserId(String reUserId) {
+	public void setReUserId(String reUserId)
+	{
+
 		this.reUserId = reUserId;
 	}
 
-	public String getReUserName() {
+	public String getReUserName()
+	{
+
 		return reUserName;
 	}
 
-	public void setReUserName(String reUserName) {
+	public void setReUserName(String reUserName)
+	{
+
 		this.reUserName = reUserName;
 	}
 
-	public String getReUserIcon() {
+	public String getReUserIcon()
+	{
+
 		return reUserIcon;
 	}
 
-	public void setReUserIcon(String reUserIcon) {
+	public void setReUserIcon(String reUserIcon)
+	{
+
 		this.reUserIcon = reUserIcon;
 	}
 

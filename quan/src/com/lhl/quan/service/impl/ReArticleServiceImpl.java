@@ -15,6 +15,7 @@ import com.lhl.quan.dao.UserDao;
 import com.lhl.quan.service.ReArticleService;
 import com.lhl.util.Constant;
 import com.lhl.util.FormatAt;
+import com.lhl.util.Tools;
 
 /**
  * @Title:
@@ -88,7 +89,7 @@ public class ReArticleServiceImpl implements ReArticleService
 			noticeDao.createNotice(notice);
 		}
 
-		if (authorId != null && !authorId.equals(reArticle.getAuthorid()))
+		if (Tools.isNotEmpty(authorId) && !authorId.equals(reArticle.getAuthorid()))
 		{
 			noticeCon = reArticle.getAuthorName() + "在\"" + articleTitle + "\"中回复了你";
 			url = "../group/post.jspx?id=" + reArticle.getArticleId() + "#re" + id;

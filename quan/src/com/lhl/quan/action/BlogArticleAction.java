@@ -70,6 +70,10 @@ public class BlogArticleAction extends BaseAction
 
 	private String quote;
 
+	private int quoteId;
+
+	private String blogauthor;
+
 	private List<BlogReply> replyList = new ArrayList<BlogReply>();
 
 	public String blog()
@@ -125,7 +129,7 @@ public class BlogArticleAction extends BaseAction
 				blogArticle.setSummary(SubStringHTML.subStringHTML(content, Constant.CUT_LENTH, "......"));
 				blogArticle.setKeyWord(keyWord);
 				blogArticle.setAllowReplay(allowReplay);
-				blogArticleService.addBlog(blogArticle);
+				blogArticleService.addBlog(blogArticle, sessionUser);
 			}
 			else
 			{
@@ -380,12 +384,12 @@ public class BlogArticleAction extends BaseAction
 				getOut().print(String.valueOf(obj));
 				return;
 			}
-			else
-			{
-				reply.setContent(quote + Tools.formateHtml(content));
-			}
+
+			reply.setQuote(quote);
+			//引用回复
+			reply.setContent(content);
 			reply.setBlogId(blogId);
-			BlogReply result = blogReplyService.addReply(reply);
+			BlogReply result = blogReplyService.addReply(reply, blogauthor, title);
 			reply.setId(result.getId());
 			reply.setPostTime(result.getPostTime());
 			obj.put("note", reply);
@@ -644,6 +648,18 @@ public class BlogArticleAction extends BaseAction
 	{
 
 		this.quote = quote;
+	}
+
+	public void setQuoteId(int quoteId)
+	{
+
+		this.quoteId = quoteId;
+	}
+
+	public void setBlogauthor(String blogauthor)
+	{
+
+		this.blogauthor = blogauthor;
 	}
 
 }

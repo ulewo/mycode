@@ -15,6 +15,8 @@ public class BlogReply
 
 	private int blogId;
 
+	private String quote;
+
 	private String content;
 
 	private String postTime;
@@ -24,6 +26,18 @@ public class BlogReply
 	private String userName;
 
 	private String reUserIcon;
+
+	public String getQuote()
+	{
+
+		return quote;
+	}
+
+	public void setQuote(String quote)
+	{
+
+		this.quote = quote;
+	}
 
 	public int getId()
 	{

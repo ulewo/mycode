@@ -1,16 +1,39 @@
 package com.lhl.quan.service.impl;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import com.lhl.entity.BlogArticle;
+import com.lhl.entity.Notice;
+import com.lhl.entity.User;
 import com.lhl.quan.dao.BlogArticleDao;
+import com.lhl.quan.dao.NoticeDao;
+import com.lhl.quan.dao.UserDao;
 import com.lhl.quan.service.BlogArticleService;
+import com.lhl.util.Constant;
+import com.lhl.util.FormatAt;
 
 public class BlogArticleServiceImpl implements BlogArticleService
 {
 	private BlogArticleDao blogArticleDao;
+
+	private UserDao userDao;
+
+	private NoticeDao noticeDao;
+
+	public void setUserDao(UserDao userDao)
+	{
+
+		this.userDao = userDao;
+	}
+
+	public void setNoticeDao(NoticeDao noticeDao)
+	{
+
+		this.noticeDao = noticeDao;
+	}
 
 	public void setBlogArticleDao(BlogArticleDao blogArticleDao)
 	{
@@ -21,11 +44,30 @@ public class BlogArticleServiceImpl implements BlogArticleService
 	private final static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	@Override
-	public boolean addBlog(BlogArticle blogArticle)
+	public boolean addBlog(BlogArticle blogArticle, User user)
 	{
 
 		blogArticle.setPostTime(format.format(new Date()));
-		blogArticleDao.addBlog(blogArticle);
+		String content = blogArticle.getContent();
+		List<String> referers = new ArrayList<String>();
+		String formatContent = FormatAt.getInstance().GenerateRefererLinks(userDao, content, referers);
+
+		blogArticle.setContent(formatContent);
+
+		int blogId = blogArticleDao.addBlog(blogArticle);
+
+		// 发送消息
+		String noticeCon = user.getUserName() + "在博客\"" + blogArticle.getTitle() + "\"中提到了你";
+		String url = "blogdetail.jspx?id=" + blogId;
+		for (String userId : referers)
+		{
+			//自己发表的文章@自己不发消息
+			if (userId != null && !userId.equals(user.getUserId()))
+			{
+				Notice notice = FormatAt.getInstance().formateNotic(userId, url, Constant.NOTICE_TYPE1, noticeCon);
+				noticeDao.createNotice(notice);
+			}
+		}
 		return true;
 	}
 

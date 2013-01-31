@@ -18,7 +18,7 @@ public interface BlogReplyService
 	 * @param item
 	 * @author luohl
 	 */
-	public BlogReply addReply(BlogReply blogReply);
+	public BlogReply addReply(BlogReply blogReply, String authorId, String articleTitle);
 
 	/**
 	 * 
@@ -46,5 +46,7 @@ public interface BlogReplyService
 	 * @author luohl
 	 */
 	public boolean delete(String userId, int id);
+
+	public BlogReply queryBlogReplyById(int id);
 
 }

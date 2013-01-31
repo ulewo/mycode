@@ -22,10 +22,10 @@ public class BlogArticleDao extends SqlMapClientDaoSupport
 	 * @param item
 	 * @author luohl
 	 */
-	public void addBlog(BlogArticle blogArticle)
+	public int addBlog(BlogArticle blogArticle)
 	{
 
-		this.getSqlMapClientTemplate().insert("blogArticle.addBlogArticle", blogArticle);
+		return (Integer) this.getSqlMapClientTemplate().insert("blogArticle.addBlogArticle", blogArticle);
 	}
 
 	/**

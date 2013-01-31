@@ -689,7 +689,7 @@ public class UserSpaceAction extends BaseAction
 		try
 		{
 			int countNumber = messageService.getCount(userId);
-			Pagination.setPageSize(5);
+			Pagination.setPageSize(10);
 			int pageSize = Pagination.getPageSize();
 			pageTotal = Pagination.getPageTotal(countNumber);
 			if (page > pageTotal)
@@ -797,12 +797,10 @@ public class UserSpaceAction extends BaseAction
 				getOut().print(String.valueOf(obj));
 				return;
 			}
-			else
-			{
-				message.setMessage(quote + Tools.formateHtml(content));
-			}
+			message.setQuote(quote);
+			message.setMessage(Tools.formateHtml(content));
 			message.setUserId(userId);
-			Message result = messageService.addMessage(message);
+			Message result = messageService.addMessage(message, userId);
 			message.setPostTime(result.getPostTime());
 			message.setId(result.getId());
 			obj.put("note", message);
