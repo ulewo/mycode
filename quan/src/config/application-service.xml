@@ -24,6 +24,7 @@
      <bean name="messageService" class="com.lhl.quan.service.impl.MessageServiceImpl">
     	 <property name="messageDao" ref="messageDao"/>
     	 <property name="userDao" ref="userDao"/>
+    	 <property name="noticeDao" ref="noticeDao"/>
    	  </bean>
    	  
    	  <!-- 文章 --> 
@@ -78,6 +79,8 @@
 	   	<!--博客-->
 	    <bean name="blogArticleService" class="com.lhl.quan.service.impl.BlogArticleServiceImpl">
 	    	 <property name="blogArticleDao" ref="blogArticleDao"/>
+	    	 <property name="userDao" ref="userDao"/>
+	    	 <property name="noticeDao" ref="noticeDao"/>
 	    </bean>
 	    <bean name="blogItemService" class="com.lhl.quan.service.impl.BlogItemServiceImpl">
 	    	 <property name="blogItemDao" ref="blogItemDao"/>
@@ -85,6 +88,8 @@
 	     <bean name="blogReplyService" class="com.lhl.quan.service.impl.BlogReplyServiceImpl">
 	    	 <property name="blogReplyDao" ref="blogReplyDao"/>
 	    	 <property name="blogArticleDao" ref="blogArticleDao"/>
+	    	 <property name="userDao" ref="userDao"/>
+	    	 <property name="noticeDao" ref="noticeDao"/>
 	    </bean>
 	    
 	    <!--消息-->
