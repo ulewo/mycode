@@ -27,6 +27,9 @@ function subReply(blogId) {
 	if ($("#quote_panle").html() != null) {
 		quote = "<div class='quote_panle'>" + $("#infocon").html() + "</div>";
 	}
+	if(quote!=""){
+		blogauthor = $("#quoteUserId").val();
+	}
 	$.ajax({
 		async : true,
 		cache : false,
@@ -38,6 +41,9 @@ function subReply(blogId) {
 			checkCode : checkCode,
 			blogId : blogId,
 			quote : quote,
+			quoteId:$("quoteId").val(),
+			title:title,
+			blogauthor:blogauthor,
 			"time" : new Date()
 		},
 		url : "savaReply.jspx",// 请求的action路径
@@ -80,7 +86,7 @@ function loadReply(blogId) {
 }
 
 function initReply(i) {
-	$("<img src='../images/load.gif'>").appendTo($("#messagelist"));
+	$("<img src='../images/load.gif'>评论加载中......").appendTo($("#messagelist"));
 	$.ajax({
 		async : true,
 		cache : false,
@@ -117,6 +123,8 @@ function NotePanle(note) {
 	var reUserIcon = note.reUserIcon || "default.gif";
 	// 最外层div
 	this.noteCon = $("<div class='main_message'></div>");
+	//@定位
+	$("<a name='re"+note.id+"'></a>").appendTo(this.noteCon);
 	// 头像
 	$(
 			"<div class='re_icon'><img src='../upload/" + reUserIcon
@@ -141,6 +149,8 @@ function NotePanle(note) {
 			re_name_time);
 	var re_span = $("<span class='nofirst'></span>").appendTo(re_name_time);
 	$("<a href='javascript:void(0)'>回复</a>").bind("click", {
+		id:note.id,
+		quoteUserId:note.userId,
 		name : note.userName,
 		time : note.postTime.substring(0, 19),
 		content : note.content
@@ -163,11 +173,13 @@ NotePanle.prototype = {
 		return this.noteCon;
 	},
 	quote : function(event) {
-		$("#quote_panle").remove();
+		$("#quote_panle").empty();
 		var name = event.data.name;
 		var time = event.data.time;
 		var content = event.data.content;
-		var quote_panle = $("<div id='quote_panle' class='quote_panle'></div>");
+		var id = event.data.id;
+		var quoteUserId = event.data.quoteUserId;
+		var quote_panle = $("<div id='quote_panle' class='quote_panle' style='margin-top:10px;'></div>");
 		$("#subform").before(quote_panle);
 		$(
 				"<a href='javascript:delquote()'><img src='../images/001_02.png' width='18' border=0 class='close_icon'></a>")
@@ -183,6 +195,8 @@ NotePanle.prototype = {
 				.appendTo(b);
 		$("<div style='margin-top:5px;'>" + content + "</div>").appendTo(
 				infocon);
+		$("<input type='hidden' id='quoteId' value="+id+">").appendTo($("#quote_panle"));
+		$("<input type='hidden' id='quoteUserId' value="+quoteUserId+">").appendTo($("#quote_panle"));
 	},
 	del : function(event) {
 		var id = event.data.id;
