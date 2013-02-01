@@ -113,3 +113,4 @@ input.button{text-align:center;width:62px;color:#FFFFFF;background:#4682B4;borde
 .recon_info_con .referer{color:#4466BB}
 .main_message .referer{color:#4466BB}
 .blogdetail .referer{color:#4466BB}
+#gototop{position:fixed;bottom: 120px; right: 100px; cursor: pointer; display:none;}

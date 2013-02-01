@@ -11,7 +11,7 @@ String realPath = "http://" + request.getServerName() + ":" + request.getServerP
 <script src="<%=realPath %>js/util.js"></script>
 <div class="head_top">
 	<div class="head_logo">
-		<a href="<%=realPath %>index.jspx" onfocus=this.blur()><img src="<%=realPath %>images/logo.gif" border="0"></a>
+		<a href="<%=realPath %>index.jspx" onfocus="this.blur()"><img src="<%=realPath %>images/logo.gif" border="0"></a>
 	</div>
 	<div class="head_user">
 		<c:choose>
