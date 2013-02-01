@@ -20,7 +20,10 @@ String realPath1 = "http://" + request.getServerName() + ":" + request.getServer
 				</script>
 			<!-- Baidu Button END -->
 			<div style="margin-top:15px;">
-			
+				<script type="text/javascript">
+					var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+					document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F1535c97f8b589c71b7a6497eda7dac5f' type='text/javascript'%3E%3C/script%3E"));
+				</script>
 			</div>
 	</div>
 </div>

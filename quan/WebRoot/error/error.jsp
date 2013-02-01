@@ -26,6 +26,9 @@
   			</div>
   			<div class="clear"></div>
   		</div>
+  		<div class="tongji">
+  		<script type="text/javascript" src="http://www.qq.com/404/search_children.js" charset="utf-8"></script>
+  		</div>
   </div>
   <jsp:include page="../common/foot.jsp"/>
 </body>
