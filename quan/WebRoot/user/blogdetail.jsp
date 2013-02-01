@@ -51,9 +51,6 @@
 				  	
 		  		</div>
 		  	</div>
-		  	<div  class="pagination" style="height:30px;float:none;margin-top:10px;">
-				<p:pager url="message.jspx?userId=${userId}" page="${page}" pageTotal = "${pageTotal }"></p:pager> 
-			</div>
 		  	<div>
 		  		<form id="subform"> 
 		  		<input type="hidden" name="userId" value="${userId }" id="userId">
@@ -92,6 +89,8 @@
     <script type="text/javascript">
     var userId = "${userId}"
     var sessionUserId ="${user.userId}";
+    var title = "${blogArticle.title}";
+    var blogauthor  =  "${blogArticle.userId}";
     $(function(){
     	loadReply("${param.id}");
     })
@@ -99,6 +98,13 @@
     	if(confirm("文章删除后无法回复，你确定要删除此文章？")){
     		document.location.href="deleteBlog.jspx?id=${blogArticle.id}";
     	}
+    }
+    window.onload = function(){
+       var url = document.location.href;
+       var at = url.lastIndexOf("#");
+      if(at!=-1){
+    	  location.href = url.substring(url.indexOf("#"));
+      }
     }
     </script>
   </body>

@@ -99,5 +99,12 @@
   		initMessage("${param.userId}");
   	});
   	var sessionUserId ="${user.userId}";
+    window.onload = function(){
+        var url = document.location.href;
+        var at = url.lastIndexOf("#");
+       if(at!=-1){
+     	  location.href = url.substring(url.indexOf("#"));
+       }
+     }
   </script>
 </html>
