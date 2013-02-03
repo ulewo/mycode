@@ -41,8 +41,9 @@
 .recon_info_re a{color:#6FCEF4;text-decoration:none;}
 .recon_info_info{width:815px;float:left;}
 .recon_info_info .info_lou{font-weight:bold;color:#333333;}
-.recon_info_info .info_name{color:#6FCEF4;padding-left:5px;}
+.recon_info_info .info_name{color:#ACACCF;padding-left:5px;}
 .recon_info_info .info_time{padding-left:10px;}
+.recon_info_info .info_name a{color:#6FCEF4}
 .recon_info_info_op{width:60px;float:right;text-align:right;}
 
 .fast_re_tit{font-size:16px;font-weight:bold;margin-left:25px;margin-top:20px;text-align:left;}
