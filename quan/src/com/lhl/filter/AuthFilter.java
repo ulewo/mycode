@@ -84,11 +84,24 @@ public class AuthFilter extends HttpServlet implements Filter
 			}
 			else
 			{
-				User user = (User) userObj;
-				if (uri.contains("admin") && !Constant.SUPERADMIN.equals(user.getUserId()))
+
+				if (uri.contains("admin"))
 				{
-					response.sendRedirect("../error/error.jsp");
-					return;
+					if (userObj == null)
+					{
+						response.sendRedirect("../error/error.jsp");
+						return;
+					}
+					else
+					{
+						User user = (User) userObj;
+						if (!Constant.SUPERADMIN.equals(user.getUserId()))
+						{
+							response.sendRedirect("../error/error.jsp");
+							return;
+						}
+					}
+
 				}
 
 			}
