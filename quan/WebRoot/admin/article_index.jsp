@@ -20,9 +20,8 @@
 	<script src="../js/admin.article.js"></script>
   </head>
   <body>
-  <jsp:include page="menue.jsp"></jsp:include>
-  <div class="bodycon">
   <div class="admin_main">
+  <jsp:include page="menue.jsp"></jsp:include>
   <div class="main_th">
   	<div class="main_title">标题</div>
   	<div class="main_time">发表时间</div>
@@ -53,7 +52,6 @@
   </div>
   	<div class="pagination">
 		<p:pager url="queryArticles.jspx" page="${page}" pageTotal = "${pageTotal }"></p:pager> 
-	</div>
 	</div>
   </body>
 </html>

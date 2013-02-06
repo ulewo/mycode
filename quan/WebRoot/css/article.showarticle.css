@@ -18,7 +18,7 @@
 .user_name{margin-top:10px;}
 .user_chare{margin-top:10px;}
 
-.showarticle{padding:15px;text-align:left;word-wrap:break-word;line-height:26px;font-size:14px;}
+.showarticle{padding:15px;text-align:left;word-wrap:break-word;line-height:26px;font-size:14px;background:#fff}
 .share_con{text-align:left;color:#666666;font-size:13px;padding-left:15px;height:30px}
 .share_con a{font-size:13px;text-decoration:none;color:#6FCEF4;text-decoration:underline;}
 .share_backlist{float:left;width:90px;}

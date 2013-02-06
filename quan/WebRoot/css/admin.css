@@ -1,4 +1,7 @@
 .bodycon{margin-top:0px;}
+.menue{width:1000px;margin:0px auto;}
+.menue ul{height:30px;}
+.menue ul li{list-style:none;float:left;width:130px;}
 .admin_main{width:1000px;margin:0px auto;text-align:left}
 .main_th{height:30px;background:#F4F4F4;margin-top:20px;}
 .main_tr{margin-top:5px;}
