@@ -51,7 +51,7 @@ String realPath = "http://" + request.getServerName() + ":" + request.getServerP
 			<li><a href="<%=realPath %>index.jspx" class="selected1" onFocus="this.blur()">首&nbsp;页</a></li>
 			<li><a  href="<%=realPath %>groups.jspx"  class="selected2" onFocus="this.blur()">窝&nbsp;窝</a></li>
 			<li><a href="<%=realPath %>square.jspx" class="selected3" onFocus="this.blur()">广&nbsp;场</a></li>
-			<li><a href="http://blog.ulewo.com" class="selected4" onFocus="this.blur()">乐哈哈</a></li>
+			<li><a href="http://haha.ulewo.com" class="selected4" onFocus="this.blur()">乐哈哈</a></li>
 		</ul>
 		<div class="search">
 			<input type="text" class="inputTxtNew" id="searchInput" name="keyWord">

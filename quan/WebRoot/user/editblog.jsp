@@ -23,7 +23,7 @@
 	<script type="text/javascript" src="../ueditor/editor_config.js"></script>
 	<script type="text/javascript" src="../ueditor/editor.js"></script>
 	<script type="text/javascript" charset="utf-8" src="../js/jquery.min.js"></script>
-	<script type="text/javascript" charset="utf-8" src="../js/user.blog.js"></script>
+	<script type="text/javascript" charset="utf-8" src="../js/user.blog_blog.js"></script>
 	<script type="text/javascript" charset="utf-8" src="../js/util.js"></script>
 	<style type="text/css">
 		#selected4 a{background:#FFFFFF;}
