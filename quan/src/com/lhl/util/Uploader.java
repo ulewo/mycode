@@ -1,10 +1,8 @@
 package com.lhl.util;
 
-import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -15,7 +13,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Random;
 
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.fileupload.FileItemIterator;
@@ -36,7 +33,7 @@ import sun.misc.BASE64Decoder;
 public class Uploader
 {
 
-	private static final int width = 700;
+	private static final int width = 750;
 
 	private static final int height = 250;
 
@@ -106,7 +103,7 @@ public class Uploader
 		BufferedInputStream in = null;
 		FileOutputStream out = null;
 		BufferedOutputStream output = null;
-		InputStream tempin = null;
+		//InputStream tempin = null;
 		try
 		{
 			ServletFileUpload sfu = new ServletFileUpload(dff);
@@ -136,9 +133,9 @@ public class Uploader
 					out = new FileOutputStream(file);
 					output = new BufferedOutputStream(out);
 					Streams.copy(in, output, true);
-					tempin = new FileInputStream(file);
-					BufferedImage srcImage = ImageIO.read(tempin);
-					if (srcImage.getWidth() > width || file.length() > 1024 * 1024)
+					//tempin = new FileInputStream(file);
+					//BufferedImage srcImage = ImageIO.read(tempin);
+					if (file.length() > 1024 * 1024)
 					{ // 如果图片太大，就重新画
 						DrowImage.saveImageAsJpg(realurl, realurl, width, 0, false);
 					}
@@ -191,10 +188,6 @@ public class Uploader
 			if (output != null)
 			{
 				output.close();
-			}
-			if (tempin != null)
-			{
-				tempin.close();
 			}
 		}
 	}
