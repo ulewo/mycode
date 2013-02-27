@@ -39,8 +39,9 @@
 				<input type="text" name="title" id="title">&nbsp;&nbsp;发表在
 			</div>
 			<div class="ad_item">
-				<select name="itemId">
-					<option value="0">全部文章</option>
+				<select name="itemId" id="itemId">
+					<option value=""></option>
+					<option value="0">全部分类</option>
   					<c:forEach var="item" items="${itemList}">
 						<option value="${item.id}">${item.itemName}</option>
 					</c:forEach>
@@ -77,6 +78,14 @@ window.UEDITOR_CONFIG.initialFrameWidth = 1000;
     		title = title.replaceHtml();
     		$("#title").val(title);
     	}
+    	
+    	var itemId = $("#itemId").val();
+    	if(itemId==""){
+    		alert("请选择分类");
+    		$("#itemId").focus();
+    		return;
+    	}
+    	
     	var keyWord =  $("#keyWord").val();
 		if(keyWord.trim()==""){
 			alert("关键字不能为空");
