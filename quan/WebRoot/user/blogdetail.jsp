@@ -15,6 +15,8 @@
 	<script type="text/javascript" src="../js/user.userinfo.js"></script>
 	<script type="text/javascript" src="../js/user.blogdetail.js"></script>
 	<link rel="stylesheet" type="text/css" href="../css/user.userinfo.css">
+	<script type="text/javascript" src="../scripts/shCore.js"></script>
+	<link type="text/css" rel="stylesheet" href="../styles/SyntaxHighlighter.css"/>
 	<style type="text/css">
 		#sel_left6 a{background:url(../images/bg.gif) 0px -85px;}
 		#sel_left6 a:hover{text-decoration:none;}
@@ -75,7 +77,10 @@
 			  		</div>
 		  		</c:if>
 		  		<div class="subbtn">
-		  			<div class="bbtn1"><a href="javascript:subReply('${param.id}')" onfocus="this.blur()">发表留言</a></div>
+		  			<div class="bbtn1">
+		  				<a href="javascript:subReply('${param.id}')" onfocus="this.blur()" id="sendBtn">发表留言</a>
+		  				<img src="../images/load.gif" id="loading" style="display:none">
+		  			</div>
 		  			<div style="margin-left:20px;padding-top:8px;float:left;">最多输入500字符</div>
 		  		</div>
 		  		
@@ -92,6 +97,15 @@
     var title = "${blogArticle.title}";
     var blogauthor  =  "${blogArticle.userId}";
     $(function(){
+		$(".blogdetail pre").each(function () {
+                var $this = $(this);
+                if ($this.attr("class")!=null&&$this.attr("class").indexOf("brush:") != -1) {
+                    var lang = $this.attr("class").split(';')[0].split(':')[1];
+                    $this.attr('name', 'code');
+                    $this.attr('class', lang);
+                }
+        });
+		dp.SyntaxHighlighter.HighlightAll('code');
     	loadReply("${param.id}");
     })
     function confirmDel(){
