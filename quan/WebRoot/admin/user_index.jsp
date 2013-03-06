@@ -21,7 +21,7 @@
   <table>
   	<c:forEach var="user" items="${userList}">
   		<tr>
-  			<td>${user.userName}</td>
+  			<td><a href="../user/userInfo.jspx?userId=${user.userId}">${user.userName}</a></td>
   		</tr>
   	</c:forEach>
   	</table>

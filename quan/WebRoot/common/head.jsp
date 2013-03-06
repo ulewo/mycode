@@ -4,6 +4,7 @@
 <%
 String realPath = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath()+"/"; 
 %>
+<link rel="shortcut icon" type="image/x-icon" href="<%=realPath %>images/favicon.ico">
 <link id="artDialog-skin" href="<%=realPath %>dialog/skins/default.css" rel="stylesheet" />
 <script src="<%=realPath %>dialog/jquery.artDialog.min.js?skin=default"></script>
 <script src="<%=realPath %>dialog/plugins/iframeTools.js"></script>
