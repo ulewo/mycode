@@ -21,7 +21,7 @@ ul li{margin:0px;padding:0px;list-style:none;}
 .new_article_list li a:hover{color:#FF6600;}
 .article_tit{float:left;display:inline-block;}
 .article_user,.article_read{float:right;display:inline-block;padding-right:10px;}
-.sec_span{padding-left:10px;}
+.sec_span{padding-left:10px;display:inline-block;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;width:480px}
 .new_blog{margin-top:10px;margin-left:5px;}
 .new_blog li{margin-top:5px;height:25px;}
 .new_blog li span{color:#888;font-size:13px;}
