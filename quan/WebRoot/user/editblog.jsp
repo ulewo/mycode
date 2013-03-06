@@ -38,7 +38,8 @@
 	  <div class="right">
 	    <div class="navPath"><a href="userInfo.jspx?userId=${user.userId}">空间</a>&nbsp;&gt;&gt;&nbsp;修改博文</div>
 	  	<div class="ad-part bbtn1" style="text-align:center;margin-top:10px;float:none;margin-left:0px;">
-			<a href="javascript:submitForm()" onfocus="this.blur()" >发表话题</a>
+			<a href="javascript:submitForm()" onfocus="this.blur()" class="sendBtn">发表话题</a>
+			<img src="../images/load.gif" class="loading" style="display:none">
 		</div>
 		<div>
 	  	<form action="editBlog.jspx" method="post"  name="example" id="subForm">
@@ -68,7 +69,8 @@
 			<input type="radio" name="allowReplay" value="2" <c:if test="${blogArticle.allowReplay==2}">checked</c:if> />禁止评论
 		</div>
 		<div class="ad-part bbtn1" style="text-align:center;margin-top:10px;">
-		<a href="javascript:submitForm()" onfocus="this.blur()" >发表话题</a>
+			<a href="javascript:submitForm()" onfocus="this.blur()" class="sendBtn">发表话题</a>
+			<img src="../images/load.gif" class="loading" style="display:none">
 		</div>
 		
 		</form>
@@ -110,6 +112,8 @@
 		}else{
 			$("#content").val(editor.getContent());
 		}
+		$(".sendBtn").hide();
+		$(".loading").show();
 		$("#subForm").submit();
 	}
     

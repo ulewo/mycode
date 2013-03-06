@@ -30,6 +30,8 @@ function subReply(blogId) {
 	if(quote!=""){
 		blogauthor = $("#quoteUserId").val();
 	}
+	$("#sendBtn").hide();
+	$("#loading").show();
 	$.ajax({
 		async : true,
 		cache : false,
@@ -63,6 +65,8 @@ function subReply(blogId) {
 				$(".nomessage").remove();
 				new NotePanle(data.note).asHtml().appendTo($("#messagelist"));
 				resetForm();
+				$("#sendBtn").show();
+				$("#loading").hide();
 			}
 			refreshcode();
 		}

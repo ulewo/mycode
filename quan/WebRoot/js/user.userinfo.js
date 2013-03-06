@@ -28,6 +28,8 @@ function submitForm() {
 	if ($("#quote_panle").html() != null) {
 		quote = "<div class='quote_panle'>" + $("#infocon").html() + "</div>";
 	}
+	$("#sendBtn").hide();
+	$("#loading").show();
 	$.ajax({
 		async : true,
 		cache : false,
@@ -57,6 +59,8 @@ function submitForm() {
 				$(".nomessage").remove();
 				new NotePanle(data.note).asHtml().appendTo($("#messagelist"));
 				resetForm();
+				$("#sendBtn").show();
+				$("#loading").hide();
 			}
 			refreshcode();
 		}
