@@ -44,7 +44,7 @@
   			<div class="titinfo">最新文章</div>
 	  			<ul class="new_article_list">
 	  				<c:forEach var="article" items="${list}">
-	  					<li><span class="article_tit"><a href="group/group.jspx?gid=${article.gid}">[${article.groupName}]</a><a href="group/post.jspx?id=${article.id}" class="sec_span"  title="${article.title}">${article.title}</a></span><span class="article_user">${fn:substring(article.postTime,0,10)} by ${article.authorName}</span></li>
+	  					<li><span class="article_tit"><a href="group/group.jspx?gid=${article.gid}">[${article.groupName}]</a><a href="group/post.jspx?id=${article.id}" class="sec_span2"  title="${article.title}">${article.title}</a></span><span class="article_user">${fn:substring(article.postTime,0,10)} by ${article.authorName}</span></li>
 	  				</c:forEach>
 	  			</ul>
   			<div class="titinfo">最新博文</div>
