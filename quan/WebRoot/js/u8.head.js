@@ -56,15 +56,12 @@ function showMenue() {
 		$(this).hide();
 	});
 }
+
 // 搜索
-function search(type) {
+function search() {
 	var keyWord = $("#searchInput").val();
 	keyWord = encodeURI(encodeURI(keyWord));
-	if (type == "index") {
-		document.location.href = "search.jspx?keyWord=" + keyWord;
-	} else if (type == "common") {
-		document.location.href = "../search.jspx?keyWord=" + keyWord;
-	}
+	document.location.href = myParam.realPath+"search.jspx?keyWord=" + keyWord;
 
 }
 

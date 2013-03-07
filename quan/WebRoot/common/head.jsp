@@ -56,7 +56,7 @@ String realPath = "http://" + request.getServerName() + ":" + request.getServerP
 		</ul>
 		<div class="search">
 			<input type="text" class="inputTxtNew" id="searchInput" name="keyWord">
-			<input type="button" class="inputBtn" value="搜索" onclick="search('index')">
+			<input type="button" class="inputBtn" value="搜索" onclick="search()">
 		</div>
 	</div>
 </div>
@@ -67,5 +67,12 @@ String realPath = "http://" + request.getServerName() + ":" + request.getServerP
 		loadNotice();
 		$("#searchBtn").bind('click', search);
 		showMenue();
+		$("#searchInput").bind("keydown",function(event){
+			event = event||window.event;
+			var code=event.keyCode;
+			if(code==13){//如果是回车键
+				search();
+			}
+		});
 	});
 </script>
