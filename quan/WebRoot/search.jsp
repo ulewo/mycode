@@ -32,6 +32,17 @@
 			keyword = encodeURI(encodeURI(keyword)); 
 			document.location.href="search.jspx?keyWord="+keyword;
 		}
+		$(function(){
+			$("#keyWord").bind("keydown",function(event){
+				event = event||window.event;
+				var code=event.keyCode;
+				if(code==13){//如果是回车键
+					searchAll();
+				}
+			});
+		});
+		
+		
 	</script>
   </head>
   <body>
