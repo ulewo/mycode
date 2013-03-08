@@ -281,6 +281,11 @@
 			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
+		<!--文章评论-->
+		<action name="queryReComment" class="article" method="queryReComment">
+		</action>
+		
+		
 		<action name="aboutArticles" class="article" method="aboutArticles">
 		</action>
 		
