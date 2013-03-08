@@ -96,3 +96,23 @@
 .checkcode .changecode{float:left;width:50px;}
 .ad_quto2{border-bottom: #666666 1px dashed; text-align: left; border-left: #666666 1px dashed; padding-bottom: 8px; background-color: #ffffff;padding-left: 8px; padding-right: 8px; border-top: #666666 1px dashed; border-right: #666666 1px dashed; padding-top: 8px;margin:0px 0px 8px 0px;}
 div.ad_quto2{filter:alpha(opacity=70); opacity:0.7; background-color:none;}
+
+#recomment{margin-left:20px;text-align:left;}
+.outerHeight{margin-left:10px;margin-top:10px;}
+.ui_avatar{float:left;width:30px;border:1px solid #9B9B9B}
+.reComent_Con{float:left;width:800px;margin-left:10px;}
+.comments_content a{color:#26709A;text-decoration:none;}
+.comments_op,.comments_op_sub{margin-top:5px;}
+.com_op_time{color:#9B9B9B}
+.com_op_link{margin-left:5px;}
+.comtent_sub{margin-top:5px;}
+.comtent_sub a{color:#26709A;text-decoration:none;}
+.comments_content_sub{float:left;width:600px;margin-left:10px;}
+.recoment_form_panel{border:1px solid #9B9B9B}
+.comment_form_at a{text-decoration:none;color:#3E79A2;background:#DDECF7;display:inline-block;padding:3px;border-radius: 4px;
+-moz-border-radius: 4px;
+-webkit-border-radius: 4px}
+.comment_form_textarea textarea{width:500px;height:50px;}
+.comment_form_panel{height:50px;}
+.comment_checkcode,.comment_checkcode_img,.comment_checkcode_link{float:left;width:100px;}
+.comment_form_name input{color:#9B9B9B}

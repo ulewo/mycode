@@ -143,6 +143,7 @@
 				</div>
 				</c:forEach>
 			</div>
+			<div id="recomment"></div>
 			<div style="height:25px;margin-top:10px;">
 				<div  class="pagination">
 					<p:pager url="post.jspx?id=${id}" page="${page}" pageTotal = "${pageTotal }"></p:pager> 
@@ -207,6 +208,9 @@ String realPath1 = "http://" + request.getServerName() + ":" + request.getServer
 %>
 <script type="text/javascript">
 	initGroupParam("<%=realPath1%>","${user.userId}","${gid}");
+	$(function(){
+		loadReComment();
+	});
 </script>
 </body>
 </html>

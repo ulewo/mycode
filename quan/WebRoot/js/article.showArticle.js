@@ -155,3 +155,93 @@ function refreshcode() {
 	$("#checkCodeImage").attr("src",
 			"../common/image.jsp?rand =" + Math.random());
 }
+
+
+function loadReComment(){
+	var rePanel;
+	for(var i=0;i<10;i++){
+		var data = new Object();
+		data.content="sdfas短发散发阿斯蒂芬阿斯蒂芬阿阿斯蒂芬爱的";
+		data.time="2012-12-23";
+		data.userName = "王五";
+		rePanel = new RePanel(data);
+		rePanel.asHtml().appendTo($("#recomment"));
+		for(var j=0;j<3;j++){
+			new SubRePanel(data).asHtml().appendTo(rePanel.reComent_Con);
+		}
+	}
+}
+
+function RePanel(data){
+	this.outerHeight = $("<div class='outerHeight'></div>");
+	//头像
+	this.ui_avatar = $("<div class='ui_avatar'><img src='../upload/defaultsmall.gif' width='30'></div>").appendTo(this.outerHeight);
+	//内容
+	this.reComent_Con = $("<div class='reComent_Con'></div>").appendTo(this.outerHeight);
+	$("<div class='clear'></div>").appendTo(this.outerHeight);
+	this.comments_content = $("<div class='comments_content'></div>").appendTo(this.reComent_Con);
+	$("<a href=''>张三</a>:<span>"+data.content+"</span>").appendTo(this.comments_content);
+	this.comments_op = $("<div class='comments_op'></div>").appendTo(this.comments_content);
+	$("<span class='com_op_time'>"+data.time+"</span>").appendTo(this.comments_op);
+	$("<a href='javascript:void(0)' class='com_op_link'>回复</a>").appendTo(this.comments_op).bind("click",{data:data},this.showReForm);
+	$("<div class='coment_sub_panel'></div>").appendTo(this.comments_content);
+}
+RePanel.prototype={
+	asHtml : function() {
+		return this.outerHeight;
+	},
+	showReForm:function(event){
+		$("#recoment_form_panel").remove();
+		var data = event.data.data
+		$(this).parent().parent().parent().children(".comtent_sub").last().after(new Recoment_form_panel(data).recoment_form_panel);
+		
+	}
+}
+function SubRePanel(data){
+	this.comment_sub = $("<div class='comtent_sub'></div>");
+	this.ui_avatar = $("<div class='ui_avatar'><img src='../upload/defaultsmall.gif' width='30'></div>").appendTo(this.comment_sub);
+	this.comments_content_sub = $("<div class='comments_content_sub'></div>").appendTo(this.comment_sub);
+	$("<div class='clear'></div>").appendTo(this.comment_sub);
+	$("<a href=''>王五</a>&nbsp;回复&nbsp;<a href=''>赵六</a>:<span>"+data.content+"</span>").appendTo(this.comments_content_sub);
+	this.comments_op_sub = $("<div class='comments_op_sub'></div>").appendTo(this.comments_content_sub);
+	$("<span class='com_op_time'>"+data.time+"</span>").appendTo(this.comments_op_sub);
+	$("<a href='javascript:void(0)' class='com_op_link'>回复</a>").appendTo(this.comments_op_sub).bind("click",{data:data},this.showReForm);;
+}
+SubRePanel.prototype={
+	asHtml : function() {
+		return this.comment_sub;
+	},
+	showReForm:function(event){
+		$("#recoment_form_panel").remove();
+		var data = event.data.data;
+		$(this).parent().parent().parent().parent().children(".comtent_sub").last().after(new Recoment_form_panel(data).recoment_form_panel);
+	}
+}
+
+function Recoment_form_panel(data){
+	this.recoment_form_panel = $("<div class='recoment_form_panel' id='recoment_form_panel'></div>");
+	$("<div class='comment_form_at'><a href='javasccript:void(0)'>@"+data.userName+"</a></div>").appendTo(this.recoment_form_panel);
+	var form_name = $("<div class='comment_form_name'></div>").appendTo(this.recoment_form_panel);
+	var name_input = $("<input type='text' value='请输入用户名'>").appendTo(form_name).bind("focus",this.mouseIn).bind("blur",this.mouseOut);
+	$("<div class='comment_form_textarea'><textarea></textarea></div>").appendTo(this.recoment_form_panel);
+	this.checkCode_area = $("<div class='comment_form_panel'></div>").appendTo(this.recoment_form_panel);
+	$("<div class='comment_checkcode'><input type='text'></div>").appendTo(this.checkCode_area);
+	$("<div class='comment_checkcode_img'><a href='JavaScript:refreshcode();' onfocus='this.blur();'><img id='checkCodeImage' src='../common/image.jsp' border='0'></a></div>").appendTo(this.checkCode_area);
+	$("<div class='comment_checkcode_link'><a href='javascript:refreshcode()'>换一张</a></div>").appendTo(this.checkCode_area);
+}
+Recoment_form_panel.prototype={
+	mouseIn:function(){
+		var value = $(this).val();
+		if(value=="请输入用户名"){
+			$(this).val("");
+			$(this).css("color","#000000");
+		}
+	},
+	mouseOut:function(){
+		var value = $(this).val();
+		if(value==""){
+			$(this).css("color","#9B9B9B");
+			$(this).val("请输入用户名");
+		}
+	}
+}
