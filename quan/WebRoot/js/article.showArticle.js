@@ -157,19 +157,25 @@ function refreshcode() {
 }
 
 
-function loadReComment(){
+function loadReComment(id){
 	var rePanel;
-	for(var i=0;i<10;i++){
-		var data = new Object();
-		data.content="sdfas短发散发阿斯蒂芬阿斯蒂芬阿阿斯蒂芬爱的";
-		data.time="2012-12-23";
-		data.userName = "王五";
-		rePanel = new RePanel(data);
-		rePanel.asHtml().appendTo($("#recomment"));
-		for(var j=0;j<3;j++){
-			new SubRePanel(data).asHtml().appendTo(rePanel.reComent_Con);
+	$.ajax({
+		async : true,
+		cache : false,
+		type : 'GET',
+		dataType : "json",
+		url : "queryReComment.jspx?id="+id,// 请求的action路径
+		success : function(data) {
+			var list = data.list;
+			for(var i=0;i<list.length;i++){
+				rePanel = new RePanel(list[i]);
+				rePanel.asHtml().appendTo($("#recomment"));
+				 /*for(var j=0;j<3;j++){
+					new SubRePanel(data).asHtml().appendTo(rePanel.reComent_Con);
+				}*/
+			}
 		}
-	}
+	});
 }
 
 function RePanel(data){
@@ -180,9 +186,9 @@ function RePanel(data){
 	this.reComent_Con = $("<div class='reComent_Con'></div>").appendTo(this.outerHeight);
 	$("<div class='clear'></div>").appendTo(this.outerHeight);
 	this.comments_content = $("<div class='comments_content'></div>").appendTo(this.reComent_Con);
-	$("<a href=''>张三</a>:<span>"+data.content+"</span>").appendTo(this.comments_content);
+	$("<a href=''>"+data.authorName+"</a>:<span class='comment_content_word'>"+data.content+"</span>").appendTo(this.comments_content);
 	this.comments_op = $("<div class='comments_op'></div>").appendTo(this.comments_content);
-	$("<span class='com_op_time'>"+data.time+"</span>").appendTo(this.comments_op);
+	$("<span class='com_op_time'>"+data.reTime.substring(0,16)+"</span>").appendTo(this.comments_op);
 	$("<a href='javascript:void(0)' class='com_op_link'>回复</a>").appendTo(this.comments_op).bind("click",{data:data},this.showReForm);
 	$("<div class='coment_sub_panel'></div>").appendTo(this.comments_content);
 }
@@ -192,9 +198,13 @@ RePanel.prototype={
 	},
 	showReForm:function(event){
 		$("#recoment_form_panel").remove();
-		var data = event.data.data
-		$(this).parent().parent().parent().children(".comtent_sub").last().after(new Recoment_form_panel(data).recoment_form_panel);
-		
+		var data = event.data.data;
+		var reComent_Con = $(this).parent().parent().parent();
+		if(reComent_Con.children(".comtent_sub").length>0){
+			reComent_Con.children(".comtent_sub").last().after(new Recoment_form_panel(data).recoment_form_panel);
+		}else{
+			reComent_Con.append(new Recoment_form_panel(data).recoment_form_panel);
+		}
 	}
 }
 function SubRePanel(data){
@@ -220,14 +230,15 @@ SubRePanel.prototype={
 
 function Recoment_form_panel(data){
 	this.recoment_form_panel = $("<div class='recoment_form_panel' id='recoment_form_panel'></div>");
-	$("<div class='comment_form_at'><a href='javasccript:void(0)'>@"+data.userName+"</a></div>").appendTo(this.recoment_form_panel);
+	$("<div class='comment_form_at'><a href='javasccript:void(0)'>@"+data.authorName+"</a></div>").appendTo(this.recoment_form_panel);
 	var form_name = $("<div class='comment_form_name'></div>").appendTo(this.recoment_form_panel);
 	var name_input = $("<input type='text' value='请输入用户名'>").appendTo(form_name).bind("focus",this.mouseIn).bind("blur",this.mouseOut);
 	$("<div class='comment_form_textarea'><textarea></textarea></div>").appendTo(this.recoment_form_panel);
 	this.checkCode_area = $("<div class='comment_form_panel'></div>").appendTo(this.recoment_form_panel);
 	$("<div class='comment_checkcode'><input type='text'></div>").appendTo(this.checkCode_area);
-	$("<div class='comment_checkcode_img'><a href='JavaScript:refreshcode();' onfocus='this.blur();'><img id='checkCodeImage' src='../common/image.jsp' border='0'></a></div>").appendTo(this.checkCode_area);
+	$("<div class='comment_checkcode_img'><a href='JavaScript:refreshcode();' onfocus='this.blur();'><img id='checkCodeImage' src='../common/image.jsp' border='0' height='22'></a></div>").appendTo(this.checkCode_area);
 	$("<div class='comment_checkcode_link'><a href='javascript:refreshcode()'>换一张</a></div>").appendTo(this.checkCode_area);
+	$("<div class='comment_checkcode_rebtn'><a href='javascript:void(0)'>回复</a></div>").appendTo(this.checkCode_area);
 }
 Recoment_form_panel.prototype={
 	mouseIn:function(){
