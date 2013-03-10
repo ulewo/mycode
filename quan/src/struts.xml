@@ -294,6 +294,8 @@
 		
 		<action name="addReArticle" class="article" method="addReArticle">
 		</action>
+		<action name="addSubReComment" class="article" method="addSubReComment">
+		</action>
 		
 		<!-- 添加文章 -->
 		<action name="addArticle" class="article" method="addArticle">
