@@ -83,9 +83,10 @@
 			  		</div>
 		  		</c:if>
 		  		<div class="subbtn">
+
 		  			<div class="bbtn1">
 		  				<a href="javascript:submitForm()" onfocus="this.blur()" id="sendBtn">发表留言</a>
-		  				<img src="../images/load.gif" id="loading" style="display:none">
+		  				<img src="../images/load.gif" id="loading" style="display:none">	
 		  			</div>
 		  			<div style="margin-left:20px;padding-top:8px;float:left;">最多输入500字符</div>
 		  		</div>
