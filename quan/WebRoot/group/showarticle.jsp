@@ -169,6 +169,7 @@ String realPath1 = "http://" + request.getServerName() + ":" + request.getServer
 %>
 <script type="text/javascript">
 	initGroupParam("<%=realPath1%>","${user.userId}","${gid}");
+	var articleId = "${article.id }";
 	$(function(){
 		loadReComment("${article.id }");
 	});

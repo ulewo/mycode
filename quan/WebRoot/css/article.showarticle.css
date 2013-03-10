@@ -98,7 +98,7 @@
 div.ad_quto2{filter:alpha(opacity=70); opacity:0.7; background-color:none;}
 
 #recomment{margin-left:20px;text-align:left;}
-.outerHeight{margin-left:10px;margin-top:10px;}
+.outerHeight{margin-left:10px;margin-top:10px;border-top:1px dashed #E0E0E0;padding-top:10px}
 .ui_avatar{float:left;width:30px;border:1px solid #9B9B9B}
 .reComent_Con{float:left;width:800px;margin-left:10px;}
 .comments_content a{color:#26709A;text-decoration:none;}

@@ -236,7 +236,7 @@ function NotePanle(note) {
 	var reUserIcon = note.reUserIcon || "default.gif";
 	// 最外层div
 	this.noteCon = $("<div class='main_message'></div>");
-	$("<a name='re"+note.id+"'></a>").appendTo(this.noteCon);
+	$("<a name='re" + note.id + "'></a>").appendTo(this.noteCon);
 	// 头像
 	$(
 			"<div class='re_icon'><img src='../upload/" + reUserIcon
