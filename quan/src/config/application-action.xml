@@ -80,6 +80,9 @@
 	 	<property name="adminUserService" ref="adminUserService"/>
 	</bean>
 	
+	<bean id="ImageFile" class="com.lhl.admin.action.ImageAction" scope="prototype">
+	</bean>
+	
 	<!-- 图片上传 -->
 	<bean id="avatarUpload" class="com.lhl.upload.AvatarUploadAction" scope="prototype">
 	</bean>
