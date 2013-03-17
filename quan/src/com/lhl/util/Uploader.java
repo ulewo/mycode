@@ -28,10 +28,9 @@ import sun.misc.BASE64Decoder;
 
 /**
  * UEditor文件上传辅助类
- *
+ * 
  */
-public class Uploader
-{
+public class Uploader {
 
 	private static final int width = 750;
 
@@ -70,12 +69,11 @@ public class Uploader
 
 	private HashMap<String, String> errorInfo = new HashMap<String, String>();
 
-	public Uploader(HttpServletRequest request)
-	{
+	public Uploader(HttpServletRequest request) {
 
 		this.request = request;
 		HashMap<String, String> tmp = this.errorInfo;
-		tmp.put("SUCCESS", "SUCCESS"); //默认成功
+		tmp.put("SUCCESS", "SUCCESS"); // 默认成功
 		tmp.put("NOFILE", "未包含文件上传域");
 		tmp.put("TYPE", "不允许的文件格式");
 		tmp.put("SIZE", "文件大小超出限制");
@@ -87,12 +85,11 @@ public class Uploader
 
 	}
 
-	public void upload() throws Exception
-	{
+	public void upload() throws Exception {
 
-		boolean isMultipart = ServletFileUpload.isMultipartContent(this.request);
-		if (!isMultipart)
-		{
+		boolean isMultipart = ServletFileUpload
+				.isMultipartContent(this.request);
+		if (!isMultipart) {
 			this.state = this.errorInfo.get("NOFILE");
 			return;
 		}
@@ -103,22 +100,19 @@ public class Uploader
 		BufferedInputStream in = null;
 		FileOutputStream out = null;
 		BufferedOutputStream output = null;
-		//InputStream tempin = null;
-		try
-		{
+		// InputStream tempin = null;
+		try {
 			ServletFileUpload sfu = new ServletFileUpload(dff);
 			sfu.setSizeMax(this.maxSize * 1024);
 			sfu.setHeaderEncoding("utf-8");
 			FileItemIterator fii = sfu.getItemIterator(this.request);
-			while (fii.hasNext())
-			{
+			while (fii.hasNext()) {
 				FileItemStream fis = fii.next();
-				if (!fis.isFormField())
-				{
+				if (!fis.isFormField()) {
 					this.originalName = fis.getName().substring(
-							fis.getName().lastIndexOf(System.getProperty("file.separator")) + 1);
-					if (!this.checkFileType(this.originalName))
-					{
+							fis.getName().lastIndexOf(
+									System.getProperty("file.separator")) + 1);
+					if (!this.checkFileType(this.originalName)) {
 						this.state = this.errorInfo.get("TYPE");
 						continue;
 					}
@@ -133,60 +127,43 @@ public class Uploader
 					out = new FileOutputStream(file);
 					output = new BufferedOutputStream(out);
 					Streams.copy(in, output, true);
-					//tempin = new FileInputStream(file);
-					//BufferedImage srcImage = ImageIO.read(tempin);
-					if (file.length() > 1024 * 1024)
-					{ // 如果图片太大，就重新画
-						DrowImage.saveImageAsJpg(realurl, realurl, width, 0, false);
+					// tempin = new FileInputStream(file);
+					// BufferedImage srcImage = ImageIO.read(tempin);
+					if (file.length() > 1024 * 1024) { // 如果图片太大，就重新画
+						DrowImage.saveImageAsJpg(realurl, realurl, width, 0,
+								false);
 					}
 					this.state = this.errorInfo.get("SUCCESS");
-					//UE中只会处理单张上传，完成后即退出
+					// UE中只会处理单张上传，完成后即退出
 					break;
-				}
-				else
-				{
+				} else {
 					String fname = fis.getFieldName();
-					//只处理title，其余表单请自行处理
-					if (!fname.equals("pictitle"))
-					{
+					// 只处理title，其余表单请自行处理
+					if (!fname.equals("pictitle")) {
 						continue;
 					}
 					this.title = "图片";
 				}
 			}
-		}
-		catch (SizeLimitExceededException e)
-		{
+		} catch (SizeLimitExceededException e) {
 			this.state = this.errorInfo.get("SIZE");
-		}
-		catch (InvalidContentTypeException e)
-		{
+		} catch (InvalidContentTypeException e) {
 			this.state = this.errorInfo.get("ENTYPE");
-		}
-		catch (FileUploadException e)
-		{
+		} catch (FileUploadException e) {
 			this.state = this.errorInfo.get("REQUEST");
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			this.state = this.errorInfo.get("UNKNOWN");
-		}
-		finally
-		{
-			if (input != null)
-			{
+		} finally {
+			if (input != null) {
 				input.close();
 			}
-			if (in != null)
-			{
+			if (in != null) {
 				in.close();
 			}
-			if (out != null)
-			{
+			if (out != null) {
 				out.close();
 			}
-			if (output != null)
-			{
+			if (output != null) {
 				output.close();
 			}
 		}
@@ -194,25 +171,22 @@ public class Uploader
 
 	/**
 	 * 接受并保存以base64格式上传的文件
+	 * 
 	 * @param fieldName
 	 */
-	public void uploadBase64(String fieldName)
-	{
+	public void uploadBase64(String fieldName) {
 
 		String savePath = this.getFolder(this.savePath);
 		String base64Data = this.request.getParameter(fieldName);
 		this.fileName = this.getName("test.png");
 		this.url = savePath + "/" + this.fileName;
 		BASE64Decoder decoder = new BASE64Decoder();
-		try
-		{
+		try {
 			File outFile = new File(this.getPhysicalPath(this.url));
 			OutputStream ro = new FileOutputStream(outFile);
 			byte[] b = decoder.decodeBuffer(base64Data);
-			for (int i = 0; i < b.length; ++i)
-			{
-				if (b[i] < 0)
-				{
+			for (int i = 0; i < b.length; ++i) {
+				if (b[i] < 0) {
 					b[i] += 256;
 				}
 			}
@@ -220,9 +194,7 @@ public class Uploader
 			ro.flush();
 			ro.close();
 			this.state = this.errorInfo.get("SUCCESS");
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			this.state = this.errorInfo.get("IO");
 		}
 	}
@@ -233,15 +205,12 @@ public class Uploader
 	 * @param fileName
 	 * @return
 	 */
-	private boolean checkFileType(String fileName)
-	{
+	private boolean checkFileType(String fileName) {
 
 		Iterator<String> type = Arrays.asList(this.allowFiles).iterator();
-		while (type.hasNext())
-		{
+		while (type.hasNext()) {
 			String ext = type.next();
-			if (fileName.toLowerCase().endsWith(ext))
-			{
+			if (fileName.toLowerCase().endsWith(ext)) {
 				return true;
 			}
 		}
@@ -253,42 +222,38 @@ public class Uploader
 	 * 
 	 * @return string
 	 */
-	private String getFileExt(String fileName)
-	{
+	private String getFileExt(String fileName) {
 
 		return fileName.substring(fileName.lastIndexOf("."));
 	}
 
 	/**
 	 * 依据原始文件名生成新文件名
+	 * 
 	 * @return
 	 */
-	private String getName(String fileName)
-	{
+	private String getName(String fileName) {
 
 		Random random = new Random();
-		return this.fileName = "" + random.nextInt(10000) + System.currentTimeMillis() + this.getFileExt(fileName);
+		return this.fileName = "" + random.nextInt(10000)
+				+ System.currentTimeMillis() + this.getFileExt(fileName);
 	}
 
 	/**
 	 * 根据字符串创建本地目录 并按照日期建立子目录返回
-	 * @param path 
-	 * @return 
+	 * 
+	 * @param path
+	 * @return
 	 */
-	private String getFolder(String path)
-	{
+	private String getFolder(String path) {
 
-		SimpleDateFormat formater = new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat formater = new SimpleDateFormat("yyyyMM");
 		path += "/" + formater.format(new Date());
 		File dir = new File(this.getPhysicalPath(path));
-		if (!dir.exists())
-		{
-			try
-			{
+		if (!dir.exists()) {
+			try {
 				dir.mkdirs();
-			}
-			catch (Exception e)
-			{
+			} catch (Exception e) {
 				this.state = this.errorInfo.get("DIR");
 				return "";
 			}
@@ -302,69 +267,59 @@ public class Uploader
 	 * @param path
 	 * @return
 	 */
-	private String getPhysicalPath(String path)
-	{
+	private String getPhysicalPath(String path) {
 
-		String realPath = this.request.getSession().getServletContext().getRealPath("/");
+		String realPath = this.request.getSession().getServletContext()
+				.getRealPath("/");
 		return realPath + path;
 	}
 
-	public void setSavePath(String savePath)
-	{
+	public void setSavePath(String savePath) {
 
 		this.savePath = savePath;
 	}
 
-	public void setAllowFiles(String[] allowFiles)
-	{
+	public void setAllowFiles(String[] allowFiles) {
 
 		this.allowFiles = allowFiles;
 	}
 
-	public void setMaxSize(int size)
-	{
+	public void setMaxSize(int size) {
 
 		this.maxSize = size;
 	}
 
-	public String getSize()
-	{
+	public String getSize() {
 
 		return this.size;
 	}
 
-	public String getUrl()
-	{
+	public String getUrl() {
 
 		return this.url;
 	}
 
-	public String getFileName()
-	{
+	public String getFileName() {
 
 		return this.fileName;
 	}
 
-	public String getState()
-	{
+	public String getState() {
 
 		return this.state;
 	}
 
-	public String getTitle()
-	{
+	public String getTitle() {
 
 		return this.title;
 	}
 
-	public String getType()
-	{
+	public String getType() {
 
 		return this.type;
 	}
 
-	public String getOriginalName()
-	{
+	public String getOriginalName() {
 
 		return this.originalName;
 	}
