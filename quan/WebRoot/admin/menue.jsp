@@ -6,5 +6,6 @@
 	<li class="blank" id="sel_left2"><a href="queryGroups.jspx" id="selected2">圈子管理</a></li>
 	<li class="blank" id="sel_left3"><a href="queryUsers.jspx" id="selected3">成员管理</a></li>
 	<li class="blank" id="sel_left4"><a href="recycleArticle.jspx" id="selected4">回收站</a></li>
+	<li class="blank" id="sel_left5"><a href="getRootPath.jspx" id="selected5">图片管理</a></li>
 </ul>
 </div>
