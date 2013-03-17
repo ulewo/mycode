@@ -502,7 +502,11 @@
 			<result name="success">article_recycle.jsp</result>
 			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
-		
+		<!--文件管理-->
+		<action name="getRootPath" class="ImageFile" method="getRootPath">
+			<result name="success">showFile.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
+		</action>
 	</package>
 	
 	<package name="imageUpload" extends="struts-default">
