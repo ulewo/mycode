@@ -507,6 +507,8 @@
 			<result name="success">showFile.jsp</result>
 			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
+		<action name="downLoadImage" class="ImageFile" method="downLoadImage">
+		</action>
 	</package>
 	
 	<package name="imageUpload" extends="struts-default">
