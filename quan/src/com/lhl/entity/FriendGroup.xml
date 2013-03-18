@@ -12,27 +12,27 @@
 	
 	<!-- 添加友情圈 -->
 	<insert id="addFriendGroup" parameterClass="friendGroup">
-		insert into friendGroup (gid,friendgid)
+		insert into friendgroup (gid,friendgid)
 		values(#gid#,#friendGid#);
 	</insert>
 	
 	<!-- 删除文章分类 -->
 	<delete id="deleteFriendGroup" parameterClass="java.lang.Integer">
-		delete from friendGroup where id = #id#
+		delete from friendgroup where id = #id#
 	</delete>
 	
 	<!-- 单笔查询友情圈子 -->
 	<select id="queryFriendGroup"  resultClass="friendGroup" parameterClass="java.lang.Integer">
-		select * from friendGroup  where id = #id#
+		select * from friendgroup  where id = #id#
 	</select>
 	
 	<!-- 通过群查询所有友情圈子 -->
 	<select id="queryFriendGroups"  resultClass="friendGroup" parameterClass="java.lang.String">
-		select * from friendGroup  where gid = #gid#
+		select * from friendgroup  where gid = #gid#
 	</select>
 
 	<!-- 查询友情圈数量-->
 	<select id="queryFriendGroupsCount"   parameterClass="java.lang.String">
-		select count(id) from friendGroup  where gid = #gid#
+		select count(id) from friendgroup  where gid = #gid#
 	</select>
 </sqlMap>

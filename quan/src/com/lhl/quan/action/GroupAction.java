@@ -166,7 +166,7 @@ public class GroupAction extends BaseAction {
 			adminList = memberService.queryAdmins(gid);
 			newsMembers = memberService.queryMembers(gid, Constant.ISVALIDY, "desc", 0, 6);
 			activeMembers = memberService.queryActiveMembers(gid, 0, 6);
-			friendGroupList = friendGroupService.queryFriendGroups(gid);
+			//friendGroupList = friendGroupService.queryFriendGroups(gid);
 			showType = 1;
 		}
 		catch (BaseException e) {
