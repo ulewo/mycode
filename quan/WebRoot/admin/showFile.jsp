@@ -26,6 +26,7 @@
   		<div class="imagecon">
   			<div class="imageicon"></div>
   			<div class="directory">${imageFile.fileName}</div>
+  			<div class="imgdownload"><a href="downLoadImage.jspx?fileName=${imageFile.fileName}"></a></div>
   		</div>	
   	</c:forEach>
   </div>

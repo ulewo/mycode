@@ -14,6 +14,8 @@
 .main_option a{color:#006A92;text-decoration:none;}
 .main_option a:hover{text-decoration:underline;}
 .pagination{margin-top:20px;}
-.imagecon{height:30px;border-bottom:1px solid #D2D2D2;color:#000000}
+.imagecon{height:28px;border-bottom:1px solid #D2D2D2;color:#000000}
 .imageicon{background:url("../images/sprite_list_icon.gif") 0px 0px;height:23px;width:30px;float:left;}
 .directory{float:left;display:inline-block;padding-top:5px;}
+.imgdownload{float:right;margin-top:5px;}
+.imgdownload a{height:20px;width:20px;background:url("../images/btn_icon.gif") -180px -40px;display:block;}
