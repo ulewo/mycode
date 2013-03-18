@@ -102,47 +102,9 @@
 			</div>
 			<div class="reCon" id="reCon">
 				<c:set var="num" value="${(page-1)*15}"></c:set>
-				<c:forEach var="reArticle" items="${reArticleList}">
-				<a name="re${reArticle.id}"></a>
-				<c:set var="num" value="${num+1}"></c:set>
-				<div class="recon_con">
-					<div class="recon_img">
-						<c:if test="${reArticle.authorIcon==''}">
-							<img src="../upload/user_default.gif" width='50'>
-						</c:if>
-						<c:if test="${reArticle.authorIcon!=''}">
-							<a href='../user/userInfo.jspx?userId=${reArticle.authorid}'><img src="../upload/${reArticle.authorIcon}" width='50'></a>
-						</c:if>
-					</div>
-					<div class="recon_info">
-						<div class="recon_info_re">
-							<div class="recon_info_info">
-								<span class='info_lou'>${num}楼</span>
-								<span class='info_name'>
-									<c:if test="${reArticle.authorid!=null&&reArticle.authorid!=''}">
-										<a href='../user/userInfo.jspx?userId=${reArticle.authorid}'>${reArticle.authorName }</a>
-									</c:if>
-									<c:if test="${reArticle.authorid==null||reArticle.authorid==''}">
-										${reArticle.authorName }
-									</c:if>
-								</span>
-								<span class='info_time'>发表时间：${fn:substring(reArticle.reTime,0, 16)}</span>
-							</div>
-							<div class="recon_info_info_op">
-								<c:if test="${user!=null}"><span><a href='javascript:void(0)' onclick="quote('${reArticle.id}')">回复</a></span></c:if>
-							<c:if test="${showDelete=='Y'}"><span class='re_op_d'>
-							<!-- <a href='####'>删除</a> -->
-							</span></c:if>
-							</div>
-						</div>
-						<div class="recon_info_con">
-							${reArticle.content}
-						</div>
-					</div>
-					<div class="clear"></div>
-				</div>
-				</c:forEach>
+				
 			</div>
+			<div id="recomment"></div>
 			<div style="height:25px;margin-top:10px;">
 				<div  class="pagination">
 					<p:pager url="post.jspx?id=${id}" page="${page}" pageTotal = "${pageTotal }"></p:pager> 
@@ -207,6 +169,10 @@ String realPath1 = "http://" + request.getServerName() + ":" + request.getServer
 %>
 <script type="text/javascript">
 	initGroupParam("<%=realPath1%>","${user.userId}","${gid}");
+	var articleId = "${article.id }";
+	$(function(){
+		loadReComment("${article.id }");
+	});
 </script>
 </body>
 </html>
