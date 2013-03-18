@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -15,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.lhl.common.action.BaseAction;
-import com.lhl.entity.ImageFile;
 
 public class ImageAction extends BaseAction {
 
@@ -26,9 +26,9 @@ public class ImageAction extends BaseAction {
 		this.fileName = fileName;
 	}
 
-	private List<ImageFile> list = new ArrayList<ImageFile>();
+	private List<String> list = new ArrayList<String>();
 
-	public List<ImageFile> getList() {
+	public List<String> getList() {
 
 		return list;
 	}
@@ -45,14 +45,10 @@ public class ImageAction extends BaseAction {
 					continue;
 				}
 				if (file.isDirectory()) {
-					ImageFile imageFile = new ImageFile();
-					imageFile.setDirectory(true);
-					imageFile.setFileName(file.getName());
-					imageFile.setFilePath(file.getPath());
-					list.add(imageFile);
+					list.add(file.getName());
 				}
-
 			}
+			Collections.sort(list);
 		}
 		catch (Exception e) {
 			return ERROR;
@@ -77,7 +73,6 @@ public class ImageAction extends BaseAction {
 			fileOut = new FileOutputStream(zipFile);
 			zos = new ZipOutputStream(fileOut);
 			zipFile(inFile, zos, "");
-
 		}
 		catch (Exception e) {
 			e.printStackTrace();
