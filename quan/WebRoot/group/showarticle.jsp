@@ -102,47 +102,9 @@
 			</div>
 			<div class="reCon" id="reCon">
 				<c:set var="num" value="${(page-1)*15}"></c:set>
-				<c:forEach var="reArticle" items="${reArticleList}">
-				<a name="re${reArticle.id}"></a>
-				<c:set var="num" value="${num+1}"></c:set>
-				<div class="recon_con">
-					<div class="recon_img">
-						<c:if test="${reArticle.authorIcon==''}">
-							<img src="../upload/user_default.gif" width='50'>
-						</c:if>
-						<c:if test="${reArticle.authorIcon!=''}">
-							<a href='../user/userInfo.jspx?userId=${reArticle.authorid}'><img src="../upload/${reArticle.authorIcon}" width='50'></a>
-						</c:if>
-					</div>
-					<div class="recon_info">
-						<div class="recon_info_re">
-							<div class="recon_info_info">
-								<span class='info_lou'>${num}楼</span>
-								<span class='info_name'>
-									<c:if test="${reArticle.authorid!=null&&reArticle.authorid!=''}">
-										<a href='../user/userInfo.jspx?userId=${reArticle.authorid}'>${reArticle.authorName }</a>
-									</c:if>
-									<c:if test="${reArticle.authorid==null||reArticle.authorid==''}">
-										${reArticle.authorName }
-									</c:if>
-								</span>
-								<span class='info_time'>发表时间：${fn:substring(reArticle.reTime,0, 16)}</span>
-							</div>
-							<div class="recon_info_info_op">
-								<c:if test="${user!=null}"><span><a href='javascript:void(0)' onclick="quote('${reArticle.id}')">回复</a></span></c:if>
-							<c:if test="${showDelete=='Y'}"><span class='re_op_d'>
-							<!-- <a href='####'>删除</a> -->
-							</span></c:if>
-							</div>
-						</div>
-						<div class="recon_info_con">
-							${reArticle.content}
-						</div>
-					</div>
-					<div class="clear"></div>
-				</div>
-				</c:forEach>
+				
 			</div>
+			<div id="recomment"></div>
 			<div style="height:25px;margin-top:10px;">
 				<div  class="pagination">
 					<p:pager url="post.jspx?id=${id}" page="${page}" pageTotal = "${pageTotal }"></p:pager> 
@@ -157,44 +119,36 @@
 			<form action="fastReArticle.jspx" method="post">
 				<input type="hidden" value="${article.authorId}" id="authorId">
 				<input type="hidden" value="${article.title}" id="articleTit">
-				<div class="fast_re">
-					<div class="faset_re_img">
+				<div class="fast_re_con">
+					<div class="ui_avatar">
 						<c:if test="${user!=null}">
-							<img src="../upload/${user.userLittleIcon}" width="50">
+							<img src="../upload/${user.userLittleIcon}" width="30">
 						</c:if>
 						<c:if test="${user==null}">
-							<img src="../upload/default.gif" width="50">
+							<img src="../upload/default.gif" width="30">
 						</c:if>
 					</div>
-					<div class="fast_re_reform">
+					<div class="recoment_form_panel fastRe">
 						<c:if test="${user==null}">
-							<div class="reform_input">
-								<input type="text" id="reUserName">
+							<div class="comment_form_name">
+								<input type="text" value="请输入用户名" style="color: rgb(155, 155, 155);" id="reUserName">
 							</div>
 						</c:if>
-						<div style="margin-top:10px;">
-							<textarea class="reform_erea" id="reContent"></textarea>
+						<div class="comment_form_textarea">
+							<textarea id="reContent"></textarea>
 						</div>
-						<c:if test="${user==null}">
-							<div class="checkcode">
-								<div class="check_con">
-									<input type="text" class="long_input" name="checkCode" id="checkCode"/>
-								</div>
-								<div class="check_img">
-									<a href="JavaScript:refreshcode();" onfocus="this.blur();"><img id="checkCodeImage" src="../common/image.jsp" border="0"/></a>
-								</div>
-								<div class="changecode">
-									<a href="javascript:refreshcode()">换一张</a>
-								</div>
-	  						</div>
-  						</c:if>
-						<div class="reform_submit">
-							<div class="submit_btn sbtn" id="subBtn_con">
+						<div class="comment_form_panel">
+							<div class="comment_checkcode">
+								<input type="text" name="checkCode" id="checkCode">
+							</div>
+							<div class="comment_checkcode_img">
+								<a href="JavaScript:refreshcode2();" onfocus="this.blur();"><img id="checkCodeImage2" src="../common/image.jsp" border="0" height="22"></a>
+							</div>
+							<div class="comment_checkcode_link"><a href="javascript:refreshcode2()">换一张</a></div>
+							<div class="comment_checkcode_rebtn" id="subBtn_con">
 								<input type="button" class="button" onclick="subReForm('${user.userId}','${id}','${gid }')" value="回复" id="subBtn">
 							</div>
-							<div style="margin-left:20px;padding-top:8px;float:left;">最多输入500字符</div>
 						</div>
-							
 					</div>
 					<div class="clear"></div>
 				</div>
@@ -207,6 +161,24 @@ String realPath1 = "http://" + request.getServerName() + ":" + request.getServer
 %>
 <script type="text/javascript">
 	initGroupParam("<%=realPath1%>","${user.userId}","${gid}");
+	var articleId = "${article.id }";
+	$(function(){
+		loadReComment("${article.id }");
+		$("#reUserName").bind("focus",function(){
+			var value = $(this).val();
+			if (value == "请输入用户名") {
+				$(this).val("");
+				$(this).css("color", "#000000");
+			}
+		});
+		$("#reUserName").bind("blur",function(){
+			var value = $(this).val();
+			if (value == "") {
+				$(this).css("color", "#9B9B9B");
+				$(this).val("请输入用户名");
+			}
+		});
+	});
 </script>
 </body>
 </html>

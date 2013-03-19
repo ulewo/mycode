@@ -1,58 +1,12 @@
 function callBackReArticle(data, userId) {
 	if (data.reArticle == "checkCodeErr") {
-		art.dialog.tips("验证码错误");
-		refreshcode();
+		alert("验证码错误");
+		refreshcode2();
 		return;
 	}
-	var articleId = data.reArticle.id;
-	var reUserName = data.reArticle.authorName;
-	var authorid = data.reArticle.authorid;
-	var reContent = data.reArticle.content;
-	var reTime = data.reArticle.reTime.substring(0, 16);
-	var user = data.reArticle.author;
-	var reUserImg = "";
-	if (user != null) {
-		reUserImg = data.reArticle.author.userLittleIcon;
-		reUserName = data.reArticle.author.userName;
-	}
-	var recon_con = $("<div class='recon_con'><div>").appendTo($("#reCon"));
-	if (authorid == "") {
-		$(
-				"<div class='recon_img'><img src='../upload/default.gif' width='50'><div>")
-				.appendTo(recon_con);
-	} else {
-		$(
-				"<div class='recon_img'><a href='../user/userInfo.jspx?userId="
-						+ authorid + "'><img src='../upload/" + reUserImg
-						+ "' width='50' border='0'></a><div>").appendTo(
-				recon_con);
-	}
-	var recon_info = $("<div class='recon_info'></div>").appendTo(recon_con);
-	$("<div class='clear'></div>").appendTo(recon_con);
-	var recon_info_re = $("<div class='recon_info_re'></div>").appendTo(
-			recon_info);
-	$("<div class='recon_info_con'>" + reContent + "</div>").appendTo(
-			recon_info);
-	if (authorid != "") {
-		reUserName = "<a href='../user/userInfo.jspx?userId=" + authorid + "'>"
-				+ reUserName + "</a>";
-	}
-	$(
-			"<div class='recon_info_info'>" + "<span class='info_lou'>"
-					+ ($(".recon_con").length) + "楼</span>"
-					+ "<span class='info_name'>" + reUserName + "</span>"
-					+ "<span class='info_time'>发表时间：" + reTime + "</span>"
-					+ "</div>").appendTo(recon_info_re);
-	if (userId != "") {
-		recon_info_info_op = $(
-				"<div class='recon_info_info_op'>"
-						+ "<span><a href='javascript:void(0)' onclick='quote("
-						+ data.reArticle.id
-						+ ")'>回复</a></span><span class='re_op_d'>" +
-						// "<a href='####'>删除</a>" +
-						"</span>" + "</div>").appendTo(recon_info_re);
-	}
-
+	clearValue();
+	var rePanel = new RePanel(data.reArticle);
+	rePanel.asHtml().appendTo($("#recomment"));
 }
 
 function clearValue() {
@@ -104,6 +58,11 @@ function refreshcode() {
 			"../common/image.jsp?rand =" + Math.random());
 }
 
+function refreshcode2() {
+	$("#checkCodeImage2").attr("src",
+			"../common/image.jsp?rand =" + Math.random());
+}
+
 function loadReComment(id) {
 	var rePanel;
 	$.ajax({
@@ -129,7 +88,6 @@ function loadReComment(id) {
 					new SubRePanel(childlist[j]).asHtml().appendTo(
 							rePanel.reComent_Con);
 				}
-
 			}
 		}
 	});
@@ -139,9 +97,16 @@ function RePanel(data) {
 	data.pid = data.id;
 	this.outerHeight = $("<div class='outerHeight'></div>");
 	// 头像
+	var authorIcon = data.authorIcon||"defaultsmall.gif";
 	this.ui_avatar = $(
-			"<div class='ui_avatar'><img src='../upload/" + data.authorIcon
-					+ "' width='30'></div>").appendTo(this.outerHeight);
+			"<div class='ui_avatar'><img src='../upload/" + authorIcon
+					+ "' width='30'></div>");
+	if(data.authorid!=""){
+		this.ui_avatar = $(
+			"<div class='ui_avatar'><a href='../user/userInfo.jspx?userId="+data.authorid+"'><img src='../upload/" + authorIcon
+					+ "' width='30' border='0'></a></div>");
+	}
+	this.ui_avatar.appendTo(this.outerHeight);
 	// 内容
 	this.reComent_Con = $("<div class='reComent_Con'></div>").appendTo(
 			this.outerHeight);
@@ -320,11 +285,14 @@ function subSubReComment(data) {
 		},
 		url : 'addSubReComment.jspx',// 请求的action路径
 		success : function(data) {
-			// callBackReArticle(data, userId);
-			// $("#reCount").html(parseInt($("#reCount").html()) + 1);
-			// clearValue();
-			// $("#subBtn").attr("disabled", false);
-			// $("#subBtn_con").children("img").remove();
+			if(data.msg=="ok"){
+				$("#recoment_form_panel").before(new SubRePanel(data.reArticle).asHtml());
+				$("#recoment_form_panel").remove();
+			}else if(data.msg=="checkCodeErr"){
+				alert("验证码错误");
+				refreshcode()();
+			}
+			
 		}
 	});
 }
@@ -336,21 +304,21 @@ function subReForm(userId, id, gid) {
 	var authorId = $("#authorId").val();
 	var articleTit = $("#articleTit").val();
 	if (userId == "" && reUserName.trim() == "") {
-		art.dialog.tips("请填写用户名");
+		alert("请填写用户名");
 		return;
 	}
 
 	if (recontent.trim() == "") {
-		art.dialog.tips("请填写回复内容");
+		alert("请填写回复内容");
 		return;
 	}
-	if (userId == "" && checkCode == "") {
-		art.dialog.tips("请填写验证码");
+	if (checkCode == "") {
+		alert("请填写验证码");
 		return;
 	}
 
 	if (recontent.trim().length > 500) {
-		art.dialog.tips("内容超过500字符，请重新输入");
+		alert("内容超过500字符，请重新输入");
 		return;
 	}
 	$("#subBtn").attr("disabled", true);
@@ -374,7 +342,6 @@ function subReForm(userId, id, gid) {
 		success : function(data) {
 			callBackReArticle(data, userId);
 			$("#reCount").html(parseInt($("#reCount").html()) + 1);
-			clearValue();
 			$("#subBtn").attr("disabled", false);
 			$("#subBtn_con").children("img").remove();
 		}

@@ -47,7 +47,7 @@
 .recon_info_info_op{width:60px;float:right;text-align:right;}
 
 .fast_re_tit{font-size:16px;font-weight:bold;margin-left:25px;margin-top:20px;text-align:left;}
-.fast_re{margin-top:20px;text-align:left;}
+.fast_re_con{margin-top:20px;text-align:left;margin-left:20px;}
 .faset_re_img{float:left;width:50px;border:1px solid #DCDCDC;margin-left:25px;}
 .fast_re_reform{float:left;width:600px;margin-left:10px;}
 .fast_re_reform input{border:1px solid #DCDCDC;margin:0px;}
@@ -81,7 +81,7 @@
 .submit_btn{float:left;}
 
 .reform_sub{margin-top:15px;}
-.reform_sub input{border:1px solid #DCDCDC;margin:0px;}
+.reform_sub input{margin:0px;}
 .reform_erea_sub{border:1px solid #DCDCDC;width:580px;height:70px;margin-top:5px;}
 .reform_submit_sub{height:30px;width:580px;margin-top:5px;}
 .face_sub{text-align:left;padding-left:10px;float:left;width:30px;}
@@ -92,13 +92,13 @@
 .checkcode .tit{float:left;width:60px;padding-top:5px;}
 .checkcode .check_con{float:left;width:90px;}
 .check_con input{width: 80px;}
-.check_img{float:left;width:90px;margin-left:10px;}
+.check_img{float:left;width:70px;margin-left:10px;}
 .checkcode .changecode{float:left;width:50px;}
 .ad_quto2{border-bottom: #666666 1px dashed; text-align: left; border-left: #666666 1px dashed; padding-bottom: 8px; background-color: #ffffff;padding-left: 8px; padding-right: 8px; border-top: #666666 1px dashed; border-right: #666666 1px dashed; padding-top: 8px;margin:0px 0px 8px 0px;}
 div.ad_quto2{filter:alpha(opacity=70); opacity:0.7; background-color:none;}
 
 #recomment{margin-left:20px;text-align:left;}
-.outerHeight{margin-left:10px;margin-top:10px;border-top:1px dashed #E0E0E0;padding-top:10px}
+.outerHeight{margin-top:10px;border-top:1px dashed #E0E0E0;padding-top:10px}
 .ui_avatar{float:left;width:30px;border:1px solid #9B9B9B}
 .reComent_Con{float:left;width:800px;margin-left:10px;}
 .comments_content a{color:#26709A;text-decoration:none;}
@@ -122,3 +122,5 @@ div.ad_quto2{filter:alpha(opacity=70); opacity:0.7; background-color:none;}
 .comment_checkcode_link{padding-top:9px;}
 .comment_checkcode_rebtn{float:right;margin-right:4px;}
 .comment_checkcode_rebtn a{display:inline-block;background:#4682B4;color:#FFFFFF;padding:2px 8px;text-decoration:none;}
+/*修改的css*/
+.fastRe{float:left;margin-left:10px;margin-top:0px}
