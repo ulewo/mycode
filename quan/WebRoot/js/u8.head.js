@@ -76,6 +76,12 @@ function login() {
 	}
 
 }
+
+function register() {
+	document.location.href = myParam.realPath
+				+ "user/register.jsp";
+}
+
 // 创建窝窝
 function createWoWo() {
 	if (myParam.user != "") {

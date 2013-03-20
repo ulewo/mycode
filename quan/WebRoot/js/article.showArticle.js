@@ -1,5 +1,8 @@
 function callBackReArticle(data, userId) {
-	if (data.reArticle == "checkCodeErr") {
+	if(data.reArticle == "nologin"){
+		alert("请首先登录");
+		return;
+	}else if (data.reArticle == "checkCodeErr") {
 		alert("验证码错误");
 		refreshcode2();
 		return;
@@ -186,14 +189,6 @@ function Recoment_form_panel(data) {
 			"<div class='comment_form_at'><a href='javasccript:void(0)'>@"
 					+ data.authorName + "</a></div>").appendTo(
 			this.recoment_form_panel);
-	var form_name = $("<div class='comment_form_name'></div>").appendTo(
-			this.recoment_form_panel);
-	this.name_input = $("<input type='text' value='请输入用户名'>").appendTo(
-			form_name).bind("focus", this.mouseIn).bind("blur", this.mouseOut);
-	if (groupParam.userId != "") {
-		form_name.hide();
-	}
-
 	this.textarea = $("<textarea></textarea>").appendTo(
 			$("<div class='comment_form_textarea'></div>").appendTo(
 					this.recoment_form_panel));
@@ -217,22 +212,14 @@ function Recoment_form_panel(data) {
 				reCotent : this.textarea,
 				checkCode : this.checkCode
 			}, this.subReComent).appendTo(this.checkCode_area);
+	if (groupParam.userId == "") {
+		var shade = $("<div class='shade' id='shade'></div>").appendTo(this.recoment_form_panel);
+		var shadeLogin = $("<div class='shadeLogin'>回复，请先 <a href='javascript:login()'>登录</a>&nbsp;&nbsp;<a href='javascript:register()'>注册</a></div>").appendTo(shade);
+			shade.css({"width":"520px","height":"145px","left":"-5px"});
+			shadeLogin.css({"marginTop":"40px"});
+	}
 }
 Recoment_form_panel.prototype = {
-	mouseIn : function() {
-		var value = $(this).val();
-		if (value == "请输入用户名") {
-			$(this).val("");
-			$(this).css("color", "#000000");
-		}
-	},
-	mouseOut : function() {
-		var value = $(this).val();
-		if (value == "") {
-			$(this).css("color", "#9B9B9B");
-			$(this).val("请输入用户名");
-		}
-	},
 	subReComent : function(event) {
 		var data = event.data.data;
 		data.reUserName = event.data.reUserName.val();
@@ -291,6 +278,8 @@ function subSubReComment(data) {
 			}else if(data.msg=="checkCodeErr"){
 				alert("验证码错误");
 				refreshcode()();
+			}else if(data.msg=="nologin"){
+				alert("请登录后再发贴");
 			}
 			
 		}
