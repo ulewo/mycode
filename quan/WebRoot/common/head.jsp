@@ -18,7 +18,7 @@ String realPath = "http://" + request.getServerName() + ":" + request.getServerP
 		<c:choose>
 			<c:when test="${user==null}">
 				<div class="head_s_p"><a href="javascript:createWoWo()">创建窝窝</a></div><div class="head_s_p">|</div>
-				<div class="head_s_p"><a href="<%=realPath %>user/register.jsp">注册</a></div><div class="head_s_p">|</div>
+				<div class="head_s_p"><a href="javascript:register()">注册</a></div><div class="head_s_p">|</div>
 				<div class="head_s_p"><a href="javascript:login()">登录</a></div><div class="head_s_p">|</div>
 				<div class="head_s_p welcom">游客，欢迎您</div>
 			</c:when>

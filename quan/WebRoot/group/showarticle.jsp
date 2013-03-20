@@ -128,12 +128,7 @@
 							<img src="../upload/default.gif" width="30">
 						</c:if>
 					</div>
-					<div class="recoment_form_panel fastRe">
-						<c:if test="${user==null}">
-							<div class="comment_form_name">
-								<input type="text" value="请输入用户名" style="color: rgb(155, 155, 155);" id="reUserName">
-							</div>
-						</c:if>
+					<div class="recoment_form_panel fastRe" id="reFormPanel">
 						<div class="comment_form_textarea">
 							<textarea id="reContent"></textarea>
 						</div>
@@ -149,6 +144,11 @@
 								<input type="button" class="button" onclick="subReForm('${user.userId}','${id}','${gid }')" value="回复" id="subBtn">
 							</div>
 						</div>
+						<c:if test="${user==null}">
+							<div class="shade" id="shade">
+								<div class="shadeLogin">回复，请先 <a href="javascript:login()">登录</a>&nbsp;&nbsp;<a href="javascript:register()">注册</a></div>
+							</div>
+						</c:if>
 					</div>
 					<div class="clear"></div>
 				</div>
@@ -164,20 +164,6 @@ String realPath1 = "http://" + request.getServerName() + ":" + request.getServer
 	var articleId = "${article.id }";
 	$(function(){
 		loadReComment("${article.id }");
-		$("#reUserName").bind("focus",function(){
-			var value = $(this).val();
-			if (value == "请输入用户名") {
-				$(this).val("");
-				$(this).css("color", "#000000");
-			}
-		});
-		$("#reUserName").bind("blur",function(){
-			var value = $(this).val();
-			if (value == "") {
-				$(this).css("color", "#9B9B9B");
-				$(this).val("请输入用户名");
-			}
-		});
 	});
 </script>
 </body>
