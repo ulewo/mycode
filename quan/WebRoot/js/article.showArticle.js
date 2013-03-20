@@ -1,8 +1,8 @@
 function callBackReArticle(data, userId) {
-	if(data.reArticle == "nologin"){
+	if(data.msg == "nologin"){
 		alert("请首先登录");
 		return;
-	}else if (data.reArticle == "checkCodeErr") {
+	}else if (data.msg == "checkCodeErr") {
 		alert("验证码错误");
 		refreshcode2();
 		return;
@@ -13,7 +13,6 @@ function callBackReArticle(data, userId) {
 }
 
 function clearValue() {
-	$("#reUserName").val("");
 	$("#reContent").val("");
 	$("#checkCode").val("");
 }
@@ -185,14 +184,16 @@ SubRePanel.prototype = {
 
 function Recoment_form_panel(data) {
 	this.recoment_form_panel = $("<div class='recoment_form_panel' id='recoment_form_panel'></div>");
-	$(
-			"<div class='comment_form_at'><a href='javasccript:void(0)'>@"
-					+ data.authorName + "</a></div>").appendTo(
+	var comment_form_at = $("<div class='comment_form_at'></div>").appendTo(
 			this.recoment_form_panel);
+	$("<a href='javasccript:void(0)'>@"
+			+ data.authorName + "</a>").appendTo(comment_form_at);
+	$("<span><img src='../images/delete.png'></span>").appendTo(comment_form_at).bind("click",function(){
+		$("#recoment_form_panel").remove();
+	});	
 	this.textarea = $("<textarea></textarea>").appendTo(
 			$("<div class='comment_form_textarea'></div>").appendTo(
 					this.recoment_form_panel));
-
 	this.checkCode_area = $("<div class='comment_form_panel'></div>").appendTo(
 			this.recoment_form_panel);
 	this.checkCode = $("<input type='text'>").appendTo(
@@ -208,21 +209,19 @@ function Recoment_form_panel(data) {
 			"<div class='comment_checkcode_rebtn'><a href='javascript:void(0)'>回复</a></div>")
 			.bind("click", {
 				data : data,
-				reUserName : this.name_input,
 				reCotent : this.textarea,
 				checkCode : this.checkCode
 			}, this.subReComent).appendTo(this.checkCode_area);
 	if (groupParam.userId == "") {
 		var shade = $("<div class='shade' id='shade'></div>").appendTo(this.recoment_form_panel);
 		var shadeLogin = $("<div class='shadeLogin'>回复，请先 <a href='javascript:login()'>登录</a>&nbsp;&nbsp;<a href='javascript:register()'>注册</a></div>").appendTo(shade);
-			shade.css({"width":"520px","height":"145px","left":"-5px"});
+			shade.css({"width":"520px","height":"115px","left":"-5px","top":"23px"});
 			shadeLogin.css({"marginTop":"40px"});
 	}
 }
 Recoment_form_panel.prototype = {
 	subReComent : function(event) {
 		var data = event.data.data;
-		data.reUserName = event.data.reUserName.val();
 		data.reCotent = event.data.reCotent.val();
 		data.checkCode = event.data.checkCode.val();
 		subSubReComment(data);
@@ -233,16 +232,10 @@ function subSubReComment(data) {
 	var pid = data.pid;
 	var atUserId = data.authorid;
 	var atUserName = data.authorName;
-	var reUserName = data.reUserName;
 	var reCotent = data.reCotent;
 	var checkCode = data.checkCode;
 	var articleTit = $("#articleTit").val();
 	var authorId = $("#authorId").val();
-	// 判断是否登录
-	if (groupParam.userId == "" && (reUserName == "" || reUserName == "请输入用户名")) {
-		alert("请填写用户名");
-		return;
-	}
 	if (reCotent == "") {
 		alert("请填写回复内容");
 		return;
@@ -262,7 +255,6 @@ function subSubReComment(data) {
 		dataType : "json",
 		data : {
 			"articleid" : articleId,
-			"reUserName" : reUserName,
 			"reContent" : reCotent,
 			"checkCode" : checkCode,
 			"gid" : groupParam.gid,
@@ -287,15 +279,10 @@ function subSubReComment(data) {
 }
 
 function subReForm(userId, id, gid) {
-	var reUserName = $("#reUserName").val();
 	var recontent = $("#reContent").val();
 	var checkCode = $("#checkCode").val();
 	var authorId = $("#authorId").val();
 	var articleTit = $("#articleTit").val();
-	if (userId == "" && reUserName.trim() == "") {
-		alert("请填写用户名");
-		return;
-	}
 
 	if (recontent.trim() == "") {
 		alert("请填写回复内容");
@@ -320,7 +307,6 @@ function subReForm(userId, id, gid) {
 		dataType : "json",
 		data : {
 			"articleid" : id,
-			"reUserName" : reUserName,
 			"reContent" : recontent,
 			"checkCode" : checkCode,
 			"gid" : gid,
