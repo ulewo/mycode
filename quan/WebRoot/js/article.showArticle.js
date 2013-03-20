@@ -1,10 +1,13 @@
 function callBackReArticle(data, userId) {
-	if(data.msg == "nologin"){
+	if (data.msg == "nologin") {
 		alert("请首先登录");
 		return;
-	}else if (data.msg == "checkCodeErr") {
+	} else if (data.msg == "checkCodeErr") {
 		alert("验证码错误");
 		refreshcode2();
+		return;
+	} else if (data.msg == "contentError") {
+		alert("输入内容为空，或者内容太长");
 		return;
 	}
 	clearValue();
@@ -99,14 +102,15 @@ function RePanel(data) {
 	data.pid = data.id;
 	this.outerHeight = $("<div class='outerHeight'></div>");
 	// 头像
-	var authorIcon = data.authorIcon||"defaultsmall.gif";
-	this.ui_avatar = $(
-			"<div class='ui_avatar'><img src='../upload/" + authorIcon
-					+ "' width='30'></div>");
-	if(data.authorid!=""){
-		this.ui_avatar = $(
-			"<div class='ui_avatar'><a href='../user/userInfo.jspx?userId="+data.authorid+"'><img src='../upload/" + authorIcon
-					+ "' width='30' border='0'></a></div>");
+	var authorIcon = data.authorIcon || "defaultsmall.gif";
+	this.ui_avatar = $("<div class='ui_avatar'><img src='../upload/"
+			+ authorIcon + "' width='30'></div>");
+	if (data.authorid != "") {
+		this.ui_avatar = $("<div class='ui_avatar'><a href='../user/userInfo.jspx?userId="
+				+ data.authorid
+				+ "'><img src='../upload/"
+				+ authorIcon
+				+ "' width='30' border='0'></a></div>");
 	}
 	this.ui_avatar.appendTo(this.outerHeight);
 	// 内容
@@ -149,14 +153,18 @@ RePanel.prototype = {
 function SubRePanel(data) {
 	this.comment_sub = $("<div class='comtent_sub'></div>");
 	this.ui_avatar = $(
-			"<div class='ui_avatar'><img src='../upload/defaultsmall.gif' width='30'></div>")
-			.appendTo(this.comment_sub);
+			"<div class='ui_avatar'><img src='../upload/" + data.authorIcon
+					+ "' width='30'></div>").appendTo(this.comment_sub);
 	this.comments_content_sub = $("<div class='comments_content_sub'></div>")
 			.appendTo(this.comment_sub);
 	$("<div class='clear'></div>").appendTo(this.comment_sub);
 	$(
-			"<a href=''>" + data.authorName + "</a>&nbsp;回复&nbsp;<a href=''>"
-					+ data.atUserName
+			"<a href='../user/userInfo.jspx?userId="
+					+ data.authorid
+					+ "'>"
+					+ data.authorName
+					+ "</a>&nbsp;回复&nbsp;<a href='../user/userInfo.jspx?userId="
+					+ data.atUserId + "'>" + data.atUserName
 					+ "</a>:<span class='comment_content_word'>" + data.content
 					+ "</span>").appendTo(this.comments_content_sub);
 	this.comments_op_sub = $("<div class='comments_op_sub'></div>").appendTo(
@@ -186,11 +194,12 @@ function Recoment_form_panel(data) {
 	this.recoment_form_panel = $("<div class='recoment_form_panel' id='recoment_form_panel'></div>");
 	var comment_form_at = $("<div class='comment_form_at'></div>").appendTo(
 			this.recoment_form_panel);
-	$("<a href='javasccript:void(0)'>@"
-			+ data.authorName + "</a>").appendTo(comment_form_at);
-	$("<span><img src='../images/delete.png'></span>").appendTo(comment_form_at).bind("click",function(){
-		$("#recoment_form_panel").remove();
-	});	
+	$("<a href='javasccript:void(0)'>@" + data.authorName + "</a>").appendTo(
+			comment_form_at);
+	$("<span><img src='../images/delete.png'></span>")
+			.appendTo(comment_form_at).bind("click", function() {
+				$("#recoment_form_panel").remove();
+			});
 	this.textarea = $("<textarea></textarea>").appendTo(
 			$("<div class='comment_form_textarea'></div>").appendTo(
 					this.recoment_form_panel));
@@ -213,10 +222,20 @@ function Recoment_form_panel(data) {
 				checkCode : this.checkCode
 			}, this.subReComent).appendTo(this.checkCode_area);
 	if (groupParam.userId == "") {
-		var shade = $("<div class='shade' id='shade'></div>").appendTo(this.recoment_form_panel);
-		var shadeLogin = $("<div class='shadeLogin'>回复，请先 <a href='javascript:login()'>登录</a>&nbsp;&nbsp;<a href='javascript:register()'>注册</a></div>").appendTo(shade);
-			shade.css({"width":"520px","height":"115px","left":"-5px","top":"23px"});
-			shadeLogin.css({"marginTop":"40px"});
+		var shade = $("<div class='shade' id='shade'></div>").appendTo(
+				this.recoment_form_panel);
+		var shadeLogin = $(
+				"<div class='shadeLogin'>回复，请先 <a href='javascript:login()'>登录</a>&nbsp;&nbsp;<a href='javascript:register()'>注册</a></div>")
+				.appendTo(shade);
+		shade.css({
+			"width" : "520px",
+			"height" : "115px",
+			"left" : "-5px",
+			"top" : "23px"
+		});
+		shadeLogin.css({
+			"marginTop" : "40px"
+		});
 	}
 }
 Recoment_form_panel.prototype = {
@@ -264,16 +283,20 @@ function subSubReComment(data) {
 		},
 		url : 'addSubReComment.jspx',// 请求的action路径
 		success : function(data) {
-			if(data.msg=="ok"){
-				$("#recoment_form_panel").before(new SubRePanel(data.reArticle).asHtml());
+			if (data.msg == "ok") {
+				$("#recoment_form_panel").before(
+						new SubRePanel(data.reArticle).asHtml());
 				$("#recoment_form_panel").remove();
-			}else if(data.msg=="checkCodeErr"){
+			} else if (data.msg == "checkCodeErr") {
 				alert("验证码错误");
 				refreshcode()();
-			}else if(data.msg=="nologin"){
+			} else if (data.msg == "nologin") {
 				alert("请登录后再发贴");
+			} else if (data.msg == "contentError") {
+				alert("输入内容为空，或者内容太长");
+				return;
 			}
-			
+
 		}
 	});
 }
