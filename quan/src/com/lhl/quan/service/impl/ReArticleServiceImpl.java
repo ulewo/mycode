@@ -7,15 +7,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.lhl.entity.Notice;
+import com.lhl.entity.NoticeParam;
 import com.lhl.entity.ReArticle;
 import com.lhl.entity.User;
+import com.lhl.enums.NoticeType;
 import com.lhl.exception.BaseException;
 import com.lhl.quan.dao.NoticeDao;
 import com.lhl.quan.dao.ReArticleDao;
 import com.lhl.quan.dao.UserDao;
 import com.lhl.quan.service.ReArticleService;
-import com.lhl.util.Constant;
 import com.lhl.util.FormatAt;
 import com.lhl.util.Tools;
 
@@ -34,8 +34,7 @@ public class ReArticleServiceImpl implements ReArticleService {
 
 	private NoticeDao noticeDao;
 
-	private SimpleDateFormat format = new SimpleDateFormat(
-			"yyyy-MM-dd HH:mm:ss");
+	private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	public void setReArticleDao(ReArticleDao reArticleDao) {
 
@@ -53,15 +52,13 @@ public class ReArticleServiceImpl implements ReArticleService {
 	}
 
 	@Override
-	public ReArticle addReArticle(ReArticle reArticle, String authorId,
-			String articleTitle) throws Exception {
+	public ReArticle addReArticle(ReArticle reArticle, String authorId, String articleTitle) throws Exception {
 
 		reArticle.setReTime(format.format(new Date()));
 		String content = reArticle.getContent();
 		String quote = reArticle.getQuote();
 		List<String> referers = new ArrayList<String>();
-		String formatContent = FormatAt.getInstance().GenerateRefererLinks(
-				userDao, content, referers);
+		String formatContent = FormatAt.getInstance().GenerateRefererLinks(userDao, content, referers);
 		String subCon = formatContent;
 		if (quote != null && !"".equals(quote)) {
 			subCon = quote + formatContent;
@@ -69,8 +66,7 @@ public class ReArticleServiceImpl implements ReArticleService {
 		reArticle.setContent(subCon);
 		int id = reArticleDao.addReArticle(reArticle);
 
-		if (!"".equals(reArticle.getAuthorid())
-				&& reArticle.getAuthorid() != null) {
+		if (!"".equals(reArticle.getAuthorid()) && reArticle.getAuthorid() != null) {
 			User user = userDao.queryUser("", "", reArticle.getAuthorid());
 			User reUser = new User();
 			reUser.setUserLittleIcon(user.getUserLittleIcon());
@@ -79,28 +75,20 @@ public class ReArticleServiceImpl implements ReArticleService {
 		}
 		reArticle.setId(id);
 
-		// 发送消息
-		String noticeCon = reArticle.getAuthorName() + "在\"" + articleTitle
-				+ "\"中提到了你";
-		String url = "../group/post.jspx?id=" + reArticle.getArticleId()
-				+ "#re" + id;
-		for (String userId : referers) {
-			Notice notice = FormatAt.getInstance().formateNotic(userId, url,
-					Constant.NOTICE_TYPE1, noticeCon);
-			noticeDao.createNotice(notice);
+		//启动一个线程发布消息
+		NoticeParam noticeParm = new NoticeParam();
+		noticeParm.setArticleId(reArticle.getArticleId());
+		noticeParm.setNoticeType(NoticeType.REARTICLE);
+		noticeParm.setAtUserIds(referers);
+		noticeParm.setSendUserId(reArticle.getAuthorid());
+		//如果At的用户Id为不为空那么就是二级回复
+		if (Tools.isNotEmpty(reArticle.getAtUserId())) {
+			noticeParm.setReceiveUserId(reArticle.getAtUserId());
 		}
-
-		if (Tools.isNotEmpty(authorId)
-				&& !authorId.equals(reArticle.getAuthorid())) {
-			noticeCon = reArticle.getAuthorName() + "在\"" + articleTitle
-					+ "\"中回复了你";
-			url = "../group/post.jspx?id=" + reArticle.getArticleId() + "#re"
-					+ id;
-			Notice notice = FormatAt.getInstance().formateNotic(authorId, url,
-					Constant.NOTICE_TYPE1, noticeCon);
-			noticeDao.createNotice(notice);
-		}
-
+		noticeParm.setReId(id);
+		NoticeThread noticeThread = new NoticeThread(noticeParm);
+		Thread thread = new Thread(noticeThread);
+		thread.start();
 		return reArticle;
 	}
 
@@ -138,11 +126,9 @@ public class ReArticleServiceImpl implements ReArticleService {
 	 * 回复的文章
 	 */
 	@Override
-	public List<ReArticle> queryReArticles(int articleid, int offset, int total)
-			throws Exception {
+	public List<ReArticle> queryReArticles(int articleid, int offset, int total) throws Exception {
 
-		List<ReArticle> list = reArticleDao.queryReArticles(articleid, offset,
-				total);
+		List<ReArticle> list = reArticleDao.queryReArticles(articleid, offset, total);
 		formateList(list);
 		/*
 		 * User author = null; User sAuthor = null; List<ReArticle> reList =
@@ -168,6 +154,7 @@ public class ReArticleServiceImpl implements ReArticleService {
 	}
 
 	private void formateList(List<ReArticle> list) {
+
 		Map<Integer, List<ReArticle>> map = new HashMap<Integer, List<ReArticle>>();
 		for (ReArticle reArticle : list) {
 			if (reArticle.getPid() != null && reArticle.getPid() != 0) {
@@ -175,7 +162,8 @@ public class ReArticleServiceImpl implements ReArticleService {
 					List<ReArticle> child = new ArrayList<ReArticle>();
 					child.add(reArticle);
 					map.put(reArticle.getPid(), child);
-				} else {
+				}
+				else {
 					List<ReArticle> child = map.get(reArticle.getPid());
 					child.add(reArticle);
 				}

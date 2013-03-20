@@ -98,7 +98,8 @@
 	    </bean>
 	    
 	    
-	    
+	<bean name="beanFactory" class="com.lhl.util.Springfactory">
+    </bean>
      <!-- service 层 end--> 
      <bean name="articleDao" class="com.lhl.quan.dao.ArticleDao">
     	 <property name="sqlMapClient" ref="sqlMapClient"/>

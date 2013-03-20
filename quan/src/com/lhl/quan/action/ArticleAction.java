@@ -288,31 +288,28 @@ public class ArticleAction extends BaseAction {
 		String msg = "";
 		JSONObject obj = new JSONObject();
 		try {
+
+			Object sessionObj = getSession().getAttribute("user");
+			if (sessionObj == null) {
+				msg = "nologin";
+				obj.put("msg", msg);
+				getOut().print(String.valueOf(obj));
+				return;
+			}
+			String sessionCcode = (String) getSession().getAttribute("checkCode");
+			if (Tools.isEmpty(checkCode) || !checkCode.equalsIgnoreCase(sessionCcode)) {
+				msg = "checkCodeErr";
+				obj.put("msg", msg);
+				getOut().print(String.valueOf(obj));
+				return;
+			}
+			User sessionUser = (User) sessionObj;
 			ReArticle reArticle = new ReArticle();
 			reArticle.setArticleId(articleid);
 			reArticle.setContent(Tools.formateHtml(reContent));
 			reArticle.setGid(gid);
-			Object sessionObj = getSession().getAttribute("user");
-			if (sessionObj != null) {
-				User sessionUser = (User) sessionObj;
-				reArticle.setAuthorid(sessionUser.getUserId());
-				reArticle.setAuthorName(sessionUser.getUserName());
-			}
-			else {// 如果用户名为空那么名字就用访客
-				String sessionCcode = (String) getSession().getAttribute("checkCode");
-				if (Tools.isEmpty(checkCode) || !checkCode.equalsIgnoreCase(sessionCcode)) {
-					msg = "checkCodeErr";
-					obj.put("reArticle", msg);
-					getOut().print(String.valueOf(obj));
-					return;
-				}
-				if ("".equals(reUserName)) {
-					reArticle.setAuthorName("访客");
-				}
-				else {
-					reArticle.setAuthorName(Tools.formateHtml(reUserName));
-				}
-			}
+			reArticle.setAuthorid(sessionUser.getUserId());
+			reArticle.setAuthorName(sessionUser.getUserName());
 			ReArticle re = reArticleService.addReArticle(reArticle, authorId, title);
 			obj.put("reArticle", re);
 			getOut().print(String.valueOf(obj));
@@ -331,6 +328,13 @@ public class ArticleAction extends BaseAction {
 		String msg = "ok";
 		JSONObject obj = new JSONObject();
 		try {
+			Object sessionObj = getSession().getAttribute("user");
+			if (sessionObj == null) {
+				msg = "nologin";
+				obj.put("msg", msg);
+				getOut().print(String.valueOf(obj));
+				return;
+			}
 			String sessionCcode = (String) getSession().getAttribute("checkCode");
 			if (Tools.isEmpty(checkCode) || !checkCode.equalsIgnoreCase(sessionCcode)) {
 				msg = "checkCodeErr";
@@ -338,7 +342,6 @@ public class ArticleAction extends BaseAction {
 				getOut().print(String.valueOf(obj));
 				return;
 			}
-
 			ReArticle reArticle = new ReArticle();
 			reArticle.setArticleId(articleid);
 			reArticle.setContent(Tools.formateHtml(reContent));
@@ -346,20 +349,8 @@ public class ArticleAction extends BaseAction {
 			reArticle.setAtUserId(atUserId);
 			reArticle.setAtUserName(atUserName);
 			reArticle.setPid(pid);
-			Object sessionObj = getSession().getAttribute("user");
-			if (sessionObj != null) {
-				User sessionUser = (User) sessionObj;
-				reArticle.setAuthorid(sessionUser.getUserId());
-				reArticle.setAuthorName(sessionUser.getUserName());
-			}
-			else {// 如果用户名为空那么名字就用访客
-				if ("".equals(reUserName)) {
-					reArticle.setAuthorName("访客");
-				}
-				else {
-					reArticle.setAuthorName(Tools.formateHtml(reUserName));
-				}
-			}
+			User sessionUser = (User) sessionObj;
+			reArticle.setAuthorid(sessionUser.getUserId());
 			ReArticle re = reArticleService.addReArticle(reArticle, authorId, title);
 			obj.put("msg", msg);
 			obj.put("reArticle", re);

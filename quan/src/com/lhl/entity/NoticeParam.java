@@ -1,19 +1,28 @@
 package com.lhl.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.lhl.enums.NoticeType;
 
 public class NoticeParam {
+
+	//消息类型
 	private NoticeType noticeType;
 
+	//文章ID
 	private int articleId;
 
-	private String userId;
+	//接受消息的人
+	private String receiveUserId;
 
-	private String userName;
+	//被at的人，也是接受消息的人。
+	private List<String> atUserIds = new ArrayList<String>();
 
-	private String reUserId;
+	//发送消息的人
+	private String sendUserId;
 
-	private String reUserName;
+	private int reId;
 
 	public NoticeType getNoticeType() {
 
@@ -35,44 +44,44 @@ public class NoticeParam {
 		this.articleId = articleId;
 	}
 
-	public String getUserId() {
+	public int getReId() {
 
-		return userId;
+		return reId;
 	}
 
-	public void setUserId(String userId) {
+	public void setReId(int reId) {
 
-		this.userId = userId;
+		this.reId = reId;
 	}
 
-	public String getUserName() {
+	public List<String> getAtUserIds() {
 
-		return userName;
+		return atUserIds;
 	}
 
-	public void setUserName(String userName) {
+	public void setAtUserIds(List<String> atUserIds) {
 
-		this.userName = userName;
+		this.atUserIds = atUserIds;
 	}
 
-	public String getReUserId() {
+	public String getReceiveUserId() {
 
-		return reUserId;
+		return receiveUserId;
 	}
 
-	public void setReUserId(String reUserId) {
+	public void setReceiveUserId(String receiveUserId) {
 
-		this.reUserId = reUserId;
+		this.receiveUserId = receiveUserId;
 	}
 
-	public String getReUserName() {
+	public String getSendUserId() {
 
-		return reUserName;
+		return sendUserId;
 	}
 
-	public void setReUserName(String reUserName) {
+	public void setSendUserId(String sendUserId) {
 
-		this.reUserName = reUserName;
+		this.sendUserId = sendUserId;
 	}
 
 }
