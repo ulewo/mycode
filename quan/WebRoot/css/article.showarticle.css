@@ -29,9 +29,9 @@
 .about_con_info{text-align:left;font-size:13px;margin-left:10px;margin-top:5px;}
 .about_con_info a{font-size:13px;text-decoration:none;color:#666666}
 .about_con_info a:hover{color:red;}
-.page_con{height:20px;padding-left:15px;}
+.page_con{height:25px;padding-left:15px;margin-top:25px}
 
-.reCon{margin-top:10px;text-align:left;}
+.reCon{margin-top:10px;text-align:left;font-size:14px;}
 .recon_con{border-top:1px solid #DCDCDC;margin-top:10px;padding-top:15px;padding-left:20px;}
 .recon_img{float:left;width:50px;border:1px solid #DCDCDC}
 .recon_img a img{border:0px;}
@@ -46,8 +46,8 @@
 .recon_info_info .info_name a{color:#6FCEF4}
 .recon_info_info_op{width:60px;float:right;text-align:right;}
 
-.fast_re_tit{font-size:16px;font-weight:bold;margin-left:25px;margin-top:20px;text-align:left;}
-.fast_re_con{margin-top:20px;text-align:left;margin-left:20px;}
+.fast_re_tit{font-size:16px;font-weight:bold;margin-left:25px;margin-top:10px;text-align:left;}
+.fast_re_con{margin-top:10px;text-align:left;margin-left:20px;}
 .faset_re_img{float:left;width:50px;border:1px solid #DCDCDC;margin-left:25px;}
 .fast_re_reform{float:left;width:600px;margin-left:10px;}
 .fast_re_reform input{border:1px solid #DCDCDC;margin:0px;}

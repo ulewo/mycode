@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="/WEB-INF/pager.tld" prefix="p"%> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -96,17 +95,10 @@
 				
 			</div>
 			<div id="recomment"></div>
-			<div style="height:25px;margin-top:10px;">
-				<div  class="pagination">
-					<p:pager url="post.jspx?id=${id}" page="${page}" pageTotal = "${pageTotal }"></p:pager> 
-	 			</div>
-	 			<div style="clear:both;"></div>
- 			</div>
  			<div class="page_con">
 				<div class="bbtn1"><a href="javascript:reArticle('${article.id}')">☆高级回复</a></div>
 				<div class="bbtn1"><a href="javascript:addArticle()">◎发表话题</a></div>
 			</div>
-			<div class="fast_re_tit">快速回复:（无需登录）</div>	
 			<form action="fastReArticle.jspx" method="post">
 				<input type="hidden" value="${article.authorId}" id="authorId">
 				<input type="hidden" value="${article.title}" id="articleTit">

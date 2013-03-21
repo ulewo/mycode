@@ -120,7 +120,8 @@ function RePanel(data) {
 	this.comments_content = $("<div class='comments_content'></div>").appendTo(
 			this.reComent_Con);
 	$(
-			"<a href=''>" + data.authorName
+			"<a href='../user/userInfo.jspx?userId=" + data.authorid + "'>"
+					+ data.authorName
 					+ "</a>:<span class='comment_content_word'>" + data.content
 					+ "</span>").appendTo(this.comments_content);
 	this.comments_op = $("<div class='comments_op'></div>").appendTo(
