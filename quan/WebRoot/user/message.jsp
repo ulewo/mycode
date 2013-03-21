@@ -61,37 +61,33 @@
 			</div>
 		  	<div class="subArea">
 		  		<form id="subform">
-		  		<input type="hidden" name="userId" value="${param.userId }" id="userId">
-		  		<div class="u_name">
-		  			<c:if test="${user==null}">
-		  				用户名：<input type="text" name="reUserName" id="name">
-		  			</c:if>
-		  		</div>
-		  		<div class="content"><textarea rows="10" cols="80" name="content" id="content"></textarea></div>
-		  		<c:if test="${user==null}">
-			  		<div class="checkcode">
-			  			<div class="tit">验证码：</div>
-						<div class="check_con">
-							<input type="text" class="long_input" name="checkCode" id="checkCode"/>
-						</div>
-						<div class="check_img">
-							<a href="JavaScript:refreshcode();" onfocus="this.blur();"><img id="checkCodeImage" src="../common/image.jsp" border="0"/></a>
-						</div>
-						<div class="changecode">
-							<a href="javascript:refreshcode()">换一张</a>
-						</div>
+		  			<input type="hidden" name="userId" value="${param.userId }" id="userId">
+			  		<div class="content"><textarea rows="10" cols="80" name="content" id="content"></textarea></div>
+				  		<div class="checkcode">
+				  			<div class="tit">验证码：</div>
+							<div class="check_con">
+								<input type="text" class="long_input" name="checkCode" id="checkCode"/>
+							</div>
+							<div class="check_img">
+								<a href="JavaScript:refreshcode();" onfocus="this.blur();"><img id="checkCodeImage" src="../common/image.jsp" border="0" height="22"/></a>
+							</div>
+							<div class="changecode">
+								<a href="javascript:refreshcode()">换一张</a>
+							</div>
+				  	</div>
+			  		<div class="subbtn">
+			  			<div class="bbtn1">
+			  				<a href="javascript:submitForm()" onfocus="this.blur()" id="sendBtn">发表留言</a>
+			  				<img src="../images/load.gif" id="loading" style="display:none">	
+			  			</div>
+			  			<div style="margin-left:20px;padding-top:8px;float:left;">最多输入500字符</div>
 			  		</div>
-		  		</c:if>
-		  		<div class="subbtn">
-
-		  			<div class="bbtn1">
-		  				<a href="javascript:submitForm()" onfocus="this.blur()" id="sendBtn">发表留言</a>
-		  				<img src="../images/load.gif" id="loading" style="display:none">	
-		  			</div>
-		  			<div style="margin-left:20px;padding-top:8px;float:left;">最多输入500字符</div>
-		  		</div>
-		  		
 		  		</form>
+		  		<c:if test="${user==null}">
+					<div class="shade blogshade" id="shade">
+						<div class="shadeLogin">回复，请先 <a href="javascript:login()">登录</a>&nbsp;&nbsp;<a href="javascript:register()">注册</a></div>
+					</div>
+				</c:if>
 		  	</div>
 		</div>
 	<div style="clear:left;"></div>

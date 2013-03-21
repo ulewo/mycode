@@ -4,19 +4,14 @@ function refreshcode() {
 }
 
 function submitForm() {
-	var name = $("#name").val();
 	var checkCode = $("#checkCode").val();
 	var content = $("#content").val();
 	var userId = $("#userId").val();
-	if (name == "") {
-		art.dialog.tips("用户名不能为空!");
-		return;
-	}
 	if (content.trim() == "") {
 		art.dialog.tips("留言不能为空!");
 		return;
 	}
-	if (userId == "" && checkCode == "") {
+	if (checkCode == "") {
 		art.dialog.tips("验证码不能为空!");
 		return;
 	}
@@ -45,23 +40,17 @@ function submitForm() {
 		},
 		url : "addMessage.jspx",// 请求的action路径
 		success : function(data) {
-			if (data.msg == "noUserName") {// 登录成功
-				art.dialog.tips("用户名不能为空!");
-			} else if (data.msg == "noContent") {
-				art.dialog.tips("留言不能为空!");
-			} else if (data.msg == "checkCodeErr") {
-				art.dialog.tips("验证码错误!");
-			} else if (data.msg == "error") {
-				art.dialog.tips("出现错误，稍后重试!");
+			if (data.result == "fail") {// 登录成功
+				art.dialog.tips(data.msg);
 			} else {
 				art.dialog.tips("发表成功");
 				$("#quote_panle").remove();
 				$(".nomessage").remove();
 				new NotePanle(data.note).asHtml().appendTo($("#messagelist"));
 				resetForm();
-				$("#sendBtn").show();
-				$("#loading").hide();
 			}
+			$("#sendBtn").show();
+			$("#loading").hide();
 			refreshcode();
 		}
 	});
@@ -305,6 +294,7 @@ NotePanle.prototype = {
 				.appendTo(b);
 		$("<div style='margin-top:5px;'>" + content + "</div>").appendTo(
 				infocon);
+		$("#content").focus();
 	},
 	del : function(event) {
 		var id = event.data.id;

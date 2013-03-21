@@ -4,23 +4,18 @@ function refreshcode() {
 }
 
 function subReply(blogId) {
-	var name = $("#name").val();
 	var checkCode = $("#checkCode").val();
 	var content = $("#content").val();
-	if (name == "") {
-		art.dialog.tips("用户名不能为空!");
-		return;
-	}
 	if (content.trim() == "") {
 		art.dialog.tips("留言不能为空!");
 		return;
 	}
-	if (checkCode == "") {
-		art.dialog.tips("验证码不能为空!");
-		return;
-	}
 	if (content.trim().length > 500) {
 		art.dialog.tips("留言内容不能超过500字符!");
+		return;
+	}
+	if (checkCode == "") {
+		art.dialog.tips("验证码不能为空!");
 		return;
 	}
 	var quote = ""
@@ -38,36 +33,26 @@ function subReply(blogId) {
 		type : 'POST',
 		dataType : "json",
 		data : {
-			reUserName : name,
 			content : content,
 			checkCode : checkCode,
 			blogId : blogId,
 			quote : quote,
-			quoteId:$("quoteId").val(),
-			title:title,
-			blogauthor:blogauthor,
 			"time" : new Date()
 		},
 		url : "savaReply.jspx",// 请求的action路径
 		success : function(data) {
-			if (data.msg == "noUserName") {// 登录成功
-				art.dialog.tips("用户名不能为空!");
-			} else if (data.msg == "noContent") {
-				art.dialog.tips("留言不能为空!");
-			} else if (data.msg == "checkCodeErr") {
-				art.dialog.tips("验证码错误!");
-			} else if (data.msg == "error") {
-				art.dialog.tips("出现错误，稍后重试!");
-			} else {
+			if(data.result == "fail"){
+				art.dialog.tips(data.msg);
+			}else {
 				art.dialog.tips("发表成功");
 				$(".nomessage").remove();
 				$("#quote_panle").remove();
 				$(".nomessage").remove();
 				new NotePanle(data.note).asHtml().appendTo($("#messagelist"));
 				resetForm();
-				$("#sendBtn").show();
-				$("#loading").hide();
 			}
+			$("#sendBtn").show();
+			$("#loading").hide();
 			refreshcode();
 		}
 	});
@@ -201,6 +186,7 @@ NotePanle.prototype = {
 				infocon);
 		$("<input type='hidden' id='quoteId' value="+id+">").appendTo($("#quote_panle"));
 		$("<input type='hidden' id='quoteUserId' value="+quoteUserId+">").appendTo($("#quote_panle"));
+		$("#content").focus();
 	},
 	del : function(event) {
 		var id = event.data.id;

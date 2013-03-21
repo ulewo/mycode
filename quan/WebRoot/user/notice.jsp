@@ -32,6 +32,12 @@
 	</div>
 	<div class="right">
 		<div class="navPath"><a href="userInfo.jspx?userId=${user.userId}">空间</a>&nbsp;&gt;&gt;&nbsp;消息</div>
+		<div class="selectAll">
+			<div class="select"><input type="checkbox" onclick="selectAll(this)" id="checkAll"></div>
+			<div class="selecttit">全选</div>
+			<div class="selectbtn bbtn1" ><a href="javascript:readNotic()" >标记为已读</a></div>
+		</div>
+		<form action="readNotice.jspx" method="post" id="myform">
 		<c:choose>
 			<c:when test="${empty list}">
 				<div>没有未处理的消息。</div>
@@ -39,16 +45,46 @@
 			<c:otherwise>
 				<c:forEach var="notice" items="${list}">
 					<div class="notice_list">
+						<div><input type="checkbox" name="ids" value="${notice.id}" class="check"></div>
 						<div><a href="noticeDetail.jspx?id=${notice.id}">${notice.content}</a></div>
 						<span>${fn:substring(notice.postTime,0,16)}</span>
 					</div>
 				</c:forEach>
 			</c:otherwise>
 		</c:choose>
-		
+		</form>
 	</div>
 	<div class="clear"></div>
 </div>
  <jsp:include page="../common/foot.jsp"/>
+ <script type="text/javascript">
+ 	$(function(){
+ 		$(".check").bind("click",function(){
+ 			var checkeds = $("input[name='ids']:checkbox:checked");
+ 			if(checkeds.length==$(".check").length){
+ 				$("#checkAll").attr("checked",true);
+ 			}else{
+ 				$("#checkAll").attr("checked",false);
+ 			}
+ 		});
+ 	});
+ 	function readNotic(){
+ 		var checkeds = $("input[name='ids']:checkbox:checked");
+ 		if(checkeds.length==0){
+ 			alert("请选择要标记的消息");
+ 			return;
+ 		}
+ 		$("#myform").submit();
+ 	}
+ 	
+ 	function selectAll(obj){
+ 		var check = $(obj).attr("checked");
+ 		if(check=="checked"){
+ 			$("input[name='ids']").attr("checked",true); 
+ 		}else{
+ 			$("input[name='ids']").attr("checked",false); 
+ 		}
+ 	}
+ </script>
 </body>
 </html>

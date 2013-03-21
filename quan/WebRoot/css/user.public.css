@@ -65,3 +65,8 @@ body{background:#F9F9F9;}
 .notice_list a{color:#4466BB;font-weight:bold;}
 .notice_list div{display:inline-block;float:left;}
 .notice_list span{display:inline-block;float:right;padding-right:10px;color:#666666}
+
+.selectAll{height:30px;margin-left:8px;}
+.select{float:left;width:18px;padding-top:3px;}
+.selecttit{float:left;width:30px;margin-left:5px;padding-top:5px;}
+.selectbtn{float:left;width:20px;}

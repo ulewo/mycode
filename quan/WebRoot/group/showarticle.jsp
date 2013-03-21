@@ -19,15 +19,6 @@
 <script type="text/javascript" src="../js/group.index.js"></script>
 <script type="text/javascript" src="../scripts/shCore.js"></script>
 <link type="text/css" rel="stylesheet" href="../styles/SyntaxHighlighter.css"/>
-<c:if test="${reMessage!=''}">
-<script type="text/javascript">
-</script>
-</c:if>
-<c:if test="${reMessage!=''&&reMessage=='checkCodeError'}">
-<script type="text/javascript">
-	alert("验证码错误");
-</script>
-</c:if>
 	<script type="text/javascript">
 		$(document).ready(function () {
             $(".showarticle pre").each(function () {

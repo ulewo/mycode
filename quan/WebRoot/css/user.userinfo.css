@@ -58,8 +58,8 @@
 .checkcode .tit{float:left;width:60px;padding-top:5px;}
 .checkcode .check_con{float:left;width:90px;}
 .check_con input{width: 80px;}
-.check_img{float:left;width:90px;margin-left:10px;}
-.checkcode .changecode{float:left;width:50px;}
+.check_img{float:left;width:70px;margin-left:10px;}
+.checkcode .changecode{float:left;width:50px;padding-top:7px;}
 .subbtn{height:30px;margin-top:5px;}
 .messagetit{background:#F5F5F5;margin-top:10px;}
 
@@ -69,3 +69,7 @@
 .ferret{width:100px;float:left;margin-left:10px;display:inherit;}
 #preview{float:left;position:relative;overflow: hidden; width:100px;height:100px}
 
+.reblogform{position:relative;}
+.blogshade{left:-10px;height:240px;width:600px;}
+
+.subArea{position:relative;}
