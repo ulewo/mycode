@@ -240,6 +240,11 @@
 			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
+		<action name="readNotice" class="notice" method="readNotice">
+			<result name="success" type="redirect">notice.jspx</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
+		</action>
+		
 	</package>
 	
 	<package name="group" namespace="/group" extends="struts-default">

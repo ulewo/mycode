@@ -18,7 +18,7 @@ public interface BlogReplyService
 	 * @param item
 	 * @author luohl
 	 */
-	public BlogReply addReply(BlogReply blogReply, String authorId, String articleTitle);
+	public BlogReply addReply(BlogReply blogReply);
 
 	/**
 	 * 

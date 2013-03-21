@@ -5,11 +5,13 @@ import java.util.Date;
 import java.util.List;
 
 import com.lhl.entity.Article;
+import com.lhl.entity.BlogArticle;
 import com.lhl.entity.Notice;
 import com.lhl.entity.NoticeParam;
 import com.lhl.entity.User;
 import com.lhl.enums.NoticeType;
 import com.lhl.quan.dao.ArticleDao;
+import com.lhl.quan.dao.BlogArticleDao;
 import com.lhl.quan.dao.NoticeDao;
 import com.lhl.quan.dao.UserDao;
 import com.lhl.util.Constant;
@@ -24,6 +26,8 @@ public class NoticeThread implements Runnable {
 
 	private UserDao userDao;
 
+	private BlogArticleDao blogArticleDao;
+
 	private NoticeParam noticeParm;
 
 	private final static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -36,10 +40,8 @@ public class NoticeThread implements Runnable {
 	@Override
 	public void run() {
 
-		articleDao = (ArticleDao) Springfactory.getBean("articleDao");
 		noticeDao = (NoticeDao) Springfactory.getBean("noticeDao");
 		userDao = (UserDao) Springfactory.getBean("userDao");
-
 		NoticeType noticeType = noticeParm.getNoticeType();
 		int articleId = noticeParm.getArticleId();
 		String receiveUserId = noticeParm.getReceiveUserId();
@@ -49,15 +51,28 @@ public class NoticeThread implements Runnable {
 		String url = "";
 		switch (noticeType) {
 		case REARTICLE: //回复主题
+			articleDao = (ArticleDao) Springfactory.getBean("articleDao");
 			url = "../group/post.jspx?id=" + articleId + "#re" + reId;
-
 			reArticle(articleId, receiveUserId, atUserIds, sendUserId, url);
 			break;
 		case ATINARTICLE: //在文章中@
+			articleDao = (ArticleDao) Springfactory.getBean("articleDao");
 			url = "../group/post.jspx?id=" + articleId;
 			atInArticle(articleId, atUserIds, sendUserId, url);
 			break;
-		case ATINREARTICLE: //在回复中@
+		case REBLOG: //回复博客
+			blogArticleDao = (BlogArticleDao) Springfactory.getBean("blogArticleDao");
+			url = "blogdetail.jspx?id=" + articleId + "#re" + reId;
+			reBlog(articleId, receiveUserId, atUserIds, sendUserId, url);
+			break;
+		case ATINBLOG: //在博客中@
+			blogArticleDao = (BlogArticleDao) Springfactory.getBean("blogArticleDao");
+			url = "blogdetail.jspx?id=" + articleId;
+			atInBlog(articleId, atUserIds, sendUserId, url);
+			break;
+		case REMESSAGE: //回复博客
+			url = "message.jsp?userId=" + receiveUserId + "#re" + reId;
+			reMessage(receiveUserId, atUserIds, sendUserId, url);
 			break;
 		}
 	}
@@ -133,7 +148,6 @@ public class NoticeThread implements Runnable {
 					for (String atUserId : atUserIds) {
 						notice = new Notice();
 						noticeCon = reUser.getUserName() + "在文章\"" + article.getTitle() + "\"中提到了你";
-						notice = new Notice();
 						notice.setUrl(url);
 						notice.setUserId(atUserId);
 						notice.setPostTime(format.format(new Date()));
@@ -142,6 +156,144 @@ public class NoticeThread implements Runnable {
 						notice.setStatus("N");
 						noticeDao.createNotice(notice);
 					}
+				}
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	//回复博客
+	private void reBlog(int articleId, String receiveUserId, List<String> atUserIds, String sendUserId, String url) {
+
+		try {
+			BlogArticle article = blogArticleDao.queryBlogById(articleId);
+			if (article != null) {
+				String title = article.getTitle();
+				String noticeCon = "";
+				Notice notice = null;
+				String sendUserName = "";
+				if (Tools.isNotEmpty(sendUserId)) {
+					User reUser = userDao.queryUser("", "", sendUserId);
+					if (reUser != null) {
+						sendUserName = reUser.getUserName();
+					}
+				}
+				//如果接受用户ID为空，那么就是回复主题
+				if (Tools.isEmpty(receiveUserId)) {
+					receiveUserId = article.getUserId();
+				}
+				//如果发送人和接受人不一样就发送消息
+				if (!receiveUserId.equals(sendUserId)) {
+					//发送消息给被回复的人
+					noticeCon = sendUserName + "在\"" + title + "\"中回复了你";
+					notice = new Notice();
+					notice.setUrl(url);
+					notice.setUserId(receiveUserId);
+					notice.setPostTime(format.format(new Date()));
+					notice.setContent(noticeCon);
+					notice.setType(Constant.NOTICE_TYPE3);
+					notice.setStatus("N");
+					noticeDao.createNotice(notice);
+				}
+				//发送消息给被@的人
+				if (atUserIds != null) {
+					for (String atUserId : atUserIds) {
+						//如果发送人@自己，自己就不给自己发信息
+						if (atUserId.equals(sendUserId)) {
+							continue;
+						}
+						noticeCon = sendUserName + "在回复\"" + title + "\"中提到了你";
+						notice = new Notice();
+						notice.setUrl(url);
+						notice.setUserId(atUserId);
+						notice.setPostTime(format.format(new Date()));
+						notice.setContent(noticeCon);
+						notice.setType(Constant.NOTICE_TYPE3);
+						notice.setStatus("N");
+						noticeDao.createNotice(notice);
+					}
+				}
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	//在文章中@
+	private void atInBlog(int articleId, List<String> atUserIds, String sendUserId, String url) {
+
+		try {
+			BlogArticle article = blogArticleDao.queryBlogById(articleId);
+			if (Tools.isNotEmpty(sendUserId)) {
+				User reUser = userDao.queryUser("", "", sendUserId);
+				Notice notice;
+				String noticeCon = "";
+				if (reUser != null && article != null) {
+					for (String atUserId : atUserIds) {
+						notice = new Notice();
+						noticeCon = reUser.getUserName() + "在文章\"" + article.getTitle() + "\"中提到了你";
+						notice.setUrl(url);
+						notice.setUserId(atUserId);
+						notice.setPostTime(format.format(new Date()));
+						notice.setContent(noticeCon);
+						notice.setType(Constant.NOTICE_TYPE1);
+						notice.setStatus("N");
+						noticeDao.createNotice(notice);
+					}
+				}
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	//留言
+	private void reMessage(String receiveUserId, List<String> atUserIds, String sendUserId, String url) {
+
+		try {
+
+			String noticeCon = "";
+			Notice notice = null;
+			String sendUserName = "";
+			if (Tools.isNotEmpty(sendUserId)) {
+				User reUser = userDao.queryUser("", "", sendUserId);
+				if (reUser != null) {
+					sendUserName = reUser.getUserName();
+				}
+			}
+			//如果发送人和接受人不一样就发送消息
+			if (!receiveUserId.equals(sendUserId)) {
+				//发送消息给被回复的人
+				noticeCon = sendUserName + "给你留言了";
+				notice = new Notice();
+				notice.setUrl(url);
+				notice.setUserId(receiveUserId);
+				notice.setPostTime(format.format(new Date()));
+				notice.setContent(noticeCon);
+				notice.setType(Constant.NOTICE_TYPE3);
+				notice.setStatus("N");
+				noticeDao.createNotice(notice);
+			}
+			//发送消息给被@的人
+			if (atUserIds != null) {
+				for (String atUserId : atUserIds) {
+					//如果发送人@自己，自己就不给自己发信息
+					if (atUserId.equals(sendUserId)) {
+						continue;
+					}
+					noticeCon = sendUserName + "在留言中提到了你";
+					notice = new Notice();
+					notice.setUrl(url);
+					notice.setUserId(atUserId);
+					notice.setPostTime(format.format(new Date()));
+					notice.setContent(noticeCon);
+					notice.setType(Constant.NOTICE_TYPE3);
+					notice.setStatus("N");
+					noticeDao.createNotice(notice);
 				}
 			}
 		}
