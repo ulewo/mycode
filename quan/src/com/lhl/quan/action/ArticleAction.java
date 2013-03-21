@@ -180,19 +180,6 @@ public class ArticleAction extends BaseAction {
 			group = groupService.queryGorup(gid);
 			itemId = article.getItemId();
 			itemList = articleItemService.queryItemByGid(gid);
-			int countNumber = reArticleService.queryReArticleCount(id);
-			Pagination.setPageSize(Constant.pageSize20);
-			int pageSize = Pagination.getPageSize();
-			pageTotal = Pagination.getPageTotal(countNumber);
-			if (page > pageTotal) {
-				page = pageTotal;
-			}
-			if (page < 1) {
-				page = 1;
-			}
-			int noStart = (page - 1) * pageSize;
-			reArticleList = reArticleService.queryReArticles(id, noStart,
-					pageSize);
 			showType = "2";
 			articleService.updateArticleSelective(article);
 		} catch (BaseException e) {
@@ -366,6 +353,7 @@ public class ArticleAction extends BaseAction {
 			reArticle.setPid(pid);
 			User sessionUser = (User) sessionObj;
 			reArticle.setAuthorid(sessionUser.getUserId());
+			reArticle.setAuthorName(sessionUser.getUserName());
 			reArticle.setAuthorIcon(sessionUser.getUserLittleIcon());
 			ReArticle re = reArticleService.addReArticle(reArticle, authorId,
 					title);
