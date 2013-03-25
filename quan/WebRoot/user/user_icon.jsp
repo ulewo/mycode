@@ -8,7 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>有乐窝</title>
 <link rel="stylesheet" type="text/css" href="../css/user.userinfo.css">
-   <link rel="stylesheet" type="text/css" href="../imgcutcss/imgareaselect-default.css" />
+<LINK href="../css/jquery.Jcrop.css" type="text/css" rel="Stylesheet" media="screen">
 <link id="artDialog-skin" href="../dialog/skins/default.css" rel="stylesheet" />
 <script type="text/javascript" charset="utf-8" src="../editor/kindeditor-min.js"></script>
 <script type="text/javascript" charset="utf-8" src="../js/jquery.min.js"></script>
@@ -16,10 +16,27 @@
 <script type="text/javascript" src="../js/userspace.js"></script>
 <script src="../dialog/jquery.artDialog.min.js?skin=default"></script>
 <script src="../dialog/plugins/iframeTools.js"></script>
-<script type="text/javascript" src="../imgcutscripts/jquery.imgareaselect.pack.js"></script>
+
+<script type="text/javascript" src="../js/jquery.Jcrop.min.js"></script>
+<script type="text/javascript" src="../js/jQuery.UtrialAvatarCutter.js"></script>
+
 <style type="text/css">
 	#selected3 a{background:#FFFFFF;}
 </style>
+<script type="text/javascript">
+var cutter = new jQuery.UtrialAvatarCutter(
+		{
+			//主图片所在容器ID
+			content : "picture_original",
+			
+			//缩略图配置,ID:所在容器ID;width,height:缩略图大小
+			purviews : [{id:"picture_200",width:80,height:80}],
+			
+			//选择器默认大小
+			selector : {width:80,height:80}
+		}
+	);
+</script>
 </head>
 <body>
 <jsp:include page="../common/head.jsp"/>
@@ -29,11 +46,6 @@
 	   </div>
 	   <div class="right">
 		  	<div class="navPath"><a href="userInfo.jspx?userId=${user.userId}">空间</a>&nbsp;&gt;&gt;&nbsp;修改头像</div>
-		  	<input type="hidden" id="x1" name="x1" value="" />
-			<input type="hidden" id="y1" name="y1" value="" />
-			<input type="hidden" id="w" name="y2" value="" />
-			<input type="hidden" id="h" name="y2" value="" />
-			<input type="hidden" name="groupicon" id="groupicon" value="">
 			<!-- <div>
 				<div class="tit_con_user" style="cursor:pointer;"><div class="tit_con_radio"><input type="radio" name="iconType" class="iconType" checked="checked" id="cus_img"></div><div class="tit_con_tit">自定义头像</div></div>
 				<div class="tit_con_user" style="margin-top:10px;cursor:pointer;"><div class="tit_con_radio"><input type="radio" name="iconType" class="iconType" id="sys_img"></div><div class="tit_con_tit">推荐头像</div></div>
@@ -43,12 +55,12 @@
 			<div class="form_are">
 				<iframe src="../imageUpload/userAvatarUpload.jsp" id="iframupload" height="30" width="310" frameborder="0"></iframe>
 			</div>
-			<div class="imgCut" id="imgCut">
-				<div class="cutarea">
-					<img id="photo" src="../upload/useravatar.jpg">
+			<div>
+				<div class="cutarea" id="picture_original">
+					<img src="" id="myImg"/>
 				</div>
 				<div id="ferret" class="ferret">
-					<div id="preview"><img src="../upload/useravatar.jpg" style="position: relative;" /></div>
+					<div id="picture_200"></div>
 				</div>
 				<div style="clear:left;"></div>
 			</div>
