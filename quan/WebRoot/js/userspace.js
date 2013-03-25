@@ -1,3 +1,7 @@
+
+$(function(){
+	cutter.init();
+});
 function preview(img, selection) {
 	if (!selection.width || !selection.height)
 		return;
@@ -24,7 +28,9 @@ function preview(img, selection) {
 }
 
 function initImage(imageName) {
-	$("#groupicon").val(imageName);
+	cutter.reload("../upload/" + imageName);
+	//$("#photo").attr("src", "../upload/" + imageName);
+	/*$("#groupicon").val(imageName);
 	$("#photo").attr("src", "../upload/" + imageName);
 	$("#preview>img").attr("src", "../upload/" + imageName);
 	$("#imgCut").css({
@@ -41,11 +47,12 @@ function initImage(imageName) {
 		fadeSpeed : 200,
 		handles : true,
 		onSelectChange : preview
-	});
+	});*/
 }
 
 function saveUserIcon(userId) {
-	if ($("#groupicon").val() == "") {
+	var data = cutter.submit();
+	if (data.s=="") {
 		alert("请先选择图片");
 		return;
 	}
@@ -55,7 +62,7 @@ function saveUserIcon(userId) {
 	$("#save").css({
 		"display" : "none"
 	});
-	var userIcon = $("#groupicon").val();
+	var userIcon = data.s.substring(3,data.s.lastIndexOf("?"));
 	var x1 = $("#x1").val();
 	var y1 = $("#y1").val();
 	var width = $("#w").val();
@@ -68,10 +75,10 @@ function saveUserIcon(userId) {
 		data : {
 			"userId" : userId,
 			"userIcon" : userIcon,
-			"x1" : x1,
-			"y1" : y1,
-			"width" : width,
-			"height" : height,
+			"x1" : data.x,
+			"y1" : data.y,
+			"width" : data.w,
+			"height" : data.h,
 			"imgtype" : 0,
 			"date" : new Date()
 		},
