@@ -57,7 +57,7 @@
 	  			</div>
   		</div>
   		<div class="right">
-  			<div class="create_wo"><a href="javascript:createGroup()">创建我的窝窝</a></div>
+  			<div class="create_wo"><a href="javascript:createWoWo()">创建我的窝窝</a></div>
   			<div class="titinfo">每日图文</div>
   			<div>
   				<c:forEach var="article" items="${imgArticle}">
