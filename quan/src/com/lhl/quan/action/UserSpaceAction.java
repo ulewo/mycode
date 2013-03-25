@@ -853,32 +853,8 @@ public class UserSpaceAction extends BaseAction {
 				imgType = userIcon.substring(idx + 1);
 			}
 		}
-		String srcpath = ServletActionContext.getServletContext().getRealPath("/") + "upload/" + userIcon;
+		String srcpath = ServletActionContext.getServletContext().getRealPath("/") + userIcon;
 		try {
-
-			// 截取图片 生成临时图片
-			/*
-			 * String current = String.valueOf(System.currentTimeMillis()); in =
-			 * new FileInputStream(srcpath); BufferedImage img =
-			 * ImageIO.read(in); BufferedImage subimg = img.getSubimage(x1, y1,
-			 * width, height); tempPath =
-			 * ServletActionContext.getServletContext().getRealPath("/") +
-			 * "/upload/" + yearMonth + "/" + current + ".jpg";;
-			 * ImageIO.write(subimg, "jpg", new File(tempPath));
-			 * 
-			 * BufferedImage srcImg = ImageIO.read(new File(tempPath));
-			 * 
-			 * BufferedImage okimg = new BufferedImage(60, 60,
-			 * BufferedImage.TYPE_INT_RGB); Graphics2D g =
-			 * okimg.createGraphics();
-			 * 
-			 * g.drawImage(srcImg, 0, 0, 60, 60, null); current =
-			 * String.valueOf(System.currentTimeMillis()); String okPath =
-			 * ServletActionContext.getServletContext().getRealPath("/") +
-			 * "/upload/" + yearMonth + "/" + current + ".jpg"; resultPath =
-			 * yearMonth + "/" + current + ".jpg"; ImageIO.write(okimg, "jpg",
-			 * new File(okPath));
-			 */
 			User sessionUser = getSessionUser();
 			File tempfile = new File(srcpath);
 			tempIn = new FileInputStream(tempfile);
