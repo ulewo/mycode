@@ -13,6 +13,7 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 
 import com.lhl.util.DrowImage;
@@ -27,9 +28,8 @@ import com.opensymphony.xwork2.ActionSupport;
  */
 public class AvatarUploadAction extends ActionSupport {
 
-	/**
-	 * 
-	 */
+	private Logger logger = Logger.getLogger(AvatarUploadAction.class);
+
 	private static final long serialVersionUID = 1L;
 
 	private static final int BUFFER_SIZE = 20 * 1024;
@@ -121,36 +121,42 @@ public class AvatarUploadAction extends ActionSupport {
 		return ERROR;
 	}
 
-	public String avatarUpload() throws Exception {
+	public String avatarUpload() {
 
-		File srcFiles = upload;
-		String srcName = uploadFileName.toLowerCase();
-		// 判断文件类型是否符合(.jpg,.gif,.png,.bmp)
-		if (!srcName.endsWith(".jpg") && !srcName.endsWith(".gif") && !srcName.endsWith(".png")
-				&& !srcName.endsWith(".bmp")) {
+		try {
+			File srcFiles = upload;
+			String srcName = uploadFileName.toLowerCase();
+			// 判断文件类型是否符合(.jpg,.gif,.png,.bmp)
+			if (!srcName.endsWith(".jpg") && !srcName.endsWith(".gif") && !srcName.endsWith(".png")
+					&& !srcName.endsWith(".bmp")) {
+				return ERROR;
+			}
+			SimpleDateFormat yearMonthFormat = new SimpleDateFormat("yyyyMM");
+			String yearMonth = yearMonthFormat.format(new Date());
+			String imagePath = ServletActionContext.getServletContext().getRealPath("/") + "/upload/" + yearMonth;
+			File imagePathFile = new File(imagePath);
+			if (!imagePathFile.exists()) {
+				imagePathFile.mkdirs();
+			}
+			// 根据服务器的文件保存地址和原文件名创建目录文件全路径
+			String destPath = imagePathFile + "/" + uploadFileName;
+			File destFile = new File(destPath);
+			if (!copy(srcFiles, destFile)) {
+				return ERROR;
+			}
+			SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
+			String current = format.format(new Date());
+			String destImage = ServletActionContext.getServletContext().getRealPath("/") + "upload/" + yearMonth + "/"
+					+ current + ".jpg";
+			DrowImage.saveImageAsJpg(destPath, destImage, 60, 60, true);
+			destFile.delete();
+			uploadFileName = yearMonth + "/" + current + ".jpg";
+			return SUCCESS;
+		}
+		catch (Exception e) {
+			logger.error(e);
 			return ERROR;
 		}
-		SimpleDateFormat yearMonthFormat = new SimpleDateFormat("yyyyMM");
-		String yearMonth = yearMonthFormat.format(new Date());
-		String imagePath = ServletActionContext.getServletContext().getRealPath("/") + "/upload/" + yearMonth;
-		File imagePathFile = new File(imagePath);
-		if (!imagePathFile.exists()) {
-			imagePathFile.mkdirs();
-		}
-		// 根据服务器的文件保存地址和原文件名创建目录文件全路径
-		String destPath = imagePathFile + "/" + uploadFileName;
-		File destFile = new File(destPath);
-		if (!copy(srcFiles, destFile)) {
-			return ERROR;
-		}
-		SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
-		String current = format.format(new Date());
-		String destImage = ServletActionContext.getServletContext().getRealPath("/") + "upload/" + yearMonth + "/"
-				+ current + ".jpg";
-		DrowImage.saveImageAsJpg(destPath, destImage, 60, 60, true);
-		destFile.delete();
-		uploadFileName = yearMonth + "/" + current + ".jpg";
-		return SUCCESS;
 	}
 
 	public String getRealyPath(String path) {

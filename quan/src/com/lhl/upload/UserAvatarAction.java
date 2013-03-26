@@ -13,6 +13,7 @@ import java.io.OutputStream;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 
 import com.lhl.common.action.BaseAction;
@@ -26,12 +27,10 @@ import com.lhl.util.DrowImage;
  * @author Administrator
  * 
  */
-public class UserAvatarAction extends BaseAction
-{
+public class UserAvatarAction extends BaseAction {
 
-	/**
-	 * 
-	 */
+	private Logger logger = Logger.getLogger(UserAvatarAction.class);
+
 	private static final long serialVersionUID = 1L;
 
 	private static final int BUFFER_SIZE = 20 * 1024;
@@ -46,81 +45,64 @@ public class UserAvatarAction extends BaseAction
 
 	private String message;
 
-	private static boolean copy(File src, File dst)
-	{
+	private static boolean copy(File src, File dst) {
 
 		boolean result = false;
 		InputStream in = null;
 		OutputStream out = null;
 		FileInputStream fin = null;
 		FileOutputStream fout = null;
-		try
-		{
+		try {
 			fin = new FileInputStream(src);
 			fout = new FileOutputStream(dst);
 			in = new BufferedInputStream(fin, BUFFER_SIZE);
 			out = new BufferedOutputStream(fout, BUFFER_SIZE);
 			byte[] buffer = new byte[BUFFER_SIZE];
 			int len = 0;
-			while ((len = in.read(buffer)) > 0)
-			{
+			while ((len = in.read(buffer)) > 0) {
 				out.write(buffer, 0, len);
 			}
 			out.flush();
 			result = true;
 		}
-		catch (Exception e)
-		{
+		catch (Exception e) {
 			e.printStackTrace();
 			result = false;
 		}
-		finally
-		{
-			if (null != fin)
-			{
-				try
-				{
+		finally {
+			if (null != fin) {
+				try {
 					fin.close();
 					fin = null;
 				}
-				catch (IOException e)
-				{
+				catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
-			if (null != fout)
-			{
-				try
-				{
+			if (null != fout) {
+				try {
 					fout.close();
 					fout = null;
 				}
-				catch (IOException e)
-				{
+				catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
-			if (null != in)
-			{
-				try
-				{
+			if (null != in) {
+				try {
 					in.close();
 					in = null;
 				}
-				catch (IOException e)
-				{
+				catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
-			if (null != out)
-			{
-				try
-				{
+			if (null != out) {
+				try {
 					out.close();
 					out = null;
 				}
-				catch (IOException e)
-				{
+				catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
@@ -128,17 +110,14 @@ public class UserAvatarAction extends BaseAction
 		return result;
 	}
 
-	public String deleteFile() throws Exception
-	{
+	public String deleteFile() throws Exception {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
 		String filePath = request.getParameter("filePath");
 		String fileName = request.getParameter("fileName");
-		if (filePath != null && fileName != null)
-		{
+		if (filePath != null && fileName != null) {
 			File file = new File(ServletActionContext.getServletContext().getRealPath("/") + "/" + filePath);
-			if (file.exists() && file.isFile())
-			{
+			if (file.exists() && file.isFile()) {
 				file.delete();
 				ServletActionContext.getRequest().setAttribute("fileName", fileName);
 				return SUCCESS;
@@ -147,18 +126,14 @@ public class UserAvatarAction extends BaseAction
 		return ERROR;
 	}
 
-	public String imageUpload() throws Exception
-	{
+	public String imageUpload() throws Exception {
 
 		File destFile = null;
 		User sessionUser = getSessionUser();
-		try
-		{
-			if (upload != null)
-			{
+		try {
+			if (upload != null) {
 				File srcFiles = upload;
-				if (srcFiles.length() > 1024 * 1024)
-				{
+				if (srcFiles.length() > 1024 * 1024) {
 					message = "isBig";
 					uploadFileName = null;
 					return SUCCESS;
@@ -166,21 +141,18 @@ public class UserAvatarAction extends BaseAction
 				String srcName = uploadFileName.toLowerCase();
 				// 判断文件类型是否符合(.jpg,.gif,.png,.bmp)
 				if (!srcName.endsWith(".jpg") && !srcName.endsWith(".gif") && !srcName.endsWith(".png")
-						&& !srcName.endsWith(".bmp"))
-				{
+						&& !srcName.endsWith(".bmp")) {
 					message = "error";
 					uploadFileName = null;
 					return SUCCESS;
 				}
 				String imagePath = ServletActionContext.getServletContext().getRealPath("/") + "/upload/avatartemp/";
 				File imagePathFile = new File(imagePath);
-				if (!imagePathFile.exists())
-				{
+				if (!imagePathFile.exists()) {
 					imagePathFile.mkdirs();
 				}
 				destFile = new File(imagePath + sessionUser.getUserId() + ".jpg");
-				if (!copy(srcFiles, destFile))
-				{
+				if (!copy(srcFiles, destFile)) {
 					message = "error";
 					uploadFileName = null;
 					return SUCCESS;
@@ -193,10 +165,8 @@ public class UserAvatarAction extends BaseAction
 				int height = srcImage.getHeight();
 				int w = 650;
 				int h = 650;
-				if (destFile.length() > 200 * 1024 || width > 650 || height > 650)
-				{
-					if (destFile.length() > 200 * 1024 && width < 650 && height < 650)
-					{//图片太大，长宽不大的情况
+				if (destFile.length() > 200 * 1024 || width > 650 || height > 650) {
+					if (destFile.length() > 200 * 1024 && width < 650 && height < 650) {//图片太大，长宽不大的情况
 						w = width;
 						h = height;
 					}
@@ -205,53 +175,47 @@ public class UserAvatarAction extends BaseAction
 				resultFileName = "avatartemp/" + sessionUser.getUserId() + ".jpg";
 			}
 		}
-		catch (Exception e)
-		{
+		catch (Exception e) {
 			destFile.delete();
 			resultFileName = null;
 			message = "error";
+			logger.info(e);
+			e.printStackTrace();
 		}
 		return SUCCESS;
 	}
 
-	public String getRealyPath(String path)
-	{
+	public String getRealyPath(String path) {
 
 		return ServletActionContext.getServletContext().getRealPath(path);
 	}
 
-	public String getUploadFileName()
-	{
+	public String getUploadFileName() {
 
 		return uploadFileName;
 	}
 
-	public void setUploadFileName(String uploadFileName)
-	{
+	public void setUploadFileName(String uploadFileName) {
 
 		this.uploadFileName = uploadFileName;
 	}
 
-	public void setUpload(File upload)
-	{
+	public void setUpload(File upload) {
 
 		this.upload = upload;
 	}
 
-	public String getMessage()
-	{
+	public String getMessage() {
 
 		return message;
 	}
 
-	public void setMessage(String message)
-	{
+	public void setMessage(String message) {
 
 		this.message = message;
 	}
 
-	public String getResultFileName()
-	{
+	public String getResultFileName() {
 
 		return resultFileName;
 	}
