@@ -60,7 +60,7 @@
 		<div class="input_area">
 			<div class="tit"></div>
 			<div class="bbtn1" id="subBtn">
-				<a href="javascript:register()">注册</a>
+				<a href="javascript:registerdo()">注册</a>
 			</div>
 		</div>
 		</form>

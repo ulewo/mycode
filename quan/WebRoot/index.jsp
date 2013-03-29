@@ -44,14 +44,14 @@
   			<div class="titinfo">最新文章</div>
 	  			<ul class="new_article_list">
 	  				<c:forEach var="article" items="${list}">
-	  					<li><span class="article_tit"><a href="group/group.jspx?gid=${article.gid}">[${article.groupName}]</a><a href="group/post.jspx?id=${article.id}" class="sec_span2"  title="${article.title}">${article.title}</a></span><span class="article_user">${fn:substring(article.postTime,0,10)} by ${article.authorName}</span></li>
+	  					<li><span class="article_tit"><a href="group/group.jspx?gid=${article.gid}" target="_blank">[${article.groupName}]</a><a href="group/post.jspx?id=${article.id}" class="sec_span2"  title="${article.title}" target="_blank">${article.title}</a></span><span class="article_user">${fn:substring(article.postTime,0,10)} by ${article.authorName}</span></li>
 	  				</c:forEach>
 	  			</ul>
   			<div class="titinfo">最新博文</div>
   			  <div>
 				<ul class="new_blog">
 					<c:forEach var="blog" items="${blogList}">
-						<li><span class="article_tit"><a href="user/blogdetail.jspx?id=${blog.id}" title="${article.title}">${blog.title}</a><span class="sec_span">${fn:substring(blog.postTime,0,10)} by ${blog.userName}</span></span><span class="article_read">${blog.reCount}回/${blog.readCount}阅</span></li>
+						<li><span class="article_tit"><a href="user/blogdetail.jspx?id=${blog.id}" title="${article.title}" target="_blank">${blog.title}</a><span class="sec_span">${fn:substring(blog.postTime,0,10)} by ${blog.userName}</span></span><span class="article_read">${blog.reCount}回/${blog.readCount}阅</span></li>
 					</c:forEach>
 	  			</ul>
 	  			</div>
@@ -63,7 +63,7 @@
   				<c:forEach var="article" items="${imgArticle}">
   					<div class="day_pic">
 					<div class="day_pic_img"><img src="upload/${article.image}"></div>
-					<div class="day_pic_tit"><a href="group/post.jspx?id=${article.id}" title="${article.title}">${article.title}</a></div>
+					<div class="day_pic_tit"><a href="group/post.jspx?id=${article.id}" title="${article.title}" target="_blank">${article.title}</a></div>
 				</div> 
   				</c:forEach>
 				<div class="clear"></div>
@@ -71,9 +71,9 @@
 	  			<div class="titinfo">推荐窝窝</div>
 	  			<c:forEach var="group" items="${commendGroupList}">
 	  				<div class="recommend_wo">
-  					<div class="wo_img"><a href="group/group.jspx?gid=${group.id}"><img src="upload/${group.groupIcon}"></a></div>
+  					<div class="wo_img"><a href="group/group.jspx?gid=${group.id}" target="_blank"><img src="upload/${group.groupIcon}"></a></div>
   					<div class="wo_info">
-  						<div><a href="group/group.jspx?gid=${group.id}">${group.groupName}</a></div>
+  						<div><a href="group/group.jspx?gid=${group.id}" target="_blank">${group.groupName}</a></div>
   						<div>成员${group.members}人</div>
   						<div>文章${group.topicCount}篇</div>
   					</div>
@@ -84,8 +84,8 @@
 			  	<div>
 			  		<c:forEach var="member" items="${activeUserList}">
 				  		<div class="user_img">
-				  			<div><a href="user/userInfo.jspx?userId=${member.userId}"><img src="upload/${member.userLittleIcon}"></a></div>
-				  			<div class="user_img_name"><a href="user/userInfo.jspx?userId=${member.userId}" title="${member.userName}">${member.userName}</a></div>
+				  			<div><a href="user/userInfo.jspx?userId=${member.userId}" target="_blank"><img src="upload/${member.userLittleIcon}"></a></div>
+				  			<div class="user_img_name"><a href="user/userInfo.jspx?userId=${member.userId}" title="${member.userName}" target="_blank">${member.userName}</a></div>
 				  		</div>
 			  		</c:forEach>
 			  		<div class="clear"></div>

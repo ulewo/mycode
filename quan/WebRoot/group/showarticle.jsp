@@ -99,7 +99,7 @@
 				<div class="bbtn1"><a href="javascript:reArticle('${article.id}')">☆高级回复</a></div>
 				<div class="bbtn1"><a href="javascript:addArticle()">◎发表话题</a></div>
 			</div>
-			<form action="fastReArticle.jspx" method="post">
+			<form  method="post">
 				<input type="hidden" value="${article.authorId}" id="authorId">
 				<input type="hidden" value="${article.title}" id="articleTit">
 				<div class="fast_re_con">
@@ -116,13 +116,6 @@
 							<textarea id="reContent"></textarea>
 						</div>
 						<div class="comment_form_panel">
-							<div class="comment_checkcode">
-								<input type="text" name="checkCode" id="checkCode">
-							</div>
-							<div class="comment_checkcode_img">
-								<a href="JavaScript:refreshcode2();" onfocus="this.blur();"><img id="checkCodeImage2" src="../common/image.jsp" border="0" height="22"></a>
-							</div>
-							<div class="comment_checkcode_link"><a href="javascript:refreshcode2()">换一张</a></div>
 							<div class="comment_checkcode_rebtn" id="subBtn_con">
 								<input type="button" class="button" onclick="subReForm('${user.userId}','${id}','${gid }')" value="回复" id="subBtn">
 							</div>

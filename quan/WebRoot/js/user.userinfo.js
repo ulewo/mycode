@@ -11,10 +11,6 @@ function submitForm() {
 		art.dialog.tips("留言不能为空!");
 		return;
 	}
-	if (checkCode == "") {
-		art.dialog.tips("验证码不能为空!");
-		return;
-	}
 	if (content.trim().length > 500) {
 		art.dialog.tips("留言内容不能超过500字符!");
 		return;
@@ -33,7 +29,6 @@ function submitForm() {
 		data : {
 			reUserName : name,
 			content : content,
-			checkCode : checkCode,
 			userId : userId,
 			quote : quote,
 			"time" : new Date()

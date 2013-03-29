@@ -144,7 +144,7 @@ function checkInfor(obj,type){
 }
 
 //注册
-function register(){
+function registerdo(){
 	var userName = $(".long_input").eq(0).val();
 	var email = $(".long_input").eq(1).val();
 	var passWord = $(".long_input").eq(2).val();

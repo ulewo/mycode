@@ -31,7 +31,7 @@ function cutString(str){
 	<div class="itemcon">
 		<div class="itemcon_item"><jsp:include page="items.jsp"/></div>
 		<div class="itemcon_btn">
-			<c:if test="${showManageGroup=='Y'}"><div class="bbtn2"><a href="../manage/manage.jspx?gid=${group.id}">管理圈子</a></div></c:if>
+			<c:if test="${showManageGroup=='Y'}"><div class="bbtn2"><a href="../manage/manage.jspx?gid=${group.id}" target="_blank">管理圈子</a></div></c:if>
 		</div>
 	</div>
 	<div class="main_con">
@@ -44,7 +44,7 @@ function cutString(str){
 					<div class="ginfo">
 						<div>
 							<span class="gname">${group.groupName}</span>&nbsp;&nbsp;
-							<span class="gzhu">群主:<a href="../user/userInfo.jspx?userId=${admin.userId}">${admin.userName}</a></span>&nbsp;&nbsp;
+							<span class="gzhu">群主:<a href="../user/userInfo.jspx?userId=${admin.userId}" target="_blank">${admin.userName}</a></span>&nbsp;&nbsp;
 							<span>创建于:${fn:substring(group.createTime,0,10)}</span>&nbsp;&nbsp;
 						</div>
 						<div>
@@ -78,17 +78,17 @@ function cutString(str){
 							<div class="atit_tit">
 							<c:if test="${article.itemName!=null}">【<a href="topics.jspx?gid=${group.id}&itemId=${article.itemId }">${article.itemName }</a>】</c:if>
 							<c:if test="${article.itemName==null}">【<a href="topics.jspx?gid=${group.id}">全部话题</a>】</c:if>
-							<a href="post.jspx?id=${article.id}" ${article.titleStyle}>${article.title }</a>
+							<a href="post.jspx?id=${article.id}" ${article.titleStyle} target="_blank">${article.title }</a>
 							&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#999999">${article.reNumber }/${article.readNumber}</span>
 							</div>
 						</div>
 						<div class="aauthor">
-							<a href="../user/userInfo.jspx?userId=${article.authorId}">${article.authorName}</a><br>
+							<a href="../user/userInfo.jspx?userId=${article.authorId}" target="_blank">${article.authorName}</a><br>
 							<span class="timestyle">${fn:substring(article.postTime,0,16)}</span>
 						</div>
 						<div class="aauthor">
 							<c:if test="${article.lastReAuthorId!=null}">
-								<a href="../user/userInfo.jspx?userId=${article.lastReAuthorId}">${article.lastReAuthorName}</a><br>
+								<a href="../user/userInfo.jspx?userId=${article.lastReAuthorId}" target="_blank">${article.lastReAuthorName}</a><br>
 							</c:if>
 							<c:if test="${article.lastReAuthorId==null}">
 								${article.lastReAuthorName }<br>
@@ -114,7 +114,7 @@ function cutString(str){
 							<div class="g_admin_icon"><img src="../images/gly.gif"></div>
 							<div class="g_admin_title">管理员</div>
 						</c:if>
-						<div class="g_admin_name"><a href="../user/userInfo.jspx?userId=${admin.userId}">${admin.userName}</a></div>
+						<div class="g_admin_name"><a href="../user/userInfo.jspx?userId=${admin.userId}" target="_blank">${admin.userName}</a></div>
 					</div>
 				</c:forEach>
 				
@@ -128,8 +128,8 @@ function cutString(str){
 			<div class="g_admin">
 				<c:forEach var="member" items="${newsMembers}">
 					<div class="g_mem">
-						<div class="g_men_img"><a href="../user/userInfo.jspx?userId=${member.userId}"><img src="../upload/${member.userIcon}" width="60" border="0"></a></div>
-						<div class="g_men_name"><a href="../user/userInfo.jspx?userId=${member.userId}" title="${member.userName}">
+						<div class="g_men_img"><a href="../user/userInfo.jspx?userId=${member.userId}" target="_blank"><img src="../upload/${member.userIcon}" width="60" border="0"></a></div>
+						<div class="g_men_name"><a href="../user/userInfo.jspx?userId=${member.userId}" title="${member.userName}" target="_blank">
 							<script>
 								document.write("${member.userName}".cutString(8));
 							</script>
@@ -142,8 +142,8 @@ function cutString(str){
 			<div class="g_admin">
 				<c:forEach var="member" items="${activeMembers}">
 						<div class="g_mem">
-							<div class="g_men_img"><a href="../user/userInfo.jspx?userId=${member.userId}"><img src="../upload/${member.userIcon}" width="60" border="0"></a></div>
-							<div class="g_men_name"><a href="../user/userInfo.jspx?userId=${member.userId}" title="${member.userName}">
+							<div class="g_men_img"><a href="../user/userInfo.jspx?userId=${member.userId}" target="_blank"><img src="../upload/${member.userIcon}" width="60" border="0"></a></div>
+							<div class="g_men_name"><a href="../user/userInfo.jspx?userId=${member.userId}" title="${member.userName}" target="_blank">
 								<script>
 								document.write("${member.userName}".cutString(8));
 							</script>

@@ -2,10 +2,6 @@ function callBackReArticle(data, userId) {
 	if (data.msg == "nologin") {
 		alert("请首先登录");
 		return;
-	} else if (data.msg == "checkCodeErr") {
-		alert("验证码错误");
-		refreshcode2();
-		return;
 	} else if (data.msg == "contentError") {
 		alert("输入内容为空，或者内容太长");
 		return;
@@ -24,7 +20,7 @@ function quote(id) {
 }
 
 function showAboutArticle(keyWord, gid) {
-	$("<img src='../images/loading.gif' id='loadImg'>").appendTo(
+	$("<img src='../images/load.gif' id='loadImg'>").appendTo(
 			$("#about_con"));
 	$.ajax({
 		async : true,
@@ -206,7 +202,7 @@ function Recoment_form_panel(data) {
 					this.recoment_form_panel));
 	this.checkCode_area = $("<div class='comment_form_panel'></div>").appendTo(
 			this.recoment_form_panel);
-	this.checkCode = $("<input type='text'>").appendTo(
+/*	this.checkCode = $("<input type='text'>").appendTo(
 			$("<div class='comment_checkcode'></div>").appendTo(
 					this.checkCode_area));
 	$(
@@ -214,14 +210,16 @@ function Recoment_form_panel(data) {
 			.appendTo(this.checkCode_area);
 	$(
 			"<div class='comment_checkcode_link'><a href='javascript:refreshcode()'>换一张</a></div>")
-			.appendTo(this.checkCode_area);
+			.appendTo(this.checkCode_area);*/
+	var comment_checkcode_rebtn = $("<div class='comment_checkcode_rebtn'></div>").appendTo(this.checkCode_area);
+	
 	$(
-			"<div class='comment_checkcode_rebtn'><a href='javascript:void(0)'>回复</a></div>")
+			"<a href='javascript:void(0)'>回复</a>")
 			.bind("click", {
 				data : data,
-				reCotent : this.textarea,
-				checkCode : this.checkCode
-			}, this.subReComent).appendTo(this.checkCode_area);
+				reCotent : this.textarea
+			}, this.subReComent).appendTo(comment_checkcode_rebtn);
+	$("<img src='../images/load.gif' style='display:none'>").appendTo(comment_checkcode_rebtn);		
 	if (groupParam.userId == "") {
 		var shade = $("<div class='shade' id='shade'></div>").appendTo(
 				this.recoment_form_panel);
@@ -243,68 +241,59 @@ Recoment_form_panel.prototype = {
 	subReComent : function(event) {
 		var data = event.data.data;
 		data.reCotent = event.data.reCotent.val();
-		data.checkCode = event.data.checkCode.val();
-		subSubReComment(data);
-	}
-}
-
-function subSubReComment(data) {
-	var pid = data.pid;
-	var atUserId = data.authorid;
-	var atUserName = data.authorName;
-	var reCotent = data.reCotent;
-	var checkCode = data.checkCode;
-	var articleTit = $("#articleTit").val();
-	var authorId = $("#authorId").val();
-	if (reCotent == "") {
-		alert("请填写回复内容");
-		return;
-	}
-	if (reCotent.trim().length > 500) {
-		alert("内容超过500字符，请重新输入");
-		return;
-	}
-	if (checkCode == "") {
-		alert("请填写验证码");
-		return;
-	}
-	$.ajax({
-		async : true,
-		cache : false,
-		type : 'POST',
-		dataType : "json",
-		data : {
-			"articleid" : articleId,
-			"reContent" : reCotent,
-			"checkCode" : checkCode,
-			"gid" : groupParam.gid,
-			"atUserId" : atUserId,
-			"atUserName" : atUserName,
-			"pid" : pid
-		},
-		url : 'addSubReComment.jspx',// 请求的action路径
-		success : function(data) {
-			if (data.msg == "ok") {
-				$("#recoment_form_panel").before(
-						new SubRePanel(data.reArticle).asHtml());
-				$("#recoment_form_panel").remove();
-			} else if (data.msg == "checkCodeErr") {
-				alert("验证码错误");
-				refreshcode()();
-			} else if (data.msg == "nologin") {
-				alert("请登录后再发贴");
-			} else if (data.msg == "contentError") {
-				alert("输入内容为空，或者内容太长");
-				return;
-			}
-
+		var pid = data.pid;
+		var atUserId = data.authorid;
+		var atUserName = data.authorName;
+		var reCotent = data.reCotent;
+		var articleTit = $("#articleTit").val();
+		var authorId = $("#authorId").val();
+		if (reCotent == "") {
+			alert("请填写回复内容");
+			return;
 		}
-	});
+		if (reCotent.trim().length > 500) {
+			alert("内容超过500字符，请重新输入");
+			return;
+		}
+		//防止重复提交禁止提交按钮
+		var _thispaernt = $(this).parent();
+		_thispaernt.children().eq(0).hide();
+		_thispaernt.children().eq(1).show();
+		$.ajax({
+			async : true,
+			cache : false,
+			type : 'POST',
+			dataType : "json",
+			data : {
+				"articleid" : articleId,
+				"reContent" : reCotent,
+				"gid" : groupParam.gid,
+				"atUserId" : atUserId,
+				"atUserName" : atUserName,
+				"pid" : pid
+			},
+			url : 'addSubReComment.jspx',// 请求的action路径
+			success : function(data) {
+				_thispaernt.children().eq(0).show();
+				_thispaernt.children().eq(1).hide();
+				if (data.msg == "ok") {
+					$("#recoment_form_panel").before(
+							new SubRePanel(data.reArticle).asHtml());
+					$("#recoment_form_panel").remove();
+				} else if (data.msg == "nologin") {
+					alert("请登录后再发贴");
+				} else if (data.msg == "contentError") {
+					alert("输入内容为空，或者内容太长");
+					return;
+				}
+			}
+		});
+	}
 }
 
 function subReForm(userId, id, gid) {
 	var recontent = $("#reContent").val();
-	var checkCode = $("#checkCode").val();
+	//var checkCode = $("#checkCode").val();
 	var authorId = $("#authorId").val();
 	var articleTit = $("#articleTit").val();
 
@@ -312,17 +301,17 @@ function subReForm(userId, id, gid) {
 		alert("请填写回复内容");
 		return;
 	}
-	if (checkCode == "") {
+	/*if (checkCode == "") {
 		alert("请填写验证码");
 		return;
-	}
+	}*/
 
 	if (recontent.trim().length > 500) {
 		alert("内容超过500字符，请重新输入");
 		return;
 	}
 	$("#subBtn").attr("disabled", true);
-	$("<img src='../images/loading.gif' width='20'>")
+	$("<img src='../images/load.gif' width='20'>")
 			.appendTo($("#subBtn_con"));
 	$.ajax({
 		async : true,
@@ -332,7 +321,6 @@ function subReForm(userId, id, gid) {
 		data : {
 			"articleid" : id,
 			"reContent" : recontent,
-			"checkCode" : checkCode,
 			"gid" : gid,
 			"authorId" : authorId,
 			"title" : articleTit

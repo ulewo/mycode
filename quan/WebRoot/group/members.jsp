@@ -26,9 +26,9 @@
   		<div class="members">
 		<c:forEach var="member" items="${memberList}">
 	  		<div class="g_gcon">
-	  			<div class="g_gon_img"><a href="../user/userInfo.jspx?userId=${member.userId}"><img src="../upload/${member.userIcon}" width="60" border="0"></a></div>
+	  			<div class="g_gon_img"><a href="../user/userInfo.jspx?userId=${member.userId}" target="_blank"><img src="../upload/${member.userIcon}" width="60" border="0"></a></div>
 	  			<div class="g_gon_info">
-	  				<div><a href="../user/userInfo.jspx?userId=${member.userId}">${member.userName}</a></div>
+	  				<div><a href="../user/userInfo.jspx?userId=${member.userId}" target="_blank">${member.userName}</a></div>
 	  				<div>发帖:${member.topicCount}</div>
 	  				<div>加入时间:${fn:substring(member.joinTime,0,10)}</div>
 	  			</div>

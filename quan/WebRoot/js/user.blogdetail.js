@@ -14,10 +14,6 @@ function subReply(blogId) {
 		art.dialog.tips("留言内容不能超过500字符!");
 		return;
 	}
-	if (checkCode == "") {
-		art.dialog.tips("验证码不能为空!");
-		return;
-	}
 	var quote = ""
 	if ($("#quote_panle").html() != null) {
 		quote = "<div class='quote_panle'>" + $("#infocon").html() + "</div>";
@@ -34,7 +30,6 @@ function subReply(blogId) {
 		dataType : "json",
 		data : {
 			content : content,
-			checkCode : checkCode,
 			blogId : blogId,
 			quote : quote,
 			"time" : new Date()

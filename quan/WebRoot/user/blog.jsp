@@ -31,7 +31,7 @@
   		<div>
   		<c:forEach var="blog" items="${blogList}">
   			<div class="blog_link">
-  				<a href="blogdetail.jspx?id=${blog.id}">${blog.title}</a><span>${blog.reCount}/${blog.readCount}</span>
+  				<a href="blogdetail.jspx?id=${blog.id}" target="_blank">${blog.title}</a><span>${blog.reCount}/${blog.readCount}</span>
   			</div>
 		 </c:forEach>
   		</div>

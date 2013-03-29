@@ -51,17 +51,17 @@
 				<div class="atit_tit">
 				<c:if test="${article.itemName!=null}">【<a href="topics.jspx?gid=${group.id}&itemId=${article.itemId }">${article.itemName }</a>】</c:if>
 				<c:if test="${article.itemName==null}">【<a href="topics.jspx?gid=${group.id}">全部话题</a>】</c:if>
-				<a href="post.jspx?id=${article.id}" ${article.titleStyle}>${article.title }</a>
+				<a href="post.jspx?id=${article.id}" ${article.titleStyle} target="_blank">${article.title }</a>
 				&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#999999">${article.reNumber }/${article.readNumber}</span>
 				</div>
 			</div>
 			<div class="aauthor">
-				<a href="../user/userInfo.jspx?userId=${article.authorId}">${article.authorName}</a><br>
+				<a href="../user/userInfo.jspx?userId=${article.authorId}" target="_blank">${article.authorName}</a><br>
 				<span class="timestyle">${fn:substring(article.postTime,0,16)}</span>
 			</div>
 			<div class="aauthor">
 				<c:if test="${article.lastReAuthorId!=null}">
-					<a href="../user/userInfo.jspx?userId=${article.lastReAuthorId}">${article.lastReAuthorName}</a><br>
+					<a href="../user/userInfo.jspx?userId=${article.lastReAuthorId}" target="_blank">${article.lastReAuthorName}</a><br>
 				</c:if>
 				<c:if test="${article.lastReAuthorId==null}">
 					${article.lastReAuthorName }<br>

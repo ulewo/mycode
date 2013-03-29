@@ -38,10 +38,10 @@
 			  	
 		  	</div>
 		  	<div class="topblog">
-		  		<div class="topblog_titcon"><span class="topblog_tit">最新博文</span><span class="topblog_link"><a href="blog.jspx?userId=${userId}">进入博客</a></span></div>
+		  		<div class="topblog_titcon"><span class="topblog_tit">最新博文</span><span class="topblog_link"><a href="blog.jspx?userId=${userId}" target="_blank">进入博客</a></span></div>
 		  		<c:forEach var="blog" items="${blogList}">
 		  			<div class="blog_link">
-		  				<a href="blogdetail.jspx?id=${blog.id}">${blog.title}</a><span>${blog.reCount}/${blog.readCount}</span>
+		  				<a href="blogdetail.jspx?id=${blog.id}" target="_blank">${blog.title}</a><span>${blog.reCount}/${blog.readCount}</span>
 		  			</div>
 		  		</c:forEach>
 		  		<c:if test="${empty blogList}">
@@ -49,7 +49,7 @@
 		  		</c:if>
 		  	</div>
 		  	<div class="topblog">
-		  		<div class="topblog_titcon"><span class="topblog_tit">最新留言</span><span class="topblog_link"><a href="message.jsp?userId=${userId}">进入留言板</a></span></div>
+		  		<div class="topblog_titcon"><span class="topblog_tit">最新留言</span><span class="topblog_link"><a href="message.jsp?userId=${userId}" target="_blank">进入留言板</a></span></div>
 		  		<div class="messagelist"  id="messagelist">
 			  	<c:forEach var="message" items="${messageList}">
 			  	<div class="main_message">
