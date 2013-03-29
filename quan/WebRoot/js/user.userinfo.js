@@ -88,15 +88,20 @@ function saveBaseInfo() {
 }
 
 function repassword() {
+	var checkPassWord = /^[0-9a-zA-Z]+$/;         //只能是数字，字母
 	var oldPwd = $("#oldPwd").val().trim();
 	var newPwd = $("#newPwd").val().trim();
-	var rePassWord = $("#newPwd").val().trim();
+	var rePassWord = $("#rePassWord").val().trim();
 	if (oldPwd == "") {
 		alert("旧密码不能为空");
 		return;
 	}
 	if (newPwd == "") {
 		alert("新密码不能为空");
+		return;
+	}
+	if(newPwd.length<6||newPwd.length>16||!checkPassWord.test(newPwd.trim())){
+		alert("密码长度6-16位字符，由数字，字母组成");
 		return;
 	}
 	if (rePassWord == "") {
@@ -119,7 +124,7 @@ function repassword() {
 		success : function(data) {
 			var msg = "";
 			if (data.result == "ok") {
-				msg = "密码修改成功，点击<a href='login2.jsp'>这里</a>重新登录";
+				msg = "密码修改成功，点击<a href='login.jsp'>这里</a>重新登录";
 			} else if (data.result == "pwdError") {
 				msg = "密码错误";
 			} else {
