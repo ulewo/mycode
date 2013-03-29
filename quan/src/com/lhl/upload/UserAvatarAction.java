@@ -35,6 +35,8 @@ public class UserAvatarAction extends BaseAction {
 
 	private static final int BUFFER_SIZE = 20 * 1024;
 
+	private final String SEPARATOR = File.separator;
+
 	// 用File数组来封装多个上传文件域对象
 	private File upload;
 
@@ -146,7 +148,8 @@ public class UserAvatarAction extends BaseAction {
 					uploadFileName = null;
 					return SUCCESS;
 				}
-				String imagePath = ServletActionContext.getServletContext().getRealPath("/") + "/upload/avatartemp/";
+				String imagePath = ServletActionContext.getServletContext().getRealPath(SEPARATOR) + SEPARATOR
+						+ "upload" + SEPARATOR + "avatartemp" + SEPARATOR;
 				File imagePathFile = new File(imagePath);
 				if (!imagePathFile.exists()) {
 					imagePathFile.mkdirs();

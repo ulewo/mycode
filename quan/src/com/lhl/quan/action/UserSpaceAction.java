@@ -666,7 +666,7 @@ public class UserSpaceAction extends BaseAction {
 				getOut().print(String.valueOf(obj));
 				return;
 			}
-			String sessionCcode = (String) getSession().getAttribute("checkCode");
+			/*String sessionCcode = (String) getSession().getAttribute("checkCode");
 			if (Tools.isEmpty(checkCode) || !checkCode.equalsIgnoreCase(sessionCcode)) {
 				result = "fail";
 				msg = "验证码错误";
@@ -674,7 +674,7 @@ public class UserSpaceAction extends BaseAction {
 				obj.put("result", result);
 				getOut().print(String.valueOf(obj));
 				return;
-			}
+			}*/
 			if (Tools.isEmpty(content) || content.length() > MAXLENGTH) {
 				result = "fail";
 				msg = "输入内容为空或者超过长度";
