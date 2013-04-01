@@ -90,13 +90,28 @@ function loadReComment(id) {
 							rePanel.reComent_Con);
 				}
 			}
+			//回复加载完成，定位回复的位置
+			var curUrl = window.location.href;
+		   	if(curUrl.lastIndexOf("#")!=-1){
+		   		var type = curUrl.substr(curUrl.lastIndexOf("#")+1);
+		   		setTimeout("getPostion()",1000);
+		   	}
 		}
 	});
+}
+
+function getPostion(){
+	var curUrl = window.location.href;
+   	if(curUrl.lastIndexOf("#")!=-1){
+   		var type = curUrl.substr(curUrl.lastIndexOf("#")+1);
+   		window.location.hash =type;
+   	}
 }
 
 function RePanel(data) {
 	data.pid = data.id;
 	this.outerHeight = $("<div class='outerHeight'></div>");
+	$("<a name=re"+data.id+">").appendTo(this.outerHeight);
 	// 头像
 	var authorIcon = data.authorIcon || "defaultsmall.gif";
 	this.ui_avatar = $("<div class='ui_avatar'><img src='../upload/"
@@ -149,6 +164,7 @@ RePanel.prototype = {
 }
 function SubRePanel(data) {
 	this.comment_sub = $("<div class='comtent_sub'></div>");
+	$("<a name=re"+data.id+">").appendTo(this.comment_sub);
 	this.ui_avatar = $(
 			"<div class='ui_avatar'><img src='../upload/" + data.authorIcon
 					+ "' width='30'></div>").appendTo(this.comment_sub);
