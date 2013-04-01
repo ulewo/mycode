@@ -29,13 +29,29 @@
 	  	<jsp:include page="left.jsp"></jsp:include>
 	  </div>
 	  <div class="right">
-		  	<div class="baseinfo">
+		  	<div class="baseinfoCon">
 			  	<span class="base_tit">加入时间：</span><span class="base_info">${fn:substring(userVo.registerTime,0,10) }</span><br>
 			  	<span class="base_tit">最近登录：</span><span class="base_info">${fn:substring(userVo.previsitTime,0,10) }</span><br>
-			  	<span class="base_tit">性别：</span><span class="base_info">${userVo.sex}</span><br>
-			  	<span class="base_tit">职业：</span><span class="base_info">${userVo.work}</span><br>
-			  	<span class="base_tit">地址：</span><span class="base_info">${userVo.address}</span><br>
-			  	
+			  	<span class="base_tit">性别：</span><span class="base_info">
+			  		<c:choose>
+                   		<c:when test="${userVo.sex =='M' }">男</c:when>
+                   		<c:when test="${userVo.sex =='F' }">女</c:when>
+                   		<c:otherwise>未知</c:otherwise>
+                  	</c:choose>
+			  	</span><br>
+			  	<span class="base_tit">职业：</span><span class="base_info">
+			  		<c:choose>
+                   		<c:when test="${!empty userVo.work}">${userVo.work}</c:when>
+                   		<c:otherwise>未知</c:otherwise>
+                  	</c:choose>	
+			  	</span><br>
+			  	<span class="base_tit">地址：</span><span class="base_info">
+			  		<c:choose>
+                   		<c:when test="${!empty userVo.address}">${userVo.address}</c:when>
+                   		<c:otherwise>未知</c:otherwise>
+                  	</c:choose>
+			  		</span><br>
+			  	<span class="base_tit">积分：</span><span class="base_info">${userVo.mark}</span><br>
 		  	</div>
 		  	<div class="topblog">
 		  		<div class="topblog_titcon"><span class="topblog_tit">最新博文</span><span class="topblog_link"><a href="blog.jspx?userId=${userId}" target="_blank">进入博客</a></span></div>
