@@ -9,7 +9,6 @@ import com.lhl.admin.service.AdminArticleService;
 import com.lhl.common.action.BaseAction;
 import com.lhl.config.ErrMsgConfig;
 import com.lhl.entity.Article;
-import com.lhl.exception.BaseException;
 import com.lhl.util.Constant;
 import com.lhl.util.Pagination;
 
@@ -67,11 +66,6 @@ public class AdminArticleAction extends BaseAction {
 			int noStart = (page - 1) * pageSize;
 			articleList = adminArticleService.queryList(keyWord, Constant.ISVALIDY, noStart, pageSize);
 		}
-		catch (BaseException e) {
-			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
-			e.printStackTrace();
-			return ERROR;
-		}
 		catch (Exception e) {
 			errMsg = ErrMsgConfig.getErrMsg(10000);
 			e.printStackTrace();
@@ -127,11 +121,6 @@ public class AdminArticleAction extends BaseAction {
 			int noStart = (page - 1) * pageSize;
 			articleList = adminArticleService.queryList(keyWord, Constant.ISVALIDN, noStart, pageSize);
 		}
-		catch (BaseException e) {
-			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
-			e.printStackTrace();
-			return ERROR;
-		}
 		catch (Exception e) {
 			errMsg = ErrMsgConfig.getErrMsg(10000);
 			e.printStackTrace();
@@ -150,11 +139,6 @@ public class AdminArticleAction extends BaseAction {
 
 		try {
 			adminArticleService.deleteArticle(ids);
-		}
-		catch (BaseException e) {
-			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
-			e.printStackTrace();
-			return ERROR;
 		}
 		catch (Exception e) {
 			errMsg = ErrMsgConfig.getErrMsg(10000);

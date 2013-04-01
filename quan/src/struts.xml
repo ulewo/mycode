@@ -516,6 +516,14 @@
 		</action>
 	</package>
 	
+	<!--android json-->
+	<package name="android" namespace="/android" extends="struts-default">
+		<!--获取所有文章-->
+		<action name="fetchArticle" class="android" method="fetchArticle">
+		</action>
+		
+	</package>
+	
 	<package name="imageUpload" extends="struts-default">
 		<!-- 上传头像 -->
 		<action name="avatarUpload" class="avatarUpload" method="avatarUpload">

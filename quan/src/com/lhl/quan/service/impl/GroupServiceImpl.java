@@ -93,7 +93,7 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@Override
-	public List<Group> queryGroupsOderArticleCount(int pageNumber, int pageSize) throws Exception {
+	public List<Group> queryGroupsOderArticleCount(int pageNumber, int pageSize) {
 
 		List<Group> list = groupDao.queryGroupsByArticleCount(pageNumber, pageSize);
 
@@ -120,7 +120,7 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@Override
-	public int queryGroupsCount() throws Exception {
+	public int queryGroupsCount() {
 
 		return groupDao.queryGroupsCount();
 	}

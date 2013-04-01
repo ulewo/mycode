@@ -93,4 +93,9 @@
 		from blog_article b order by posttime desc limit  #offset#,#total#
 	</select>
 	
+	<select id="querCount" resultClass="java.lang.Integer">
+		select count(id) from blog_article
+	</select>
+	
+	
 </sqlMap>

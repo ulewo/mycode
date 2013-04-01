@@ -34,27 +34,27 @@ public class AdminArticleServiceImpl implements AdminArticleService {
 	}
 
 	@Override
-	public int queryArticleCount(String keyWord, String isValid) throws Exception {
+	public int queryArticleCount(String keyWord, String isValid) {
 
 		return adminArticleDao.queryArticleCount(keyWord, isValid);
 	}
 
 	@Override
-	public List<Article> queryList(String keyWord, String isValid, int offset, int total) throws Exception {
+	public List<Article> queryList(String keyWord, String isValid, int offset, int total) {
 
 		List<Article> list = adminArticleDao.queryArticle(keyWord, isValid, offset, total);
 		return list;
 	}
 
 	@Override
-	public void commendArticle(Article article) throws Exception {
+	public void commendArticle(Article article) {
 
 		adminArticleDao.updateArticle(article);
 
 	}
 
 	@Override
-	public void deleteArticle(int[] ids) throws Exception {
+	public void deleteArticle(int[] ids) {
 
 		adminArticleDao.deleteArticle(ids);
 

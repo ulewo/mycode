@@ -97,4 +97,13 @@
 
 	<bean id="userAvatarUpload" class="com.lhl.upload.UserAvatarAction" scope="prototype">
 	</bean>
+	
+	<!--android-->
+	<bean id="android" class="com.lhl.quan.action.AndroidAction" scope="prototype">
+		<property name="adminArticleService" ref="adminArticleService"/>
+		<property name="articleService" ref="articleService"/>
+		<property name="groupService" ref="groupService"/>
+		<property name="userService" ref="userService"/>
+		<property name="blogArticleService" ref="blogArticleService"/>
+	</bean>
 </beans>

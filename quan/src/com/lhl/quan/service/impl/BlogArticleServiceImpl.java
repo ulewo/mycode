@@ -138,4 +138,9 @@ public class BlogArticleServiceImpl implements BlogArticleService {
 
 		return blogArticleDao.indexLatestBlog(offset, total);
 	}
+
+	public int queryCount() {
+
+		return blogArticleDao.queryCount();
+	}
 }

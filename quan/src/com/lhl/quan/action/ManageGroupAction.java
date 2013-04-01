@@ -310,11 +310,6 @@ public class ManageGroupAction extends BaseAction {
 				return ERROR;
 			}
 		}
-		catch (BaseException e) {
-			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
-			e.printStackTrace();
-			return ERROR;
-		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}

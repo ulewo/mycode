@@ -46,7 +46,7 @@ public interface GroupService {
 	 * @return
 	 * @author lhl
 	 */
-	List<Group> queryGroupsOderArticleCount(int pageNumber, int pageSize) throws Exception;
+	List<Group> queryGroupsOderArticleCount(int pageNumber, int pageSize);
 
 	/**
 	 * 
@@ -55,7 +55,7 @@ public interface GroupService {
 	 * @return
 	 * @author lhl
 	 */
-	int queryGroupsCount() throws Exception;
+	int queryGroupsCount();
 
 	/**
 	 * 

@@ -23,14 +23,13 @@ import com.lhl.entity.Article;
  * @date 2012-5-23
  * @version V1.0
 */
-public interface AdminArticleService
-{
-	public int queryArticleCount(String keyWord, String isValid) throws Exception;
+public interface AdminArticleService {
+	public int queryArticleCount(String keyWord, String isValid);
 
-	public List<Article> queryList(String keyWord, String isValid, int offset, int total) throws Exception;
+	public List<Article> queryList(String keyWord, String isValid, int offset, int total);
 
-	public void commendArticle(Article article) throws Exception;
+	public void commendArticle(Article article);
 
-	public void deleteArticle(int[] ids) throws Exception;
+	public void deleteArticle(int[] ids);
 
 }

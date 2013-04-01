@@ -30,20 +30,17 @@ import com.lhl.entity.Article;
  */
 public class AdminArticleDao extends SqlMapClientDaoSupport {
 
-	public int queryArticleCount(String keyWord, String isValid)
-			throws Exception {
+	public int queryArticleCount(String keyWord, String isValid) {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		if (StringUtils.isNotEmpty(keyWord)) {
 			parmMap.put("keyWord", "%" + keyWord + "%");
 		}
 		parmMap.put("isValid", isValid);
-		return (Integer) this.getSqlMapClientTemplate().queryForObject(
-				"article.searchTopicCount", parmMap);
+		return (Integer) this.getSqlMapClientTemplate().queryForObject("article.searchTopicCount", parmMap);
 	}
 
-	public List<Article> queryArticle(String keyWord, String isValid,
-			int offset, int total) throws Exception {
+	public List<Article> queryArticle(String keyWord, String isValid, int offset, int total) {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		if (StringUtils.isNotEmpty(keyWord)) {
@@ -52,14 +49,12 @@ public class AdminArticleDao extends SqlMapClientDaoSupport {
 		parmMap.put("isValid", isValid);
 		parmMap.put("offset", offset);
 		parmMap.put("total", total);
-		return this.getSqlMapClientTemplate().queryForList(
-				"article.searchTopic", parmMap);
+		return this.getSqlMapClientTemplate().queryForList("article.searchTopic", parmMap);
 	}
 
 	public void updateArticle(Article article) {
 
-		this.getSqlMapClientTemplate().update(
-				"article.updateArticle_selective", article);
+		this.getSqlMapClientTemplate().update("article.updateArticle_selective", article);
 	}
 
 	public void deleteArticle(int[] ids) {

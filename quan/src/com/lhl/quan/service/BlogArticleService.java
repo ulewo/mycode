@@ -5,8 +5,7 @@ import java.util.List;
 import com.lhl.entity.BlogArticle;
 import com.lhl.entity.User;
 
-public interface BlogArticleService
-{
+public interface BlogArticleService {
 	/**
 	 * 
 	 * description: 新增博文
@@ -70,4 +69,6 @@ public interface BlogArticleService
 	public int queryCountByUserIdOrItem(String userId, int itemId);
 
 	public List<BlogArticle> indexLatestBlog(int offset, int total);
+
+	public int queryCount();
 }
