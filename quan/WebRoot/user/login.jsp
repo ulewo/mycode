@@ -74,5 +74,15 @@ String realPath1 = "http://" + request.getServerName() + ":" + request.getServer
   	function goToRegister(){
   		document.location.href="register.jsp";
   	}
+  	
+  	$(function(){
+  		document.onkeydown = function(e){    
+  		    var ev = document.all ? window.event : e;  
+  		    if(ev.keyCode==13) {// 如（ev.ctrlKey && ev.keyCode==13）为ctrl+Center 触发  
+  		    	loginDo('${param.redirectUrl}');
+  		    }  
+  		  }  
+  	});
+  	
   </script>
 </html>

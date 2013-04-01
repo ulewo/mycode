@@ -67,5 +67,15 @@
 	</div>
 	</div>
 	<jsp:include page="../common/foot.jsp"/>
+	<script type="text/javascript">
+		$(function(){
+	  		document.onkeydown = function(e){    
+	  		    var ev = document.all ? window.event : e;  
+	  		    if(ev.keyCode==13) {// 如（ev.ctrlKey && ev.keyCode==13）为ctrl+Center 触发  
+	  		    	registerdo();
+	  		    }  
+	  		  }  
+	  	});
+	</script>
   </body>
 </html>
