@@ -522,6 +522,11 @@
 		<action name="fetchArticle" class="android" method="fetchArticle">
 		</action>
 		
+		<action name="fetchBlog" class="android" method="fetchBlog">
+		</action>
+		
+		<action name="fetchWoWo" class="android" method="fetchWoWo">
+		</action>
 	</package>
 	
 	<package name="imageUpload" extends="struts-default">
