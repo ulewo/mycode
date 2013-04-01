@@ -13,6 +13,7 @@ import com.lhl.quan.dao.BlogArticleDao;
 import com.lhl.quan.dao.NoticeDao;
 import com.lhl.quan.dao.UserDao;
 import com.lhl.quan.service.BlogArticleService;
+import com.lhl.util.Constant;
 import com.lhl.util.FormatAt;
 
 public class BlogArticleServiceImpl implements BlogArticleService {
@@ -50,6 +51,11 @@ public class BlogArticleServiceImpl implements BlogArticleService {
 		blogArticle.setContent(formatContent);
 
 		int blogId = blogArticleDao.addBlog(blogArticle);
+
+		User curUser = userDao.queryUser(null, null, user.getUserId());
+		curUser.setMark(curUser.getMark() + Constant.ARTICLE_MARK5);
+		userDao.updateUserSelectiveByUserId(curUser);
+
 		//启动一个线程发布消息
 		NoticeParam noticeParm = new NoticeParam();
 		noticeParm.setArticleId(blogId);

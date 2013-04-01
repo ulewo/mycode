@@ -1,7 +1,6 @@
 package com.lhl;
 
-public class UserVo
-{
+public class UserVo {
 	private String userId; // 用户ID
 
 	private String userName; // 用户名
@@ -22,124 +21,116 @@ public class UserVo
 
 	private String previsitTime;
 
-	public String getPrevisitTime()
-	{
+	private int mark; //积分
+
+	public String getPrevisitTime() {
 
 		return previsitTime;
 	}
 
-	public void setPrevisitTime(String previsitTime)
-	{
+	public void setPrevisitTime(String previsitTime) {
 
 		this.previsitTime = previsitTime;
 	}
 
-	public String getUserId()
-	{
+	public String getUserId() {
 
 		return userId;
 	}
 
-	public void setUserId(String userId)
-	{
+	public void setUserId(String userId) {
 
 		this.userId = userId;
 	}
 
-	public String getUserName()
-	{
+	public String getUserName() {
 
 		return userName;
 	}
 
-	public void setUserName(String userName)
-	{
+	public void setUserName(String userName) {
 
 		this.userName = userName;
 	}
 
-	public String getUserLittleIcon()
-	{
+	public String getUserLittleIcon() {
 
 		return userLittleIcon;
 	}
 
-	public void setUserLittleIcon(String userLittleIcon)
-	{
+	public void setUserLittleIcon(String userLittleIcon) {
 
 		this.userLittleIcon = userLittleIcon;
 	}
 
-	public String getAge()
-	{
+	public String getAge() {
 
 		return age;
 	}
 
-	public void setAge(String age)
-	{
+	public void setAge(String age) {
 
 		this.age = age;
 	}
 
-	public String getSex()
-	{
+	public String getSex() {
 
 		return sex;
 	}
 
-	public void setSex(String sex)
-	{
+	public void setSex(String sex) {
 
 		this.sex = sex;
 	}
 
-	public String getCharacters()
-	{
+	public String getCharacters() {
 
 		return characters;
 	}
 
-	public void setCharacters(String characters)
-	{
+	public void setCharacters(String characters) {
 
 		this.characters = characters;
 	}
 
-	public String getAddress()
-	{
+	public String getAddress() {
 
 		return address;
 	}
 
-	public void setAddress(String address)
-	{
+	public void setAddress(String address) {
 
 		this.address = address;
 	}
 
-	public String getWork()
-	{
+	public String getWork() {
 
 		return work;
 	}
 
-	public void setWork(String work)
-	{
+	public void setWork(String work) {
 
 		this.work = work;
 	}
 
-	public String getRegisterTime()
-	{
+	public String getRegisterTime() {
 
 		return registerTime;
 	}
 
-	public void setRegisterTime(String registerTime)
-	{
+	public void setRegisterTime(String registerTime) {
 
 		this.registerTime = registerTime;
+	}
+
+	public int getMark() {
+
+		return mark;
+	}
+
+	public void setMark(int mark) {
+
+		this.mark = mark;
 	}
 
 }

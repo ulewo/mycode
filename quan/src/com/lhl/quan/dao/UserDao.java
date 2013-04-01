@@ -8,8 +8,7 @@ import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 import com.lhl.entity.User;
 
-public class UserDao extends SqlMapClientDaoSupport
-{
+public class UserDao extends SqlMapClientDaoSupport {
 	/**
 	 * 
 	 * description:  条件查询用户
@@ -19,8 +18,7 @@ public class UserDao extends SqlMapClientDaoSupport
 	 * @return
 	 * @author lhl
 	 */
-	public User queryUser(String email, String userName, String userId)
-	{
+	public User queryUser(String email, String userName, String userId) {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("email", email);
@@ -36,8 +34,7 @@ public class UserDao extends SqlMapClientDaoSupport
 	 * @return
 	 * @author luohl
 	 */
-	public User queryUserDetail(String userId)
-	{
+	public User queryUserDetail(String userId) {
 
 		return (User) getSqlMapClientTemplate().queryForObject("user.queryUserDetail", userId);
 	}
@@ -46,8 +43,7 @@ public class UserDao extends SqlMapClientDaoSupport
 	 * 新增用户
 	 * @param user
 	 */
-	public void addUser(User user) throws Exception
-	{
+	public void addUser(User user) throws Exception {
 
 		getSqlMapClientTemplate().insert("user.addUser", user);
 	}
@@ -57,8 +53,7 @@ public class UserDao extends SqlMapClientDaoSupport
 	 * @param user
 	 * @throws Exception
 	 */
-	public void updateUserSelectiveByUserId(User user) throws Exception
-	{
+	public void updateUserSelectiveByUserId(User user) {
 
 		getSqlMapClientTemplate().update("user.updateUser_selective_userId", user);
 	}
@@ -68,8 +63,7 @@ public class UserDao extends SqlMapClientDaoSupport
 	 * @param user
 	 * @throws Exception
 	 */
-	public void updateUserSelectiveByEmail(User user) throws Exception
-	{
+	public void updateUserSelectiveByEmail(User user) throws Exception {
 
 		getSqlMapClientTemplate().update("user.updateUser_selective_email", user);
 	}
@@ -79,14 +73,12 @@ public class UserDao extends SqlMapClientDaoSupport
 	 * @param user
 	 * @throws Exception
 	 */
-	public void updateUserInfo(User user) throws Exception
-	{
+	public void updateUserInfo(User user) throws Exception {
 
 		getSqlMapClientTemplate().insert("user.updateUser_userId", user);
 	}
 
-	public List<User> queryActiveUser(int offset, int total) throws Exception
-	{
+	public List<User> queryActiveUser(int offset, int total) throws Exception {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("offset", offset);
@@ -94,16 +86,13 @@ public class UserDao extends SqlMapClientDaoSupport
 		return getSqlMapClientTemplate().queryForList("user.queryActiveUser", parmMap);
 	}
 
-	public int getMaxUserId()
-	{
+	public int getMaxUserId() {
 
 		Object obj = getSqlMapClientTemplate().queryForObject("user.getMaxUserId");
-		if (null == obj)
-		{
+		if (null == obj) {
 			return 10000;
 		}
-		else
-		{
+		else {
 			return (Integer) obj;
 		}
 	}

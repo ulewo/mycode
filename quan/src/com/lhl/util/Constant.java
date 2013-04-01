@@ -1,7 +1,6 @@
 package com.lhl.util;
 
-public class Constant
-{
+public class Constant {
 
 	public static final String SUPERADMIN = "10000";
 
@@ -91,5 +90,9 @@ public class Constant
 	public static int NOTICE_TYPE4 = 4; //回复博客
 
 	public static int NOTICE_TYPE5 = 5; //留言
+
+	public static int ARTICLE_MARK5 = 5;
+
+	public static int ARTICLE_MARK2 = 2;
 
 }

@@ -8,12 +8,14 @@ import java.util.List;
 import com.lhl.entity.BlogArticle;
 import com.lhl.entity.BlogReply;
 import com.lhl.entity.NoticeParam;
+import com.lhl.entity.User;
 import com.lhl.enums.NoticeType;
 import com.lhl.quan.dao.BlogArticleDao;
 import com.lhl.quan.dao.BlogReplyDao;
 import com.lhl.quan.dao.NoticeDao;
 import com.lhl.quan.dao.UserDao;
 import com.lhl.quan.service.BlogReplyService;
+import com.lhl.util.Constant;
 import com.lhl.util.FormatAt;
 
 public class BlogReplyServiceImpl implements BlogReplyService {
@@ -63,6 +65,10 @@ public class BlogReplyServiceImpl implements BlogReplyService {
 		blogReply.setContent(subCon);
 		int id = blogReplyDao.addReply(blogReply);
 		blogReply.setId(id);
+
+		User curUser = userDao.queryUser(null, null, blogReply.getUserId());
+		curUser.setMark(curUser.getMark() + Constant.ARTICLE_MARK2);
+		userDao.updateUserSelectiveByUserId(curUser);
 
 		//启动一个线程发布消息
 		NoticeParam noticeParm = new NoticeParam();

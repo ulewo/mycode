@@ -21,7 +21,7 @@ public class User {
 
 	private String characters; // 个性签名
 
-	private String mark; // 积分
+	private int mark; // 积分
 
 	private String address; // 籍贯
 
@@ -129,12 +129,12 @@ public class User {
 		this.age = age;
 	}
 
-	public String getMark() {
+	public int getMark() {
 
 		return mark;
 	}
 
-	public void setMark(String mark) {
+	public void setMark(int mark) {
 
 		this.mark = mark;
 	}

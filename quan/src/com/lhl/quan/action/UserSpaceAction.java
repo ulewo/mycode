@@ -575,6 +575,7 @@ public class UserSpaceAction extends BaseAction {
 			userVo.setRegisterTime(userInfo.getRegisterTime());
 			userVo.setSex(userInfo.getSex());
 			userVo.setPrevisitTime(userInfo.getPrevisitTime());
+			userVo.setMark(userInfo.getMark());
 			messageList = messageService.queryMessage(userId, 0, 10);
 			blogList = blogArticleService.queryBlogByUserIdOrItem(userId, 0, 0, 10);
 		}

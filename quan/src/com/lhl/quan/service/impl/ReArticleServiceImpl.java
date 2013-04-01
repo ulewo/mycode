@@ -16,6 +16,7 @@ import com.lhl.quan.dao.NoticeDao;
 import com.lhl.quan.dao.ReArticleDao;
 import com.lhl.quan.dao.UserDao;
 import com.lhl.quan.service.ReArticleService;
+import com.lhl.util.Constant;
 import com.lhl.util.FormatAt;
 import com.lhl.util.Tools;
 
@@ -74,6 +75,10 @@ public class ReArticleServiceImpl implements ReArticleService {
 			reArticle.setAuthor(reUser);
 		}
 		reArticle.setId(id);
+
+		User curUser = userDao.queryUser(null, null, reArticle.getAuthorid());
+		curUser.setMark(curUser.getMark() + Constant.ARTICLE_MARK2);
+		userDao.updateUserSelectiveByUserId(curUser);
 
 		//启动一个线程发布消息
 		NoticeParam noticeParm = new NoticeParam();

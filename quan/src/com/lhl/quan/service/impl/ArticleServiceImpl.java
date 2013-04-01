@@ -85,6 +85,12 @@ public class ArticleServiceImpl implements ArticleService {
 
 		article.setContent(formatContent);
 		int id = articleDao.addArticle(article);
+
+		//更新用户的积分
+		User curUser = userDao.queryUser(null, null, user.getUserId());
+		curUser.setMark(curUser.getMark() + Constant.ARTICLE_MARK5);
+		userDao.updateUserSelectiveByUserId(curUser);
+
 		//启动一个线程发布消息
 		NoticeParam noticeParm = new NoticeParam();
 		noticeParm.setArticleId(id);
