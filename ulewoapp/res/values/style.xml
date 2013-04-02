@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+	<!-- 底部菜单 radio样式 -->
+   <style name="main_footbar_radio">
+        <item name="android:background">@drawable/widget_bar_bg</item>
+        <item name="android:button">@null</item>  
+      	<item name="android:layout_weight">1.0</item>
+      	<item name="android:gravity">center_horizontal</item>
+      	<item name="android:textSize">@dimen/size_13</item>
+    </style>
+    <!-- 底部菜单分割线样式 -->
+    <style name="main_footbar_cutline">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    
+    <style name="main_head_title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/size_14</item>
+    </style>
+    
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">有乐窝</string>
+     <string name="name_article">文章</string>
+    <string name="name_blog">博客</string>
+    <string name="name_wowo">窝窝</string>
+    <string name="name_user">用户</string>
+    <string name="name_more">更多</string>
+</resources>
