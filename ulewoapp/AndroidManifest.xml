@@ -15,6 +15,7 @@
             </intent-filter>
         </activity>
 		 <activity android:name=".ui.ArticleActivity"/>
+		 <activity android:name=".ui.ShowArticleActivity"  android:theme="@android:style/Theme.NoTitleBar"/>
 		 <activity android:name=".ui.BlogActivity"/>
 		 <activity android:name=".ui.WoWoActivity"/>
 		 <activity android:name=".ui.UserActivity"/>
