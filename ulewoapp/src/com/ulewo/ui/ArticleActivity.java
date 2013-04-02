@@ -15,7 +15,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -24,6 +28,7 @@ import android.widget.TextView;
 import com.ulewo.R;
 
 public class ArticleActivity extends Activity {
+	private List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +41,10 @@ public class ArticleActivity extends Activity {
 		textView.setText(R.string.name_article);
 
 		String myString = "";
-		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 		try {
 			// 定义获取文件内容的URL
-			URL myURL = new URL("http://192.168.0.224:8080/ulewo/android/fetchArticle.jspx");
+			URL myURL = new URL(
+					"http://192.168.2.224:8080/ulewo/android/fetchArticle.jspx");
 			// 打开URL链接
 			URLConnection ucon = myURL.openConnection();
 			// 使用InputStream，从URLConnection读取数据
@@ -53,27 +58,45 @@ public class ArticleActivity extends Activity {
 			}
 			myString = EncodingUtils.getString(baf.toByteArray(), "UTF-8");
 			JSONObject jsonObj = new JSONObject(myString);
-			JSONArray jsonArray = new JSONArray(String.valueOf(jsonObj.get("list")));
+			JSONArray jsonArray = new JSONArray(String.valueOf(jsonObj
+					.get("list")));
 			int jsonLength = jsonArray.length();
 			for (int i = 0; i < jsonLength; i++) {
 				JSONObject obj = jsonArray.getJSONObject(i);
 				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("id", obj.get("id"));
 				map.put("article_title", obj.get("title"));
-				map.put("article_time", String.valueOf(obj.get("postTime")).substring(0, 16));
+				map.put("article_time", String.valueOf(obj.get("postTime"))
+						.substring(0, 16));
 				map.put("article_recount", obj.get("reNumber"));
 				map.put("article_author", obj.get("authorName"));
 				list.add(map);
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			myString = e.getMessage();
 		}
-		SimpleAdapter adapter = new SimpleAdapter(this, list, R.layout.article_item, new String[] { "article_title",
-				"article_author", "article_time", "article_recount" }, new int[] { R.id.article_title,
-				R.id.article_author, R.id.article_time, R.id.article_recount });
-		//	setListAdapter(adapter);
+		SimpleAdapter adapter = new SimpleAdapter(this, list,
+				R.layout.article_item, new String[] { "article_title",
+						"article_author", "article_time", "article_recount" },
+				new int[] { R.id.article_title, R.id.article_author,
+						R.id.article_time, R.id.article_recount });
+		// setListAdapter(adapter);
 		ListView listView = (ListView) findViewById(R.id.article_list_view_id);
 		listView.setAdapter(adapter);
+
+		// 添加点击事件
+		listView.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int postion, long id) {
+				Map<String, Object> map = ArticleActivity.this.list
+						.get(postion);
+				String articleId = String.valueOf(map.get("id"));
+				Intent intent = new Intent();
+				intent.putExtra("articleId", articleId);
+				intent.setClass(ArticleActivity.this, ShowArticleActivity.class);
+				startActivity(intent);
+			}
+		});
 	}
 }

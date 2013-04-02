@@ -66,15 +66,16 @@ public final class R {
         public static final int head_back_selected=0x7f020003;
         public static final int home=0x7f020004;
         public static final int icon=0x7f020005;
-        public static final int more=0x7f020006;
-        public static final int user=0x7f020007;
-        public static final int widget_bar_bg=0x7f020008;
-        public static final int widget_bar_bg_n=0x7f020009;
-        public static final int widget_bar_bg_p=0x7f02000a;
-        public static final int widget_bar_cut_off=0x7f02000b;
-        public static final int widget_comment_count_icon=0x7f02000c;
-        public static final int widget_head_bg=0x7f02000d;
-        public static final int wowo=0x7f02000e;
+        public static final int line_bluegray=0x7f020006;
+        public static final int more=0x7f020007;
+        public static final int user=0x7f020008;
+        public static final int widget_bar_bg=0x7f020009;
+        public static final int widget_bar_bg_n=0x7f02000a;
+        public static final int widget_bar_bg_p=0x7f02000b;
+        public static final int widget_bar_cut_off=0x7f02000c;
+        public static final int widget_comment_count_icon=0x7f02000d;
+        public static final int widget_head_bg=0x7f02000e;
+        public static final int wowo=0x7f02000f;
     }
     public static final class id {
         public static final int article_author=0x7f080002;
@@ -91,6 +92,8 @@ public final class R {
         public static final int radio_more_id=0x7f08000d;
         public static final int radio_user_id=0x7f08000c;
         public static final int radio_wowo_id=0x7f08000b;
+        public static final int show_article_id=0x7f08000f;
+        public static final int show_article_title=0x7f08000e;
     }
     public static final class layout {
         public static final int article=0x7f030000;
@@ -99,8 +102,9 @@ public final class R {
         public static final int common_head=0x7f030003;
         public static final int main=0x7f030004;
         public static final int more=0x7f030005;
-        public static final int user=0x7f030006;
-        public static final int wowo=0x7f030007;
+        public static final int show_article=0x7f030006;
+        public static final int user=0x7f030007;
+        public static final int wowo=0x7f030008;
     }
     public static final class string {
         public static final int app_name=0x7f060000;
@@ -111,6 +115,9 @@ public final class R {
         public static final int name_wowo=0x7f060003;
     }
     public static final class style {
+        /**  分割线 
+         */
+        public static final int detail_cut_line=0x7f070003;
         /**  底部菜单分割线样式 
          */
         public static final int main_footbar_cutline=0x7f070001;
