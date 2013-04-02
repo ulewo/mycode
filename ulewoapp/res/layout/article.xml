@@ -5,8 +5,8 @@
     android:background="@drawable/widget_head_bg">
    	<include layout="@layout/common_head"/>
    	<ListView 
-	   	android:layout_width="fill_parent"
-	    android:layout_height="fill_parent"
+	   	android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
 	    android:id="@+id/article_list_view_id">
 	</ListView>
 </LinearLayout>
