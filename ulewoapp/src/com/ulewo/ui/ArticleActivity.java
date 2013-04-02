@@ -39,7 +39,7 @@ public class ArticleActivity extends Activity {
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 		try {
 			// 定义获取文件内容的URL
-			URL myURL = new URL("http://ulewo.cloudfoundry.com/android/fetchArticle.jspx");
+			URL myURL = new URL("http://192.168.0.224:8080/ulewo/android/fetchArticle.jspx");
 			// 打开URL链接
 			URLConnection ucon = myURL.openConnection();
 			// 使用InputStream，从URLConnection读取数据
@@ -72,6 +72,7 @@ public class ArticleActivity extends Activity {
 		SimpleAdapter adapter = new SimpleAdapter(this, list, R.layout.article_item, new String[] { "article_title",
 				"article_author", "article_time", "article_recount" }, new int[] { R.id.article_title,
 				R.id.article_author, R.id.article_time, R.id.article_recount });
+		//	setListAdapter(adapter);
 		ListView listView = (ListView) findViewById(R.id.article_list_view_id);
 		listView.setAdapter(adapter);
 	}
