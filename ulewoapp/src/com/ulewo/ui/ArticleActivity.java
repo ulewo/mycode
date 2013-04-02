@@ -14,23 +14,26 @@ import org.apache.http.util.EncodingUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import android.app.ListActivity;
+import android.app.Activity;
 import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import com.ulewo.R;
 
-public class ArticleActivity extends ListActivity {
+public class ArticleActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-		//super.setContentView(R.layout.article);
-		//ImageView imageView = (ImageView) findViewById(R.id.main_head_logo);
-		//imageView.setImageResource(R.drawable.article);
-		//TextView textView = (TextView) findViewById(R.id.main_head_title);
-		//textView.setText(R.string.name_article);
+		super.setContentView(R.layout.article);
+		ImageView imageView = (ImageView) findViewById(R.id.main_head_logo);
+		imageView.setImageResource(R.drawable.article);
+		TextView textView = (TextView) findViewById(R.id.main_head_title);
+		textView.setText(R.string.name_article);
 
 		String myString = "";
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
@@ -69,6 +72,7 @@ public class ArticleActivity extends ListActivity {
 		SimpleAdapter adapter = new SimpleAdapter(this, list, R.layout.article_item, new String[] { "article_title",
 				"article_author", "article_time", "article_recount" }, new int[] { R.id.article_title,
 				R.id.article_author, R.id.article_time, R.id.article_recount });
-		setListAdapter(adapter);
+		ListView listView = (ListView) findViewById(R.id.article_list_view_id);
+		listView.setAdapter(adapter);
 	}
 }
