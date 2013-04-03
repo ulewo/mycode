@@ -54,6 +54,8 @@ public class AndroidAction extends BaseAction {
 
 	private int page;
 
+	private int articleId;
+
 	public int getPage() {
 
 		return page;
@@ -62,6 +64,11 @@ public class AndroidAction extends BaseAction {
 	public void setPage(int page) {
 
 		this.page = page;
+	}
+
+	public void setArticleId(int articleId) {
+
+		this.articleId = articleId;
 	}
 
 	/**
@@ -83,8 +90,26 @@ public class AndroidAction extends BaseAction {
 		}
 		int noStart = (page - 1) * pageSize;
 		List<Article> list = adminArticleService.queryList("", Constant.ISVALIDY, noStart, pageSize);
+		for (Article article : list) {
+			article.setSummary("");
+			article.setPostTime(article.getPostTime().substring(0, 19));
+		}
 		JSONObject obj = new JSONObject();
 		obj.put("list", list);
+		getOut().print(String.valueOf(obj));
+	}
+
+	public void showArticle() {
+
+		Article article = null;
+		try {
+			article = articleService.queryTopicById(articleId);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		JSONObject obj = new JSONObject();
+		obj.put("article", article);
 		getOut().print(String.valueOf(obj));
 	}
 
@@ -96,7 +121,7 @@ public class AndroidAction extends BaseAction {
 	public void fetchBlog() {
 
 		int countNumber = blogArticleService.queryCount();
-		Pagination.setPageSize(Constant.pageSize50);
+		Pagination.setPageSize(Constant.pageSize20);
 		int pageSize = Pagination.getPageSize();
 		int pageTotal = Pagination.getPageTotal(countNumber);
 		if (page > pageTotal) {
@@ -109,6 +134,20 @@ public class AndroidAction extends BaseAction {
 		List<BlogArticle> list = blogArticleService.indexLatestBlog(noStart, pageSize);
 		JSONObject obj = new JSONObject();
 		obj.put("list", list);
+		getOut().print(String.valueOf(obj));
+	}
+
+	public void showBlog() {
+
+		BlogArticle article = null;
+		try {
+			article = blogArticleService.queryBlogById(articleId);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		JSONObject obj = new JSONObject();
+		obj.put("article", article);
 		getOut().print(String.valueOf(obj));
 	}
 

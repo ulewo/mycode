@@ -521,8 +521,13 @@
 		<!--获取所有文章-->
 		<action name="fetchArticle" class="android" method="fetchArticle">
 		</action>
+		<action name="showArticle" class="android" method="showArticle">
+		</action>
 		
 		<action name="fetchBlog" class="android" method="fetchBlog">
+		</action>
+		
+		<action name="showBlog" class="android" method="showBlog">
 		</action>
 		
 		<action name="fetchWoWo" class="android" method="fetchWoWo">

@@ -25,7 +25,7 @@
 	
 	<!-- 单笔查询文章-->
 	<select id="queryTopicById"  resultClass="article" parameterClass="java.lang.Integer">
-		select * from article where id = #id#
+		select *,u.username authorName,(select count(r.id) from rearticle r where r.articleid=a.id) as reNumber from article a inner join user u on a.authorid = u.userid where id = #id#
 	</select>
 	
 	<!-- 更新文章 用户只能修改的内容 -->
