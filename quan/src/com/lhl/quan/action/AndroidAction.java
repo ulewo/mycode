@@ -79,7 +79,7 @@ public class AndroidAction extends BaseAction {
 	public void fetchArticle() {
 
 		int countNumber = adminArticleService.queryArticleCount("", Constant.ISVALIDY);
-		Pagination.setPageSize(Constant.pageSize50);
+		Pagination.setPageSize(Constant.pageSize20);
 		int pageSize = Pagination.getPageSize();
 		int pageTotal = Pagination.getPageTotal(countNumber);
 		if (page > pageTotal) {
