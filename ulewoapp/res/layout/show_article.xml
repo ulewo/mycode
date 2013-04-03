@@ -2,25 +2,61 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical"
     android:layout_width="fill_parent"
+    android:background="@color/white"
     android:layout_height="fill_parent">
 	<include layout="@layout/common_head"/>
-	<LinearLayout
-		android:layout_width="fill_parent"
-    	android:layout_height="wrap_content"
-		android:background="@color/white">
 	<TextView 
 		android:layout_width="fill_parent"
     	android:layout_height="wrap_content"
     	android:id="@+id/show_article_title"
     	android:textColor="@color/black"
     	android:textSize="16.0dp"
-    	android:padding="10.0dp"/>
+    	android:paddingLeft="10.0dp"
+    	android:paddingTop="10.0dp"
+    	android:paddingBottom="3.0dp"/>
+    <RelativeLayout 
+   		android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:layout_marginTop="@dimen/size_5"
+    	android:paddingLeft="10.0dp"
+    	android:orientation="horizontal">
+    	<TextView 
+	    	android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	    	android:textSize="@dimen/size_11"
+	    	android:textColor="@color/shadeblack"
+	    	android:id="@+id/article_author"/>
+    	<TextView 
+	    	android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	    	android:textSize="@dimen/size_11"
+	    	android:layout_toRightOf="@id/article_author"
+	    	android:textColor="@color/shadeblack"
+	    	android:layout_marginLeft="@dimen/size_15"
+	    	android:id="@+id/article_time"/>
+    	<ImageView 
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:layout_marginLeft="@dimen/size_15"
+    		android:layout_marginTop="@dimen/size_2"
+    		android:layout_toRightOf="@id/article_time"
+    		android:src="@drawable/widget_comment_count_icon"
+    		android:id="@+id/article_recount_icon"/>	
+    	<TextView 
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:textSize="@dimen/size_11"
+    	android:textColor="@color/shadeblack"
+    	android:layout_toRightOf="@id/article_recount_icon"
+    	android:layout_marginLeft="@dimen/size_5"
+    	android:id="@+id/article_recount"/>
+    </RelativeLayout>	
     <View style="@style/detail_cut_line"/>
 	<TextView 
 		android:layout_width="fill_parent"
     	android:layout_height="wrap_content"
     	android:id="@+id/show_article_id"
     	android:textColor="@color/black"
-    	android:padding="10.0dp"/>
-    </LinearLayout>
+    	android:padding="10.0dp"
+    	android:paddingTop="5.0dp"/>
 </LinearLayout>

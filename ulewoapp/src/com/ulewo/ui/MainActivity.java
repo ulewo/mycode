@@ -1,4 +1,4 @@
-package com.ulewo;
+package com.ulewo.ui;
 
 import android.app.TabActivity;
 import android.content.Intent;
@@ -7,11 +7,7 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TabHost;
 
-import com.ulewo.ui.ArticleActivity;
-import com.ulewo.ui.BlogActivity;
-import com.ulewo.ui.MoreActivity;
-import com.ulewo.ui.UserActivity;
-import com.ulewo.ui.WoWoActivity;
+import com.ulewo.R;
 
 public class MainActivity extends TabActivity {
 	private static final String TAG_ARTICLE = "article";

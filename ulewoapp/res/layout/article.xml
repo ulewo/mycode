@@ -4,9 +4,16 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 	<include layout="@layout/common_head"/>
+   	<ProgressBar 
+   		android:id="@+id/article_load"
+   		android:layout_width="wrap_content"
+   		android:layout_height="wrap_content"
+   		android:layout_gravity="center_vertical|center_horizontal"
+   		style="@android:style/Widget.ProgressBar.Inverse"	/>
 	<ListView 
 	   	android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
+	    android:cacheColorHint="@color/white"
 	    android:id="@+id/article_list_view_id">
 	</ListView>
 </LinearLayout>

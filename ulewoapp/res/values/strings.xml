@@ -6,4 +6,9 @@
     <string name="name_wowo">窝窝</string>
     <string name="name_user">用户</string>
     <string name="name_more">更多</string>
+    
+    <string name="guide_one">儿时友，莫相忘</string>
+    <string name="guide_two">同学情，请珍藏</string>
+    <string name="guide_three">共奋斗，同分享</string>
+    <string name="request_timeout">请求网络超时</string>
 </resources>
