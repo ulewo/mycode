@@ -18,7 +18,7 @@ import com.ulewo.handler.MxgsaTagHandler;
 
 public class ShowArticleActivity extends Activity {
 
-	private static final String path = "http://192.168.0.224:8080/ulewo/android/showArticle.jspx";
+	private static final String path = "http://192.168.2.224:8080/ulewo/android/showArticle.jspx";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,8 @@ public class ShowArticleActivity extends Activity {
 		String articleId = bunde.getString("articleId");
 
 		try {
-			RequestResult requestResult = ApiClient.getUlewoInfo(path + "?articleId=" + articleId);
+			RequestResult requestResult = ApiClient.getUlewoInfo(path
+					+ "?articleId=" + articleId);
 			if (requestResult.getResultEnum() == ResultEnum.SUCCESS) {
 				JSONObject jsonObj = requestResult.getJsonObject();
 				JSONObject myobj = new JSONObject(jsonObj.getString("article"));
@@ -46,14 +47,15 @@ public class ShowArticleActivity extends Activity {
 				TextView recountView = (TextView) findViewById(R.id.article_recount);
 				titleView.setText(myobj.getString("title"));
 				authorView.setText(myobj.getString("authorName"));
-				timeView.setText(String.valueOf(myobj.getString("postTime")).substring(0, 16));
+				timeView.setText(String.valueOf(myobj.getString("postTime"))
+						.substring(0, 16));
 				recountView.setText(myobj.getString("reNumber"));
-				showView.setText(Html.fromHtml(myobj.getString("content"), null, new MxgsaTagHandler(this)));
+				showView.setText(Html.fromHtml(myobj.getString("content"),
+						null, new MxgsaTagHandler(this)));
 				showView.setClickable(true);
 				showView.setMovementMethod(LinkMovementMethod.getInstance());
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
