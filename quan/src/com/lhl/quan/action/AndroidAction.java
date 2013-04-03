@@ -67,18 +67,19 @@ public class AndroidAction extends BaseAction {
 	}
 
 	public void setArticleId(int articleId) {
-
 		this.articleId = articleId;
 	}
 
 	/**
 	 * 
 	 * description: 查询最新的文章
+	 * 
 	 * @author luohl
 	 */
 	public void fetchArticle() {
 
-		int countNumber = adminArticleService.queryArticleCount("", Constant.ISVALIDY);
+		int countNumber = adminArticleService.queryArticleCount("",
+				Constant.ISVALIDY);
 		Pagination.setPageSize(Constant.pageSize20);
 		int pageSize = Pagination.getPageSize();
 		int pageTotal = Pagination.getPageTotal(countNumber);
@@ -89,7 +90,8 @@ public class AndroidAction extends BaseAction {
 			page = 1;
 		}
 		int noStart = (page - 1) * pageSize;
-		List<Article> list = adminArticleService.queryList("", Constant.ISVALIDY, noStart, pageSize);
+		List<Article> list = adminArticleService.queryList("",
+				Constant.ISVALIDY, noStart, pageSize);
 		for (Article article : list) {
 			article.setSummary("");
 			article.setPostTime(article.getPostTime().substring(0, 19));
@@ -104,8 +106,7 @@ public class AndroidAction extends BaseAction {
 		Article article = null;
 		try {
 			article = articleService.queryTopicById(articleId);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		JSONObject obj = new JSONObject();
@@ -116,6 +117,7 @@ public class AndroidAction extends BaseAction {
 	/**
 	 * 
 	 * description: 查询博客
+	 * 
 	 * @author luohl
 	 */
 	public void fetchBlog() {
@@ -131,7 +133,8 @@ public class AndroidAction extends BaseAction {
 			page = 1;
 		}
 		int noStart = (page - 1) * pageSize;
-		List<BlogArticle> list = blogArticleService.indexLatestBlog(noStart, pageSize);
+		List<BlogArticle> list = blogArticleService.indexLatestBlog(noStart,
+				pageSize);
 		JSONObject obj = new JSONObject();
 		obj.put("list", list);
 		getOut().print(String.valueOf(obj));
@@ -142,8 +145,7 @@ public class AndroidAction extends BaseAction {
 		BlogArticle article = null;
 		try {
 			article = blogArticleService.queryBlogById(articleId);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		JSONObject obj = new JSONObject();
@@ -154,6 +156,7 @@ public class AndroidAction extends BaseAction {
 	/**
 	 * 
 	 * description: 查询窝窝
+	 * 
 	 * @author luohl
 	 */
 	public void fetchWoWo() {
@@ -169,7 +172,8 @@ public class AndroidAction extends BaseAction {
 			page = 1;
 		}
 		int noStart = (page - 1) * pageSize;
-		List<Group> list = groupService.queryGroupsOderArticleCount(noStart, pageSize);
+		List<Group> list = groupService.queryGroupsOderArticleCount(noStart,
+				pageSize);
 		JSONObject obj = new JSONObject();
 		obj.put("list", list);
 		getOut().print(String.valueOf(obj));
