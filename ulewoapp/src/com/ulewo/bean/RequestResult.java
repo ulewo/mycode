@@ -2,7 +2,7 @@ package com.ulewo.bean;
 
 import org.json.JSONObject;
 
-import com.ulewo.Enum.ResultEnum;
+import com.ulewo.enums.ResultEnum;
 
 public class RequestResult {
 	private ResultEnum resultEnum;

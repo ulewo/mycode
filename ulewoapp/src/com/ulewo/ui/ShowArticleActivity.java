@@ -11,9 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ulewo.R;
-import com.ulewo.Enum.ResultEnum;
 import com.ulewo.api.ApiClient;
 import com.ulewo.bean.RequestResult;
+import com.ulewo.enums.ResultEnum;
 import com.ulewo.handler.MxgsaTagHandler;
 
 public class ShowArticleActivity extends Activity {

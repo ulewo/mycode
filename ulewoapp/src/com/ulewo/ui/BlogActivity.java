@@ -25,13 +25,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ulewo.R;
-import com.ulewo.Enum.ResultEnum;
 import com.ulewo.api.ApiClient;
 import com.ulewo.bean.RequestResult;
+import com.ulewo.enums.ResultEnum;
 
 public class BlogActivity extends Activity {
 
-	private static final String path = "http://192.168.0.224:8080/ulewo/android/fetchBlog.jspx";
+	private static final String path = "http://192.168.2.224:8080/ulewo/android/fetchBlog.jspx";
 
 	private List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 	MyHandler myHandler = null;
@@ -46,20 +46,13 @@ public class BlogActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		super.setContentView(R.layout.article);
 		ImageView imageView = (ImageView) findViewById(R.id.main_head_logo);
-		imageView.setImageResource(R.drawable.article);
+		imageView.setImageResource(R.drawable.blog);
 		TextView textView = (TextView) findViewById(R.id.main_head_title);
-		textView.setText(R.string.name_article);
+		textView.setText(R.string.name_blog);
 
 		myHandler = new MyHandler();
 		MyThread m = new MyThread();
 		new Thread(m).start();
-
-		new Handler().postDelayed(new Runnable() {
-			@Override
-			public void run() {
-
-			}
-		}, 2500);
 	}
 
 	class MyHandler extends Handler {
@@ -95,8 +88,8 @@ public class BlogActivity extends Activity {
 						map.put("article_time",
 								String.valueOf(obj.get("postTime")).substring(
 										0, 16));
-						map.put("article_recount", obj.get("reNumber"));
-						map.put("article_author", obj.get("authorName"));
+						map.put("article_recount", obj.get("reCount"));
+						map.put("article_author", obj.get("userName"));
 						list.add(map);
 					}
 

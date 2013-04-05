@@ -25,9 +25,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ulewo.R;
-import com.ulewo.Enum.ResultEnum;
 import com.ulewo.api.ApiClient;
 import com.ulewo.bean.RequestResult;
+import com.ulewo.enums.ResultEnum;
 
 public class ArticleActivity extends Activity {
 
@@ -60,13 +60,6 @@ public class ArticleActivity extends Activity {
 		myHandler = new MyHandler();
 		MyThread m = new MyThread();
 		new Thread(m).start();
-
-		new Handler().postDelayed(new Runnable() {
-			@Override
-			public void run() {
-
-			}
-		}, 2500);
 	}
 
 	class MyHandler extends Handler {
@@ -87,7 +80,7 @@ public class ArticleActivity extends Activity {
 			try {
 				// 请求网络资源
 				ProgressBar progressBar = (ProgressBar) findViewById(R.id.article_load);
-				progressBar.setVisibility(8);
+				progressBar.setVisibility(View.GONE);
 
 				if (requestResult.getResultEnum() == ResultEnum.SUCCESS) {
 					JSONObject jsonObj = requestResult.getJsonObject();

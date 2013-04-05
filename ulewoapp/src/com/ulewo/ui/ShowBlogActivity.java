@@ -11,14 +11,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ulewo.R;
-import com.ulewo.Enum.ResultEnum;
 import com.ulewo.api.ApiClient;
 import com.ulewo.bean.RequestResult;
+import com.ulewo.enums.ResultEnum;
 import com.ulewo.handler.MxgsaTagHandler;
 
 public class ShowBlogActivity extends Activity {
 
-	private static final String path = "http://192.168.0.224:8080/ulewo/android/showBlog.jspx";
+	private static final String path = "http://192.168.2.224:8080/ulewo/android/showBlog.jspx";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,8 @@ public class ShowBlogActivity extends Activity {
 		String articleId = bunde.getString("articleId");
 
 		try {
-			RequestResult requestResult = ApiClient.getUlewoInfo(path + "?articleId=" + articleId);
+			RequestResult requestResult = ApiClient.getUlewoInfo(path
+					+ "?articleId=" + articleId);
 			if (requestResult.getResultEnum() == ResultEnum.SUCCESS) {
 				JSONObject jsonObj = requestResult.getJsonObject();
 				JSONObject myobj = new JSONObject(jsonObj.getString("article"));
@@ -46,14 +47,15 @@ public class ShowBlogActivity extends Activity {
 				TextView recountView = (TextView) findViewById(R.id.article_recount);
 				titleView.setText(myobj.getString("title"));
 				authorView.setText(myobj.getString("userName"));
-				timeView.setText(String.valueOf(myobj.getString("postTime")).substring(0, 16));
+				timeView.setText(String.valueOf(myobj.getString("postTime"))
+						.substring(0, 16));
 				recountView.setText(myobj.getString("reCount"));
-				showView.setText(Html.fromHtml(myobj.getString("content"), null, new MxgsaTagHandler(this)));
+				showView.setText(Html.fromHtml(myobj.getString("content"),
+						null, new MxgsaTagHandler(this)));
 				showView.setClickable(true);
 				showView.setMovementMethod(LinkMovementMethod.getInstance());
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
