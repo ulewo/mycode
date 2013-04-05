@@ -1,5 +1,7 @@
 package com.ulewo.bean;
 
+import org.json.JSONObject;
+
 public class Article {
 	private int id;
 
@@ -9,9 +11,11 @@ public class Article {
 
 	private String postTime;
 
-	private int reNumber;
+	private String reNumber;
 
-	private int readNumber;
+	private String authorName;
+
+	private String authorId;
 
 	public int getId() {
 
@@ -53,24 +57,46 @@ public class Article {
 		this.postTime = postTime;
 	}
 
-	public int getReNumber() {
-
+	public String getReNumber() {
 		return reNumber;
 	}
 
-	public void setReNumber(int reNumber) {
-
+	public void setReNumber(String reNumber) {
 		this.reNumber = reNumber;
 	}
 
-	public int getReadNumber() {
-
-		return readNumber;
+	public String getAuthorName() {
+		return authorName;
 	}
 
-	public void setReadNumber(int readNumber) {
-
-		this.readNumber = readNumber;
+	public void setAuthorName(String authorName) {
+		this.authorName = authorName;
 	}
 
+	public String getAuthorId() {
+		return authorId;
+	}
+
+	public void setAuthorId(String authorId) {
+		this.authorId = authorId;
+	}
+
+	public Article(JSONObject json) {
+		try {
+			constructJson(json);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void constructJson(JSONObject json) throws Exception {
+		id = json.getInt("id");
+		title = json.getString("title");
+		content = json.getString("content");
+		postTime = json.getString("postTime") == null ? "" : json.getString(
+				"postTime").substring(0, 16);
+		reNumber = json.getString("reNumber");
+		authorName = json.getString("authorName");
+		authorId = json.getString("authorId");
+	}
 }

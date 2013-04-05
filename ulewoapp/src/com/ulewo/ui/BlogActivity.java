@@ -18,8 +18,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -72,8 +72,8 @@ public class BlogActivity extends Activity {
 			super.handleMessage(msg);
 			try {
 				// 请求网络资源
-				ProgressBar progressBar = (ProgressBar) findViewById(R.id.article_load);
-				progressBar.setVisibility(8);
+				LinearLayout progressBar = (LinearLayout) findViewById(R.id.myprogressbar);
+				progressBar.setVisibility(View.GONE);
 
 				if (requestResult.getResultEnum() == ResultEnum.SUCCESS) {
 					JSONObject jsonObj = requestResult.getJsonObject();

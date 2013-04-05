@@ -15,8 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ulewo.R;
-import com.ulewo.bean.Task;
-import com.ulewo.enums.TaskType;
 import com.ulewo.logic.MainService;
 
 public class UserActivity extends Activity implements IMainActivity {
@@ -49,8 +47,8 @@ public class UserActivity extends Activity implements IMainActivity {
 				Map<String, Object> param = new HashMap<String, Object>();
 				param.put("userName", usernameEdit.getText());
 				param.put("password", pwdEdit.getText());
-				Task task = new Task(TaskType.QUERYARTICLES, param);
-				MainService.newTask(task);
+				// Task task = new Task(TaskType.QUERYARTICLES, param);
+				// MainService.newTask(task);
 			}
 		});
 

@@ -3,6 +3,8 @@ package com.ulewo.bean;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.app.Activity;
+
 import com.ulewo.enums.TaskType;
 
 public class Task {
@@ -10,9 +12,13 @@ public class Task {
 
 	private Map<String, Object> taskParams = new HashMap<String, Object>();
 
-	public Task(TaskType taskType, Map<String, Object> taskParams) {
+	private Activity curActivity;
+
+	public Task(TaskType taskType, Map<String, Object> taskParams,
+			Activity curActivity) {
 		this.taskType = taskType;
 		this.taskParams = taskParams;
+		this.curActivity = curActivity;
 	}
 
 	public TaskType getTaskType() {
@@ -29,6 +35,14 @@ public class Task {
 
 	public void setTaskParams(Map<String, Object> taskParams) {
 		this.taskParams = taskParams;
+	}
+
+	public Activity getCurActivity() {
+		return curActivity;
+	}
+
+	public void setCurActivity(Activity curActivity) {
+		this.curActivity = curActivity;
 	}
 
 }

@@ -6,7 +6,7 @@
         <item name="android:button">@null</item>  
       	<item name="android:layout_weight">1.0</item>
       	<item name="android:gravity">center_horizontal</item>
-      	<item name="android:textSize">@dimen/size_13</item>
+      	<item name="android:textSize">@dimen/size_12</item>
     </style>
     <!-- 底部菜单分割线样式 -->
     <style name="main_footbar_cutline">
@@ -29,5 +29,9 @@
 		<item name="android:layout_marginLeft">6.0dip</item>
 		<item name="android:layout_marginRight">6.0dip</item>
 		<item name="android:background">@drawable/line_bluegray</item>
+	</style>
+	
+	<style name="progressstyle" parent="android:style/Widget.ProgressBar.Large">
+		<item name="android:indeterminateDrawable">@drawable/myprogressbar</item>
 	</style>
 </resources>
