@@ -29,7 +29,8 @@ public class MainActivity extends TabActivity {
 		setContentView(R.layout.main);
 		tabHost = getTabHost();
 
-		tabHost.addTab(tabHost.newTabSpec(TAG_ARTICLE).setIndicator(TAG_ARTICLE)
+		tabHost.addTab(tabHost.newTabSpec(TAG_ARTICLE)
+				.setIndicator(TAG_ARTICLE)
 				.setContent(new Intent(this, ArticleActivity.class)));
 		tabHost.addTab(tabHost.newTabSpec(TAG_BLOG).setIndicator(TAG_BLOG)
 				.setContent(new Intent(this, BlogActivity.class)));
