@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-	<include layout="@layout/common_head"/>
-   	<include layout="@layout/progress"/>
-	<ListView 
-	   	android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:cacheColorHint="@color/white"
-	    android:id="@+id/article_list_view_id">
-	</ListView>
-</LinearLayout>
+<FrameLayout 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	<LinearLayout 
+		android:orientation="vertical"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent">
+		<include layout="@layout/common_head"/>
+		<ListView 
+		   	android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:cacheColorHint="@color/white"
+		    android:id="@+id/article_list_view_id">
+		</ListView>
+	</LinearLayout>
+	<include layout="@layout/progress"/>
+</FrameLayout>
+

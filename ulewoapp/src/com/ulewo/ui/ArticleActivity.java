@@ -9,8 +9,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -38,6 +40,8 @@ public class ArticleActivity extends Activity implements IMainActivity {
 	private LinearLayout loadmore_prgressbar = null;
 
 	ListView listView = null;
+
+	private ImageButton refreshBtn = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +80,22 @@ public class ArticleActivity extends Activity implements IMainActivity {
 			}
 		});
 
+		refreshBtn = (ImageButton) findViewById(R.id.head_refresh);
+		refreshBtn.setVisibility(View.VISIBLE);
+		refreshBtn.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				progressBar.setVisibility(View.VISIBLE);
+				page = 1;
+				Map<String, Object> param = new HashMap<String, Object>();
+				param.put("page", page);
+				Task task = new Task(TaskType.QUERYARTICLES, param,
+						ArticleActivity.this);
+				MainService.newTask(task);
+			}
+		});
+
 		Intent service = new Intent(this, MainService.class);
 		startService(service);
 		Map<String, Object> param = new HashMap<String, Object>();
@@ -99,8 +119,9 @@ public class ArticleActivity extends Activity implements IMainActivity {
 	@Override
 	public void refresh(Object... obj) {
 		progressBar.setVisibility(View.GONE);
+		refreshBtn.clearAnimation();
 		List<Article> list = (ArrayList<Article>) obj[0];
-		if (adapter == null) {
+		if (adapter == null || page == 1) {
 			adapter = new ArticleListAdapter(this, list);
 			listView.setAdapter(adapter);
 		} else {

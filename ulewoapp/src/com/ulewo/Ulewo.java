@@ -13,7 +13,7 @@ import com.ulewo.bean.RequestResult;
 import com.ulewo.enums.ResultEnum;
 
 public class Ulewo {
-	private static final String BASEURL_ARTICLELIST = "http://192.168.2.224:8080/ulewo/android/fetchArticle.jspx";
+	private static final String BASEURL_ARTICLELIST = "http://ulewo.cloudfoundry.com/android/fetchArticle.jspx";
 
 	private static final String BASEUR_SHOWARTICLE = "http://192.168.2.224:8080/ulewo/android/showArticle.jspx";
 

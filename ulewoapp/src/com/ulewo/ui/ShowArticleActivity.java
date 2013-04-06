@@ -8,9 +8,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.ulewo.R;
@@ -26,7 +27,7 @@ public class ShowArticleActivity extends Activity implements IMainActivity {
 
 	private LinearLayout contentlayout = null;
 
-	private RadioButton backBtn = null;
+	private ImageButton backBtn = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +37,9 @@ public class ShowArticleActivity extends Activity implements IMainActivity {
 		ImageView imageView = (ImageView) findViewById(R.id.main_head_logo);
 		imageView.setImageResource(R.drawable.article);
 		progressBar = (LinearLayout) super.findViewById(R.id.myprogressbar);
-		backBtn = (RadioButton) super.findViewById(R.id.head_back);
+		backBtn = (ImageButton) super.findViewById(R.id.head_back);
 		backBtn.setVisibility(View.VISIBLE);
-		backBtn.setOnClickListener(new View.OnClickListener() {
+		backBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View paramView) {
 				ShowArticleActivity.this.finish();

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="30dp"
+    android:layout_height="wrap_content"
     android:background="@drawable/widget_head_bg">
      <ImageView
     	android:id="@+id/main_head_logo"
@@ -17,7 +17,8 @@
 		android:layout_toRightOf="@id/main_head_logo"
 		android:layout_centerVertical="true"
 		android:layout_marginLeft="5.0dip"/>
-	<RadioButton
+	<!-- 返回 -->
+	<ImageButton
 		android:visibility="gone"
 		android:id="@+id/head_back"
 		android:layout_width="wrap_content"
@@ -26,4 +27,13 @@
 		android:button="@null"
 		android:background="@drawable/widget_bar_back"
 	/>
+	<!-- 加载更多-->
+	<ImageButton
+		android:visibility="gone"
+		android:id="@+id/head_refresh"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentRight="true"
+		android:button="@null"
+		android:background="@drawable/widget_bar_refresh"/>
 </RelativeLayout>
