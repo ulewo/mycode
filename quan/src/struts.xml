@@ -519,8 +519,8 @@
 	<!--android json-->
 	<package name="android" namespace="/android" extends="struts-default">
 		<!--获取所有文章-->
-		<action name="fetchArticle" class="android" method="fetchArticle">
-		</action>
+	
+		
 		<action name="showArticle" class="android" method="showArticle">
 		</action>
 		
@@ -531,6 +531,9 @@
 		</action>
 		
 		<action name="fetchWoWo" class="android" method="fetchWoWo">
+		</action>
+		
+		<action name="fetchArticle" class="android" method="fetchArticle">
 		</action>
 	</package>
 	
