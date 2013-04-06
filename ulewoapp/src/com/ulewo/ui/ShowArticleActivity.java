@@ -10,6 +10,7 @@ import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.ulewo.R;
@@ -25,7 +26,7 @@ public class ShowArticleActivity extends Activity implements IMainActivity {
 
 	private LinearLayout contentlayout = null;
 
-	private ImageView backBtn = null;
+	private RadioButton backBtn = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +36,7 @@ public class ShowArticleActivity extends Activity implements IMainActivity {
 		ImageView imageView = (ImageView) findViewById(R.id.main_head_logo);
 		imageView.setImageResource(R.drawable.article);
 		progressBar = (LinearLayout) super.findViewById(R.id.myprogressbar);
-		backBtn = (ImageView) super.findViewById(R.id.head_back);
+		backBtn = (RadioButton) super.findViewById(R.id.head_back);
 		backBtn.setVisibility(View.VISIBLE);
 		backBtn.setOnClickListener(new View.OnClickListener() {
 			@Override

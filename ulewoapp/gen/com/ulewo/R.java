@@ -77,13 +77,14 @@ public final class R {
         public static final int shap=0x7f02000e;
         public static final int user=0x7f02000f;
         public static final int welcome_alpha=0x7f020010;
-        public static final int widget_bar_bg=0x7f020011;
-        public static final int widget_bar_bg_n=0x7f020012;
-        public static final int widget_bar_bg_p=0x7f020013;
-        public static final int widget_bar_cut_off=0x7f020014;
-        public static final int widget_comment_count_icon=0x7f020015;
-        public static final int widget_head_bg=0x7f020016;
-        public static final int wowo=0x7f020017;
+        public static final int widget_bar_back=0x7f020011;
+        public static final int widget_bar_bg=0x7f020012;
+        public static final int widget_bar_bg_n=0x7f020013;
+        public static final int widget_bar_bg_p=0x7f020014;
+        public static final int widget_bar_cut_off=0x7f020015;
+        public static final int widget_comment_count_icon=0x7f020016;
+        public static final int widget_head_bg=0x7f020017;
+        public static final int wowo=0x7f020018;
     }
     public static final class id {
         public static final int article_author=0x7f080002;
@@ -92,36 +93,40 @@ public final class R {
         public static final int article_recount_icon=0x7f080004;
         public static final int article_time=0x7f080003;
         public static final int article_title=0x7f080001;
-        public static final int bg_progress=0x7f080010;
-        public static final int group_id=0x7f080009;
+        public static final int bg_progress=0x7f08000c;
+        public static final int group_id=0x7f08000d;
         public static final int head_back=0x7f080008;
-        public static final int login_btn=0x7f080015;
-        public static final int login_password=0x7f080014;
-        public static final int login_username=0x7f080013;
+        public static final int loadmore=0x7f080009;
+        public static final int loadmore_progressbar=0x7f08000b;
+        public static final int loadmoretextview=0x7f08000a;
+        public static final int login_btn=0x7f080018;
+        public static final int login_password=0x7f080017;
+        public static final int login_username=0x7f080016;
         public static final int main_head_logo=0x7f080006;
         public static final int main_head_title=0x7f080007;
-        public static final int myprogressbar=0x7f08000f;
-        public static final int radio_article_id=0x7f08000a;
-        public static final int radio_blog_id=0x7f08000b;
-        public static final int radio_more_id=0x7f08000e;
-        public static final int radio_user_id=0x7f08000d;
-        public static final int radio_wowo_id=0x7f08000c;
-        public static final int show_article_id=0x7f080012;
-        public static final int show_article_title=0x7f080011;
-        public static final int wlecomelogo=0x7f080016;
+        public static final int myprogressbar=0x7f080013;
+        public static final int radio_article_id=0x7f08000e;
+        public static final int radio_blog_id=0x7f08000f;
+        public static final int radio_more_id=0x7f080012;
+        public static final int radio_user_id=0x7f080011;
+        public static final int radio_wowo_id=0x7f080010;
+        public static final int show_article_id=0x7f080015;
+        public static final int show_article_title=0x7f080014;
+        public static final int wlecomelogo=0x7f080019;
     }
     public static final class layout {
         public static final int article=0x7f030000;
         public static final int article_item=0x7f030001;
         public static final int blog=0x7f030002;
         public static final int common_head=0x7f030003;
-        public static final int main=0x7f030004;
-        public static final int more=0x7f030005;
-        public static final int progress=0x7f030006;
-        public static final int show_article=0x7f030007;
-        public static final int user=0x7f030008;
-        public static final int welcom=0x7f030009;
-        public static final int wowo=0x7f03000a;
+        public static final int loadmore=0x7f030004;
+        public static final int main=0x7f030005;
+        public static final int more=0x7f030006;
+        public static final int progress=0x7f030007;
+        public static final int show_article=0x7f030008;
+        public static final int user=0x7f030009;
+        public static final int welcom=0x7f03000a;
+        public static final int wowo=0x7f03000b;
     }
     public static final class string {
         public static final int app_name=0x7f060000;
@@ -129,6 +134,7 @@ public final class R {
         public static final int guide_three=0x7f060008;
         public static final int guide_two=0x7f060007;
         public static final int loading=0x7f06000a;
+        public static final int loadmore=0x7f06000b;
         public static final int name_article=0x7f060001;
         public static final int name_blog=0x7f060002;
         public static final int name_more=0x7f060005;

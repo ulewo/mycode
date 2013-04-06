@@ -19,29 +19,25 @@ import android.widget.TextView;
 import com.ulewo.R;
 import com.ulewo.adapter.ArticleListAdapter;
 import com.ulewo.bean.Article;
-import com.ulewo.bean.RequestResult;
 import com.ulewo.bean.Task;
 import com.ulewo.enums.TaskType;
 import com.ulewo.logic.MainService;
-import com.ulewo.ui.BlogActivity.MyHandler;
 
 public class ArticleActivity extends Activity implements IMainActivity {
-
-	private static final String path = "http://192.168.2.224:8080/ulewo/android/fetchArticle.jspx";
-
-	private MyHandler myHandler = null;
-
-	private RequestResult requestResult = null;
 
 	private LinearLayout progressBar = null;
 
 	private ArticleListAdapter adapter = null;
 
-	private int visibleItemCount = 0;
-
-	private int visibleLastIndex = 0;
+	private View loadMoreView = null;
 
 	private int page = 1;
+
+	private TextView loadmoreTextView = null;
+
+	private LinearLayout loadmore_prgressbar = null;
+
+	ListView listView = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,10 +51,35 @@ public class ArticleActivity extends Activity implements IMainActivity {
 		textView.setText(R.string.name_article);
 
 		progressBar = (LinearLayout) findViewById(R.id.myprogressbar);
+
+		loadMoreView = View.inflate(this, R.layout.loadmore, null);
+
+		listView = (ListView) findViewById(R.id.article_list_view_id);
+		listView.addFooterView(loadMoreView);
+
+		loadmore_prgressbar = (LinearLayout) findViewById(R.id.loadmore_progressbar);
+		loadmoreTextView = (TextView) findViewById(R.id.loadmoretextview);
+
+		loadmoreTextView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				loadmoreTextView.setVisibility(View.GONE);
+				loadmore_prgressbar.setVisibility(View.VISIBLE);
+				Intent service = new Intent(ArticleActivity.this,
+						MainService.class);
+				startService(service);
+				Map<String, Object> param = new HashMap<String, Object>();
+				param.put("page", ++page);
+				Task task = new Task(TaskType.QUERYARTICLES, param,
+						ArticleActivity.this);
+				MainService.newTask(task);
+			}
+		});
+
 		Intent service = new Intent(this, MainService.class);
 		startService(service);
 		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("page", 1);
+		param.put("page", page);
 		Task task = new Task(TaskType.QUERYARTICLES, param, this);
 		MainService.newTask(task);
 		// MainService.addActivity(this);
@@ -79,17 +100,25 @@ public class ArticleActivity extends Activity implements IMainActivity {
 	public void refresh(Object... obj) {
 		progressBar.setVisibility(View.GONE);
 		List<Article> list = (ArrayList<Article>) obj[0];
-		adapter = new ArticleListAdapter(this, list);
-		ListView listView = (ListView) findViewById(R.id.article_list_view_id);
-		listView.setAdapter(adapter);
+		if (adapter == null) {
+			adapter = new ArticleListAdapter(this, list);
+			listView.setAdapter(adapter);
+		} else {
+			loadmore_prgressbar.setVisibility(View.GONE);
+			loadmoreTextView.setVisibility(View.VISIBLE);
+			adapter.loadMore(list);
+		}
 		listView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int postion, long id) {
 				String articleId = String.valueOf(adapter.getItemId(postion));
-				Intent intent = new Intent();
-				intent.putExtra("articleId", articleId);
-				intent.setClass(ArticleActivity.this, ShowArticleActivity.class);
-				startActivity(intent);
+				if (!"0".equals(articleId)) {
+					Intent intent = new Intent();
+					intent.putExtra("articleId", articleId);
+					intent.setClass(ArticleActivity.this,
+							ShowArticleActivity.class);
+					startActivity(intent);
+				}
 			}
 		});
 	}

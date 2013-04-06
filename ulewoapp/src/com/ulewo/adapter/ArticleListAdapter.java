@@ -17,9 +17,12 @@ public class ArticleListAdapter extends BaseAdapter {
 	private List<Article> list = null;
 	private Context context;
 
+	private LayoutInflater mInflater;
+
 	public ArticleListAdapter(Context context, List<Article> list) {
 		this.context = context;
 		this.list = list;
+		mInflater = LayoutInflater.from(context);
 	}
 
 	@Override
@@ -34,28 +37,48 @@ public class ArticleListAdapter extends BaseAdapter {
 
 	@Override
 	public long getItemId(int position) {
-		return list.get(position).getId();
+		if (position < getCount()) {
+			return list.get(position).getId();
+		} else {
+			return 0;
+		}
+
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		View view = convertView;
-		if (null == view) {
-			view = LayoutInflater.from(context).inflate(R.layout.article_item,
-					null);
-			TextView titView = (TextView) view.findViewById(R.id.article_title);
-			TextView authorView = (TextView) view
-					.findViewById(R.id.article_author);
-			TextView timeView = (TextView) view.findViewById(R.id.article_time);
-			TextView recountView = (TextView) view
-					.findViewById(R.id.article_recount);
-			Article article = list.get(position);
-			titView.setText(article.getTitle());
-			authorView.setText(article.getAuthorName());
-			timeView.setText(article.getPostTime() == null ? "" : article
-					.getPostTime().substring(0, 16));
-			recountView.setText(article.getReNumber());
+		return createViewFromResource(position, convertView);
+	}
+
+	private View createViewFromResource(int position, View convertView) {
+		View view;
+		if (convertView == null) {
+			view = this.mInflater.inflate(R.layout.article_item, null);
+		} else {
+			view = convertView;
 		}
+		bindView(position, view);
 		return view;
 	}
+
+	private void bindView(int postion, View view) {
+		Article article = list.get(postion);
+		TextView titView = (TextView) view.findViewById(R.id.article_title);
+		TextView authorView = (TextView) view.findViewById(R.id.article_author);
+		TextView timeView = (TextView) view.findViewById(R.id.article_time);
+		TextView recountView = (TextView) view
+				.findViewById(R.id.article_recount);
+
+		titView.setText(article.getTitle());
+		authorView.setText(article.getAuthorName());
+		timeView.setText(article.getPostTime() == null ? "" : article
+				.getPostTime().substring(0, 16));
+		recountView.setText(article.getReNumber());
+	}
+
+	public void loadMore(List<Article> articleList) {
+		list.addAll(articleList);
+		this.notifyDataSetChanged();
+	}
+
 }
