@@ -106,9 +106,9 @@
         <isNotEmpty prepend="," property="characters" >
           characters=#characters#
         </isNotEmpty>
-        <isNotEmpty prepend="," property="mark" >
+        <isNotEqual  prepend="," compareValue="0"  property="mark">
           mark=#mark#
-        </isNotEmpty>
+        </isNotEqual>
         <isNotEmpty prepend="," property="address" >
           address=#address#
         </isNotEmpty>
@@ -149,9 +149,9 @@
         <isNotEmpty prepend="," property="characters">
           characters=#characters#
         </isNotEmpty>
-        <isNotEmpty prepend="," property="mark">
+        <isNotEqual  prepend="," compareValue="0"  property="mark">
           mark=#mark#
-        </isNotEmpty>
+        </isNotEqual>
         <isNotEmpty prepend="," property="address">
           address=#address#
         </isNotEmpty>
