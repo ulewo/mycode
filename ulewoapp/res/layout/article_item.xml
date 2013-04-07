@@ -40,12 +40,12 @@
     		android:src="@drawable/widget_comment_count_icon"
     		android:id="@+id/article_recount_icon"/>	
     	<TextView 
-    	android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:textSize="@dimen/size_11"
-    	android:textColor="@color/shadeblack"
-    	android:layout_toRightOf="@id/article_recount_icon"
-    	android:layout_marginLeft="@dimen/size_5"
-    	android:id="@+id/article_recount"/>
+	    	android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	    	android:textSize="@dimen/size_11"
+	    	android:textColor="@color/shadeblack"
+	    	android:layout_toRightOf="@id/article_recount_icon"
+	    	android:layout_marginLeft="@dimen/size_5"
+	    	android:id="@+id/article_recount"/>
     </RelativeLayout>
 </LinearLayout>

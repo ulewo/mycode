@@ -13,4 +13,7 @@
     <string name="request_timeout">请求网络超时</string>
     <string name="loading">加载中......</string>
     <string name="loadmore">加载更多......</string>
+    <string name="wowo_username">创建者:</string>
+    <string name="wowo_membercount">成员:</string>
+    <string name="wowo_articlecount">文章:</string>
 </resources>

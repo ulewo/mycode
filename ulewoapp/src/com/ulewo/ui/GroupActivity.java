@@ -2,7 +2,6 @@ package com.ulewo.ui;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -22,18 +21,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ulewo.R;
-import com.ulewo.adapter.BlogListAdapter;
-import com.ulewo.bean.Blog;
+import com.ulewo.adapter.GroupListAdapter;
+import com.ulewo.bean.Group;
 import com.ulewo.bean.Task;
 import com.ulewo.enums.TaskType;
 import com.ulewo.logic.MainService;
 import com.ulewo.util.Constants;
 
-public class BlogActivity extends Activity implements IMainActivity {
+public class GroupActivity extends Activity implements IMainActivity {
 
 	private LinearLayout progressBar = null;
 
-	private BlogListAdapter adapter = null;
+	private GroupListAdapter adapter = null;
 
 	private View loadMoreView = null;
 
@@ -63,16 +62,16 @@ public class BlogActivity extends Activity implements IMainActivity {
 
 		HashMap<String, Object> param = new HashMap<String, Object>(1);
 		param.put("page", page);
-		Task task = new Task(TaskType.QUERYBLOGES, param, this);
+		Task task = new Task(TaskType.GROUP, param, this);
 		MainService.newTask(task);
 	}
 
 	private void init() {
 
 		ImageView imageView = (ImageView) findViewById(R.id.main_head_logo);
-		imageView.setImageResource(R.drawable.blog);
+		imageView.setImageResource(R.drawable.wowo);
 		TextView textView = (TextView) findViewById(R.id.main_head_title);
-		textView.setText(R.string.name_blog);
+		textView.setText(R.string.name_wowo);
 
 		progressBar = (LinearLayout) findViewById(R.id.myprogressbar);
 
@@ -90,11 +89,11 @@ public class BlogActivity extends Activity implements IMainActivity {
 
 				loadmoreTextView.setVisibility(View.GONE);
 				loadmore_prgressbar.setVisibility(View.VISIBLE);
-				Intent service = new Intent(BlogActivity.this, MainService.class);
+				Intent service = new Intent(GroupActivity.this, MainService.class);
 				startService(service);
 				HashMap<String, Object> param = new HashMap<String, Object>(1);
 				param.put("page", ++page);
-				Task task = new Task(TaskType.QUERYBLOGES, param, BlogActivity.this);
+				Task task = new Task(TaskType.QUERYARTICLES, param, GroupActivity.this);
 				MainService.newTask(task);
 			}
 		});
@@ -109,7 +108,7 @@ public class BlogActivity extends Activity implements IMainActivity {
 				page = 1;
 				HashMap<String, Object> param = new HashMap<String, Object>(1);
 				param.put("page", page);
-				Task task = new Task(TaskType.QUERYBLOGES, param, BlogActivity.this);
+				Task task = new Task(TaskType.QUERYARTICLES, param, GroupActivity.this);
 				MainService.newTask(task);
 			}
 		});
@@ -123,9 +122,9 @@ public class BlogActivity extends Activity implements IMainActivity {
 		refreshBtn.clearAnimation();
 		HashMap<String, Object> myobj = (HashMap<String, Object>) obj[0];
 		if (Constants.RESULTCODE_SUCCESS.equals(myobj.get("resultCode").toString())) {
-			List<Blog> list = (ArrayList<Blog>) myobj.get("list");
+			ArrayList<Group> list = (ArrayList<Group>) myobj.get("list");
 			if (adapter == null || page == 1) {
-				adapter = new BlogListAdapter(this, list);
+				adapter = new GroupListAdapter(this, list);
 				listView.setAdapter(adapter);
 			}
 			else {
@@ -140,15 +139,16 @@ public class BlogActivity extends Activity implements IMainActivity {
 					if (!"0".equals(articleId)) {
 						Intent intent = new Intent();
 						intent.putExtra("articleId", articleId);
-						intent.setClass(BlogActivity.this, ShowBlogActivity.class);
+						intent.setClass(GroupActivity.this, ShowArticleActivity.class);
 						startActivity(intent);
 					}
 				}
 			});
 		}
 		else {
-			Toast.makeText(BlogActivity.this, R.string.request_timeout, Toast.LENGTH_LONG).show();
+			Toast.makeText(GroupActivity.this, R.string.request_timeout, Toast.LENGTH_LONG).show();
 		}
+
 	}
 
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -165,7 +165,9 @@ public class BlogActivity extends Activity implements IMainActivity {
 			isExit.setButton2("取消", listener);
 			// 显示对话框
 			isExit.show();
+
 		}
+
 		return false;
 
 	}

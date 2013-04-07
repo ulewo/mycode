@@ -3,7 +3,6 @@ package com.ulewo.ui;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -20,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ulewo.R;
 import com.ulewo.adapter.ArticleListAdapter;
@@ -27,6 +27,7 @@ import com.ulewo.bean.Article;
 import com.ulewo.bean.Task;
 import com.ulewo.enums.TaskType;
 import com.ulewo.logic.MainService;
+import com.ulewo.util.Constants;
 
 public class ArticleActivity extends Activity implements IMainActivity {
 
@@ -46,11 +47,27 @@ public class ArticleActivity extends Activity implements IMainActivity {
 
 	private ImageButton refreshBtn = null;
 
+	private static final int RESULTCODE_SUCCESS = 200;
+
+	private static final int RESULTCODE_FAIL = 400;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
 		super.setContentView(R.layout.article);
+
+		init();
+		Intent service = new Intent(this, MainService.class);
+		startService(service);
+
+		HashMap<String, Object> param = new HashMap<String, Object>(1);
+		param.put("page", page);
+		Task task = new Task(TaskType.QUERYARTICLES, param, this);
+		MainService.newTask(task);
+	}
+
+	private void init() {
 
 		ImageView imageView = (ImageView) findViewById(R.id.main_head_logo);
 		imageView.setImageResource(R.drawable.article);
@@ -70,15 +87,14 @@ public class ArticleActivity extends Activity implements IMainActivity {
 		loadmoreTextView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+
 				loadmoreTextView.setVisibility(View.GONE);
 				loadmore_prgressbar.setVisibility(View.VISIBLE);
-				Intent service = new Intent(ArticleActivity.this,
-						MainService.class);
+				Intent service = new Intent(ArticleActivity.this, MainService.class);
 				startService(service);
-				Map<String, Object> param = new HashMap<String, Object>();
+				HashMap<String, Object> param = new HashMap<String, Object>(1);
 				param.put("page", ++page);
-				Task task = new Task(TaskType.QUERYARTICLES, param,
-						ArticleActivity.this);
+				Task task = new Task(TaskType.QUERYARTICLES, param, ArticleActivity.this);
 				MainService.newTask(task);
 			}
 		});
@@ -86,68 +102,58 @@ public class ArticleActivity extends Activity implements IMainActivity {
 		refreshBtn = (ImageButton) findViewById(R.id.head_refresh);
 		refreshBtn.setVisibility(View.VISIBLE);
 		refreshBtn.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
+
 				progressBar.setVisibility(View.VISIBLE);
 				page = 1;
-				Map<String, Object> param = new HashMap<String, Object>();
+				HashMap<String, Object> param = new HashMap<String, Object>(1);
 				param.put("page", page);
-				Task task = new Task(TaskType.QUERYARTICLES, param,
-						ArticleActivity.this);
+				Task task = new Task(TaskType.QUERYARTICLES, param, ArticleActivity.this);
 				MainService.newTask(task);
 			}
 		});
-
-		Intent service = new Intent(this, MainService.class);
-		startService(service);
-		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("page", page);
-		Task task = new Task(TaskType.QUERYARTICLES, param, this);
-		MainService.newTask(task);
-		// MainService.addActivity(this);
-		/*
-		 * myHandler = new MyHandler(); MyThread m = new MyThread(); new
-		 * Thread(m).start();
-		 */
-	}
-
-	@Override
-	public void init() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public void refresh(Object... obj) {
+
 		progressBar.setVisibility(View.GONE);
 		refreshBtn.clearAnimation();
-		List<Article> list = (ArrayList<Article>) obj[0];
-		if (adapter == null || page == 1) {
-			adapter = new ArticleListAdapter(this, list);
-			listView.setAdapter(adapter);
-		} else {
-			loadmore_prgressbar.setVisibility(View.GONE);
-			loadmoreTextView.setVisibility(View.VISIBLE);
-			adapter.loadMore(list);
-		}
-		listView.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view,
-					int postion, long id) {
-				String articleId = String.valueOf(adapter.getItemId(postion));
-				if (!"0".equals(articleId)) {
-					Intent intent = new Intent();
-					intent.putExtra("articleId", articleId);
-					intent.setClass(ArticleActivity.this,
-							ShowArticleActivity.class);
-					startActivity(intent);
-				}
+		HashMap<String, Object> myobj = (HashMap<String, Object>) obj[0];
+		if (Constants.RESULTCODE_SUCCESS.equals(myobj.get("resultCode").toString())) {
+			List<Article> list = (ArrayList<Article>) myobj.get("list");
+			if (adapter == null || page == 1) {
+				adapter = new ArticleListAdapter(this, list);
+				listView.setAdapter(adapter);
 			}
-		});
+			else {
+				loadmore_prgressbar.setVisibility(View.GONE);
+				loadmoreTextView.setVisibility(View.VISIBLE);
+				adapter.loadMore(list);
+			}
+			listView.setOnItemClickListener(new OnItemClickListener() {
+				public void onItemClick(AdapterView<?> parent, View view, int postion, long id) {
+
+					String articleId = String.valueOf(adapter.getItemId(postion));
+					if (!"0".equals(articleId)) {
+						Intent intent = new Intent();
+						intent.putExtra("articleId", articleId);
+						intent.setClass(ArticleActivity.this, ShowArticleActivity.class);
+						startActivity(intent);
+					}
+				}
+			});
+		}
+		else {
+			Toast.makeText(ArticleActivity.this, R.string.request_timeout, Toast.LENGTH_LONG).show();
+		}
+
 	}
 
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
+
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			// 创建退出对话框
 			AlertDialog isExit = new AlertDialog.Builder(this).create();
@@ -169,6 +175,7 @@ public class ArticleActivity extends Activity implements IMainActivity {
 
 	DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
 		public void onClick(DialogInterface dialog, int which) {
+
 			switch (which) {
 			case AlertDialog.BUTTON_POSITIVE:// "确认"按钮退出程序
 				android.os.Process.killProcess(android.os.Process.myPid());

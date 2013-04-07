@@ -29,13 +29,12 @@ public class MainActivity extends TabActivity {
 		setContentView(R.layout.main);
 		tabHost = getTabHost();
 
-		tabHost.addTab(tabHost.newTabSpec(TAG_ARTICLE)
-				.setIndicator(TAG_ARTICLE)
+		tabHost.addTab(tabHost.newTabSpec(TAG_ARTICLE).setIndicator(TAG_ARTICLE)
 				.setContent(new Intent(this, ArticleActivity.class)));
 		tabHost.addTab(tabHost.newTabSpec(TAG_BLOG).setIndicator(TAG_BLOG)
 				.setContent(new Intent(this, BlogActivity.class)));
 		tabHost.addTab(tabHost.newTabSpec(TAG_WOWO).setIndicator(TAG_WOWO)
-				.setContent(new Intent(this, WoWoActivity.class)));
+				.setContent(new Intent(this, GroupActivity.class)));
 		tabHost.addTab(tabHost.newTabSpec(TAG_USER).setIndicator(TAG_USER)
 				.setContent(new Intent(this, UserActivity.class)));
 		tabHost.addTab(tabHost.newTabSpec(TAG_MORE).setIndicator(TAG_MORE)

@@ -21,7 +21,7 @@
 		 <activity android:name=".ui.ShowArticleActivity"  android:theme="@android:style/Theme.NoTitleBar"/>
 		 <activity android:name=".ui.BlogActivity"/>
 		 <activity android:name=".ui.ShowBlogActivity"  android:theme="@android:style/Theme.NoTitleBar"/>
-		 <activity android:name=".ui.WoWoActivity"/>
+		 <activity android:name=".ui.GroupActivity"/>
 		 <activity android:name=".ui.UserActivity"/>
 		 <activity android:name=".ui.MoreActivity"/>
 		 

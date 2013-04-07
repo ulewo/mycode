@@ -19,6 +19,7 @@ import com.ulewo.logic.MainService;
 
 public class UserActivity extends Activity implements IMainActivity {
 	EditText usernameEdit = null;
+
 	EditText pwdEdit = null;
 
 	@Override
@@ -44,6 +45,7 @@ public class UserActivity extends Activity implements IMainActivity {
 
 			@Override
 			public void onClick(View paramView) {
+
 				Map<String, Object> param = new HashMap<String, Object>();
 				param.put("userName", usernameEdit.getText());
 				param.put("password", pwdEdit.getText());
@@ -57,18 +59,10 @@ public class UserActivity extends Activity implements IMainActivity {
 	}
 
 	@Override
-	public void init() {
-
-	}
-
-	@Override
 	public void refresh(Object... obj) {
-		@SuppressWarnings("unchecked")
-		HashMap<String, Object> map = (HashMap<String, Object>) obj[0];
-		Toast.makeText(
-				this,
-				String.valueOf(map.get("userName")) + "  "
-						+ String.valueOf(map.get("password")),
+
+		@SuppressWarnings("unchecked") HashMap<String, Object> map = (HashMap<String, Object>) obj[0];
+		Toast.makeText(this, String.valueOf(map.get("userName")) + "  " + String.valueOf(map.get("password")),
 				Toast.LENGTH_LONG).show();
 	}
 

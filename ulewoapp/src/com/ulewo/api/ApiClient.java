@@ -46,24 +46,27 @@ public class ApiClient {
 				while ((current = bis.read()) != -1) {
 					baf.append((byte) current);
 				}
-				String myString = EncodingUtils.getString(baf.toByteArray(),
-						"UTF-8");
+				String myString = EncodingUtils.getString(baf.toByteArray(), "UTF-8");
 				JSONObject jsonObj = new JSONObject(myString);
 				requestResult.setResultEnum(ResultEnum.SUCCESS);
 				requestResult.setJsonObject(jsonObj);
-			} else {
+			}
+			else {
 				requestResult.setResultEnum(ResultEnum.REQUESTTIMEOUT);
 			}
 			// 关闭连接
 			urlConn.disconnect();
 
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			requestResult.setResultEnum(ResultEnum.ERROR);
-		} finally {
+		}
+		finally {
 			if (bis != null) {
 				try {
 					bis.close();
-				} catch (IOException e) {
+				}
+				catch (IOException e) {
 					bis = null;
 				}
 				bis = null;
@@ -71,7 +74,8 @@ public class ApiClient {
 			if (is != null) {
 				try {
 					is.close();
-				} catch (IOException e) {
+				}
+				catch (IOException e) {
 					is = null;
 				}
 				bis = null;
