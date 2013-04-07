@@ -519,21 +519,34 @@
 	<!--android json-->
 	<package name="android" namespace="/android" extends="struts-default">
 		<!--获取所有文章-->
-	
-		
+		<action name="fetchArticle" class="android" method="fetchArticle">
+		</action>
+		<!--文章详情-->
 		<action name="showArticle" class="android" method="showArticle">
 		</action>
-		
+		<!--评论-->
+		<action name="fetchReComment" class="android" method="fetchReComment">
+		</action>
+		<!--博客列表-->
 		<action name="fetchBlog" class="android" method="fetchBlog">
 		</action>
-		
+		<!--博客详情-->
 		<action name="showBlog" class="android" method="showBlog">
 		</action>
-		
+		<!--博客评论 -->
+		<action name="fetchBlogComment" class="android" method="fetchBlogComment">
+		</action>
+		<!--wowo-->
 		<action name="fetchWoWo" class="android" method="fetchWoWo">
 		</action>
-		
-		<action name="fetchArticle" class="android" method="fetchArticle">
+		<!--wowo文章-->
+		<action name="fetchArticleByGid" class="android" method="fetchArticleByGid">
+		</action>
+		<!--登录-->
+		<action name="login" class="android" method="login">
+		</action>
+		<!--用户信息-->
+		<action name="fetchUserInfo" class="android" method="fetchUserInfo">
 		</action>
 	</package>
 	

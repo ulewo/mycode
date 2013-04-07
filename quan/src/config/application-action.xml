@@ -102,8 +102,10 @@
 	<bean id="android" class="com.lhl.quan.action.AndroidAction" scope="prototype">
 		<property name="adminArticleService" ref="adminArticleService"/>
 		<property name="articleService" ref="articleService"/>
+		<property name="reArticleService" ref="reArticleService"/>
 		<property name="groupService" ref="groupService"/>
 		<property name="userService" ref="userService"/>
 		<property name="blogArticleService" ref="blogArticleService"/>
+		<property name="blogReplyService" ref="blogReplyService"/>
 	</bean>
 </beans>
