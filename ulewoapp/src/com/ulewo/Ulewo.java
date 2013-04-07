@@ -15,17 +15,22 @@ import com.ulewo.bean.RequestResult;
 import com.ulewo.enums.ResultEnum;
 
 public class Ulewo {
-	private static final String BASEURL = "http://192.168.0.224:8080/ulewo";
+	private static final String BASEURL = "http://192.168.2.224:8080/ulewo";
 
-	private static final String BASEURL_ARTICLELIST = BASEURL + "/android/fetchArticle.jspx";
+	private static final String BASEURL_ARTICLELIST = BASEURL
+			+ "/android/fetchArticle.jspx";
 
-	private static final String BASEUR_SHOWARTICLE = BASEURL + "/android/showArticle.jspx";
+	private static final String BASEUR_SHOWARTICLE = BASEURL
+			+ "/android/showArticle.jspx";
 
-	private static final String BASEUR_BLOGLIST = BASEURL + "/android/fetchBlog.jspx";
+	private static final String BASEUR_BLOGLIST = BASEURL
+			+ "/android/fetchBlog.jspx";
 
-	private static final String BASEUR_SHOWBLOG = BASEURL + "/android/showBlog.jspx";
+	private static final String BASEUR_SHOWBLOG = BASEURL
+			+ "/android/showBlog.jspx";
 
-	private static final String BASEUR_GROUPLIST = BASEURL + "/android/fetchWoWo.jspx";
+	private static final String BASEUR_GROUPLIST = BASEURL
+			+ "/android/fetchWoWo.jspx";
 
 	private static final int RESULTCODE_SUCCESS = 200;
 
@@ -34,12 +39,15 @@ public class Ulewo {
 	public static List<Article> queryArticleList(int page) {
 
 		List<Article> list = null;
-		RequestResult requestResult = ApiClient.getUlewoInfo(BASEURL_ARTICLELIST + "?page=" + page);
+		RequestResult requestResult = ApiClient
+				.getUlewoInfo(BASEURL_ARTICLELIST + "?page=" + page);
 		if (requestResult.getResultEnum() == ResultEnum.SUCCESS) {
 			JSONObject jsonObj = requestResult.getJsonObject();
 			try {
-				JSONObject response = new JSONObject(String.valueOf(jsonObj.get("response")));
-				JSONArray jsonArray = new JSONArray(String.valueOf(response.get("list")));
+				JSONObject response = new JSONObject(String.valueOf(jsonObj
+						.get("response")));
+				JSONArray jsonArray = new JSONArray(String.valueOf(response
+						.get("list")));
 				if (response.getInt("resultCode") == RESULTCODE_SUCCESS) {
 					list = new ArrayList<Article>();
 					int jsonLength = jsonArray.length();
@@ -51,28 +59,28 @@ public class Ulewo {
 					}
 				}
 
-			}
-			catch (JSONException e) {
+			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 			return list;
-		}
-		else {
+		} else {
 			return null;
 		}
 	}
 
 	public static Article queryArticle(int articleId) {
 
-		RequestResult requestResult = ApiClient.getUlewoInfo(BASEUR_SHOWARTICLE + "?articleId=" + articleId);
+		RequestResult requestResult = ApiClient.getUlewoInfo(BASEUR_SHOWARTICLE
+				+ "?articleId=" + articleId);
 		Article article = null;
 		if (requestResult.getResultEnum() == ResultEnum.SUCCESS) {
 			JSONObject jsonObj = requestResult.getJsonObject();
 			try {
-				JSONObject response = new JSONObject(String.valueOf(jsonObj.get("response")));
-				article = new Article(new JSONObject(response.get("obj").toString()));
-			}
-			catch (JSONException e) {
+				JSONObject response = new JSONObject(String.valueOf(jsonObj
+						.get("response")));
+				article = new Article(new JSONObject(response.get("obj")
+						.toString()));
+			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 		}
@@ -82,12 +90,15 @@ public class Ulewo {
 	public static List<Blog> queryBlogList(int page) {
 
 		List<Blog> list = null;
-		RequestResult requestResult = ApiClient.getUlewoInfo(BASEUR_BLOGLIST + "?page=" + page);
+		RequestResult requestResult = ApiClient.getUlewoInfo(BASEUR_BLOGLIST
+				+ "?page=" + page);
 		if (requestResult.getResultEnum() == ResultEnum.SUCCESS) {
 			JSONObject jsonObj = requestResult.getJsonObject();
 			try {
-				JSONObject response = new JSONObject(String.valueOf(jsonObj.get("response")));
-				JSONArray jsonArray = new JSONArray(String.valueOf(response.get("list")));
+				JSONObject response = new JSONObject(String.valueOf(jsonObj
+						.get("response")));
+				JSONArray jsonArray = new JSONArray(String.valueOf(response
+						.get("list")));
 				if (response.getInt("resultCode") == RESULTCODE_SUCCESS) {
 					list = new ArrayList<Blog>();
 					int jsonLength = jsonArray.length();
@@ -99,28 +110,27 @@ public class Ulewo {
 					}
 				}
 
-			}
-			catch (JSONException e) {
+			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 			return list;
-		}
-		else {
+		} else {
 			return null;
 		}
 	}
 
 	public static Blog queryBlog(int articleId) {
 
-		RequestResult requestResult = ApiClient.getUlewoInfo(BASEUR_SHOWBLOG + "?articleId=" + articleId);
+		RequestResult requestResult = ApiClient.getUlewoInfo(BASEUR_SHOWBLOG
+				+ "?articleId=" + articleId);
 		Blog blog = null;
 		if (requestResult.getResultEnum() == ResultEnum.SUCCESS) {
 			JSONObject jsonObj = requestResult.getJsonObject();
 			try {
-				JSONObject response = new JSONObject(String.valueOf(jsonObj.get("response")));
+				JSONObject response = new JSONObject(String.valueOf(jsonObj
+						.get("response")));
 				blog = new Blog(new JSONObject(response.get("obj").toString()));
-			}
-			catch (JSONException e) {
+			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 		}
@@ -130,12 +140,15 @@ public class Ulewo {
 	public static List<Group> queryGroupList(int page) {
 
 		List<Group> list = null;
-		RequestResult requestResult = ApiClient.getUlewoInfo(BASEUR_GROUPLIST + "?page=" + page);
+		RequestResult requestResult = ApiClient.getUlewoInfo(BASEUR_GROUPLIST
+				+ "?page=" + page);
 		if (requestResult.getResultEnum() == ResultEnum.SUCCESS) {
 			JSONObject jsonObj = requestResult.getJsonObject();
 			try {
-				JSONObject response = new JSONObject(String.valueOf(jsonObj.get("response")));
-				JSONArray jsonArray = new JSONArray(String.valueOf(response.get("list")));
+				JSONObject response = new JSONObject(String.valueOf(jsonObj
+						.get("response")));
+				JSONArray jsonArray = new JSONArray(String.valueOf(response
+						.get("list")));
 				if (response.getInt("resultCode") == RESULTCODE_SUCCESS) {
 					list = new ArrayList<Group>();
 					int jsonLength = jsonArray.length();
@@ -147,13 +160,11 @@ public class Ulewo {
 					}
 				}
 
-			}
-			catch (JSONException e) {
+			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 			return list;
-		}
-		else {
+		} else {
 			return null;
 		}
 	}
