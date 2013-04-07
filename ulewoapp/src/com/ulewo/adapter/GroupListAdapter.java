@@ -87,7 +87,7 @@ public class GroupListAdapter extends BaseAdapter {
 		TextView memberView = (TextView) view.findViewById(R.id.wowo_member_con);
 		TextView articleView = (TextView) view.findViewById(R.id.wowo_articlecount_con);
 
-		imageView.setImageBitmap(returnBitMap(blog.getGroupIcon()));
+		//imageView.setImageBitmap(returnBitMap(blog.getGroupIcon()));
 		titView.setText(blog.getgName());
 		authorView.setText(blog.getgUserName());
 		memberView.setText(blog.getgMember());

@@ -4,5 +4,87 @@
     android:layout_height="wrap_content"
     android:background="@drawable/widget_head_bg">
    	<include layout="@layout/common_head"/>
-   	
+  	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	   android:layout_width="fill_parent"
+	   android:layout_height="wrap_content"
+	   android:paddingLeft="10dp"
+	   android:paddingBottom="5dp"
+	   android:orientation="horizontal">
+		<ImageView 
+			android:layout_width="50px"
+		   	android:layout_height="50px"
+		   	android:layout_marginTop="5dp"
+		   	android:textSize="@dimen/size_13"
+		   	android:src="@drawable/icon"
+			android:id="@+id/wowo_icon"/>
+		<LinearLayout 
+			android:layout_toRightOf="@id/wowo_icon"
+			android:layout_width="wrap_content"
+		   	android:layout_height="wrap_content"
+		   	android:layout_marginLeft="10dp"
+		   	android:orientation="vertical">
+			<TextView 
+				android:layout_width="fill_parent"
+		    	android:layout_height="wrap_content"
+		    	android:layout_marginTop="10dp"
+		    	android:textSize="@dimen/size_13"
+		    	android:textColor="@color/black"
+				android:id="@+id/wowo_tit"/>
+			<RelativeLayout 
+				android:layout_marginTop="10dp"
+		   		android:layout_width="fill_parent"
+		    	android:layout_height="wrap_content">
+		    	<!-- 作者 -->
+				<TextView 
+					android:id="@+id/wowo_username"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:textSize="@dimen/size_11"
+					android:textColor="@color/black"
+					android:text="@string/wowo_username"/>
+				<TextView 
+					android:id="@+id/wowo_username_con"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_toRightOf="@id/wowo_username"
+					android:textSize="@dimen/size_11"
+					android:textColor="@color/shadeblack"/>
+				<!-- 成员 -->
+				<TextView 
+					android:id="@+id/wowo_member"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:textSize="@dimen/size_11"
+					android:layout_toRightOf="@id/wowo_username_con"
+					android:textColor="@color/black"
+					android:layout_marginLeft="@dimen/size_15"
+					android:text="@string/wowo_membercount"/>
+				<TextView 
+					android:id="@+id/wowo_member_con"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_toRightOf="@id/wowo_member"
+					android:textSize="@dimen/size_11"
+					android:textColor="@color/shadeblack"/>
+				<!-- 文章 -->
+		    	<TextView 
+		    		android:id="@+id/wowo_articlecount"
+			    	android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:textSize="@dimen/size_11"
+			    	android:textColor="@color/black"
+			    	android:layout_toRightOf="@id/wowo_member_con"
+			    	android:layout_marginLeft="@dimen/size_5"
+			    	android:text="@string/wowo_articlecount"/>
+			   <TextView 
+		    		android:id="@+id/wowo_articlecount_con"
+			    	android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:layout_toRightOf="@id/wowo_articlecount"
+			    	android:textSize="@dimen/size_11"
+			    	android:textColor="@color/shadeblack"
+			    	android:layout_marginLeft="@dimen/size_5"/>
+			</RelativeLayout>
+	</LinearLayout>
+</RelativeLayout>
 </LinearLayout>

@@ -134,15 +134,15 @@ public final class R {
         public static final int article_item=0x7f030001;
         public static final int blog=0x7f030002;
         public static final int common_head=0x7f030003;
-        public static final int group_item=0x7f030004;
-        public static final int loadmore=0x7f030005;
-        public static final int main=0x7f030006;
-        public static final int more=0x7f030007;
-        public static final int progress=0x7f030008;
-        public static final int show_article=0x7f030009;
-        public static final int user=0x7f03000a;
-        public static final int welcom=0x7f03000b;
-        public static final int wowo=0x7f03000c;
+        public static final int group=0x7f030004;
+        public static final int group_item=0x7f030005;
+        public static final int loadmore=0x7f030006;
+        public static final int main=0x7f030007;
+        public static final int more=0x7f030008;
+        public static final int progress=0x7f030009;
+        public static final int show_article=0x7f03000a;
+        public static final int user=0x7f03000b;
+        public static final int welcom=0x7f03000c;
     }
     public static final class string {
         public static final int app_name=0x7f070000;
