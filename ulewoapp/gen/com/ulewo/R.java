@@ -158,7 +158,9 @@ public final class R {
         public static final int name_wowo=0x7f070003;
         public static final int request_timeout=0x7f070009;
         public static final int wowo_articlecount=0x7f07000e;
+        public static final int wowo_createtime=0x7f07000f;
         public static final int wowo_membercount=0x7f07000d;
+        public static final int wowo_todypost=0x7f070010;
         public static final int wowo_username=0x7f07000c;
     }
     public static final class style {
