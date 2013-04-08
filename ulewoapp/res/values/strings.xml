@@ -16,4 +16,6 @@
     <string name="wowo_username">创建者:</string>
     <string name="wowo_membercount">成员:</string>
     <string name="wowo_articlecount">文章:</string>
+    <string name="wowo_createtime">创建于:</string>
+    <string name="wowo_todypost">今日发表:</string>
 </resources>
