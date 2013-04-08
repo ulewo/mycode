@@ -67,7 +67,8 @@ public class AndroidAction extends BaseAction {
 	 */
 	public void fetchArticle() {
 
-		int countNumber = adminArticleService.queryArticleCount("", Constant.ISVALIDY);
+		int countNumber = adminArticleService.queryArticleCount("",
+				Constant.ISVALIDY);
 		Pagination.setPageSize(Constant.pageSize20);
 		int pageSize = Pagination.getPageSize();
 		pageTotal = Pagination.getPageTotal(countNumber);
@@ -78,7 +79,8 @@ public class AndroidAction extends BaseAction {
 			page = 1;
 		}
 		int noStart = (page - 1) * pageSize;
-		List<Article> list = adminArticleService.queryList("", Constant.ISVALIDY, noStart, pageSize);
+		List<Article> list = adminArticleService.queryList("",
+				Constant.ISVALIDY, noStart, pageSize);
 		for (Article article : list) {
 			article.setSummary("");
 			article.setPostTime(article.getPostTime().substring(0, 19));
@@ -88,8 +90,7 @@ public class AndroidAction extends BaseAction {
 			Response response = new Response(RESULTCODE_SUCCESS, null, list);
 			obj.put("response", response);
 			getOut().print(String.valueOf(obj));
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -97,6 +98,7 @@ public class AndroidAction extends BaseAction {
 	/**
 	 * 
 	 * description: 展示文章
+	 * 
 	 * @author luohl
 	 */
 	public void showArticle() {
@@ -105,8 +107,7 @@ public class AndroidAction extends BaseAction {
 		Article article = null;
 		try {
 			article = articleService.queryTopicById(articleId);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			resultCode = RESULTCODE_FAIL;
 			e.printStackTrace();
 		}
@@ -119,6 +120,7 @@ public class AndroidAction extends BaseAction {
 	/**
 	 * 
 	 * description: 查询回复
+	 * 
 	 * @author luohl
 	 */
 	public void fetchReComment() {
@@ -137,9 +139,9 @@ public class AndroidAction extends BaseAction {
 				page = 1;
 			}
 			int noStart = (page - 1) * pageSize;
-			reArticleList = reArticleService.queryReArticles(articleId, noStart, countNumber);
-		}
-		catch (Exception e) {
+			reArticleList = reArticleService.queryReArticles(articleId,
+					noStart, countNumber);
+		} catch (Exception e) {
 			resultCode = RESULTCODE_FAIL;
 			e.printStackTrace();
 		}
@@ -172,8 +174,7 @@ public class AndroidAction extends BaseAction {
 			}
 			int noStart = (page - 1) * pageSize;
 			list = blogArticleService.indexLatestBlog(noStart, pageSize);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			resultCode = RESULTCODE_FAIL;
 		}
 		JSONObject obj = new JSONObject();
@@ -188,8 +189,7 @@ public class AndroidAction extends BaseAction {
 		BlogArticle article = null;
 		try {
 			article = blogArticleService.queryBlogById(articleId);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			resultCode = RESULTCODE_FAIL;
 		}
 		JSONObject obj = new JSONObject();
@@ -204,8 +204,7 @@ public class AndroidAction extends BaseAction {
 		List<BlogReply> list = null;
 		try {
 			list = blogReplyService.queryBlogReplyByBlogId(articleId);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			resultCode = RESULTCODE_FAIL;
 			e.printStackTrace();
 		}
@@ -238,8 +237,7 @@ public class AndroidAction extends BaseAction {
 			}
 			int noStart = (page - 1) * pageSize;
 			list = groupService.queryGroupsOderArticleCount(noStart, pageSize);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			resultCode = RESULTCODE_FAIL;
 		}
 		JSONObject obj = new JSONObject();
@@ -253,7 +251,8 @@ public class AndroidAction extends BaseAction {
 		int resultCode = RESULTCODE_SUCCESS;
 		List<Article> list = null;
 		try {
-			int countNumber = articleService.queryTopicCountByGid(gid, 0, Constant.ISVALIDY);
+			int countNumber = articleService.queryTopicCountByGid(gid, 0,
+					Constant.ISVALIDY);
 			Pagination.setPageSize(Constant.pageSize50);
 			int pageSize = Pagination.getPageSize();
 			pageTotal = Pagination.getPageTotal(countNumber);
@@ -264,12 +263,9 @@ public class AndroidAction extends BaseAction {
 				page = 1;
 			}
 			int noStart = (page - 1) * pageSize;
-			list = articleService.queryTopicOrderByPostTime(gid, 0, Constant.ISVALIDY, noStart, countNumber);
-			JSONObject obj = new JSONObject();
-			obj.put("list", list);
-			getOut().print(String.valueOf(obj));
-		}
-		catch (Exception e) {
+			list = articleService.queryTopicOrderByPostTime(gid, 0,
+					Constant.ISVALIDY, noStart, countNumber);
+		} catch (Exception e) {
 			resultCode = RESULTCODE_FAIL;
 		}
 		JSONObject obj = new JSONObject();
@@ -281,6 +277,7 @@ public class AndroidAction extends BaseAction {
 	/**
 	 * 
 	 * description: 登录
+	 * 
 	 * @author luohl
 	 */
 	public void login() {
@@ -291,8 +288,7 @@ public class AndroidAction extends BaseAction {
 			if (!Tools.encodeByMD5(password).equals(user.getPassword())) {
 				resultCode = RESULTCODE_FAIL;
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			resultCode = RESULTCODE_FAIL;
 			e.printStackTrace();
 		}
@@ -321,12 +317,10 @@ public class AndroidAction extends BaseAction {
 				userVo.setSex(userInfo.getSex());
 				userVo.setPrevisitTime(userInfo.getPrevisitTime());
 				userVo.setMark(userInfo.getMark());
-			}
-			else {
+			} else {
 				resultCode = RESULTCODE_FAIL;
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			resultCode = RESULTCODE_FAIL;
 		}
 		JSONObject obj = new JSONObject();
