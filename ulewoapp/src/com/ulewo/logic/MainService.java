@@ -32,6 +32,8 @@ public class MainService extends Service implements Runnable {
 
 	protected static final int GROUP_VALUE = 5;
 
+	protected static final int SHOGROUPARTICLE_VALUE = 6;
+
 	private static final String USERACTIVITY = "UserActivity";
 
 	// 任务队列
@@ -84,6 +86,12 @@ public class MainService extends Service implements Runnable {
 				activity = (IMainActivity) myobj.get("activity");
 				activity.refresh(myobj);
 				break;
+			case SHOGROUPARTICLE_VALUE:
+				// 更新UI
+				myobj = (HashMap<String, Object>) msg.obj;
+				activity = (IMainActivity) myobj.get("activity");
+				activity.refresh(myobj);
+				break;
 			}
 		}
 
@@ -113,8 +121,7 @@ public class MainService extends Service implements Runnable {
 		}
 		try {
 			Thread.sleep(1000);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 
 		}
 	}
@@ -173,8 +180,7 @@ public class MainService extends Service implements Runnable {
 			msgMap = new HashMap<String, Object>(3);
 			if (null != list) {
 				msgMap.put("resultCode", RESULTCODE_SUCCESS);
-			}
-			else {
+			} else {
 				msgMap.put("resultCode", RESULTCODE_FAIL);
 			}
 			msgMap.put("activity", task.getCurActivity());
@@ -197,8 +203,7 @@ public class MainService extends Service implements Runnable {
 			msgMap = new HashMap<String, Object>(3);
 			if (null != bloglist) {
 				msgMap.put("resultCode", RESULTCODE_SUCCESS);
-			}
-			else {
+			} else {
 				msgMap.put("resultCode", RESULTCODE_FAIL);
 			}
 			msgMap.put("activity", task.getCurActivity());
@@ -221,12 +226,26 @@ public class MainService extends Service implements Runnable {
 			msgMap = new HashMap<String, Object>(3);
 			if (null != groupList) {
 				msgMap.put("resultCode", RESULTCODE_SUCCESS);
-			}
-			else {
+			} else {
 				msgMap.put("resultCode", RESULTCODE_FAIL);
 			}
 			msgMap.put("activity", task.getCurActivity());
 			msgMap.put("list", groupList);
+			msg.obj = msgMap;
+			break;
+		case SHOGROUPARTICLE:// 窝窝文章
+			obj = task.getTaskParams();
+			page = (Integer) obj.get("page");
+			String gid = obj.get("gid").toString();
+			List<Article> articleList = Ulewo.queryArticleListByGid(gid, page);
+			msgMap = new HashMap<String, Object>(3);
+			if (null != articleList) {
+				msgMap.put("resultCode", RESULTCODE_SUCCESS);
+			} else {
+				msgMap.put("resultCode", RESULTCODE_FAIL);
+			}
+			msgMap.put("activity", task.getCurActivity());
+			msgMap.put("list", articleList);
 			msg.obj = msgMap;
 			break;
 		}

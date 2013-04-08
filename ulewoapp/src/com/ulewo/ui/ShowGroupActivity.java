@@ -1,5 +1,10 @@
 package com.ulewo.ui;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -7,6 +12,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -21,22 +28,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ulewo.R;
-import com.ulewo.adapter.GroupListAdapter;
-import com.ulewo.bean.Group;
+import com.ulewo.adapter.ArticleListAdapter;
+import com.ulewo.bean.Article;
 import com.ulewo.bean.Task;
 import com.ulewo.enums.TaskType;
 import com.ulewo.logic.MainService;
 import com.ulewo.util.Constants;
 
-public class GroupActivity extends Activity implements IMainActivity {
+public class ShowGroupActivity extends Activity implements IMainActivity {
 
 	private LinearLayout progressBar = null;
 
-	private GroupListAdapter adapter = null;
+	private ArticleListAdapter adapter = null;
 
 	private View loadMoreView = null;
-
-	private int page = 1;
 
 	private TextView loadmoreTextView = null;
 
@@ -50,21 +55,24 @@ public class GroupActivity extends Activity implements IMainActivity {
 
 	private static final int RESULTCODE_FAIL = 400;
 
-	private String gid;
+	private String gid = "";
+
+	private int page = 1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-		super.setContentView(R.layout.article);
+		super.setContentView(R.layout.group);
 
 		init();
+
 		Intent service = new Intent(this, MainService.class);
 		startService(service);
-
 		HashMap<String, Object> param = new HashMap<String, Object>(1);
-		param.put("page", page);
-		Task task = new Task(TaskType.GROUP, param, this);
+		param.put("gid", this.gid);
+		param.put("page", this.page);
+		Task task = new Task(TaskType.SHOGROUPARTICLE, param, this);
 		MainService.newTask(task);
 	}
 
@@ -74,6 +82,27 @@ public class GroupActivity extends Activity implements IMainActivity {
 		imageView.setImageResource(R.drawable.wowo);
 		TextView textView = (TextView) findViewById(R.id.main_head_title);
 		textView.setText(R.string.name_wowo);
+
+		Intent intent = getIntent();
+		Bundle bunde = intent.getExtras();
+		this.gid = bunde.getString("gid");
+		String groupIcon = bunde.getString("groupIcon");
+		String gName = bunde.getString("gName");
+		String gUserName = bunde.getString("gUserName");
+		String gMember = bunde.getString("gMember");
+		String gArticleCount = bunde.getString("gArticleCount");
+
+		ImageView group_icon = (ImageView) findViewById(R.id.wowo_icon);
+		TextView titView = (TextView) findViewById(R.id.wowo_tit);
+		TextView authorView = (TextView) findViewById(R.id.wowo_username_con);
+		TextView memberView = (TextView) findViewById(R.id.wowo_member_con);
+		TextView articleView = (TextView) findViewById(R.id.wowo_articlecount_con);
+
+		// imageView.setImageBitmap(returnBitMap(blog.getGroupIcon()));
+		titView.setText(gName);
+		authorView.setText(gUserName);
+		memberView.setText(gMember);
+		articleView.setText(gArticleCount);
 
 		progressBar = (LinearLayout) findViewById(R.id.myprogressbar);
 
@@ -91,13 +120,13 @@ public class GroupActivity extends Activity implements IMainActivity {
 
 				loadmoreTextView.setVisibility(View.GONE);
 				loadmore_prgressbar.setVisibility(View.VISIBLE);
-				Intent service = new Intent(GroupActivity.this,
+				Intent service = new Intent(ShowGroupActivity.this,
 						MainService.class);
 				startService(service);
 				HashMap<String, Object> param = new HashMap<String, Object>(1);
 				param.put("page", ++page);
 				Task task = new Task(TaskType.QUERYARTICLES, param,
-						GroupActivity.this);
+						ShowGroupActivity.this);
 				MainService.newTask(task);
 			}
 		});
@@ -113,7 +142,7 @@ public class GroupActivity extends Activity implements IMainActivity {
 				HashMap<String, Object> param = new HashMap<String, Object>(1);
 				param.put("page", page);
 				Task task = new Task(TaskType.QUERYARTICLES, param,
-						GroupActivity.this);
+						ShowGroupActivity.this);
 				MainService.newTask(task);
 			}
 		});
@@ -128,9 +157,9 @@ public class GroupActivity extends Activity implements IMainActivity {
 		HashMap<String, Object> myobj = (HashMap<String, Object>) obj[0];
 		if (Constants.RESULTCODE_SUCCESS.equals(myobj.get("resultCode")
 				.toString())) {
-			ArrayList<Group> list = (ArrayList<Group>) myobj.get("list");
+			ArrayList<Article> list = (ArrayList<Article>) myobj.get("list");
 			if (adapter == null || page == 1) {
-				adapter = new GroupListAdapter(this, list);
+				adapter = new ArticleListAdapter(this, list);
 				listView.setAdapter(adapter);
 			} else {
 				loadmore_prgressbar.setVisibility(View.GONE);
@@ -140,32 +169,46 @@ public class GroupActivity extends Activity implements IMainActivity {
 			listView.setOnItemClickListener(new OnItemClickListener() {
 				public void onItemClick(AdapterView<?> parent, View view,
 						int postion, long id) {
-					Group group = (Group) adapter.getItem(postion);
-					String gid = group.getGid();
-					String groupIcon = group.getGroupIcon();
-					String gName = group.getgName();
-					String gUserName = group.getgUserName();
-					String gMember = group.getgMember();
-					String gArticleCount = group.getgArticleCount();
-					if (!"0".equals(gid)) {
+
+					String articleId = String.valueOf(adapter
+							.getItemId(postion));
+					if (!"0".equals(articleId)) {
 						Intent intent = new Intent();
-						intent.putExtra("gid", gid);
-						intent.putExtra("groupIcon", groupIcon);
-						intent.putExtra("gName", gName);
-						intent.putExtra("gUserName", gUserName);
-						intent.putExtra("gMember", gMember);
-						intent.putExtra("gArticleCount", gArticleCount);
-						intent.setClass(GroupActivity.this,
-								ShowGroupActivity.class);
+						intent.putExtra("articleId", articleId);
+						intent.setClass(ShowGroupActivity.this,
+								ShowArticleActivity.class);
 						startActivity(intent);
 					}
 				}
 			});
 		} else {
-			Toast.makeText(GroupActivity.this, R.string.request_timeout,
+			Toast.makeText(ShowGroupActivity.this, R.string.request_timeout,
 					Toast.LENGTH_LONG).show();
 		}
 
+	}
+
+	private Bitmap returnBitMap(String url) {
+
+		URL myFileUrl = null;
+		Bitmap bitmap = null;
+		try {
+			myFileUrl = new URL(url);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+		try {
+			HttpURLConnection conn = (HttpURLConnection) myFileUrl
+					.openConnection();
+			conn.setDoInput(true);
+			conn.connect();
+			InputStream is = conn.getInputStream();
+			bitmap = BitmapFactory.decodeStream(is);
+			is.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return bitmap;
 	}
 
 	public boolean onKeyDown(int keyCode, KeyEvent event) {

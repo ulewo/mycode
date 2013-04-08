@@ -32,6 +32,9 @@ public class Ulewo {
 	private static final String BASEUR_GROUPLIST = BASEURL
 			+ "/android/fetchWoWo.jspx";
 
+	private static final String BASEUR_GROUPARTICLELIST = BASEURL
+			+ "/android/fetchArticleByGid.jspx";
+
 	private static final int RESULTCODE_SUCCESS = 200;
 
 	private static final int RESULTCODE_FAIL = 400;
@@ -160,6 +163,38 @@ public class Ulewo {
 					}
 				}
 
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			return list;
+		} else {
+			return null;
+		}
+	}
+
+	public static List<Article> queryArticleListByGid(String gid, int page) {
+
+		List<Article> list = null;
+		RequestResult requestResult = ApiClient
+				.getUlewoInfo(BASEUR_GROUPARTICLELIST + "?page=" + page
+						+ "&gid=" + gid);
+		if (requestResult.getResultEnum() == ResultEnum.SUCCESS) {
+			JSONObject jsonObj = requestResult.getJsonObject();
+			try {
+				JSONObject response = new JSONObject(String.valueOf(jsonObj
+						.get("response")));
+				JSONArray jsonArray = new JSONArray(String.valueOf(response
+						.get("list")));
+				if (response.getInt("resultCode") == RESULTCODE_SUCCESS) {
+					list = new ArrayList<Article>();
+					int jsonLength = jsonArray.length();
+					Article article = null;
+					for (int i = 0; i < jsonLength; i++) {
+						JSONObject obj = jsonArray.getJSONObject(i);
+						article = new Article(obj);
+						list.add(article);
+					}
+				}
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}

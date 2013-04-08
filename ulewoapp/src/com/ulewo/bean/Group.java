@@ -82,15 +82,15 @@ public class Group {
 
 		try {
 			constructJson(json);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	private void constructJson(JSONObject json) throws Exception {
 
-		groupIcon = Constants.BASEURL + "/upload/" + json.getString("groupIcon");
+		groupIcon = Constants.BASEURL + "/upload/"
+				+ json.getString("groupIcon");
 		gid = json.getString("id");
 		gName = json.getString("groupName");
 		gUserName = json.getString("authorName");
