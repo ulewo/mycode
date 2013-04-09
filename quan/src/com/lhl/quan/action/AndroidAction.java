@@ -253,7 +253,7 @@ public class AndroidAction extends BaseAction {
 		try {
 			int countNumber = articleService.queryTopicCountByGid(gid, 0,
 					Constant.ISVALIDY);
-			Pagination.setPageSize(Constant.pageSize50);
+			Pagination.setPageSize(Constant.pageSize20);
 			int pageSize = Pagination.getPageSize();
 			pageTotal = Pagination.getPageTotal(countNumber);
 			if (page > pageTotal) {
@@ -264,7 +264,7 @@ public class AndroidAction extends BaseAction {
 			}
 			int noStart = (page - 1) * pageSize;
 			list = articleService.queryTopicOrderByPostTime(gid, 0,
-					Constant.ISVALIDY, noStart, countNumber);
+					Constant.ISVALIDY, noStart, pageSize);
 		} catch (Exception e) {
 			resultCode = RESULTCODE_FAIL;
 		}
