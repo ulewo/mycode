@@ -52,7 +52,6 @@ public class MainService extends Service implements Runnable {
 		@SuppressWarnings("unchecked")
 		@Override
 		public void handleMessage(Message msg) {
-
 			HashMap<String, Object> myobj = null;
 			IMainActivity activity = null;
 			switch (msg.what) {
@@ -233,7 +232,7 @@ public class MainService extends Service implements Runnable {
 			msgMap.put("list", groupList);
 			msg.obj = msgMap;
 			break;
-		case SHOGROUPARTICLE:// 窝窝文章
+		case SHOWGROUP:// 窝窝文章
 			obj = task.getTaskParams();
 			page = (Integer) obj.get("page");
 			String gid = obj.get("gid").toString();

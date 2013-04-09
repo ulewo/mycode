@@ -9,13 +9,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -31,6 +29,8 @@ import com.ulewo.R;
 import com.ulewo.adapter.ArticleListAdapter;
 import com.ulewo.bean.Article;
 import com.ulewo.bean.Task;
+import com.ulewo.cache.AsyncImageLoader;
+import com.ulewo.cache.AsyncImageLoader.ImageCallback;
 import com.ulewo.enums.TaskType;
 import com.ulewo.logic.MainService;
 import com.ulewo.util.Constants;
@@ -72,7 +72,7 @@ public class ShowGroupActivity extends Activity implements IMainActivity {
 		HashMap<String, Object> param = new HashMap<String, Object>(1);
 		param.put("gid", this.gid);
 		param.put("page", this.page);
-		Task task = new Task(TaskType.SHOGROUPARTICLE, param, this);
+		Task task = new Task(TaskType.SHOWGROUP, param, this);
 		MainService.newTask(task);
 	}
 
@@ -92,12 +92,25 @@ public class ShowGroupActivity extends Activity implements IMainActivity {
 		String gMember = bunde.getString("gMember");
 		String gArticleCount = bunde.getString("gArticleCount");
 
-		ImageView group_icon = (ImageView) findViewById(R.id.wowo_icon);
+		final ImageView group_icon = (ImageView) findViewById(R.id.wowo_icon);
 		TextView titView = (TextView) findViewById(R.id.wowo_tit);
 		TextView authorView = (TextView) findViewById(R.id.wowo_username_con);
 		TextView memberView = (TextView) findViewById(R.id.wowo_member_con);
 		TextView articleView = (TextView) findViewById(R.id.wowo_articlecount_con);
 
+		AsyncImageLoader asyncImageLoader = new AsyncImageLoader();
+		Drawable cachedImage = asyncImageLoader.loadDrawable(groupIcon,
+				new ImageCallback() {
+					public void imageLoaded(Drawable imageDrawable,
+							String imageUrl) {
+						group_icon.setImageDrawable(imageDrawable);
+					}
+				});
+		if (cachedImage == null) {
+			group_icon.setImageResource(R.drawable.icon);
+		} else {
+			group_icon.setImageDrawable(cachedImage);
+		}
 		// imageView.setImageBitmap(returnBitMap(blog.getGroupIcon()));
 		titView.setText(gName);
 		authorView.setText(gUserName);
@@ -125,7 +138,8 @@ public class ShowGroupActivity extends Activity implements IMainActivity {
 				startService(service);
 				HashMap<String, Object> param = new HashMap<String, Object>(1);
 				param.put("page", ++page);
-				Task task = new Task(TaskType.QUERYARTICLES, param,
+				param.put("gid", gid);
+				Task task = new Task(TaskType.SHOWGROUP, param,
 						ShowGroupActivity.this);
 				MainService.newTask(task);
 			}
@@ -141,7 +155,8 @@ public class ShowGroupActivity extends Activity implements IMainActivity {
 				page = 1;
 				HashMap<String, Object> param = new HashMap<String, Object>(1);
 				param.put("page", page);
-				Task task = new Task(TaskType.QUERYARTICLES, param,
+				param.put("gid", gid);
+				Task task = new Task(TaskType.SHOWGROUP, param,
 						ShowGroupActivity.this);
 				MainService.newTask(task);
 			}
@@ -210,41 +225,5 @@ public class ShowGroupActivity extends Activity implements IMainActivity {
 		}
 		return bitmap;
 	}
-
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			// 创建退出对话框
-			AlertDialog isExit = new AlertDialog.Builder(this).create();
-			// 设置对话框标题
-			isExit.setTitle("系统提示");
-			// 设置对话框消息
-			isExit.setMessage("确定要退出吗");
-			// 添加选择按钮并注册监听
-			isExit.setButton("确定", listener);
-			isExit.setButton2("取消", listener);
-			// 显示对话框
-			isExit.show();
-
-		}
-
-		return false;
-
-	}
-
-	DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-		public void onClick(DialogInterface dialog, int which) {
-
-			switch (which) {
-			case AlertDialog.BUTTON_POSITIVE:// "确认"按钮退出程序
-				android.os.Process.killProcess(android.os.Process.myPid());
-				break;
-			case AlertDialog.BUTTON_NEGATIVE:// "取消"第二个按钮取消对话框
-				break;
-			default:
-				break;
-			}
-		}
-	};
 
 }

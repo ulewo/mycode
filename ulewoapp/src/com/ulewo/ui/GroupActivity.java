@@ -24,6 +24,7 @@ import com.ulewo.R;
 import com.ulewo.adapter.GroupListAdapter;
 import com.ulewo.bean.Group;
 import com.ulewo.bean.Task;
+import com.ulewo.cache.AsyncImageLoader;
 import com.ulewo.enums.TaskType;
 import com.ulewo.logic.MainService;
 import com.ulewo.util.Constants;
@@ -130,7 +131,8 @@ public class GroupActivity extends Activity implements IMainActivity {
 				.toString())) {
 			ArrayList<Group> list = (ArrayList<Group>) myobj.get("list");
 			if (adapter == null || page == 1) {
-				adapter = new GroupListAdapter(this, list);
+				adapter = new GroupListAdapter(this, list,
+						new AsyncImageLoader(), listView);
 				listView.setAdapter(adapter);
 			} else {
 				loadmore_prgressbar.setVisibility(View.GONE);
