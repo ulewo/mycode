@@ -8,7 +8,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -35,7 +34,7 @@ import com.ulewo.enums.TaskType;
 import com.ulewo.logic.MainService;
 import com.ulewo.util.Constants;
 
-public class ShowGroupActivity extends Activity implements IMainActivity {
+public class ShowGroupActivity extends BaseActivity implements IMainActivity {
 
 	private LinearLayout progressBar = null;
 
@@ -64,7 +63,7 @@ public class ShowGroupActivity extends Activity implements IMainActivity {
 
 		super.onCreate(savedInstanceState);
 		super.setContentView(R.layout.group);
-
+		ExitApplication.getInstance().addActivity(this);
 		init();
 
 		Intent service = new Intent(this, MainService.class);
@@ -99,16 +98,16 @@ public class ShowGroupActivity extends Activity implements IMainActivity {
 		TextView articleView = (TextView) findViewById(R.id.wowo_articlecount_con);
 
 		AsyncImageLoader asyncImageLoader = new AsyncImageLoader();
-		Drawable cachedImage = asyncImageLoader.loadDrawable(groupIcon,
-				new ImageCallback() {
-					public void imageLoaded(Drawable imageDrawable,
-							String imageUrl) {
-						group_icon.setImageDrawable(imageDrawable);
-					}
-				});
+		Drawable cachedImage = asyncImageLoader.loadDrawable(groupIcon, new ImageCallback() {
+			public void imageLoaded(Drawable imageDrawable, String imageUrl) {
+
+				group_icon.setImageDrawable(imageDrawable);
+			}
+		});
 		if (cachedImage == null) {
 			group_icon.setImageResource(R.drawable.icon);
-		} else {
+		}
+		else {
 			group_icon.setImageDrawable(cachedImage);
 		}
 		// imageView.setImageBitmap(returnBitMap(blog.getGroupIcon()));
@@ -133,14 +132,12 @@ public class ShowGroupActivity extends Activity implements IMainActivity {
 
 				loadmoreTextView.setVisibility(View.GONE);
 				loadmore_prgressbar.setVisibility(View.VISIBLE);
-				Intent service = new Intent(ShowGroupActivity.this,
-						MainService.class);
+				Intent service = new Intent(ShowGroupActivity.this, MainService.class);
 				startService(service);
 				HashMap<String, Object> param = new HashMap<String, Object>(1);
 				param.put("page", ++page);
 				param.put("gid", gid);
-				Task task = new Task(TaskType.SHOWGROUP, param,
-						ShowGroupActivity.this);
+				Task task = new Task(TaskType.SHOWGROUP, param, ShowGroupActivity.this);
 				MainService.newTask(task);
 			}
 		});
@@ -156,8 +153,7 @@ public class ShowGroupActivity extends Activity implements IMainActivity {
 				HashMap<String, Object> param = new HashMap<String, Object>(1);
 				param.put("page", page);
 				param.put("gid", gid);
-				Task task = new Task(TaskType.SHOWGROUP, param,
-						ShowGroupActivity.this);
+				Task task = new Task(TaskType.SHOWGROUP, param, ShowGroupActivity.this);
 				MainService.newTask(task);
 			}
 		});
@@ -170,35 +166,34 @@ public class ShowGroupActivity extends Activity implements IMainActivity {
 		progressBar.setVisibility(View.GONE);
 		refreshBtn.clearAnimation();
 		HashMap<String, Object> myobj = (HashMap<String, Object>) obj[0];
-		if (Constants.RESULTCODE_SUCCESS.equals(myobj.get("resultCode")
-				.toString())) {
+		if (Constants.RESULTCODE_SUCCESS.equals(myobj.get("resultCode").toString())) {
 			ArrayList<Article> list = (ArrayList<Article>) myobj.get("list");
 			if (adapter == null || page == 1) {
 				adapter = new ArticleListAdapter(this, list);
 				listView.setAdapter(adapter);
-			} else {
+			}
+			else {
 				loadmore_prgressbar.setVisibility(View.GONE);
 				loadmoreTextView.setVisibility(View.VISIBLE);
 				adapter.loadMore(list);
 			}
 			listView.setOnItemClickListener(new OnItemClickListener() {
-				public void onItemClick(AdapterView<?> parent, View view,
-						int postion, long id) {
+				public void onItemClick(AdapterView<?> parent, View view, int postion, long id) {
 
-					String articleId = String.valueOf(adapter
-							.getItemId(postion));
+					String articleId = String.valueOf(adapter.getItemId(postion));
 					if (!"0".equals(articleId)) {
 						Intent intent = new Intent();
 						intent.putExtra("articleId", articleId);
-						intent.setClass(ShowGroupActivity.this,
-								ShowArticleActivity.class);
+						intent.setClass(ShowGroupActivity.this, ShowArticleActivity.class);
 						startActivity(intent);
 					}
 				}
 			});
-		} else {
-			Toast.makeText(ShowGroupActivity.this, R.string.request_timeout,
-					Toast.LENGTH_LONG).show();
+		}
+		else {
+			Toast.makeText(ShowGroupActivity.this, R.string.request_timeout, Toast.LENGTH_LONG).show();
+			progressBar.setVisibility(View.GONE);
+			loadmoreTextView.setVisibility(View.VISIBLE);
 		}
 
 	}
@@ -209,18 +204,19 @@ public class ShowGroupActivity extends Activity implements IMainActivity {
 		Bitmap bitmap = null;
 		try {
 			myFileUrl = new URL(url);
-		} catch (MalformedURLException e) {
+		}
+		catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
 		try {
-			HttpURLConnection conn = (HttpURLConnection) myFileUrl
-					.openConnection();
+			HttpURLConnection conn = (HttpURLConnection) myFileUrl.openConnection();
 			conn.setDoInput(true);
 			conn.connect();
 			InputStream is = conn.getInputStream();
 			bitmap = BitmapFactory.decodeStream(is);
 			is.close();
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			e.printStackTrace();
 		}
 		return bitmap;

@@ -8,11 +8,13 @@ import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.ImageView;
 
+import com.ulewo.ui.ExitApplication;
 import com.ulewo.ui.MainActivity;
 
 public class WelcomeActivity extends Activity {
 
 	private ImageView imageView = null;
+
 	private final static long time = 3000;
 
 	@Override
@@ -20,6 +22,7 @@ public class WelcomeActivity extends Activity {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.welcom);
+		ExitApplication.getInstance().addActivity(this);
 		imageView = (ImageView) findViewById(R.id.wlecomelogo);
 		AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
 		alphaAnimation.setDuration(time);
@@ -39,8 +42,8 @@ public class WelcomeActivity extends Activity {
 			@Override
 			// 效果结束后，跳转到新的activity
 			public void onAnimationEnd(Animation animation) {
-				Intent mainIntent = new Intent(WelcomeActivity.this,
-						MainActivity.class);
+
+				Intent mainIntent = new Intent(WelcomeActivity.this, MainActivity.class);
 				startActivity(mainIntent);
 
 			}

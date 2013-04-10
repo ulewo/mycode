@@ -2,7 +2,6 @@ package com.ulewo.ui;
 
 import java.util.HashMap;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
@@ -21,7 +20,7 @@ import com.ulewo.enums.TaskType;
 import com.ulewo.handler.MxgsaTagHandler;
 import com.ulewo.logic.MainService;
 
-public class ShowBlogActivity extends Activity implements IMainActivity {
+public class ShowBlogActivity extends BaseActivity implements IMainActivity {
 
 	private LinearLayout progressBar = null;
 
@@ -32,6 +31,7 @@ public class ShowBlogActivity extends Activity implements IMainActivity {
 
 		super.onCreate(savedInstanceState);
 		super.setContentView(R.layout.show_article);
+		ExitApplication.getInstance().addActivity(this);
 		ImageView imageView = (ImageView) findViewById(R.id.main_head_logo);
 		imageView.setImageResource(R.drawable.blog);
 		progressBar = (LinearLayout) super.findViewById(R.id.myprogressbar);
@@ -79,6 +79,7 @@ public class ShowBlogActivity extends Activity implements IMainActivity {
 		}
 		else {
 			Toast.makeText(ShowBlogActivity.this, R.string.request_timeout, Toast.LENGTH_LONG).show();
+			progressBar.setVisibility(View.GONE);
 		}
 	}
 

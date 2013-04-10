@@ -1,23 +1,16 @@
 package com.ulewo.ui;
 
 import java.util.HashMap;
-import java.util.Map;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ulewo.R;
-import com.ulewo.logic.MainService;
 
-public class UserActivity extends Activity implements IMainActivity {
+public class UserActivity extends BaseActivity implements IMainActivity {
 	EditText usernameEdit = null;
 
 	EditText pwdEdit = null;
@@ -27,12 +20,13 @@ public class UserActivity extends Activity implements IMainActivity {
 
 		super.onCreate(savedInstanceState);
 		super.setContentView(R.layout.user);
+		ExitApplication.getInstance().addActivity(this);
 		ImageView imageView = (ImageView) findViewById(R.id.main_head_logo);
 		imageView.setImageResource(R.drawable.user);
 		TextView textView = (TextView) findViewById(R.id.main_head_title);
 		textView.setText(R.string.name_user);
 
-		usernameEdit = (EditText) findViewById(R.id.login_username);
+		/*usernameEdit = (EditText) findViewById(R.id.login_username);
 
 		pwdEdit = (EditText) findViewById(R.id.login_username);
 
@@ -54,7 +48,7 @@ public class UserActivity extends Activity implements IMainActivity {
 			}
 		});
 
-		MainService.addActivity(this);
+		MainService.addActivity(this);*/
 
 	}
 

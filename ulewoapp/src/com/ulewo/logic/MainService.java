@@ -119,8 +119,9 @@ public class MainService extends Service implements Runnable {
 			}
 		}
 		try {
-			Thread.sleep(1000);
-		} catch (Exception e) {
+			Thread.sleep(2000);
+		}
+		catch (Exception e) {
 
 		}
 	}
@@ -179,7 +180,8 @@ public class MainService extends Service implements Runnable {
 			msgMap = new HashMap<String, Object>(3);
 			if (null != list) {
 				msgMap.put("resultCode", RESULTCODE_SUCCESS);
-			} else {
+			}
+			else {
 				msgMap.put("resultCode", RESULTCODE_FAIL);
 			}
 			msgMap.put("activity", task.getCurActivity());
@@ -202,7 +204,8 @@ public class MainService extends Service implements Runnable {
 			msgMap = new HashMap<String, Object>(3);
 			if (null != bloglist) {
 				msgMap.put("resultCode", RESULTCODE_SUCCESS);
-			} else {
+			}
+			else {
 				msgMap.put("resultCode", RESULTCODE_FAIL);
 			}
 			msgMap.put("activity", task.getCurActivity());
@@ -225,7 +228,8 @@ public class MainService extends Service implements Runnable {
 			msgMap = new HashMap<String, Object>(3);
 			if (null != groupList) {
 				msgMap.put("resultCode", RESULTCODE_SUCCESS);
-			} else {
+			}
+			else {
 				msgMap.put("resultCode", RESULTCODE_FAIL);
 			}
 			msgMap.put("activity", task.getCurActivity());
@@ -240,7 +244,8 @@ public class MainService extends Service implements Runnable {
 			msgMap = new HashMap<String, Object>(3);
 			if (null != articleList) {
 				msgMap.put("resultCode", RESULTCODE_SUCCESS);
-			} else {
+			}
+			else {
 				msgMap.put("resultCode", RESULTCODE_FAIL);
 			}
 			msgMap.put("activity", task.getCurActivity());

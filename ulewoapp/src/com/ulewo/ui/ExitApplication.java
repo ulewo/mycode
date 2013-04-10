@@ -12,10 +12,12 @@ public class ExitApplication {
 	private static ExitApplication instance;
 
 	private ExitApplication() {
+
 	}
 
 	// 单例模式中获取唯一的ExitApplication 实例
 	public static ExitApplication getInstance() {
+
 		if (null == instance) {
 			instance = new ExitApplication();
 		}
@@ -25,16 +27,17 @@ public class ExitApplication {
 
 	// 添加Activity 到容器中
 	public void addActivity(Activity activity) {
+
 		activityList.add(activity);
 	}
 
 	// 遍历所有Activity 并finish
 
 	public void exit() {
+
 		for (Activity activity : activityList) {
 			activity.finish();
 		}
 		System.exit(0);
-
 	}
 }
