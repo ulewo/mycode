@@ -16,7 +16,6 @@ import android.os.Message;
 import com.ulewo.Ulewo;
 import com.ulewo.bean.Article;
 import com.ulewo.bean.Blog;
-import com.ulewo.bean.Group;
 import com.ulewo.bean.Task;
 import com.ulewo.ui.IMainActivity;
 
@@ -120,8 +119,7 @@ public class MainService extends Service implements Runnable {
 		}
 		try {
 			Thread.sleep(2000);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 
 		}
 	}
@@ -164,6 +162,7 @@ public class MainService extends Service implements Runnable {
 	 * 
 	 * @param task
 	 */
+	@SuppressWarnings("unchecked")
 	private void doTask(Task task) {
 
 		Message msg = handler.obtainMessage();
@@ -176,16 +175,8 @@ public class MainService extends Service implements Runnable {
 		case QUERYARTICLES:// 文章列表
 			obj = task.getTaskParams();
 			page = (Integer) obj.get("page");
-			List<Article> list = Ulewo.queryArticleList(page);
-			msgMap = new HashMap<String, Object>(3);
-			if (null != list) {
-				msgMap.put("resultCode", RESULTCODE_SUCCESS);
-			}
-			else {
-				msgMap.put("resultCode", RESULTCODE_FAIL);
-			}
+			msgMap = Ulewo.queryArticleList(page);
 			msgMap.put("activity", task.getCurActivity());
-			msgMap.put("list", list);
 			msg.obj = msgMap;
 			break;
 		case SHOWARTICLE:// 文章详情
@@ -200,16 +191,8 @@ public class MainService extends Service implements Runnable {
 		case QUERYBLOGES:// 博客列表
 			obj = task.getTaskParams();
 			page = (Integer) obj.get("page");
-			List<Blog> bloglist = Ulewo.queryBlogList(page);
-			msgMap = new HashMap<String, Object>(3);
-			if (null != bloglist) {
-				msgMap.put("resultCode", RESULTCODE_SUCCESS);
-			}
-			else {
-				msgMap.put("resultCode", RESULTCODE_FAIL);
-			}
+			msgMap = Ulewo.queryBlogList(page);
 			msgMap.put("activity", task.getCurActivity());
-			msgMap.put("list", bloglist);
 			msg.obj = msgMap;
 			break;
 		case SHOWBLOG:// 文章详情
@@ -224,32 +207,16 @@ public class MainService extends Service implements Runnable {
 		case GROUP:// 窝窝
 			obj = task.getTaskParams();
 			page = (Integer) obj.get("page");
-			List<Group> groupList = Ulewo.queryGroupList(page);
-			msgMap = new HashMap<String, Object>(3);
-			if (null != groupList) {
-				msgMap.put("resultCode", RESULTCODE_SUCCESS);
-			}
-			else {
-				msgMap.put("resultCode", RESULTCODE_FAIL);
-			}
+			msgMap = Ulewo.queryGroupList(page);
 			msgMap.put("activity", task.getCurActivity());
-			msgMap.put("list", groupList);
 			msg.obj = msgMap;
 			break;
 		case SHOWGROUP:// 窝窝文章
 			obj = task.getTaskParams();
 			page = (Integer) obj.get("page");
 			String gid = obj.get("gid").toString();
-			List<Article> articleList = Ulewo.queryArticleListByGid(gid, page);
-			msgMap = new HashMap<String, Object>(3);
-			if (null != articleList) {
-				msgMap.put("resultCode", RESULTCODE_SUCCESS);
-			}
-			else {
-				msgMap.put("resultCode", RESULTCODE_FAIL);
-			}
+			msgMap = Ulewo.queryArticleListByGid(gid, page);
 			msgMap.put("activity", task.getCurActivity());
-			msgMap.put("list", articleList);
 			msg.obj = msgMap;
 			break;
 		}

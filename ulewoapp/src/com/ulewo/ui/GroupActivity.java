@@ -23,7 +23,6 @@ import com.ulewo.bean.Task;
 import com.ulewo.cache.AsyncImageLoader;
 import com.ulewo.enums.TaskType;
 import com.ulewo.logic.MainService;
-import com.ulewo.util.Constants;
 
 public class GroupActivity extends BaseActivity implements IMainActivity {
 
@@ -81,18 +80,19 @@ public class GroupActivity extends BaseActivity implements IMainActivity {
 
 		loadmore_prgressbar = (LinearLayout) findViewById(R.id.loadmore_progressbar);
 		loadmoreTextView = (TextView) findViewById(R.id.loadmoretextview);
-
+		loadmoreTextView.setVisibility(View.GONE);
 		loadmoreTextView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 
 				loadmoreTextView.setVisibility(View.GONE);
 				loadmore_prgressbar.setVisibility(View.VISIBLE);
-				Intent service = new Intent(GroupActivity.this, MainService.class);
+				Intent service = new Intent(GroupActivity.this,
+						MainService.class);
 				startService(service);
 				HashMap<String, Object> param = new HashMap<String, Object>(1);
 				param.put("page", ++page);
-				Task task = new Task(TaskType.QUERYARTICLES, param, GroupActivity.this);
+				Task task = new Task(TaskType.GROUP, param, GroupActivity.this);
 				MainService.newTask(task);
 			}
 		});
@@ -107,7 +107,7 @@ public class GroupActivity extends BaseActivity implements IMainActivity {
 				page = 1;
 				HashMap<String, Object> param = new HashMap<String, Object>(1);
 				param.put("page", page);
-				Task task = new Task(TaskType.QUERYARTICLES, param, GroupActivity.this);
+				Task task = new Task(TaskType.GROUP, param, GroupActivity.this);
 				MainService.newTask(task);
 			}
 		});
@@ -120,19 +120,25 @@ public class GroupActivity extends BaseActivity implements IMainActivity {
 		progressBar.setVisibility(View.GONE);
 		refreshBtn.clearAnimation();
 		HashMap<String, Object> myobj = (HashMap<String, Object>) obj[0];
-		if (Constants.RESULTCODE_SUCCESS.equals(myobj.get("resultCode").toString())) {
+		if (null != myobj.get("list")) {
 			ArrayList<Group> list = (ArrayList<Group>) myobj.get("list");
 			if (adapter == null || page == 1) {
-				adapter = new GroupListAdapter(this, list, new AsyncImageLoader(), listView);
+				adapter = new GroupListAdapter(this, list,
+						new AsyncImageLoader(), listView);
 				listView.setAdapter(adapter);
-			}
-			else {
+				if (page < Integer.parseInt(myobj.get("pageTotal").toString())) {
+					loadmoreTextView.setVisibility(View.VISIBLE);
+				}
+			} else {
 				loadmore_prgressbar.setVisibility(View.GONE);
-				loadmoreTextView.setVisibility(View.VISIBLE);
-				adapter.loadMore(list);
+				if (page < Integer.parseInt(myobj.get("pageTotal").toString())) {
+					loadmoreTextView.setVisibility(View.VISIBLE);
+					adapter.loadMore(list);
+				}
 			}
 			listView.setOnItemClickListener(new OnItemClickListener() {
-				public void onItemClick(AdapterView<?> parent, View view, int postion, long id) {
+				public void onItemClick(AdapterView<?> parent, View view,
+						int postion, long id) {
 
 					Group group = (Group) adapter.getItem(postion);
 					String gid = group.getGid();
@@ -149,14 +155,15 @@ public class GroupActivity extends BaseActivity implements IMainActivity {
 						intent.putExtra("gUserName", gUserName);
 						intent.putExtra("gMember", gMember);
 						intent.putExtra("gArticleCount", gArticleCount);
-						intent.setClass(GroupActivity.this, ShowGroupActivity.class);
+						intent.setClass(GroupActivity.this,
+								ShowGroupActivity.class);
 						startActivity(intent);
 					}
 				}
 			});
-		}
-		else {
-			Toast.makeText(GroupActivity.this, R.string.request_timeout, Toast.LENGTH_LONG).show();
+		} else {
+			Toast.makeText(GroupActivity.this, R.string.request_timeout,
+					Toast.LENGTH_LONG).show();
 			progressBar.setVisibility(View.GONE);
 			loadmoreTextView.setVisibility(View.VISIBLE);
 		}
