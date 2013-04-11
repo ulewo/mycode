@@ -70,7 +70,7 @@ public class ShowGroupActivity extends BaseActivity implements IMainActivity {
 		startService(service);
 		HashMap<String, Object> param = new HashMap<String, Object>(1);
 		param.put("gid", this.gid);
-		param.put("page", this.page);
+		param.put("page", 0);
 		Task task = new Task(TaskType.SHOWGROUP, param, this);
 		MainService.newTask(task);
 	}
@@ -98,16 +98,17 @@ public class ShowGroupActivity extends BaseActivity implements IMainActivity {
 		TextView articleView = (TextView) findViewById(R.id.wowo_articlecount_con);
 
 		AsyncImageLoader asyncImageLoader = new AsyncImageLoader();
-		Drawable cachedImage = asyncImageLoader.loadDrawable(groupIcon, new ImageCallback() {
-			public void imageLoaded(Drawable imageDrawable, String imageUrl) {
+		Drawable cachedImage = asyncImageLoader.loadDrawable(groupIcon,
+				new ImageCallback() {
+					public void imageLoaded(Drawable imageDrawable,
+							String imageUrl) {
 
-				group_icon.setImageDrawable(imageDrawable);
-			}
-		});
+						group_icon.setImageDrawable(imageDrawable);
+					}
+				});
 		if (cachedImage == null) {
 			group_icon.setImageResource(R.drawable.icon);
-		}
-		else {
+		} else {
 			group_icon.setImageDrawable(cachedImage);
 		}
 		// imageView.setImageBitmap(returnBitMap(blog.getGroupIcon()));
@@ -125,19 +126,21 @@ public class ShowGroupActivity extends BaseActivity implements IMainActivity {
 
 		loadmore_prgressbar = (LinearLayout) findViewById(R.id.loadmore_progressbar);
 		loadmoreTextView = (TextView) findViewById(R.id.loadmoretextview);
-
+		loadmoreTextView.setVisibility(View.GONE);
 		loadmoreTextView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 
 				loadmoreTextView.setVisibility(View.GONE);
 				loadmore_prgressbar.setVisibility(View.VISIBLE);
-				Intent service = new Intent(ShowGroupActivity.this, MainService.class);
+				Intent service = new Intent(ShowGroupActivity.this,
+						MainService.class);
 				startService(service);
 				HashMap<String, Object> param = new HashMap<String, Object>(1);
 				param.put("page", ++page);
 				param.put("gid", gid);
-				Task task = new Task(TaskType.SHOWGROUP, param, ShowGroupActivity.this);
+				Task task = new Task(TaskType.SHOWGROUP, param,
+						ShowGroupActivity.this);
 				MainService.newTask(task);
 			}
 		});
@@ -153,7 +156,8 @@ public class ShowGroupActivity extends BaseActivity implements IMainActivity {
 				HashMap<String, Object> param = new HashMap<String, Object>(1);
 				param.put("page", page);
 				param.put("gid", gid);
-				Task task = new Task(TaskType.SHOWGROUP, param, ShowGroupActivity.this);
+				Task task = new Task(TaskType.SHOWGROUP, param,
+						ShowGroupActivity.this);
 				MainService.newTask(task);
 			}
 		});
@@ -166,32 +170,41 @@ public class ShowGroupActivity extends BaseActivity implements IMainActivity {
 		progressBar.setVisibility(View.GONE);
 		refreshBtn.clearAnimation();
 		HashMap<String, Object> myobj = (HashMap<String, Object>) obj[0];
-		if (null != myobj.get("article") && Constants.RESULTCODE_SUCCESS.equals(String.valueOf(myobj.get("result")))) {
+		if (null != myobj.get("list")
+				&& Constants.RESULTCODE_SUCCESS.equals(String.valueOf(myobj
+						.get("result")))) {
 			ArrayList<Article> list = (ArrayList<Article>) myobj.get("list");
 			if (adapter == null || page == 1) {
 				adapter = new ArticleListAdapter(this, list);
 				listView.setAdapter(adapter);
-			}
-			else {
+				if (page < Integer.parseInt(myobj.get("pageTotal").toString())) {
+					loadmoreTextView.setVisibility(View.VISIBLE);
+				}
+			} else {
 				loadmore_prgressbar.setVisibility(View.GONE);
-				loadmoreTextView.setVisibility(View.VISIBLE);
+				if (page < Integer.parseInt(myobj.get("pageTotal").toString())) {
+					loadmoreTextView.setVisibility(View.VISIBLE);
+				}
 				adapter.loadMore(list);
 			}
 			listView.setOnItemClickListener(new OnItemClickListener() {
-				public void onItemClick(AdapterView<?> parent, View view, int postion, long id) {
+				public void onItemClick(AdapterView<?> parent, View view,
+						int postion, long id) {
 
-					String articleId = String.valueOf(adapter.getItemId(postion));
+					String articleId = String.valueOf(adapter
+							.getItemId(postion));
 					if (!"0".equals(articleId)) {
 						Intent intent = new Intent();
 						intent.putExtra("articleId", articleId);
-						intent.setClass(ShowGroupActivity.this, ShowArticleActivity.class);
+						intent.setClass(ShowGroupActivity.this,
+								ShowArticleActivity.class);
 						startActivity(intent);
 					}
 				}
 			});
-		}
-		else {
-			Toast.makeText(ShowGroupActivity.this, R.string.request_timeout, Toast.LENGTH_LONG).show();
+		} else {
+			Toast.makeText(ShowGroupActivity.this, R.string.request_timeout,
+					Toast.LENGTH_LONG).show();
 			progressBar.setVisibility(View.GONE);
 			loadmoreTextView.setVisibility(View.VISIBLE);
 		}
@@ -204,19 +217,18 @@ public class ShowGroupActivity extends BaseActivity implements IMainActivity {
 		Bitmap bitmap = null;
 		try {
 			myFileUrl = new URL(url);
-		}
-		catch (MalformedURLException e) {
+		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
 		try {
-			HttpURLConnection conn = (HttpURLConnection) myFileUrl.openConnection();
+			HttpURLConnection conn = (HttpURLConnection) myFileUrl
+					.openConnection();
 			conn.setDoInput(true);
 			conn.connect();
 			InputStream is = conn.getInputStream();
 			bitmap = BitmapFactory.decodeStream(is);
 			is.close();
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return bitmap;

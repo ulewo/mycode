@@ -6,6 +6,7 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -58,7 +59,7 @@ public class BlogActivity extends BaseActivity implements IMainActivity {
 		startService(service);
 
 		HashMap<String, Object> param = new HashMap<String, Object>(1);
-		param.put("page", page);
+		param.put("page", 0);
 		Task task = new Task(TaskType.QUERYBLOGES, param, this);
 		MainService.newTask(task);
 	}
@@ -86,11 +87,13 @@ public class BlogActivity extends BaseActivity implements IMainActivity {
 
 				loadmoreTextView.setVisibility(View.GONE);
 				loadmore_prgressbar.setVisibility(View.VISIBLE);
-				Intent service = new Intent(BlogActivity.this, MainService.class);
+				Intent service = new Intent(BlogActivity.this,
+						MainService.class);
 				startService(service);
 				HashMap<String, Object> param = new HashMap<String, Object>(1);
 				param.put("page", ++page);
-				Task task = new Task(TaskType.QUERYBLOGES, param, BlogActivity.this);
+				Task task = new Task(TaskType.QUERYBLOGES, param,
+						BlogActivity.this);
 				MainService.newTask(task);
 			}
 		});
@@ -105,7 +108,8 @@ public class BlogActivity extends BaseActivity implements IMainActivity {
 				page = 1;
 				HashMap<String, Object> param = new HashMap<String, Object>(1);
 				param.put("page", page);
-				Task task = new Task(TaskType.QUERYBLOGES, param, BlogActivity.this);
+				Task task = new Task(TaskType.QUERYBLOGES, param,
+						BlogActivity.this);
 				MainService.newTask(task);
 			}
 		});
@@ -118,34 +122,50 @@ public class BlogActivity extends BaseActivity implements IMainActivity {
 		progressBar.setVisibility(View.GONE);
 		refreshBtn.clearAnimation();
 		HashMap<String, Object> myobj = (HashMap<String, Object>) obj[0];
-		if (Constants.RESULTCODE_SUCCESS.equals(String.valueOf(myobj.get("result")))) {
+		if (Constants.RESULTCODE_SUCCESS.equals(String.valueOf(myobj
+				.get("result")))) {
 			List<Blog> list = (ArrayList<Blog>) myobj.get("list");
 			if (adapter == null || page == 1) {
 				adapter = new BlogListAdapter(this, list);
 				listView.setAdapter(adapter);
-			}
-			else {
+				if (page < Integer.parseInt(myobj.get("pageTotal").toString())) {
+					loadmoreTextView.setVisibility(View.VISIBLE);
+				}
+			} else {
+
 				loadmore_prgressbar.setVisibility(View.GONE);
-				loadmoreTextView.setVisibility(View.VISIBLE);
 				adapter.loadMore(list);
+				if (page < Integer.parseInt(myobj.get("pageTotal").toString())) {
+					loadmoreTextView.setVisibility(View.VISIBLE);
+				}
 			}
 			listView.setOnItemClickListener(new OnItemClickListener() {
-				public void onItemClick(AdapterView<?> parent, View view, int postion, long id) {
+				public void onItemClick(AdapterView<?> parent, View view,
+						int postion, long id) {
 
-					String articleId = String.valueOf(adapter.getItemId(postion));
+					String articleId = String.valueOf(adapter
+							.getItemId(postion));
 					if (!"0".equals(articleId)) {
 						Intent intent = new Intent();
 						intent.putExtra("articleId", articleId);
-						intent.setClass(BlogActivity.this, ShowBlogActivity.class);
+						intent.setClass(BlogActivity.this,
+								ShowBlogActivity.class);
 						startActivity(intent);
 					}
 				}
 			});
-		}
-		else {
-			Toast.makeText(BlogActivity.this, R.string.request_timeout, Toast.LENGTH_LONG).show();
+		} else {
+			Toast.makeText(BlogActivity.this, R.string.request_timeout,
+					Toast.LENGTH_LONG).show();
 			progressBar.setVisibility(View.GONE);
 			loadmoreTextView.setVisibility(View.VISIBLE);
 		}
+	}
+
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			isExit();
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 }

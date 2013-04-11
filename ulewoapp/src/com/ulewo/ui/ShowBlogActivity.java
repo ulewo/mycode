@@ -66,21 +66,24 @@ public class ShowBlogActivity extends BaseActivity implements IMainActivity {
 		// 隐藏loding
 		progressBar.setVisibility(View.GONE);
 		HashMap<String, Object> myobj = (HashMap<String, Object>) obj[0];
-		if (null != myobj.get("article") && Constants.RESULTCODE_SUCCESS.equals(String.valueOf(myobj.get("result")))) {
+		if (null != myobj.get("article")
+				&& Constants.RESULTCODE_SUCCESS.equals(String.valueOf(myobj
+						.get("result")))) {
 			TextView showView = (TextView) findViewById(R.id.show_article_id);
 			TextView titleView = (TextView) findViewById(R.id.show_article_title);
 			TextView authorView = (TextView) findViewById(R.id.article_author);
 			TextView timeView = (TextView) findViewById(R.id.article_time);
 			TextView recountView = (TextView) findViewById(R.id.article_recount);
-			Blog article = (Blog) obj[0];
+			Blog article = (Blog) myobj.get("article");
 			titleView.setText(article.getTitle());
 			authorView.setText(article.getAuthorName());
 			timeView.setText(article.getPostTime());
 			recountView.setText(article.getReNumber());
-			showView.setText(Html.fromHtml(article.getContent(), null, new MxgsaTagHandler(this)));
-		}
-		else {
-			Toast.makeText(ShowBlogActivity.this, R.string.request_timeout, Toast.LENGTH_LONG).show();
+			showView.setText(Html.fromHtml(article.getContent(), null,
+					new MxgsaTagHandler(this)));
+		} else {
+			Toast.makeText(ShowBlogActivity.this, R.string.request_timeout,
+					Toast.LENGTH_LONG).show();
 			progressBar.setVisibility(View.GONE);
 		}
 	}

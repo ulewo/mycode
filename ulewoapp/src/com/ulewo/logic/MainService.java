@@ -63,7 +63,7 @@ public class MainService extends Service implements Runnable {
 				// 更新UI
 				myobj = (HashMap<String, Object>) msg.obj;
 				activity = (IMainActivity) myobj.get("activity");
-				activity.refresh(myobj.get("obj"));
+				activity.refresh(myobj);
 				break;
 			case QUERYBLOGS_VALUE:
 				// 更新UI
@@ -75,7 +75,7 @@ public class MainService extends Service implements Runnable {
 				// 更新UI
 				myobj = (HashMap<String, Object>) msg.obj;
 				activity = (IMainActivity) myobj.get("activity");
-				activity.refresh(myobj.get("obj"));
+				activity.refresh(myobj);
 				break;
 			case GROUP_VALUE:
 				// 更新UI
@@ -118,8 +118,7 @@ public class MainService extends Service implements Runnable {
 		}
 		try {
 			Thread.sleep(2000);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 
 		}
 	}
