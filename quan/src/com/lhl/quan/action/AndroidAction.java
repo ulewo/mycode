@@ -87,7 +87,8 @@ public class AndroidAction extends BaseAction {
 		}
 		try {
 			JSONObject obj = new JSONObject();
-			Response response = new Response(RESULTCODE_SUCCESS, null, list);
+			Response response = new Response(RESULTCODE_SUCCESS, pageTotal,
+					list);
 			obj.put("response", response);
 			getOut().print(String.valueOf(obj));
 		} catch (Exception e) {
@@ -226,7 +227,7 @@ public class AndroidAction extends BaseAction {
 		List<Group> list = null;
 		try {
 			int countNumber = groupService.queryGroupsCount();
-			Pagination.setPageSize(Constant.pageSize50);
+			Pagination.setPageSize(Constant.pageSize20);
 			int pageSize = Pagination.getPageSize();
 			pageTotal = Pagination.getPageTotal(countNumber);
 			if (page > pageTotal) {
