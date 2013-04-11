@@ -19,6 +19,7 @@ import com.ulewo.bean.Task;
 import com.ulewo.enums.TaskType;
 import com.ulewo.handler.MxgsaTagHandler;
 import com.ulewo.logic.MainService;
+import com.ulewo.util.Constants;
 
 public class ShowArticleActivity extends BaseActivity implements IMainActivity {
 
@@ -66,7 +67,8 @@ public class ShowArticleActivity extends BaseActivity implements IMainActivity {
 		progressBar.setVisibility(View.GONE);
 		// 显示正文
 		// contentlayout.setVisibility(View.VISIBLE);
-		if (obj[0] != null) {
+		HashMap<String, Object> myobj = (HashMap<String, Object>) obj[0];
+		if (null != myobj.get("article") && Constants.RESULTCODE_SUCCESS.equals(String.valueOf(myobj.get("result")))) {
 			TextView showView = (TextView) findViewById(R.id.show_article_id);
 			TextView titleView = (TextView) findViewById(R.id.show_article_title);
 			TextView authorView = (TextView) findViewById(R.id.article_author);

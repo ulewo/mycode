@@ -166,7 +166,7 @@ public class ShowGroupActivity extends BaseActivity implements IMainActivity {
 		progressBar.setVisibility(View.GONE);
 		refreshBtn.clearAnimation();
 		HashMap<String, Object> myobj = (HashMap<String, Object>) obj[0];
-		if (Constants.RESULTCODE_SUCCESS.equals(myobj.get("resultCode").toString())) {
+		if (null != myobj.get("article") && Constants.RESULTCODE_SUCCESS.equals(String.valueOf(myobj.get("result")))) {
 			ArrayList<Article> list = (ArrayList<Article>) myobj.get("list");
 			if (adapter == null || page == 1) {
 				adapter = new ArticleListAdapter(this, list);

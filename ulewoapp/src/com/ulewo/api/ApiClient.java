@@ -1,8 +1,14 @@
 package com.ulewo.api;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -10,8 +16,11 @@ import org.apache.http.util.ByteArrayBuffer;
 import org.apache.http.util.EncodingUtils;
 import org.json.JSONObject;
 
+import android.os.Environment;
+
 import com.ulewo.bean.RequestResult;
 import com.ulewo.enums.ResultEnum;
+import com.ulewo.util.Tools;
 
 public class ApiClient {
 	private static final int HTTP_200 = 200;
@@ -20,9 +29,19 @@ public class ApiClient {
 
 	private static final String REQUESTTIMEOUT = "requesttimeout";
 
-	public static RequestResult getUlewoInfo(String path) {
+	public static RequestResult getUlewoInfo(String path, int page) {
 
 		RequestResult requestResult = new RequestResult();
+		String fileName = Tools.encodeByMD5(path);
+
+		//如果page==0读取缓存
+		if (page == 0) {
+			requestResult = readFromSdk(fileName);
+			if (requestResult != null) {
+				return requestResult;
+			}
+
+		}
 		InputStream is = null;
 		HttpURLConnection urlConn = null;
 		BufferedInputStream bis = null;
@@ -47,6 +66,12 @@ public class ApiClient {
 					baf.append((byte) current);
 				}
 				String myString = EncodingUtils.getString(baf.toByteArray(), "UTF-8");
+				//保存缓存到sdk
+				if (page == 1) {
+					SaveDateThread thread = new SaveDateThread(path, baf.toByteArray());
+					Thread mythread = new Thread(thread);
+					mythread.start();
+				}
 				JSONObject jsonObj = new JSONObject(myString);
 				requestResult.setResultEnum(ResultEnum.SUCCESS);
 				requestResult.setJsonObject(jsonObj);
@@ -79,6 +104,100 @@ public class ApiClient {
 					is = null;
 				}
 				bis = null;
+			}
+		}
+		return requestResult;
+	}
+
+	static class SaveDateThread implements Runnable {
+		private String url;
+
+		private byte[] data;
+
+		public SaveDateThread(String url, byte[] data) {
+
+			this.url = url;
+			this.data = data;
+		}
+
+		@Override
+		public void run() {
+
+			if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+				OutputStream out = null;
+				try {
+					File file = new File(Environment.getExternalStorageDirectory(), url);
+					out = new FileOutputStream(file);
+					out.write(data);
+					out.flush();
+					out.close();
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+				finally {
+					try {
+						if (null != out) {
+							out.close();
+						}
+					}
+					catch (Exception e) {
+					}
+				}
+			}
+
+		}
+	}
+
+	private static RequestResult readFromSdk(String fileName) {
+
+		RequestResult requestResult = null;
+		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+
+			BufferedReader read = null;
+			InputStreamReader fos = null;
+			FileInputStream filein = null;
+			StringBuffer sb = new StringBuffer();
+			try {
+				File file = new File(Environment.getExternalStorageDirectory(), fileName);
+				filein = new FileInputStream(file);
+				fos = new InputStreamReader(filein);
+				read = new BufferedReader(fos);
+				String str = null;
+				while ((str = read.readLine()) != null) {
+					sb.append(str);
+				}
+				JSONObject jsonObj = new JSONObject(String.valueOf(sb));
+				requestResult = new RequestResult();
+				requestResult.setResultEnum(ResultEnum.SUCCESS);
+				requestResult.setJsonObject(jsonObj);
+			}
+			catch (Exception e) {
+				requestResult = null;
+				e.printStackTrace();
+			}
+			finally {
+				try {
+					if (null != filein) {
+						filein.close();
+					}
+				}
+				catch (Exception e) {
+				}
+				try {
+					if (null != fos) {
+						fos.close();
+					}
+				}
+				catch (Exception e) {
+				}
+				try {
+					if (null != read) {
+						read.close();
+					}
+				}
+				catch (Exception e) {
+				}
 			}
 		}
 		return requestResult;

@@ -14,8 +14,6 @@ import android.os.IBinder;
 import android.os.Message;
 
 import com.ulewo.Ulewo;
-import com.ulewo.bean.Article;
-import com.ulewo.bean.Blog;
 import com.ulewo.bean.Task;
 import com.ulewo.ui.IMainActivity;
 
@@ -51,6 +49,7 @@ public class MainService extends Service implements Runnable {
 		@SuppressWarnings("unchecked")
 		@Override
 		public void handleMessage(Message msg) {
+
 			HashMap<String, Object> myobj = null;
 			IMainActivity activity = null;
 			switch (msg.what) {
@@ -119,7 +118,8 @@ public class MainService extends Service implements Runnable {
 		}
 		try {
 			Thread.sleep(2000);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 
 		}
 	}
@@ -182,10 +182,8 @@ public class MainService extends Service implements Runnable {
 		case SHOWARTICLE:// 文章详情
 			obj = task.getTaskParams();
 			articleId = Integer.parseInt(obj.get("articleId").toString());
-			Article article = Ulewo.queryArticle(articleId);
-			msgMap = new HashMap<String, Object>(2);
+			msgMap = Ulewo.queryArticle(articleId);
 			msgMap.put("activity", task.getCurActivity());
-			msgMap.put("obj", article);
 			msg.obj = msgMap;
 			break;
 		case QUERYBLOGES:// 博客列表
@@ -198,10 +196,8 @@ public class MainService extends Service implements Runnable {
 		case SHOWBLOG:// 文章详情
 			obj = task.getTaskParams();
 			articleId = Integer.parseInt(obj.get("articleId").toString());
-			Blog blog = Ulewo.queryBlog(articleId);
-			msgMap = new HashMap<String, Object>(2);
+			msgMap = Ulewo.queryBlog(articleId);
 			msgMap.put("activity", task.getCurActivity());
-			msgMap.put("obj", blog);
 			msg.obj = msgMap;
 			break;
 		case GROUP:// 窝窝

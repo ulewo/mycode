@@ -91,7 +91,7 @@ public class Tools {
 	}
 
 	/**
-	 * 判断不为�?
+	 * 判断不为�?
 	 * @param str
 	 * @return
 	 */
@@ -114,5 +114,17 @@ public class Tools {
 			return true;
 		}
 		return false;
+	}
+
+	//根据文件路径获取文件名
+	public static String convertUrlToFileName(String iconurl) {
+
+		if (iconurl == null) {
+			return "";
+		}
+		int start = iconurl.lastIndexOf("/");
+		int end = iconurl.length();
+		String iconname = iconurl.substring(start, end);
+		return iconname;
 	}
 }
