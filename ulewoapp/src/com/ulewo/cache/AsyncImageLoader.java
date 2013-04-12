@@ -29,6 +29,10 @@ public class AsyncImageLoader {
 
 	private static int FREE_SD_SPACE_NEEDED_TO_CACHE = 1;
 
+	private static final String SEPARATOR = File.separator;
+
+	private static final String ULEWO = "ulewo";
+
 	private HashMap<String, SoftReference<Drawable>> imageCache;
 
 	public AsyncImageLoader() {
@@ -36,8 +40,8 @@ public class AsyncImageLoader {
 		imageCache = new HashMap<String, SoftReference<Drawable>>();
 	}
 
-	public Drawable loadDrawable(final String imageUrl,
-			final ImageCallback imageCallback) {
+	public Drawable loadDrawable(final String imageUrl, final ImageCallback imageCallback) {
+
 		final String fileName = Tools.convertUrlToFileName(imageUrl);
 		// 从内存中读取
 		if (imageCache.containsKey(fileName)) {
@@ -55,6 +59,7 @@ public class AsyncImageLoader {
 
 		final Handler handler = new Handler() {
 			public void handleMessage(Message message) {
+
 				imageCallback.imageLoaded((Drawable) message.obj, imageUrl);
 			}
 		};
@@ -81,9 +86,11 @@ public class AsyncImageLoader {
 		try {
 			m = new URL(url);
 			i = (InputStream) m.getContent();
-		} catch (MalformedURLException e1) {
+		}
+		catch (MalformedURLException e1) {
 			e1.printStackTrace();
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			e.printStackTrace();
 		}
 		Drawable d = Drawable.createFromStream(i, "src");
@@ -97,6 +104,9 @@ public class AsyncImageLoader {
 	// 保存到sdk
 	private void save2SDK(Drawable drawable, String imageUrl) {
 
+		if (drawable == null) {
+			return;
+		}
 		Bitmap bm = ((BitmapDrawable) drawable).getBitmap();
 		if (bm == null) {
 			return;
@@ -106,23 +116,29 @@ public class AsyncImageLoader {
 			return;
 		}
 		String filename = Tools.convertUrlToFileName(imageUrl);
-		if (Environment.getExternalStorageState().equals(
-				Environment.MEDIA_MOUNTED)) {
+		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
 			FileOutputStream fos = null;
 			try {
-				File file = new File(Environment.getExternalStorageDirectory(),
-						filename);
+				String sDir = Environment.getExternalStorageDirectory() + SEPARATOR + ULEWO;
+				File destDir = new File(sDir);
+				if (!destDir.exists()) {
+					destDir.mkdirs();
+				}
+				File file = new File(sDir, filename);
 				fos = new FileOutputStream(file);
 				bm.compress(CompressFormat.JPEG, 100, fos);
 				fos.flush();
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				e.printStackTrace();
-			} finally {
+			}
+			finally {
 				try {
 					if (null != fos) {
 						fos.close();
 					}
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 				}
 			}
 		}
@@ -131,14 +147,12 @@ public class AsyncImageLoader {
 	// 计算sdcard上的剩余空间
 	private int freeSpaceOnSd() {
 
-		if (Environment.getExternalStorageState().equals(
-				Environment.MEDIA_MOUNTED)) {
-			StatFs stat = new StatFs(Environment.getExternalStorageDirectory()
-					.getPath());
-			double sdFreeMB = ((double) stat.getAvailableBlocks() * (double) stat
-					.getBlockSize()) / MB;
+		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+			StatFs stat = new StatFs(Environment.getExternalStorageDirectory().getPath());
+			double sdFreeMB = ((double) stat.getAvailableBlocks() * (double) stat.getBlockSize()) / MB;
 			return (int) sdFreeMB;
-		} else {
+		}
+		else {
 			return 0;
 		}
 	}
@@ -161,12 +175,12 @@ public class AsyncImageLoader {
 	}
 
 	private Drawable readFromSDK(String filename) {
+
 		Bitmap btp = null;
 		Drawable drawable = null;
-		if (Environment.getExternalStorageState().equals(
-				Environment.MEDIA_MOUNTED)) {
-			File file = new File(Environment.getExternalStorageDirectory(),
-					filename);
+		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+
+			File file = new File(Environment.getExternalStorageDirectory() + SEPARATOR + ULEWO, filename);
 			if (file.exists()) {
 				FileInputStream fs = null;
 				BufferedInputStream bs = null;
@@ -180,21 +194,25 @@ public class AsyncImageLoader {
 						return null;
 					}
 					drawable = new BitmapDrawable(btp);
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 
-				} finally {
+				}
+				finally {
 					try {
 						if (null != fs) {
 							fs.close();
 						}
 
-					} catch (Exception e) {
+					}
+					catch (Exception e) {
 					}
 					try {
 						if (null != bs) {
 							bs.close();
 						}
-					} catch (Exception e) {
+					}
+					catch (Exception e) {
 					}
 				}
 			}
@@ -202,5 +220,4 @@ public class AsyncImageLoader {
 		return drawable;
 
 	}
-
 }

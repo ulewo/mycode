@@ -65,45 +65,53 @@ public final class R {
     public static final class drawable {
         public static final int article=0x7f020000;
         public static final int blog=0x7f020001;
-        public static final int btn_style_three_normal=0x7f020002;
-        public static final int btn_style_three_pressed=0x7f020003;
-        public static final int btn_style_two_normal=0x7f020004;
-        public static final int btn_style_two_pressed=0x7f020005;
-        public static final int chatfrom_bg_voice_normal=0x7f020006;
-        public static final int chatfrom_bg_voice_pressed=0x7f020007;
-        public static final int head_back_normal=0x7f020008;
-        public static final int head_back_selected=0x7f020009;
-        public static final int head_refresh_normal=0x7f02000a;
-        public static final int head_refresh_selected=0x7f02000b;
-        public static final int home=0x7f02000c;
-        public static final int icon=0x7f02000d;
-        public static final int line_bluegray=0x7f02000e;
-        public static final int load=0x7f02000f;
-        public static final int loading=0x7f020010;
-        public static final int logo=0x7f020011;
-        public static final int mm_title_back_normal=0x7f020012;
-        public static final int mm_title_back_pressed=0x7f020013;
-        public static final int mmtitle_bg=0x7f020014;
-        public static final int mmtitle_bg_alpha=0x7f020015;
-        public static final int more=0x7f020016;
-        public static final int myprogressbar=0x7f020017;
-        public static final int refresh_btn_normal=0x7f020018;
-        public static final int refresh_btn_pressed=0x7f020019;
-        public static final int semitrans_bg=0x7f02001a;
-        public static final int shakepic_loading=0x7f02001b;
-        public static final int shap=0x7f02001c;
-        public static final int talk_room_title_bg=0x7f02001d;
-        public static final int user=0x7f02001e;
-        public static final int welcome_alpha=0x7f02001f;
-        public static final int widget_bar_back=0x7f020020;
-        public static final int widget_bar_bg=0x7f020021;
-        public static final int widget_bar_bg_n=0x7f020022;
-        public static final int widget_bar_bg_p=0x7f020023;
-        public static final int widget_bar_cut_off=0x7f020024;
-        public static final int widget_bar_refresh=0x7f020025;
-        public static final int widget_comment_count_icon=0x7f020026;
-        public static final int widget_head_bg=0x7f020027;
-        public static final int wowo=0x7f020028;
+        public static final int btn_style_nine_normal=0x7f020002;
+        public static final int btn_style_nine_pressed=0x7f020003;
+        public static final int btn_style_three_normal=0x7f020004;
+        public static final int btn_style_three_pressed=0x7f020005;
+        public static final int btn_style_two_normal=0x7f020006;
+        public static final int btn_style_two_pressed=0x7f020007;
+        public static final int chatfrom_bg_voice_normal=0x7f020008;
+        public static final int chatfrom_bg_voice_pressed=0x7f020009;
+        public static final int com_tencent_open_agent_imgnavbar_btn_back_bg=0x7f02000a;
+        public static final int com_tencent_open_agent_imgnavbar_btn_back_click_bg=0x7f02000b;
+        public static final int com_tencent_open_agent_navbar_btn_bg=0x7f02000c;
+        public static final int head_back_normal=0x7f02000d;
+        public static final int head_back_selected=0x7f02000e;
+        public static final int head_refresh_normal=0x7f02000f;
+        public static final int head_refresh_selected=0x7f020010;
+        public static final int home=0x7f020011;
+        public static final int icon=0x7f020012;
+        public static final int line_bluegray=0x7f020013;
+        public static final int load=0x7f020014;
+        public static final int loading=0x7f020015;
+        public static final int logo=0x7f020016;
+        public static final int mm_title_back_normal=0x7f020017;
+        public static final int mm_title_back_pressed=0x7f020018;
+        public static final int mmtitle_bg=0x7f020019;
+        public static final int mmtitle_bg_alpha=0x7f02001a;
+        public static final int more=0x7f02001b;
+        public static final int myprogressbar=0x7f02001c;
+        public static final int qz_btn_blue_short_normal=0x7f02001d;
+        public static final int qz_btn_blue_short_pressed=0x7f02001e;
+        public static final int refresh_btn_normal=0x7f02001f;
+        public static final int refresh_btn_pressed=0x7f020020;
+        public static final int semitrans_bg=0x7f020021;
+        public static final int shakepic_loading=0x7f020022;
+        public static final int shap=0x7f020023;
+        public static final int talk_room_title_bg=0x7f020024;
+        public static final int user=0x7f020025;
+        public static final int welcome_alpha=0x7f020026;
+        public static final int widget_bar_back=0x7f020027;
+        public static final int widget_bar_bg=0x7f020028;
+        public static final int widget_bar_bg_n=0x7f020029;
+        public static final int widget_bar_bg_p=0x7f02002a;
+        public static final int widget_bar_cut_off=0x7f02002b;
+        public static final int widget_bar_refresh=0x7f02002c;
+        public static final int widget_comment_count_icon=0x7f02002d;
+        public static final int widget_head_bg=0x7f02002e;
+        public static final int widget_login_btn=0x7f02002f;
+        public static final int wowo=0x7f020030;
     }
     public static final class id {
         public static final int article_author=0x7f090002;
@@ -119,6 +127,11 @@ public final class R {
         public static final int loadmore=0x7f090012;
         public static final int loadmore_progressbar=0x7f090014;
         public static final int loadmoretextview=0x7f090013;
+        public static final int login_password=0x7f090022;
+        public static final int login_submit=0x7f090023;
+        public static final int login_username=0x7f090021;
+        public static final int login_username_text=0x7f090020;
+        public static final int loginlayout=0x7f09001f;
         public static final int main_head_logo=0x7f090006;
         public static final int main_head_title=0x7f090007;
         public static final int myprogressbar=0x7f09001c;
@@ -129,7 +142,8 @@ public final class R {
         public static final int radio_wowo_id=0x7f090019;
         public static final int show_article_id=0x7f09001e;
         public static final int show_article_title=0x7f09001d;
-        public static final int wlecomelogo=0x7f09001f;
+        public static final int userinfolayout=0x7f090024;
+        public static final int wlecomelogo=0x7f090025;
         public static final int wowo_articlecount=0x7f090010;
         public static final int wowo_articlecount_con=0x7f090011;
         public static final int wowo_icon=0x7f09000a;
@@ -162,6 +176,9 @@ public final class R {
         public static final int guide_two=0x7f070007;
         public static final int loading=0x7f07000a;
         public static final int loadmore=0x7f07000b;
+        public static final int login_password=0x7f070014;
+        public static final int login_submit=0x7f070015;
+        public static final int login_username=0x7f070013;
         public static final int name_article=0x7f070001;
         public static final int name_blog=0x7f070002;
         public static final int name_more=0x7f070005;
@@ -179,6 +196,17 @@ public final class R {
         /**  分割线 
          */
         public static final int detail_cut_line=0x7f080003;
+        public static final int login_submitbtn=0x7f080008;
+        /**  登录 
+登录输入控件 
+         */
+        public static final int login_text_con=0x7f080005;
+        /**  标题 
+         */
+        public static final int login_text_title=0x7f080006;
+        /**  输入框 
+         */
+        public static final int login_textinput=0x7f080007;
         /**  底部菜单分割线样式 
          */
         public static final int main_footbar_cutline=0x7f080001;
