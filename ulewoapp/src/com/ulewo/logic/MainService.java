@@ -31,6 +31,8 @@ public class MainService extends Service implements Runnable {
 
 	protected static final int SHOGROUPARTICLE_VALUE = 6;
 
+	protected static final int ARTICLECOMMENT_VALUE = 7;
+
 	private static final String USERACTIVITY = "UserActivity";
 
 	// 任务队列
@@ -89,9 +91,14 @@ public class MainService extends Service implements Runnable {
 				activity = (IMainActivity) myobj.get("activity");
 				activity.refresh(myobj);
 				break;
+			case ARTICLECOMMENT_VALUE:
+				// 更新UI
+				myobj = (HashMap<String, Object>) msg.obj;
+				activity = (IMainActivity) myobj.get("activity");
+				activity.refresh(myobj);
+				break;
 			}
 		}
-
 	};
 
 	@Override
@@ -211,6 +218,15 @@ public class MainService extends Service implements Runnable {
 			page = (Integer) obj.get("page");
 			String gid = obj.get("gid").toString();
 			msgMap = Ulewo.queryArticleListByGid(gid, page);
+			msgMap.put("activity", task.getCurActivity());
+			msg.obj = msgMap;
+			break;
+		case ARTICLECOMMENT:// 评论
+			obj = task.getTaskParams();
+			page = (Integer) obj.get("page");
+			articleId = Integer.parseInt(String.valueOf(obj.get("articleId")
+					.toString()));
+			msgMap = Ulewo.queryReCommentList(articleId, page);
 			msgMap.put("activity", task.getCurActivity());
 			msg.obj = msgMap;
 			break;

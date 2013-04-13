@@ -11,7 +11,6 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -68,8 +67,6 @@ public class GroupActivity extends BaseActivity implements IMainActivity {
 
 	private void init() {
 
-		ImageView imageView = (ImageView) findViewById(R.id.main_head_logo);
-		imageView.setImageResource(R.drawable.wowo);
 		TextView textView = (TextView) findViewById(R.id.main_head_title);
 		textView.setText(R.string.name_wowo);
 

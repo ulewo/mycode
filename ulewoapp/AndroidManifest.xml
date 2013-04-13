@@ -19,15 +19,15 @@
         <service android:name=".logic.MainService"></service>
         
          <activity android:name=".ui.MainActivity" android:theme="@android:style/Theme.NoTitleBar"/>
-		 <activity android:name=".ui.ArticleActivity"/>
+		 <activity android:name=".ui.ArticleActivity" android:theme="@android:style/Theme.NoTitleBar"/>
 		 <activity android:name=".ui.ShowArticleActivity"  android:theme="@android:style/Theme.NoTitleBar"/>
-		 <activity android:name=".ui.BlogActivity"/>
+		 <activity android:name=".ui.BlogActivity" android:theme="@android:style/Theme.NoTitleBar"/>
 		 <activity android:name=".ui.ShowBlogActivity"  android:theme="@android:style/Theme.NoTitleBar"/>
-		 <activity android:name=".ui.GroupActivity"/>
-		  <activity android:name=".ui.ShowGroupActivity"/>
-		 <activity android:name=".ui.UserActivity"/>
-		 <activity android:name=".ui.MoreActivity"/>
-		 
+		 <activity android:name=".ui.GroupActivity" android:theme="@android:style/Theme.NoTitleBar"/>
+		  <activity android:name=".ui.ShowGroupActivity" android:theme="@android:style/Theme.NoTitleBar"/>
+		 <activity android:name=".ui.UserActivity" android:theme="@android:style/Theme.NoTitleBar"/>
+		 <activity android:name=".ui.MoreActivity" android:theme="@android:style/Theme.NoTitleBar"/>
+		 <activity android:name=".ui.ArticleCommentActivity" android:theme="@android:style/Theme.NoTitleBar"/>
 		 
     </application>
 </manifest>

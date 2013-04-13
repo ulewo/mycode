@@ -12,7 +12,7 @@
   		android:gravity="center"
   		android:textSize="12dp"
   		android:textColor="@color/white"
-  		android:background="@drawable/widget_head_bg"
+  		android:background="@drawable/qz_btn_blue_short_normal"
   		android:text="@string/loadmore"/>
 	<LinearLayout 
 		android:id="@+id/loadmore_progressbar"

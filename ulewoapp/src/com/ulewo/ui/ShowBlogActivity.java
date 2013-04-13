@@ -7,8 +7,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageButton;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,7 +24,7 @@ public class ShowBlogActivity extends BaseActivity implements IMainActivity {
 
 	private LinearLayout progressBar = null;
 
-	private ImageButton backBtn = null;
+	private Button backBtn = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +32,8 @@ public class ShowBlogActivity extends BaseActivity implements IMainActivity {
 		super.onCreate(savedInstanceState);
 		super.setContentView(R.layout.show_article);
 		ExitApplication.getInstance().addActivity(this);
-		ImageView imageView = (ImageView) findViewById(R.id.main_head_logo);
-		imageView.setImageResource(R.drawable.blog);
 		progressBar = (LinearLayout) super.findViewById(R.id.myprogressbar);
-		backBtn = (ImageButton) super.findViewById(R.id.head_back);
+		backBtn = (Button) super.findViewById(R.id.head_back);
 		backBtn.setVisibility(View.VISIBLE);
 		backBtn.setOnClickListener(new OnClickListener() {
 			@Override
@@ -46,8 +43,7 @@ public class ShowBlogActivity extends BaseActivity implements IMainActivity {
 			}
 		});
 		TextView textView = (TextView) findViewById(R.id.main_head_title);
-		textView.setText(R.string.name_blog);
-
+		textView.setText(R.string.show_blog);
 		Intent intent = getIntent();
 		Bundle bunde = intent.getExtras();
 		String articleId = bunde.getString("articleId");

@@ -15,12 +15,9 @@ import com.ulewo.bean.Article;
 public class ArticleListAdapter extends BaseAdapter {
 
 	private List<Article> list = null;
-	private Context context;
-
 	private LayoutInflater mInflater;
 
 	public ArticleListAdapter(Context context, List<Article> list) {
-		this.context = context;
 		this.list = list;
 		mInflater = LayoutInflater.from(context);
 	}

@@ -33,10 +33,12 @@ public class ApiClient {
 
 	private static final String ULEWO = "ulewo";
 
-	public static RequestResult getUlewoInfo(String path, int page, boolean isCache) {
+	public static RequestResult getUlewoInfo(String path, int page,
+			boolean isCache) {
 
 		RequestResult requestResult = new RequestResult();
-		String fileName = Tools.encodeByMD5(path);
+		String fileName = Tools.encodeByMD5(path.substring(0,
+				path.lastIndexOf("?")));
 
 		// 如果page==0读取缓存
 		if (page == 0 && isCache) {
@@ -72,33 +74,31 @@ public class ApiClient {
 				while ((current = bis.read()) != -1) {
 					baf.append((byte) current);
 				}
-				String myString = EncodingUtils.getString(baf.toByteArray(), "UTF-8");
+				String myString = EncodingUtils.getString(baf.toByteArray(),
+						"UTF-8");
 				// 保存缓存到sdk
 				if ((page == 1 || page == 0) && isCache) {
-					SaveDateThread thread = new SaveDateThread(fileName, baf.toByteArray());
+					SaveDateThread thread = new SaveDateThread(fileName,
+							baf.toByteArray());
 					Thread mythread = new Thread(thread);
 					mythread.start();
 				}
 				JSONObject jsonObj = new JSONObject(myString);
 				requestResult.setResultEnum(ResultEnum.SUCCESS);
 				requestResult.setJsonObject(jsonObj);
-			}
-			else {
+			} else {
 				requestResult.setResultEnum(ResultEnum.REQUESTTIMEOUT);
 			}
 			// 关闭连接
 			urlConn.disconnect();
 
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			requestResult.setResultEnum(ResultEnum.ERROR);
-		}
-		finally {
+		} finally {
 			if (bis != null) {
 				try {
 					bis.close();
-				}
-				catch (IOException e) {
+				} catch (IOException e) {
 					bis = null;
 				}
 				bis = null;
@@ -106,8 +106,7 @@ public class ApiClient {
 			if (is != null) {
 				try {
 					is.close();
-				}
-				catch (IOException e) {
+				} catch (IOException e) {
 					is = null;
 				}
 				bis = null;
@@ -130,10 +129,12 @@ public class ApiClient {
 		@Override
 		public void run() {
 
-			if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+			if (Environment.getExternalStorageState().equals(
+					Environment.MEDIA_MOUNTED)) {
 				OutputStream out = null;
 				try {
-					String sDir = Environment.getExternalStorageDirectory() + SEPARATOR + ULEWO;
+					String sDir = Environment.getExternalStorageDirectory()
+							+ SEPARATOR + ULEWO;
 					File destDir = new File(sDir);
 					if (!destDir.exists()) {
 						destDir.mkdirs();
@@ -146,17 +147,14 @@ public class ApiClient {
 					out.write(data);
 					out.flush();
 					out.close();
-				}
-				catch (Exception e) {
+				} catch (Exception e) {
 					e.printStackTrace();
-				}
-				finally {
+				} finally {
 					try {
 						if (null != out) {
 							out.close();
 						}
-					}
-					catch (Exception e) {
+					} catch (Exception e) {
 					}
 				}
 			}
@@ -167,14 +165,16 @@ public class ApiClient {
 	private static RequestResult readFromSdk(String fileName) {
 
 		RequestResult requestResult = null;
-		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+		if (Environment.getExternalStorageState().equals(
+				Environment.MEDIA_MOUNTED)) {
 
 			BufferedReader read = null;
 			InputStreamReader fos = null;
 			FileInputStream filein = null;
 			StringBuffer sb = new StringBuffer();
 			try {
-				String sDir = Environment.getExternalStorageDirectory() + SEPARATOR + ULEWO;
+				String sDir = Environment.getExternalStorageDirectory()
+						+ SEPARATOR + ULEWO;
 				File file = new File(sDir, fileName);
 				if (!file.exists()) {
 					return null;
@@ -190,32 +190,27 @@ public class ApiClient {
 				requestResult = new RequestResult();
 				requestResult.setResultEnum(ResultEnum.SUCCESS);
 				requestResult.setJsonObject(jsonObj);
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				requestResult = null;
 				e.printStackTrace();
-			}
-			finally {
+			} finally {
 				try {
 					if (null != filein) {
 						filein.close();
 					}
-				}
-				catch (Exception e) {
+				} catch (Exception e) {
 				}
 				try {
 					if (null != fos) {
 						fos.close();
 					}
-				}
-				catch (Exception e) {
+				} catch (Exception e) {
 				}
 				try {
 					if (null != read) {
 						read.close();
 					}
-				}
-				catch (Exception e) {
+				} catch (Exception e) {
 				}
 			}
 		}

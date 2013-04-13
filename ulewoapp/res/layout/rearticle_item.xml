@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="10dp"
+    android:orientation="vertical">
+	<RelativeLayout 
+		android:id="@+id/recomment_p"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+		<!-- 回复人头像 -->
+		<ImageView
+			android:id="@+id/recomment_icon" 
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:src="@drawable/icon"/>
+		<!-- 回复信息 -->
+		<LinearLayout 
+			android:layout_toRightOf="@id/recomment_icon"
+			android:orientation="vertical"
+			android:layout_width="fill_parent"
+			android:layout_marginLeft="10dp"
+			android:layout_height="wrap_content">
+			<!-- 回复人姓名 -->
+			<TextView 
+				android:id="@+id/recomment_username"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:textColor="@color/nameblue"
+				android:textSize="13dp"
+			/>
+			<!-- 回复时间 -->
+			<TextView
+				android:id="@+id/recomment_posttime" 
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:textColor="@color/shadeblack"
+				android:textSize="12dp"
+			/>
+		</LinearLayout>
+	</RelativeLayout>
+	<LinearLayout 
+		android:id="@+id/recomment_con_layout"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="10dp">
+		<TextView 
+			android:id="@+id/recomment_con"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:textColor="@color/black"
+			android:textSize="13dp"
+		/>
+	</LinearLayout>
+	<LinearLayout 
+		android:id="@+id/recomment_sub_layout"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:background="@drawable/friendactivity_comment_detail_list_">
+	</LinearLayout>
+	<RelativeLayout 
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical">
+		<Button 
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:layout_marginTop="5dp"
+			android:background="@drawable/download_downprgfront_icon"
+			android:textSize="12dp"
+			android:padding="3dp"
+			android:textColor="@color/white"
+			android:text="@string/rename"/>
+	</RelativeLayout>
+</LinearLayout>

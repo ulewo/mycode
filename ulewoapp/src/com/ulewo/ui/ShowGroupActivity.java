@@ -77,10 +77,7 @@ public class ShowGroupActivity extends BaseActivity implements IMainActivity {
 
 	private void init() {
 
-		ImageView imageView = (ImageView) findViewById(R.id.main_head_logo);
-		imageView.setImageResource(R.drawable.wowo);
 		TextView textView = (TextView) findViewById(R.id.main_head_title);
-		textView.setText(R.string.name_wowo);
 
 		Intent intent = getIntent();
 		Bundle bunde = intent.getExtras();
@@ -96,7 +93,8 @@ public class ShowGroupActivity extends BaseActivity implements IMainActivity {
 		TextView authorView = (TextView) findViewById(R.id.wowo_username_con);
 		TextView memberView = (TextView) findViewById(R.id.wowo_member_con);
 		TextView articleView = (TextView) findViewById(R.id.wowo_articlecount_con);
-
+		// 设置窝窝标题
+		textView.setText(gName);
 		AsyncImageLoader asyncImageLoader = new AsyncImageLoader();
 		Drawable cachedImage = asyncImageLoader.loadDrawable(groupIcon,
 				new ImageCallback() {

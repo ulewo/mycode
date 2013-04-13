@@ -5,7 +5,6 @@ import java.util.HashMap;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,8 +21,6 @@ public class UserActivity extends BaseActivity implements IMainActivity {
 		super.onCreate(savedInstanceState);
 		super.setContentView(R.layout.user);
 		ExitApplication.getInstance().addActivity(this);
-		ImageView imageView = (ImageView) findViewById(R.id.main_head_logo);
-		imageView.setImageResource(R.drawable.user);
 		TextView textView = (TextView) findViewById(R.id.main_head_title);
 		textView.setText(R.string.name_user);
 

@@ -16,4 +16,7 @@
 	<color name="grayslate">#708090</color>
 	<color name="lightblue">#0083FF</color>
 	<color name="shadeblack">#888888</color>
+	<color name="nameblue">#26709A</color>
+	<color name="recomentsubnormal">#E7E3E7</color>
+	<color name="recomentsubpressed">#EFEFEF</color>
 </resources>

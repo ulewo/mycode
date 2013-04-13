@@ -7,8 +7,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageButton;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,7 +24,13 @@ public class ShowArticleActivity extends BaseActivity implements IMainActivity {
 
 	private LinearLayout progressBar = null;
 
-	private ImageButton backBtn = null;
+	private Button backBtn = null;
+
+	private LinearLayout recommentBtn = null;
+
+	private TextView recommentCount = null;
+
+	private int articleId = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,11 +38,17 @@ public class ShowArticleActivity extends BaseActivity implements IMainActivity {
 		super.onCreate(savedInstanceState);
 		super.setContentView(R.layout.show_article);
 		ExitApplication.getInstance().addActivity(this);
-		ImageView imageView = (ImageView) findViewById(R.id.main_head_logo);
-		imageView.setImageResource(R.drawable.article);
 		progressBar = (LinearLayout) super.findViewById(R.id.myprogressbar);
-		backBtn = (ImageButton) super.findViewById(R.id.head_back);
+		backBtn = (Button) super.findViewById(R.id.head_back);
 		backBtn.setVisibility(View.VISIBLE);
+
+		recommentBtn = (LinearLayout) super
+				.findViewById(R.id.article_recomment_btn);
+		recommentBtn.setVisibility(View.VISIBLE);
+
+		recommentCount = (TextView) super
+				.findViewById(R.id.article_recomment_count);
+
 		backBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View paramView) {
@@ -45,13 +56,24 @@ public class ShowArticleActivity extends BaseActivity implements IMainActivity {
 				ShowArticleActivity.this.finish();
 			}
 		});
+
+		recommentBtn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View paramView) {
+				Intent intent = new Intent();
+				intent.putExtra("id", articleId);
+				intent.setClass(ShowArticleActivity.this,
+						ArticleCommentActivity.class);
+				startActivity(intent);
+			}
+		});
+
 		TextView textView = (TextView) findViewById(R.id.main_head_title);
-		textView.setText(R.string.name_article);
+		textView.setText(R.string.show_article);
 
 		Intent intent = getIntent();
 		Bundle bunde = intent.getExtras();
 		String articleId = bunde.getString("articleId");
-		progressBar = (LinearLayout) findViewById(R.id.myprogressbar);
 		Intent service = new Intent(this, MainService.class);
 		startService(service);
 		HashMap<String, Object> param = new HashMap<String, Object>(1);
@@ -77,6 +99,8 @@ public class ShowArticleActivity extends BaseActivity implements IMainActivity {
 			TextView timeView = (TextView) findViewById(R.id.article_time);
 			TextView recountView = (TextView) findViewById(R.id.article_recount);
 			Article article = (Article) myobj.get("article");
+			articleId = article.getId();
+			recommentCount.setText(article.getReNumber() + "");
 			titleView.setText(article.getTitle());
 			authorView.setText(article.getAuthorName());
 			timeView.setText(article.getPostTime());
