@@ -17,6 +17,6 @@
 	<color name="lightblue">#0083FF</color>
 	<color name="shadeblack">#888888</color>
 	<color name="nameblue">#26709A</color>
-	<color name="recomentsubnormal">#E7E3E7</color>
-	<color name="recomentsubpressed">#EFEFEF</color>
+	<color name="recomentsubnormal">#EDEEEE</color>
+	<color name="recomentsubpressed">#E3E3E3</color>
 </resources>
