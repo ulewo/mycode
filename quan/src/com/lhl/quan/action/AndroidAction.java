@@ -1,6 +1,9 @@
 package com.lhl.quan.action;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONObject;
 
@@ -22,7 +25,6 @@ import com.lhl.quan.service.ReArticleService;
 import com.lhl.quan.service.UserService;
 import com.lhl.util.Constant;
 import com.lhl.util.Pagination;
-import com.lhl.util.Tools;
 
 public class AndroidAction extends BaseAction {
 	private static final long serialVersionUID = 1L;
@@ -67,7 +69,8 @@ public class AndroidAction extends BaseAction {
 	 */
 	public void fetchArticle() {
 
-		int countNumber = adminArticleService.queryArticleCount("", Constant.ISVALIDY);
+		int countNumber = adminArticleService.queryArticleCount("",
+				Constant.ISVALIDY);
 		Pagination.setPageSize(Constant.pageSize20);
 		int pageSize = Pagination.getPageSize();
 		pageTotal = Pagination.getPageTotal(countNumber);
@@ -78,7 +81,8 @@ public class AndroidAction extends BaseAction {
 			page = 1;
 		}
 		int noStart = (page - 1) * pageSize;
-		List<Article> list = adminArticleService.queryList("", Constant.ISVALIDY, noStart, pageSize);
+		List<Article> list = adminArticleService.queryList("",
+				Constant.ISVALIDY, noStart, pageSize);
 		for (Article article : list) {
 			article.setSummary("");
 			article.setPostTime(article.getPostTime().substring(0, 19));
@@ -93,8 +97,7 @@ public class AndroidAction extends BaseAction {
 					list);
 			obj.put("response", response);
 			getOut().print(String.valueOf(obj));
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -111,8 +114,7 @@ public class AndroidAction extends BaseAction {
 		Article article = null;
 		try {
 			article = articleService.queryTopicById(articleId);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			resultCode = RESULTCODE_FAIL;
 			e.printStackTrace();
 		}
@@ -132,28 +134,47 @@ public class AndroidAction extends BaseAction {
 
 		int resultCode = RESULTCODE_SUCCESS;
 		List<ReArticle> reArticleList = null;
+		int pageSize = 10;
 		try {
 			int countNumber = reArticleService.queryReArticleCount(articleId);
-			Pagination.setPageSize(Constant.pageSize20);
-			int pageSize = Pagination.getPageSize();
-			pageTotal = Pagination.getPageTotal(countNumber);
+			reArticleList = reArticleService.queryReArticles(articleId, 0,
+					countNumber);
+
+			Pagination.setPageSize(Constant.pageSize10);
+			pageSize = Pagination.getPageSize();
+			pageTotal = Pagination.getPageTotal(reArticleList.size());
 			if (page > pageTotal) {
 				page = pageTotal;
 			}
 			if (page < 1) {
 				page = 1;
 			}
-			int noStart = (page - 1) * pageSize;
-			reArticleList = reArticleService.queryReArticles(articleId, noStart, countNumber);
-		}
-		catch (Exception e) {
+
+		} catch (Exception e) {
 			resultCode = RESULTCODE_FAIL;
 			e.printStackTrace();
 		}
 		JSONObject obj = new JSONObject();
-		Response response = new Response(resultCode, pageTotal, reArticleList);
+		List<ReArticle> resultList = getListbyPageNum(page, reArticleList,
+				pageSize);
+		Response response = new Response(resultCode, pageTotal, resultList);
 		obj.put("response", response);
 		getOut().print(String.valueOf(obj));
+	}
+
+	private List<ReArticle> getListbyPageNum(int page,
+			List<ReArticle> reArticleList, int pageSize) {
+		List<ReArticle> resultList = new ArrayList<ReArticle>();
+		int count = reArticleList.size();
+		int start = (page - 1) * pageSize;
+		int offset = page * pageSize;
+		if (offset > count) {
+			offset = count;
+		}
+		for (int i = start; i < offset; i++) {
+			resultList.add(reArticleList.get(i));
+		}
+		return resultList;
 	}
 
 	/**
@@ -179,8 +200,7 @@ public class AndroidAction extends BaseAction {
 			}
 			int noStart = (page - 1) * pageSize;
 			list = blogArticleService.indexLatestBlog(noStart, pageSize);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			resultCode = RESULTCODE_FAIL;
 		}
 		JSONObject obj = new JSONObject();
@@ -195,8 +215,7 @@ public class AndroidAction extends BaseAction {
 		BlogArticle article = null;
 		try {
 			article = blogArticleService.queryBlogById(articleId);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			resultCode = RESULTCODE_FAIL;
 		}
 		JSONObject obj = new JSONObject();
@@ -211,8 +230,7 @@ public class AndroidAction extends BaseAction {
 		List<BlogReply> list = null;
 		try {
 			list = blogReplyService.queryBlogReplyByBlogId(articleId);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			resultCode = RESULTCODE_FAIL;
 			e.printStackTrace();
 		}
@@ -249,8 +267,7 @@ public class AndroidAction extends BaseAction {
 				group.setGroupDesc("");
 				group.setGroupHeadIcon("");
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			resultCode = RESULTCODE_FAIL;
 		}
 		JSONObject obj = new JSONObject();
@@ -264,7 +281,8 @@ public class AndroidAction extends BaseAction {
 		int resultCode = RESULTCODE_SUCCESS;
 		List<Article> list = null;
 		try {
-			int countNumber = articleService.queryTopicCountByGid(gid, 0, Constant.ISVALIDY);
+			int countNumber = articleService.queryTopicCountByGid(gid, 0,
+					Constant.ISVALIDY);
 			Pagination.setPageSize(Constant.pageSize20);
 			int pageSize = Pagination.getPageSize();
 			pageTotal = Pagination.getPageTotal(countNumber);
@@ -275,7 +293,8 @@ public class AndroidAction extends BaseAction {
 				page = 1;
 			}
 			int noStart = (page - 1) * pageSize;
-			list = articleService.queryTopicOrderByPostTime(gid, 0, Constant.ISVALIDY, noStart, pageSize);
+			list = articleService.queryTopicOrderByPostTime(gid, 0,
+					Constant.ISVALIDY, noStart, pageSize);
 			for (Article article : list) {
 				article.setSummary("");
 				article.setPostTime(article.getPostTime().substring(0, 19));
@@ -284,8 +303,7 @@ public class AndroidAction extends BaseAction {
 				article.setLastReAuthorName("");
 				article.setLastReTime("");
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			resultCode = RESULTCODE_FAIL;
 		}
 		JSONObject obj = new JSONObject();
@@ -303,18 +321,22 @@ public class AndroidAction extends BaseAction {
 	public void login() {
 
 		int resultCode = RESULTCODE_SUCCESS;
+		User user = null;
 		try {
-			User user = userService.login(userName);
-			if (!Tools.encodeByMD5(password).equals(user.getPassword())) {
+			user = userService.login(userName);
+			if (null != user && password.equals(user.getPassword())) {
+				resultCode = RESULTCODE_SUCCESS;
+				HttpSession session = getSession();
+				session.setAttribute("androidUserId", user.getUserId());
+			} else {
 				resultCode = RESULTCODE_FAIL;
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			resultCode = RESULTCODE_FAIL;
 			e.printStackTrace();
 		}
 		JSONObject obj = new JSONObject();
-		Response response = new Response(resultCode, null, null);
+		Response response = new Response(resultCode, user, null);
 		obj.put("response", response);
 		getOut().print(String.valueOf(obj));
 	}
@@ -338,12 +360,10 @@ public class AndroidAction extends BaseAction {
 				userVo.setSex(userInfo.getSex());
 				userVo.setPrevisitTime(userInfo.getPrevisitTime());
 				userVo.setMark(userInfo.getMark());
-			}
-			else {
+			} else {
 				resultCode = RESULTCODE_FAIL;
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			resultCode = RESULTCODE_FAIL;
 		}
 		JSONObject obj = new JSONObject();

@@ -27,6 +27,8 @@ public class Constant {
 
 	public static int pageSize50 = 50; // 查询页数
 
+	public static int pageSize10 = 10; // 查询页数
+
 	public static int pageSize3 = 24; // 查询页数
 
 	public static int articleGrade0 = 0; // 普通帖子
@@ -77,19 +79,19 @@ public class Constant {
 
 	public static int CUT_LENTH = 400;
 
-	public static String ADMIN_TYPE_A = "A"; //普通管理员
+	public static String ADMIN_TYPE_A = "A"; // 普通管理员
 
-	public static String ADMIN_TYPE_S = "S"; //超级管理员
+	public static String ADMIN_TYPE_S = "S"; // 超级管理员
 
-	public static int NOTICE_TYPE1 = 1; //论坛主题
+	public static int NOTICE_TYPE1 = 1; // 论坛主题
 
-	public static int NOTICE_TYPE2 = 2; //论坛回复
+	public static int NOTICE_TYPE2 = 2; // 论坛回复
 
 	public static int NOTICE_TYPE3 = 3; // 博客主题
 
-	public static int NOTICE_TYPE4 = 4; //回复博客
+	public static int NOTICE_TYPE4 = 4; // 回复博客
 
-	public static int NOTICE_TYPE5 = 5; //留言
+	public static int NOTICE_TYPE5 = 5; // 留言
 
 	public static int ARTICLE_MARK5 = 5;
 

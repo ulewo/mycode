@@ -35,7 +35,8 @@ public class ReArticleServiceImpl implements ReArticleService {
 
 	private NoticeDao noticeDao;
 
-	private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private SimpleDateFormat format = new SimpleDateFormat(
+			"yyyy-MM-dd HH:mm:ss");
 
 	public void setReArticleDao(ReArticleDao reArticleDao) {
 
@@ -53,13 +54,15 @@ public class ReArticleServiceImpl implements ReArticleService {
 	}
 
 	@Override
-	public ReArticle addReArticle(ReArticle reArticle, String authorId, String articleTitle) throws Exception {
+	public ReArticle addReArticle(ReArticle reArticle, String authorId,
+			String articleTitle) throws Exception {
 
 		reArticle.setReTime(format.format(new Date()));
 		String content = reArticle.getContent();
 		String quote = reArticle.getQuote();
 		List<String> referers = new ArrayList<String>();
-		String formatContent = FormatAt.getInstance().GenerateRefererLinks(userDao, content, referers);
+		String formatContent = FormatAt.getInstance().GenerateRefererLinks(
+				userDao, content, referers);
 		String subCon = formatContent;
 		if (quote != null && !"".equals(quote)) {
 			subCon = quote + formatContent;
@@ -67,7 +70,8 @@ public class ReArticleServiceImpl implements ReArticleService {
 		reArticle.setContent(subCon);
 		int id = reArticleDao.addReArticle(reArticle);
 
-		if (!"".equals(reArticle.getAuthorid()) && reArticle.getAuthorid() != null) {
+		if (!"".equals(reArticle.getAuthorid())
+				&& reArticle.getAuthorid() != null) {
 			User user = userDao.queryUser("", "", reArticle.getAuthorid());
 			User reUser = new User();
 			reUser.setUserLittleIcon(user.getUserLittleIcon());
@@ -80,13 +84,13 @@ public class ReArticleServiceImpl implements ReArticleService {
 		curUser.setMark(curUser.getMark() + Constant.ARTICLE_MARK2);
 		userDao.updateUserSelectiveByUserId(curUser);
 
-		//启动一个线程发布消息
+		// 启动一个线程发布消息
 		NoticeParam noticeParm = new NoticeParam();
 		noticeParm.setArticleId(reArticle.getArticleId());
 		noticeParm.setNoticeType(NoticeType.REARTICLE);
 		noticeParm.setAtUserIds(referers);
 		noticeParm.setSendUserId(reArticle.getAuthorid());
-		//如果At的用户Id为不为空那么就是二级回复
+		// 如果At的用户Id为不为空那么就是二级回复
 		if (Tools.isNotEmpty(reArticle.getAtUserId())) {
 			noticeParm.setReceiveUserId(reArticle.getAtUserId());
 		}
@@ -131,10 +135,12 @@ public class ReArticleServiceImpl implements ReArticleService {
 	 * 回复的文章
 	 */
 	@Override
-	public List<ReArticle> queryReArticles(int articleid, int offset, int total) throws Exception {
+	public List<ReArticle> queryReArticles(int articleid, int offset, int total)
+			throws Exception {
 
-		List<ReArticle> list = reArticleDao.queryReArticles(articleid, offset, total);
-		formateList(list);
+		List<ReArticle> list = reArticleDao.queryReArticles(articleid, offset,
+				total);
+		return formateList(list);
 		/*
 		 * User author = null; User sAuthor = null; List<ReArticle> reList =
 		 * null; for (ReArticle reParticle : list) { if
@@ -155,11 +161,10 @@ public class ReArticleServiceImpl implements ReArticleService {
 		 * 
 		 * }
 		 */
-		return list;
 	}
 
-	private void formateList(List<ReArticle> list) {
-
+	private List<ReArticle> formateList(List<ReArticle> list) {
+		List<ReArticle> resultlist = new ArrayList<ReArticle>();
 		Map<Integer, List<ReArticle>> map = new HashMap<Integer, List<ReArticle>>();
 		for (ReArticle reArticle : list) {
 			if (reArticle.getPid() != null && reArticle.getPid() != 0) {
@@ -167,15 +172,20 @@ public class ReArticleServiceImpl implements ReArticleService {
 					List<ReArticle> child = new ArrayList<ReArticle>();
 					child.add(reArticle);
 					map.put(reArticle.getPid(), child);
-				}
-				else {
+				} else {
 					List<ReArticle> child = map.get(reArticle.getPid());
 					child.add(reArticle);
 				}
 			}
 		}
+
 		for (ReArticle reArticle : list) {
+			if (reArticle.getPid() != null && reArticle.getPid() != 0) {
+				continue;
+			}
 			reArticle.setChildList(map.get(reArticle.getId()));
+			resultlist.add(reArticle);
 		}
+		return resultlist;
 	}
 }
