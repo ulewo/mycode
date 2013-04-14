@@ -33,6 +33,8 @@ public class MainService extends Service implements Runnable {
 
 	protected static final int ARTICLECOMMENT_VALUE = 7;
 
+	protected static final int LOGIN_VALUE = 8;
+
 	private static final String USERACTIVITY = "UserActivity";
 
 	// 任务队列
@@ -92,6 +94,12 @@ public class MainService extends Service implements Runnable {
 				activity.refresh(myobj);
 				break;
 			case ARTICLECOMMENT_VALUE:
+				// 更新UI
+				myobj = (HashMap<String, Object>) msg.obj;
+				activity = (IMainActivity) myobj.get("activity");
+				activity.refresh(myobj);
+				break;
+			case LOGIN_VALUE:
 				// 更新UI
 				myobj = (HashMap<String, Object>) msg.obj;
 				activity = (IMainActivity) myobj.get("activity");
@@ -227,6 +235,14 @@ public class MainService extends Service implements Runnable {
 			articleId = Integer.parseInt(String.valueOf(obj.get("articleId")
 					.toString()));
 			msgMap = Ulewo.queryReCommentList(articleId, page);
+			msgMap.put("activity", task.getCurActivity());
+			msg.obj = msgMap;
+			break;
+		case USERINFO:// 用户信息
+			obj = task.getTaskParams();
+			String userName = String.valueOf(obj.get("username"));
+			String password = String.valueOf(obj.get("password"));
+			msgMap = Ulewo.login(userName, password);
 			msgMap.put("activity", task.getCurActivity());
 			msg.obj = msgMap;
 			break;

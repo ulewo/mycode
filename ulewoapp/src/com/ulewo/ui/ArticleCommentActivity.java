@@ -77,8 +77,9 @@ public class ArticleCommentActivity extends BaseActivity implements
 			}
 		});
 
+		loadMoreView = View.inflate(this, R.layout.loadmore, null);
 		listView = (ListView) super.findViewById(R.id.recoment_list_view_id);
-		// listView.addFooterView(loadMoreView);
+		listView.addFooterView(loadMoreView);
 
 		TextView textView = (TextView) findViewById(R.id.main_head_title);
 		textView.setText(R.string.recomment_tit_web);
@@ -92,6 +93,26 @@ public class ArticleCommentActivity extends BaseActivity implements
 				page = 1;
 				HashMap<String, Object> param = new HashMap<String, Object>(1);
 				param.put("page", page);
+				param.put("articleId", articleId);
+				Task task = new Task(TaskType.ARTICLECOMMENT, param,
+						ArticleCommentActivity.this);
+				MainService.newTask(task);
+			}
+		});
+		loadmore_prgressbar = (LinearLayout) findViewById(R.id.loadmore_progressbar);
+		loadmoreTextView = (TextView) findViewById(R.id.loadmoretextview);
+		loadmoreTextView.setVisibility(View.GONE);
+		loadmoreTextView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+				loadmoreTextView.setVisibility(View.GONE);
+				loadmore_prgressbar.setVisibility(View.VISIBLE);
+				Intent service = new Intent(ArticleCommentActivity.this,
+						MainService.class);
+				startService(service);
+				HashMap<String, Object> param = new HashMap<String, Object>(1);
+				param.put("page", ++page);
 				param.put("articleId", articleId);
 				Task task = new Task(TaskType.ARTICLECOMMENT, param,
 						ArticleCommentActivity.this);

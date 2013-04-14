@@ -38,7 +38,7 @@ public class ApiClient {
 
 		RequestResult requestResult = new RequestResult();
 		String fileName = Tools.encodeByMD5(path.substring(0,
-				path.lastIndexOf("?")));
+				path.lastIndexOf("=")));
 
 		// 如果page==0读取缓存
 		if (page == 0 && isCache) {

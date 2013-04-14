@@ -6,13 +6,10 @@ import android.content.Context;
 import android.text.Html;
 import android.text.TextPaint;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.ulewo.R;
@@ -87,17 +84,16 @@ public class ArticleCommentListAdapter extends BaseAdapter {
 
 		LinearLayout liner = (LinearLayout) view
 				.findViewById(R.id.recomment_sub_layout);
+		liner.removeAllViewsInLayout();
 		List<ReArticle> childList = reArticle.getChildList();
-		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-				LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
-		LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(
-				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		if (childList.size() == 0) {
+		if (childList.size() > 0) {
+			liner.setVisibility(View.VISIBLE);
+		} else {
 			liner.setVisibility(View.GONE);
 		}
+		View subview = null;
 		for (ReArticle subRe : childList) {
-			final View subview = this.subflater.inflate(
-					R.layout.rearticle_sub_item, null);
+			subview = this.subflater.inflate(R.layout.rearticle_sub_item, null);
 			liner.addView(subview);
 			TextView nameView = (TextView) subview
 					.findViewById(R.id.recoment_sub_name);
@@ -116,19 +112,17 @@ public class ArticleCommentListAdapter extends BaseAdapter {
 					.findViewById(R.id.recoment_sub_con);
 			conView.setText(Html.fromHtml(subRe.getContent(), null,
 					new MxgsaTagHandler(context)));
-			subview.setOnTouchListener(new OnTouchListener() {
-				@Override
-				public boolean onTouch(View paramView,
-						MotionEvent paramMotionEvent) {
-
-					if (paramMotionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-						subview.setBackgroundResource(R.color.recomentsubpressed);
-					} else {
-						subview.setBackgroundResource(R.color.recomentsubnormal);
-					}
-					return true;
-				}
-			});
+			/*
+			 * subview.setOnTouchListener(new OnTouchListener() {
+			 * 
+			 * @Override public boolean onTouch(View paramView, MotionEvent
+			 * paramMotionEvent) {
+			 * 
+			 * if (paramMotionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+			 * subview.setBackgroundResource(R.color.recomentsubpressed); } else
+			 * { subview.setBackgroundResource(R.color.recomentsubnormal); }
+			 * return true; } });
+			 */
 		}
 	}
 

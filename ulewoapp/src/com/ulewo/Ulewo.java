@@ -14,8 +14,10 @@ import com.ulewo.bean.Blog;
 import com.ulewo.bean.Group;
 import com.ulewo.bean.ReArticle;
 import com.ulewo.bean.RequestResult;
+import com.ulewo.bean.User;
 import com.ulewo.enums.ResultEnum;
 import com.ulewo.util.Constants;
+import com.ulewo.util.Tools;
 
 public class Ulewo {
 	private static final String BASEURL = "http://192.168.2.224:8080/ulewo";
@@ -41,6 +43,7 @@ public class Ulewo {
 	private static final String BASEUR_RECOMMENT = BASEURL
 			+ "/android/fetchReComment.jspx";
 
+	private static final String BASEUR_LOGIN = BASEURL + "/android/login.jspx";
 	public static final int RESULTCODE_SUCCESS = 200;
 
 	public static final int RESULTCODE_FAIL = 400;
@@ -285,6 +288,31 @@ public class Ulewo {
 				result = Constants.RESULTCODE_FAIL;
 			}
 
+		} else {
+			result = Constants.RESULTCODE_FAIL;
+		}
+		map.put("result", result);
+		return map;
+	}
+
+	public static HashMap<String, Object> login(String userName, String password) {
+
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		String result = Constants.RESULTCODE_SUCCESS;
+		RequestResult requestResult = ApiClient.getUlewoInfo(
+				BASEUR_LOGIN + "?userName=" + userName + "&password="
+						+ Tools.encodeByMD5(password), 0, false);
+		User user = null;
+		if (requestResult.getResultEnum() == ResultEnum.SUCCESS) {
+			JSONObject jsonObj = requestResult.getJsonObject();
+			try {
+				JSONObject response = new JSONObject(String.valueOf(jsonObj
+						.get("response")));
+				user = new User(new JSONObject(response.get("obj").toString()));
+				map.put("user", user);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
 		} else {
 			result = Constants.RESULTCODE_FAIL;
 		}
