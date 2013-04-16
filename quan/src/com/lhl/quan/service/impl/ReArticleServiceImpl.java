@@ -54,8 +54,7 @@ public class ReArticleServiceImpl implements ReArticleService {
 	}
 
 	@Override
-	public ReArticle addReArticle(ReArticle reArticle, String authorId,
-			String articleTitle) throws Exception {
+	public ReArticle addReArticle(ReArticle reArticle) throws Exception {
 
 		reArticle.setReTime(format.format(new Date()));
 		String content = reArticle.getContent();

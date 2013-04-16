@@ -7,6 +7,8 @@ import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONObject;
 
+import org.jsoup.helper.StringUtil;
+
 import com.lhl.UserVo;
 import com.lhl.admin.service.AdminArticleService;
 import com.lhl.common.action.BaseAction;
@@ -24,7 +26,9 @@ import com.lhl.quan.service.GroupService;
 import com.lhl.quan.service.ReArticleService;
 import com.lhl.quan.service.UserService;
 import com.lhl.util.Constant;
+import com.lhl.util.MySessionContext;
 import com.lhl.util.Pagination;
+import com.lhl.util.Tools;
 
 public class AndroidAction extends BaseAction {
 	private static final long serialVersionUID = 1L;
@@ -57,9 +61,14 @@ public class AndroidAction extends BaseAction {
 
 	private String userId;
 
+	private String content;
+
+	private String sessionId;
+
 	private static final int RESULTCODE_SUCCESS = 200;
 
 	private static final int RESULTCODE_FAIL = 400;
+	private static final int RESULTCODE_LOGINFAILL = 100;
 
 	/**
 	 * 
@@ -175,6 +184,36 @@ public class AndroidAction extends BaseAction {
 			resultList.add(reArticleList.get(i));
 		}
 		return resultList;
+	}
+
+	public void addArticleComment() {
+		int resultCode = RESULTCODE_SUCCESS;
+		ReArticle re = null;
+		try {
+			HttpSession session = MySessionContext.getSession(sessionId);
+			if (session == null) {
+				resultCode = RESULTCODE_FAIL;
+			} else {
+				Object sessionObj = session.getAttribute("user");
+				User sessionUser = (User) sessionObj;
+				ReArticle reArticle = new ReArticle();
+				reArticle.setArticleId(articleId);
+				reArticle.setContent(Tools.formateHtml(content));
+				reArticle.setGid(gid);
+				reArticle.setAuthorid(sessionUser.getUserId());
+				reArticle.setAuthorName(sessionUser.getUserName());
+				reArticle.setAuthorIcon(sessionUser.getUserLittleIcon());
+				re = reArticleService.addReArticle(reArticle);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultCode = RESULTCODE_FAIL;
+		}
+		JSONObject obj = new JSONObject();
+		Response response = new Response(resultCode, re, null);
+		obj.put("response", response);
+		getOut().print(String.valueOf(obj));
 	}
 
 	/**
@@ -321,22 +360,43 @@ public class AndroidAction extends BaseAction {
 	public void login() {
 
 		int resultCode = RESULTCODE_SUCCESS;
-		User user = null;
+		User userInfo = null;
+		UserVo userVo = null;
 		try {
-			user = userService.login(userName);
-			if (null != user && password.equals(user.getPassword())) {
+			if (StringUtil.isBlank(userName)) {
+				resultCode = RESULTCODE_LOGINFAILL;
+			}
+			userInfo = userService.login(userName);
+			if (null != userInfo && password.equals(userInfo.getPassword())) {
 				resultCode = RESULTCODE_SUCCESS;
 				HttpSession session = getSession();
-				session.setAttribute("androidUserId", user.getUserId());
+				User loginUser = new User();
+				loginUser.setUserId(userInfo.getUserId());
+				loginUser.setUserName(userName);
+				loginUser.setUserLittleIcon(userInfo.getUserLittleIcon());
+				getSession().setAttribute("user", loginUser);
+				MySessionContext.AddSession(session);
+
+				userVo = new UserVo();
+				userVo.setUserName(userInfo.getUserName());
+				userVo.setWork(userInfo.getWork());
+				userVo.setAddress(userInfo.getAddress());
+				userVo.setAge(userInfo.getAge());
+				userVo.setCharacters(userInfo.getCharacters());
+				userVo.setRegisterTime(userInfo.getRegisterTime());
+				userVo.setSex(userInfo.getSex());
+				userVo.setPrevisitTime(userInfo.getPrevisitTime());
+				userVo.setMark(userInfo.getMark());
+				userVo.setSessionId(session.getId());
 			} else {
-				resultCode = RESULTCODE_FAIL;
+				resultCode = RESULTCODE_LOGINFAILL;
 			}
 		} catch (Exception e) {
 			resultCode = RESULTCODE_FAIL;
 			e.printStackTrace();
 		}
 		JSONObject obj = new JSONObject();
-		Response response = new Response(resultCode, user, null);
+		Response response = new Response(resultCode, userVo, null);
 		obj.put("response", response);
 		getOut().print(String.valueOf(obj));
 	}
@@ -445,6 +505,18 @@ public class AndroidAction extends BaseAction {
 	public void setUserId(String userId) {
 
 		this.userId = userId;
+	}
+
+	public void setReContent(String content) {
+		this.content = content;
+	}
+
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 }

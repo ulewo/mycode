@@ -21,7 +21,9 @@ public class UserVo {
 
 	private String previsitTime;
 
-	private int mark; //积分
+	private int mark; // 积分
+
+	private String sessionId;
 
 	public String getPrevisitTime() {
 
@@ -133,4 +135,11 @@ public class UserVo {
 		this.mark = mark;
 	}
 
+	public String getSessionId() {
+		return sessionId;
+	}
+
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
+	}
 }

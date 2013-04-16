@@ -309,7 +309,7 @@ public class ArticleAction extends BaseAction {
 			reArticle.setAuthorid(sessionUser.getUserId());
 			reArticle.setAuthorName(sessionUser.getUserName());
 			reArticle.setAuthorIcon(sessionUser.getUserLittleIcon());
-			ReArticle re = reArticleService.addReArticle(reArticle, authorId, title);
+			ReArticle re = reArticleService.addReArticle(reArticle);
 			obj.put("reArticle", re);
 			getOut().print(String.valueOf(obj));
 		}
@@ -358,7 +358,7 @@ public class ArticleAction extends BaseAction {
 			reArticle.setAuthorid(sessionUser.getUserId());
 			reArticle.setAuthorName(sessionUser.getUserName());
 			reArticle.setAuthorIcon(sessionUser.getUserLittleIcon());
-			ReArticle re = reArticleService.addReArticle(reArticle, authorId, title);
+			ReArticle re = reArticleService.addReArticle(reArticle);
 			obj.put("msg", msg);
 			obj.put("reArticle", re);
 			getOut().print(String.valueOf(obj));
@@ -523,7 +523,7 @@ public class ArticleAction extends BaseAction {
 			rearticle.setAuthorid(sessionUser.getUserId());
 			rearticle.setAuthorName(sessionUser.getUserName());
 			Article article = articleService.queryTopicById(id);
-			reArticleService.addReArticle(rearticle, article.getAuthorId(), article.getTitle());
+			reArticleService.addReArticle(rearticle);
 		}
 		catch (BaseException e) {
 			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
@@ -598,7 +598,7 @@ public class ArticleAction extends BaseAction {
 			rearticle.setAuthorid(sessionUser.getUserId());
 			rearticle.setAuthorName(sessionUser.getUserName());
 			Article article = articleService.queryTopicById(quote.getArticleId());
-			reArticleService.addReArticle(rearticle, quote.getAuthorid(), article.getTitle());
+			reArticleService.addReArticle(rearticle);
 		}
 		catch (BaseException e) {
 			errMsg = ErrMsgConfig.getErrMsg(e.getCode());

@@ -33,8 +33,7 @@ public interface ReArticleService {
 	 * @throws Exception
 	 * @author luohl
 	 */
-	public ReArticle addReArticle(ReArticle reArticle, String authorId,
-			String articleTitle) throws Exception;
+	public ReArticle addReArticle(ReArticle reArticle) throws Exception;
 
 	/**
 	 * 
