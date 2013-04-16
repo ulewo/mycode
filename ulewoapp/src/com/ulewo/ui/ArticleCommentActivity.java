@@ -9,12 +9,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ulewo.AppContext;
 import com.ulewo.R;
 import com.ulewo.adapter.ArticleCommentListAdapter;
 import com.ulewo.bean.ReArticle;
@@ -43,6 +45,10 @@ public class ArticleCommentActivity extends BaseActivity implements
 	private Button backBtn = null;
 	private LinearLayout progressBar = null;
 	private String articleId = "";
+
+	private EditText recomment_input = null;
+
+	private Button subrecomment = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +125,25 @@ public class ArticleCommentActivity extends BaseActivity implements
 				MainService.newTask(task);
 			}
 		});
+		recomment_input = (EditText) super.findViewById(R.id.recomment_input);
+		subrecomment = (Button) super.findViewById(R.id.subrecomment);
+		subrecomment.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View paramView) {
+				if (null == AppContext.getSessionId()) {
+					Toast.makeText(ArticleCommentActivity.this,
+							R.string.pleaselogin, Toast.LENGTH_LONG).show();
+					return;
+				}
+				HashMap<String, Object> param = new HashMap<String, Object>(1);
+				param.put("content", recomment_input.getText());
+				param.put("articleId", articleId);
+				Task task = new Task(TaskType.ADDRECOMMENT, param,
+						ArticleCommentActivity.this);
+				MainService.newTask(task);
+			}
+		});
 	}
 
 	@SuppressWarnings("unchecked")
@@ -127,29 +152,47 @@ public class ArticleCommentActivity extends BaseActivity implements
 		progressBar.setVisibility(View.GONE);
 		refreshBtn.clearAnimation();
 		HashMap<String, Object> myobj = (HashMap<String, Object>) obj[0];
-		if (null != myobj.get("list")
-				&& Constants.RESULTCODE_SUCCESS.equals(String.valueOf(myobj
-						.get("result")))) {
-			List<ReArticle> list = (ArrayList<ReArticle>) myobj.get("list");
-			if (adapter == null || page == 1) {
-				adapter = new ArticleCommentListAdapter(this, list);
-				listView.setAdapter(adapter);
-				if (page < Integer.parseInt(myobj.get("pageTotal").toString())) {
-					loadmoreTextView.setVisibility(View.VISIBLE);
-				}
-			} else {
-				loadmore_prgressbar.setVisibility(View.GONE);
+		if (obj.length > 1) {
+			if (null != myobj.get("reArticle")
+					&& Constants.RESULTCODE_SUCCESS.equals(String.valueOf(myobj
+							.get("result")))) {
+				ReArticle reArticle = (ReArticle) myobj.get("reArticle");
+				List<ReArticle> list = new ArrayList<ReArticle>();
+				list.add(reArticle);
 				adapter.loadMore(list);
-				if (page < Integer.parseInt(myobj.get("pageTotal").toString())) {
-					loadmoreTextView.setVisibility(View.VISIBLE);
-				}
+				recomment_input.setText("");
+			} else {
+				Toast.makeText(ArticleCommentActivity.this,
+						R.string.request_timeout, Toast.LENGTH_LONG).show();
+				progressBar.setVisibility(View.GONE);
+				loadmoreTextView.setVisibility(View.VISIBLE);
 			}
 		} else {
-			Toast.makeText(ArticleCommentActivity.this,
-					R.string.request_timeout, Toast.LENGTH_LONG).show();
-			progressBar.setVisibility(View.GONE);
-			loadmoreTextView.setVisibility(View.VISIBLE);
+			if (null != myobj.get("list")
+					&& Constants.RESULTCODE_SUCCESS.equals(String.valueOf(myobj
+							.get("result")))) {
+				List<ReArticle> list = (ArrayList<ReArticle>) myobj.get("list");
+				if (adapter == null || page == 1) {
+					adapter = new ArticleCommentListAdapter(this, list);
+					listView.setAdapter(adapter);
+					if (page < Integer.parseInt(myobj.get("pageTotal")
+							.toString())) {
+						loadmoreTextView.setVisibility(View.VISIBLE);
+					}
+				} else {
+					loadmore_prgressbar.setVisibility(View.GONE);
+					adapter.loadMore(list);
+					if (page < Integer.parseInt(myobj.get("pageTotal")
+							.toString())) {
+						loadmoreTextView.setVisibility(View.VISIBLE);
+					}
+				}
+			} else {
+				Toast.makeText(ArticleCommentActivity.this,
+						R.string.request_timeout, Toast.LENGTH_LONG).show();
+				progressBar.setVisibility(View.GONE);
+				loadmoreTextView.setVisibility(View.VISIBLE);
+			}
 		}
 	}
-
 }

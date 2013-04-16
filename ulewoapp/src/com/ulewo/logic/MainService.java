@@ -35,6 +35,8 @@ public class MainService extends Service implements Runnable {
 
 	protected static final int LOGIN_VALUE = 8;
 
+	protected static final int ADDCOMMENT_VALUE = 9;
+
 	private static final String USERACTIVITY = "UserActivity";
 
 	// 任务队列
@@ -99,11 +101,18 @@ public class MainService extends Service implements Runnable {
 				activity = (IMainActivity) myobj.get("activity");
 				activity.refresh(myobj);
 				break;
+
 			case LOGIN_VALUE:
 				// 更新UI
 				myobj = (HashMap<String, Object>) msg.obj;
 				activity = (IMainActivity) myobj.get("activity");
 				activity.refresh(myobj);
+				break;
+			case ADDCOMMENT_VALUE:
+				// 更新UI
+				myobj = (HashMap<String, Object>) msg.obj;
+				activity = (IMainActivity) myobj.get("activity");
+				activity.refresh(myobj, "");
 				break;
 			}
 		}
@@ -235,6 +244,15 @@ public class MainService extends Service implements Runnable {
 			articleId = Integer.parseInt(String.valueOf(obj.get("articleId")
 					.toString()));
 			msgMap = Ulewo.queryReCommentList(articleId, page);
+			msgMap.put("activity", task.getCurActivity());
+			msg.obj = msgMap;
+			break;
+		case ADDRECOMMENT:// 发布评论
+			obj = task.getTaskParams();
+			String content = obj.get("content").toString();
+			articleId = Integer.parseInt(String.valueOf(obj.get("articleId")
+					.toString()));
+			msgMap = Ulewo.addComment(content, articleId);
 			msgMap.put("activity", task.getCurActivity());
 			msg.obj = msgMap;
 			break;

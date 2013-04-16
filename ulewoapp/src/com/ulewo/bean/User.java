@@ -25,6 +25,8 @@ public class User {
 
 	private int mark; // 积分
 
+	private String sessionId;
+
 	public String getPrevisitTime() {
 
 		return previsitTime;
@@ -143,8 +145,17 @@ public class User {
 		}
 	}
 
+	public String getSessionId() {
+		return sessionId;
+	}
+
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
+	}
+
 	private void constructJson(JSONObject json) throws Exception {
 		userId = json.getString("userId");
+		userName = json.getString("userName");
 		userLittleIcon = json.getString("userLittleIcon");
 		age = json.getString("age");
 		sex = json.getString("sex");
@@ -153,5 +164,6 @@ public class User {
 		work = json.getString("work");
 		registerTime = json.getString("registerTime");
 		previsitTime = json.getString("previsitTime");
+		sessionId = json.getString("sessionId");
 	}
 }

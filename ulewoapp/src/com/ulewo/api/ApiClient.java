@@ -2,16 +2,30 @@ package com.ulewo.api;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpException;
+import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.httpclient.cookie.CookiePolicy;
+import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.methods.multipart.FilePart;
+import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
+import org.apache.commons.httpclient.methods.multipart.Part;
+import org.apache.commons.httpclient.methods.multipart.StringPart;
+import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.http.util.ByteArrayBuffer;
 import org.apache.http.util.EncodingUtils;
 import org.json.JSONObject;
@@ -19,6 +33,7 @@ import org.json.JSONObject;
 import android.os.Environment;
 
 import com.ulewo.bean.RequestResult;
+import com.ulewo.enums.PostType;
 import com.ulewo.enums.ResultEnum;
 import com.ulewo.util.Tools;
 
@@ -33,65 +48,96 @@ public class ApiClient {
 
 	private static final String ULEWO = "ulewo";
 
+	private final static int TIMEOUT_CONNECTION = 5000;
+	private final static int TIMEOUT_SOCKET = 5000;
+	private final static String UTF_8 = "utf-8";
+	private final static int RETRY_TIME = 3;
+
+	private static final String HOST = "http://192.168.2.224:8080/ulewo";
+
+	private static final String BASEURL = "http://192.168.2.224:8080/ulewo";
+
+	private static final String BASEURL_ARTICLELIST = BASEURL
+			+ "/android/fetchArticle.jspx";
+
+	private static final String BASEUR_SHOWARTICLE = BASEURL
+			+ "/android/showArticle.jspx";
+
+	private static final String BASEUR_BLOGLIST = BASEURL
+			+ "/android/fetchBlog.jspx";
+
+	private static final String BASEUR_SHOWBLOG = BASEURL
+			+ "/android/showBlog.jspx";
+
+	private static final String BASEUR_GROUPLIST = BASEURL
+			+ "/android/fetchWoWo.jspx";
+
+	private static final String BASEUR_GROUPARTICLELIST = BASEURL
+			+ "/android/fetchArticleByGid.jspx";
+
+	private static final String BASEUR_RECOMMENT = BASEURL
+			+ "/android/fetchReComment.jspx";
+
+	private static final String BASEUR_LOGIN = BASEURL + "/android/login.jspx";
+	public static final int RESULTCODE_SUCCESS = 200;
+
+	public final static String CONF_APP_UNIQUEID = "APP_UNIQUEID";
+
+	public static final int RESULTCODE_FAIL = 400;
+
+	private static final int NoPage = 0;
+
 	public static RequestResult getUlewoInfo(String path, int page,
-			boolean isCache) {
+			boolean isCache, PostType postType, HashMap<String, Object> params,
+			HashMap<String, File> files) {
 
 		RequestResult requestResult = new RequestResult();
-		String fileName = Tools.encodeByMD5(path.substring(0,
-				path.lastIndexOf("=")));
-
+		String fileName = path;
+		if (path.contains("=")) {
+			fileName = Tools.encodeByMD5(path.substring(0,
+					path.lastIndexOf("=")));
+		}
 		// 如果page==0读取缓存
 		if (page == 0 && isCache) {
 			requestResult = readFromSdk(fileName);
 			if (requestResult != null) {
 				return requestResult;
 			}
-
 		}
 		if (null == requestResult) {
 			requestResult = new RequestResult();
 		}
 		InputStream is = null;
-		HttpURLConnection urlConn = null;
 		BufferedInputStream bis = null;
 		try {
-			// 新建一个URL对象
-			URL url = new URL(path);
-			// 打开一个HttpURLConnection连接
-			urlConn = (HttpURLConnection) url.openConnection();
-			// 设置连接超时时间
-			urlConn.setConnectTimeout(5 * 1000);
-			// 开始连接
-			urlConn.connect();
-			// 判断请求是否成功
-			if (urlConn.getResponseCode() == HTTP_200) {
-				// 获取返回的数据
-				is = urlConn.getInputStream();
-				bis = new BufferedInputStream(is);
-				// 用ByteArrayBuffer缓存
-				ByteArrayBuffer baf = new ByteArrayBuffer(50);
-				int current = 0;
-				while ((current = bis.read()) != -1) {
-					baf.append((byte) current);
-				}
-				String myString = EncodingUtils.getString(baf.toByteArray(),
-						"UTF-8");
-				// 保存缓存到sdk
-				if ((page == 1 || page == 0) && isCache) {
-					SaveDateThread thread = new SaveDateThread(fileName,
-							baf.toByteArray());
-					Thread mythread = new Thread(thread);
-					mythread.start();
-				}
-				JSONObject jsonObj = new JSONObject(myString);
-				requestResult.setResultEnum(ResultEnum.SUCCESS);
-				requestResult.setJsonObject(jsonObj);
+			// 获取返回的数据
+			if (postType == PostType.GET) {
+				is = http_get(path);
 			} else {
-				requestResult.setResultEnum(ResultEnum.REQUESTTIMEOUT);
+				is = http_post(path, params, files);
 			}
-			// 关闭连接
-			urlConn.disconnect();
-
+			if (null == is) {
+				throw new Exception();
+			}
+			bis = new BufferedInputStream(is);
+			// 用ByteArrayBuffer缓存
+			ByteArrayBuffer baf = new ByteArrayBuffer(50);
+			int current = 0;
+			while ((current = bis.read()) != -1) {
+				baf.append((byte) current);
+			}
+			String myString = EncodingUtils.getString(baf.toByteArray(),
+					"UTF-8");
+			// 保存缓存到sdk
+			if ((page == 1 || page == 0) && isCache) {
+				SaveDateThread thread = new SaveDateThread(fileName,
+						baf.toByteArray());
+				Thread mythread = new Thread(thread);
+				mythread.start();
+			}
+			JSONObject jsonObj = new JSONObject(myString);
+			requestResult.setResultEnum(ResultEnum.SUCCESS);
+			requestResult.setJsonObject(jsonObj);
 		} catch (Exception e) {
 			requestResult.setResultEnum(ResultEnum.ERROR);
 		} finally {
@@ -216,4 +262,181 @@ public class ApiClient {
 		}
 		return requestResult;
 	}
+
+	/**
+	 * get请求URL
+	 * 
+	 * @param url
+	 * @throws AppException
+	 */
+	private static InputStream http_get(String url) throws Exception {
+		HttpClient httpClient = null;
+		GetMethod httpGet = null;
+
+		String responseBody = "";
+		int time = 0;
+		do {
+			try {
+				httpClient = getHttpClient();
+				httpGet = getHttpGet(url);
+				int statusCode = httpClient.executeMethod(httpGet);
+				if (statusCode != HttpStatus.SC_OK) {
+					return null;
+				}
+				responseBody = httpGet.getResponseBodyAsString();
+				break;
+			} catch (HttpException e) {
+				time++;
+				if (time < RETRY_TIME) {
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e1) {
+					}
+					continue;
+				}
+				// 发生致命的异常，可能是协议不对或者返回的内容有问题
+				e.printStackTrace();
+			} catch (IOException e) {
+				time++;
+				if (time < RETRY_TIME) {
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e1) {
+					}
+					continue;
+				}
+				// 发生网络异常
+				e.printStackTrace();
+			} finally {
+				// 释放连接
+				httpGet.releaseConnection();
+				httpClient = null;
+			}
+		} while (time < RETRY_TIME);
+		return new ByteArrayInputStream(responseBody.getBytes());
+	}
+
+	private static GetMethod getHttpGet(String url) {
+		GetMethod httpGet = new GetMethod(url);
+		// 设置 请求超时时间
+		httpGet.getParams().setSoTimeout(TIMEOUT_SOCKET);
+		httpGet.setRequestHeader("Host", HOST);
+		httpGet.setRequestHeader("Connection", "Keep-Alive");
+		return httpGet;
+	}
+
+	private static PostMethod getHttpPost(String url) {
+		PostMethod httpPost = new PostMethod(url);
+		// 设置 请求超时时间
+		httpPost.getParams().setSoTimeout(TIMEOUT_SOCKET);
+		httpPost.setRequestHeader("Host", HOST);
+		httpPost.setRequestHeader("Connection", "Keep-Alive");
+		return httpPost;
+	}
+
+	/**
+	 * 公用post方法
+	 * 
+	 * @param url
+	 * @param params
+	 * @param files
+	 * @throws AppException
+	 */
+	private static InputStream http_post(String url,
+			Map<String, Object> params, Map<String, File> files)
+			throws Exception {
+		// System.out.println("post_url==> "+url);
+		// String cookie = getCookie(appContext);
+		// String userAgent = getUserAgent(appContext);
+
+		HttpClient httpClient = null;
+		PostMethod httpPost = null;
+
+		// post表单参数处理
+		int length = (params == null ? 0 : params.size())
+				+ (files == null ? 0 : files.size());
+		Part[] parts = new Part[length];
+		int i = 0;
+		if (params != null)
+			for (String name : params.keySet()) {
+				parts[i++] = new StringPart(name, String.valueOf(params
+						.get(name)), UTF_8);
+				// System.out.println("post_key==> "+name+"    value==>"+String.valueOf(params.get(name)));
+			}
+		if (files != null)
+			for (String file : files.keySet()) {
+				try {
+					parts[i++] = new FilePart(file, files.get(file));
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+				// System.out.println("post_key_file==> "+file);
+			}
+
+		String responseBody = "";
+		int time = 0;
+		do {
+			try {
+				httpClient = getHttpClient();
+				httpPost = getHttpPost(url);
+				httpPost.setRequestEntity(new MultipartRequestEntity(parts,
+						httpPost.getParams()));
+				int statusCode = httpClient.executeMethod(httpPost);
+				if (statusCode != HttpStatus.SC_OK) {
+					return null;
+				}
+				responseBody = httpPost.getResponseBodyAsString();
+				// System.out.println("XMLDATA=====>"+responseBody);
+				break;
+			} catch (HttpException e) {
+				time++;
+				if (time < RETRY_TIME) {
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e1) {
+					}
+					continue;
+				}
+				// 发生致命的异常，可能是协议不对或者返回的内容有问题
+				e.printStackTrace();
+			} catch (IOException e) {
+				time++;
+				if (time < RETRY_TIME) {
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e1) {
+					}
+					continue;
+				}
+				// 发生网络异常
+				e.printStackTrace();
+			} finally {
+				// 释放连接
+				httpPost.releaseConnection();
+				httpClient = null;
+			}
+		} while (time < RETRY_TIME);
+
+		return new ByteArrayInputStream(responseBody.getBytes());
+	}
+
+	private static HttpClient getHttpClient() {
+		HttpClient httpClient = new HttpClient();
+		// 设置 HttpClient 接收 Cookie,用与浏览器一样的策略
+		httpClient.getParams().setCookiePolicy(
+				CookiePolicy.BROWSER_COMPATIBILITY);
+		// 设置 默认的超时重试处理策略
+		httpClient.getParams().setParameter(HttpMethodParams.RETRY_HANDLER,
+				new DefaultHttpMethodRetryHandler());
+		// 设置 连接超时时间
+		httpClient.getHttpConnectionManager().getParams()
+				.setConnectionTimeout(TIMEOUT_CONNECTION);
+		// 设置 读数据超时时间
+		httpClient.getHttpConnectionManager().getParams()
+				.setSoTimeout(TIMEOUT_SOCKET);
+		// 设置 字符集
+		httpClient.getParams().setContentCharset(UTF_8);
+		return httpClient;
+	}
+
 }

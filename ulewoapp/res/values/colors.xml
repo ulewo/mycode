@@ -19,4 +19,6 @@
 	<color name="nameblue">#26709A</color>
 	<color name="recomentsubnormal">#EDEEEE</color>
 	<color name="recomentsubpressed">#E3E3E3</color>
+	<color name="head_text">#0e5986</color>
+    <color name="author_text">#0e5986</color>
 </resources>

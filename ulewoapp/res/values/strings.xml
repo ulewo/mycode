@@ -4,7 +4,7 @@
      <string name="name_article">文章</string>
     <string name="name_blog">博客</string>
     <string name="name_wowo">窝窝</string>
-    <string name="name_user">用户</string>
+    <string name="name_user">我的资料</string>
     <string name="name_more">更多</string>
     
     <string name="show_article">文章正文</string>
@@ -30,4 +30,15 @@
     <string name="recomment_tit_web">网友跟帖</string>
     <string name="rename">回复</string>
     <string name="maohao">:</string>
+   	<string name="msg_login_error">登陆失败</string>
+   	<string name="jointime">加入时间：</string>
+   	 <string name="age">年龄：</string>
+    <string name="work">职业：</string>
+    <string name="address">地址：</string>
+    <string name="mark">积分：</string>
+    <string name="characters">签名：</string>
+    <string name="loginfaill">用户名或密码错误</string>
+    <string name="pleaselogin">请先登录</string>
+    <string name="noname">用户名不能为空</string>
+    <string name="nopassword">密码不能为空</string>
 </resources>
