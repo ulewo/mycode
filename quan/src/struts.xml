@@ -527,6 +527,9 @@
 		<!--评论-->
 		<action name="fetchReComment" class="android" method="fetchReComment">
 		</action>
+		<!--添加评论-->
+		<action name="addArticleComment" class="android" method="addArticleComment">
+		</action>
 		<!--博客列表-->
 		<action name="fetchBlog" class="android" method="fetchBlog">
 		</action>
