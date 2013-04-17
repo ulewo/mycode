@@ -11,7 +11,9 @@ public class Blog {
 
 	private String postTime;
 
-	private String reNumber;
+	private int reNumber;
+
+	private int readNumber;
 
 	private String authorName;
 
@@ -57,16 +59,6 @@ public class Blog {
 		this.postTime = postTime;
 	}
 
-	public String getReNumber() {
-
-		return reNumber;
-	}
-
-	public void setReNumber(String reNumber) {
-
-		this.reNumber = reNumber;
-	}
-
 	public String getAuthorName() {
 
 		return authorName;
@@ -87,12 +79,27 @@ public class Blog {
 		this.authorId = authorId;
 	}
 
+	public int getReNumber() {
+		return reNumber;
+	}
+
+	public void setReNumber(int reNumber) {
+		this.reNumber = reNumber;
+	}
+
+	public int getReadNumber() {
+		return readNumber;
+	}
+
+	public void setReadNumber(int readNumber) {
+		this.readNumber = readNumber;
+	}
+
 	public Blog(JSONObject json) {
 
 		try {
 			constructJson(json);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -102,8 +109,9 @@ public class Blog {
 		id = json.getInt("id");
 		title = json.getString("title");
 		content = json.getString("content");
-		postTime = json.getString("postTime") == null ? "" : json.getString("postTime").substring(0, 16);
-		reNumber = json.getString("reCount");
+		postTime = json.getString("postTime") == null ? "" : json.getString(
+				"postTime").substring(0, 16);
+		reNumber = json.getInt("reCount");
 		authorName = json.getString("userName");
 		authorId = json.getString("userId");
 	}

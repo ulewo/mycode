@@ -44,8 +44,7 @@ public class BlogListAdapter extends BaseAdapter {
 
 		if (position < getCount()) {
 			return list.get(position).getId();
-		}
-		else {
+		} else {
 			return 0;
 		}
 
@@ -62,8 +61,7 @@ public class BlogListAdapter extends BaseAdapter {
 		View view;
 		if (convertView == null) {
 			view = this.mInflater.inflate(R.layout.article_item, null);
-		}
-		else {
+		} else {
 			view = convertView;
 		}
 		bindView(position, view);
@@ -76,12 +74,14 @@ public class BlogListAdapter extends BaseAdapter {
 		TextView titView = (TextView) view.findViewById(R.id.article_title);
 		TextView authorView = (TextView) view.findViewById(R.id.article_author);
 		TextView timeView = (TextView) view.findViewById(R.id.article_time);
-		TextView recountView = (TextView) view.findViewById(R.id.article_recount);
+		TextView recountView = (TextView) view
+				.findViewById(R.id.article_recount);
 
 		titView.setText(blog.getTitle());
 		authorView.setText(blog.getAuthorName());
-		timeView.setText(blog.getPostTime() == null ? "" : blog.getPostTime().substring(0, 16));
-		recountView.setText(blog.getReNumber());
+		timeView.setText(blog.getPostTime() == null ? "" : blog.getPostTime()
+				.substring(0, 16));
+		recountView.setText(blog.getReNumber() + "");
 	}
 
 	public void loadMore(List<Blog> blogList) {

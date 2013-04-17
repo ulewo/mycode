@@ -4,7 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.ulewo.AppException;
 
 public class ArticleList implements Serializable {
 	private static final long serialVersionUID = -6956425724309545864L;
@@ -33,20 +36,20 @@ public class ArticleList implements Serializable {
 		this.articleList = articleList;
 	}
 
-	public static ArticleList parse(JSONObject jsonObj) throws Exception {
+	public static ArticleList parse(JSONObject jsonObj) throws AppException {
 
 		ArticleList list = new ArticleList();
 		try {
-			JSONArray jsonArray = new JSONArray(String.valueOf(jsonObj.get("list")));
+			JSONArray jsonArray = new JSONArray(String.valueOf(jsonObj
+					.get("list")));
 			int length = jsonArray.length();
 			for (int i = 0; i < length; i++) {
 				JSONObject obj = jsonArray.getJSONObject(i);
 				list.getArticleList().add(Article.parse(obj));
 			}
 			list.setPageTotal(jsonObj.getInt("pageTotal"));
-		}
-		catch (Exception e) {
-			throw e;
+		} catch (JSONException e) {
+			throw AppException.josn(e);
 		}
 		return list;
 	}
