@@ -9,7 +9,6 @@ import net.sf.json.JSONObject;
 
 import org.jsoup.helper.StringUtil;
 
-import com.lhl.UserVo;
 import com.lhl.admin.service.AdminArticleService;
 import com.lhl.common.action.BaseAction;
 import com.lhl.entity.Article;
@@ -29,6 +28,7 @@ import com.lhl.util.Constant;
 import com.lhl.util.MySessionContext;
 import com.lhl.util.Pagination;
 import com.lhl.util.Tools;
+import com.lhl.vo.UserVo;
 
 public class AndroidAction extends BaseAction {
 	private static final long serialVersionUID = 1L;
