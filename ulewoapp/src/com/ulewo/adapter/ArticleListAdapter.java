@@ -15,28 +15,34 @@ import com.ulewo.bean.Article;
 public class ArticleListAdapter extends BaseAdapter {
 
 	private List<Article> list = null;
+
 	private LayoutInflater mInflater;
 
 	public ArticleListAdapter(Context context, List<Article> list) {
+
 		this.list = list;
 		mInflater = LayoutInflater.from(context);
 	}
 
 	@Override
 	public int getCount() {
+
 		return list == null ? 0 : list.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
+
 		return list == null ? null : list.get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
+
 		if (position < getCount()) {
 			return list.get(position).getId();
-		} else {
+		}
+		else {
 			return 0;
 		}
 
@@ -44,14 +50,17 @@ public class ArticleListAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+
 		return createViewFromResource(position, convertView);
 	}
 
 	private View createViewFromResource(int position, View convertView) {
+
 		View view;
 		if (convertView == null) {
 			view = this.mInflater.inflate(R.layout.article_item, null);
-		} else {
+		}
+		else {
 			view = convertView;
 		}
 		bindView(position, view);
@@ -59,21 +68,21 @@ public class ArticleListAdapter extends BaseAdapter {
 	}
 
 	private void bindView(int postion, View view) {
+
 		Article article = list.get(postion);
 		TextView titView = (TextView) view.findViewById(R.id.article_title);
 		TextView authorView = (TextView) view.findViewById(R.id.article_author);
 		TextView timeView = (TextView) view.findViewById(R.id.article_time);
-		TextView recountView = (TextView) view
-				.findViewById(R.id.article_recount);
+		TextView recountView = (TextView) view.findViewById(R.id.article_recount);
 
 		titView.setText(article.getTitle());
 		authorView.setText(article.getAuthorName());
-		timeView.setText(article.getPostTime() == null ? "" : article
-				.getPostTime().substring(0, 16));
-		recountView.setText(article.getReNumber());
+		timeView.setText(article.getPostTime());
+		recountView.setText(article.getReNumber() + "");
 	}
 
 	public void loadMore(List<Article> articleList) {
+
 		list.addAll(articleList);
 		this.notifyDataSetChanged();
 	}

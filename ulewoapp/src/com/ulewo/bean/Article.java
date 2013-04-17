@@ -1,8 +1,12 @@
 package com.ulewo.bean;
 
+import java.io.Serializable;
+
 import org.json.JSONObject;
 
-public class Article {
+public class Article implements Serializable {
+	private static final long serialVersionUID = 2393143064912211800L;
+
 	private int id;
 
 	private String title;
@@ -11,7 +15,9 @@ public class Article {
 
 	private String postTime;
 
-	private String reNumber;
+	private int reNumber;
+
+	private int readNumber;
 
 	private String authorName;
 
@@ -57,46 +63,56 @@ public class Article {
 		this.postTime = postTime;
 	}
 
-	public String getReNumber() {
+	public int getReNumber() {
+
 		return reNumber;
 	}
 
-	public void setReNumber(String reNumber) {
+	public void setReNumber(int reNumber) {
+
 		this.reNumber = reNumber;
 	}
 
+	public int getReadNumber() {
+
+		return readNumber;
+	}
+
+	public void setReadNumber(int readNumber) {
+
+		this.readNumber = readNumber;
+	}
+
 	public String getAuthorName() {
+
 		return authorName;
 	}
 
 	public void setAuthorName(String authorName) {
+
 		this.authorName = authorName;
 	}
 
 	public String getAuthorId() {
+
 		return authorId;
 	}
 
 	public void setAuthorId(String authorId) {
+
 		this.authorId = authorId;
 	}
 
-	public Article(JSONObject json) {
-		try {
-			constructJson(json);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	public static Article parse(JSONObject obj) throws Exception {
 
-	private void constructJson(JSONObject json) throws Exception {
-		id = json.getInt("id");
-		title = json.getString("title");
-		content = json.getString("content");
-		postTime = json.getString("postTime") == null ? "" : json.getString(
-				"postTime").substring(0, 16);
-		reNumber = json.getString("reNumber");
-		authorName = json.getString("authorName");
-		authorId = json.getString("authorId");
+		Article article = new Article();
+		article.setId(obj.getInt("id"));
+		article.setTitle(obj.getString("title"));
+		article.setAuthorId(obj.getString("authorId"));
+		article.setAuthorName(obj.getString("authorName"));
+		article.setPostTime(obj.getString("postTime").substring(0, 16));
+		article.setReNumber(obj.getInt("reNumber"));
+		article.setReadNumber(obj.getInt("readNumber"));
+		return article;
 	}
 }

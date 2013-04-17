@@ -6,6 +6,9 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,9 +20,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ulewo.AppContext;
 import com.ulewo.R;
 import com.ulewo.adapter.ArticleListAdapter;
 import com.ulewo.bean.Article;
+import com.ulewo.bean.ArticleList;
 import com.ulewo.bean.Task;
 import com.ulewo.enums.TaskType;
 import com.ulewo.logic.MainService;
@@ -33,7 +38,7 @@ public class ArticleActivity extends BaseActivity implements IMainActivity {
 
 	private View loadMoreView = null;
 
-	private int page = 1;
+	private int page = 0;
 
 	private TextView loadmoreTextView = null;
 
@@ -47,23 +52,24 @@ public class ArticleActivity extends BaseActivity implements IMainActivity {
 
 	private static final int RESULTCODE_FAIL = 400;
 
+	private Handler handler = null;
+
+	private AppContext appContext;
+
+	boolean isRefresh = false;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
 		super.setContentView(R.layout.article);
 		ExitApplication.getInstance().addActivity(this);
-		init();
-		Intent service = new Intent(this, MainService.class);
-		startService(service);
-
-		HashMap<String, Object> param = new HashMap<String, Object>(1);
-		param.put("page", 0);
-		Task task = new Task(TaskType.QUERYARTICLES, param, this);
-		MainService.newTask(task);
+		appContext = (AppContext) getApplication();
+		initView();
+		initData();
 	}
 
-	private void init() {
+	private void initView() {
 
 		TextView textView = (TextView) findViewById(R.id.main_head_title);
 		textView.setText(R.string.name_article);
@@ -84,13 +90,11 @@ public class ArticleActivity extends BaseActivity implements IMainActivity {
 
 				loadmoreTextView.setVisibility(View.GONE);
 				loadmore_prgressbar.setVisibility(View.VISIBLE);
-				Intent service = new Intent(ArticleActivity.this,
-						MainService.class);
+				Intent service = new Intent(ArticleActivity.this, MainService.class);
 				startService(service);
 				HashMap<String, Object> param = new HashMap<String, Object>(1);
 				param.put("page", ++page);
-				Task task = new Task(TaskType.QUERYARTICLES, param,
-						ArticleActivity.this);
+				Task task = new Task(TaskType.QUERYARTICLES, param, ArticleActivity.this);
 				MainService.newTask(task);
 			}
 		});
@@ -103,13 +107,72 @@ public class ArticleActivity extends BaseActivity implements IMainActivity {
 
 				progressBar.setVisibility(View.VISIBLE);
 				page = 1;
-				HashMap<String, Object> param = new HashMap<String, Object>(1);
-				param.put("page", page);
-				Task task = new Task(TaskType.QUERYARTICLES, param,
-						ArticleActivity.this);
-				MainService.newTask(task);
+				isRefresh = true;
+				initData();
 			}
 		});
+	}
+
+	private void initData() {
+
+		handler = new Handler() {
+			@Override
+			public void handleMessage(Message msg) {
+
+				progressBar.setVisibility(View.GONE);
+				if (msg.what != -1) {
+					ArticleList list = (ArticleList) msg.obj;
+					if (adapter == null || page == 1) {
+						adapter = new ArticleListAdapter(ArticleActivity.this, list.getArticleList());
+						listView.setAdapter(adapter);
+						if (page < msg.arg1) {
+							loadmoreTextView.setVisibility(View.VISIBLE);
+						}
+					}
+					else {
+						loadmore_prgressbar.setVisibility(View.GONE);
+						adapter.loadMore(list.getArticleList());
+						if (page < msg.arg1) {
+							loadmoreTextView.setVisibility(View.VISIBLE);
+						}
+					}
+					listView.setOnItemClickListener(new OnItemClickListener() {
+						public void onItemClick(AdapterView<?> parent, View view, int postion, long id) {
+
+							String articleId = String.valueOf(adapter.getItemId(postion));
+							if (!"0".equals(articleId)) {
+								Intent intent = new Intent();
+								intent.putExtra("articleId", articleId);
+								intent.setClass(ArticleActivity.this, ShowArticleActivity.class);
+								startActivity(intent);
+							}
+						}
+					});
+				}
+				else {
+					Toast.makeText(ArticleActivity.this, R.string.request_timeout, Toast.LENGTH_LONG).show();
+					progressBar.setVisibility(View.GONE);
+					loadmoreTextView.setVisibility(View.VISIBLE);
+				}
+			}
+		};
+		new Thread() {
+			@Override
+			public void run() {
+
+				Message msg = new Message();
+				try {
+					ArticleList list = appContext.getArticleList(page, isRefresh);
+					msg.obj = list;
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+					Log.e("exception", e.getMessage());
+					msg.what = -1;
+				}
+				handler.sendMessage(msg);
+			}
+		}.start();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -119,9 +182,7 @@ public class ArticleActivity extends BaseActivity implements IMainActivity {
 		progressBar.setVisibility(View.GONE);
 		refreshBtn.clearAnimation();
 		HashMap<String, Object> myobj = (HashMap<String, Object>) obj[0];
-		if (null != myobj.get("list")
-				&& Constants.RESULTCODE_SUCCESS.equals(String.valueOf(myobj
-						.get("result")))) {
+		if (null != myobj.get("list") && Constants.RESULTCODE_SUCCESS.equals(String.valueOf(myobj.get("result")))) {
 			List<Article> list = (ArrayList<Article>) myobj.get("list");
 			if (adapter == null || page == 1) {
 				adapter = new ArticleListAdapter(this, list);
@@ -129,7 +190,8 @@ public class ArticleActivity extends BaseActivity implements IMainActivity {
 				if (page < Integer.parseInt(myobj.get("pageTotal").toString())) {
 					loadmoreTextView.setVisibility(View.VISIBLE);
 				}
-			} else {
+			}
+			else {
 				loadmore_prgressbar.setVisibility(View.GONE);
 				adapter.loadMore(list);
 				if (page < Integer.parseInt(myobj.get("pageTotal").toString())) {
@@ -137,23 +199,20 @@ public class ArticleActivity extends BaseActivity implements IMainActivity {
 				}
 			}
 			listView.setOnItemClickListener(new OnItemClickListener() {
-				public void onItemClick(AdapterView<?> parent, View view,
-						int postion, long id) {
+				public void onItemClick(AdapterView<?> parent, View view, int postion, long id) {
 
-					String articleId = String.valueOf(adapter
-							.getItemId(postion));
+					String articleId = String.valueOf(adapter.getItemId(postion));
 					if (!"0".equals(articleId)) {
 						Intent intent = new Intent();
 						intent.putExtra("articleId", articleId);
-						intent.setClass(ArticleActivity.this,
-								ShowArticleActivity.class);
+						intent.setClass(ArticleActivity.this, ShowArticleActivity.class);
 						startActivity(intent);
 					}
 				}
 			});
-		} else {
-			Toast.makeText(ArticleActivity.this, R.string.request_timeout,
-					Toast.LENGTH_LONG).show();
+		}
+		else {
+			Toast.makeText(ArticleActivity.this, R.string.request_timeout, Toast.LENGTH_LONG).show();
 			progressBar.setVisibility(View.GONE);
 			loadmoreTextView.setVisibility(View.VISIBLE);
 		}
@@ -162,6 +221,7 @@ public class ArticleActivity extends BaseActivity implements IMainActivity {
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
+
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			isExit();
 		}
