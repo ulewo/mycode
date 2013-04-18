@@ -1,11 +1,9 @@
 package com.ulewo.ui;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,17 +13,14 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.ulewo.AppContext;
+import com.ulewo.AppException;
 import com.ulewo.R;
 import com.ulewo.adapter.BlogListAdapter;
-import com.ulewo.bean.Blog;
-import com.ulewo.bean.Task;
-import com.ulewo.enums.TaskType;
-import com.ulewo.logic.MainService;
-import com.ulewo.util.Constants;
+import com.ulewo.bean.BlogList;
 
-public class BlogActivity extends BaseActivity implements IMainActivity {
+public class BlogActivity extends BaseActivity {
 
 	private LinearLayout progressBar = null;
 
@@ -35,11 +30,17 @@ public class BlogActivity extends BaseActivity implements IMainActivity {
 
 	private int page = 1;
 
+	private boolean isRefresh = false;
+
 	private TextView loadmoreTextView = null;
 
 	private LinearLayout loadmore_prgressbar = null;
 
 	ListView listView = null;
+
+	private Handler handler = null;
+
+	private AppContext appContext;
 
 	private ImageButton refreshBtn = null;
 
@@ -52,18 +53,12 @@ public class BlogActivity extends BaseActivity implements IMainActivity {
 
 		super.onCreate(savedInstanceState);
 		super.setContentView(R.layout.article);
-		ExitApplication.getInstance().addActivity(this);
-		init();
-		Intent service = new Intent(this, MainService.class);
-		startService(service);
-
-		HashMap<String, Object> param = new HashMap<String, Object>(1);
-		param.put("page", 0);
-		Task task = new Task(TaskType.QUERYBLOGES, param, this);
-		MainService.newTask(task);
+		appContext = (AppContext) getApplication();
+		initView();
+		initData();
 	}
 
-	private void init() {
+	private void initView() {
 
 		TextView textView = (TextView) findViewById(R.id.main_head_title);
 		textView.setText(R.string.name_blog);
@@ -84,14 +79,8 @@ public class BlogActivity extends BaseActivity implements IMainActivity {
 
 				loadmoreTextView.setVisibility(View.GONE);
 				loadmore_prgressbar.setVisibility(View.VISIBLE);
-				Intent service = new Intent(BlogActivity.this,
-						MainService.class);
-				startService(service);
-				HashMap<String, Object> param = new HashMap<String, Object>(1);
-				param.put("page", ++page);
-				Task task = new Task(TaskType.QUERYBLOGES, param,
-						BlogActivity.this);
-				MainService.newTask(task);
+				++page;
+				initData();
 			}
 		});
 
@@ -103,63 +92,76 @@ public class BlogActivity extends BaseActivity implements IMainActivity {
 
 				progressBar.setVisibility(View.VISIBLE);
 				page = 1;
-				HashMap<String, Object> param = new HashMap<String, Object>(1);
-				param.put("page", page);
-				Task task = new Task(TaskType.QUERYBLOGES, param,
-						BlogActivity.this);
-				MainService.newTask(task);
+				isRefresh = true;
+				initData();
 			}
 		});
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public void refresh(Object... obj) {
+	private void initData() {
 
-		progressBar.setVisibility(View.GONE);
-		refreshBtn.clearAnimation();
-		HashMap<String, Object> myobj = (HashMap<String, Object>) obj[0];
-		if (Constants.RESULTCODE_SUCCESS.equals(String.valueOf(myobj
-				.get("result")))) {
-			List<Blog> list = (ArrayList<Blog>) myobj.get("list");
-			if (adapter == null || page == 1) {
-				adapter = new BlogListAdapter(this, list);
-				listView.setAdapter(adapter);
-				if (page < Integer.parseInt(myobj.get("pageTotal").toString())) {
-					loadmoreTextView.setVisibility(View.VISIBLE);
+		handler = new Handler() {
+			@Override
+			public void handleMessage(Message msg) {
+
+				progressBar.setVisibility(View.GONE);
+				if (msg.what != -1) {
+					BlogList list = (BlogList) msg.obj;
+					if (adapter == null || page == 1) {
+						adapter = new BlogListAdapter(BlogActivity.this, list.getBlogList());
+						listView.setAdapter(adapter);
+						if (page < msg.arg1) {
+							loadmoreTextView.setVisibility(View.VISIBLE);
+						}
+					}
+					else {
+						loadmore_prgressbar.setVisibility(View.GONE);
+						adapter.loadMore(list.getBlogList());
+						if (page < msg.arg1) {
+							loadmoreTextView.setVisibility(View.VISIBLE);
+						}
+					}
+					listView.setOnItemClickListener(new OnItemClickListener() {
+						public void onItemClick(AdapterView<?> parent, View view, int postion, long id) {
+
+							String articleId = String.valueOf(adapter.getItemId(postion));
+							if (!"0".equals(articleId)) {
+								Intent intent = new Intent();
+								intent.putExtra("articleId", articleId);
+								intent.setClass(BlogActivity.this, ShowArticleActivity.class);
+								startActivity(intent);
+							}
+						}
+					});
 				}
-			} else {
-
-				loadmore_prgressbar.setVisibility(View.GONE);
-				adapter.loadMore(list);
-				if (page < Integer.parseInt(myobj.get("pageTotal").toString())) {
+				else {
+					((AppException) msg.obj).makeToast(BlogActivity.this);
+					progressBar.setVisibility(View.GONE);
 					loadmoreTextView.setVisibility(View.VISIBLE);
 				}
 			}
-			listView.setOnItemClickListener(new OnItemClickListener() {
-				public void onItemClick(AdapterView<?> parent, View view,
-						int postion, long id) {
+		};
+		new Thread() {
+			@Override
+			public void run() {
 
-					String articleId = String.valueOf(adapter
-							.getItemId(postion));
-					if (!"0".equals(articleId)) {
-						Intent intent = new Intent();
-						intent.putExtra("articleId", articleId);
-						intent.setClass(BlogActivity.this,
-								ShowBlogActivity.class);
-						startActivity(intent);
-					}
+				Message msg = new Message();
+				try {
+					BlogList list = appContext.getBlogList(page, isRefresh);
+					msg.what = 0;
+					msg.obj = list;
 				}
-			});
-		} else {
-			Toast.makeText(BlogActivity.this, R.string.request_timeout,
-					Toast.LENGTH_LONG).show();
-			progressBar.setVisibility(View.GONE);
-			loadmoreTextView.setVisibility(View.VISIBLE);
-		}
+				catch (AppException e) {
+					msg.what = -1;
+					msg.obj = e;
+				}
+				handler.sendMessage(msg);
+			}
+		}.start();
 	}
 
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
+
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			isExit();
 		}

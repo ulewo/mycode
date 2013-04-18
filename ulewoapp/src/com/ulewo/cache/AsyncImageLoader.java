@@ -21,7 +21,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.StatFs;
 
-import com.ulewo.util.Tools;
+import com.ulewo.util.StringUtils;
 
 public class AsyncImageLoader {
 
@@ -42,7 +42,7 @@ public class AsyncImageLoader {
 
 	public Drawable loadDrawable(final String imageUrl, final ImageCallback imageCallback) {
 
-		final String fileName = Tools.convertUrlToFileName(imageUrl);
+		final String fileName = StringUtils.convertUrlToFileName(imageUrl);
 		// 从内存中读取
 		if (imageCache.containsKey(fileName)) {
 			SoftReference<Drawable> softReference = imageCache.get(fileName);
@@ -115,7 +115,7 @@ public class AsyncImageLoader {
 		if (FREE_SD_SPACE_NEEDED_TO_CACHE > freeSpaceOnSd()) {
 			return;
 		}
-		String filename = Tools.convertUrlToFileName(imageUrl);
+		String filename = StringUtils.convertUrlToFileName(imageUrl);
 		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
 			FileOutputStream fos = null;
 			try {
@@ -218,6 +218,5 @@ public class AsyncImageLoader {
 			}
 		}
 		return drawable;
-
 	}
 }

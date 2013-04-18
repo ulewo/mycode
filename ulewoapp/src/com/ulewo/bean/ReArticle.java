@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.ulewo.AppException;
+import com.ulewo.util.StringUtils;
 
 /**
  * @Title:
@@ -36,40 +40,6 @@ public class ReArticle {
 
 	private String atUserId;
 
-	public ReArticle(JSONObject json) {
-		try {
-			constructJson(json);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void constructJson(JSONObject json) throws Exception {
-		id = json.getInt("id");
-		pid = json.getInt("pid");
-		articleId = json.getInt("articleId");
-		reTime = json.getString("reTime") == null ? "" : json.getString(
-				"reTime").substring(0, 16);
-		content = json.getString("content");
-
-		authorIcon = json.getString("authorIcon");
-		authorName = json.getString("authorName");
-		authorid = json.getString("authorid");
-
-		atUserName = json.getString("atUserName");
-		atUserId = json.getString("atUserId");
-		JSONArray jsonArray = new JSONArray(String.valueOf(json
-				.get("childList")));
-		childList = new ArrayList<ReArticle>();
-		int jsonLength = jsonArray.length();
-		ReArticle reArticle = null;
-		for (int i = 0; i < jsonLength; i++) {
-			JSONObject obj = jsonArray.getJSONObject(i);
-			reArticle = new ReArticle(obj);
-			childList.add(reArticle);
-		}
-	}
-
 	public int getId() {
 
 		return id;
@@ -78,6 +48,16 @@ public class ReArticle {
 	public void setId(int id) {
 
 		this.id = id;
+	}
+
+	public Integer getPid() {
+
+		return pid;
+	}
+
+	public void setPid(Integer pid) {
+
+		this.pid = pid;
 	}
 
 	public int getArticleId() {
@@ -100,6 +80,16 @@ public class ReArticle {
 		this.content = content;
 	}
 
+	public String getAuthorIcon() {
+
+		return authorIcon;
+	}
+
+	public void setAuthorIcon(String authorIcon) {
+
+		this.authorIcon = authorIcon;
+	}
+
 	public String getAuthorid() {
 
 		return authorid;
@@ -108,16 +98,6 @@ public class ReArticle {
 	public void setAuthorid(String authorid) {
 
 		this.authorid = authorid;
-	}
-
-	public String getReTime() {
-
-		return reTime;
-	}
-
-	public void setReTime(String reTime) {
-
-		this.reTime = reTime;
 	}
 
 	public String getAuthorName() {
@@ -130,46 +110,73 @@ public class ReArticle {
 		this.authorName = authorName;
 	}
 
+	public String getReTime() {
+
+		return reTime;
+	}
+
+	public void setReTime(String reTime) {
+
+		this.reTime = reTime;
+	}
+
 	public List<ReArticle> getChildList() {
+
 		return childList;
 	}
 
 	public void setChildList(List<ReArticle> childList) {
+
 		this.childList = childList;
 	}
 
-	public String getAuthorIcon() {
-
-		return authorIcon;
-	}
-
-	public void setAuthorIcon(String authorIcon) {
-
-		this.authorIcon = authorIcon;
-	}
-
 	public String getAtUserName() {
+
 		return atUserName;
 	}
 
 	public void setAtUserName(String atUserName) {
+
 		this.atUserName = atUserName;
 	}
 
 	public String getAtUserId() {
+
 		return atUserId;
 	}
 
 	public void setAtUserId(String atUserId) {
+
 		this.atUserId = atUserId;
 	}
 
-	public Integer getPid() {
-		return pid;
-	}
+	public static ReArticle parse(JSONObject obj) throws AppException {
 
-	public void setPid(Integer pid) {
-		this.pid = pid;
+		try {
+			ReArticle reArticle = new ReArticle();
+			reArticle.setId(obj.getInt("id"));
+			reArticle.setPid(obj.getInt("pid"));
+			reArticle.setReTime(StringUtils.friendly_time(obj.getString("reTime")));
+			reArticle.setContent(obj.getString("content"));
+			reArticle.setAuthorName(obj.getString("authorName"));
+			reArticle.setReTime(StringUtils.friendly_time(obj.getString("postTime")));
+			reArticle.setArticleId(obj.getInt("articleId"));
+			reArticle.setAtUserId(obj.getString("atUserId"));
+			reArticle.setAtUserName(obj.getString("atUserName"));
+			reArticle.setAuthorIcon(obj.getString("authorIcon"));
+			JSONArray jsonArray = new JSONArray(obj.getString("childList"));
+			ArrayList<ReArticle> childList = new ArrayList<ReArticle>();
+			int jsonLength = jsonArray.length();
+			for (int i = 0; i < jsonLength; i++) {
+				JSONObject childObj = jsonArray.getJSONObject(i);
+				reArticle = ReArticle.parse(childObj);
+				childList.add(reArticle);
+			}
+			reArticle.setChildList(childList);
+			return reArticle;
+		}
+		catch (JSONException e) {
+			throw AppException.josn(e);
+		}
 	}
-
 }

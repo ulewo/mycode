@@ -9,6 +9,7 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TabHost;
 
+import com.ulewo.AppManager;
 import com.ulewo.R;
 
 public class MainActivity extends TabActivity {
@@ -29,7 +30,6 @@ public class MainActivity extends TabActivity {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		ExitApplication.getInstance().addActivity(this);
 		tabHost = getTabHost();
 
 		tabHost.addTab(tabHost.newTabSpec(TAG_ARTICLE).setIndicator(TAG_ARTICLE)
@@ -93,7 +93,7 @@ public class MainActivity extends TabActivity {
 
 			switch (which) {
 			case AlertDialog.BUTTON_POSITIVE:// "确认"按钮退出程序
-				ExitApplication.getInstance().exit();
+				AppManager.getAppManager().AppExit(MainActivity.this);
 				break;
 			case AlertDialog.BUTTON_NEGATIVE:// "取消"第二个按钮取消对话框
 				break;

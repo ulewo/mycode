@@ -3,10 +3,32 @@ package com.ulewo.ui;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.ulewo.AppManager;
+
 public class BaseActivity extends Activity {
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+
+		super.onCreate(savedInstanceState);
+
+		//添加Activity到堆栈
+		AppManager.getAppManager().addActivity(this);
+	}
+
+	@Override
+	protected void onDestroy() {
+
+		super.onDestroy();
+
+		//结束Activity&从堆栈中移除
+		AppManager.getAppManager().finishActivity(this);
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -49,7 +71,7 @@ public class BaseActivity extends Activity {
 
 			switch (which) {
 			case AlertDialog.BUTTON_POSITIVE:// "确认"按钮退出程序
-				ExitApplication.getInstance().exit();
+				AppManager.getAppManager().AppExit(BaseActivity.this);
 				break;
 			case AlertDialog.BUTTON_NEGATIVE:// "取消"第二个按钮取消对话框
 				break;

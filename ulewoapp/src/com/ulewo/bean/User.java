@@ -1,15 +1,21 @@
 package com.ulewo.bean;
 
+import java.io.Serializable;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 
-public class User {
+import com.ulewo.AppException;
+import com.ulewo.util.StringUtils;
+
+public class User implements Serializable {
 	private String userId; // 用户ID
 
 	private String userName; // 用户名
 
 	private String userLittleIcon; // 用户小图像
 
-	private String age; // 年龄
+	private int age; // 年龄
 
 	private String sex; // 性别
 
@@ -26,6 +32,8 @@ public class User {
 	private int mark; // 积分
 
 	private String sessionId;
+
+	private String password;
 
 	public String getPrevisitTime() {
 
@@ -67,12 +75,12 @@ public class User {
 		this.userLittleIcon = userLittleIcon;
 	}
 
-	public String getAge() {
+	public int getAge() {
 
 		return age;
 	}
 
-	public void setAge(String age) {
+	public void setAge(int age) {
 
 		this.age = age;
 	}
@@ -137,33 +145,52 @@ public class User {
 		this.mark = mark;
 	}
 
-	public User(JSONObject json) {
-		try {
-			constructJson(json);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	public String getSessionId() {
+
 		return sessionId;
 	}
 
 	public void setSessionId(String sessionId) {
+
 		this.sessionId = sessionId;
 	}
 
-	private void constructJson(JSONObject json) throws Exception {
-		userId = json.getString("userId");
-		userName = json.getString("userName");
-		userLittleIcon = json.getString("userLittleIcon");
-		age = json.getString("age");
-		sex = json.getString("sex");
-		characters = json.getString("characters");
-		address = json.getString("address");
-		work = json.getString("work");
-		registerTime = json.getString("registerTime");
-		previsitTime = json.getString("previsitTime");
-		sessionId = json.getString("sessionId");
+	public String getPassword() {
+
+		return password;
+	}
+
+	public void setPassword(String password) {
+
+		this.password = password;
+	}
+
+	public static User parse(JSONObject jsonobj) throws AppException {
+
+		try {
+			JSONObject obj = null;
+			if (!jsonobj.isNull("user")) {
+				obj = new JSONObject(jsonobj.getString("user"));
+			}
+			else {
+				obj = jsonobj;
+			}
+			User user = new User();
+			user.setUserId(obj.getString("userId"));
+			user.setUserName(obj.getString("userName"));
+			user.setUserLittleIcon(obj.getString("userLittleIcon"));
+			user.setAge(obj.getInt("age"));
+			user.setRegisterTime(StringUtils.friendly_time(obj.getString("registerTime")));
+			user.setAddress(obj.getString("address"));
+			user.setMark(obj.getInt("mark"));
+			user.setSex(obj.getString("sex"));
+			user.setWork(obj.getString("work"));
+			user.setCharacters(obj.getString("characters"));
+			user.setSessionId(obj.getString("sessionId"));
+			return user;
+		}
+		catch (JSONException e) {
+			throw AppException.josn(e);
+		}
 	}
 }

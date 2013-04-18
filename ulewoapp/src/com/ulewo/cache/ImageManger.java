@@ -16,7 +16,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import com.ulewo.util.Tools;
+import com.ulewo.util.StringUtils;
 
 public class ImageManger {
 	Map<String, SoftReference<Bitmap>> imgCache = null;
@@ -24,32 +24,37 @@ public class ImageManger {
 	private Context context;
 
 	public ImageManger(Context context) {
+
 		this.context = context;
 		imgCache = new HashMap<String, SoftReference<Bitmap>>();
 	}
 
 	public boolean contians(String url) {
+
 		return imgCache.containsKey(url);
 	}
 
 	public Bitmap getFromCache(String url) {
+
 		Bitmap bitmap = null;
 		bitmap = this.getFromCache(url);
 		if (null == bitmap) {
 			bitmap = getFromMapCashe(url);
-		} else {
+		}
+		else {
 			bitmap = getFromFile(url);
 		}
 		return bitmap;
 	}
 
 	/**
-	 * 从缓存中取
+	 * 锟接伙拷锟斤拷锟斤拷取
 	 * 
 	 * @param url
 	 * @return
 	 */
 	private Bitmap getFromMapCashe(String url) {
+
 		Bitmap bitmap = null;
 		SoftReference<Bitmap> ref = null;
 		synchronized (this) {
@@ -62,25 +67,29 @@ public class ImageManger {
 	}
 
 	/**
-	 * 从文件中取
+	 * 浠庢枃浠朵腑鑾峰彇
 	 * 
 	 * @param url
 	 * @return
 	 */
 	private Bitmap getFromFile(String url) {
-		String fileName = Tools.encodeByMD5(url);
+
+		String fileName = StringUtils.encodeByMD5(url);
 		FileInputStream in = null;
 		try {
 			in = context.openFileInput(fileName);
 			return BitmapFactory.decodeStream(in);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 			return null;
-		} finally {
+		}
+		finally {
 			if (null != in) {
 				try {
 					in.close();
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 
 				}
 			}
@@ -92,8 +101,7 @@ public class ImageManger {
 		InputStream in = null;
 		try {
 			URL url = new URL(urlstr);
-			HttpsURLConnection connection = (HttpsURLConnection) url
-					.openConnection();
+			HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
 			in = connection.getInputStream();
 			String fileName = writer2File(urlstr, in);
 			return BitmapFactory.decodeFile(fileName);
@@ -101,13 +109,15 @@ public class ImageManger {
 			 * return Drawable.createFromStream(connection.getInputStream(),
 			 * "image");
 			 */
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 
 	public Bitmap safeGet(String url) throws Exception {
+
 		Bitmap bitmap = this.getFromFile(url);
 		if (null != bitmap) {
 			synchronized (this) {
@@ -119,32 +129,36 @@ public class ImageManger {
 	}
 
 	public String writer2File(String fileName, InputStream in) {
+
 		BufferedInputStream bis = null;
 		BufferedOutputStream bos = null;
 		try {
 			bis = new BufferedInputStream(in);
-			bos = new BufferedOutputStream(context.openFileOutput(fileName,
-					Context.MODE_PRIVATE));
+			bos = new BufferedOutputStream(context.openFileOutput(fileName, Context.MODE_PRIVATE));
 			byte[] buffer = new byte[1024];
 			int length;
 			while ((length = bis.read(buffer)) != -1) {
 				bos.write(buffer, 0, length);
 			}
 			bos.flush();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 
-		} finally {
+		}
+		finally {
 			if (null != bis) {
 				try {
 					bis.close();
-				} catch (IOException e) {
+				}
+				catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
 			if (null != bos) {
 				try {
 					bos.close();
-				} catch (IOException e) {
+				}
+				catch (IOException e) {
 					e.printStackTrace();
 				}
 			}

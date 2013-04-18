@@ -1,26 +1,23 @@
 package com.ulewo.ui;
 
-import java.util.HashMap;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Html;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.ulewo.AppContext;
+import com.ulewo.AppException;
 import com.ulewo.R;
 import com.ulewo.bean.Article;
-import com.ulewo.bean.Task;
-import com.ulewo.enums.TaskType;
 import com.ulewo.handler.MxgsaTagHandler;
-import com.ulewo.logic.MainService;
-import com.ulewo.util.Constants;
 
-public class ShowArticleActivity extends BaseActivity implements IMainActivity {
+public class ShowArticleActivity extends BaseActivity {
 
 	private LinearLayout progressBar = null;
 
@@ -30,24 +27,47 @@ public class ShowArticleActivity extends BaseActivity implements IMainActivity {
 
 	private TextView recommentCount = null;
 
+	private TextView showView = null;
+
+	private TextView titleView = null;
+
+	private TextView authorView = null;
+
+	private TextView timeView = null;
+
+	private TextView recountView = null;
+
 	private int articleId = 0;
+
+	private Handler handler = null;
+
+	private AppContext appContext;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
 		super.setContentView(R.layout.show_article);
-		ExitApplication.getInstance().addActivity(this);
+		appContext = (AppContext) getApplication();
+		initView();
+		initData();
+	}
+
+	private void initView() {
+
 		progressBar = (LinearLayout) super.findViewById(R.id.myprogressbar);
 		backBtn = (Button) super.findViewById(R.id.head_back);
 		backBtn.setVisibility(View.VISIBLE);
 
-		recommentBtn = (LinearLayout) super
-				.findViewById(R.id.article_recomment_btn);
+		recommentBtn = (LinearLayout) super.findViewById(R.id.article_recomment_btn);
 		recommentBtn.setVisibility(View.VISIBLE);
 
-		recommentCount = (TextView) super
-				.findViewById(R.id.article_recomment_count);
+		recommentCount = (TextView) super.findViewById(R.id.article_recomment_count);
+		showView = (TextView) findViewById(R.id.show_article_id);
+		titleView = (TextView) findViewById(R.id.show_article_title);
+		authorView = (TextView) findViewById(R.id.article_author);
+		timeView = (TextView) findViewById(R.id.article_time);
+		recountView = (TextView) findViewById(R.id.article_recount);
 
 		backBtn.setOnClickListener(new OnClickListener() {
 			@Override
@@ -60,58 +80,61 @@ public class ShowArticleActivity extends BaseActivity implements IMainActivity {
 		recommentBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View paramView) {
+
 				Intent intent = new Intent();
 				intent.putExtra("id", articleId);
-				intent.setClass(ShowArticleActivity.this,
-						ArticleCommentActivity.class);
+				intent.setClass(ShowArticleActivity.this, ReArticleActivity.class);
 				startActivity(intent);
 			}
 		});
-
 		TextView textView = (TextView) findViewById(R.id.main_head_title);
 		textView.setText(R.string.show_article);
 
+	}
+
+	private void initData() {
+
 		Intent intent = getIntent();
 		Bundle bunde = intent.getExtras();
-		String articleId = bunde.getString("articleId");
-		Intent service = new Intent(this, MainService.class);
-		startService(service);
-		HashMap<String, Object> param = new HashMap<String, Object>(1);
-		param.put("articleId", articleId);
-		Task task = new Task(TaskType.SHOWARTICLE, param, this);
-		MainService.newTask(task);
+		articleId = Integer.parseInt(bunde.getString("articleId"));
+
+		handler = new Handler() {
+			@Override
+			public void handleMessage(Message msg) {
+
+				progressBar.setVisibility(View.GONE);
+				if (msg.what != -1) {
+					Article article = (Article) msg.obj;
+					recommentCount.setText(article.getReNumber() + "");
+					titleView.setText(article.getTitle());
+					authorView.setText(article.getAuthorName());
+					timeView.setText(article.getPostTime());
+					recountView.setText(article.getReNumber() + "");
+					showView.setText(Html.fromHtml(article.getContent(), null, new MxgsaTagHandler(
+							ShowArticleActivity.this)));
+				}
+				else {
+					((AppException) msg.obj).makeToast(ShowArticleActivity.this);
+					progressBar.setVisibility(View.GONE);
+				}
+			}
+		};
+		new Thread() {
+			@Override
+			public void run() {
+
+				Message msg = new Message();
+				try {
+					Article article = appContext.getArticle(articleId);
+					msg.what = 0;
+					msg.obj = article;
+				}
+				catch (AppException e) {
+					msg.what = -1;
+					msg.obj = e;
+				}
+				handler.sendMessage(msg);
+			}
+		}.start();
 	}
-
-	@Override
-	public void refresh(Object... obj) {
-
-		// 隐藏loding
-		progressBar.setVisibility(View.GONE);
-		// 显示正文
-		// contentlayout.setVisibility(View.VISIBLE);
-		HashMap<String, Object> myobj = (HashMap<String, Object>) obj[0];
-		if (null != myobj.get("article")
-				&& Constants.RESULTCODE_SUCCESS.equals(String.valueOf(myobj
-						.get("result")))) {
-			TextView showView = (TextView) findViewById(R.id.show_article_id);
-			TextView titleView = (TextView) findViewById(R.id.show_article_title);
-			TextView authorView = (TextView) findViewById(R.id.article_author);
-			TextView timeView = (TextView) findViewById(R.id.article_time);
-			TextView recountView = (TextView) findViewById(R.id.article_recount);
-			Article article = (Article) myobj.get("article");
-			articleId = article.getId();
-			recommentCount.setText(article.getReNumber() + "");
-			titleView.setText(article.getTitle());
-			authorView.setText(article.getAuthorName());
-			timeView.setText(article.getPostTime());
-			recountView.setText(article.getReNumber());
-			showView.setText(Html.fromHtml(article.getContent(), null,
-					new MxgsaTagHandler(this)));
-		} else {
-			Toast.makeText(ShowArticleActivity.this, R.string.request_timeout,
-					Toast.LENGTH_LONG).show();
-			progressBar.setVisibility(View.GONE);
-		}
-	}
-
 }

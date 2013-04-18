@@ -1,8 +1,9 @@
 package com.ulewo.bean;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.ulewo.util.Constants;
+import com.ulewo.AppException;
 
 public class Group {
 
@@ -12,11 +13,13 @@ public class Group {
 
 	private String gName;
 
-	private String gUserName;
+	private String gAuthorName;
 
-	private String gMember;
+	private String gAuthorId;
 
-	private String gArticleCount;
+	private int gMember;
+
+	private int gArticleCount;
 
 	public String getGroupIcon() {
 
@@ -48,53 +51,61 @@ public class Group {
 		this.gName = gName;
 	}
 
-	public String getgUserName() {
+	public String getgAuthorName() {
 
-		return gUserName;
+		return gAuthorName;
 	}
 
-	public void setgUserName(String gUserName) {
+	public void setgAuthorName(String gAuthorName) {
 
-		this.gUserName = gUserName;
+		this.gAuthorName = gAuthorName;
 	}
 
-	public String getgMember() {
+	public String getgAuthorId() {
+
+		return gAuthorId;
+	}
+
+	public void setgAuthorId(String gAuthorId) {
+
+		this.gAuthorId = gAuthorId;
+	}
+
+	public int getgMember() {
 
 		return gMember;
 	}
 
-	public void setgMember(String gMember) {
+	public void setgMember(int gMember) {
 
 		this.gMember = gMember;
 	}
 
-	public String getgArticleCount() {
+	public int getgArticleCount() {
 
 		return gArticleCount;
 	}
 
-	public void setgArticleCount(String gArticleCount) {
+	public void setgArticleCount(int gArticleCount) {
 
 		this.gArticleCount = gArticleCount;
 	}
 
-	public Group(JSONObject json) {
+	public static Group parse(JSONObject obj) throws AppException {
 
 		try {
-			constructJson(json);
-		} catch (Exception e) {
-			e.printStackTrace();
+			Group group = new Group();
+			group.setGid(obj.getString("gid"));
+			group.setgName(obj.getString("gName"));
+			group.setgArticleCount(obj.getInt("gArticleCount"));
+			group.setgAuthorId(obj.getString("gAuthorId"));
+			group.setgAuthorName(obj.getString("gAuthorName"));
+			group.setgMember(obj.getInt("gMember"));
+			group.setGroupIcon(obj.getString("groupIcon"));
+			return group;
 		}
-	}
-
-	private void constructJson(JSONObject json) throws Exception {
-
-		groupIcon = Constants.BASEURL + "/upload/"
-				+ json.getString("groupIcon");
-		gid = json.getString("id");
-		gName = json.getString("groupName");
-		gUserName = json.getString("authorName");
-		gMember = json.getString("members");
-		gArticleCount = json.getString("topicCount");
+		catch (JSONException e) {
+			throw AppException.josn(e);
+		}
 	}
 }

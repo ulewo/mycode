@@ -1,6 +1,10 @@
 package com.ulewo.bean;
 
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.ulewo.AppException;
+import com.ulewo.util.StringUtils;
 
 public class Blog {
 	private int id;
@@ -80,39 +84,47 @@ public class Blog {
 	}
 
 	public int getReNumber() {
+
 		return reNumber;
 	}
 
 	public void setReNumber(int reNumber) {
+
 		this.reNumber = reNumber;
 	}
 
 	public int getReadNumber() {
+
 		return readNumber;
 	}
 
 	public void setReadNumber(int readNumber) {
+
 		this.readNumber = readNumber;
 	}
 
-	public Blog(JSONObject json) {
+	public static Blog parse(JSONObject jsonobj) throws AppException {
 
 		try {
-			constructJson(json);
-		} catch (Exception e) {
-			e.printStackTrace();
+			JSONObject obj = null;
+			if (!jsonobj.isNull("blog")) {
+				obj = new JSONObject(jsonobj.getString("blog"));
+			}
+			else {
+				obj = jsonobj;
+			}
+			Blog blog = new Blog();
+			blog.setId(obj.getInt("id"));
+			blog.setTitle(obj.getString("title"));
+			blog.setAuthorId(obj.getString("authorId"));
+			blog.setAuthorName(obj.getString("authorName"));
+			blog.setPostTime(StringUtils.friendly_time(obj.getString("postTime")));
+			blog.setReNumber(obj.getInt("reNumber"));
+			blog.setReadNumber(obj.getInt("readNumber"));
+			return blog;
 		}
-	}
-
-	private void constructJson(JSONObject json) throws Exception {
-
-		id = json.getInt("id");
-		title = json.getString("title");
-		content = json.getString("content");
-		postTime = json.getString("postTime") == null ? "" : json.getString(
-				"postTime").substring(0, 16);
-		reNumber = json.getInt("reCount");
-		authorName = json.getString("userName");
-		authorId = json.getString("userId");
+		catch (JSONException e) {
+			throw AppException.josn(e);
+		}
 	}
 }

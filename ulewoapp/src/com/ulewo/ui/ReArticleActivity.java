@@ -4,35 +4,31 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ulewo.AppContext;
 import com.ulewo.AppException;
 import com.ulewo.R;
-import com.ulewo.adapter.GroupListAdapter;
-import com.ulewo.bean.Group;
-import com.ulewo.bean.GroupList;
-import com.ulewo.cache.AsyncImageLoader;
+import com.ulewo.adapter.ArticleCommentListAdapter;
+import com.ulewo.bean.ReArticleList;
 
-public class GroupActivity extends BaseActivity {
+public class ReArticleActivity extends BaseActivity {
 
-	private LinearLayout progressBar = null;
-
-	private GroupListAdapter adapter = null;
+	private ArticleCommentListAdapter adapter = null;
 
 	private View loadMoreView = null;
 
 	private int page = 1;
-
-	private boolean isRefresh;
 
 	private TextView loadmoreTextView = null;
 
@@ -42,52 +38,54 @@ public class GroupActivity extends BaseActivity {
 
 	private ImageButton refreshBtn = null;
 
-	private static final int RESULTCODE_SUCCESS = 200;
+	private Button backBtn = null;
 
-	private static final int RESULTCODE_FAIL = 400;
+	private LinearLayout progressBar = null;
 
-	private String gid;
+	private int articleId = 0;
 
-	private AppContext appContext;
+	private EditText recomment_input = null;
 
-	private Handler handler = null;
+	private Button subrecomment = null;
+
+	Handler handler = null;
+
+	AppContext appContext = null;
+
+	boolean isRefresh = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-		super.setContentView(R.layout.article);
-		appContext = (AppContext) getApplication();
+		super.setContentView(R.layout.article_recomment);
 		initView();
 		initData();
 	}
 
 	private void initView() {
 
-		TextView textView = (TextView) findViewById(R.id.main_head_title);
-		textView.setText(R.string.name_wowo);
+		Intent intent = getIntent();
+		Bundle bundle = intent.getExtras();
+		articleId = Integer.parseInt(String.valueOf(bundle.get("id")));
 
-		progressBar = (LinearLayout) findViewById(R.id.myprogressbar);
-
-		loadMoreView = View.inflate(this, R.layout.loadmore, null);
-
-		listView = (ListView) findViewById(R.id.article_list_view_id);
-		listView.addFooterView(loadMoreView);
-
-		loadmore_prgressbar = (LinearLayout) findViewById(R.id.loadmore_progressbar);
-		loadmoreTextView = (TextView) findViewById(R.id.loadmoretextview);
-		loadmoreTextView.setVisibility(View.GONE);
-		loadmoreTextView.setOnClickListener(new View.OnClickListener() {
+		progressBar = (LinearLayout) super.findViewById(R.id.myprogressbar);
+		backBtn = (Button) super.findViewById(R.id.head_back);
+		backBtn.setVisibility(View.VISIBLE);
+		backBtn.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v) {
+			public void onClick(View paramView) {
 
-				loadmoreTextView.setVisibility(View.GONE);
-				loadmore_prgressbar.setVisibility(View.VISIBLE);
-				++page;
-				initData();
+				ReArticleActivity.this.finish();
 			}
 		});
 
+		loadMoreView = View.inflate(this, R.layout.loadmore, null);
+		listView = (ListView) super.findViewById(R.id.recoment_list_view_id);
+		listView.addFooterView(loadMoreView);
+
+		TextView textView = (TextView) findViewById(R.id.main_head_title);
+		textView.setText(R.string.recomment_tit_web);
 		refreshBtn = (ImageButton) findViewById(R.id.head_refresh);
 		refreshBtn.setVisibility(View.VISIBLE);
 		refreshBtn.setOnClickListener(new OnClickListener() {
@@ -100,6 +98,33 @@ public class GroupActivity extends BaseActivity {
 				initData();
 			}
 		});
+		loadmore_prgressbar = (LinearLayout) findViewById(R.id.loadmore_progressbar);
+		loadmoreTextView = (TextView) findViewById(R.id.loadmoretextview);
+		loadmoreTextView.setVisibility(View.GONE);
+		loadmoreTextView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+				loadmoreTextView.setVisibility(View.GONE);
+				loadmore_prgressbar.setVisibility(View.VISIBLE);
+				page++;
+				initData();
+			}
+		});
+		recomment_input = (EditText) super.findViewById(R.id.recomment_input);
+		subrecomment = (Button) super.findViewById(R.id.subrecomment);
+		subrecomment.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View paramView) {
+
+				if (null == AppContext.getSessionId()) {
+					Toast.makeText(ReArticleActivity.this, R.string.pleaselogin, Toast.LENGTH_LONG).show();
+					return;
+				}
+
+			}
+		});
 	}
 
 	private void initData() {
@@ -110,10 +135,9 @@ public class GroupActivity extends BaseActivity {
 
 				progressBar.setVisibility(View.GONE);
 				if (msg.what != -1) {
-					GroupList list = (GroupList) msg.obj;
+					ReArticleList list = (ReArticleList) msg.obj;
 					if (adapter == null || page == 1) {
-						adapter = new GroupListAdapter(GroupActivity.this, list.getGroupList(), new AsyncImageLoader(),
-								listView);
+						adapter = new ArticleCommentListAdapter(ReArticleActivity.this, list.getReArticleList());
 						listView.setAdapter(adapter);
 						if (page < msg.arg1) {
 							loadmoreTextView.setVisibility(View.VISIBLE);
@@ -121,7 +145,7 @@ public class GroupActivity extends BaseActivity {
 					}
 					else {
 						loadmore_prgressbar.setVisibility(View.GONE);
-						adapter.loadMore(list.getGroupList());
+						adapter.loadMore(list.getReArticleList());
 						if (page < msg.arg1) {
 							loadmoreTextView.setVisibility(View.VISIBLE);
 						}
@@ -129,29 +153,18 @@ public class GroupActivity extends BaseActivity {
 					listView.setOnItemClickListener(new OnItemClickListener() {
 						public void onItemClick(AdapterView<?> parent, View view, int postion, long id) {
 
-							Group group = (Group) adapter.getItem(postion);
-							String gid = group.getGid();
-							String groupIcon = group.getGroupIcon();
-							String gName = group.getgName();
-							String gUserName = group.getgAuthorName();
-							int gMember = group.getgMember();
-							int gArticleCount = group.getgArticleCount();
-							if (!"0".equals(gid)) {
+							String articleId = String.valueOf(adapter.getItemId(postion));
+							if (!"0".equals(articleId)) {
 								Intent intent = new Intent();
-								intent.putExtra("gid", gid);
-								intent.putExtra("groupIcon", groupIcon);
-								intent.putExtra("gName", gName);
-								intent.putExtra("gUserName", gUserName);
-								intent.putExtra("gMember", gMember);
-								intent.putExtra("gArticleCount", gArticleCount);
-								intent.setClass(GroupActivity.this, ShowGroupActivity.class);
+								intent.putExtra("articleId", articleId);
+								intent.setClass(ReArticleActivity.this, ShowArticleActivity.class);
 								startActivity(intent);
 							}
 						}
 					});
 				}
 				else {
-					((AppException) msg.obj).makeToast(GroupActivity.this);
+					((AppException) msg.obj).makeToast(ReArticleActivity.this);
 					progressBar.setVisibility(View.GONE);
 					loadmoreTextView.setVisibility(View.VISIBLE);
 				}
@@ -163,7 +176,7 @@ public class GroupActivity extends BaseActivity {
 
 				Message msg = new Message();
 				try {
-					GroupList list = appContext.getGroupList(page, isRefresh);
+					ReArticleList list = appContext.getReArticleList(articleId, page, isRefresh);
 					msg.what = 0;
 					msg.obj = list;
 				}
@@ -174,13 +187,5 @@ public class GroupActivity extends BaseActivity {
 				handler.sendMessage(msg);
 			}
 		}.start();
-	}
-
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			isExit();
-		}
-		return super.onKeyDown(keyCode, event);
 	}
 }

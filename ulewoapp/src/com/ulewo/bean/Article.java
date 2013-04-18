@@ -6,6 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.ulewo.AppException;
+import com.ulewo.util.StringUtils;
 
 public class Article implements Serializable {
 	private static final long serialVersionUID = 2393143064912211800L;
@@ -106,20 +107,29 @@ public class Article implements Serializable {
 		this.authorId = authorId;
 	}
 
-	public static Article parse(JSONObject obj) throws AppException {
+	public static Article parse(JSONObject jsonobj) throws AppException {
+
 		try {
+			JSONObject obj = null;
+			if (!jsonobj.isNull("article")) {
+				obj = new JSONObject(jsonobj.getString("article"));
+			}
+			else {
+				obj = jsonobj;
+			}
 			Article article = new Article();
 			article.setId(obj.getInt("id"));
 			article.setTitle(obj.getString("title"));
 			article.setAuthorId(obj.getString("authorId"));
 			article.setAuthorName(obj.getString("authorName"));
-			article.setPostTime(obj.getString("postTime").substring(0, 16));
+			article.setPostTime(StringUtils.friendly_time(obj.getString("postTime")));
 			article.setReNumber(obj.getInt("reNumber"));
+			article.setContent(obj.getString("content"));
 			article.setReadNumber(obj.getInt("readNumber"));
 			return article;
-		} catch (JSONException e) {
+		}
+		catch (JSONException e) {
 			throw AppException.josn(e);
 		}
-
 	}
 }

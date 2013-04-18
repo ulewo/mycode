@@ -1,18 +1,12 @@
 package com.ulewo.api;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.util.HashMap;
-import java.util.Map;
 
 import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
 import org.apache.commons.httpclient.HttpClient;
@@ -31,14 +25,14 @@ import org.apache.http.util.EncodingUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.os.Environment;
-
 import com.ulewo.AppException;
+import com.ulewo.bean.Article;
 import com.ulewo.bean.ArticleList;
-import com.ulewo.bean.RequestResult;
-import com.ulewo.enums.PostType;
-import com.ulewo.enums.ResultEnum;
-import com.ulewo.util.Tools;
+import com.ulewo.bean.Blog;
+import com.ulewo.bean.BlogList;
+import com.ulewo.bean.GroupList;
+import com.ulewo.bean.LoginUser;
+import com.ulewo.bean.ReArticleList;
 
 public class ApiClient {
 	private static final int HTTP_200 = 200;
@@ -59,30 +53,23 @@ public class ApiClient {
 
 	private final static int RETRY_TIME = 3;
 
-	private static final String BASEURL = "http://192.168.2.224:8080/ulewo";
+	private static final String BASEURL = "http://192.168.0.224:80/ulewo";
 
 	private static final String HOST = BASEURL;
 
-	private static final String BASEURL_ARTICLELIST = BASEURL
-			+ "/android/fetchArticle.jspx";
+	private static final String BASEURL_ARTICLELIST = BASEURL + "/android/fetchArticle.jspx";
 
-	private static final String BASEUR_SHOWARTICLE = BASEURL
-			+ "/android/showArticle.jspx";
+	private static final String BASEUR_SHOWARTICLE = BASEURL + "/android/showArticle.jspx";
 
-	private static final String BASEUR_BLOGLIST = BASEURL
-			+ "/android/fetchBlog.jspx";
+	private static final String BASEUR_BLOGLIST = BASEURL + "/android/fetchBlog.jspx";
 
-	private static final String BASEUR_SHOWBLOG = BASEURL
-			+ "/android/showBlog.jspx";
+	private static final String BASEUR_SHOWBLOG = BASEURL + "/android/showBlog.jspx";
 
-	private static final String BASEUR_GROUPLIST = BASEURL
-			+ "/android/fetchWoWo.jspx";
+	private static final String BASEUR_GROUPLIST = BASEURL + "/android/fetchWoWo.jspx";
 
-	private static final String BASEUR_GROUPARTICLELIST = BASEURL
-			+ "/android/fetchArticleByGid.jspx";
+	private static final String BASEUR_GROUPARTICLELIST = BASEURL + "/android/fetchArticleByGid.jspx";
 
-	private static final String BASEUR_RECOMMENT = BASEURL
-			+ "/android/fetchReComment.jspx";
+	private static final String BASEUR_RECOMMENT = BASEURL + "/android/fetchReComment.jspx";
 
 	private static final String BASEUR_LOGIN = BASEURL + "/android/login.jspx";
 
@@ -94,196 +81,156 @@ public class ApiClient {
 
 	private static final int NoPage = 0;
 
-	public static RequestResult getUlewoInfo(String path, int page,
-			boolean isCache, PostType postType, HashMap<String, Object> params,
-			HashMap<String, File> files) {
-
-		RequestResult requestResult = new RequestResult();
-		String fileName = path;
-		if (path.contains("=")) {
-			fileName = Tools.encodeByMD5(path.substring(0,
-					path.lastIndexOf("=")));
-		}
-		// 如果page==0读取缓存
-		if (page == 0 && isCache) {
-			requestResult = readFromSdk(fileName);
-			if (requestResult != null) {
-				return requestResult;
-			}
-		}
-		if (null == requestResult) {
-			requestResult = new RequestResult();
-		}
-		InputStream is = null;
-		BufferedInputStream bis = null;
-		try {
-			// 获取返回的数据
-			if (postType == PostType.GET) {
-				is = http_get(path);
-			} else {
-				is = http_post(path, params, files);
-			}
-			if (null == is) {
-				throw new Exception();
-			}
-			bis = new BufferedInputStream(is);
-			// 用ByteArrayBuffer缓存
-			ByteArrayBuffer baf = new ByteArrayBuffer(50);
-			int current = 0;
-			while ((current = bis.read()) != -1) {
-				baf.append((byte) current);
-			}
-			String myString = EncodingUtils.getString(baf.toByteArray(),
-					"UTF-8");
-			// 保存缓存到sdk
-			if ((page == 1 || page == 0) && isCache) {
-				SaveDateThread thread = new SaveDateThread(fileName,
-						baf.toByteArray());
-				Thread mythread = new Thread(thread);
-				mythread.start();
-			}
-			JSONObject jsonObj = new JSONObject(myString);
-			requestResult.setResultEnum(ResultEnum.SUCCESS);
-			requestResult.setJsonObject(jsonObj);
-		} catch (Exception e) {
-			requestResult.setResultEnum(ResultEnum.ERROR);
-		} finally {
-			if (bis != null) {
-				try {
-					bis.close();
-				} catch (IOException e) {
-					bis = null;
-				}
-				bis = null;
-			}
-			if (is != null) {
-				try {
-					is.close();
-				} catch (IOException e) {
-					is = null;
-				}
-				bis = null;
-			}
-		}
-		return requestResult;
-	}
-
-	static class SaveDateThread implements Runnable {
-		private String url;
-
-		private byte[] data;
-
-		public SaveDateThread(String url, byte[] data) {
-
-			this.url = url;
-			this.data = data;
-		}
-
-		@Override
-		public void run() {
-
-			if (Environment.getExternalStorageState().equals(
-					Environment.MEDIA_MOUNTED)) {
-				OutputStream out = null;
-				try {
-					String sDir = Environment.getExternalStorageDirectory()
-							+ SEPARATOR + ULEWO;
-					File destDir = new File(sDir);
-					if (!destDir.exists()) {
-						destDir.mkdirs();
-					}
-					File file = new File(sDir, url);
-					if (!file.exists()) {
-						file.createNewFile();
-					}
-					out = new FileOutputStream(file);
-					out.write(data);
-					out.flush();
-					out.close();
-				} catch (Exception e) {
-					e.printStackTrace();
-				} finally {
-					try {
-						if (null != out) {
-							out.close();
-						}
-					} catch (Exception e) {
-					}
-				}
-			}
-
-		}
-	}
-
-	private static RequestResult readFromSdk(String fileName) {
-
-		RequestResult requestResult = null;
-		if (Environment.getExternalStorageState().equals(
-				Environment.MEDIA_MOUNTED)) {
-
-			BufferedReader read = null;
-			InputStreamReader fos = null;
-			FileInputStream filein = null;
-			StringBuffer sb = new StringBuffer();
-			try {
-				String sDir = Environment.getExternalStorageDirectory()
-						+ SEPARATOR + ULEWO;
-				File file = new File(sDir, fileName);
-				if (!file.exists()) {
-					return null;
-				}
-				filein = new FileInputStream(file);
-				fos = new InputStreamReader(filein);
-				read = new BufferedReader(fos);
-				String str = null;
-				while ((str = read.readLine()) != null) {
-					sb.append(str);
-				}
-				JSONObject jsonObj = new JSONObject(String.valueOf(sb));
-				requestResult = new RequestResult();
-				requestResult.setResultEnum(ResultEnum.SUCCESS);
-				requestResult.setJsonObject(jsonObj);
-			} catch (Exception e) {
-				requestResult = null;
-				e.printStackTrace();
-			} finally {
-				try {
-					if (null != filein) {
-						filein.close();
-					}
-				} catch (Exception e) {
-				}
-				try {
-					if (null != fos) {
-						fos.close();
-					}
-				} catch (Exception e) {
-				}
-				try {
-					if (null != read) {
-						read.close();
-					}
-				} catch (Exception e) {
-				}
-			}
-		}
-		return requestResult;
-	}
-
-	public static ArticleList getArticleList(final int pageIndex)
-			throws AppException {
+	/**
+	 * 
+	 * description: 文章列表
+	 * @param pageIndex
+	 * @return
+	 * @throws AppException
+	 * @author luohl
+	 */
+	public static ArticleList getArticleList(final int pageIndex) throws AppException {
 
 		String newUrl = BASEURL_ARTICLELIST + "?page=" + pageIndex;
 		try {
-			return ArticleList
-					.parse(convertInputStream2JSONObject(http_get(newUrl)));
-		} catch (AppException e) {
+			return ArticleList.parse(convertInputStream2JSONObject(http_get(newUrl)));
+		}
+		catch (AppException e) {
 			throw e;
 		}
 	}
 
-	private static JSONObject convertInputStream2JSONObject(InputStream in)
-			throws AppException {
+	/**
+	 * 
+	 * description: 获取文章详情
+	 * @param articleId
+	 * @return
+	 * @throws AppException
+	 * @author luohl
+	 */
+	public static Article getArticle(final int articleId) throws AppException {
+
+		String newUrl = BASEUR_SHOWARTICLE + "?articleId=" + articleId;
+		try {
+			return Article.parse(convertInputStream2JSONObject(http_get(newUrl)));
+		}
+		catch (AppException e) {
+			throw e;
+		}
+	}
+
+	/**
+	 * 
+	 * description:获取评论
+	 * @param articleId
+	 * @param pageIndex
+	 * @return
+	 * @throws AppException
+	 * @author luohl
+	 */
+	public static ReArticleList getReArticleList(final int articleId, int pageIndex) throws AppException {
+
+		String newUrl = BASEUR_RECOMMENT + "?page=" + pageIndex + "articleId=" + articleId;
+		try {
+			return ReArticleList.parse(convertInputStream2JSONObject(http_get(newUrl)));
+		}
+		catch (AppException e) {
+			throw e;
+		}
+	}
+
+	/**
+	 * 
+	 * description: 博客列表
+	 * @param pageIndex
+	 * @return
+	 * @throws AppException
+	 * @author luohl
+	 */
+	public static BlogList getBlogList(final int pageIndex) throws AppException {
+
+		String newUrl = BASEUR_BLOGLIST + "?page=" + pageIndex;
+		try {
+			return BlogList.parse(convertInputStream2JSONObject(http_get(newUrl)));
+		}
+		catch (AppException e) {
+			throw e;
+		}
+	}
+
+	/**
+	 * 
+	 * description: 博客详情
+	 * @param articleId
+	 * @return
+	 * @throws AppException
+	 * @author luohl
+	 */
+	public static Blog getBlog(final int articleId) throws AppException {
+
+		String newUrl = BASEUR_SHOWBLOG + "?articleId=" + articleId;
+		try {
+			return Blog.parse(convertInputStream2JSONObject(http_get(newUrl)));
+		}
+		catch (AppException e) {
+			throw e;
+		}
+	}
+
+	/**
+	 * 
+	 * description: 群组列表
+	 * @param pageIdex
+	 * @return
+	 * @throws AppException
+	 * @author luohl
+	 */
+	public static GroupList getGroupList(final int pageIdex) throws AppException {
+
+		String newUrl = BASEUR_GROUPLIST + "?page=" + pageIdex;
+		try {
+			return GroupList.parse(convertInputStream2JSONObject(http_get(newUrl)));
+		}
+		catch (AppException e) {
+			throw e;
+		}
+	}
+
+	/**
+	 * 
+	 * description: 群组文章
+	 * @param pageIndex
+	 * @param gid
+	 * @return
+	 * @throws AppException
+	 * @author luohl
+	 */
+	public static ArticleList getGroupArticleList(final int pageIndex, final String gid) throws AppException {
+
+		String newUrl = BASEUR_GROUPARTICLELIST + "?page=" + pageIndex + "&gid=" + gid;
+		try {
+			return ArticleList.parse(convertInputStream2JSONObject(http_get(newUrl)));
+		}
+		catch (AppException e) {
+			throw e;
+		}
+	}
+
+	public static LoginUser login(String userName, String password) throws AppException {
+
+		String newUrl = BASEUR_LOGIN;
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("userName", userName);
+		params.put("password", password);
+		try {
+			return LoginUser.parse(convertInputStream2JSONObject(http_post(newUrl, params, null)));
+		}
+		catch (AppException e) {
+			throw e;
+		}
+	}
+
+	private static JSONObject convertInputStream2JSONObject(InputStream in) throws AppException {
 
 		JSONObject jsonObj = null;
 		BufferedInputStream bis = null;
@@ -295,27 +242,31 @@ public class ApiClient {
 			while ((current = bis.read()) != -1) {
 				baf.append((byte) current);
 			}
-			String myString = EncodingUtils.getString(baf.toByteArray(),
-					"UTF-8");
+			String myString = EncodingUtils.getString(baf.toByteArray(), "UTF-8");
 			jsonObj = new JSONObject(myString);
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			e.printStackTrace();
 			AppException.io(e);
-		} catch (JSONException e) {
+		}
+		catch (JSONException e) {
 			e.printStackTrace();
 			AppException.josn(e);
-		} finally {
+		}
+		finally {
 			if (null != in) {
 				try {
 					in.close();
-				} catch (IOException e) {
+				}
+				catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
 			if (null != bis) {
 				try {
 					bis.close();
-				} catch (IOException e) {
+				}
+				catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
@@ -346,36 +297,42 @@ public class ApiClient {
 				}
 				responseBody = httpGet.getResponseBodyAsString();
 				break;
-			} catch (HttpException e) {
+			}
+			catch (HttpException e) {
 				time++;
 				if (time < RETRY_TIME) {
 					try {
 						Thread.sleep(1000);
-					} catch (InterruptedException e1) {
+					}
+					catch (InterruptedException e1) {
 					}
 					continue;
 				}
 				// 发生致命的异常，可能是协议不对或者返回的内容有问题
 				e.printStackTrace();
 				throw AppException.http(e);
-			} catch (IOException e) {
+			}
+			catch (IOException e) {
 				time++;
 				if (time < RETRY_TIME) {
 					try {
 						Thread.sleep(1000);
-					} catch (InterruptedException e1) {
+					}
+					catch (InterruptedException e1) {
 					}
 					continue;
 				}
 				// 发生网络异常
 				e.printStackTrace();
 				throw AppException.network(e);
-			} finally {
+			}
+			finally {
 				// 释放连接
 				httpGet.releaseConnection();
 				httpClient = null;
 			}
-		} while (time < RETRY_TIME);
+		}
+		while (time < RETRY_TIME);
 		return new ByteArrayInputStream(responseBody.getBytes());
 	}
 
@@ -407,8 +364,7 @@ public class ApiClient {
 	 * @param files
 	 * @throws AppException
 	 */
-	private static InputStream http_post(String url,
-			Map<String, Object> params, Map<String, File> files)
+	private static InputStream http_post(String url, HashMap<String, Object> params, HashMap<String, File> files)
 			throws AppException {
 
 		// System.out.println("post_url==> "+url);
@@ -419,21 +375,20 @@ public class ApiClient {
 		PostMethod httpPost = null;
 
 		// post表单参数处理
-		int length = (params == null ? 0 : params.size())
-				+ (files == null ? 0 : files.size());
+		int length = (params == null ? 0 : params.size()) + (files == null ? 0 : files.size());
 		Part[] parts = new Part[length];
 		int i = 0;
 		if (params != null)
 			for (String name : params.keySet()) {
-				parts[i++] = new StringPart(name, String.valueOf(params
-						.get(name)), UTF_8);
+				parts[i++] = new StringPart(name, String.valueOf(params.get(name)), UTF_8);
 				// System.out.println("post_key==> "+name+"    value==>"+String.valueOf(params.get(name)));
 			}
 		if (files != null)
 			for (String file : files.keySet()) {
 				try {
 					parts[i++] = new FilePart(file, files.get(file));
-				} catch (FileNotFoundException e) {
+				}
+				catch (FileNotFoundException e) {
 					e.printStackTrace();
 				}
 				// System.out.println("post_key_file==> "+file);
@@ -445,8 +400,7 @@ public class ApiClient {
 			try {
 				httpClient = getHttpClient();
 				httpPost = getHttpPost(url);
-				httpPost.setRequestEntity(new MultipartRequestEntity(parts,
-						httpPost.getParams()));
+				httpPost.setRequestEntity(new MultipartRequestEntity(parts, httpPost.getParams()));
 				int statusCode = httpClient.executeMethod(httpPost);
 				if (statusCode != HttpStatus.SC_OK) {
 					throw AppException.http(new HttpException());
@@ -454,36 +408,42 @@ public class ApiClient {
 				responseBody = httpPost.getResponseBodyAsString();
 				// System.out.println("XMLDATA=====>"+responseBody);
 				break;
-			} catch (HttpException e) {
+			}
+			catch (HttpException e) {
 				time++;
 				if (time < RETRY_TIME) {
 					try {
 						Thread.sleep(1000);
-					} catch (InterruptedException e1) {
+					}
+					catch (InterruptedException e1) {
 					}
 					continue;
 				}
 				// 发生致命的异常，可能是协议不对或者返回的内容有问题
 				e.printStackTrace();
 				throw AppException.http(e);
-			} catch (IOException e) {
+			}
+			catch (IOException e) {
 				time++;
 				if (time < RETRY_TIME) {
 					try {
 						Thread.sleep(1000);
-					} catch (InterruptedException e1) {
+					}
+					catch (InterruptedException e1) {
 					}
 					continue;
 				}
 				// 发生网络异常
 				e.printStackTrace();
 				throw AppException.network(e);
-			} finally {
+			}
+			finally {
 				// 释放连接
 				httpPost.releaseConnection();
 				httpClient = null;
 			}
-		} while (time < RETRY_TIME);
+		}
+		while (time < RETRY_TIME);
 
 		return new ByteArrayInputStream(responseBody.getBytes());
 	}
@@ -492,17 +452,13 @@ public class ApiClient {
 
 		HttpClient httpClient = new HttpClient();
 		// 设置 HttpClient 接收 Cookie,用与浏览器一样的策略
-		httpClient.getParams().setCookiePolicy(
-				CookiePolicy.BROWSER_COMPATIBILITY);
+		httpClient.getParams().setCookiePolicy(CookiePolicy.BROWSER_COMPATIBILITY);
 		// 设置 默认的超时重试处理策略
-		httpClient.getParams().setParameter(HttpMethodParams.RETRY_HANDLER,
-				new DefaultHttpMethodRetryHandler());
+		httpClient.getParams().setParameter(HttpMethodParams.RETRY_HANDLER, new DefaultHttpMethodRetryHandler());
 		// 设置 连接超时时间
-		httpClient.getHttpConnectionManager().getParams()
-				.setConnectionTimeout(TIMEOUT_CONNECTION);
+		httpClient.getHttpConnectionManager().getParams().setConnectionTimeout(TIMEOUT_CONNECTION);
 		// 设置 读数据超时时间
-		httpClient.getHttpConnectionManager().getParams()
-				.setSoTimeout(TIMEOUT_SOCKET);
+		httpClient.getHttpConnectionManager().getParams().setSoTimeout(TIMEOUT_SOCKET);
 		// 设置 字符集
 		httpClient.getParams().setContentCharset(UTF_8);
 		return httpClient;
