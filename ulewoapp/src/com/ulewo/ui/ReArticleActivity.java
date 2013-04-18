@@ -50,6 +50,8 @@ public class ReArticleActivity extends BaseActivity {
 
 	Handler handler = null;
 
+	Handler subCommentHandler = null;
+
 	AppContext appContext = null;
 
 	boolean isRefresh = false;
@@ -189,6 +191,24 @@ public class ReArticleActivity extends BaseActivity {
 					msg.obj = e;
 				}
 				handler.sendMessage(msg);
+			}
+		}.start();
+	}
+
+	private void subComment(final String content) {
+		subCommentHandler = new Handler() {
+
+			@Override
+			public void handleMessage(Message msg) {
+
+			}
+		};
+
+		new Thread() {
+
+			@Override
+			public void run() {
+
 			}
 		}.start();
 	}

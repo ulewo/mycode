@@ -25,6 +25,7 @@ import org.apache.http.util.EncodingUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.ulewo.AppContext;
 import com.ulewo.AppException;
 import com.ulewo.bean.Article;
 import com.ulewo.bean.ArticleList;
@@ -32,7 +33,9 @@ import com.ulewo.bean.Blog;
 import com.ulewo.bean.BlogList;
 import com.ulewo.bean.GroupList;
 import com.ulewo.bean.LoginUser;
+import com.ulewo.bean.ReArticle;
 import com.ulewo.bean.ReArticleList;
+import com.ulewo.util.Constants;
 
 public class ApiClient {
 	private static final int HTTP_200 = 200;
@@ -77,6 +80,9 @@ public class ApiClient {
 
 	private static final String BASEUR_RECOMMENT = BASEURL
 			+ "/android/fetchReComment.jspx";
+
+	private static final String BASEUR_SUBRECOMMENT = BASEURL
+			+ "/android/addArticleComment.jspx";
 
 	private static final String BASEUR_LOGIN = BASEURL + "/android/login.jspx";
 
@@ -139,14 +145,31 @@ public class ApiClient {
 	 * @throws AppException
 	 * @author luohl
 	 */
-	public static ReArticleList getReArticleList(final int articleId,
-			int pageIndex) throws AppException {
+	public static ReArticleList getReArticleList(int articleId, int pageIndex)
+			throws AppException {
 
 		String newUrl = BASEUR_RECOMMENT + "?page=" + pageIndex + "&articleId="
 				+ articleId;
 		try {
 			return ReArticleList
 					.parse(convertInputStream2JSONObject(http_get(newUrl)));
+		} catch (AppException e) {
+			throw e;
+		}
+	}
+
+	public static ReArticle subReArticle(String content, int articleId)
+			throws AppException {
+		String newUrl = BASEUR_SUBRECOMMENT;
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("content", content);
+		params.put("articleId", articleId);
+		params.put(Constants.SESSIONID, AppContext.getSessionId());
+		params.put(Constants.USERID, AppContext.getUserId());
+		params.put(Constants.PASSWORD, AppContext.getPassword());
+		try {
+			return ReArticle.parse(convertInputStream2JSONObject(http_post(
+					newUrl, params, null)));
 		} catch (AppException e) {
 			throw e;
 		}
