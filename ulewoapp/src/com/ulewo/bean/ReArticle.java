@@ -156,10 +156,12 @@ public class ReArticle {
 			ReArticle reArticle = new ReArticle();
 			reArticle.setId(obj.getInt("id"));
 			reArticle.setPid(obj.getInt("pid"));
-			reArticle.setReTime(StringUtils.friendly_time(obj.getString("reTime")));
+			reArticle.setReTime(StringUtils.friendly_time(obj
+					.getString("reTime")));
 			reArticle.setContent(obj.getString("content"));
 			reArticle.setAuthorName(obj.getString("authorName"));
-			reArticle.setReTime(StringUtils.friendly_time(obj.getString("postTime")));
+			reArticle.setReTime(StringUtils.friendly_time(obj
+					.getString("reTime")));
 			reArticle.setArticleId(obj.getInt("articleId"));
 			reArticle.setAtUserId(obj.getString("atUserId"));
 			reArticle.setAtUserName(obj.getString("atUserName"));
@@ -174,8 +176,7 @@ public class ReArticle {
 			}
 			reArticle.setChildList(childList);
 			return reArticle;
-		}
-		catch (JSONException e) {
+		} catch (JSONException e) {
 			throw AppException.josn(e);
 		}
 	}

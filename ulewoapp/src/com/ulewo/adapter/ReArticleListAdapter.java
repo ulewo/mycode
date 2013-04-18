@@ -16,14 +16,14 @@ import com.ulewo.R;
 import com.ulewo.bean.ReArticle;
 import com.ulewo.handler.MxgsaTagHandler;
 
-public class ArticleCommentListAdapter extends BaseAdapter {
+public class ReArticleListAdapter extends BaseAdapter {
 
 	private List<ReArticle> list = null;
 	private LayoutInflater mInflater;
 	private LayoutInflater subflater;
 	private Context context;
 
-	public ArticleCommentListAdapter(Context context, List<ReArticle> list) {
+	public ReArticleListAdapter(Context context, List<ReArticle> list) {
 		this.list = list;
 		this.context = context;
 		mInflater = LayoutInflater.from(context);
@@ -77,8 +77,7 @@ public class ArticleCommentListAdapter extends BaseAdapter {
 		TextPaint paint = recomment_username.getPaint();
 		paint.setFakeBoldText(true);
 		recomment_username.setText(reArticle.getAuthorName());
-		recomment_posttime.setText(reArticle.getReTime() == null ? ""
-				: reArticle.getReTime().substring(0, 16));
+		recomment_posttime.setText(reArticle.getReTime());
 		recomment_con.setText(Html.fromHtml(reArticle.getContent(), null,
 				new MxgsaTagHandler(context)));
 

@@ -19,12 +19,12 @@ import android.widget.Toast;
 import com.ulewo.AppContext;
 import com.ulewo.AppException;
 import com.ulewo.R;
-import com.ulewo.adapter.ArticleCommentListAdapter;
+import com.ulewo.adapter.ReArticleListAdapter;
 import com.ulewo.bean.ReArticleList;
 
 public class ReArticleActivity extends BaseActivity {
 
-	private ArticleCommentListAdapter adapter = null;
+	private ReArticleListAdapter adapter = null;
 
 	private View loadMoreView = null;
 
@@ -59,6 +59,7 @@ public class ReArticleActivity extends BaseActivity {
 
 		super.onCreate(savedInstanceState);
 		super.setContentView(R.layout.article_recomment);
+		appContext = (AppContext) getApplication();
 		initView();
 		initData();
 	}
@@ -119,7 +120,8 @@ public class ReArticleActivity extends BaseActivity {
 			public void onClick(View paramView) {
 
 				if (null == AppContext.getSessionId()) {
-					Toast.makeText(ReArticleActivity.this, R.string.pleaselogin, Toast.LENGTH_LONG).show();
+					Toast.makeText(ReArticleActivity.this,
+							R.string.pleaselogin, Toast.LENGTH_LONG).show();
 					return;
 				}
 
@@ -137,13 +139,13 @@ public class ReArticleActivity extends BaseActivity {
 				if (msg.what != -1) {
 					ReArticleList list = (ReArticleList) msg.obj;
 					if (adapter == null || page == 1) {
-						adapter = new ArticleCommentListAdapter(ReArticleActivity.this, list.getReArticleList());
+						adapter = new ReArticleListAdapter(
+								ReArticleActivity.this, list.getReArticleList());
 						listView.setAdapter(adapter);
 						if (page < msg.arg1) {
 							loadmoreTextView.setVisibility(View.VISIBLE);
 						}
-					}
-					else {
+					} else {
 						loadmore_prgressbar.setVisibility(View.GONE);
 						adapter.loadMore(list.getReArticleList());
 						if (page < msg.arg1) {
@@ -151,19 +153,21 @@ public class ReArticleActivity extends BaseActivity {
 						}
 					}
 					listView.setOnItemClickListener(new OnItemClickListener() {
-						public void onItemClick(AdapterView<?> parent, View view, int postion, long id) {
+						public void onItemClick(AdapterView<?> parent,
+								View view, int postion, long id) {
 
-							String articleId = String.valueOf(adapter.getItemId(postion));
+							String articleId = String.valueOf(adapter
+									.getItemId(postion));
 							if (!"0".equals(articleId)) {
 								Intent intent = new Intent();
 								intent.putExtra("articleId", articleId);
-								intent.setClass(ReArticleActivity.this, ShowArticleActivity.class);
+								intent.setClass(ReArticleActivity.this,
+										ShowArticleActivity.class);
 								startActivity(intent);
 							}
 						}
 					});
-				}
-				else {
+				} else {
 					((AppException) msg.obj).makeToast(ReArticleActivity.this);
 					progressBar.setVisibility(View.GONE);
 					loadmoreTextView.setVisibility(View.VISIBLE);
@@ -176,11 +180,11 @@ public class ReArticleActivity extends BaseActivity {
 
 				Message msg = new Message();
 				try {
-					ReArticleList list = appContext.getReArticleList(articleId, page, isRefresh);
+					ReArticleList list = appContext.getReArticleList(articleId,
+							page, isRefresh);
 					msg.what = 0;
 					msg.obj = list;
-				}
-				catch (AppException e) {
+				} catch (AppException e) {
 					msg.what = -1;
 					msg.obj = e;
 				}
