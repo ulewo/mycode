@@ -6,7 +6,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.ulewo.AppException;
-import com.ulewo.util.StringUtils;
 
 public class User implements Serializable {
 	private String userId; // 用户ID
@@ -180,7 +179,7 @@ public class User implements Serializable {
 			user.setUserName(obj.getString("userName"));
 			user.setUserLittleIcon(obj.getString("userLittleIcon"));
 			user.setAge(obj.getInt("age"));
-			user.setRegisterTime(StringUtils.friendly_time(obj.getString("registerTime")));
+			user.setRegisterTime(obj.getString("registerTime"));
 			user.setAddress(obj.getString("address"));
 			user.setMark(obj.getInt("mark"));
 			user.setSex(obj.getString("sex"));

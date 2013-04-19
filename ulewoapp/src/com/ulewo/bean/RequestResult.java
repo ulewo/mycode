@@ -1,10 +1,12 @@
 package com.ulewo.bean;
 
+import java.io.Serializable;
+
 import org.json.JSONObject;
 
 import com.ulewo.enums.ResultEnum;
 
-public class RequestResult {
+public class RequestResult implements Serializable {
 	private ResultEnum resultEnum;
 
 	private JSONObject jsonObject;

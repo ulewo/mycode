@@ -23,30 +23,18 @@ import com.ulewo.bean.BlogList;
 public class BlogActivity extends BaseActivity {
 
 	private LinearLayout progressBar = null;
-
-	private BlogListAdapter adapter = null;
-
 	private View loadMoreView = null;
-
-	private int page = 1;
-
-	private boolean isRefresh = false;
-
 	private TextView loadmoreTextView = null;
-
 	private LinearLayout loadmore_prgressbar = null;
-
 	ListView listView = null;
-
-	private Handler handler = null;
-
-	private AppContext appContext;
-
 	private ImageButton refreshBtn = null;
 
-	private static final int RESULTCODE_SUCCESS = 200;
+	private int page = 1;
+	private boolean isRefresh = false;
 
-	private static final int RESULTCODE_FAIL = 400;
+	private BlogListAdapter adapter = null;
+	private Handler handler = null;
+	private AppContext appContext;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,15 +52,14 @@ public class BlogActivity extends BaseActivity {
 		textView.setText(R.string.name_blog);
 
 		progressBar = (LinearLayout) findViewById(R.id.myprogressbar);
-
 		loadMoreView = View.inflate(this, R.layout.loadmore, null);
 
 		listView = (ListView) findViewById(R.id.article_list_view_id);
 		listView.addFooterView(loadMoreView);
 
+		//加载更多
 		loadmore_prgressbar = (LinearLayout) findViewById(R.id.loadmore_progressbar);
 		loadmoreTextView = (TextView) findViewById(R.id.loadmoretextview);
-
 		loadmoreTextView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -84,6 +71,7 @@ public class BlogActivity extends BaseActivity {
 			}
 		});
 
+		//刷新按钮
 		refreshBtn = (ImageButton) findViewById(R.id.head_refresh);
 		refreshBtn.setVisibility(View.VISIBLE);
 		refreshBtn.setOnClickListener(new OnClickListener() {
@@ -110,14 +98,14 @@ public class BlogActivity extends BaseActivity {
 					if (adapter == null || page == 1) {
 						adapter = new BlogListAdapter(BlogActivity.this, list.getBlogList());
 						listView.setAdapter(adapter);
-						if (page < msg.arg1) {
+						if (page < list.getPageTotal()) {
 							loadmoreTextView.setVisibility(View.VISIBLE);
 						}
 					}
 					else {
 						loadmore_prgressbar.setVisibility(View.GONE);
 						adapter.loadMore(list.getBlogList());
-						if (page < msg.arg1) {
+						if (page < list.getPageTotal()) {
 							loadmoreTextView.setVisibility(View.VISIBLE);
 						}
 					}
@@ -138,6 +126,7 @@ public class BlogActivity extends BaseActivity {
 					((AppException) msg.obj).makeToast(BlogActivity.this);
 					progressBar.setVisibility(View.GONE);
 					loadmoreTextView.setVisibility(View.VISIBLE);
+					loadmore_prgressbar.setVisibility(View.GONE);
 				}
 			}
 		};

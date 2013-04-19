@@ -1,11 +1,13 @@
 package com.ulewo.bean;
 
+import java.io.Serializable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.ulewo.AppException;
 
-public class Group {
+public class Group implements Serializable {
 
 	private String groupIcon;
 

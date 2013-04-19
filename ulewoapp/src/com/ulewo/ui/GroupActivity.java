@@ -25,31 +25,18 @@ import com.ulewo.cache.AsyncImageLoader;
 public class GroupActivity extends BaseActivity {
 
 	private LinearLayout progressBar = null;
-
-	private GroupListAdapter adapter = null;
-
 	private View loadMoreView = null;
-
-	private int page = 1;
-
-	private boolean isRefresh;
-
 	private TextView loadmoreTextView = null;
-
 	private LinearLayout loadmore_prgressbar = null;
-
 	ListView listView = null;
-
 	private ImageButton refreshBtn = null;
 
-	private static final int RESULTCODE_SUCCESS = 200;
-
-	private static final int RESULTCODE_FAIL = 400;
-
+	private int page = 1;
+	private boolean isRefresh;
 	private String gid;
 
+	private GroupListAdapter adapter = null;
 	private AppContext appContext;
-
 	private Handler handler = null;
 
 	@Override
@@ -68,9 +55,7 @@ public class GroupActivity extends BaseActivity {
 		textView.setText(R.string.name_wowo);
 
 		progressBar = (LinearLayout) findViewById(R.id.myprogressbar);
-
 		loadMoreView = View.inflate(this, R.layout.loadmore, null);
-
 		listView = (ListView) findViewById(R.id.article_list_view_id);
 		listView.addFooterView(loadMoreView);
 
@@ -115,14 +100,14 @@ public class GroupActivity extends BaseActivity {
 						adapter = new GroupListAdapter(GroupActivity.this, list.getGroupList(), new AsyncImageLoader(),
 								listView);
 						listView.setAdapter(adapter);
-						if (page < msg.arg1) {
+						if (page < list.getPageTotal()) {
 							loadmoreTextView.setVisibility(View.VISIBLE);
 						}
 					}
 					else {
 						loadmore_prgressbar.setVisibility(View.GONE);
 						adapter.loadMore(list.getGroupList());
-						if (page < msg.arg1) {
+						if (page < list.getPageTotal()) {
 							loadmoreTextView.setVisibility(View.VISIBLE);
 						}
 					}
@@ -154,6 +139,7 @@ public class GroupActivity extends BaseActivity {
 					((AppException) msg.obj).makeToast(GroupActivity.this);
 					progressBar.setVisibility(View.GONE);
 					loadmoreTextView.setVisibility(View.VISIBLE);
+					loadmore_prgressbar.setVisibility(View.GONE);
 				}
 			}
 		};

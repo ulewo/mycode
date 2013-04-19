@@ -22,27 +22,26 @@ import com.ulewo.bean.ArticleList;
 
 public class ArticleActivity extends BaseActivity {
 
+	//进度条
 	private LinearLayout progressBar = null;
-
-	private ArticleListAdapter adapter = null;
-
+	//加载更多
 	private View loadMoreView = null;
-
-	private int page = 1;
-
+	//加载更多按钮
 	private TextView loadmoreTextView = null;
-
+	//加载更多进度条
 	private LinearLayout loadmore_prgressbar = null;
-
-	ListView listView = null;
-
+	//刷新按钮
 	private ImageButton refreshBtn = null;
 
-	private Handler handler = null;
-
-	private AppContext appContext;
-
+	//全局页码
+	private int page = 1;
+	//全局变量是否刷新
 	boolean isRefresh = false;
+
+	ListView listView = null;
+	private ArticleListAdapter adapter = null;
+	private Handler handler = null;
+	private AppContext appContext;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,12 +59,12 @@ public class ArticleActivity extends BaseActivity {
 		textView.setText(R.string.name_article);
 
 		progressBar = (LinearLayout) findViewById(R.id.myprogressbar);
+		listView = (ListView) findViewById(R.id.article_list_view_id);
 
 		loadMoreView = View.inflate(this, R.layout.loadmore, null);
-
-		listView = (ListView) findViewById(R.id.article_list_view_id);
 		listView.addFooterView(loadMoreView);
 
+		//要先讲加载更多添加到listView中在获取，不然获取不到。
 		loadmore_prgressbar = (LinearLayout) findViewById(R.id.loadmore_progressbar);
 		loadmoreTextView = (TextView) findViewById(R.id.loadmoretextview);
 		loadmoreTextView.setVisibility(View.GONE);
@@ -79,7 +78,6 @@ public class ArticleActivity extends BaseActivity {
 				initData();
 			}
 		});
-
 		refreshBtn = (ImageButton) findViewById(R.id.head_refresh);
 		refreshBtn.setVisibility(View.VISIBLE);
 		refreshBtn.setOnClickListener(new OnClickListener() {
@@ -106,14 +104,14 @@ public class ArticleActivity extends BaseActivity {
 					if (adapter == null || page == 1) {
 						adapter = new ArticleListAdapter(ArticleActivity.this, list.getArticleList());
 						listView.setAdapter(adapter);
-						if (page < msg.arg1) {
+						if (page < list.getPageTotal()) {
 							loadmoreTextView.setVisibility(View.VISIBLE);
 						}
 					}
 					else {
 						loadmore_prgressbar.setVisibility(View.GONE);
 						adapter.loadMore(list.getArticleList());
-						if (page < msg.arg1) {
+						if (page < list.getPageTotal()) {
 							loadmoreTextView.setVisibility(View.VISIBLE);
 						}
 					}
@@ -134,6 +132,7 @@ public class ArticleActivity extends BaseActivity {
 					((AppException) msg.obj).makeToast(ArticleActivity.this);
 					progressBar.setVisibility(View.GONE);
 					loadmoreTextView.setVisibility(View.VISIBLE);
+					loadmore_prgressbar.setVisibility(View.GONE);
 				}
 			}
 		};

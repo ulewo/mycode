@@ -67,7 +67,7 @@ public class StringUtils {
 	 * @param sdate
 	 * @return
 	 */
-	public static String friendly_time(String sdate) {
+	public static String friendly_times(String sdate) {
 
 		Date time = toDate(sdate);
 		if (time == null) {

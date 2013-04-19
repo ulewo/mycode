@@ -1,5 +1,6 @@
 package com.ulewo.bean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +9,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.ulewo.AppException;
-import com.ulewo.util.StringUtils;
 
 /**
  * @Title:
@@ -17,7 +17,7 @@ import com.ulewo.util.StringUtils;
  * @date 2012-3-30
  * @version V1.0
  */
-public class ReArticle {
+public class ReArticle implements Serializable {
 	private int id;
 
 	private Integer pid;
@@ -156,12 +156,9 @@ public class ReArticle {
 			ReArticle reArticle = new ReArticle();
 			reArticle.setId(obj.getInt("id"));
 			reArticle.setPid(obj.getInt("pid"));
-			reArticle.setReTime(StringUtils.friendly_time(obj
-					.getString("reTime")));
+			reArticle.setReTime(obj.getString("reTime"));
 			reArticle.setContent(obj.getString("content"));
 			reArticle.setAuthorName(obj.getString("authorName"));
-			reArticle.setReTime(StringUtils.friendly_time(obj
-					.getString("reTime")));
 			reArticle.setArticleId(obj.getInt("articleId"));
 			reArticle.setAtUserId(obj.getString("atUserId"));
 			reArticle.setAtUserName(obj.getString("atUserName"));
@@ -176,7 +173,8 @@ public class ReArticle {
 			}
 			reArticle.setChildList(childList);
 			return reArticle;
-		} catch (JSONException e) {
+		}
+		catch (JSONException e) {
 			throw AppException.josn(e);
 		}
 	}

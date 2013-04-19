@@ -9,7 +9,7 @@ public class Constants {
 
 	public static final String BASEURL = "http://ulewo.cloudfoundry.com";
 
-	public static final String USERID = "userId";
+	public static final String USERNAME = "userName";
 
 	public static final String PASSWORD = "password";
 

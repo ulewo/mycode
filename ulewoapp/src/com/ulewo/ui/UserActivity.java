@@ -116,7 +116,7 @@ public class UserActivity extends BaseActivity {
 			@Override
 			public void onClick(View paramView) {
 
-				login(AppContext.getUserId(), AppContext.getPassword());
+				login(AppContext.getUserName(), AppContext.getPassword());
 			}
 		});
 	}
@@ -229,7 +229,7 @@ public class UserActivity extends BaseActivity {
 
 				Message msg = new Message();
 				try {
-					LoginUser loginUser = appContext.login(appContext.getUserId(), appContext.getPassword(), false);
+					LoginUser loginUser = appContext.login(appContext.getUserName(), appContext.getPassword(), false);
 					msg.what = 0;
 					msg.obj = loginUser;
 				}

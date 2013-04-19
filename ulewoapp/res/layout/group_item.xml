@@ -2,18 +2,25 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="10dp"
+    android:paddingLeft="5dp"
+    android:paddingTop="5dp"
     android:paddingBottom="5dp"
     android:orientation="horizontal">
+	<LinearLayout 
+		android:layout_width="56px"
+    	android:layout_height="56px"
+    	android:id="@+id/wowo_icon_p"
+    	android:padding="3px"
+    	android:background="@drawable/mini_avatar_shadow">
 	<ImageView 
 		android:layout_width="50px"
     	android:layout_height="50px"
-    	android:layout_marginTop="5dp"
     	android:textSize="@dimen/size_13"
     	android:src="@drawable/icon"
 		android:id="@+id/wowo_icon"/>
+	</LinearLayout>
 	<LinearLayout 
-		android:layout_toRightOf="@id/wowo_icon"
+		android:layout_toRightOf="@id/wowo_icon_p"
 		android:layout_width="wrap_content"
     	android:layout_height="wrap_content"
     	android:layout_marginLeft="10dp"

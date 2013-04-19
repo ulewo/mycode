@@ -1,12 +1,13 @@
 package com.ulewo.bean;
 
+import java.io.Serializable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.ulewo.AppException;
-import com.ulewo.util.StringUtils;
 
-public class Blog {
+public class Blog implements Serializable {
 	private int id;
 
 	private String title;
@@ -118,7 +119,7 @@ public class Blog {
 			blog.setTitle(obj.getString("title"));
 			blog.setAuthorId(obj.getString("authorId"));
 			blog.setAuthorName(obj.getString("authorName"));
-			blog.setPostTime(StringUtils.friendly_time(obj.getString("postTime")));
+			blog.setPostTime(obj.getString("postTime"));
 			blog.setReNumber(obj.getInt("reNumber"));
 			blog.setReadNumber(obj.getInt("readNumber"));
 			return blog;

@@ -27,27 +27,18 @@ import com.ulewo.util.StringUtils;
 public class ShowGroupActivity extends BaseActivity {
 
 	private LinearLayout progressBar = null;
-
-	private ArticleListAdapter adapter = null;
-
 	private View loadMoreView = null;
-
 	private TextView loadmoreTextView = null;
-
 	private LinearLayout loadmore_prgressbar = null;
-
 	ListView listView = null;
-
 	private ImageButton refreshBtn = null;
 
-	private String gid = "";
-
+	private String gid;
 	private int page = 1;
-
 	private boolean isRefresh;
 
 	private AppContext appContext;
-
+	private ArticleListAdapter adapter = null;
 	private Handler handler;
 
 	@Override
@@ -100,9 +91,7 @@ public class ShowGroupActivity extends BaseActivity {
 		articleView.setText(gArticleCount + "");
 
 		progressBar = (LinearLayout) findViewById(R.id.myprogressbar);
-
 		loadMoreView = View.inflate(this, R.layout.loadmore, null);
-
 		listView = (ListView) findViewById(R.id.article_list_view_id);
 		listView.addFooterView(loadMoreView);
 
@@ -146,14 +135,14 @@ public class ShowGroupActivity extends BaseActivity {
 					if (adapter == null || page == 1) {
 						adapter = new ArticleListAdapter(ShowGroupActivity.this, list.getArticleList());
 						listView.setAdapter(adapter);
-						if (page < msg.arg1) {
+						if (page < list.getPageTotal()) {
 							loadmoreTextView.setVisibility(View.VISIBLE);
 						}
 					}
 					else {
 						loadmore_prgressbar.setVisibility(View.GONE);
 						adapter.loadMore(list.getArticleList());
-						if (page < msg.arg1) {
+						if (page < list.getPageTotal()) {
 							loadmoreTextView.setVisibility(View.VISIBLE);
 						}
 					}
@@ -174,6 +163,7 @@ public class ShowGroupActivity extends BaseActivity {
 					((AppException) msg.obj).makeToast(ShowGroupActivity.this);
 					progressBar.setVisibility(View.GONE);
 					loadmoreTextView.setVisibility(View.VISIBLE);
+					loadmore_prgressbar.setVisibility(View.GONE);
 				}
 			}
 		};

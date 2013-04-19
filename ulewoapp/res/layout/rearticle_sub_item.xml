@@ -9,19 +9,20 @@
     android:paddingBottom="5dp"
     android:orientation="vertical"
     android:background="@drawable/widget_sub_recoment">
-    <LinearLayout 
+    <RelativeLayout 
     	android:layout_width="fill_parent"
-    	android:layout_height="wrap_content"
-    	android:orientation="horizontal">
+    	android:layout_height="wrap_content">
     	<TextView 
-		android:id="@+id/recoment_sub_name"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:textColor="@color/nameblue"
-		android:textSize="12dp"/>
-		<TextView 
+			android:id="@+id/recoment_sub_name"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+			android:textColor="@color/nameblue"
+			android:textSize="12dp"/>
+		<TextView 
+			android:id="@+id/recoment_sub_rename"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_toRightOf="@id/recoment_sub_name"
 			android:text="@string/rename"
 			android:textColor="@color/black"
 			android:textSize="12dp"/>
@@ -29,15 +30,28 @@
 			android:id="@+id/recoment_sub_atname"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+			android:layout_toRightOf="@id/recoment_sub_rename"
 			android:textColor="@color/nameblue"
 			android:textSize="12dp"/>
 		<TextView 
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+			android:layout_toRightOf="@id/recoment_sub_atname"
 			android:text="@string/maohao"
 			android:textSize="12dp"
 			android:textColor="@color/black"/>
-    </LinearLayout>
+		<Button
+			android:id="@+id/recoment_sub_rebtn" 
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:layout_marginTop="5dp"
+			android:background="@drawable/download_downprgfront_icon"
+			android:textSize="12dp"
+			android:padding="3dp"
+			android:textColor="@color/white"
+			android:text="@string/rename"/>
+    </RelativeLayout>
 	 <LinearLayout 
 	 	android:layout_width="fill_parent"
     	android:layout_height="wrap_content">

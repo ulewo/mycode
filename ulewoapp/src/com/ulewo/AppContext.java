@@ -29,6 +29,7 @@ import com.ulewo.bean.BlogList;
 import com.ulewo.bean.GroupList;
 import com.ulewo.bean.LoginUser;
 import com.ulewo.bean.ReArticleList;
+import com.ulewo.bean.ReArticleResult;
 import com.ulewo.bean.User;
 import com.ulewo.util.Constants;
 import com.ulewo.util.StringUtils;
@@ -44,11 +45,6 @@ public class AppContext extends Application {
 	private static HashMap<String, Object> userInfo = new HashMap<String, Object>();
 
 	private Hashtable<String, Object> memCacheRegion = new Hashtable<String, Object>();
-
-	public static void putUserInfo(String key, String value) {
-
-		userInfo.put(key, value);
-	}
 
 	/**
 	 * 
@@ -124,27 +120,41 @@ public class AppContext extends Application {
 	public ReArticleList getReArticleList(int articleId, int pageIndex, boolean isRefresh) throws AppException {
 
 		ReArticleList list = null;
-		String key = StringUtils.encodeByMD5("articleReCommentlist" + "_" + articleId + pageIndex);
-		if (isNetworkConnected() && (!isReadDataCache(key) || isRefresh)) {
+		if (isNetworkConnected()) {
 			try {
 				list = ApiClient.getReArticleList(articleId, pageIndex);
-				if (list != null && pageIndex == 1) {
-					saveObject(list, key);
-				}
 			}
 			catch (AppException e) {
-				list = (ReArticleList) readObject(key);
-				if (list == null)
-					throw e;
+				throw e;
 			}
 		}
 		else {
-			list = (ReArticleList) readObject(key);
-			if (list == null) {
-				throw AppException.network(new HttpException());
-			}
+			throw AppException.network(new HttpException());
 		}
 		return list;
+	}
+
+	public ReArticleResult addReArticle(String content, int articleId) throws AppException {
+
+		ReArticleResult result = null;
+		if (isNetworkConnected()) {
+			try {
+				result = ApiClient.addReArticle(content, articleId, getSessionId(), getUserName(), getPassword());
+				if (result.isLogin()) {
+					putUserInfo(Constants.SESSIONID, result.getSessionId());
+				}
+				else {
+					removeUserInfo(Constants.SESSIONID);
+				}
+			}
+			catch (AppException e) {
+				throw e;
+			}
+		}
+		else {
+			throw AppException.network(new HttpException());
+		}
+		return result;
 	}
 
 	/**
@@ -297,7 +307,7 @@ public class AppContext extends Application {
 					user.setPassword(password);
 					loginUser.setUser(user);
 					saveObject(loginUser, key);
-					userInfo.put(Constants.USERID, userName);
+					userInfo.put(Constants.USERNAME, userName);
 					userInfo.put(Constants.PASSWORD, password);
 					userInfo.put(Constants.SESSIONID, user.getSessionId());
 				}
@@ -536,9 +546,9 @@ public class AppContext extends Application {
 		return null == obj ? null : String.valueOf(obj);
 	}
 
-	public static String getUserId() {
+	public static String getUserName() {
 
-		Object obj = userInfo.get(Constants.USERID);
+		Object obj = userInfo.get(Constants.USERNAME);
 		return null == obj ? null : String.valueOf(obj);
 	}
 
@@ -546,5 +556,17 @@ public class AppContext extends Application {
 
 		Object obj = userInfo.get(Constants.PASSWORD);
 		return null == obj ? null : String.valueOf(obj);
+	}
+
+	public static void putUserInfo(String key, String value) {
+
+		userInfo.put(key, value);
+	}
+
+	public static void removeUserInfo(String key) {
+
+		if (null != userInfo.get(key)) {
+			userInfo.remove(key);
+		}
 	}
 }

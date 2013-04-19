@@ -6,7 +6,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.ulewo.AppException;
-import com.ulewo.util.StringUtils;
 
 public class Article implements Serializable {
 	private static final long serialVersionUID = 2393143064912211800L;
@@ -122,7 +121,7 @@ public class Article implements Serializable {
 			article.setTitle(obj.getString("title"));
 			article.setAuthorId(obj.getString("authorId"));
 			article.setAuthorName(obj.getString("authorName"));
-			article.setPostTime(StringUtils.friendly_time(obj.getString("postTime")));
+			article.setPostTime(obj.getString("postTime"));
 			article.setReNumber(obj.getInt("reNumber"));
 			article.setContent(obj.getString("content"));
 			article.setReadNumber(obj.getInt("readNumber"));
