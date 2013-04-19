@@ -102,7 +102,7 @@ public class AndroidAction extends BaseAction {
 			vo.setAuthorId(article.getAuthorId());
 			vo.setAuthorName(article.getAuthorName());
 			vo.setId(article.getId());
-			vo.setPostTime(article.getPostTime());
+			vo.setPostTime(Tools.friendly_time(article.getPostTime()));
 			vo.setReadNumber(article.getReadNumber());
 			vo.setReNumber(article.getReNumber());
 			vo.setTitle(article.getTitle());
@@ -131,7 +131,7 @@ public class AndroidAction extends BaseAction {
 				vo.setAuthorName(article.getAuthorName());
 				vo.setContent(article.getContent());
 				vo.setId(article.getId());
-				vo.setPostTime(article.getPostTime());
+				vo.setPostTime(Tools.friendly_time(article.getPostTime()));
 				vo.setReadNumber(article.getReadNumber());
 				vo.setReNumber(article.getReNumber());
 				vo.setTitle(article.getTitle());
@@ -203,12 +203,18 @@ public class AndroidAction extends BaseAction {
 			vo.setContent(reArticle.getContent());
 			vo.setId(reArticle.getId());
 			vo.setPid(reArticle.getPid());
-			vo.setReTime(reArticle.getReTime());
+			vo.setReTime(Tools.friendly_time(reArticle.getReTime()));
 			vo.setChildList(reArticle.getChildList());
 			resultList.add(vo);
 		}
 		return resultList;
 	}
+
+	/**
+	 * 
+	 * description: 评论时候先获取session如果获取不到就登录，然后重新设置sesssion.
+	 * @author luohl
+	 */
 
 	public void addArticleComment() {
 
@@ -220,6 +226,10 @@ public class AndroidAction extends BaseAction {
 				//session失效，重新登录
 				if (!login2(session, userName, password)) {
 					isLogin = false;
+				}
+				else {
+					sessionId = session.getId();
+					MySessionContext.AddSession(session);
 				}
 			}
 			else {
@@ -244,7 +254,7 @@ public class AndroidAction extends BaseAction {
 				vo.setContent(re.getContent());
 				vo.setId(re.getId());
 				vo.setPid(re.getPid());
-				vo.setReTime(re.getReTime());
+				vo.setReTime(Tools.friendly_time(re.getReTime()));
 			}
 		}
 		catch (Exception e) {
@@ -252,6 +262,7 @@ public class AndroidAction extends BaseAction {
 		}
 		JSONObject obj = new JSONObject();
 		obj.put("reArticle", vo);
+		obj.put("sessionId", sessionId);
 		obj.put("isLogin", isLogin);
 		getOut().print(String.valueOf(obj));
 	}
@@ -308,7 +319,7 @@ public class AndroidAction extends BaseAction {
 				vo.setAuthorId(blog.getUserId());
 				vo.setAuthorName(blog.getUserName());
 				vo.setId(blog.getId());
-				vo.setPostTime(blog.getPostTime());
+				vo.setPostTime(Tools.friendly_time(blog.getPostTime()));
 				vo.setReadNumber(blog.getReadCount());
 				vo.setReNumber(blog.getReCount());
 				vo.setTitle(blog.getTitle());
@@ -334,7 +345,7 @@ public class AndroidAction extends BaseAction {
 			vo.setAuthorName(blog.getUserName());
 			vo.setContent(blog.getContent());
 			vo.setId(blog.getId());
-			vo.setPostTime(blog.getPostTime());
+			vo.setPostTime(Tools.friendly_time(blog.getPostTime()));
 			vo.setReadNumber(blog.getReadCount());
 			vo.setReNumber(blog.getReCount());
 			vo.setTitle(blog.getTitle());
@@ -434,7 +445,7 @@ public class AndroidAction extends BaseAction {
 				vo.setAuthorId(article.getAuthorId());
 				vo.setAuthorName(article.getAuthorName());
 				vo.setId(article.getId());
-				vo.setPostTime(article.getPostTime());
+				vo.setPostTime(Tools.friendly_time(article.getPostTime()));
 				vo.setReadNumber(article.getReadNumber());
 				vo.setReNumber(article.getReNumber());
 				vo.setTitle(article.getTitle());
@@ -480,7 +491,7 @@ public class AndroidAction extends BaseAction {
 				userVo.setAddress(userInfo.getAddress());
 				userVo.setAge(userInfo.getAge());
 				userVo.setCharacters(userInfo.getCharacters());
-				userVo.setRegisterTime(userInfo.getRegisterTime());
+				userVo.setRegisterTime(Tools.friendly_time(userInfo.getRegisterTime()));
 				userVo.setSex(userInfo.getSex());
 				userVo.setPrevisitTime(userInfo.getPrevisitTime());
 				userVo.setMark(userInfo.getMark());
@@ -515,7 +526,7 @@ public class AndroidAction extends BaseAction {
 				userVo.setAddress(userInfo.getAddress());
 				userVo.setAge(userInfo.getAge());
 				userVo.setCharacters(userInfo.getCharacters());
-				userVo.setRegisterTime(userInfo.getRegisterTime());
+				userVo.setRegisterTime(Tools.friendly_time(userInfo.getRegisterTime()));
 				userVo.setSex(userInfo.getSex());
 				userVo.setPrevisitTime(userInfo.getPrevisitTime());
 				userVo.setMark(userInfo.getMark());
