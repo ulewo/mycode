@@ -65,9 +65,13 @@ public class AndroidAction extends BaseAction {
 
 	private String userId;
 
+	private String atUserId;
+
 	private String content;
 
 	private String sessionId;
+
+	private int pid;
 
 	private static final int RESULTCODE_SUCCESS = 200;
 
@@ -83,7 +87,8 @@ public class AndroidAction extends BaseAction {
 	 */
 	public void fetchArticle() {
 
-		int countNumber = adminArticleService.queryArticleCount("", Constant.ISVALIDY);
+		int countNumber = adminArticleService.queryArticleCount("",
+				Constant.ISVALIDY);
 		Pagination.setPageSize(Constant.pageSize20);
 		int pageSize = Pagination.getPageSize();
 		pageTotal = Pagination.getPageTotal(countNumber);
@@ -94,7 +99,8 @@ public class AndroidAction extends BaseAction {
 			page = 1;
 		}
 		int noStart = (page - 1) * pageSize;
-		List<Article> list = adminArticleService.queryList("", Constant.ISVALIDY, noStart, pageSize);
+		List<Article> list = adminArticleService.queryList("",
+				Constant.ISVALIDY, noStart, pageSize);
 		List<ArticleVo> resultList = new ArrayList<ArticleVo>();
 		ArticleVo vo = null;
 		for (Article article : list) {
@@ -136,8 +142,7 @@ public class AndroidAction extends BaseAction {
 				vo.setReNumber(article.getReNumber());
 				vo.setTitle(article.getTitle());
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		JSONObject obj = new JSONObject();
@@ -157,7 +162,8 @@ public class AndroidAction extends BaseAction {
 		int pageSize = 10;
 		try {
 			int countNumber = reArticleService.queryReArticleCount(articleId);
-			reArticleList = reArticleService.queryReArticles(articleId, 0, countNumber);
+			reArticleList = reArticleService.queryReArticles(articleId, 0,
+					countNumber);
 
 			Pagination.setPageSize(Constant.pageSize10);
 			pageSize = Pagination.getPageSize();
@@ -169,18 +175,19 @@ public class AndroidAction extends BaseAction {
 				page = 1;
 			}
 
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		JSONObject obj = new JSONObject();
-		List<ReArticleVo> resultList = getListbyPageNum(page, reArticleList, pageSize);
+		List<ReArticleVo> resultList = getListbyPageNum(page, reArticleList,
+				pageSize);
 		obj.put("list", resultList);
 		obj.put("pageTotal", pageTotal);
 		getOut().print(String.valueOf(obj));
 	}
 
-	private List<ReArticleVo> getListbyPageNum(int page, List<ReArticle> reArticleList, int pageSize) {
+	private List<ReArticleVo> getListbyPageNum(int page,
+			List<ReArticle> reArticleList, int pageSize) {
 
 		List<ReArticleVo> resultList = new ArrayList<ReArticleVo>();
 		int count = reArticleList.size();
@@ -213,6 +220,7 @@ public class AndroidAction extends BaseAction {
 	/**
 	 * 
 	 * description: 评论时候先获取session如果获取不到就登录，然后重新设置sesssion.
+	 * 
 	 * @author luohl
 	 */
 
@@ -223,16 +231,14 @@ public class AndroidAction extends BaseAction {
 		try {
 			HttpSession session = MySessionContext.getSession(sessionId);
 			if (session == null) {
-				//session失效，重新登录
+				// session失效，重新登录
 				if (!login2(session, userName, password)) {
 					isLogin = false;
-				}
-				else {
+				} else {
 					sessionId = session.getId();
 					MySessionContext.AddSession(session);
 				}
-			}
-			else {
+			} else {
 				Object sessionObj = session.getAttribute("user");
 				User sessionUser = (User) sessionObj;
 				ReArticle reArticle = new ReArticle();
@@ -242,6 +248,8 @@ public class AndroidAction extends BaseAction {
 				reArticle.setAuthorid(sessionUser.getUserId());
 				reArticle.setAuthorName(sessionUser.getUserName());
 				reArticle.setAuthorIcon(sessionUser.getUserLittleIcon());
+				reArticle.setAtUserId(atUserId);
+				reArticle.setPid(pid);
 				ReArticle re = reArticleService.addReArticle(reArticle);
 
 				vo = new ReArticleVo();
@@ -251,13 +259,13 @@ public class AndroidAction extends BaseAction {
 				vo.setAuthorIcon(re.getAuthorIcon());
 				vo.setAuthorid(re.getAuthorid());
 				vo.setAuthorName(re.getAuthorName());
+				vo.setAtUserId(atUserId);
 				vo.setContent(re.getContent());
 				vo.setId(re.getId());
 				vo.setPid(re.getPid());
 				vo.setReTime(Tools.friendly_time(re.getReTime()));
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		JSONObject obj = new JSONObject();
@@ -280,12 +288,10 @@ public class AndroidAction extends BaseAction {
 				getSession().setAttribute("user", loginUser);
 				MySessionContext.AddSession(session);
 				return true;
-			}
-			else {
+			} else {
 				return false;
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return false;
@@ -312,7 +318,8 @@ public class AndroidAction extends BaseAction {
 				page = 1;
 			}
 			int noStart = (page - 1) * pageSize;
-			List<BlogArticle> list = blogArticleService.indexLatestBlog(noStart, pageSize);
+			List<BlogArticle> list = blogArticleService.indexLatestBlog(
+					noStart, pageSize);
 			BlogVo vo = null;
 			for (BlogArticle blog : list) {
 				vo = new BlogVo();
@@ -325,8 +332,7 @@ public class AndroidAction extends BaseAction {
 				vo.setTitle(blog.getTitle());
 				resultList.add(vo);
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 
 		}
 		JSONObject obj = new JSONObject();
@@ -349,8 +355,7 @@ public class AndroidAction extends BaseAction {
 			vo.setReadNumber(blog.getReadCount());
 			vo.setReNumber(blog.getReCount());
 			vo.setTitle(blog.getTitle());
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		JSONObject obj = new JSONObject();
@@ -364,8 +369,7 @@ public class AndroidAction extends BaseAction {
 		List<BlogReply> list = null;
 		try {
 			list = blogReplyService.queryBlogReplyByBlogId(articleId);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			resultCode = RESULTCODE_FAIL;
 			e.printStackTrace();
 		}
@@ -396,7 +400,8 @@ public class AndroidAction extends BaseAction {
 				page = 1;
 			}
 			int noStart = (page - 1) * pageSize;
-			List<Group> list = groupService.queryGroupsOderArticleCount(noStart, pageSize);
+			List<Group> list = groupService.queryGroupsOderArticleCount(
+					noStart, pageSize);
 			GroupVo vo = null;
 			for (Group group : list) {
 				vo = new GroupVo();
@@ -413,8 +418,7 @@ public class AndroidAction extends BaseAction {
 				group.setGroupDesc("");
 				group.setGroupHeadIcon("");
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		JSONObject obj = new JSONObject();
@@ -427,7 +431,8 @@ public class AndroidAction extends BaseAction {
 
 		List<ArticleVo> resultList = new ArrayList<ArticleVo>();
 		try {
-			int countNumber = articleService.queryTopicCountByGid(gid, 0, Constant.ISVALIDY);
+			int countNumber = articleService.queryTopicCountByGid(gid, 0,
+					Constant.ISVALIDY);
 			Pagination.setPageSize(Constant.pageSize20);
 			int pageSize = Pagination.getPageSize();
 			pageTotal = Pagination.getPageTotal(countNumber);
@@ -438,7 +443,8 @@ public class AndroidAction extends BaseAction {
 				page = 1;
 			}
 			int noStart = (page - 1) * pageSize;
-			List<Article> list = articleService.queryTopicOrderByPostTime(gid, 0, Constant.ISVALIDY, noStart, pageSize);
+			List<Article> list = articleService.queryTopicOrderByPostTime(gid,
+					0, Constant.ISVALIDY, noStart, pageSize);
 			ArticleVo vo = null;
 			for (Article article : list) {
 				vo = new ArticleVo();
@@ -451,8 +457,7 @@ public class AndroidAction extends BaseAction {
 				vo.setTitle(article.getTitle());
 				resultList.add(vo);
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		JSONObject obj = new JSONObject();
@@ -491,17 +496,16 @@ public class AndroidAction extends BaseAction {
 				userVo.setAddress(userInfo.getAddress());
 				userVo.setAge(userInfo.getAge());
 				userVo.setCharacters(userInfo.getCharacters());
-				userVo.setRegisterTime(Tools.friendly_time(userInfo.getRegisterTime()));
+				userVo.setRegisterTime(Tools.friendly_time(userInfo
+						.getRegisterTime()));
 				userVo.setSex(userInfo.getSex());
 				userVo.setPrevisitTime(userInfo.getPrevisitTime());
 				userVo.setMark(userInfo.getMark());
 				userVo.setSessionId(session.getId());
-			}
-			else {
+			} else {
 				loginResult = "fail";
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			loginResult = "fail";
 			e.printStackTrace();
 		}
@@ -526,16 +530,15 @@ public class AndroidAction extends BaseAction {
 				userVo.setAddress(userInfo.getAddress());
 				userVo.setAge(userInfo.getAge());
 				userVo.setCharacters(userInfo.getCharacters());
-				userVo.setRegisterTime(Tools.friendly_time(userInfo.getRegisterTime()));
+				userVo.setRegisterTime(Tools.friendly_time(userInfo
+						.getRegisterTime()));
 				userVo.setSex(userInfo.getSex());
 				userVo.setPrevisitTime(userInfo.getPrevisitTime());
 				userVo.setMark(userInfo.getMark());
-			}
-			else {
+			} else {
 				resultCode = RESULTCODE_FAIL;
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			resultCode = RESULTCODE_FAIL;
 		}
 		JSONObject obj = new JSONObject();
@@ -634,4 +637,11 @@ public class AndroidAction extends BaseAction {
 		this.content = content;
 	}
 
+	public void setAtUserId(String atUserId) {
+		this.atUserId = atUserId;
+	}
+
+	public void setPid(int pid) {
+		this.pid = pid;
+	}
 }
