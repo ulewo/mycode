@@ -32,7 +32,8 @@ public class MainActivity extends TabActivity {
 		setContentView(R.layout.main);
 		tabHost = getTabHost();
 
-		tabHost.addTab(tabHost.newTabSpec(TAG_ARTICLE).setIndicator(TAG_ARTICLE)
+		tabHost.addTab(tabHost.newTabSpec(TAG_ARTICLE)
+				.setIndicator(TAG_ARTICLE)
 				.setContent(new Intent(this, ArticleActivity.class)));
 		tabHost.addTab(tabHost.newTabSpec(TAG_BLOG).setIndicator(TAG_BLOG)
 				.setContent(new Intent(this, BlogActivity.class)));
@@ -40,8 +41,8 @@ public class MainActivity extends TabActivity {
 				.setContent(new Intent(this, GroupActivity.class)));
 		tabHost.addTab(tabHost.newTabSpec(TAG_USER).setIndicator(TAG_USER)
 				.setContent(new Intent(this, UserActivity.class)));
-		/*tabHost.addTab(tabHost.newTabSpec(TAG_MORE).setIndicator(TAG_MORE)
-				.setContent(new Intent(this, MoreActivity.class)));*/
+		tabHost.addTab(tabHost.newTabSpec(TAG_MORE).setIndicator(TAG_MORE)
+				.setContent(new Intent(this, MoreActivity.class)));
 
 		RadioGroup radioGroup = (RadioGroup) findViewById(R.id.group_id);
 		radioGroup.check(R.id.radio_article_id);
@@ -64,7 +65,7 @@ public class MainActivity extends TabActivity {
 					tabHost.setCurrentTabByTag(TAG_USER);
 					break;
 				case R.id.radio_more_id:
-					isExit();
+					tabHost.setCurrentTabByTag(TAG_MORE);
 					break;
 				}
 			}

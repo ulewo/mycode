@@ -163,18 +163,20 @@ public class ReArticle implements Serializable {
 			reArticle.setAtUserId(obj.getString("atUserId"));
 			reArticle.setAtUserName(obj.getString("atUserName"));
 			reArticle.setAuthorIcon(obj.getString("authorIcon"));
+			reArticle.setAuthorid(obj.getString("authorid"));
+			reArticle.setAuthorName(obj.getString("authorName"));
 			JSONArray jsonArray = new JSONArray(obj.getString("childList"));
 			ArrayList<ReArticle> childList = new ArrayList<ReArticle>();
 			int jsonLength = jsonArray.length();
+			ReArticle subRe = null;
 			for (int i = 0; i < jsonLength; i++) {
 				JSONObject childObj = jsonArray.getJSONObject(i);
-				reArticle = ReArticle.parse(childObj);
-				childList.add(reArticle);
+				subRe = ReArticle.parse(childObj);
+				childList.add(subRe);
 			}
 			reArticle.setChildList(childList);
 			return reArticle;
-		}
-		catch (JSONException e) {
+		} catch (JSONException e) {
 			throw AppException.josn(e);
 		}
 	}

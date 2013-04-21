@@ -73,8 +73,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textColor="@color/black"
-			android:text="@string/rename"
-		/>
+			android:text="@string/rename"/>
 		<TextView 
 			android:id="@+id/reuser"
 			android:layout_width="wrap_content"
@@ -88,6 +87,21 @@
 			android:layout_marginTop="5dp"
 			android:gravity="top"
 			android:background="@drawable/com_tencent_open_agent_navbar_btn_bg"/>
+		<EditText 
+			android:id="@+id/hide_pid"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:visibility="gone"/>
+		<EditText 
+			android:id="@+id/hide_atuserId"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:visibility="gone"/>
+		<EditText 
+			android:id="@+id/hide_postion"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:visibility="gone"/>
 		<Button 
 			android:id="@+id/subreformbtn"
 			android:layout_width="fill_parent"

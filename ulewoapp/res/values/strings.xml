@@ -51,4 +51,9 @@
     <string name="noname">用户名不能为空</string>
     <string name="nopassword">密码不能为空</string>
     <string name="nocontent">回复内容不能为空</string>
+    <!-- 更多 -->
+    <string name="logout">注销登录</string>
+    <string name="check_new_version">检测新版本</string>
+    <string name="about">关于</string>
+    <string name="exitprogram">退出程序</string>
 </resources>

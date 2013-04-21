@@ -21,4 +21,6 @@
 	<color name="recomentsubpressed">#E3E3E3</color>
 	<color name="head_text">#0e5986</color>
     <color name="author_text">#0e5986</color>
+    <color name="sut_re_nor">#EDEEEE</color>
+    <color name="sut_re_press">#F9F9F9</color>
 </resources>

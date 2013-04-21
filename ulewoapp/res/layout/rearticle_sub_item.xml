@@ -8,6 +8,8 @@
     android:paddingLeft="10dp"
     android:paddingBottom="5dp"
     android:orientation="vertical"
+  	android:focusable="true" 
+	android:clickable="true"
     android:background="@drawable/widget_sub_recoment">
     <RelativeLayout 
     	android:layout_width="fill_parent"
@@ -40,17 +42,6 @@
 			android:text="@string/maohao"
 			android:textSize="12dp"
 			android:textColor="@color/black"/>
-		<Button
-			android:id="@+id/recoment_sub_rebtn" 
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_alignParentRight="true"
-			android:layout_marginTop="5dp"
-			android:background="@drawable/download_downprgfront_icon"
-			android:textSize="12dp"
-			android:padding="3dp"
-			android:textColor="@color/white"
-			android:text="@string/rename"/>
     </RelativeLayout>
 	 <LinearLayout 
 	 	android:layout_width="fill_parent"

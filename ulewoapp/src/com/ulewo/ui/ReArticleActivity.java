@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Html;
+import android.text.TextPaint;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -24,6 +27,7 @@ import com.ulewo.adapter.ReArticleListAdapter;
 import com.ulewo.bean.ReArticle;
 import com.ulewo.bean.ReArticleList;
 import com.ulewo.bean.ReArticleResult;
+import com.ulewo.handler.MxgsaTagHandler;
 import com.ulewo.util.StringUtils;
 
 public class ReArticleActivity extends BaseActivity {
@@ -47,20 +51,25 @@ public class ReArticleActivity extends BaseActivity {
 	private LinearLayout progressBar = null;
 
 	private int articleId = 0;
+	boolean isRefresh = false;
 
 	private EditText recomment_input = null;
-
 	private Button subrecomment = null;
 
 	private RelativeLayout reSubPanel = null;
+	TextView reusers = null;
+	EditText textarea = null;
+	Button subreformbtn = null;
+	EditText hide_atuserId = null;
+	EditText hide_postion = null;
+	EditText hide_pid = null;
 
 	Handler handler = null;
-
 	Handler subCommentHandler = null;
-
+	Handler subReCommentHandler = null;
 	AppContext appContext = null;
 
-	boolean isRefresh = false;
+	private LayoutInflater subflater;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +77,7 @@ public class ReArticleActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		super.setContentView(R.layout.article_recomment);
 		appContext = (AppContext) getApplication();
+		subflater = LayoutInflater.from(ReArticleActivity.this);
 		initView();
 		initData();
 	}
@@ -88,7 +98,6 @@ public class ReArticleActivity extends BaseActivity {
 				ReArticleActivity.this.finish();
 			}
 		});
-		reSubPanel = (RelativeLayout) findViewById(R.id.article_subrepanel);
 		loadMoreView = View.inflate(this, R.layout.loadmore, null);
 		listView = (ListView) super.findViewById(R.id.recoment_list_view_id);
 		listView.addFooterView(loadMoreView);
@@ -128,15 +137,31 @@ public class ReArticleActivity extends BaseActivity {
 			public void onClick(View paramView) {
 
 				if (null == AppContext.getSessionId()) {
-					Toast.makeText(ReArticleActivity.this, R.string.pleaselogin, Toast.LENGTH_LONG).show();
+					Toast.makeText(ReArticleActivity.this,
+							R.string.pleaselogin, Toast.LENGTH_LONG).show();
 					return;
 				}
-				String content = String.valueOf(recomment_input.getText()).trim();
+				String content = String.valueOf(recomment_input.getText())
+						.trim();
 				if (StringUtils.isEmpty(content)) {
-					Toast.makeText(ReArticleActivity.this, R.string.nocontent, Toast.LENGTH_LONG).show();
+					Toast.makeText(ReArticleActivity.this, R.string.nocontent,
+							Toast.LENGTH_LONG).show();
 					return;
 				}
 				subComment(content);
+			}
+		});
+		reSubPanel = (RelativeLayout) findViewById(R.id.article_subrepanel);
+		subreformbtn = (Button) findViewById(R.id.subreformbtn);
+		reusers = (TextView) findViewById(R.id.reuser);
+		hide_atuserId = (EditText) findViewById(R.id.hide_atuserId);
+		hide_pid = (EditText) findViewById(R.id.hide_pid);
+		hide_postion = (EditText) findViewById(R.id.hide_postion);
+		textarea = (EditText) findViewById(R.id.textarea);
+		subreformbtn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				ReArticleActivity.this.addSubReArticle();
 			}
 		});
 	}
@@ -151,21 +176,22 @@ public class ReArticleActivity extends BaseActivity {
 				if (msg.what != -1) {
 					ReArticleList list = (ReArticleList) msg.obj;
 					if (adapter == null || page == 1) {
-						adapter = new ReArticleListAdapter(ReArticleActivity.this, list.getReArticleList(), reSubPanel);
+						adapter = new ReArticleListAdapter(
+								ReArticleActivity.this,
+								list.getReArticleList(), reSubPanel);
 						listView.setAdapter(adapter);
 						if (page < msg.arg1) {
 							loadmoreTextView.setVisibility(View.VISIBLE);
 						}
-					}
-					else {
+					} else {
 						loadmore_prgressbar.setVisibility(View.GONE);
 						adapter.loadMore(list.getReArticleList());
 						if (page < msg.arg1) {
 							loadmoreTextView.setVisibility(View.VISIBLE);
 						}
 					}
-
 				}
+
 				else {
 					((AppException) msg.obj).makeToast(ReArticleActivity.this);
 					progressBar.setVisibility(View.GONE);
@@ -179,11 +205,11 @@ public class ReArticleActivity extends BaseActivity {
 
 				Message msg = new Message();
 				try {
-					ReArticleList list = appContext.getReArticleList(articleId, page, isRefresh);
+					ReArticleList list = appContext.getReArticleList(articleId,
+							page, isRefresh);
 					msg.what = 0;
 					msg.obj = list;
-				}
-				catch (AppException e) {
+				} catch (AppException e) {
 					msg.what = -1;
 					msg.obj = e;
 				}
@@ -201,19 +227,15 @@ public class ReArticleActivity extends BaseActivity {
 				if (msg.what != -1) {
 					ReArticleResult result = (ReArticleResult) msg.obj;
 					if (result.isLogin()) {
-						ArrayList<ReArticle> list = new ArrayList<ReArticle>();
-						list.add(result.getReArticle());
-						adapter.loadMore(list);
+						adapter.addItem(result.getReArticle());
 						recomment_input.setText("");
-						recomment_input.setFocusable(false);
-					}
-					else {
+					} else {
 						Intent intent = new Intent();
-						intent.setClass(ReArticleActivity.this, UserActivity.class);
+						intent.setClass(ReArticleActivity.this,
+								UserActivity.class);
 						startActivity(intent);
 					}
-				}
-				else {
+				} else {
 					((AppException) msg.obj).makeToast(ReArticleActivity.this);
 					progressBar.setVisibility(View.GONE);
 					loadmoreTextView.setVisibility(View.VISIBLE);
@@ -227,15 +249,74 @@ public class ReArticleActivity extends BaseActivity {
 
 				Message msg = new Message();
 				try {
-					ReArticleResult result = appContext.addReArticle(content, articleId);
+					ReArticleResult result = appContext.addReArticle(content,
+							articleId);
 					msg.what = 0;
 					msg.obj = result;
-				}
-				catch (AppException e) {
+				} catch (AppException e) {
 					msg.what = -1;
 					msg.obj = e;
 				}
 				subCommentHandler.sendMessage(msg);
+			}
+		}.start();
+	}
+
+	private void addSubReArticle() {
+		final String atUserNameValue = ReArticleActivity.this.reusers.getText()
+				.toString();
+		final String hide_atuserId = ReArticleActivity.this.hide_atuserId
+				.getText().toString();
+		final String content = ReArticleActivity.this.textarea.getText()
+				.toString();
+		final int hide_postion_value = Integer
+				.parseInt(ReArticleActivity.this.hide_postion.getText()
+						.toString());
+		final String hide_pid = ReArticleActivity.this.hide_pid.getText()
+				.toString();
+		subReCommentHandler = new Handler() {
+			@Override
+			public void handleMessage(Message msg) {
+
+				if (msg.what != -1) {
+					ReArticleResult result = (ReArticleResult) msg.obj;
+					if (result.isLogin()) {
+						ReArticle reArticle = result.getReArticle();
+						ReArticle curReArticle = (ReArticle) listView
+								.getItemAtPosition(hide_postion_value);
+						reArticle.setAtUserName(atUserNameValue);
+						curReArticle.getChildList().add(reArticle);
+						adapter.notifyDataSetChanged();
+						reSubPanel.setVisibility(View.GONE);
+					} else {
+						Intent intent = new Intent();
+						intent.setClass(ReArticleActivity.this,
+								UserActivity.class);
+						startActivity(intent);
+					}
+				} else {
+					((AppException) msg.obj).makeToast(ReArticleActivity.this);
+					progressBar.setVisibility(View.GONE);
+					loadmoreTextView.setVisibility(View.VISIBLE);
+				}
+			}
+		};
+
+		new Thread() {
+			@Override
+			public void run() {
+
+				Message msg = new Message();
+				try {
+					ReArticleResult result = appContext.addSubReArticle(
+							content, articleId, hide_atuserId, hide_pid);
+					msg.what = 0;
+					msg.obj = result;
+				} catch (AppException e) {
+					msg.what = -1;
+					msg.obj = e;
+				}
+				subReCommentHandler.sendMessage(msg);
 			}
 		}.start();
 	}

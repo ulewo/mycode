@@ -8,9 +8,11 @@ import android.text.TextPaint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -30,12 +32,15 @@ public class ReArticleListAdapter extends BaseAdapter {
 	private Context context;
 
 	private RelativeLayout reSubPanel = null;
-
 	TextView reusers = null;
-
+	TextView content = null;
 	Button subreformbtn = null;
+	EditText hide_atuserId = null;
+	EditText hide_postion = null;
+	EditText hide_pid = null;
 
-	public ReArticleListAdapter(Context context, List<ReArticle> list, View subView) {
+	public ReArticleListAdapter(Context context, List<ReArticle> list,
+			View subView) {
 
 		this.list = list;
 		this.context = context;
@@ -43,7 +48,11 @@ public class ReArticleListAdapter extends BaseAdapter {
 		subflater = LayoutInflater.from(context);
 		reSubPanel = (RelativeLayout) subView;
 		reusers = (TextView) reSubPanel.findViewById(R.id.reuser);
+		content = (TextView) reSubPanel.findViewById(R.id.textarea);
 		subreformbtn = (Button) reSubPanel.findViewById(R.id.subreformbtn);
+		hide_atuserId = (EditText) reSubPanel.findViewById(R.id.hide_atuserId);
+		hide_pid = (EditText) reSubPanel.findViewById(R.id.hide_pid);
+		hide_postion = (EditText) reSubPanel.findViewById(R.id.hide_postion);
 	}
 
 	@Override
@@ -63,8 +72,7 @@ public class ReArticleListAdapter extends BaseAdapter {
 
 		if (position < getCount()) {
 			return list.get(position).getId();
-		}
-		else {
+		} else {
 			return 0;
 		}
 	}
@@ -80,64 +88,89 @@ public class ReArticleListAdapter extends BaseAdapter {
 		View view;
 		if (convertView == null) {
 			view = this.mInflater.inflate(R.layout.rearticle_item, null);
-		}
-		else {
+		} else {
 			view = convertView;
 		}
 		bindView(position, view);
 		return view;
 	}
 
-	private void bindView(int postion, View view) {
+	private void bindView(final int postion, View view) {
 
 		final ReArticle reArticle = list.get(postion);
-		TextView recomment_username = (TextView) view.findViewById(R.id.recomment_username);
-		TextView recomment_posttime = (TextView) view.findViewById(R.id.recomment_posttime);
+		TextView recomment_username = (TextView) view
+				.findViewById(R.id.recomment_username);
+		TextView recomment_posttime = (TextView) view
+				.findViewById(R.id.recomment_posttime);
 
-		TextView recomment_con = (TextView) view.findViewById(R.id.recomment_con);
+		TextView recomment_con = (TextView) view
+				.findViewById(R.id.recomment_con);
 		TextPaint paint = recomment_username.getPaint();
 		paint.setFakeBoldText(true);
 		recomment_username.setText(reArticle.getAuthorName());
 		recomment_posttime.setText(reArticle.getReTime());
-		recomment_con.setText(Html.fromHtml(reArticle.getContent(), null, new MxgsaTagHandler(context)));
+		recomment_con.setText(Html.fromHtml(reArticle.getContent(), null,
+				new MxgsaTagHandler(context)));
 
-		//回复btn
+		// 回复btn
 		Button item_rebtn = (Button) view.findViewById(R.id.item_rebtn);
 		item_rebtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-
+				content.setText("");
 				reSubPanel.setVisibility(View.VISIBLE);
 				reusers.setText(reArticle.getAuthorName());
+				hide_postion.setText(postion + "");
+				hide_pid.setText(reArticle.getId() + "");
+				hide_atuserId.setText(reArticle.getAuthorid());
 			}
 		});
 
-		LinearLayout liner = (LinearLayout) view.findViewById(R.id.recomment_sub_layout);
+		LinearLayout liner = (LinearLayout) view
+				.findViewById(R.id.recomment_sub_layout);
 		liner.removeAllViewsInLayout();
 		List<ReArticle> childList = reArticle.getChildList();
 		if (childList.size() > 0) {
 			liner.setVisibility(View.VISIBLE);
-		}
-		else {
+		} else {
 			liner.setVisibility(View.GONE);
 		}
 		View subview = null;
-		for (ReArticle subRe : childList) {
+		for (final ReArticle subRe : childList) {
 			subview = this.subflater.inflate(R.layout.rearticle_sub_item, null);
+
+			subview.setOnLongClickListener(new OnLongClickListener() {
+
+				@Override
+				public boolean onLongClick(View v) {
+					content.setText("");
+					reSubPanel.setVisibility(View.VISIBLE);
+					reusers.setText(subRe.getAuthorName());
+					hide_postion.setText(postion + "");
+					hide_pid.setText(subRe.getId() + "");
+					hide_atuserId.setText(subRe.getAuthorid());
+					return true;
+				}
+			});
+
 			liner.addView(subview);
-			TextView nameView = (TextView) subview.findViewById(R.id.recoment_sub_name);
+			TextView nameView = (TextView) subview
+					.findViewById(R.id.recoment_sub_name);
 			TextPaint paint1 = nameView.getPaint();
 			paint1.setFakeBoldText(true);
 			nameView.setText(subRe.getAuthorName());
 
-			TextView atNameView = (TextView) subview.findViewById(R.id.recoment_sub_atname);
+			TextView atNameView = (TextView) subview
+					.findViewById(R.id.recoment_sub_atname);
 			TextPaint paint2 = atNameView.getPaint();
 			paint2.setFakeBoldText(true);
 
 			atNameView.setText(subRe.getAtUserName());
 
-			TextView conView = (TextView) subview.findViewById(R.id.recoment_sub_con);
-			conView.setText(Html.fromHtml(subRe.getContent(), null, new MxgsaTagHandler(context)));
+			TextView conView = (TextView) subview
+					.findViewById(R.id.recoment_sub_con);
+			conView.setText(Html.fromHtml(subRe.getContent(), null,
+					new MxgsaTagHandler(context)));
 			/*
 			 * subview.setOnTouchListener(new OnTouchListener() {
 			 * 
@@ -156,6 +189,11 @@ public class ReArticleListAdapter extends BaseAdapter {
 
 		list.addAll(rearticleList);
 		this.notifyDataSetChanged();
+		// this.notifyDataSetInvalidated();
 	}
 
+	public void addItem(ReArticle reArticle){
+		list.add(reArticle);
+		this.notifyDataSetChanged();
+	}
 }
