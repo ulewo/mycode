@@ -6,6 +6,7 @@
     android:orientation="vertical">
    	<include layout="@layout/common_head"/>
    	<RelativeLayout 
+   	    android:id="@+id/more_logout"
    		android:layout_width="fill_parent"
     	android:layout_height="wrap_content"
     	style="@style/about_item"
@@ -28,7 +29,8 @@
     		android:layout_marginTop="5dp"
     		android:layout_marginRight="10dp"/>
     </RelativeLayout>
-    <RelativeLayout 
+    <RelativeLayout
+        android:id="@+id/more_check_version" 
    		android:layout_width="fill_parent"
     	android:layout_height="wrap_content"
     	style="@style/about_item"
@@ -51,6 +53,7 @@
     		android:layout_marginRight="10dp"/>
     </RelativeLayout>
     <RelativeLayout 
+        android:id="@+id/more_about_item"
    		android:layout_width="fill_parent"
     	android:layout_height="wrap_content"
     	style="@style/about_item"
@@ -72,26 +75,27 @@
     		android:layout_marginTop="5dp"
     		android:layout_marginRight="10dp"/>
     </RelativeLayout>
-        <RelativeLayout 
-   		android:layout_width="fill_parent"
-    	android:layout_height="wrap_content"
-    	style="@style/about_item"
-    	android:focusable="true" 
-	    android:clickable="true"
-    	android:background="@drawable/table_below_bg">
-    	<TextView
-    		android:id="@+id/exitprogram" 
-    		android:layout_width="wrap_content"
-    		android:layout_height="wrap_content"
-    		android:text="@string/exitprogram"
-    		android:textColor="@color/black"
-    		android:padding="10dp"/>
-    	<ImageView 
-    		android:layout_width="wrap_content"
-    		android:layout_height="wrap_content"
-    		android:layout_alignParentRight="true"
-    		android:src="@drawable/mail_sender_btn_arrow"
-    		android:layout_marginTop="5dp"
-    		android:layout_marginRight="10dp"/>
-    </RelativeLayout>
+    <RelativeLayout 
+        android:id="@+id/more_exit"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		style="@style/about_item"
+		android:focusable="true" 
+	 	android:clickable="true"
+		android:background="@drawable/table_below_bg">
+	<TextView
+		android:id="@+id/exitprogram" 
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/exitprogram"
+		android:textColor="@color/black"
+		android:padding="10dp"/>
+	<ImageView 
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentRight="true"
+		android:src="@drawable/mail_sender_btn_arrow"
+		android:layout_marginTop="5dp"
+		android:layout_marginRight="10dp"/>
+</RelativeLayout>
 </LinearLayout>
