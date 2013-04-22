@@ -56,7 +56,7 @@ public class ApiClient {
 
 	private final static int RETRY_TIME = 3;
 
-	private static final String BASEURL = "http://192.168.0.224:80/ulewo";
+	private static final String BASEURL = "http://192.168.2.224:8080/ulewo";
 
 	private static final String HOST = BASEURL;
 
@@ -308,6 +308,21 @@ public class ApiClient {
 		try {
 			return LoginUser.parse(convertInputStream2JSONObject(http_post(
 					newUrl, params, null)));
+		} catch (AppException e) {
+			throw e;
+		}
+	}
+
+	/**
+	 * 检测新版本
+	 * 
+	 * @return
+	 * @throws AppException
+	 */
+	public static String getVersion() throws AppException {
+		try {
+			JSONObject json = convertInputStream2JSONObject(http_get(""));
+			return json.toString();
 		} catch (AppException e) {
 			throw e;
 		}

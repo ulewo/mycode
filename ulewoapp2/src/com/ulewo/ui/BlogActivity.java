@@ -116,7 +116,7 @@ public class BlogActivity extends BaseActivity {
 							if (!"0".equals(articleId)) {
 								Intent intent = new Intent();
 								intent.putExtra("articleId", articleId);
-								intent.setClass(BlogActivity.this, ShowArticleActivity.class);
+								intent.setClass(BlogActivity.this, ShowBlogActivity.class);
 								startActivity(intent);
 							}
 						}

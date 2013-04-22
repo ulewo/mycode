@@ -14,9 +14,13 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.ulewo.AppContext;
 import com.ulewo.R;
 import com.ulewo.bean.ReArticle;
 import com.ulewo.handler.MxgsaTagHandler;
@@ -28,6 +32,8 @@ public class ReArticleListAdapter extends BaseAdapter {
 	private LayoutInflater mInflater;
 
 	private LayoutInflater subflater;
+
+	private LayoutInflater menueflater;
 
 	private Context context;
 
@@ -46,6 +52,7 @@ public class ReArticleListAdapter extends BaseAdapter {
 		this.context = context;
 		mInflater = LayoutInflater.from(context);
 		subflater = LayoutInflater.from(context);
+		menueflater = LayoutInflater.from(context);
 		reSubPanel = (RelativeLayout) subView;
 		reusers = (TextView) reSubPanel.findViewById(R.id.reuser);
 		content = (TextView) reSubPanel.findViewById(R.id.textarea);
@@ -117,6 +124,11 @@ public class ReArticleListAdapter extends BaseAdapter {
 		item_rebtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				if (null == AppContext.getSessionId()) {
+					Toast.makeText(context, R.string.pleaselogin,
+							Toast.LENGTH_LONG).show();
+					return;
+				}
 				content.setText("");
 				reSubPanel.setVisibility(View.VISIBLE);
 				reusers.setText(reArticle.getAuthorName());
@@ -140,9 +152,15 @@ public class ReArticleListAdapter extends BaseAdapter {
 			subview = this.subflater.inflate(R.layout.rearticle_sub_item, null);
 
 			subview.setOnLongClickListener(new OnLongClickListener() {
+				PopupWindow mPop = null;
 
 				@Override
 				public boolean onLongClick(View v) {
+					if (null == AppContext.getSessionId()) {
+						Toast.makeText(context, R.string.pleaselogin,
+								Toast.LENGTH_LONG).show();
+						return false;
+					}
 					content.setText("");
 					reSubPanel.setVisibility(View.VISIBLE);
 					reusers.setText(subRe.getAuthorName());
@@ -150,6 +168,17 @@ public class ReArticleListAdapter extends BaseAdapter {
 					hide_pid.setText(subRe.getId() + "");
 					hide_atuserId.setText(subRe.getAuthorid());
 					return true;
+				}
+
+				private void initPopWindow() {
+					if (mPop == null) {
+						mPop = new PopupWindow(menueflater.inflate(
+								R.layout.pop, null), LayoutParams.WRAP_CONTENT,
+								LayoutParams.WRAP_CONTENT);
+					}
+					if (mPop.isShowing()) {
+						mPop.dismiss();
+					}
 				}
 			});
 
@@ -192,7 +221,7 @@ public class ReArticleListAdapter extends BaseAdapter {
 		// this.notifyDataSetInvalidated();
 	}
 
-	public void addItem(ReArticle reArticle){
+	public void addItem(ReArticle reArticle) {
 		list.add(reArticle);
 		this.notifyDataSetChanged();
 	}

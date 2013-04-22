@@ -1,16 +1,14 @@
 package com.ulewo.ui;
 
-import java.util.ArrayList;
-
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.Html;
-import android.text.TextPaint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -27,7 +25,6 @@ import com.ulewo.adapter.ReArticleListAdapter;
 import com.ulewo.bean.ReArticle;
 import com.ulewo.bean.ReArticleList;
 import com.ulewo.bean.ReArticleResult;
-import com.ulewo.handler.MxgsaTagHandler;
 import com.ulewo.util.StringUtils;
 
 public class ReArticleActivity extends BaseActivity {
@@ -229,6 +226,9 @@ public class ReArticleActivity extends BaseActivity {
 					if (result.isLogin()) {
 						adapter.addItem(result.getReArticle());
 						recomment_input.setText("");
+						InputMethodManager inputMethodManager =(InputMethodManager)ReArticleActivity.this.getApplicationContext().
+								getSystemService(Context.INPUT_METHOD_SERVICE);
+						inputMethodManager.hideSoftInputFromWindow(recomment_input.getWindowToken(), 0);
 					} else {
 						Intent intent = new Intent();
 						intent.setClass(ReArticleActivity.this,
@@ -288,6 +288,9 @@ public class ReArticleActivity extends BaseActivity {
 						curReArticle.getChildList().add(reArticle);
 						adapter.notifyDataSetChanged();
 						reSubPanel.setVisibility(View.GONE);
+						InputMethodManager inputMethodManager =(InputMethodManager)ReArticleActivity.this.getApplicationContext().
+								getSystemService(Context.INPUT_METHOD_SERVICE);
+						inputMethodManager.hideSoftInputFromWindow(ReArticleActivity.this.textarea.getWindowToken(), 0);
 					} else {
 						Intent intent = new Intent();
 						intent.setClass(ReArticleActivity.this,

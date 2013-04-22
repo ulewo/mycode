@@ -105,9 +105,9 @@ public class ShowBlogActivity extends BaseActivity {
 
 				Message msg = new Message();
 				try {
-					Article article = appContext.getArticle(articleId);
+					Blog blog = appContext.getBlog(articleId);
 					msg.what = 0;
-					msg.obj = article;
+					msg.obj = blog;
 				}
 				catch (AppException e) {
 					msg.what = -1;

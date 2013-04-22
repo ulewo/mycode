@@ -110,8 +110,7 @@ public class Blog implements Serializable {
 			JSONObject obj = null;
 			if (!jsonobj.isNull("blog")) {
 				obj = new JSONObject(jsonobj.getString("blog"));
-			}
-			else {
+			} else {
 				obj = jsonobj;
 			}
 			Blog blog = new Blog();
@@ -122,9 +121,9 @@ public class Blog implements Serializable {
 			blog.setPostTime(obj.getString("postTime"));
 			blog.setReNumber(obj.getInt("reNumber"));
 			blog.setReadNumber(obj.getInt("readNumber"));
+			blog.setContent(obj.getString("content"));
 			return blog;
-		}
-		catch (JSONException e) {
+		} catch (JSONException e) {
 			throw AppException.josn(e);
 		}
 	}
