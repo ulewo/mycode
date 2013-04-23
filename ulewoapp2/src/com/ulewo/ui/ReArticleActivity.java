@@ -89,13 +89,7 @@ public class ReArticleActivity extends BaseActivity {
 		progressBar = (LinearLayout) super.findViewById(R.id.myprogressbar);
 		backBtn = (Button) super.findViewById(R.id.head_back);
 		backBtn.setVisibility(View.VISIBLE);
-		backBtn.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View paramView) {
-
-				ReArticleActivity.this.finish();
-			}
-		});
+		backBtn.setOnClickListener(UIHelper.finish(this));
 		loadMoreView = View.inflate(this, R.layout.loadmore, null);
 		listView = (ListView) super.findViewById(R.id.recoment_list_view_id);
 		listView.addFooterView(loadMoreView);

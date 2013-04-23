@@ -27,6 +27,8 @@ public class UserActivity extends BaseActivity {
 
 	EditText pwdEdit = null;
 
+	ImageButton closBtn = null;
+	
 	LinearLayout loginlayout = null;
 
 	LinearLayout userinfolayout = null;
@@ -74,10 +76,11 @@ public class UserActivity extends BaseActivity {
 		loginlayout = (LinearLayout) findViewById(R.id.loginlayout);
 		userinfolayout = (LinearLayout) findViewById(R.id.userinfolayout);
 
-		usernameEdit = (EditText) findViewById(R.id.login_username);
+		usernameEdit = (EditText) findViewById(R.id.login_account);
 		pwdEdit = (EditText) findViewById(R.id.login_password);
-
-		Button button = (Button) findViewById(R.id.login_submit);
+		closBtn = (ImageButton) findViewById(R.id.login_close_button);
+		closBtn.setVisibility(View.GONE);
+		Button button = (Button) findViewById(R.id.login_btn_login);
 
 		user_info_icon = (ImageView) findViewById(R.id.user_info_icon);
 		user_info_sex = (ImageView) findViewById(R.id.user_info_sex);

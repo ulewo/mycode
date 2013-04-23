@@ -74,13 +74,7 @@ public class ShowArticleActivity extends BaseActivity {
 		timeView = (TextView) findViewById(R.id.article_time);
 		recountView = (TextView) findViewById(R.id.article_recount);
 
-		backBtn.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View paramView) {
-
-				ShowArticleActivity.this.finish();
-			}
-		});
+		backBtn.setOnClickListener(UIHelper.finish(this));
 
 		recommentBtn.setOnClickListener(new OnClickListener() {
 			@Override

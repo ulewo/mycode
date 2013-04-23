@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,6 +23,7 @@ import com.ulewo.adapter.ArticleListAdapter;
 import com.ulewo.bean.ArticleList;
 import com.ulewo.cache.AsyncImageLoader;
 import com.ulewo.cache.AsyncImageLoader.ImageCallback;
+import com.ulewo.common.UIHelper;
 import com.ulewo.util.StringUtils;
 
 public class ShowGroupActivity extends BaseActivity {
@@ -32,7 +34,7 @@ public class ShowGroupActivity extends BaseActivity {
 	private LinearLayout loadmore_prgressbar = null;
 	ListView listView = null;
 	private ImageButton refreshBtn = null;
-
+	 private Button backBtn = null;
 	private String gid;
 	private int page = 1;
 	private boolean isRefresh;
@@ -121,6 +123,9 @@ public class ShowGroupActivity extends BaseActivity {
 				initData();
 			}
 		});
+		backBtn = (Button) super.findViewById(R.id.head_back);
+		backBtn.setVisibility(View.VISIBLE);
+		backBtn.setOnClickListener(UIHelper.finish(this));
 	}
 
 	private void initData() {
