@@ -25,6 +25,7 @@ import com.ulewo.adapter.ReArticleListAdapter;
 import com.ulewo.bean.ReArticle;
 import com.ulewo.bean.ReArticleList;
 import com.ulewo.bean.ReArticleResult;
+import com.ulewo.common.UIHelper;
 import com.ulewo.util.StringUtils;
 
 public class ReArticleActivity extends BaseActivity {
@@ -134,8 +135,7 @@ public class ReArticleActivity extends BaseActivity {
 			public void onClick(View paramView) {
 
 				if (null == AppContext.getSessionId()) {
-					Toast.makeText(ReArticleActivity.this,
-							R.string.pleaselogin, Toast.LENGTH_LONG).show();
+					UIHelper.showLoginDialog(ReArticleActivity.this);
 					return;
 				}
 				String content = String.valueOf(recomment_input.getText())
@@ -226,9 +226,11 @@ public class ReArticleActivity extends BaseActivity {
 					if (result.isLogin()) {
 						adapter.addItem(result.getReArticle());
 						recomment_input.setText("");
-						InputMethodManager inputMethodManager =(InputMethodManager)ReArticleActivity.this.getApplicationContext().
-								getSystemService(Context.INPUT_METHOD_SERVICE);
-						inputMethodManager.hideSoftInputFromWindow(recomment_input.getWindowToken(), 0);
+						InputMethodManager inputMethodManager = (InputMethodManager) ReArticleActivity.this
+								.getApplicationContext().getSystemService(
+										Context.INPUT_METHOD_SERVICE);
+						inputMethodManager.hideSoftInputFromWindow(
+								recomment_input.getWindowToken(), 0);
 					} else {
 						Intent intent = new Intent();
 						intent.setClass(ReArticleActivity.this,
@@ -288,9 +290,12 @@ public class ReArticleActivity extends BaseActivity {
 						curReArticle.getChildList().add(reArticle);
 						adapter.notifyDataSetChanged();
 						reSubPanel.setVisibility(View.GONE);
-						InputMethodManager inputMethodManager =(InputMethodManager)ReArticleActivity.this.getApplicationContext().
-								getSystemService(Context.INPUT_METHOD_SERVICE);
-						inputMethodManager.hideSoftInputFromWindow(ReArticleActivity.this.textarea.getWindowToken(), 0);
+						InputMethodManager inputMethodManager = (InputMethodManager) ReArticleActivity.this
+								.getApplicationContext().getSystemService(
+										Context.INPUT_METHOD_SERVICE);
+						inputMethodManager.hideSoftInputFromWindow(
+								ReArticleActivity.this.textarea
+										.getWindowToken(), 0);
 					} else {
 						Intent intent = new Intent();
 						intent.setClass(ReArticleActivity.this,

@@ -7,26 +7,28 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.ulewo.AppContext;
 import com.ulewo.R;
+import com.ulewo.util.Constants;
 
-public class MoreActivity extends Activity {
+public class MoreActivity extends BaseActivity {
 
 	private RelativeLayout more_logout = null;
 	private RelativeLayout more_check_version = null;
@@ -34,12 +36,14 @@ public class MoreActivity extends Activity {
 	private RelativeLayout more_exit = null;
 
 	private Handler checkVersionHandler = null;
+	AppContext appContext = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
 		super.setContentView(R.layout.more);
+		appContext = (AppContext) getApplication();
 		TextView textView = (TextView) findViewById(R.id.main_head_title);
 		textView.setText(R.string.name_more);
 		initView();
@@ -58,6 +62,42 @@ public class MoreActivity extends Activity {
 				checkVersion();
 			}
 		});
+
+		more_logout.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View paramView) {
+				// 创建退出对话框
+				AlertDialog isExit = new AlertDialog.Builder(MoreActivity.this)
+						.create();
+				// 设置对话框标题
+				isExit.setTitle("系统提示");
+				// 设置对话框消息
+				isExit.setMessage("确定要注销吗");
+				// 添加选择按钮并注册监听
+				isExit.setButton("确定", listener);
+				isExit.setButton2("取消", listener);
+				// 显示对话框
+				isExit.show();
+
+			}
+
+			DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+
+					switch (which) {
+					case AlertDialog.BUTTON_POSITIVE:// "确认"按钮退出程序
+						appContext.removeUserInfo(Constants.SESSIONID);
+						// appContext.re
+						break;
+					case AlertDialog.BUTTON_NEGATIVE:// "取消"第二个按钮取消对话框
+						break;
+					default:
+						break;
+					}
+				}
+			};
+		});
 	}
 
 	// 检测新版本
@@ -66,7 +106,8 @@ public class MoreActivity extends Activity {
 
 			@Override
 			public void handleMessage(Message msg) {
-				String version = MoreActivity.this.getVersionName();
+				PackageInfo info = appContext.getPackageInfo();
+				String version = info.versionName;
 				Log.v("version", version);
 			}
 		};
@@ -81,22 +122,8 @@ public class MoreActivity extends Activity {
 		}.start();
 	}
 
-	public String getVersionName() {
-		// 获取packagemanager的实例
-		PackageManager packageManager = getPackageManager();
-		// getPackageName()是你当前类的包名，0代表是获取版本信息
-		PackageInfo packInfo = null;
-		try {
-			packInfo = packageManager.getPackageInfo(getPackageName(), 0);
-		} catch (NameNotFoundException e) {
-			e.printStackTrace();
-		}
-		return packInfo.versionName;
-	}
-
 	private void download() {
 		new Thread() {
-
 			@Override
 			public void run() {
 				ProgressDialog pd = null;
@@ -145,5 +172,13 @@ public class MoreActivity extends Activity {
 		intent.setDataAndType(Uri.fromFile(file),
 				"application/vnd.Android.package-archive");// 编者按：此处Android应为android，否则造成安装不了
 		startActivity(intent);
+	}
+
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			isExit();
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 }

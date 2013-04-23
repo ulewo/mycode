@@ -348,6 +348,38 @@ public class AppContext extends Application {
 	}
 
 	/**
+	 * 获取用户信息
+	 * 
+	 * @param userId
+	 * @param isRefresh
+	 * @return
+	 * @throws AppException
+	 */
+	public User fetchUserInfo(String userId, boolean isRefresh)
+			throws AppException {
+		User user = null;
+		String key = StringUtils.encodeByMD5("user");
+		if (isNetworkConnected() && (!isReadDataCache(key) || isRefresh)) {
+			try {
+				user = ApiClient.fetchUserInfo(userId);
+				if (user != null) {
+					saveObject(user, key);
+				}
+			} catch (AppException e) {
+				user = (User) readObject(key);
+				if (user == null)
+					throw e;
+			}
+		} else {
+			user = (User) readObject(key);
+			if (user == null) {
+				throw AppException.network(new HttpException());
+			}
+		}
+		return user;
+	}
+
+	/**
 	 * 判断缓存数据是否可读
 	 * 
 	 * @param cachefile

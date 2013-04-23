@@ -34,8 +34,8 @@
     	<TextView 
 	    	android:layout_width="wrap_content"
 	    	android:layout_height="wrap_content"
-	    	android:textSize="@dimen/size_11"
-	    	android:textColor="@color/shadeblack"
+	    	android:textSize="@dimen/size_13"
+	    	android:textColor="@color/nameblue"
 	    	android:id="@+id/article_author"/>
     	<TextView 
 	    	android:layout_width="wrap_content"
@@ -69,11 +69,11 @@
 		android:layout_width="fill_parent" 
 		android:layout_height="wrap_content"
 		android:orientation="vertical">	    
-	    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"  
-			        android:layout_width="fill_parent" 
-			        android:layout_height="wrap_content"    
-					android:scrollbars="vertical" 
-					android:fadingEdge="vertical">
+	    <ScrollView 
+	        android:layout_width="fill_parent" 
+	        android:layout_height="wrap_content"    
+			android:scrollbars="vertical" 
+			android:fadingEdge="vertical">
 			<TextView 
 				android:layout_width="fill_parent"
 		    	android:layout_height="wrap_content"

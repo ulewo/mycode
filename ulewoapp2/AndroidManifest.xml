@@ -30,6 +30,6 @@
 		 <activity android:name=".ui.UserActivity" android:theme="@android:style/Theme.NoTitleBar"/>
 		 <activity android:name=".ui.MoreActivity" android:theme="@android:style/Theme.NoTitleBar"/>
 		 <activity android:name=".ui.ReArticleActivity" android:theme="@android:style/Theme.NoTitleBar"/>
-		 
+		 <activity android:name=".ui.UserCenterActivity" android:theme="@android:style/Theme.NoTitleBar"/>
     </application>
 </manifest>

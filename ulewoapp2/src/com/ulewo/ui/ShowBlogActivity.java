@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Html;
+import android.text.TextPaint;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -14,8 +15,8 @@ import android.widget.TextView;
 import com.ulewo.AppContext;
 import com.ulewo.AppException;
 import com.ulewo.R;
-import com.ulewo.bean.Article;
 import com.ulewo.bean.Blog;
+import com.ulewo.common.UIHelper;
 import com.ulewo.handler.MxgsaTagHandler;
 
 public class ShowBlogActivity extends BaseActivity {
@@ -39,6 +40,7 @@ public class ShowBlogActivity extends BaseActivity {
 	TextView recountView = null;
 
 	private AppContext appContext;
+	Blog blog = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,9 @@ public class ShowBlogActivity extends BaseActivity {
 
 		titleView = (TextView) findViewById(R.id.show_article_title);
 		authorView = (TextView) findViewById(R.id.article_author);
+		TextPaint paint1 = authorView.getPaint();
+		paint1.setFakeBoldText(true);
+
 		timeView = (TextView) findViewById(R.id.article_time);
 		recountView = (TextView) findViewById(R.id.article_recount);
 		showView = (TextView) findViewById(R.id.show_article_id);
@@ -71,6 +76,8 @@ public class ShowBlogActivity extends BaseActivity {
 		TextView textView = (TextView) findViewById(R.id.main_head_title);
 		textView.setText(R.string.show_blog);
 
+		authorView.setOnClickListener(authorClickListener);
+
 		progressBar = (LinearLayout) findViewById(R.id.myprogressbar);
 	}
 
@@ -86,14 +93,14 @@ public class ShowBlogActivity extends BaseActivity {
 
 				progressBar.setVisibility(View.GONE);
 				if (msg.what != -1) {
-					Blog blog = (Blog) msg.obj;
+					blog = (Blog) msg.obj;
 					titleView.setText(blog.getTitle());
 					authorView.setText(blog.getAuthorName());
 					timeView.setText(blog.getPostTime());
 					recountView.setText(blog.getReNumber() + "");
-					showView.setText(Html.fromHtml(blog.getContent(), null, new MxgsaTagHandler(ShowBlogActivity.this)));
-				}
-				else {
+					showView.setText(Html.fromHtml(blog.getContent(), null,
+							new MxgsaTagHandler(ShowBlogActivity.this)));
+				} else {
 					((AppException) msg.obj).makeToast(ShowBlogActivity.this);
 					progressBar.setVisibility(View.GONE);
 				}
@@ -108,8 +115,7 @@ public class ShowBlogActivity extends BaseActivity {
 					Blog blog = appContext.getBlog(articleId);
 					msg.what = 0;
 					msg.obj = blog;
-				}
-				catch (AppException e) {
+				} catch (AppException e) {
 					msg.what = -1;
 					msg.obj = e;
 				}
@@ -117,4 +123,11 @@ public class ShowBlogActivity extends BaseActivity {
 			}
 		}.start();
 	}
+
+	private View.OnClickListener authorClickListener = new View.OnClickListener() {
+		public void onClick(View v) {
+			UIHelper.showUserCenter(v.getContext(), blog.getAuthorId(),
+					blog.getAuthorName());
+		}
+	};
 }

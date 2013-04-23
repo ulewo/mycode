@@ -18,11 +18,11 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ulewo.AppContext;
 import com.ulewo.R;
 import com.ulewo.bean.ReArticle;
+import com.ulewo.common.UIHelper;
 import com.ulewo.handler.MxgsaTagHandler;
 
 public class ReArticleListAdapter extends BaseAdapter {
@@ -125,8 +125,7 @@ public class ReArticleListAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View v) {
 				if (null == AppContext.getSessionId()) {
-					Toast.makeText(context, R.string.pleaselogin,
-							Toast.LENGTH_LONG).show();
+					UIHelper.showLoginDialog(context);
 					return;
 				}
 				content.setText("");
@@ -157,8 +156,7 @@ public class ReArticleListAdapter extends BaseAdapter {
 				@Override
 				public boolean onLongClick(View v) {
 					if (null == AppContext.getSessionId()) {
-						Toast.makeText(context, R.string.pleaselogin,
-								Toast.LENGTH_LONG).show();
+						UIHelper.showLoginDialog(context);
 						return false;
 					}
 					content.setText("");

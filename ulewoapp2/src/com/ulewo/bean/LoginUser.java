@@ -37,12 +37,12 @@ public class LoginUser implements Serializable {
 		try {
 			LoginUser loginUser = new LoginUser();
 			if (!obj.isNull("user")) {
-				loginUser.setUser(User.parse(new JSONObject(obj.getString("user"))));
+				loginUser.setUser(User.parse(new JSONObject(obj
+						.getString("user"))));
 			}
 			loginUser.setLoginResult(obj.getString("loginResult"));
 			return loginUser;
-		}
-		catch (JSONException e) {
+		} catch (JSONException e) {
 			throw AppException.josn(e);
 		}
 	}
