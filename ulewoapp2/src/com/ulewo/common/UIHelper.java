@@ -1,7 +1,9 @@
 package com.ulewo.common;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.view.View;
 import android.widget.Toast;
 
 import com.ulewo.ui.LoginDialogActivity;
@@ -44,7 +46,14 @@ public class UIHelper {
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		context.startActivity(intent);
 	}
-
+	public static View.OnClickListener finish(final Activity activity)
+	{
+		return new View.OnClickListener() {
+			public void onClick(View v) {
+				activity.finish();
+			}
+		};
+	}	
 	/**
 	 * 退出程序
 	 * 

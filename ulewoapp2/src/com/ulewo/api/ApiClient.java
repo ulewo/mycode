@@ -57,7 +57,7 @@ public class ApiClient {
 
 	private final static int RETRY_TIME = 3;
 
-	private static final String BASEURL = "http://192.168.0.224:80/ulewo";
+	private static final String BASEURL = "http://192.168.2.224:8080/ulewo";
 
 	private static final String HOST = BASEURL;
 
