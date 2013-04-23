@@ -516,8 +516,6 @@ public class AndroidAction extends BaseAction {
 	}
 
 	public void fetchUserInfo() {
-
-		int resultCode = RESULTCODE_SUCCESS;
 		UserVo userVo = null;
 		try {
 			User userInfo = userService.getUserInfo(userId);
@@ -535,15 +533,13 @@ public class AndroidAction extends BaseAction {
 				userVo.setSex(userInfo.getSex());
 				userVo.setPrevisitTime(userInfo.getPrevisitTime());
 				userVo.setMark(userInfo.getMark());
-			} else {
-				resultCode = RESULTCODE_FAIL;
 			}
 		} catch (Exception e) {
-			resultCode = RESULTCODE_FAIL;
+			e.printStackTrace();
 		}
 		JSONObject obj = new JSONObject();
-		Response response = new Response(resultCode, userVo, null);
-		obj.put("response", response);
+		obj.put("user", userVo);
+		obj.put("pageTotal", pageTotal);
 		getOut().print(String.valueOf(obj));
 	}
 
