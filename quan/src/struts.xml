@@ -551,6 +551,9 @@
 		<!--用户信息-->
 		<action name="fetchUserInfo" class="android" method="fetchUserInfo">
 		</action>
+		<!--版本信息-->
+		<action name="fetchVersion" class="android" method="fetchVersion">
+		</action>
 	</package>
 	
 	<package name="imageUpload" extends="struts-default">

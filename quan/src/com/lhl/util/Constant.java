@@ -97,4 +97,6 @@ public class Constant {
 
 	public static int ARTICLE_MARK2 = 2;
 
+	public static int VERSION = 1;
+
 }

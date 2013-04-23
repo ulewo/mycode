@@ -542,6 +542,12 @@ public class AndroidAction extends BaseAction {
 		getOut().print(String.valueOf(obj));
 	}
 
+	public void fetchVersion() {
+		JSONObject obj = new JSONObject();
+		obj.put("version", Constant.VERSION);
+		getOut().print(String.valueOf(obj));
+	}
+
 	public void setArticleService(ArticleService articleService) {
 
 		this.articleService = articleService;
