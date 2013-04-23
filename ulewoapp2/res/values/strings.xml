@@ -33,6 +33,8 @@
     <string name="userinfo">正在开发中，敬请期待...</string>
     <string name="login_username">帐号</string>
     <string name="login_password">密码</string>
+    <string name="login_username_p">请输入帐号</string>
+     <string name="login_password_p">请输入密码</string>
     <string name="login_submit">登录</string>
     <string name="back">返&#160;&#160;回</string>
     <string name="recomment_tit">跟帖</string>
