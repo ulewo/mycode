@@ -539,7 +539,6 @@ public class AndroidAction extends BaseAction {
 		}
 		JSONObject obj = new JSONObject();
 		obj.put("user", userVo);
-		obj.put("pageTotal", pageTotal);
 		getOut().print(String.valueOf(obj));
 	}
 
