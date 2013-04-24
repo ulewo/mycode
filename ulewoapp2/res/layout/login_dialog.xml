@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent" 
+	android:layout_height="fill_parent">
+<RelativeLayout 
 	android:id="@+id/logindialog_space" 
 	android:layout_width="fill_parent" 
-	android:background="#11000000"
 	android:layout_height="fill_parent">
     <ScrollView 
     	android:id="@+id/login_scrollview" 
@@ -44,7 +47,7 @@
 	                         android:layout_marginTop="10.0dip" 
 	                         android:textSize="@dimen/size_16" 
 	                         android:textStyle="bold" 
-	                         android:textColor="#ff000000" 
+	                         android:textColor="@color/black" 
 	                         android:text="@string/login_username" />
                         <EditText 
 	                         android:id="@+id/login_account" 
@@ -79,7 +82,7 @@
 	                        android:layout_marginLeft="8.0dip" 
 	                        android:textSize="@dimen/size_16" 
 	                        android:textStyle="bold" 
-	                        android:textColor="#ff000000" 
+	                         android:textColor="@color/black" 
 	                        android:text="@string/login_password" />
                         <EditText 
 	                        android:id="@+id/login_password" 
@@ -128,3 +131,5 @@
 	    android:layout_alignTop="@+id/login_scrollview"
 	    android:background="@drawable/login_close_button"  />
 </RelativeLayout>
+<include layout="@layout/progress"/>
+</FrameLayout>

@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ import com.ulewo.bean.LoginUser;
 import com.ulewo.bean.User;
 import com.ulewo.cache.AsyncImageLoader;
 import com.ulewo.cache.AsyncImageLoader.ImageCallback;
+import com.ulewo.common.UIHelper;
 import com.ulewo.util.Constants;
 import com.ulewo.util.StringUtils;
 
@@ -31,29 +33,21 @@ public class UserActivity extends BaseActivity {
 	EditText pwdEdit = null;
 
 	ImageButton closBtn = null;
-
 	LinearLayout loginlayout = null;
-
 	LinearLayout userinfolayout = null;
-
 	ImageView user_info_icon = null;
-
 	ImageView user_info_sex = null;
-
 	TextView user_info_username = null;
-
 	TextView user_info_jointime = null;
-
 	TextView user_info_age = null;
-
 	TextView user_info_mark = null;
-
 	TextView user_info_address = null;
-
 	TextView user_info_work = null;
-
 	TextView user_info_characters = null;
-
+	LinearLayout myprogressbar = null;
+	
+	RelativeLayout head_common = null;
+	
 	// 刷新按钮
 	ImageButton head_refresh = null;
 
@@ -71,6 +65,26 @@ public class UserActivity extends BaseActivity {
 		appContext = (AppContext) getApplication();
 		initView();
 	}
+
+	
+	
+	@Override
+	protected void onResume() {
+		super.onRestart();
+		if (null != AppContext.getSessionId()) {
+			loginlayout.setVisibility(View.GONE);
+			head_common.setVisibility(View.VISIBLE);
+			initData();
+		}else{
+			usernameEdit.setText("");
+			pwdEdit.setText("");
+			loginlayout.setVisibility(View.VISIBLE);
+			head_common.setVisibility(View.GONE);
+			userinfolayout.setVisibility(View.GONE);
+		}
+	}
+
+
 
 	private void initView() {
 
@@ -95,8 +109,11 @@ public class UserActivity extends BaseActivity {
 		user_info_work = (TextView) findViewById(R.id.user_info_work);
 		user_info_characters = (TextView) findViewById(R.id.user_info_characters);
 
+		head_common = (RelativeLayout)findViewById(R.id.head_common);
+		head_common.setVisibility(View.GONE);
 		if (null != AppContext.getSessionId()) {
 			loginlayout.setVisibility(View.GONE);
+			head_common.setVisibility(View.VISIBLE);
 			initData();
 		}
 
@@ -128,20 +145,22 @@ public class UserActivity extends BaseActivity {
 				login(AppContext.getUserName(), AppContext.getPassword());
 			}
 		});
+		myprogressbar = (LinearLayout)findViewById(R.id.myprogressbar);
+		myprogressbar.setOnClickListener(UIHelper.noOnclick(this));
 	}
 
 	private void login(final String userName, final String password) {
-
+		myprogressbar.setVisibility(View.VISIBLE);
 		loginHandler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
-
+				myprogressbar.setVisibility(View.GONE);
 				if (msg.what != -1) {
 					LoginUser loginUser = (LoginUser) msg.obj;
 					// 登录成功
 					if (Constants.SUCCESS.equals(loginUser.getLoginResult())) {
+						head_common.setVisibility(View.VISIBLE);
 						User user = loginUser.getUser();
-
 						AsyncImageLoader asyncImageLoader = new AsyncImageLoader();
 						Drawable cachedImage = asyncImageLoader.loadDrawable(
 								user.getUserLittleIcon(), new ImageCallback() {

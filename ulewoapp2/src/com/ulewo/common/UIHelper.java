@@ -61,6 +61,14 @@ public class UIHelper {
 		};
 	}
 
+	public static View.OnClickListener noOnclick(final Activity activity) {
+		return new View.OnClickListener() {
+			public void onClick(View v) {
+				return;
+			}
+		};
+	}
+	
 	/**
 	 * 获取webviewClient对象
 	 * 
