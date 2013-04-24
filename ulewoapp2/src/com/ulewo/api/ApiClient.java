@@ -35,6 +35,8 @@ import com.ulewo.bean.GroupList;
 import com.ulewo.bean.LoginUser;
 import com.ulewo.bean.ReArticleList;
 import com.ulewo.bean.ReArticleResult;
+import com.ulewo.bean.ReBlogList;
+import com.ulewo.bean.ReBlogResult;
 import com.ulewo.bean.User;
 import com.ulewo.util.Constants;
 
@@ -57,7 +59,7 @@ public class ApiClient {
 
 	private final static int RETRY_TIME = 3;
 
-	private static final String BASEURL = "http://192.168.2.224:8080/ulewo";
+	private static final String BASEURL = "http://192.168.0.224:80/ulewo";
 
 	private static final String HOST = BASEURL;
 
@@ -72,6 +74,12 @@ public class ApiClient {
 
 	private static final String BASEUR_SHOWBLOG = BASEURL
 			+ "/android/showBlog.jspx";
+
+	private static final String BASEUR_REBLOGLIST = BASEURL
+			+ "/android/fetchBlogComment.jspx";
+
+	private static final String BASEUR_ADDREGLOG = BASEURL
+			+ "/android/addBlogComment.jspx";
 
 	private static final String BASEUR_GROUPLIST = BASEURL
 			+ "/android/fetchWoWo.jspx";
@@ -253,6 +261,65 @@ public class ApiClient {
 		String newUrl = BASEUR_SHOWBLOG + "?articleId=" + articleId;
 		try {
 			return Blog.parse(convertInputStream2JSONObject(http_get(newUrl)));
+		} catch (AppException e) {
+			throw e;
+		}
+	}
+
+	/**
+	 * 博客回复列表
+	 * 
+	 * @param articleId
+	 * @param pageIndex
+	 * @return
+	 * @throws AppException
+	 */
+	public static ReBlogList getReBlogList(int articleId, int pageIndex)
+			throws AppException {
+
+		String newUrl = BASEUR_REBLOGLIST + "?page=" + pageIndex
+				+ "&articleId=" + articleId;
+		try {
+			return ReBlogList
+					.parse(convertInputStream2JSONObject(http_get(newUrl)));
+		} catch (AppException e) {
+			throw e;
+		}
+	}
+
+	/**
+	 * 回复博客
+	 * 
+	 * @param content
+	 * @param articleId
+	 * @param sessionId
+	 * @param userName
+	 * @param password
+	 * @return
+	 * @throws AppException
+	 */
+	public static ReBlogResult addReBlog(String content, int articleId,
+			String sessionId, String userName, String password)
+			throws AppException {
+		String newUrl = BASEUR_ADDREGLOG;
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("content", content);
+		params.put("articleId", articleId);
+		params.put(Constants.SESSIONID, sessionId);
+		params.put(Constants.USERNAME, userName);
+		params.put(Constants.PASSWORD, password);
+
+		try {
+			ReBlogResult result = ReBlogResult
+					.parse(convertInputStream2JSONObject(http_post(newUrl,
+							params, null)));
+			if (result.isLogin()) {
+				AppContext.putUserInfo(Constants.SESSIONID,
+						result.getSessionId());
+			} else {
+				AppContext.removeUserInfo(Constants.SESSIONID);
+			}
+			return result;
 		} catch (AppException e) {
 			throw e;
 		}

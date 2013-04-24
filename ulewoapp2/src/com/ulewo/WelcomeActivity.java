@@ -48,7 +48,8 @@ public class WelcomeActivity extends BaseActivity {
 			// 效果结束后，跳转到新的activity
 			public void onAnimationEnd(Animation animation) {
 
-				Intent mainIntent = new Intent(WelcomeActivity.this, MainActivity.class);
+				Intent mainIntent = new Intent(WelcomeActivity.this,
+						MainActivity.class);
 				startActivity(mainIntent);
 			}
 		});
@@ -62,13 +63,14 @@ public class WelcomeActivity extends BaseActivity {
 
 				String key = StringUtils.encodeByMD5("user");
 				if (appContext.isReadDataCache(key)) {
-					LoginUser loginUser = (LoginUser) appContext.readObject(key);
+					LoginUser loginUser = (LoginUser) appContext
+							.readObject(key);
 					if (loginUser != null) {
 						User user = loginUser.getUser();
 						try {
-							appContext.login(user.getUserName(), user.getPassword(), true);
-						}
-						catch (AppException e) {
+							appContext.login(user.getUserName(),
+									user.getPassword(), true);
+						} catch (AppException e) {
 						}
 					}
 				}

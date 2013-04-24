@@ -1,6 +1,7 @@
 package com.ulewo.ui;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -18,7 +19,10 @@ import com.ulewo.AppContext;
 import com.ulewo.AppException;
 import com.ulewo.R;
 import com.ulewo.bean.User;
+import com.ulewo.cache.AsyncImageLoader;
+import com.ulewo.cache.AsyncImageLoader.ImageCallback;
 import com.ulewo.util.Constants;
+import com.ulewo.util.StringUtils;
 
 public class UserCenterActivity extends BaseActivity {
 
@@ -113,6 +117,23 @@ public class UserCenterActivity extends BaseActivity {
 					// 登录成功
 					if (null != msg.obj) {
 						User user = (User) msg.obj;
+						AsyncImageLoader asyncImageLoader = new AsyncImageLoader();
+						Drawable cachedImage = asyncImageLoader.loadDrawable(
+								user.getUserLittleIcon(), new ImageCallback() {
+									public void imageLoaded(
+											Drawable imageDrawable,
+											String imageUrl) {
+
+										user_info_icon
+												.setImageDrawable(imageDrawable);
+									}
+								});
+						if (cachedImage == null) {
+							user_info_icon.setImageResource(R.drawable.icon);
+						} else {
+							user_info_icon.setImageDrawable(StringUtils
+									.toRoundCornerDrawable(cachedImage, 5));
+						}
 						if (Constants.SEX_M.equals(user.getSex())) {
 							user_info_sex
 									.setImageResource(R.drawable.widget_gender_man);

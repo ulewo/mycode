@@ -98,6 +98,13 @@ public class MoreActivity extends BaseActivity {
 				}
 			};
 		});
+		more_exit.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				isExit();
+			}
+		});
 	}
 
 	// 检测新版本

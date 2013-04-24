@@ -30,6 +30,8 @@ import com.ulewo.bean.GroupList;
 import com.ulewo.bean.LoginUser;
 import com.ulewo.bean.ReArticleList;
 import com.ulewo.bean.ReArticleResult;
+import com.ulewo.bean.ReBlogList;
+import com.ulewo.bean.ReBlogResult;
 import com.ulewo.bean.User;
 import com.ulewo.util.Constants;
 import com.ulewo.util.StringUtils;
@@ -238,6 +240,59 @@ public class AppContext extends Application {
 	}
 
 	/**
+	 * 博客回复列表
+	 * 
+	 * @param articleId
+	 * @param pageIndex
+	 * @return
+	 * @throws AppException
+	 */
+	public ReBlogList getReBlogList(int articleId, int pageIndex)
+			throws AppException {
+		ReBlogList list = null;
+		if (isNetworkConnected()) {
+			try {
+				list = ApiClient.getReBlogList(articleId, pageIndex);
+			} catch (AppException e) {
+				throw e;
+			}
+		} else {
+			throw AppException.network(new HttpException());
+		}
+		return list;
+	}
+
+	/***
+	 * 
+	 * @param content
+	 * @param articleId
+	 * @return
+	 * @throws AppException
+	 */
+
+	public ReBlogResult addReBlog(String content, int articleId)
+			throws AppException {
+
+		ReBlogResult result = null;
+		if (isNetworkConnected()) {
+			try {
+				result = ApiClient.addReBlog(content, articleId,
+						getSessionId(), getUserName(), getPassword());
+				if (result.isLogin()) {
+					putUserInfo(Constants.SESSIONID, result.getSessionId());
+				} else {
+					removeUserInfo(Constants.SESSIONID);
+				}
+			} catch (AppException e) {
+				throw e;
+			}
+		} else {
+			throw AppException.network(new HttpException());
+		}
+		return result;
+	}
+
+	/**
 	 * 
 	 * description:群组列表
 	 * 
@@ -358,7 +413,7 @@ public class AppContext extends Application {
 	public User fetchUserInfo(String userId, boolean isRefresh)
 			throws AppException {
 		User user = null;
-		String key = StringUtils.encodeByMD5("user");
+		String key = StringUtils.encodeByMD5(userId);
 		if (isNetworkConnected() && (!isReadDataCache(key) || isRefresh)) {
 			try {
 				user = ApiClient.fetchUserInfo(userId);

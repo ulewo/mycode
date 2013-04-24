@@ -4,10 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.Html;
 import android.text.TextPaint;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,7 +17,6 @@ import com.ulewo.AppException;
 import com.ulewo.R;
 import com.ulewo.bean.Blog;
 import com.ulewo.common.UIHelper;
-import com.ulewo.handler.MxgsaTagHandler;
 
 public class ShowBlogActivity extends BaseActivity {
 
@@ -29,15 +28,13 @@ public class ShowBlogActivity extends BaseActivity {
 
 	private Handler handler = null;
 
-	TextView showView = null;
-
+	WebView showView = null;
 	TextView titleView = null;
-
 	TextView authorView = null;
-
 	TextView timeView = null;
-
 	TextView recountView = null;
+	private LinearLayout recommentBtn = null;
+	private TextView recommentCount = null;
 
 	private AppContext appContext;
 	Blog blog = null;
@@ -53,6 +50,22 @@ public class ShowBlogActivity extends BaseActivity {
 	}
 
 	private void initView() {
+		recommentBtn = (LinearLayout) super
+				.findViewById(R.id.article_recomment_btn);
+		recommentBtn.setVisibility(View.VISIBLE);
+		recommentBtn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View paramView) {
+
+				Intent intent = new Intent();
+				intent.putExtra("id", articleId);
+				intent.setClass(ShowBlogActivity.this, ReBlogActivity.class);
+				startActivity(intent);
+			}
+		});
+
+		recommentCount = (TextView) super
+				.findViewById(R.id.article_recomment_count);
 
 		titleView = (TextView) findViewById(R.id.show_article_title);
 		authorView = (TextView) findViewById(R.id.article_author);
@@ -61,8 +74,11 @@ public class ShowBlogActivity extends BaseActivity {
 
 		timeView = (TextView) findViewById(R.id.article_time);
 		recountView = (TextView) findViewById(R.id.article_recount);
-		showView = (TextView) findViewById(R.id.show_article_id);
-
+		showView = (WebView) findViewById(R.id.show_article_id);
+		showView.getSettings().setJavaScriptEnabled(false);
+		showView.getSettings().setSupportZoom(true);
+		showView.getSettings().setBuiltInZoomControls(true);
+		showView.getSettings().setDefaultFontSize(13);
 		progressBar = (LinearLayout) super.findViewById(R.id.myprogressbar);
 		backBtn = (Button) super.findViewById(R.id.head_back);
 		backBtn.setVisibility(View.VISIBLE);
@@ -79,6 +95,7 @@ public class ShowBlogActivity extends BaseActivity {
 		authorView.setOnClickListener(authorClickListener);
 
 		progressBar = (LinearLayout) findViewById(R.id.myprogressbar);
+
 	}
 
 	private void initData() {
@@ -98,8 +115,11 @@ public class ShowBlogActivity extends BaseActivity {
 					authorView.setText(blog.getAuthorName());
 					timeView.setText(blog.getPostTime());
 					recountView.setText(blog.getReNumber() + "");
-					showView.setText(Html.fromHtml(blog.getContent(), null,
-							new MxgsaTagHandler(ShowBlogActivity.this)));
+					String body = UIHelper.WEB_STYLE + blog.getContent();
+					showView.loadDataWithBaseURL(null, body, "text/html",
+							"utf-8", null);
+					showView.setWebViewClient(UIHelper.getWebViewClient());
+					recommentCount.setText(blog.getReNumber() + "");
 				} else {
 					((AppException) msg.obj).makeToast(ShowBlogActivity.this);
 					progressBar.setVisibility(View.GONE);

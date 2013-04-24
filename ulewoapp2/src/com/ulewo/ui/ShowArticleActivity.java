@@ -4,10 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.Html;
 import android.text.TextPaint;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,32 +17,22 @@ import com.ulewo.AppException;
 import com.ulewo.R;
 import com.ulewo.bean.Article;
 import com.ulewo.common.UIHelper;
-import com.ulewo.handler.MxgsaTagHandler;
 
 public class ShowArticleActivity extends BaseActivity {
 
 	private LinearLayout progressBar = null;
 
 	private Button backBtn = null;
-
 	private LinearLayout recommentBtn = null;
-
 	private TextView recommentCount = null;
-
-	private TextView showView = null;
-
+	private WebView showView = null;
 	private TextView titleView = null;
-
 	private TextView authorView = null;
-
 	private TextView timeView = null;
-
 	private TextView recountView = null;
-
 	private int articleId = 0;
 
 	private Handler handler = null;
-
 	private AppContext appContext;
 	Article article = null;
 
@@ -68,7 +58,12 @@ public class ShowArticleActivity extends BaseActivity {
 
 		recommentCount = (TextView) super
 				.findViewById(R.id.article_recomment_count);
-		showView = (TextView) findViewById(R.id.show_article_id);
+		showView = (WebView) findViewById(R.id.show_article_id);
+		showView.getSettings().setJavaScriptEnabled(false);
+		showView.getSettings().setSupportZoom(true);
+		showView.getSettings().setBuiltInZoomControls(true);
+		showView.getSettings().setDefaultFontSize(13);
+
 		titleView = (TextView) findViewById(R.id.show_article_title);
 		authorView = (TextView) findViewById(R.id.article_author);
 		timeView = (TextView) findViewById(R.id.article_time);
@@ -82,8 +77,7 @@ public class ShowArticleActivity extends BaseActivity {
 
 				Intent intent = new Intent();
 				intent.putExtra("id", articleId);
-				intent.setClass(ShowArticleActivity.this,
-						ReArticleActivity.class);
+				intent.setClass(ShowArticleActivity.this, ReBlogActivity.class);
 				startActivity(intent);
 			}
 		});
@@ -112,8 +106,12 @@ public class ShowArticleActivity extends BaseActivity {
 					authorView.setText(article.getAuthorName());
 					timeView.setText(article.getPostTime());
 					recountView.setText(article.getReNumber() + "");
-					showView.setText(Html.fromHtml(article.getContent(), null,
-							new MxgsaTagHandler(ShowArticleActivity.this)));
+					String body = UIHelper.WEB_STYLE + article.getContent();
+
+					showView.loadDataWithBaseURL(null, body, "text/html",
+							"utf-8", null);
+					showView.setWebViewClient(UIHelper.getWebViewClient());
+
 				} else {
 					((AppException) msg.obj)
 							.makeToast(ShowArticleActivity.this);

@@ -1,5 +1,6 @@
 package com.ulewo.ui;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -19,6 +20,8 @@ import com.ulewo.AppException;
 import com.ulewo.R;
 import com.ulewo.bean.LoginUser;
 import com.ulewo.bean.User;
+import com.ulewo.cache.AsyncImageLoader;
+import com.ulewo.cache.AsyncImageLoader.ImageCallback;
 import com.ulewo.util.Constants;
 import com.ulewo.util.StringUtils;
 
@@ -28,7 +31,7 @@ public class UserActivity extends BaseActivity {
 	EditText pwdEdit = null;
 
 	ImageButton closBtn = null;
-	
+
 	LinearLayout loginlayout = null;
 
 	LinearLayout userinfolayout = null;
@@ -102,14 +105,17 @@ public class UserActivity extends BaseActivity {
 			public void onClick(View paramView) {
 
 				if (StringUtils.isEmpty(usernameEdit.getText().toString())) {
-					Toast.makeText(UserActivity.this, R.string.noname, Toast.LENGTH_LONG).show();
+					Toast.makeText(UserActivity.this, R.string.noname,
+							Toast.LENGTH_LONG).show();
 					return;
 				}
 				if (StringUtils.isEmpty(pwdEdit.getText().toString())) {
-					Toast.makeText(UserActivity.this, R.string.nopassword, Toast.LENGTH_LONG).show();
+					Toast.makeText(UserActivity.this, R.string.nopassword,
+							Toast.LENGTH_LONG).show();
 					return;
 				}
-				login(usernameEdit.getText().toString(), StringUtils.encodeByMD5(pwdEdit.getText().toString()));
+				login(usernameEdit.getText().toString(),
+						StringUtils.encodeByMD5(pwdEdit.getText().toString()));
 			}
 		});
 
@@ -132,34 +138,57 @@ public class UserActivity extends BaseActivity {
 
 				if (msg.what != -1) {
 					LoginUser loginUser = (LoginUser) msg.obj;
-					//登录成功
+					// 登录成功
 					if (Constants.SUCCESS.equals(loginUser.getLoginResult())) {
 						User user = loginUser.getUser();
-						if (Constants.SEX_M.equals(user.getSex())) {
-							user_info_sex.setImageResource(R.drawable.widget_gender_man);
+
+						AsyncImageLoader asyncImageLoader = new AsyncImageLoader();
+						Drawable cachedImage = asyncImageLoader.loadDrawable(
+								user.getUserLittleIcon(), new ImageCallback() {
+									public void imageLoaded(
+											Drawable imageDrawable,
+											String imageUrl) {
+
+										user_info_icon
+												.setImageDrawable(imageDrawable);
+									}
+								});
+						if (cachedImage == null) {
+							user_info_icon.setImageResource(R.drawable.icon);
+						} else {
+							user_info_icon.setImageDrawable(StringUtils
+									.toRoundCornerDrawable(cachedImage, 5));
 						}
-						else if (Constants.SEX_F.equals(user.getSex())) {
-							user_info_sex.setImageResource(R.drawable.widget_gender_woman);
+						if (Constants.SEX_M.equals(user.getSex())) {
+							user_info_sex
+									.setImageResource(R.drawable.widget_gender_man);
+						} else if (Constants.SEX_F.equals(user.getSex())) {
+							user_info_sex
+									.setImageResource(R.drawable.widget_gender_woman);
 						}
 						user_info_username.setText(user.getUserName());
 						user_info_jointime.setText(user.getRegisterTime());
 						user_info_age.setText(user.getAge() + "");
 						user_info_mark.setText(user.getMark() + "");
-						user_info_address.setText(!"".equals(user.getAddress()) ? user.getAddress() : "<未知>");
-						user_info_work.setText(!"".equals(user.getWork()) ? user.getWork() : "<未知>");
-						user_info_characters.setText(!"".equals(user.getCharacters()) ? user.getCharacters()
+						user_info_address
+								.setText(!"".equals(user.getAddress()) ? user
+										.getAddress() : "<未知>");
+						user_info_work
+								.setText(!"".equals(user.getWork()) ? user
+										.getWork() : "<未知>");
+						user_info_characters.setText(!"".equals(user
+								.getCharacters()) ? user.getCharacters()
 								: "这个人很懒，什么都没留下");
 						loginlayout.setVisibility(View.GONE);
 						userinfolayout.setVisibility(View.VISIBLE);
-					}
-					else {
-						Toast.makeText(UserActivity.this, R.string.loginfaill, Toast.LENGTH_SHORT).show();
+					} else {
+						Toast.makeText(UserActivity.this, R.string.loginfaill,
+								Toast.LENGTH_SHORT).show();
 						loginlayout.setVisibility(View.VISIBLE);
 						userinfolayout.setVisibility(View.GONE);
 					}
 
-				}
-				else {
+				} else {
 					((AppException) msg.obj).makeToast(UserActivity.this);
 					loginlayout.setVisibility(View.VISIBLE);
 					userinfolayout.setVisibility(View.GONE);
@@ -172,11 +201,11 @@ public class UserActivity extends BaseActivity {
 
 				Message msg = new Message();
 				try {
-					LoginUser loginUser = appContext.login(userName, password, true);
+					LoginUser loginUser = appContext.login(userName, password,
+							true);
 					msg.what = 0;
 					msg.obj = loginUser;
-				}
-				catch (AppException e) {
+				} catch (AppException e) {
 					msg.what = -1;
 					msg.obj = e;
 				}
@@ -193,33 +222,37 @@ public class UserActivity extends BaseActivity {
 
 				if (msg.what != -1) {
 					LoginUser loginUser = (LoginUser) msg.obj;
-					//登录成功
+					// 登录成功
 					if (Constants.SUCCESS.equals(loginUser.getLoginResult())) {
 
 						User user = loginUser.getUser();
 						if (Constants.SEX_M.equals(user.getSex())) {
-							user_info_sex.setImageResource(R.drawable.widget_gender_man);
-						}
-						else if (Constants.SEX_F.equals(user.getSex())) {
-							user_info_sex.setImageResource(R.drawable.widget_gender_woman);
+							user_info_sex
+									.setImageResource(R.drawable.widget_gender_man);
+						} else if (Constants.SEX_F.equals(user.getSex())) {
+							user_info_sex
+									.setImageResource(R.drawable.widget_gender_woman);
 						}
 						user_info_username.setText(user.getUserName());
 						user_info_jointime.setText(user.getRegisterTime());
 						user_info_age.setText(user.getAge() + "");
 						user_info_mark.setText(user.getMark() + "");
-						user_info_address.setText(!"".equals(user.getAddress()) ? user.getAddress() : "<未知>");
-						user_info_work.setText(!"".equals(user.getWork()) ? user.getWork() : "<未知>");
-						user_info_characters.setText(!"".equals(user.getCharacters()) ? user.getCharacters()
+						user_info_address
+								.setText(!"".equals(user.getAddress()) ? user
+										.getAddress() : "<未知>");
+						user_info_work
+								.setText(!"".equals(user.getWork()) ? user
+										.getWork() : "<未知>");
+						user_info_characters.setText(!"".equals(user
+								.getCharacters()) ? user.getCharacters()
 								: "这个人很懒，什么都没留下");
 						userinfolayout.setVisibility(View.VISIBLE);
-					}
-					else {
+					} else {
 						loginlayout.setVisibility(View.VISIBLE);
 						userinfolayout.setVisibility(View.GONE);
 					}
 
-				}
-				else {
+				} else {
 					((AppException) msg.obj).makeToast(UserActivity.this);
 					loginlayout.setVisibility(View.VISIBLE);
 					userinfolayout.setVisibility(View.GONE);
@@ -232,11 +265,12 @@ public class UserActivity extends BaseActivity {
 
 				Message msg = new Message();
 				try {
-					LoginUser loginUser = appContext.login(appContext.getUserName(), appContext.getPassword(), false);
+					LoginUser loginUser = appContext.login(
+							appContext.getUserName(), appContext.getPassword(),
+							false);
 					msg.what = 0;
 					msg.obj = loginUser;
-				}
-				catch (AppException e) {
+				} catch (AppException e) {
 					msg.what = -1;
 					msg.obj = e;
 				}

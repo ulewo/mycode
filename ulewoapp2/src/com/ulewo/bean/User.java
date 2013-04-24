@@ -170,25 +170,27 @@ public class User implements Serializable {
 			JSONObject obj = null;
 			if (!jsonobj.isNull("user")) {
 				obj = new JSONObject(jsonobj.getString("user"));
-			}
-			else {
+			} else {
 				obj = jsonobj;
 			}
 			User user = new User();
 			user.setUserId(obj.getString("userId"));
 			user.setUserName(obj.getString("userName"));
 			user.setUserLittleIcon(obj.getString("userLittleIcon"));
-			user.setAge(obj.getInt("age"));
+			if (!"".equals(obj.getString("age"))) {
+				user.setAge(obj.getInt("age"));
+			}
 			user.setRegisterTime(obj.getString("registerTime"));
 			user.setAddress(obj.getString("address"));
-			user.setMark(obj.getInt("mark"));
+			if (!"".equals(obj.getString("mark"))) {
+				user.setMark(obj.getInt("mark"));
+			}
 			user.setSex(obj.getString("sex"));
 			user.setWork(obj.getString("work"));
 			user.setCharacters(obj.getString("characters"));
 			user.setSessionId(obj.getString("sessionId"));
 			return user;
-		}
-		catch (JSONException e) {
+		} catch (JSONException e) {
 			throw AppException.josn(e);
 		}
 	}
