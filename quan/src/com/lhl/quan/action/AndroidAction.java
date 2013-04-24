@@ -16,7 +16,6 @@ import com.lhl.entity.BlogArticle;
 import com.lhl.entity.BlogReply;
 import com.lhl.entity.Group;
 import com.lhl.entity.ReArticle;
-import com.lhl.entity.Response;
 import com.lhl.entity.User;
 import com.lhl.quan.service.ArticleService;
 import com.lhl.quan.service.BlogArticleService;
@@ -29,6 +28,7 @@ import com.lhl.util.MySessionContext;
 import com.lhl.util.Pagination;
 import com.lhl.util.Tools;
 import com.lhl.vo.ArticleVo;
+import com.lhl.vo.BlogReplyVo;
 import com.lhl.vo.BlogVo;
 import com.lhl.vo.GroupVo;
 import com.lhl.vo.ReArticleVo;
@@ -135,7 +135,8 @@ public class AndroidAction extends BaseAction {
 				vo = new ArticleVo();
 				vo.setAuthorId(article.getAuthorId());
 				vo.setAuthorName(article.getAuthorName());
-				vo.setContent(article.getContent());
+				vo.setContent(Tools.pathRelative2Absolutely(article
+						.getContent()));
 				vo.setId(article.getId());
 				vo.setPostTime(Tools.friendly_time(article.getPostTime()));
 				vo.setReadNumber(article.getReadNumber());
@@ -349,7 +350,7 @@ public class AndroidAction extends BaseAction {
 			vo = new BlogVo();
 			vo.setAuthorId(blog.getUserId());
 			vo.setAuthorName(blog.getUserName());
-			vo.setContent(blog.getContent());
+			vo.setContent(Tools.pathRelative2Absolutely(blog.getContent()));
 			vo.setId(blog.getId());
 			vo.setPostTime(Tools.friendly_time(blog.getPostTime()));
 			vo.setReadNumber(blog.getReadCount());
@@ -364,18 +365,83 @@ public class AndroidAction extends BaseAction {
 	}
 
 	public void fetchBlogComment() {
-
-		int resultCode = RESULTCODE_SUCCESS;
-		List<BlogReply> list = null;
+		List<BlogReplyVo> resultList = new ArrayList<BlogReplyVo>();
+		int pageSize = 10;
 		try {
-			list = blogReplyService.queryBlogReplyByBlogId(articleId);
+			int countNumber = blogReplyService
+					.queryBlogReplyCountByBlogId(articleId);
+
+			Pagination.setPageSize(Constant.pageSize50);
+			pageTotal = Pagination.getPageTotal(countNumber);
+			/*
+			 * if (page > pageTotal) { page = pageTotal; } if (page < 1) { page
+			 * = 1; } int noStart = (page - 1) * pageSize;
+			 */
+			List<BlogReply> reArticleList = blogReplyService
+					.queryBlogReplyByBlogId(articleId);
+			BlogReplyVo vo = null;
+			for (BlogReply re : reArticleList) {
+				vo = new BlogReplyVo();
+				vo.setArticleId(re.getBlogId());
+				vo.setAuthorIcon(Constant.WEBSTIE + re.getReUserIcon());
+				vo.setAuthorid(re.getUserId());
+				vo.setAuthorName(re.getUserName());
+				vo.setContent(re.getContent());
+				vo.setReTime(re.getPostTime());
+				resultList.add(vo);
+			}
+
 		} catch (Exception e) {
-			resultCode = RESULTCODE_FAIL;
 			e.printStackTrace();
 		}
 		JSONObject obj = new JSONObject();
-		Response response = new Response(resultCode, pageTotal, list);
-		obj.put("response", response);
+		obj.put("list", resultList);
+		obj.put("pageTotal", pageTotal);
+		getOut().print(String.valueOf(obj));
+	}
+
+	public void addBlogComment() {
+
+		BlogReplyVo vo = null;
+		boolean isLogin = true;
+		try {
+			HttpSession session = MySessionContext.getSession(sessionId);
+			if (session == null) {
+				// session失效，重新登录
+				if (!login2(session, userName, password)) {
+					isLogin = false;
+				} else {
+					sessionId = session.getId();
+					MySessionContext.AddSession(session);
+				}
+			} else {
+				Object sessionObj = session.getAttribute("user");
+				User sessionUser = (User) sessionObj;
+				BlogReply blogReply = new BlogReply();
+
+				blogReply.setBlogId(articleId);
+				blogReply.setContent(Tools.formateHtml(content));
+				blogReply.setUserId(sessionUser.getUserId());
+				blogReply.setUserName(sessionUser.getUserName());
+				blogReply.setReUserIcon(sessionUser.getUserLittleIcon());
+				BlogReply re = blogReplyService.addReply(blogReply);
+
+				vo = new BlogReplyVo();
+				vo.setArticleId(re.getBlogId());
+				vo.setContent(content);
+				vo.setId(re.getId());
+				vo.setAuthorid(re.getUserId());
+				vo.setAuthorName(re.getUserName());
+				vo.setAuthorIcon(re.getReUserIcon());
+				vo.setReTime(Tools.friendly_time(re.getPostTime()));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		JSONObject obj = new JSONObject();
+		obj.put("reBlog", vo);
+		obj.put("sessionId", sessionId);
+		obj.put("isLogin", isLogin);
 		getOut().print(String.valueOf(obj));
 	}
 
@@ -411,12 +477,9 @@ public class AndroidAction extends BaseAction {
 				vo.setGid(group.getId());
 				vo.setgMember(group.getMembers());
 				vo.setgName(group.getGroupName());
-				vo.setGroupIcon(group.getGroupIcon());
+				vo.setGroupIcon(Constant.WEBSTIE_IMAGEURL
+						+ group.getGroupIcon());
 				resultList.add(vo);
-			}
-			for (Group group : list) {
-				group.setGroupDesc("");
-				group.setGroupHeadIcon("");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -486,7 +549,8 @@ public class AndroidAction extends BaseAction {
 				User loginUser = new User();
 				loginUser.setUserId(userInfo.getUserId());
 				loginUser.setUserName(userName);
-				loginUser.setUserLittleIcon(userInfo.getUserLittleIcon());
+				loginUser.setUserLittleIcon(Constant.WEBSTIE_IMAGEURL
+						+ userInfo.getUserLittleIcon());
 				getSession().setAttribute("user", loginUser);
 				MySessionContext.AddSession(session);
 
@@ -521,7 +585,8 @@ public class AndroidAction extends BaseAction {
 			User userInfo = userService.getUserInfo(userId);
 			if (userInfo != null) {
 				userVo = new UserVo();
-				userVo.setUserLittleIcon(userInfo.getUserLittleIcon());
+				userVo.setUserLittleIcon(Constant.WEBSTIE_IMAGEURL
+						+ userInfo.getUserLittleIcon());
 				userVo.setUserId(userInfo.getUserId());
 				userVo.setUserName(userInfo.getUserName());
 				userVo.setWork(userInfo.getWork());

@@ -39,7 +39,7 @@
 	
 	<!-- 查询数量 -->
 	<select id="queryReplyCountByBlogId"  resultClass="java.lang.Integer" parameterClass="java.lang.Integer">
-		select count(id) from blog_reply  where id = #blogId#
+		select count(id) from blog_reply  where blogid = #blogId#
 	</select>
 	
 	<!-- 删除回复 -->
