@@ -539,6 +539,10 @@
 		<!--博客评论 -->
 		<action name="fetchBlogComment" class="android" method="fetchBlogComment">
 		</action>
+		<!--回复博客 -->
+		<action name="addBlogComment" class="android" method="addBlogComment">
+		</action>
+		
 		<!--wowo-->
 		<action name="fetchWoWo" class="android" method="fetchWoWo">
 		</action>
