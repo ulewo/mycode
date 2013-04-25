@@ -60,7 +60,6 @@
 		</ListView>
     </LinearLayout>
 </RelativeLayout>
-<include  layout="@layout/progress"/>
 <RelativeLayout 
     	android:id="@+id/article_subrepanel"
     	android:layout_width="fill_parent"
@@ -110,5 +109,6 @@
 			android:text="@string/rename"
 		/>	
 </RelativeLayout>
+<include  layout="@layout/progress"/>
 </FrameLayout>
 

@@ -29,23 +29,16 @@ import com.ulewo.util.StringUtils;
 public class ReBlogActivity extends BaseActivity {
 
 	private ReBlogListAdapter adapter = null;
-
 	private View loadMoreView = null;
 
-	private int page = 1;
-
 	private TextView loadmoreTextView = null;
-
 	private LinearLayout loadmore_prgressbar = null;
-
 	ListView listView = null;
-
 	private ImageButton refreshBtn = null;
-
 	private Button backBtn = null;
-
 	private LinearLayout progressBar = null;
 
+	private int page = 1;
 	private int articleId = 0;
 	boolean isRefresh = false;
 
@@ -77,6 +70,7 @@ public class ReBlogActivity extends BaseActivity {
 		articleId = Integer.parseInt(String.valueOf(bundle.get("id")));
 
 		progressBar = (LinearLayout) super.findViewById(R.id.myprogressbar);
+		progressBar.setOnClickListener(UIHelper.noOnclick(this));
 		backBtn = (Button) super.findViewById(R.id.head_back);
 		backBtn.setVisibility(View.VISIBLE);
 		backBtn.setOnClickListener(UIHelper.finish(this));
@@ -129,6 +123,7 @@ public class ReBlogActivity extends BaseActivity {
 							Toast.LENGTH_LONG).show();
 					return;
 				}
+				progressBar.setVisibility(View.VISIBLE);
 				subComment(content);
 			}
 		});
@@ -189,7 +184,7 @@ public class ReBlogActivity extends BaseActivity {
 		subCommentHandler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
-
+				progressBar.setVisibility(View.GONE);
 				if (msg.what != -1) {
 					ReBlogResult result = (ReBlogResult) msg.obj;
 					if (result.isLogin()) {
