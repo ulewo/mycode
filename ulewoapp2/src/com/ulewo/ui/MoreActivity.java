@@ -27,6 +27,7 @@ import android.widget.TextView;
 import com.ulewo.AppContext;
 import com.ulewo.R;
 import com.ulewo.util.Constants;
+import com.ulewo.util.StringUtils;
 
 public class MoreActivity extends BaseActivity {
 
@@ -87,7 +88,11 @@ public class MoreActivity extends BaseActivity {
 
 					switch (which) {
 					case AlertDialog.BUTTON_POSITIVE:// "确认"按钮退出程序
+						//清除session
 						appContext.removeUserInfo(Constants.SESSIONID);
+						//删除缓存文件
+						String fileName = StringUtils.encodeByMD5("user");
+						appContext.deleteObject(fileName);
 						// appContext.re
 						break;
 					case AlertDialog.BUTTON_NEGATIVE:// "取消"第二个按钮取消对话框
@@ -103,6 +108,15 @@ public class MoreActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				isExit();
+			}
+		});
+		
+		more_about_item.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View paramView) {
+				Intent intent = new Intent();
+				intent.setClass(MoreActivity.this, AboutActivity.class);
+				startActivity(intent);
 			}
 		});
 	}

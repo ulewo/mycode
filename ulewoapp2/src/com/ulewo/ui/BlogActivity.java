@@ -52,6 +52,7 @@ public class BlogActivity extends BaseActivity {
 		textView.setText(R.string.name_blog);
 
 		progressBar = (LinearLayout) findViewById(R.id.myprogressbar);
+		progressBar.setVisibility(View.VISIBLE);
 		loadMoreView = View.inflate(this, R.layout.loadmore, null);
 
 		listView = (ListView) findViewById(R.id.article_list_view_id);

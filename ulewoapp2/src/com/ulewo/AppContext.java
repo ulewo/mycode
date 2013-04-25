@@ -582,6 +582,20 @@ public class AppContext extends Application {
 		return null;
 	}
 
+	public Serializable deleteObject(String fileName) {
+
+		if (Environment.getExternalStorageState().equals(
+				Environment.MEDIA_MOUNTED)) {
+			String sDir = Environment.getExternalStorageDirectory()
+					+ Constants.SEPARATOR + Constants.ULEWO;
+			File file = new File(sDir, fileName);
+			if (file.exists()) {
+				file.delete();
+			}
+		}
+		return null;
+	}
+	
 	/**
 	 * 获取App安装包信息
 	 * 

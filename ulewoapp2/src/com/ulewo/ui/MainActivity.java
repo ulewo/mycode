@@ -30,6 +30,7 @@ public class MainActivity extends TabActivity {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		AppManager.getAppManager().addActivity(this);
 		tabHost = getTabHost();
 
 		tabHost.addTab(tabHost.newTabSpec(TAG_ARTICLE)

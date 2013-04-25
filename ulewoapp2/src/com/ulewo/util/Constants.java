@@ -24,5 +24,7 @@ public class Constants {
 	public static final String SEX_M = "M";
 
 	public static final String SEX_F = "F";
+	
+	public static int MAXCONTENTLENGTH = 500;
 
 }

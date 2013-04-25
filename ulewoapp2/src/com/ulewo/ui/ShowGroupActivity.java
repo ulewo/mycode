@@ -93,6 +93,7 @@ public class ShowGroupActivity extends BaseActivity {
 		articleView.setText(gArticleCount + "");
 
 		progressBar = (LinearLayout) findViewById(R.id.myprogressbar);
+		progressBar.setVisibility(View.VISIBLE);
 		loadMoreView = View.inflate(this, R.layout.loadmore, null);
 		listView = (ListView) findViewById(R.id.article_list_view_id);
 		listView.addFooterView(loadMoreView);

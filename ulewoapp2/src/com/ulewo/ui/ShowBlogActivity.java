@@ -80,6 +80,8 @@ public class ShowBlogActivity extends BaseActivity {
 		showView.getSettings().setBuiltInZoomControls(true);
 		showView.getSettings().setDefaultFontSize(13);
 		progressBar = (LinearLayout) super.findViewById(R.id.myprogressbar);
+		progressBar.setVisibility(View.VISIBLE);
+		progressBar.setOnClickListener(UIHelper.noOnclick(this));
 		backBtn = (Button) super.findViewById(R.id.head_back);
 		backBtn.setVisibility(View.VISIBLE);
 		backBtn.setOnClickListener(new OnClickListener() {
@@ -94,7 +96,6 @@ public class ShowBlogActivity extends BaseActivity {
 
 		authorView.setOnClickListener(authorClickListener);
 
-		progressBar = (LinearLayout) findViewById(R.id.myprogressbar);
 
 	}
 
@@ -122,7 +123,6 @@ public class ShowBlogActivity extends BaseActivity {
 					recommentCount.setText(blog.getReNumber() + "");
 				} else {
 					((AppException) msg.obj).makeToast(ShowBlogActivity.this);
-					progressBar.setVisibility(View.GONE);
 				}
 			}
 		};

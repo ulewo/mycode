@@ -26,6 +26,7 @@ import com.ulewo.bean.ReArticle;
 import com.ulewo.bean.ReArticleList;
 import com.ulewo.bean.ReArticleResult;
 import com.ulewo.common.UIHelper;
+import com.ulewo.util.Constants;
 import com.ulewo.util.StringUtils;
 
 public class ReArticleActivity extends BaseActivity {
@@ -78,9 +79,9 @@ public class ReArticleActivity extends BaseActivity {
 		Intent intent = getIntent();
 		Bundle bundle = intent.getExtras();
 		articleId = Integer.parseInt(String.valueOf(bundle.get("id")));
-
 		progressBar = (LinearLayout) super.findViewById(R.id.myprogressbar);
 		progressBar.setOnClickListener(UIHelper.finish(this));
+		progressBar.setVisibility(View.VISIBLE);
 		backBtn = (Button) super.findViewById(R.id.head_back);
 		backBtn.setVisibility(View.VISIBLE);
 		backBtn.setOnClickListener(UIHelper.finish(this));
@@ -133,11 +134,17 @@ public class ReArticleActivity extends BaseActivity {
 							Toast.LENGTH_LONG).show();
 					return;
 				}
+				if (content.length()>Constants.MAXCONTENTLENGTH) {
+					Toast.makeText(ReArticleActivity.this, R.string.contenttoolong,
+							Toast.LENGTH_LONG).show();
+					return;
+				}
 				progressBar.setVisibility(View.VISIBLE);
 				subComment(content);
 			}
 		});
 		reSubPanel = (RelativeLayout) findViewById(R.id.article_subrepanel);
+		reSubPanel.setOnClickListener(UIHelper.noOnclick(this));
 		subreformbtn = (Button) findViewById(R.id.subreformbtn);
 		reusers = (TextView) findViewById(R.id.reuser);
 		hide_atuserId = (EditText) findViewById(R.id.hide_atuserId);
@@ -147,8 +154,7 @@ public class ReArticleActivity extends BaseActivity {
 		subreformbtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				progressBar.setVisibility(View.VISIBLE);
-				ReArticleActivity.this.addSubReArticle();
+				addSubReArticle();
 			}
 		});
 	}
@@ -264,6 +270,17 @@ public class ReArticleActivity extends BaseActivity {
 						.toString());
 		final String hide_pid = ReArticleActivity.this.hide_pid.getText()
 				.toString();
+		if (StringUtils.isEmpty(content)) {
+			Toast.makeText(ReArticleActivity.this, R.string.nocontent,
+					Toast.LENGTH_LONG).show();
+			return;
+		}
+		if (content.length()>Constants.MAXCONTENTLENGTH) {
+			Toast.makeText(ReArticleActivity.this, R.string.contenttoolong,
+					Toast.LENGTH_LONG).show();
+			return;
+		}
+		progressBar.setVisibility(View.VISIBLE);
 		subReCommentHandler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {

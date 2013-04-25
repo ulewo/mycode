@@ -24,6 +24,7 @@ import com.ulewo.adapter.ReBlogListAdapter;
 import com.ulewo.bean.ReBlogList;
 import com.ulewo.bean.ReBlogResult;
 import com.ulewo.common.UIHelper;
+import com.ulewo.util.Constants;
 import com.ulewo.util.StringUtils;
 
 public class ReBlogActivity extends BaseActivity {
@@ -71,6 +72,7 @@ public class ReBlogActivity extends BaseActivity {
 
 		progressBar = (LinearLayout) super.findViewById(R.id.myprogressbar);
 		progressBar.setOnClickListener(UIHelper.noOnclick(this));
+		progressBar.setOnClickListener(UIHelper.noOnclick(this));
 		backBtn = (Button) super.findViewById(R.id.head_back);
 		backBtn.setVisibility(View.VISIBLE);
 		backBtn.setOnClickListener(UIHelper.finish(this));
@@ -111,7 +113,6 @@ public class ReBlogActivity extends BaseActivity {
 
 			@Override
 			public void onClick(View paramView) {
-
 				if (null == AppContext.getSessionId()) {
 					UIHelper.showLoginDialog(ReBlogActivity.this);
 					return;
@@ -120,6 +121,11 @@ public class ReBlogActivity extends BaseActivity {
 						.trim();
 				if (StringUtils.isEmpty(content)) {
 					Toast.makeText(ReBlogActivity.this, R.string.nocontent,
+							Toast.LENGTH_LONG).show();
+					return;
+				}
+				if (content.length()>Constants.MAXCONTENTLENGTH) {
+					Toast.makeText(ReBlogActivity.this, R.string.contenttoolong,
 							Toast.LENGTH_LONG).show();
 					return;
 				}
@@ -134,7 +140,6 @@ public class ReBlogActivity extends BaseActivity {
 		handler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
-
 				progressBar.setVisibility(View.GONE);
 				if (msg.what != -1) {
 					ReBlogList list = (ReBlogList) msg.obj;

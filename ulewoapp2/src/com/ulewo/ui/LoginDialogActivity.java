@@ -72,7 +72,7 @@ public class LoginDialogActivity extends BaseActivity {
 					LoginUser loginUser = (LoginUser) msg.obj;
 					// 登录成功
 					if (Constants.SUCCESS.equals(loginUser.getLoginResult())) {
-						UIHelper.finish(LoginDialogActivity.this);
+						LoginDialogActivity.this.finish();
 					} else {
 						Toast.makeText(LoginDialogActivity.this, R.string.loginfaill,
 								Toast.LENGTH_SHORT).show();

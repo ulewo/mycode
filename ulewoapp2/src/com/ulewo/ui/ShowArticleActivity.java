@@ -49,6 +49,8 @@ public class ShowArticleActivity extends BaseActivity {
 	private void initView() {
 
 		progressBar = (LinearLayout) super.findViewById(R.id.myprogressbar);
+		progressBar.setVisibility(View.VISIBLE);
+		progressBar.setOnClickListener(UIHelper.noOnclick(this));
 		backBtn = (Button) super.findViewById(R.id.head_back);
 		backBtn.setVisibility(View.VISIBLE);
 
@@ -77,7 +79,7 @@ public class ShowArticleActivity extends BaseActivity {
 
 				Intent intent = new Intent();
 				intent.putExtra("id", articleId);
-				intent.setClass(ShowArticleActivity.this, ReBlogActivity.class);
+				intent.setClass(ShowArticleActivity.this, ReArticleActivity.class);
 				startActivity(intent);
 			}
 		});
@@ -115,7 +117,6 @@ public class ShowArticleActivity extends BaseActivity {
 				} else {
 					((AppException) msg.obj)
 							.makeToast(ShowArticleActivity.this);
-					progressBar.setVisibility(View.GONE);
 				}
 			}
 		};
