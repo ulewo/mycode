@@ -113,6 +113,7 @@ public class ArticleServiceImpl implements ArticleService {
 		if (null == article) {
 			throw new BaseException(30000);
 		}
+		article.setPostTime(Tools.friendly_time(article.getPostTime()));
 		return article;
 	}
 
@@ -149,6 +150,8 @@ public class ArticleServiceImpl implements ArticleService {
 			// 设置回复数
 			article.setReNumber(reArticleDao.queryReArticleCount(article
 					.getId()));
+			article.setPostTime(Tools.friendly_time(article.getPostTime()));
+
 		} else {
 			throw new BaseException(30000);
 		}
@@ -231,9 +234,10 @@ public class ArticleServiceImpl implements ArticleService {
 			if (Tools.isEmpty(article.getItemName())) {
 				article.setItemName("全部分类");
 			}
+			article.setPostTime(Tools.friendly_time(article.getPostTime()));
 			article.setLastReAuthorId(lastReAuthorId);
 			article.setLastReAuthorName(lastReAuthorName);
-			article.setLastReTime(lastReTime);
+			article.setLastReTime(Tools.friendly_time(lastReTime));
 		}
 	}
 
@@ -249,6 +253,9 @@ public class ArticleServiceImpl implements ArticleService {
 
 		List<Article> list = articleDao.queryTopicByUserId(userId, offset,
 				total);
+		for (Article article : list) {
+			article.setPostTime(Tools.friendly_time(article.getPostTime()));
+		}
 		return list;
 	}
 
@@ -264,6 +271,9 @@ public class ArticleServiceImpl implements ArticleService {
 
 		List<Article> list = articleDao.queryTopicByReUserId(userId, offset,
 				total);
+		for (Article article : list) {
+			article.setPostTime(Tools.friendly_time(article.getPostTime()));
+		}
 		return list;
 	}
 
@@ -318,6 +328,9 @@ public class ArticleServiceImpl implements ArticleService {
 
 		List<Article> list = articleDao.searchTopic(keyWord, gid, isValid,
 				offset, total);
+		for (Article article : list) {
+			article.setPostTime(Tools.friendly_time(article.getPostTime()));
+		}
 		return list;
 	}
 
@@ -346,6 +359,9 @@ public class ArticleServiceImpl implements ArticleService {
 	public List<Article> queryLatestArticle(int offset, int total) {
 
 		List<Article> list = articleDao.queryLatestArticle(offset, total);
+		for (Article article : list) {
+			article.setPostTime(Tools.friendly_time(article.getPostTime()));
+		}
 		return list;
 	}
 

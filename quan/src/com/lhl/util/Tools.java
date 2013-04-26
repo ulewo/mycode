@@ -144,6 +144,9 @@ public class Tools {
 	 */
 	public static String friendly_time(String sdate) {
 
+		if (isEmpty(sdate)) {
+			return "";
+		}
 		Date time = toDate(sdate);
 		if (time == null) {
 			return "Unknown";
