@@ -9,14 +9,21 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content">
 		<!-- 回复人头像 -->
+		<LinearLayout 
+			android:id="@+id/recomment_icon_con"
+			android:layout_width="56px"
+	    	android:layout_height="56px"
+	    	android:padding="3px"
+	    	android:background="@drawable/mini_avatar_shadow">
 		<ImageView
 			android:id="@+id/recomment_icon" 
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:src="@drawable/icon"/>
+		</LinearLayout>
 		<!-- 回复信息 -->
 		<LinearLayout 
-			android:layout_toRightOf="@id/recomment_icon"
+			android:layout_toRightOf="@id/recomment_icon_con"
 			android:orientation="vertical"
 			android:layout_width="fill_parent"
 			android:layout_marginLeft="10dp"
