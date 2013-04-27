@@ -61,7 +61,7 @@
   	 		<c:forEach var="article" items="${articleList}">
 				<div class="mainlist_con <c:if test='${num%2==0}'>mainlist_con_color</c:if>">
 					<div class="mainlist_con_title"><a href="group/post.jspx?id=${article.id}">${article.title}</a></div>
-					<div class="mainlist_con_username"><a href="">${article.authorName}</a>&nbsp;&nbsp;发表于：${fn:substring(article.postTime,0,10)}</div>
+					<div class="mainlist_con_username"><a href="">${article.authorName}</a>&nbsp;&nbsp;发表于：${article.postTime}</div>
 					<div class="mainlist_con_summary">${article.summary}(${article.reNumber}评论)</div>
 				</div>
 				<c:set var="num" value="${num+1}" />

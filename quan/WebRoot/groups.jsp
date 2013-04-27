@@ -28,7 +28,7 @@
 	  			<div class="group_info">
 	  				<div class="group_name"><a href="group/group.jspx?gid=${group.id}">${group.groupName }</a></div>
 	  				<div class="group_author">创建者：<a href="user/userInfo.jspx?userId=${group.groupAuthor }">${group.authorName }</a>&nbsp;|&nbsp;成员数：${group.members }人&nbsp;|&nbsp;文章数：${group.topicCount }</div>
-	  				<div class="group_desc">${fn:substring(group.groupDesc,0,150)}</div>
+	  				<div class="group_desc">${group.groupDesc}</div>
 	  			</div>
 	  			<div style="clear:left;"></div>
 	  		</div>

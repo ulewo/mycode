@@ -44,14 +44,14 @@
   			<div class="titinfo">最新文章</div>
 	  			<ul class="new_article_list">
 	  				<c:forEach var="article" items="${list}">
-	  					<li><span class="article_tit"><a href="group/group.jspx?gid=${article.gid}" target="_blank">[${article.groupName}]</a><a href="group/post.jspx?id=${article.id}" class="sec_span2"  title="${article.title}" target="_blank">${article.title}</a></span><span class="article_user">${fn:substring(article.postTime,0,10)} by ${article.authorName}</span></li>
+	  					<li><span class="article_tit"><a href="group/group.jspx?gid=${article.gid}" target="_blank">[${article.groupName}]</a><a href="group/post.jspx?id=${article.id}" class="sec_span2"  title="${article.title}" target="_blank">${article.title}</a></span><span class="article_user">${article.postTime} by ${article.authorName}</span></li>
 	  				</c:forEach>
 	  			</ul>
   			<div class="titinfo">最新博文</div>
   			  <div>
 				<ul class="new_blog">
 					<c:forEach var="blog" items="${blogList}">
-						<li><span class="article_tit"><a href="user/blogdetail.jspx?id=${blog.id}" title="${article.title}" target="_blank">${blog.title}</a><span class="sec_span">${fn:substring(blog.postTime,0,10)} by ${blog.userName}</span></span><span class="article_read">${blog.reCount}回/${blog.readCount}阅</span></li>
+						<li><span class="article_tit"><a href="user/blogdetail.jspx?id=${blog.id}" title="${article.title}" target="_blank">${blog.title}</a><span class="sec_span">${blog.postTime} by ${blog.userName}</span></span><span class="article_read">${blog.reCount}回/${blog.readCount}阅</span></li>
 					</c:forEach>
 	  			</ul>
 	  			</div>
