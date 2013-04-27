@@ -74,7 +74,7 @@
 		<div class="main">
 			<div class="title_con">
 				<div class="title" id="title_con">${article.title}</div>
-				<div class="article_info">${fn:substring(article.postTime,0,16)} 阅读(${article.readNumber})&nbsp;&nbsp;回复(<span id="reCount">${article.reNumber}</span>)</div>
+				<div class="article_info">${article.postTime} 阅读(${article.readNumber})&nbsp;&nbsp;回复(<span id="reCount">${article.reNumber}</span>)</div>
 				<!-- <div class="next_article"><a href="">上一篇</a>&nbsp;&nbsp;<a href="">下一篇</a></div> -->
 			</div>
 			<div class="user_info">
@@ -126,7 +126,7 @@
 										${reArticle.authorName }
 									</c:if>
 								</span>
-								<span class='info_time'>发表时间：${fn:substring(reArticle.reTime,0, 16)}</span>
+								<span class='info_time'>发表时间：${reArticle.reTime}</span>
 							</div>
 							<div class="recon_info_info_op">
 								<c:if test="${user!=null}"><span><a href='javascript:void(0)' onclick="quote('${reArticle.id}')">回复</a></span></c:if>

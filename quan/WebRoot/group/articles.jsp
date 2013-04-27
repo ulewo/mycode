@@ -57,7 +57,7 @@
 			</div>
 			<div class="aauthor">
 				<a href="../user/userInfo.jspx?userId=${article.authorId}" target="_blank">${article.authorName}</a><br>
-				<span class="timestyle">${fn:substring(article.postTime,0,16)}</span>
+				<span class="timestyle">${article.postTime}</span>
 			</div>
 			<div class="aauthor">
 				<c:if test="${article.lastReAuthorId!=null}">
@@ -66,7 +66,7 @@
 				<c:if test="${article.lastReAuthorId==null}">
 					${article.lastReAuthorName }<br>
 				</c:if>
-				<span class="timestyle">${fn:substring(article.postTime,0,16)}</span>
+				<span class="timestyle">${article.postTime}</span>
 			</div>
 			<div class="clear"></div>
 		</div>

@@ -30,8 +30,8 @@
 	  </div>
 	  <div class="right">
 		  	<div class="baseinfoCon">
-			  	<span class="base_tit">加入时间：</span><span class="base_info">${fn:substring(userVo.registerTime,0,10) }</span><br>
-			  	<span class="base_tit">最近登录：</span><span class="base_info">${fn:substring(userVo.previsitTime,0,10) }</span><br>
+			  	<span class="base_tit">加入时间：</span><span class="base_info">${userVo.registerTime}</span><br>
+			  	<span class="base_tit">最近登录：</span><span class="base_info">${userVo.previsitTime}</span><br>
 			  	<span class="base_tit">性别：</span><span class="base_info">
 			  		<c:choose>
                    		<c:when test="${userVo.sex =='M' }">男</c:when>
@@ -87,7 +87,7 @@
 				  					${message.reUserName }
 				  				</c:if>
 			  				</span>
-			  				<span class="note_time nofirst">发表于：${fn:substring(message.postTime,0,10)}</span>
+			  				<span class="note_time nofirst">发表于：${message.postTime}</span>
 			  			</div>
 			  			<div class="re_content">${message.message }</div>
 			  		</div>

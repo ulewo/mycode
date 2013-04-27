@@ -66,7 +66,7 @@
 						${article.itemName}
 					</div>
 					<div class="aauthor3">
-						<span class="timestyle">${fn:substring(article.postTime,0,16)}</span>
+						<span class="timestyle">${article.postTime}</span>
 					</div>
 					<div class="aauthor2">
 						<a href="editArticle.jspx?id=${article.id}&gid=${gid}">修改</a>

@@ -48,7 +48,7 @@
 						<a href="../group/group.jspx?gid=${article.gid}">${article.groupName}</a>
 					</div>
 					<div class="atime">
-						<span class="timestyle">${fn:substring(article.postTime,0,16)}</span>
+						<span class="timestyle">${article.postTime}</span>
 					</div>
 				</div>
 			</c:forEach>

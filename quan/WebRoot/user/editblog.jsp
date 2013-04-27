@@ -53,7 +53,7 @@
 				<select name="itemId">
 					<option value="0">全部文章</option>
   					<c:forEach var="item" items="${itemList}">
-						<option value="${item.id}">${item.itemName}</option>
+						<option value="${item.id}" <c:if test="${blogArticle.itemId==item.id}">selected</c:if>>${item.itemName}</option>
 					</c:forEach>
 				</select>
 			</div>

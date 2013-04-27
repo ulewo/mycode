@@ -45,7 +45,7 @@ function cutString(str){
 						<div>
 							<span class="gname">${group.groupName}</span>&nbsp;&nbsp;
 							<span class="gzhu">群主:<a href="../user/userInfo.jspx?userId=${admin.userId}" target="_blank">${admin.userName}</a></span>&nbsp;&nbsp;
-							<span>创建于:${fn:substring(group.createTime,0,10)}</span>&nbsp;&nbsp;
+							<span>创建于:${group.createTime}</span>&nbsp;&nbsp;
 						</div>
 						<div>
 							<span>成员${group.members}个</span>&nbsp;/
@@ -84,7 +84,7 @@ function cutString(str){
 						</div>
 						<div class="aauthor">
 							<a href="../user/userInfo.jspx?userId=${article.authorId}" target="_blank">${article.authorName}</a><br>
-							<span class="timestyle">${fn:substring(article.postTime,0,16)}</span>
+							<span class="timestyle">${article.postTime}</span>
 						</div>
 						<div class="aauthor">
 							<c:if test="${article.lastReAuthorId!=null}">
@@ -93,7 +93,7 @@ function cutString(str){
 							<c:if test="${article.lastReAuthorId==null}">
 								${article.lastReAuthorName }<br>
 							</c:if>
-							<span class="timestyle">${fn:substring(article.lastReTime,0,16)}</span>
+							<span class="timestyle">${article.lastReTime}</span>
 						</div>
 						<div class="clear"></div>
 					</div>

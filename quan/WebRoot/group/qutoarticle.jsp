@@ -43,7 +43,7 @@ window.UEDITOR_HOME_URL = "<%=patch%>/ueditor/";
 			<img border="0" src="../images/quto.gif">
 			<b>引用&nbsp;
 			<span style="color:blue">${reArticle.authorName}</span>
-			&nbsp;在&nbsp;${fn:substring(reArticle.reTime,0,16)}&nbsp;的发表</b>
+			&nbsp;在&nbsp;${reArticle.reTime}&nbsp;的发表</b>
 			<div style="margin-top:5px;">${reArticle.content}</div>
 		</div>
 		<div id="editor" style="text-align:left;">

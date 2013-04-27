@@ -36,7 +36,7 @@
   		
   		<div class="blog_title">${blogArticle.title}</div>
   		<div class="blogsta">
-  			<div class="blogsta_info">发表于(${fn:substring(blogArticle.postTime,0,19)})， 已有<span>${blogArticle.readCount}</span>次阅读 ，共<span>${blogArticle.reCount}</span>个评论
+  			<div class="blogsta_info">发表于(${blogArticle.postTime})， 已有<span>${blogArticle.readCount}</span>次阅读 ，共<span>${blogArticle.reCount}</span>个评论
   			</div>
   			<c:if test="${user!=null&&userId==user.userId}">
 	  			<div class="blogsta_op">

@@ -36,7 +36,7 @@
 	  	职业：<input type="text" value="${userVo.work}" name="work"><br>
 	  	地址：<input type="text" value="${userVo.address }" name="address"><br>
 	  	个人签名:<input type="text" value="${userVo.characters}" name="characters"><br>
-	  	注册时间：${fn:substring(userVo.registerTime,0,10) }<br>
+	  	注册时间：${userVo.registerTime}<br>
 	  	<div style="margin-top:10px;">
 	  		<div><input type="button" class="button" id="subBtn" value="提交" onclick="saveBaseInfo()"><img id="loadImg" style="display:none;" src="../images/loading.gif" width="20"></div>
 	  		<div id="resultInfo" style="display:none;"></div>

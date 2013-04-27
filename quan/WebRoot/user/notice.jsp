@@ -47,7 +47,7 @@
 					<div class="notice_list">
 						<div><input type="checkbox" name="ids" value="${notice.id}" class="check"></div>
 						<div><a href="noticeDetail.jspx?id=${notice.id}">${notice.content}</a></div>
-						<span>${fn:substring(notice.postTime,0,16)}</span>
+						<span>${notice.postTime}</span>
 					</div>
 				</c:forEach>
 			</c:otherwise>

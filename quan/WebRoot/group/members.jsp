@@ -30,7 +30,7 @@
 	  			<div class="g_gon_info">
 	  				<div><a href="../user/userInfo.jspx?userId=${member.userId}" target="_blank">${member.userName}</a></div>
 	  				<div>发帖:${member.topicCount}</div>
-	  				<div>加入时间:${fn:substring(member.joinTime,0,10)}</div>
+	  				<div>加入时间:${member.joinTime}</div>
 	  			</div>
 	  		</div>
 	  	</c:forEach>
