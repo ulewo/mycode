@@ -40,6 +40,7 @@
     <string name="recomment_tit">跟帖</string>
     <string name="recomment_tit_web">网友跟帖</string>
     <string name="rename">回复</string>
+    <string name="cancel">取消</string>
     <string name="maohao">:</string>
    	<string name="msg_login_error">登陆失败</string>
    	<string name="jointime">加入时间：</string>

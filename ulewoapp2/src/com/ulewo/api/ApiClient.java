@@ -59,7 +59,7 @@ public class ApiClient {
 
 	private final static int RETRY_TIME = 3;
 
-	private static final String BASEURL = "http://192.168.2.224:8080/ulewo";
+	private static final String BASEURL = "http://192.168.0.224:80/ulewo";
 
 	private static final String HOST = BASEURL;
 
@@ -496,10 +496,15 @@ public class ApiClient {
 				// 发生网络异常
 				e.printStackTrace();
 				throw AppException.network(e);
+			} catch (Exception e) {
+				throw AppException.run(e);
 			} finally {
 				// 释放连接
-				httpGet.releaseConnection();
-				httpClient = null;
+				if (httpGet != null) {
+					httpGet.releaseConnection();
+					httpClient = null;
+				}
+
 			}
 		} while (time < RETRY_TIME);
 		return new ByteArrayInputStream(responseBody.getBytes());

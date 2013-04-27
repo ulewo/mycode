@@ -25,6 +25,7 @@ import com.ulewo.adapter.ReArticleListAdapter;
 import com.ulewo.bean.ReArticle;
 import com.ulewo.bean.ReArticleList;
 import com.ulewo.bean.ReArticleResult;
+import com.ulewo.cache.AsyncImageLoader;
 import com.ulewo.common.UIHelper;
 import com.ulewo.util.Constants;
 import com.ulewo.util.StringUtils;
@@ -52,6 +53,8 @@ public class ReArticleActivity extends BaseActivity {
 	TextView reusers = null;
 	EditText textarea = null;
 	Button subreformbtn = null;
+	Button canelBtn = null;
+
 	EditText hide_atuserId = null;
 	EditText hide_postion = null;
 	EditText hide_pid = null;
@@ -134,9 +137,9 @@ public class ReArticleActivity extends BaseActivity {
 							Toast.LENGTH_LONG).show();
 					return;
 				}
-				if (content.length()>Constants.MAXCONTENTLENGTH) {
-					Toast.makeText(ReArticleActivity.this, R.string.contenttoolong,
-							Toast.LENGTH_LONG).show();
+				if (content.length() > Constants.MAXCONTENTLENGTH) {
+					Toast.makeText(ReArticleActivity.this,
+							R.string.contenttoolong, Toast.LENGTH_LONG).show();
 					return;
 				}
 				progressBar.setVisibility(View.VISIBLE);
@@ -157,7 +160,15 @@ public class ReArticleActivity extends BaseActivity {
 				addSubReArticle();
 			}
 		});
-	}
+
+		canelBtn = (Button) findViewById(R.id.cancelformbtn);
+		canelBtn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				reSubPanel.setVisibility(View.GONE);
+			}
+		});
+	};
 
 	private void initData() {
 
@@ -171,7 +182,8 @@ public class ReArticleActivity extends BaseActivity {
 					if (adapter == null || page == 1) {
 						adapter = new ReArticleListAdapter(
 								ReArticleActivity.this,
-								list.getReArticleList(), reSubPanel);
+								list.getReArticleList(), reSubPanel,
+								new AsyncImageLoader(), listView);
 						listView.setAdapter(adapter);
 						if (page < msg.arg1) {
 							loadmoreTextView.setVisibility(View.VISIBLE);
@@ -275,7 +287,7 @@ public class ReArticleActivity extends BaseActivity {
 					Toast.LENGTH_LONG).show();
 			return;
 		}
-		if (content.length()>Constants.MAXCONTENTLENGTH) {
+		if (content.length() > Constants.MAXCONTENTLENGTH) {
 			Toast.makeText(ReArticleActivity.this, R.string.contenttoolong,
 					Toast.LENGTH_LONG).show();
 			return;

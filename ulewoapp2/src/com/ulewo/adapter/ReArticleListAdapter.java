@@ -3,18 +3,20 @@ package com.ulewo.adapter;
 import java.util.List;
 
 import android.content.Context;
-import android.text.Html;
-import android.text.TextPaint;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -22,8 +24,10 @@ import android.widget.TextView;
 import com.ulewo.AppContext;
 import com.ulewo.R;
 import com.ulewo.bean.ReArticle;
+import com.ulewo.cache.AsyncImageLoader;
+import com.ulewo.cache.AsyncImageLoader.ImageCallback;
 import com.ulewo.common.UIHelper;
-import com.ulewo.handler.MxgsaTagHandler;
+import com.ulewo.util.StringUtils;
 
 public class ReArticleListAdapter extends BaseAdapter {
 
@@ -36,6 +40,8 @@ public class ReArticleListAdapter extends BaseAdapter {
 	private LayoutInflater menueflater;
 
 	private Context context;
+	private AsyncImageLoader asyncImageLoader = null;
+	private ListView listView;
 
 	private RelativeLayout reSubPanel = null;
 	TextView reusers = null;
@@ -46,9 +52,10 @@ public class ReArticleListAdapter extends BaseAdapter {
 	EditText hide_pid = null;
 
 	public ReArticleListAdapter(Context context, List<ReArticle> list,
-			View subView) {
-
+			View subView, AsyncImageLoader asyncImageLoader, ListView listView) {
+		this.asyncImageLoader = asyncImageLoader;
 		this.list = list;
+		this.listView = listView;
 		this.context = context;
 		mInflater = LayoutInflater.from(context);
 		subflater = LayoutInflater.from(context);
@@ -105,19 +112,55 @@ public class ReArticleListAdapter extends BaseAdapter {
 	private void bindView(final int postion, View view) {
 
 		final ReArticle reArticle = list.get(postion);
+
+		ImageView imageView = (ImageView) view
+				.findViewById(R.id.recomment_icon);
+		String imageUrl = reArticle.getAuthorIcon();
+		imageView.setTag(imageUrl);
+		Drawable cachedImage = asyncImageLoader.loadDrawable(imageUrl,
+				new ImageCallback() {
+					public void imageLoaded(Drawable imageDrawable,
+							String imageUrl) {
+
+						ImageView imageViewByTag = (ImageView) listView
+								.findViewWithTag(imageUrl);
+						if (imageViewByTag != null) {
+							imageViewByTag.setImageDrawable(imageDrawable);
+						}
+					}
+				});
+		if (cachedImage == null) {
+			imageView.setImageResource(R.drawable.icon);
+		} else {
+			imageView.setImageDrawable(StringUtils.toRoundCornerDrawable(
+					cachedImage, 5));
+		}
+
 		TextView recomment_username = (TextView) view
 				.findViewById(R.id.recomment_username);
 		TextView recomment_posttime = (TextView) view
 				.findViewById(R.id.recomment_posttime);
+		WebView recomment_con = (WebView) view.findViewById(R.id.recomment_con);
+		recomment_con.getSettings().setJavaScriptEnabled(false);
+		recomment_con.getSettings().setSupportZoom(true);
+		recomment_con.getSettings().setBuiltInZoomControls(true);
+		recomment_con.getSettings().setDefaultFontSize(13);
 
-		TextView recomment_con = (TextView) view
-				.findViewById(R.id.recomment_con);
-		TextPaint paint = recomment_username.getPaint();
-		paint.setFakeBoldText(true);
 		recomment_username.setText(reArticle.getAuthorName());
+
+		recomment_username.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				UIHelper.showUserCenter(v.getContext(),
+						reArticle.getAuthorid(), reArticle.getAuthorName());
+			}
+		});
+
 		recomment_posttime.setText(reArticle.getReTime());
-		recomment_con.setText(Html.fromHtml(reArticle.getContent(), null,
-				new MxgsaTagHandler(context)));
+		String body = UIHelper.WEB_STYLE + reArticle.getContent();
+		recomment_con.loadDataWithBaseURL(null, body, "text/html", "utf-8",
+				null);
+		recomment_con.setWebViewClient(UIHelper.getWebViewClient());
 
 		// 回复btn
 		Button item_rebtn = (Button) view.findViewById(R.id.item_rebtn);
@@ -183,21 +226,31 @@ public class ReArticleListAdapter extends BaseAdapter {
 			liner.addView(subview);
 			TextView nameView = (TextView) subview
 					.findViewById(R.id.recoment_sub_name);
-			TextPaint paint1 = nameView.getPaint();
-			paint1.setFakeBoldText(true);
 			nameView.setText(subRe.getAuthorName());
+
+			nameView.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					UIHelper.showUserCenter(v.getContext(),
+							subRe.getAuthorid(), subRe.getAuthorName());
+				}
+			});
 
 			TextView atNameView = (TextView) subview
 					.findViewById(R.id.recoment_sub_atname);
-			TextPaint paint2 = atNameView.getPaint();
-			paint2.setFakeBoldText(true);
-
 			atNameView.setText(subRe.getAtUserName());
+
+			atNameView.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					UIHelper.showUserCenter(v.getContext(),
+							subRe.getAtUserId(), subRe.getAtUserName());
+				}
+			});
 
 			TextView conView = (TextView) subview
 					.findViewById(R.id.recoment_sub_con);
-			conView.setText(Html.fromHtml(subRe.getContent(), null,
-					new MxgsaTagHandler(context)));
+			conView.setText(subRe.getContent());
 			/*
 			 * subview.setOnTouchListener(new OnTouchListener() {
 			 * 
@@ -223,4 +276,5 @@ public class ReArticleListAdapter extends BaseAdapter {
 		list.add(reArticle);
 		this.notifyDataSetChanged();
 	}
+
 }

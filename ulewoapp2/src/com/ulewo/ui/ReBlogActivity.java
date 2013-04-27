@@ -23,6 +23,7 @@ import com.ulewo.R;
 import com.ulewo.adapter.ReBlogListAdapter;
 import com.ulewo.bean.ReBlogList;
 import com.ulewo.bean.ReBlogResult;
+import com.ulewo.cache.AsyncImageLoader;
 import com.ulewo.common.UIHelper;
 import com.ulewo.util.Constants;
 import com.ulewo.util.StringUtils;
@@ -124,9 +125,9 @@ public class ReBlogActivity extends BaseActivity {
 							Toast.LENGTH_LONG).show();
 					return;
 				}
-				if (content.length()>Constants.MAXCONTENTLENGTH) {
-					Toast.makeText(ReBlogActivity.this, R.string.contenttoolong,
-							Toast.LENGTH_LONG).show();
+				if (content.length() > Constants.MAXCONTENTLENGTH) {
+					Toast.makeText(ReBlogActivity.this,
+							R.string.contenttoolong, Toast.LENGTH_LONG).show();
 					return;
 				}
 				progressBar.setVisibility(View.VISIBLE);
@@ -145,7 +146,8 @@ public class ReBlogActivity extends BaseActivity {
 					ReBlogList list = (ReBlogList) msg.obj;
 					if (adapter == null || page == 1) {
 						adapter = new ReBlogListAdapter(ReBlogActivity.this,
-								list.getReBlogList());
+								list.getReBlogList(), new AsyncImageLoader(),
+								listView);
 						listView.setAdapter(adapter);
 						if (page < msg.arg1) {
 							loadmoreTextView.setVisibility(View.VISIBLE);

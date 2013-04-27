@@ -11,14 +11,13 @@
 		<!-- 回复人头像 -->
 		<LinearLayout 
 			android:id="@+id/recomment_icon_con"
-			android:layout_width="56px"
-	    	android:layout_height="56px"
-	    	android:padding="3px"
-	    	android:background="@drawable/mini_avatar_shadow">
+			android:layout_width="46px"
+	    	android:layout_height="46px"
+	    	android:background="@drawable/iconbg">
 		<ImageView
 			android:id="@+id/recomment_icon" 
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
+			android:layout_width="40px"
+			android:layout_height="40px"
 			android:src="@drawable/icon"/>
 		</LinearLayout>
 		<!-- 回复信息 -->
@@ -35,12 +34,14 @@
 				android:layout_height="wrap_content"
 				android:textColor="@color/nameblue"
 				android:textSize="13dp"
+				android:textStyle="bold"
 			/>
 			<!-- 回复时间 -->
 			<TextView
 				android:id="@+id/recomment_posttime" 
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
+				android:layout_marginTop="10px"
 				android:textColor="@color/shadeblack"
 				android:textSize="12dp"
 			/>
@@ -50,19 +51,19 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_alignParentRight="true"
-			android:layout_marginTop="5dp"
-			android:background="@drawable/download_downprgfront_icon"
+			android:background="@drawable/rebt"
 			android:textSize="12dp"
-			android:padding="3dp"
-			android:textColor="@color/white"
+			android:paddingRight="3dp"
+			android:paddingLeft="3dp"
+			android:textColor="@color/black"
 			android:text="@string/rename"/>
 	</RelativeLayout>
 	<LinearLayout 
 		android:id="@+id/recomment_con_layout"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginTop="10dp">
-		<TextView 
+		android:layout_marginTop="3dp">
+		<WebView 
 			android:id="@+id/recomment_con"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"

@@ -3,25 +3,32 @@ package com.ulewo.adapter;
 import java.util.List;
 
 import android.content.Context;
-import android.text.Html;
-import android.text.TextPaint;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ulewo.R;
 import com.ulewo.bean.ReBlog;
-import com.ulewo.handler.MxgsaTagHandler;
+import com.ulewo.cache.AsyncImageLoader;
+import com.ulewo.cache.AsyncImageLoader.ImageCallback;
+import com.ulewo.common.UIHelper;
+import com.ulewo.util.StringUtils;
 
 public class ReBlogListAdapter extends BaseAdapter {
 
 	private List<ReBlog> list = null;
 
 	private LayoutInflater mInflater;
-
+	private AsyncImageLoader asyncImageLoader = null;
+	private ListView listView;
 	/*
 	 * private LayoutInflater subflater;
 	 * 
@@ -30,11 +37,14 @@ public class ReBlogListAdapter extends BaseAdapter {
 
 	private Context context;
 
-	public ReBlogListAdapter(Context context, List<ReBlog> list) {
+	public ReBlogListAdapter(Context context, List<ReBlog> list,
+			AsyncImageLoader asyncImageLoader, ListView listView) {
 
 		this.list = list;
 		this.context = context;
 		mInflater = LayoutInflater.from(context);
+		this.asyncImageLoader = asyncImageLoader;
+		this.list = list;
 		// subflater = LayoutInflater.from(context);
 		// menueflater = LayoutInflater.from(context);
 	}
@@ -82,19 +92,53 @@ public class ReBlogListAdapter extends BaseAdapter {
 	private void bindView(final int postion, View view) {
 
 		final ReBlog reBlog = list.get(postion);
+
+		ImageView imageView = (ImageView) view
+				.findViewById(R.id.recomment_icon);
+		String imageUrl = reBlog.getAuthorIcon();
+		imageView.setTag(imageUrl);
+		Drawable cachedImage = asyncImageLoader.loadDrawable(imageUrl,
+				new ImageCallback() {
+					public void imageLoaded(Drawable imageDrawable,
+							String imageUrl) {
+
+						ImageView imageViewByTag = (ImageView) listView
+								.findViewWithTag(imageUrl);
+						if (imageViewByTag != null) {
+							imageViewByTag.setImageDrawable(imageDrawable);
+						}
+					}
+				});
+		if (cachedImage == null) {
+			imageView.setImageResource(R.drawable.icon);
+		} else {
+			imageView.setImageDrawable(StringUtils.toRoundCornerDrawable(
+					cachedImage, 5));
+		}
+
 		TextView recomment_username = (TextView) view
 				.findViewById(R.id.recomment_username);
+		recomment_username.setText(reBlog.getAuthorName());
+		recomment_username.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				UIHelper.showUserCenter(v.getContext(), reBlog.getAuthorid(),
+						reBlog.getAuthorName());
+			}
+		});
+
 		TextView recomment_posttime = (TextView) view
 				.findViewById(R.id.recomment_posttime);
-
-		TextView recomment_con = (TextView) view
-				.findViewById(R.id.recomment_con);
-		TextPaint paint = recomment_username.getPaint();
-		paint.setFakeBoldText(true);
-		recomment_username.setText(reBlog.getAuthorName());
+		WebView recomment_con = (WebView) view.findViewById(R.id.recomment_con);
 		recomment_posttime.setText(reBlog.getReTime());
-		recomment_con.setText(Html.fromHtml(reBlog.getContent(), null,
-				new MxgsaTagHandler(context)));
+		recomment_con.getSettings().setJavaScriptEnabled(false);
+		recomment_con.getSettings().setSupportZoom(true);
+		recomment_con.getSettings().setBuiltInZoomControls(true);
+		recomment_con.getSettings().setDefaultFontSize(13);
+		String body = UIHelper.WEB_STYLE + reBlog.getContent();
+		recomment_con.loadDataWithBaseURL(null, body, "text/html", "utf-8",
+				null);
+		recomment_con.setWebViewClient(UIHelper.getWebViewClient());
 		Button item_rebtn = (Button) view.findViewById(R.id.item_rebtn);
 		item_rebtn.setVisibility(View.GONE);
 		/*

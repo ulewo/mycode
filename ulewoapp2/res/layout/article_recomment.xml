@@ -34,14 +34,15 @@
 			android:id="@+id/subrecomment"
 			android:layout_toRightOf="@id/recomment_input"
 			android:layout_width="wrap_content" 
-			android:layout_height="wrap_content"
-			android:layout_marginTop="6dp"
+			android:layout_height="32dp"
+			android:layout_marginTop="8dp"
 			android:layout_marginLeft="10dp"
 			android:layout_marginRight="10dp"
-			android:paddingTop="6dp"
-			android:paddingBottom="10dp"
-			android:background="@drawable/widget_sendform_btn"
-			android:textColor="@color/white"
+			android:paddingTop="3dp"
+			android:paddingLeft="5dp"
+			android:paddingRight="5dp"
+			android:background="@drawable/rebtn"
+			android:textColor="@color/black"
 			android:text="发送"/>
 	</LinearLayout> 
     <LinearLayout 
@@ -72,11 +73,17 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textColor="@color/black"
+			android:textSize="16dp"
+			android:textStyle="bold"
 			android:text="@string/rename"/>
 		<TextView 
 			android:id="@+id/reuser"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+			android:textStyle="italic"
+			android:layout_marginTop="2dp"
+			android:layout_marginLeft="5dp"
+			android:textColor="@color/nameblue"
 			android:layout_toRightOf="@id/retit"/>
 		<EditText 
 			android:id="@+id/textarea"
@@ -101,13 +108,29 @@
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:visibility="gone"/>
-		<Button 
+		<LinearLayout 
+		    android:layout_below="@id/textarea"
+		    android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:layout_marginTop="10dp">
+		    <Button 
+		    android:layout_weight="1.0"
 			android:id="@+id/subreformbtn"
-			android:layout_width="fill_parent"
+			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_below="@id/textarea"
-			android:text="@string/rename"
-		/>	
+			android:text="@string/rename"/>	
+			
+		    <Button 
+		    android:layout_weight="1.0"
+			android:id="@+id/cancelformbtn"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_below="@id/textarea"
+			android:text="@string/cancel"/>	
+		</LinearLayout>
+		
 </RelativeLayout>
 <include  layout="@layout/progress"/>
 </FrameLayout>
