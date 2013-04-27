@@ -28,7 +28,8 @@ public class GroupServiceImpl implements GroupService {
 
 	private UserDao userDao;
 
-	private final SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private final SimpleDateFormat formate = new SimpleDateFormat(
+			"yyyy-MM-dd HH:mm:ss");
 
 	@Override
 	public String createGroup(Group group) throws Exception {
@@ -72,6 +73,7 @@ public class GroupServiceImpl implements GroupService {
 		if (null == group) {
 			throw new BaseException(40000);
 		}
+		group.setCreateTime(Tools.friendly_time(group.getCreateTime()));
 		return group;
 	}
 
@@ -81,8 +83,11 @@ public class GroupServiceImpl implements GroupService {
 		if (null == group) {
 			throw new BaseException(40000);
 		}
-		group.setMembers(memberDao.queryMemberCount(group.getId(), Constant.ISVALIDY, ""));
-		group.setTopicCount(articleDao.queryTopicCountByGid(group.getId(), 0, Constant.ISVALIDY));
+		group.setMembers(memberDao.queryMemberCount(group.getId(),
+				Constant.ISVALIDY, ""));
+		group.setTopicCount(articleDao.queryTopicCountByGid(group.getId(), 0,
+				Constant.ISVALIDY));
+		group.setCreateTime(Tools.friendly_time(group.getCreateTime()));
 		return group;
 	}
 
@@ -95,10 +100,12 @@ public class GroupServiceImpl implements GroupService {
 	@Override
 	public List<Group> queryGroupsOderArticleCount(int pageNumber, int pageSize) {
 
-		List<Group> list = groupDao.queryGroupsByArticleCount(pageNumber, pageSize);
+		List<Group> list = groupDao.queryGroupsByArticleCount(pageNumber,
+				pageSize);
 
 		for (Group group : list) {
-			String groupdesc = group.getGroupDesc().replaceAll("<[.[^<]]*>", "").replaceAll("[\\n|\\r]", "")
+			String groupdesc = group.getGroupDesc()
+					.replaceAll("<[.[^<]]*>", "").replaceAll("[\\n|\\r]", "")
 					.replaceAll("&nbsp;", "");
 			group.setGroupDesc(groupdesc);
 			// 查询群作者信息
@@ -111,10 +118,13 @@ public class GroupServiceImpl implements GroupService {
 			group.setAuthorName(user.getUserName());
 
 			// 设置群成员数量
-			group.setMembers(memberDao.queryMemberCount(group.getId(), Constant.ISVALIDY, ""));
+			group.setMembers(memberDao.queryMemberCount(group.getId(),
+					Constant.ISVALIDY, ""));
 
 			// 设置群文章数量
-			group.setTopicCount(articleDao.queryTopicCountByGid(group.getId(), 0, Constant.ISVALIDY));
+			group.setTopicCount(articleDao.queryTopicCountByGid(group.getId(),
+					0, Constant.ISVALIDY));
+			group.setCreateTime(Tools.friendly_time(group.getCreateTime()));
 		}
 		return list;
 	}
@@ -154,7 +164,8 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@Override
-	public List<Group> searchGroups(String keyWord, int offset, int total) throws Exception {
+	public List<Group> searchGroups(String keyWord, int offset, int total)
+			throws Exception {
 
 		return groupDao.searchGroup(keyWord, offset, total);
 	}

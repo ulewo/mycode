@@ -13,6 +13,7 @@ import com.lhl.quan.dao.NoticeDao;
 import com.lhl.quan.dao.UserDao;
 import com.lhl.quan.service.MessageService;
 import com.lhl.util.FormatAt;
+import com.lhl.util.Tools;
 
 public class MessageServiceImpl implements MessageService {
 
@@ -22,7 +23,8 @@ public class MessageServiceImpl implements MessageService {
 
 	private NoticeDao noticeDao;
 
-	private final SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private final SimpleDateFormat formate = new SimpleDateFormat(
+			"yyyy-MM-dd HH:mm:ss");
 
 	public void setNoticeDao(NoticeDao noticeDao) {
 
@@ -40,9 +42,13 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	public List<Message> queryMessage(String userId, int offset, int total) throws Exception {
+	public List<Message> queryMessage(String userId, int offset, int total)
+			throws Exception {
 
 		List<Message> list = messageDao.queryMessage(userId, offset, total);
+		for (Message message : list) {
+			message.setPostTime(Tools.friendly_time(message.getPostTime()));
+		}
 		return list;
 	}
 
@@ -58,7 +64,8 @@ public class MessageServiceImpl implements MessageService {
 		String content = message.getMessage();
 		String quote = message.getQuote();
 		List<String> referers = new ArrayList<String>();
-		String formatContent = FormatAt.getInstance().GenerateRefererLinks(userDao, content, referers);
+		String formatContent = FormatAt.getInstance().GenerateRefererLinks(
+				userDao, content, referers);
 		String subCon = formatContent;
 		if (quote != null && !"".equals(quote)) {
 			subCon = quote + formatContent;
@@ -66,8 +73,9 @@ public class MessageServiceImpl implements MessageService {
 		message.setMessage(subCon);
 		message.setPostTime(formate.format(new Date()));
 		messageDao.addMessage(message);
+		message.setPostTime(Tools.friendly_time(message.getPostTime()));
 		int id = message.getId();
-		//启动一个线程发布消息
+		// 启动一个线程发布消息
 		NoticeParam noticeParm = new NoticeParam();
 		noticeParm.setReceiveUserId(message.getUserId());
 		noticeParm.setNoticeType(NoticeType.REMESSAGE);
@@ -87,8 +95,7 @@ public class MessageServiceImpl implements MessageService {
 		if (null != message && message.getUserId().equals(curUserId)) {
 			messageDao.deleteMessage(id);
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	}

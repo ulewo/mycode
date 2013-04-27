@@ -108,7 +108,7 @@ public class AndroidAction extends BaseAction {
 			vo.setAuthorId(article.getAuthorId());
 			vo.setAuthorName(article.getAuthorName());
 			vo.setId(article.getId());
-			vo.setPostTime(Tools.friendly_time(article.getPostTime()));
+			vo.setPostTime(article.getPostTime());
 			vo.setReadNumber(article.getReadNumber());
 			vo.setReNumber(article.getReNumber());
 			vo.setTitle(article.getTitle());
@@ -138,7 +138,7 @@ public class AndroidAction extends BaseAction {
 				vo.setContent(Tools.pathRelative2Absolutely(article
 						.getContent()));
 				vo.setId(article.getId());
-				vo.setPostTime(Tools.friendly_time(article.getPostTime()));
+				vo.setPostTime(article.getPostTime());
 				vo.setReadNumber(article.getReadNumber());
 				vo.setReNumber(article.getReNumber());
 				vo.setTitle(article.getTitle());
@@ -208,10 +208,10 @@ public class AndroidAction extends BaseAction {
 			vo.setAuthorIcon(reArticle.getAuthorIcon());
 			vo.setAuthorid(reArticle.getAuthorid());
 			vo.setAuthorName(reArticle.getAuthorName());
-			vo.setContent(reArticle.getContent());
+			vo.setContent(Tools.pathRelative2Absolutely(reArticle.getContent()));
 			vo.setId(reArticle.getId());
 			vo.setPid(reArticle.getPid());
-			vo.setReTime(Tools.friendly_time(reArticle.getReTime()));
+			vo.setReTime(reArticle.getReTime());
 			vo.setChildList(reArticle.getChildList());
 			resultList.add(vo);
 		}
@@ -264,7 +264,7 @@ public class AndroidAction extends BaseAction {
 				vo.setContent(re.getContent());
 				vo.setId(re.getId());
 				vo.setPid(re.getPid());
-				vo.setReTime(Tools.friendly_time(re.getReTime()));
+				vo.setReTime(re.getReTime());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -327,7 +327,7 @@ public class AndroidAction extends BaseAction {
 				vo.setAuthorId(blog.getUserId());
 				vo.setAuthorName(blog.getUserName());
 				vo.setId(blog.getId());
-				vo.setPostTime(Tools.friendly_time(blog.getPostTime()));
+				vo.setPostTime(blog.getPostTime());
 				vo.setReadNumber(blog.getReadCount());
 				vo.setReNumber(blog.getReCount());
 				vo.setTitle(blog.getTitle());
@@ -352,7 +352,7 @@ public class AndroidAction extends BaseAction {
 			vo.setAuthorName(blog.getUserName());
 			vo.setContent(Tools.pathRelative2Absolutely(blog.getContent()));
 			vo.setId(blog.getId());
-			vo.setPostTime(Tools.friendly_time(blog.getPostTime()));
+			vo.setPostTime(blog.getPostTime());
 			vo.setReadNumber(blog.getReadCount());
 			vo.setReNumber(blog.getReCount());
 			vo.setTitle(blog.getTitle());
@@ -433,7 +433,7 @@ public class AndroidAction extends BaseAction {
 				vo.setAuthorid(re.getUserId());
 				vo.setAuthorName(re.getUserName());
 				vo.setAuthorIcon(re.getReUserIcon());
-				vo.setReTime(Tools.friendly_time(re.getPostTime()));
+				vo.setReTime(re.getPostTime());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -514,7 +514,7 @@ public class AndroidAction extends BaseAction {
 				vo.setAuthorId(article.getAuthorId());
 				vo.setAuthorName(article.getAuthorName());
 				vo.setId(article.getId());
-				vo.setPostTime(Tools.friendly_time(article.getPostTime()));
+				vo.setPostTime(article.getPostTime());
 				vo.setReadNumber(article.getReadNumber());
 				vo.setReNumber(article.getReNumber());
 				vo.setTitle(article.getTitle());
@@ -560,8 +560,7 @@ public class AndroidAction extends BaseAction {
 				userVo.setAddress(userInfo.getAddress());
 				userVo.setAge(userInfo.getAge());
 				userVo.setCharacters(userInfo.getCharacters());
-				userVo.setRegisterTime(Tools.friendly_time(userInfo
-						.getRegisterTime()));
+				userVo.setRegisterTime(userInfo.getRegisterTime());
 				userVo.setSex(userInfo.getSex());
 				userVo.setPrevisitTime(userInfo.getPrevisitTime());
 				userVo.setMark(userInfo.getMark());
@@ -593,8 +592,7 @@ public class AndroidAction extends BaseAction {
 				userVo.setAddress(userInfo.getAddress());
 				userVo.setAge(userInfo.getAge());
 				userVo.setCharacters(userInfo.getCharacters());
-				userVo.setRegisterTime(Tools.friendly_time(userInfo
-						.getRegisterTime()));
+				userVo.setRegisterTime(userInfo.getRegisterTime());
 				userVo.setSex(userInfo.getSex());
 				userVo.setPrevisitTime(userInfo.getPrevisitTime());
 				userVo.setMark(userInfo.getMark());

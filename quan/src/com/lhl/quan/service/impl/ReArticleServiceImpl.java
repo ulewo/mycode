@@ -78,7 +78,7 @@ public class ReArticleServiceImpl implements ReArticleService {
 			reArticle.setAuthor(reUser);
 		}
 		reArticle.setId(id);
-
+		reArticle.setReTime(Tools.friendly_time(reArticle.getReTime()));
 		User curUser = userDao.queryUser(null, null, reArticle.getAuthorid());
 		curUser.setMark(curUser.getMark() + Constant.ARTICLE_MARK2);
 		userDao.updateUserSelectiveByUserId(curUser);
@@ -114,6 +114,7 @@ public class ReArticleServiceImpl implements ReArticleService {
 		if (null == reArticle) {
 			throw new BaseException(30000);
 		}
+		reArticle.setReTime(Tools.friendly_time(reArticle.getReTime()));
 		return reArticle;
 	}
 
@@ -176,6 +177,7 @@ public class ReArticleServiceImpl implements ReArticleService {
 					child.add(reArticle);
 				}
 			}
+			reArticle.setReTime(Tools.friendly_time(reArticle.getReTime()));
 		}
 
 		for (ReArticle reArticle : list) {

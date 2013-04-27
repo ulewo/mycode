@@ -17,6 +17,7 @@ import com.lhl.quan.dao.UserDao;
 import com.lhl.quan.service.BlogReplyService;
 import com.lhl.util.Constant;
 import com.lhl.util.FormatAt;
+import com.lhl.util.Tools;
 
 public class BlogReplyServiceImpl implements BlogReplyService {
 
@@ -28,7 +29,8 @@ public class BlogReplyServiceImpl implements BlogReplyService {
 
 	private NoticeDao noticeDao;
 
-	private final SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private final SimpleDateFormat formate = new SimpleDateFormat(
+			"yyyy-MM-dd HH:mm:ss");
 
 	public void setNoticeDao(NoticeDao noticeDao) {
 
@@ -57,7 +59,8 @@ public class BlogReplyServiceImpl implements BlogReplyService {
 		String content = blogReply.getContent();
 		String quote = blogReply.getQuote();
 		List<String> referers = new ArrayList<String>();
-		String formatContent = FormatAt.getInstance().GenerateRefererLinks(userDao, content, referers);
+		String formatContent = FormatAt.getInstance().GenerateRefererLinks(
+				userDao, content, referers);
 		String subCon = formatContent;
 		if (quote != null && !"".equals(quote)) {
 			subCon = quote + formatContent;
@@ -65,18 +68,18 @@ public class BlogReplyServiceImpl implements BlogReplyService {
 		blogReply.setContent(subCon);
 		int id = blogReplyDao.addReply(blogReply);
 		blogReply.setId(id);
-
+		blogReply.setPostTime(Tools.friendly_time(blogReply.getPostTime()));
 		User curUser = userDao.queryUser(null, null, blogReply.getUserId());
 		curUser.setMark(curUser.getMark() + Constant.ARTICLE_MARK2);
 		userDao.updateUserSelectiveByUserId(curUser);
 
-		//启动一个线程发布消息
+		// 启动一个线程发布消息
 		NoticeParam noticeParm = new NoticeParam();
 		noticeParm.setArticleId(blogReply.getBlogId());
 		noticeParm.setNoticeType(NoticeType.REBLOG);
 		noticeParm.setAtUserIds(referers);
 		noticeParm.setSendUserId(blogReply.getUserId());
-		//如果At的用户Id为不为空那么就是二级回复
+		// 如果At的用户Id为不为空那么就是二级回复
 		noticeParm.setReId(id);
 		NoticeThread noticeThread = new NoticeThread(noticeParm);
 		Thread thread = new Thread(noticeThread);
@@ -87,8 +90,12 @@ public class BlogReplyServiceImpl implements BlogReplyService {
 
 	@Override
 	public List<BlogReply> queryBlogReplyByBlogId(int blogId) {
-
-		return blogReplyDao.queryReplyByBlogId(blogId);
+		List<BlogReply> list = new ArrayList<BlogReply>();
+		list = blogReplyDao.queryReplyByBlogId(blogId);
+		for (BlogReply reply : list) {
+			reply.setPostTime(Tools.friendly_time(reply.getPostTime()));
+		}
+		return list;
 	}
 
 	@Override
@@ -105,23 +112,23 @@ public class BlogReplyServiceImpl implements BlogReplyService {
 		// 通过ID查询回复
 		if (null != reply) {
 			// 通过回复获取博客ID
-			BlogArticle article = blogArticleDao.queryBlogById(reply.getBlogId());
+			BlogArticle article = blogArticleDao.queryBlogById(reply
+					.getBlogId());
 			// 删除 1,博主可以删除评论 article.getUserId() 博主ID
 			if (null != article && article.getUserId().equals(curUserId)) {
 				blogReplyDao.delete(id);
 				return true;
-			}
-			else {
+			} else {
 				return false;
 			}
-		}
-		else {
+		} else {
 			return false;
 		}
 	}
 
 	public BlogReply queryBlogReplyById(int id) {
-
-		return blogReplyDao.queryBlogReplyById(id);
+		BlogReply reply = blogReplyDao.queryBlogReplyById(id);
+		reply.setPostTime(Tools.friendly_time(reply.getPostTime()));
+		return reply;
 	}
 }

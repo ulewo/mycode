@@ -28,6 +28,7 @@ import com.lhl.quan.dao.MemberDao;
 import com.lhl.quan.dao.UserDao;
 import com.lhl.quan.service.MemberService;
 import com.lhl.util.Constant;
+import com.lhl.util.Tools;
 
 /**
  * @Title:
@@ -243,6 +244,7 @@ public class MemberServiceImp implements MemberService {
 			} else {
 				list.remove(member);
 			}
+			member.setJoinTime(Tools.friendly_time(member.getJoinTime()));
 		}
 	}
 

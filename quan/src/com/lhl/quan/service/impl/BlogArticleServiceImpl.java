@@ -15,6 +15,7 @@ import com.lhl.quan.dao.UserDao;
 import com.lhl.quan.service.BlogArticleService;
 import com.lhl.util.Constant;
 import com.lhl.util.FormatAt;
+import com.lhl.util.Tools;
 
 public class BlogArticleServiceImpl implements BlogArticleService {
 	private BlogArticleDao blogArticleDao;
@@ -38,7 +39,8 @@ public class BlogArticleServiceImpl implements BlogArticleService {
 		this.blogArticleDao = blogArticleDao;
 	}
 
-	private final static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private final static SimpleDateFormat format = new SimpleDateFormat(
+			"yyyy-MM-dd HH:mm:ss");
 
 	@Override
 	public boolean addBlog(BlogArticle blogArticle, User user) {
@@ -46,7 +48,8 @@ public class BlogArticleServiceImpl implements BlogArticleService {
 		blogArticle.setPostTime(format.format(new Date()));
 		String content = blogArticle.getContent();
 		List<String> referers = new ArrayList<String>();
-		String formatContent = FormatAt.getInstance().GenerateRefererLinks(userDao, content, referers);
+		String formatContent = FormatAt.getInstance().GenerateRefererLinks(
+				userDao, content, referers);
 
 		blogArticle.setContent(formatContent);
 
@@ -56,7 +59,7 @@ public class BlogArticleServiceImpl implements BlogArticleService {
 		curUser.setMark(curUser.getMark() + Constant.ARTICLE_MARK5);
 		userDao.updateUserSelectiveByUserId(curUser);
 
-		//启动一个线程发布消息
+		// 启动一个线程发布消息
 		NoticeParam noticeParm = new NoticeParam();
 		noticeParm.setArticleId(blogId);
 		noticeParm.setNoticeType(NoticeType.ATINBLOG);
@@ -70,8 +73,9 @@ public class BlogArticleServiceImpl implements BlogArticleService {
 
 	@Override
 	public BlogArticle queryBlogById(int id) {
-
-		return blogArticleDao.queryBlogById(id);
+		BlogArticle blog = blogArticleDao.queryBlogById(id);
+		blog.setPostTime(Tools.friendly_time(blog.getPostTime()));
+		return blog;
 	}
 
 	@Override
@@ -80,8 +84,7 @@ public class BlogArticleServiceImpl implements BlogArticleService {
 		if (isCurUser(blogArticle.getUserId(), blogArticle.getId())) {
 			blogArticleDao.update(blogArticle);
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	}
@@ -100,15 +103,18 @@ public class BlogArticleServiceImpl implements BlogArticleService {
 	}
 
 	@Override
-	public List<BlogArticle> queryBlogByUserIdOrItem(String userId, int itemId, int offset, int total) {
-
+	public List<BlogArticle> queryBlogByUserIdOrItem(String userId, int itemId,
+			int offset, int total) {
+		List<BlogArticle> list = new ArrayList<BlogArticle>();
 		if (itemId == 0) {
-			return blogArticleDao.queryBlogByUserId(userId, offset, total);
+			list = blogArticleDao.queryBlogByUserId(userId, offset, total);
+		} else {
+			list = blogArticleDao.queryBlogByItemId(itemId, offset, total);
 		}
-		else {
-			return blogArticleDao.queryBlogByItemId(itemId, offset, total);
+		for (BlogArticle blog : list) {
+			blog.setPostTime(Tools.friendly_time(blog.getPostTime()));
 		}
-
+		return list;
 	}
 
 	@Override
@@ -116,8 +122,7 @@ public class BlogArticleServiceImpl implements BlogArticleService {
 
 		if (itemId == 0) {
 			return blogArticleDao.queryCountByUserId(userId);
-		}
-		else {
+		} else {
 			return blogArticleDao.queryCountByItemId(itemId);
 		}
 
@@ -128,19 +133,23 @@ public class BlogArticleServiceImpl implements BlogArticleService {
 		BlogArticle article = blogArticleDao.queryBlogById(id);
 		if (article != null && (article.getUserId().equals(userId))) {
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	}
 
 	public List<BlogArticle> indexLatestBlog(int offset, int total) {
-
-		return blogArticleDao.indexLatestBlog(offset, total);
+		List<BlogArticle> list = new ArrayList<BlogArticle>();
+		list = blogArticleDao.indexLatestBlog(offset, total);
+		for (BlogArticle blog : list) {
+			blog.setPostTime(Tools.friendly_time(blog.getPostTime()));
+		}
+		return list;
 	}
 
 	public int queryCount() {
 
 		return blogArticleDao.queryCount();
 	}
+
 }
