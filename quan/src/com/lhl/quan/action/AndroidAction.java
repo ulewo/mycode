@@ -205,7 +205,8 @@ public class AndroidAction extends BaseAction {
 			vo.setArticleId(reArticle.getArticleId());
 			vo.setAtUserId(reArticle.getAtUserId());
 			vo.setAtUserName(reArticle.getAtUserName());
-			vo.setAuthorIcon(reArticle.getAuthorIcon());
+			vo.setAuthorIcon(Constant.WEBSTIE_IMAGEURL
+					+ reArticle.getAuthorIcon());
 			vo.setAuthorid(reArticle.getAuthorid());
 			vo.setAuthorName(reArticle.getAuthorName());
 			vo.setContent(Tools.pathRelative2Absolutely(reArticle.getContent()));
@@ -383,7 +384,7 @@ public class AndroidAction extends BaseAction {
 			for (BlogReply re : reArticleList) {
 				vo = new BlogReplyVo();
 				vo.setArticleId(re.getBlogId());
-				vo.setAuthorIcon(Constant.WEBSTIE + re.getReUserIcon());
+				vo.setAuthorIcon(Constant.WEBSTIE_IMAGEURL + re.getReUserIcon());
 				vo.setAuthorid(re.getUserId());
 				vo.setAuthorName(re.getUserName());
 				vo.setContent(re.getContent());
