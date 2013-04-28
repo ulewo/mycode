@@ -40,7 +40,8 @@ public class AsyncImageLoader {
 		imageCache = new HashMap<String, SoftReference<Drawable>>();
 	}
 
-	public Drawable loadDrawable(final String imageUrl, final ImageCallback imageCallback) {
+	public Drawable loadDrawable(final String imageUrl,
+			final ImageCallback imageCallback) {
 
 		final String fileName = StringUtils.convertUrlToFileName(imageUrl);
 		// 从内存中读取
@@ -83,17 +84,24 @@ public class AsyncImageLoader {
 
 		URL m;
 		InputStream i = null;
+		Drawable d = null;
 		try {
 			m = new URL(url);
 			i = (InputStream) m.getContent();
-		}
-		catch (MalformedURLException e1) {
+			d = Drawable.createFromStream(i, "src");
+		} catch (MalformedURLException e1) {
 			e1.printStackTrace();
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			if (i != null) {
+				try {
+					i.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
-		Drawable d = Drawable.createFromStream(i, "src");
 		return d;
 	}
 
@@ -116,10 +124,12 @@ public class AsyncImageLoader {
 			return;
 		}
 		String filename = StringUtils.convertUrlToFileName(imageUrl);
-		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+		if (Environment.getExternalStorageState().equals(
+				Environment.MEDIA_MOUNTED)) {
 			FileOutputStream fos = null;
 			try {
-				String sDir = Environment.getExternalStorageDirectory() + SEPARATOR + ULEWO;
+				String sDir = Environment.getExternalStorageDirectory()
+						+ SEPARATOR + ULEWO;
 				File destDir = new File(sDir);
 				if (!destDir.exists()) {
 					destDir.mkdirs();
@@ -128,17 +138,14 @@ public class AsyncImageLoader {
 				fos = new FileOutputStream(file);
 				bm.compress(CompressFormat.JPEG, 100, fos);
 				fos.flush();
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				e.printStackTrace();
-			}
-			finally {
+			} finally {
 				try {
 					if (null != fos) {
 						fos.close();
 					}
-				}
-				catch (Exception e) {
+				} catch (Exception e) {
 				}
 			}
 		}
@@ -147,12 +154,14 @@ public class AsyncImageLoader {
 	// 计算sdcard上的剩余空间
 	private int freeSpaceOnSd() {
 
-		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-			StatFs stat = new StatFs(Environment.getExternalStorageDirectory().getPath());
-			double sdFreeMB = ((double) stat.getAvailableBlocks() * (double) stat.getBlockSize()) / MB;
+		if (Environment.getExternalStorageState().equals(
+				Environment.MEDIA_MOUNTED)) {
+			StatFs stat = new StatFs(Environment.getExternalStorageDirectory()
+					.getPath());
+			double sdFreeMB = ((double) stat.getAvailableBlocks() * (double) stat
+					.getBlockSize()) / MB;
 			return (int) sdFreeMB;
-		}
-		else {
+		} else {
 			return 0;
 		}
 	}
@@ -178,9 +187,11 @@ public class AsyncImageLoader {
 
 		Bitmap btp = null;
 		Drawable drawable = null;
-		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+		if (Environment.getExternalStorageState().equals(
+				Environment.MEDIA_MOUNTED)) {
 
-			File file = new File(Environment.getExternalStorageDirectory() + SEPARATOR + ULEWO, filename);
+			File file = new File(Environment.getExternalStorageDirectory()
+					+ SEPARATOR + ULEWO, filename);
 			if (file.exists()) {
 				FileInputStream fs = null;
 				BufferedInputStream bs = null;
@@ -194,25 +205,21 @@ public class AsyncImageLoader {
 						return null;
 					}
 					drawable = new BitmapDrawable(btp);
-				}
-				catch (Exception e) {
+				} catch (Exception e) {
 
-				}
-				finally {
+				} finally {
 					try {
 						if (null != fs) {
 							fs.close();
 						}
 
-					}
-					catch (Exception e) {
+					} catch (Exception e) {
 					}
 					try {
 						if (null != bs) {
 							bs.close();
 						}
-					}
-					catch (Exception e) {
+					} catch (Exception e) {
 					}
 				}
 			}

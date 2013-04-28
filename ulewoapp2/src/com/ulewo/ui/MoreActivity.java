@@ -17,15 +17,18 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ulewo.AppContext;
+import com.ulewo.AppException;
 import com.ulewo.R;
+import com.ulewo.bean.UlewoVersion;
+import com.ulewo.service.UpdateService;
 import com.ulewo.util.Constants;
 import com.ulewo.util.StringUtils;
 
@@ -35,6 +38,7 @@ public class MoreActivity extends BaseActivity {
 	private RelativeLayout more_check_version = null;
 	private RelativeLayout more_about_item = null;
 	private RelativeLayout more_exit = null;
+	private LinearLayout progressBar = null;
 
 	private Handler checkVersionHandler = null;
 	AppContext appContext = null;
@@ -55,7 +59,7 @@ public class MoreActivity extends BaseActivity {
 		more_check_version = (RelativeLayout) findViewById(R.id.more_check_version);
 		more_about_item = (RelativeLayout) findViewById(R.id.more_about_item);
 		more_exit = (RelativeLayout) findViewById(R.id.more_exit);
-
+		progressBar = (LinearLayout) findViewById(R.id.myprogressbar);
 		more_check_version.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -88,9 +92,9 @@ public class MoreActivity extends BaseActivity {
 
 					switch (which) {
 					case AlertDialog.BUTTON_POSITIVE:// "确认"按钮退出程序
-						//清除session
+						// 清除session
 						appContext.removeUserInfo(Constants.SESSIONID);
-						//删除缓存文件
+						// 删除缓存文件
 						String fileName = StringUtils.encodeByMD5("user");
 						appContext.deleteObject(fileName);
 						// appContext.re
@@ -110,7 +114,7 @@ public class MoreActivity extends BaseActivity {
 				isExit();
 			}
 		});
-		
+
 		more_about_item.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View paramView) {
@@ -123,21 +127,86 @@ public class MoreActivity extends BaseActivity {
 
 	// 检测新版本
 	private void checkVersion() {
+		progressBar.setVisibility(View.VISIBLE);
 		checkVersionHandler = new Handler() {
+			UlewoVersion version = null;
 
 			@Override
 			public void handleMessage(Message msg) {
+				progressBar.setVisibility(View.GONE);
 				PackageInfo info = appContext.getPackageInfo();
-				String version = info.versionName;
-				Log.v("version", version);
-			}
-		};
+				double curVersion = Double.valueOf(info.versionName);
+				if (msg.what != -1) {
+					version = (UlewoVersion) msg.obj;
+					if (version.getVersion() > curVersion) {
+						// 创建对话框
+						AlertDialog isUpload = new AlertDialog.Builder(
+								MoreActivity.this).create();
+						// 设置对话框标题
+						isUpload.setTitle("软件更新");
+						// 设置对话框消息
+						isUpload.setMessage("当前版本" + curVersion + "发现新版本"
+								+ version.getVersion() + ",是否更新？");
+						// 添加选择按钮并注册监听
+						isUpload.setButton("确定", mylistener);
+						isUpload.setButton2("取消", mylistener);
+						// 显示对话框
+						isUpload.show();
+					} else {
+						AlertDialog isExit = new AlertDialog.Builder(
+								MoreActivity.this).create();
+						// 设置对话框标题
+						isExit.setTitle("软件更新");
+						// 设置对话框消息
+						isExit.setMessage("已经是最新版本了");
+						// 添加选择按钮并注册监听
+						isExit.setButton2("确定", mylistener);
+						// 显示对话框
+						isExit.show();
+					}
+				} else {
+					((AppException) msg.obj).makeToast(MoreActivity.this);
+				}
 
+			}
+
+			DialogInterface.OnClickListener mylistener = new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+
+					switch (which) {
+					case AlertDialog.BUTTON_POSITIVE:// "确认更新程序"
+						Intent updateIntent = new Intent(MoreActivity.this,
+								UpdateService.class);
+						String appName = "ulewo";
+						if (version != null) {
+							appName = version.getAppName();
+						}
+						updateIntent.putExtra("app_name", appName);
+						startService(updateIntent);
+						break;
+					case AlertDialog.BUTTON_NEGATIVE:// "取消"第二个按钮取消对话框
+						break;
+					default:
+						break;
+					}
+				}
+			};
+
+		};
 		new Thread() {
 
 			@Override
 			public void run() {
+
 				Message msg = new Message();
+				try {
+					UlewoVersion version = appContext.fetchVersion();
+					msg.what = 0;
+					msg.obj = version;
+				} catch (AppException e) {
+					msg.what = -1;
+					msg.obj = e;
+				}
 				checkVersionHandler.sendMessage(msg);
 			}
 		}.start();

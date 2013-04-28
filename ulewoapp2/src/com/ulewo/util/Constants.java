@@ -7,7 +7,9 @@ public class Constants {
 
 	public static final String RESULTCODE_LOGINFAIL = "100";
 
-	public static final String BASEURL = "http://ulewo.cloudfoundry.com";
+	public static final String BASEURL = "http://192.168.0.224:80/ulewo";
+
+	public static final String APPDOWNLOADURL = BASEURL + "/app";
 
 	public static final String USERNAME = "userName";
 
@@ -24,7 +26,7 @@ public class Constants {
 	public static final String SEX_M = "M";
 
 	public static final String SEX_F = "F";
-	
+
 	public static int MAXCONTENTLENGTH = 500;
 
 }

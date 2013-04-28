@@ -32,6 +32,7 @@ import com.ulewo.bean.ReArticleList;
 import com.ulewo.bean.ReArticleResult;
 import com.ulewo.bean.ReBlogList;
 import com.ulewo.bean.ReBlogResult;
+import com.ulewo.bean.UlewoVersion;
 import com.ulewo.bean.User;
 import com.ulewo.util.Constants;
 import com.ulewo.util.StringUtils;
@@ -434,6 +435,20 @@ public class AppContext extends Application {
 		return user;
 	}
 
+	public UlewoVersion fetchVersion() throws AppException {
+		UlewoVersion version = null;
+		if (isNetworkConnected()) {
+			try {
+				version = ApiClient.getVersion();
+			} catch (AppException e) {
+				throw e;
+			}
+		} else {
+			throw AppException.network(new HttpException());
+		}
+		return version;
+	}
+
 	/**
 	 * 判断缓存数据是否可读
 	 * 
@@ -595,7 +610,7 @@ public class AppContext extends Application {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * 获取App安装包信息
 	 * 

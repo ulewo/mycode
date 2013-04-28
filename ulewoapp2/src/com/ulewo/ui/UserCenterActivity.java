@@ -5,7 +5,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -26,6 +25,7 @@ import com.ulewo.util.StringUtils;
 
 public class UserCenterActivity extends BaseActivity {
 
+	LinearLayout myprogressbar = null;
 	LinearLayout userinfolayout = null;
 
 	ImageView user_info_icon = null;
@@ -90,6 +90,7 @@ public class UserCenterActivity extends BaseActivity {
 			@Override
 			public void onClick(View paramView) {
 				isRefresh = true;
+				myprogressbar.setVisibility(View.VISIBLE);
 				fetchUserInfo();
 			}
 		});
@@ -102,9 +103,13 @@ public class UserCenterActivity extends BaseActivity {
 			}
 		});
 
+		myprogressbar = (LinearLayout) findViewById(R.id.myprogressbar);
+		myprogressbar.setVisibility(View.VISIBLE);
+
 		Intent intent = getIntent();
 		Bundle bunde = intent.getExtras();
 		userId = bunde.getString("userId");
+
 	}
 
 	private void fetchUserInfo() {
@@ -112,9 +117,8 @@ public class UserCenterActivity extends BaseActivity {
 		userHandler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
+				myprogressbar.setVisibility(View.GONE);
 				if (msg.what != -1) {
-
-					// 登录成功
 					if (null != msg.obj) {
 						User user = (User) msg.obj;
 						AsyncImageLoader asyncImageLoader = new AsyncImageLoader();
@@ -183,13 +187,5 @@ public class UserCenterActivity extends BaseActivity {
 				userHandler.sendMessage(msg);
 			}
 		}.start();
-	}
-
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			isExit();
-		}
-		return super.onKeyDown(keyCode, event);
 	}
 }

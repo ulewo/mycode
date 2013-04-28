@@ -37,6 +37,7 @@ import com.ulewo.bean.ReArticleList;
 import com.ulewo.bean.ReArticleResult;
 import com.ulewo.bean.ReBlogList;
 import com.ulewo.bean.ReBlogResult;
+import com.ulewo.bean.UlewoVersion;
 import com.ulewo.bean.User;
 import com.ulewo.util.Constants;
 
@@ -59,7 +60,7 @@ public class ApiClient {
 
 	private final static int RETRY_TIME = 3;
 
-	private static final String BASEURL = "http://192.168.0.224:80/ulewo";
+	private static final String BASEURL = Constants.BASEURL;
 
 	private static final String HOST = BASEURL;
 
@@ -95,6 +96,9 @@ public class ApiClient {
 
 	private static final String BASEUR_FETCHUSERINFO = BASEURL
 			+ "/android/fetchUserInfo.jspx";
+
+	private static final String BASEUR_GETVERSION = BASEURL
+			+ "/android/fetchVersion.jspx";
 
 	private static final String BASEUR_LOGIN = BASEURL + "/android/login.jspx";
 
@@ -390,12 +394,14 @@ public class ApiClient {
 	 * @return
 	 * @throws AppException
 	 */
-	public static String getVersion() throws AppException {
+	public static UlewoVersion getVersion() throws AppException {
 		try {
-			JSONObject json = convertInputStream2JSONObject(http_get(""));
-			return json.toString();
+			JSONObject json = convertInputStream2JSONObject(http_get(BASEUR_GETVERSION));
+			return UlewoVersion.parse(json);
 		} catch (AppException e) {
 			throw e;
+		} catch (Exception e) {
+			throw AppException.josn(e);
 		}
 	}
 

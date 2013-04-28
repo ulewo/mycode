@@ -58,7 +58,7 @@ public class BlogActivity extends BaseActivity {
 		listView = (ListView) findViewById(R.id.article_list_view_id);
 		listView.addFooterView(loadMoreView);
 
-		//加载更多
+		// 加载更多
 		loadmore_prgressbar = (LinearLayout) findViewById(R.id.loadmore_progressbar);
 		loadmoreTextView = (TextView) findViewById(R.id.loadmoretextview);
 		loadmoreTextView.setOnClickListener(new View.OnClickListener() {
@@ -72,7 +72,7 @@ public class BlogActivity extends BaseActivity {
 			}
 		});
 
-		//刷新按钮
+		// 刷新按钮
 		refreshBtn = (ImageButton) findViewById(R.id.head_refresh);
 		refreshBtn.setVisibility(View.VISIBLE);
 		refreshBtn.setOnClickListener(new OnClickListener() {
@@ -92,18 +92,17 @@ public class BlogActivity extends BaseActivity {
 		handler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
-
 				progressBar.setVisibility(View.GONE);
 				if (msg.what != -1) {
 					BlogList list = (BlogList) msg.obj;
 					if (adapter == null || page == 1) {
-						adapter = new BlogListAdapter(BlogActivity.this, list.getBlogList());
+						adapter = new BlogListAdapter(BlogActivity.this,
+								list.getBlogList());
 						listView.setAdapter(adapter);
 						if (page < list.getPageTotal()) {
 							loadmoreTextView.setVisibility(View.VISIBLE);
 						}
-					}
-					else {
+					} else {
 						loadmore_prgressbar.setVisibility(View.GONE);
 						adapter.loadMore(list.getBlogList());
 						if (page < list.getPageTotal()) {
@@ -111,21 +110,22 @@ public class BlogActivity extends BaseActivity {
 						}
 					}
 					listView.setOnItemClickListener(new OnItemClickListener() {
-						public void onItemClick(AdapterView<?> parent, View view, int postion, long id) {
+						public void onItemClick(AdapterView<?> parent,
+								View view, int postion, long id) {
 
-							String articleId = String.valueOf(adapter.getItemId(postion));
+							String articleId = String.valueOf(adapter
+									.getItemId(postion));
 							if (!"0".equals(articleId)) {
 								Intent intent = new Intent();
 								intent.putExtra("articleId", articleId);
-								intent.setClass(BlogActivity.this, ShowBlogActivity.class);
+								intent.setClass(BlogActivity.this,
+										ShowBlogActivity.class);
 								startActivity(intent);
 							}
 						}
 					});
-				}
-				else {
+				} else {
 					((AppException) msg.obj).makeToast(BlogActivity.this);
-					progressBar.setVisibility(View.GONE);
 					loadmoreTextView.setVisibility(View.VISIBLE);
 					loadmore_prgressbar.setVisibility(View.GONE);
 				}
@@ -140,8 +140,7 @@ public class BlogActivity extends BaseActivity {
 					BlogList list = appContext.getBlogList(page, isRefresh);
 					msg.what = 0;
 					msg.obj = list;
-				}
-				catch (AppException e) {
+				} catch (AppException e) {
 					msg.what = -1;
 					msg.obj = e;
 				}
