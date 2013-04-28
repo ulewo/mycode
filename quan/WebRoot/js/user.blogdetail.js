@@ -18,7 +18,7 @@ function subReply(blogId) {
 	if ($("#quote_panle").html() != null) {
 		quote = "<div class='quote_panle'>" + $("#infocon").html() + "</div>";
 	}
-	if(quote!=""){
+	if (quote != "") {
 		blogauthor = $("#quoteUserId").val();
 	}
 	$("#sendBtn").hide();
@@ -36,9 +36,9 @@ function subReply(blogId) {
 		},
 		url : "savaReply.jspx",// 请求的action路径
 		success : function(data) {
-			if(data.result == "fail"){
+			if (data.result == "fail") {
 				art.dialog.tips(data.msg);
-			}else {
+			} else {
 				art.dialog.tips("发表成功");
 				$(".nomessage").remove();
 				$("#quote_panle").remove();
@@ -107,8 +107,8 @@ function NotePanle(note) {
 	var reUserIcon = note.reUserIcon || "default.gif";
 	// 最外层div
 	this.noteCon = $("<div class='main_message'></div>");
-	//@定位
-	$("<a name='re"+note.id+"'></a>").appendTo(this.noteCon);
+	// @定位
+	$("<a name='re" + note.id + "'></a>").appendTo(this.noteCon);
 	// 头像
 	$(
 			"<div class='re_icon'><img src='../upload/" + reUserIcon
@@ -127,14 +127,19 @@ function NotePanle(note) {
 		$("<span class='note_name'>" + note.userName + "</span>").appendTo(
 				re_name_time);
 	}
-	$(
-			"<span class='note_time nofirst'>发表于"
-					+ note.postTime.substring(0, 19) + "</span>").appendTo(
-			re_name_time);
+	if (note.sourceFrom == "A") {
+		$(
+				"<span class='note_time nofirst'>发表于:" + note.postTime
+						+ "(来自:android客户端)</span>").appendTo(re_name_time);
+	} else {
+		$("<span class='note_time nofirst'>发表于" + note.postTime + "</span>")
+				.appendTo(re_name_time);
+	}
+
 	var re_span = $("<span class='nofirst'></span>").appendTo(re_name_time);
 	$("<a href='javascript:void(0)'>回复</a>").bind("click", {
-		id:note.id,
-		quoteUserId:note.userId,
+		id : note.id,
+		quoteUserId : note.userId,
 		name : note.userName,
 		time : note.postTime.substring(0, 19),
 		content : note.content
@@ -179,8 +184,10 @@ NotePanle.prototype = {
 				.appendTo(b);
 		$("<div style='margin-top:5px;'>" + content + "</div>").appendTo(
 				infocon);
-		$("<input type='hidden' id='quoteId' value="+id+">").appendTo($("#quote_panle"));
-		$("<input type='hidden' id='quoteUserId' value="+quoteUserId+">").appendTo($("#quote_panle"));
+		$("<input type='hidden' id='quoteId' value=" + id + ">").appendTo(
+				$("#quote_panle"));
+		$("<input type='hidden' id='quoteUserId' value=" + quoteUserId + ">")
+				.appendTo($("#quote_panle"));
 		$("#content").focus();
 	},
 	del : function(event) {

@@ -20,8 +20,7 @@ function quote(id) {
 }
 
 function showAboutArticle(keyWord, gid) {
-	$("<img src='../images/load.gif' id='loadImg'>").appendTo(
-			$("#about_con"));
+	$("<img src='../images/load.gif' id='loadImg'>").appendTo($("#about_con"));
 	$.ajax({
 		async : true,
 		cache : false,
@@ -90,28 +89,28 @@ function loadReComment(id) {
 							rePanel.reComent_Con);
 				}
 			}
-			//回复加载完成，定位回复的位置
+			// 回复加载完成，定位回复的位置
 			var curUrl = window.location.href;
-		   	if(curUrl.lastIndexOf("#")!=-1){
-		   		var type = curUrl.substr(curUrl.lastIndexOf("#")+1);
-		   		setTimeout("getPostion()",1000);
-		   	}
+			if (curUrl.lastIndexOf("#") != -1) {
+				var type = curUrl.substr(curUrl.lastIndexOf("#") + 1);
+				setTimeout("getPostion()", 1000);
+			}
 		}
 	});
 }
 
-function getPostion(){
+function getPostion() {
 	var curUrl = window.location.href;
-   	if(curUrl.lastIndexOf("#")!=-1){
-   		var type = curUrl.substr(curUrl.lastIndexOf("#")+1);
-   		window.location.hash =type;
-   	}
+	if (curUrl.lastIndexOf("#") != -1) {
+		var type = curUrl.substr(curUrl.lastIndexOf("#") + 1);
+		window.location.hash = type;
+	}
 }
 
 function RePanel(data) {
 	data.pid = data.id;
 	this.outerHeight = $("<div class='outerHeight'></div>");
-	$("<a name=re"+data.id+">").appendTo(this.outerHeight);
+	$("<a name=re" + data.id + ">").appendTo(this.outerHeight);
 	// 头像
 	var authorIcon = data.authorIcon || "defaultsmall.gif";
 	this.ui_avatar = $("<div class='ui_avatar'><img src='../upload/"
@@ -137,8 +136,14 @@ function RePanel(data) {
 					+ "</span>").appendTo(this.comments_content);
 	this.comments_op = $("<div class='comments_op'></div>").appendTo(
 			this.comments_content);
-	$("<span class='com_op_time'>" + data.reTime.substring(0, 16) + "</span>")
-			.appendTo(this.comments_op);
+
+	if (data.sourceFrom == "A") {
+		$("<span class='com_op_time'>" + data.reTime + "(来自:android客户端)</span>")
+				.appendTo(this.comments_op);
+	} else {
+		$("<span class='com_op_time'>" + data.reTime + "</span>").appendTo(
+				this.comments_op);
+	}
 	$("<a href='javascript:void(0)' class='com_op_link'>回复</a>").appendTo(
 			this.comments_op).bind("click", {
 		data : data
@@ -164,7 +169,7 @@ RePanel.prototype = {
 }
 function SubRePanel(data) {
 	this.comment_sub = $("<div class='comtent_sub'></div>");
-	$("<a name=re"+data.id+">").appendTo(this.comment_sub);
+	$("<a name=re" + data.id + ">").appendTo(this.comment_sub);
 	this.ui_avatar = $(
 			"<div class='ui_avatar'><img src='../upload/" + data.authorIcon
 					+ "' width='30'></div>").appendTo(this.comment_sub);
@@ -182,8 +187,15 @@ function SubRePanel(data) {
 					+ "</span>").appendTo(this.comments_content_sub);
 	this.comments_op_sub = $("<div class='comments_op_sub'></div>").appendTo(
 			this.comments_content_sub);
-	$("<span class='com_op_time'>" + data.reTime.substring(0, 16) + "</span>")
-			.appendTo(this.comments_op_sub);
+
+	if (data.sourceFrom == "A") {
+		$("<span class='com_op_time'>" + data.reTime + "(来自:android客户端)</span>")
+				.appendTo(this.comments_op_sub);
+	} else {
+		$("<span class='com_op_time'>" + data.reTime + "</span>").appendTo(
+				this.comments_op_sub);
+	}
+
 	$("<a href='javascript:void(0)' class='com_op_link'>回复</a>").appendTo(
 			this.comments_op_sub).bind("click", {
 		data : data
@@ -218,24 +230,26 @@ function Recoment_form_panel(data) {
 					this.recoment_form_panel));
 	this.checkCode_area = $("<div class='comment_form_panel'></div>").appendTo(
 			this.recoment_form_panel);
-/*	this.checkCode = $("<input type='text'>").appendTo(
-			$("<div class='comment_checkcode'></div>").appendTo(
-					this.checkCode_area));
-	$(
-			"<div class='comment_checkcode_img'><a href='JavaScript:refreshcode();' onfocus='this.blur();'><img id='checkCodeImage' src='../common/image.jsp' border='0' height='22'></a></div>")
-			.appendTo(this.checkCode_area);
-	$(
-			"<div class='comment_checkcode_link'><a href='javascript:refreshcode()'>换一张</a></div>")
-			.appendTo(this.checkCode_area);*/
-	var comment_checkcode_rebtn = $("<div class='comment_checkcode_rebtn'></div>").appendTo(this.checkCode_area);
-	
-	$(
-			"<a href='javascript:void(0)'>回复</a>")
-			.bind("click", {
-				data : data,
-				reCotent : this.textarea
-			}, this.subReComent).appendTo(comment_checkcode_rebtn);
-	$("<img src='../images/load.gif' style='display:none'>").appendTo(comment_checkcode_rebtn);		
+	/*
+	 * this.checkCode = $("<input type='text'>").appendTo( $("<div
+	 * class='comment_checkcode'></div>").appendTo( this.checkCode_area)); $( "<div
+	 * class='comment_checkcode_img'><a href='JavaScript:refreshcode();'
+	 * onfocus='this.blur();'><img id='checkCodeImage'
+	 * src='../common/image.jsp' border='0' height='22'></a></div>")
+	 * .appendTo(this.checkCode_area); $( "<div class='comment_checkcode_link'><a
+	 * href='javascript:refreshcode()'>换一张</a></div>")
+	 * .appendTo(this.checkCode_area);
+	 */
+	var comment_checkcode_rebtn = $(
+			"<div class='comment_checkcode_rebtn'></div>").appendTo(
+			this.checkCode_area);
+
+	$("<a href='javascript:void(0)'>回复</a>").bind("click", {
+		data : data,
+		reCotent : this.textarea
+	}, this.subReComent).appendTo(comment_checkcode_rebtn);
+	$("<img src='../images/load.gif' style='display:none'>").appendTo(
+			comment_checkcode_rebtn);
 	if (groupParam.userId == "") {
 		var shade = $("<div class='shade' id='shade'></div>").appendTo(
 				this.recoment_form_panel);
@@ -271,7 +285,7 @@ Recoment_form_panel.prototype = {
 			alert("内容超过500字符，请重新输入");
 			return;
 		}
-		//防止重复提交禁止提交按钮
+		// 防止重复提交禁止提交按钮
 		var _thispaernt = $(this).parent();
 		_thispaernt.children().eq(0).hide();
 		_thispaernt.children().eq(1).show();
@@ -309,7 +323,7 @@ Recoment_form_panel.prototype = {
 
 function subReForm(userId, id, gid) {
 	var recontent = $("#reContent").val();
-	//var checkCode = $("#checkCode").val();
+	// var checkCode = $("#checkCode").val();
 	var authorId = $("#authorId").val();
 	var articleTit = $("#articleTit").val();
 
@@ -317,18 +331,16 @@ function subReForm(userId, id, gid) {
 		alert("请填写回复内容");
 		return;
 	}
-	/*if (checkCode == "") {
-		alert("请填写验证码");
-		return;
-	}*/
+	/*
+	 * if (checkCode == "") { alert("请填写验证码"); return; }
+	 */
 
 	if (recontent.trim().length > 500) {
 		alert("内容超过500字符，请重新输入");
 		return;
 	}
 	$("#subBtn").attr("disabled", true);
-	$("<img src='../images/load.gif' width='20'>")
-			.appendTo($("#subBtn_con"));
+	$("<img src='../images/load.gif' width='20'>").appendTo($("#subBtn_con"));
 	$.ajax({
 		async : true,
 		cache : false,
