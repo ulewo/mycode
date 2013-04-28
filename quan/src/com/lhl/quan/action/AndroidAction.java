@@ -2,6 +2,7 @@ package com.lhl.quan.action;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpSession;
 
@@ -252,6 +253,7 @@ public class AndroidAction extends BaseAction {
 				reArticle.setAuthorIcon(sessionUser.getUserLittleIcon());
 				reArticle.setAtUserId(atUserId);
 				reArticle.setPid(pid);
+				reArticle.setSourceFrom("A");
 				ReArticle re = reArticleService.addReArticle(reArticle);
 
 				vo = new ReArticleVo();
@@ -425,6 +427,7 @@ public class AndroidAction extends BaseAction {
 				blogReply.setUserId(sessionUser.getUserId());
 				blogReply.setUserName(sessionUser.getUserName());
 				blogReply.setReUserIcon(sessionUser.getUserLittleIcon());
+				blogReply.setSourceFrom("A");
 				BlogReply re = blogReplyService.addReply(blogReply);
 
 				vo = new BlogReplyVo();
@@ -556,6 +559,9 @@ public class AndroidAction extends BaseAction {
 				MySessionContext.AddSession(session);
 
 				userVo = new UserVo();
+				userVo.setUserId(userInfo.getUserId());
+				userVo.setUserLittleIcon(Constant.WEBSTIE_IMAGEURL
+						+ userInfo.getUserLittleIcon());
 				userVo.setUserName(userInfo.getUserName());
 				userVo.setWork(userInfo.getWork());
 				userVo.setAddress(userInfo.getAddress());
@@ -608,8 +614,16 @@ public class AndroidAction extends BaseAction {
 
 	public void fetchVersion() {
 		JSONObject obj = new JSONObject();
-		obj.put("version", Constant.VERSION);
-		getOut().print(String.valueOf(obj));
+		try {
+			ResourceBundle rb = ResourceBundle.getBundle("config.config");
+			String version = rb.getString("version");
+			String app_name = rb.getString("app_name");
+			obj.put("version", version);
+			obj.put("app_name", app_name);
+			getOut().print(String.valueOf(obj));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void setArticleService(ArticleService articleService) {

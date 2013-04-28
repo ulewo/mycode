@@ -66,6 +66,9 @@ public class BlogReplyServiceImpl implements BlogReplyService {
 			subCon = quote + formatContent;
 		}
 		blogReply.setContent(subCon);
+		if (Tools.isEmpty(blogReply.getSourceFrom())) {
+			blogReply.setSourceFrom("P");
+		}
 		int id = blogReplyDao.addReply(blogReply);
 		blogReply.setId(id);
 		blogReply.setPostTime(Tools.friendly_time(blogReply.getPostTime()));

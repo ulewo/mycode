@@ -67,6 +67,9 @@ public class ReArticleServiceImpl implements ReArticleService {
 			subCon = quote + formatContent;
 		}
 		reArticle.setContent(subCon);
+		if (Tools.isEmpty(reArticle.getSourceFrom())) {
+			reArticle.setSourceFrom("P");
+		}
 		int id = reArticleDao.addReArticle(reArticle);
 
 		if (!"".equals(reArticle.getAuthorid())

@@ -11,8 +11,8 @@
 	
 	<!-- 新增回复-->
 	<insert id="addReArticle" parameterClass="reArticle">
-		insert into rearticle (articleid,pid,gid,content,authorid,authorname,retime,atuserid,atusername)
-		values(#articleId#,#pid#,#gid#,#content#,#authorid#,#authorName#,#reTime#,#atUserId#,#atUserName#);
+		insert into rearticle (articleid,pid,gid,content,authorid,authorname,retime,atuserid,atusername,sourcefrom)
+		values(#articleId#,#pid#,#gid#,#content#,#authorid#,#authorName#,#reTime#,#atUserId#,#atUserName#,#sourceFrom#);
 		<selectKey resultClass="int" keyProperty="id">  
    	 		select max(id) from rearticle  
   	 	</selectKey>  
@@ -45,7 +45,7 @@
 	
 	<!--通过articleId查询回复-->
 	<select id="queryReArticles" resultClass="reArticle" parameterClass="java.util.Map">
-		select r.id,r.pid,r.articleid,r.gid,r.content,r.authorid,
+		select r.id,r.pid,r.articleid,r.gid,r.content,r.authorid,r.sourcefrom,
 		(case when r.authorid is not null then u.username else r.authorname end)as authorName,
 		(case when r.authorid is not null then u.userLittleIcon else '' end)as authorIcon,
 		r.retime,atuserid,

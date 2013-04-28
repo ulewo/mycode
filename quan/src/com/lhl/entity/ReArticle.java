@@ -40,6 +40,8 @@ public class ReArticle {
 
 	private String atUserIcon;
 
+	private String sourceFrom;
+
 	public int getId() {
 
 		return id;
@@ -178,6 +180,14 @@ public class ReArticle {
 
 	public void setPid(Integer pid) {
 		this.pid = pid;
+	}
+
+	public String getSourceFrom() {
+		return sourceFrom;
+	}
+
+	public void setSourceFrom(String sourceFrom) {
+		this.sourceFrom = sourceFrom;
 	}
 
 }

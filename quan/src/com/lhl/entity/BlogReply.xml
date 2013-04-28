@@ -16,15 +16,15 @@
       		SELECT LAST_INSERT_ID()
     	 </selectKey>
         <![CDATA[
-        insert into blog_reply (blogid,content,posttime,userid,username)
-		values(#blogId#,#content#,#postTime#,#userId#,#userName#);
+        insert into blog_reply (blogid,content,posttime,userid,username,sourcefrom)
+		values(#blogId#,#content#,#postTime#,#userId#,#userName#,#sourceFrom#);
         ]]>
 		
 	</insert>
 	
 	<!-- 通过博客ID查询回复 -->
 	<select id="queryReplyByBlogId"  resultClass="blogReply" parameterClass="java.lang.Integer">
-		select m.id,m.userid,m.blogid,m.content,
+		select m.id,m.userid,m.blogid,m.content,m.sourcefrom,
 		(case when m.userid is not null then u.username else m.username end)as userName,
 		(case when m.userid is not null then u.userlittleicon else '' end)as reUserIcon,
 		m.posttime 

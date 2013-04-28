@@ -97,10 +97,8 @@ public class Constant {
 
 	public static int ARTICLE_MARK2 = 2;
 
-	public static int VERSION = 1;
-
 	public static String WEBSTIE = "http://192.168.0.224:80/ulewo/";
 
-	public static String WEBSTIE_IMAGEURL = "http://192.168.2.224:8080/ulewo/upload/";
+	public static String WEBSTIE_IMAGEURL = WEBSTIE + "upload/";
 
 }

@@ -8,8 +8,7 @@ package com.lhl.entity;
  * @date 2013-1-4
  * @version V1.0
  */
-public class BlogReply
-{
+public class BlogReply {
 
 	private int id;
 
@@ -27,100 +26,94 @@ public class BlogReply
 
 	private String reUserIcon;
 
-	public String getQuote()
-	{
+	private String sourceFrom;
+
+	public String getQuote() {
 
 		return quote;
 	}
 
-	public void setQuote(String quote)
-	{
+	public void setQuote(String quote) {
 
 		this.quote = quote;
 	}
 
-	public int getId()
-	{
+	public int getId() {
 
 		return id;
 	}
 
-	public void setId(int id)
-	{
+	public void setId(int id) {
 
 		this.id = id;
 	}
 
-	public int getBlogId()
-	{
+	public int getBlogId() {
 
 		return blogId;
 	}
 
-	public void setBlogId(int blogId)
-	{
+	public void setBlogId(int blogId) {
 
 		this.blogId = blogId;
 	}
 
-	public String getContent()
-	{
+	public String getContent() {
 
 		return content;
 	}
 
-	public void setContent(String content)
-	{
+	public void setContent(String content) {
 
 		this.content = content;
 	}
 
-	public String getPostTime()
-	{
+	public String getPostTime() {
 
 		return postTime;
 	}
 
-	public void setPostTime(String postTime)
-	{
+	public void setPostTime(String postTime) {
 
 		this.postTime = postTime;
 	}
 
-	public String getUserId()
-	{
+	public String getUserId() {
 
 		return userId;
 	}
 
-	public void setUserId(String userId)
-	{
+	public void setUserId(String userId) {
 
 		this.userId = userId;
 	}
 
-	public String getUserName()
-	{
+	public String getUserName() {
 
 		return userName;
 	}
 
-	public void setUserName(String userName)
-	{
+	public void setUserName(String userName) {
 
 		this.userName = userName;
 	}
 
-	public String getReUserIcon()
-	{
+	public String getReUserIcon() {
 
 		return reUserIcon;
 	}
 
-	public void setReUserIcon(String reUserIcon)
-	{
+	public void setReUserIcon(String reUserIcon) {
 
 		this.reUserIcon = reUserIcon;
+	}
+
+	public String getSourceFrom() {
+		return sourceFrom;
+	}
+
+	public void setSourceFrom(String sourceFrom) {
+		this.sourceFrom = sourceFrom;
 	}
 
 }
