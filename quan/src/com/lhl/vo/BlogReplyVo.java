@@ -15,6 +15,8 @@ public class BlogReplyVo {
 
 	private String reTime; // 回复时间
 
+	private String sourceFrom;
+
 	public int getId() {
 		return id;
 	}
@@ -69,5 +71,13 @@ public class BlogReplyVo {
 
 	public void setReTime(String reTime) {
 		this.reTime = reTime;
+	}
+
+	public String getSourceFrom() {
+		return sourceFrom;
+	}
+
+	public void setSourceFrom(String sourceFrom) {
+		this.sourceFrom = sourceFrom;
 	}
 }

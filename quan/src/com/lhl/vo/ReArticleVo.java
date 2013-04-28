@@ -27,6 +27,8 @@ public class ReArticleVo {
 
 	private String atUserId;
 
+	private String sourceFrom;
+
 	public int getId() {
 		return id;
 	}
@@ -113,5 +115,13 @@ public class ReArticleVo {
 
 	public void setAtUserId(String atUserId) {
 		this.atUserId = atUserId;
+	}
+
+	public String getSourceFrom() {
+		return sourceFrom;
+	}
+
+	public void setSourceFrom(String sourceFrom) {
+		this.sourceFrom = sourceFrom;
 	}
 }

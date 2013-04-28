@@ -214,6 +214,7 @@ public class AndroidAction extends BaseAction {
 			vo.setId(reArticle.getId());
 			vo.setPid(reArticle.getPid());
 			vo.setReTime(reArticle.getReTime());
+			vo.setSourceFrom(reArticle.getSourceFrom());
 			vo.setChildList(reArticle.getChildList());
 			resultList.add(vo);
 		}
@@ -268,6 +269,7 @@ public class AndroidAction extends BaseAction {
 				vo.setId(re.getId());
 				vo.setPid(re.getPid());
 				vo.setReTime(re.getReTime());
+				vo.setSourceFrom(re.getSourceFrom());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -391,6 +393,7 @@ public class AndroidAction extends BaseAction {
 				vo.setAuthorName(re.getUserName());
 				vo.setContent(re.getContent());
 				vo.setReTime(re.getPostTime());
+				vo.setSourceFrom(re.getSourceFrom());
 				resultList.add(vo);
 			}
 
@@ -438,6 +441,7 @@ public class AndroidAction extends BaseAction {
 				vo.setAuthorName(re.getUserName());
 				vo.setAuthorIcon(re.getReUserIcon());
 				vo.setReTime(re.getPostTime());
+				vo.setSourceFrom(re.getSourceFrom());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
