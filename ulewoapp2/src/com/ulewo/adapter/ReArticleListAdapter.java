@@ -206,7 +206,7 @@ public class ReArticleListAdapter extends BaseAdapter {
 					reSubPanel.setVisibility(View.VISIBLE);
 					reusers.setText(subRe.getAuthorName());
 					hide_postion.setText(postion + "");
-					hide_pid.setText(subRe.getId() + "");
+					hide_pid.setText(subRe.getPid() + "");
 					hide_atuserId.setText(subRe.getAuthorid());
 					return true;
 				}
