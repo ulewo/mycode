@@ -115,13 +115,11 @@ public class GroupAction extends BaseAction {
 				group.setJoinPerm(joinPerm);
 				group.setPostPerm(postPerm);
 				gid = groupService.createGroup(group);
-			}
-			else {
+			} else {
 				errMsg = ErrMsgConfig.getErrMsg(10000);
 				return ERROR;
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			errMsg = ErrMsgConfig.getErrMsg(10000);
 			return ERROR;
@@ -142,15 +140,14 @@ public class GroupAction extends BaseAction {
 			Object obj = getSession().getAttribute("user");
 			if (null == obj) {
 				showManageGroup = "N";
-			}
-			else {
+			} else {
 				User sessionUser = (User) obj;
-				int grade = CheckRole.getMemberGrade(gid, sessionUser.getUserId());
+				int grade = CheckRole.getMemberGrade(gid,
+						sessionUser.getUserId());
 				if (Constant.grade1 == grade || Constant.grade2 == grade
 						|| Constant.SUPERADMIN.equals(sessionUser.getUserId())) {
 					showManageGroup = "Y";
-				}
-				else {
+				} else {
 					showManageGroup = "N";
 				}
 			}
@@ -159,22 +156,22 @@ public class GroupAction extends BaseAction {
 			if (null == group) {
 				return ERROR;
 			}
-			articleList = articleService.queryTopicOrderByGradeAndLastReTime(gid, 0, Constant.ISVALIDY, 0, 30);
+			articleList = articleService.queryTopicOrderByGradeAndLastReTime(
+					gid, 0, Constant.ISVALIDY, 0, 30);
 			todayCount = articleService.queryTopicCountByTime(gid);
 			itemList = articleItemService.queryItemByGid(gid);
 			admin = memberService.queryAdmin(gid);
 			adminList = memberService.queryAdmins(gid);
-			newsMembers = memberService.queryMembers(gid, Constant.ISVALIDY, "desc", 0, 6);
+			newsMembers = memberService.queryMembers(gid, Constant.ISVALIDY,
+					"desc", 0, 6);
 			activeMembers = memberService.queryActiveMembers(gid, 0, 6);
-			//friendGroupList = friendGroupService.queryFriendGroups(gid);
+			// friendGroupList = friendGroupService.queryFriendGroups(gid);
 			showType = 1;
-		}
-		catch (BaseException e) {
+		} catch (BaseException e) {
 			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
 			e.printStackTrace();
 			return ERROR;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			errMsg = ErrMsgConfig.getErrMsg(10000);
 			e.printStackTrace();
 			return ERROR;
@@ -200,17 +197,17 @@ public class GroupAction extends BaseAction {
 			Object userObj = getSession().getAttribute("user");
 			if (null == userObj) {
 				msg = "nologin";
-			}
-			else {
+			} else {
 				User sessionUser = (User) userObj;
-				Member member = memberService.getMember(gid, sessionUser.getUserId());
-				if (null != member && Constant.ISVALIDY.equals(member.getIsMember())) {
+				Member member = memberService.getMember(gid,
+						sessionUser.getUserId());
+				if (null != member
+						&& Constant.ISVALIDY.equals(member.getIsMember())) {
 					msg = "isMemeber";
-				}
-				else if (null != member && Constant.ISVALIDN.equals(member.getIsMember())) {
+				} else if (null != member
+						&& Constant.ISVALIDN.equals(member.getIsMember())) {
 					msg = "addNeedCheck";
-				}
-				else {
+				} else {
 					Group group = groupService.queryGorup(gid);
 					Member adMember = new Member();
 					adMember.setGid(gid);
@@ -218,19 +215,16 @@ public class GroupAction extends BaseAction {
 					if (Constant.ISVALIDY.equals(group.getJoinPerm())) {
 						adMember.setIsMember(Constant.ISVALIDY);
 						msg = "addOk";
-					}
-					else {
+					} else {
 						adMember.setIsMember(Constant.ISVALIDN);
 						msg = "addNeedCheck";
 					}
 					memberService.addMember(adMember);
 				}
 			}
-		}
-		catch (BaseException e) {
+		} catch (BaseException e) {
 			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 		}
 		obj.put("msg", msg);
 		getOut().print(String.valueOf(obj));
@@ -244,29 +238,26 @@ public class GroupAction extends BaseAction {
 			Object userObj = getSession().getAttribute("user");
 			if (null == userObj) {
 				msg = "nologin";
-			}
-			else {
+			} else {
 				User sessionUser = (User) userObj;
-				Member member = memberService.getMember(gid, sessionUser.getUserId());
-				//是成员
-				if (null != member && Constant.ISVALIDY.equals(member.getIsMember())) {
+				Member member = memberService.getMember(gid,
+						sessionUser.getUserId());
+				// 是成员
+				if (null != member
+						&& Constant.ISVALIDY.equals(member.getIsMember())) {
 					msg = "havePerm";
-				}
-				else {
+				} else {
 					Group group = groupService.queryGorup(gid);
-					if (Constant.ISVALIDY.equals(group.getJoinPerm())) {
+					if (Constant.ALL_PERA.equals(group.getPostPerm())) {
 						msg = "havePerm";
-					}
-					else {
+					} else {
 						msg = "noPerm";
 					}
 				}
 			}
-		}
-		catch (BaseException e) {
+		} catch (BaseException e) {
 			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 		}
 		obj.put("msg", msg);
 		getOut().print(String.valueOf(obj));
@@ -307,7 +298,8 @@ public class GroupAction extends BaseAction {
 
 		try {
 			group = groupService.queryGorup(gid);
-			int countNumber = memberService.queryMemberCount(gid, Constant.ISVALIDY);
+			int countNumber = memberService.queryMemberCount(gid,
+					Constant.ISVALIDY);
 			Pagination.setPageSize(Constant.pageSize20);
 			int pageSize = Pagination.getPageSize();
 			pageTotal = Pagination.getPageTotal(countNumber);
@@ -318,15 +310,14 @@ public class GroupAction extends BaseAction {
 				page = 1;
 			}
 			int noStart = (page - 1) * pageSize;
-			memberList = memberService.queryMembers(gid, Constant.ISVALIDY, "asc", noStart, pageSize);
+			memberList = memberService.queryMembers(gid, Constant.ISVALIDY,
+					"asc", noStart, pageSize);
 			showType = 3;
-		}
-		catch (BaseException e) {
+		} catch (BaseException e) {
 			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
 			e.printStackTrace();
 			return ERROR;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			errMsg = ErrMsgConfig.getErrMsg(10000);
 			e.printStackTrace();
 			return ERROR;

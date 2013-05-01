@@ -582,4 +582,10 @@
 			<result name="error" type="redirect">userAvatarUpload.jsp</result>
 		</action>
 	</package>
+	
+	<package name="app" extends="struts-default">
+		<!-- 上传头像 -->
+		<action name="downloadApp" class="appdown" method="downloadApp">
+		</action>
+	</package>
 </struts>

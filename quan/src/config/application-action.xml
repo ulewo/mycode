@@ -108,4 +108,8 @@
 		<property name="blogArticleService" ref="blogArticleService"/>
 		<property name="blogReplyService" ref="blogReplyService"/>
 	</bean>
+	
+	<bean id="appdown" class="com.lhl.quan.action.DownAppAction" scope="prototype">
+	</bean>
+	
 </beans>

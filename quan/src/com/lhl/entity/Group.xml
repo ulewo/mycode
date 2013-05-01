@@ -36,7 +36,7 @@
 	<!-- 更新群信息全更新 -->
 	<update id="updateGroup" parameterClass="group">
 		update groups set groupname=#groupName#,groupdesc=#groupDesc#,groupicon=#groupIcon#,groupheadicon=#groupHeadIcon#,
-        joinperm=#joinPerm#,createtime=#createTime#,postperm=#postPerm#,iscommend=#isCommend#,visitcount=#visitCount#,isvalid=#isValid# where id=#id#
+        joinperm=#joinPerm#,postperm=#postPerm#,iscommend=#isCommend#,visitcount=#visitCount#,isvalid=#isValid# where id=#id#
 	</update>
 	
 	<!-- 更新群非空信息 -->
@@ -57,9 +57,6 @@
         </isNotEmpty>
          <isNotEmpty prepend="," property="joinPerm">
 			joinperm=#joinPerm#
-        </isNotEmpty>
-        <isNotEmpty prepend="," property="createTime">
-			createtime=#createTime#
         </isNotEmpty>
         <isNotEqual prepend="," property="postPerm">
           postperm=#postPerm#
