@@ -76,7 +76,7 @@ function initReply(i) {
 		cache : false,
 		type : 'GET',
 		dataType : "json",
-		url : "loadReply.jspx?&blogId=" + this.blogId,// 请求的action路径
+		url : "loadReply.jspx?blogId=" + this.blogId,// 请求的action路径
 		success : function(data) {
 			$("#messagelist").empty();
 			$(".pagination").empty();

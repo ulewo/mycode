@@ -70,11 +70,7 @@ var addArticle = function() {
 					document.location.href = "addArticle.jspx?gid="
 							+ groupParam.gid;
 				} else if (data.msg == "nologin") {
-					art.dialog.open('../user/login.jsp', {
-						title : '用户登录',
-						width : 500,
-						height : 300
-					});
+					login();
 				} else if (data.msg == "noPerm") {
 					art.dialog.tips("只有成员才能发帖哦");
 				} else {

@@ -1,7 +1,8 @@
 body{margin:0px auto;font-size:13px;text-align:center;width:100%;}
 input{outline:none;}
-.head_top{width:1000px;height:30px;margin:0px auto;height:40px;}
-.head_logo{display:inline-block;float:left;}
+.head_top{width:1000px;height:85px;margin:0px auto;}
+.head_logo{display:inline-block;float:left;padding-top:10px;}
+.android_logo{display: inline-block;float:left;margin-left: 10px;}
 .head_user{display:inline-block;float:right;font-size:14px;position:relative;}
 .head_user .head_s_p{display:inline-block;float:right;padding:3px;}
 .head_user a{color:#3E62A6;text-decoration:none;display:inline-block;padding:1px;}

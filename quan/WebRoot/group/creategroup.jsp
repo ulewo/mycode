@@ -79,8 +79,8 @@
 					<div class="partCon">
 						<div class="formTile">群权限：</div>
 						<div class="formCon">
-							<input type="radio" name="joinPerm" value ="O" checked />公开，允许任何人加入
-							<input type="radio" name="joinPerm" value ="C" />不公开，需经我批准才能加入
+							<input type="radio" name="joinPerm" value ="Y" checked />公开，允许任何人加入
+							<input type="radio" name="joinPerm" value ="N" />不公开，需经我批准才能加入
 						</div>
 					</div>
 					<div class="partCon">
