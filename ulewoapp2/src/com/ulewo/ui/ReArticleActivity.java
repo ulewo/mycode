@@ -83,7 +83,7 @@ public class ReArticleActivity extends BaseActivity {
 		Bundle bundle = intent.getExtras();
 		articleId = Integer.parseInt(String.valueOf(bundle.get("id")));
 		progressBar = (LinearLayout) super.findViewById(R.id.myprogressbar);
-		progressBar.setOnClickListener(UIHelper.finish(this));
+		progressBar.setOnClickListener(UIHelper.noOnclick(this));
 		progressBar.setVisibility(View.VISIBLE);
 		backBtn = (Button) super.findViewById(R.id.head_back);
 		backBtn.setVisibility(View.VISIBLE);
@@ -185,13 +185,13 @@ public class ReArticleActivity extends BaseActivity {
 								list.getReArticleList(), reSubPanel,
 								new AsyncImageLoader(), listView);
 						listView.setAdapter(adapter);
-						if (page < msg.arg1) {
+						if (page < list.getPageTotal()) {
 							loadmoreTextView.setVisibility(View.VISIBLE);
 						}
 					} else {
 						loadmore_prgressbar.setVisibility(View.GONE);
 						adapter.loadMore(list.getReArticleList());
-						if (page < msg.arg1) {
+						if (page < list.getPageTotal()) {
 							loadmoreTextView.setVisibility(View.VISIBLE);
 						}
 					}
@@ -227,7 +227,7 @@ public class ReArticleActivity extends BaseActivity {
 			@Override
 			public void handleMessage(Message msg) {
 				progressBar.setVisibility(View.GONE);
-				if (msg.what != -1) {
+				if (msg.what != -1 && null != msg.obj) {
 					ReArticleResult result = (ReArticleResult) msg.obj;
 					if (result.isLogin()) {
 						adapter.addItem(result.getReArticle());

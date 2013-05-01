@@ -4,11 +4,13 @@ import java.util.List;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.text.Html;
+import android.text.Html.ImageGetter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.webkit.WebView;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -36,6 +38,7 @@ public class ReBlogListAdapter extends BaseAdapter {
 	 */
 
 	private Context context;
+	private static int maxImgWidth = 200;
 
 	public ReBlogListAdapter(Context context, List<ReBlog> list,
 			AsyncImageLoader asyncImageLoader, ListView listView) {
@@ -45,6 +48,9 @@ public class ReBlogListAdapter extends BaseAdapter {
 		mInflater = LayoutInflater.from(context);
 		this.asyncImageLoader = asyncImageLoader;
 		this.list = list;
+		WindowManager wm = (WindowManager) context
+				.getSystemService(Context.WINDOW_SERVICE);
+		maxImgWidth = wm.getDefaultDisplay().getWidth();
 		// subflater = LayoutInflater.from(context);
 		// menueflater = LayoutInflater.from(context);
 	}
@@ -129,16 +135,13 @@ public class ReBlogListAdapter extends BaseAdapter {
 
 		TextView recomment_posttime = (TextView) view
 				.findViewById(R.id.recomment_posttime);
-		WebView recomment_con = (WebView) view.findViewById(R.id.recomment_con);
 		recomment_posttime.setText(reBlog.getReTime());
-		recomment_con.getSettings().setJavaScriptEnabled(false);
-		recomment_con.getSettings().setSupportZoom(true);
-		recomment_con.getSettings().setBuiltInZoomControls(true);
-		recomment_con.getSettings().setDefaultFontSize(13);
-		String body = UIHelper.WEB_STYLE + reBlog.getContent();
-		recomment_con.loadDataWithBaseURL(null, body, "text/html", "utf-8",
-				null);
-		recomment_con.setWebViewClient(UIHelper.getWebViewClient());
+
+		TextView recomment_con = (TextView) view
+				.findViewById(R.id.recomment_con);
+		recomment_con.setText(Html.fromHtml(reBlog.getContent(), imgGetter,
+				null));
+
 		Button item_rebtn = (Button) view.findViewById(R.id.item_rebtn);
 		item_rebtn.setVisibility(View.GONE);
 		/*
@@ -188,6 +191,31 @@ public class ReBlogListAdapter extends BaseAdapter {
 		 * true; } });
 		 */
 
+	}
+
+	ImageGetter imgGetter = new Html.ImageGetter() {
+		@Override
+		public Drawable getDrawable(String source) {
+			Drawable drawable = asyncImageLoader
+					.loadImageFromUrlNoSynchronization(source);
+			if (null != drawable) {
+				resizeDrawable(drawable);
+			}
+			resizeDrawable(drawable);
+			return drawable;
+		}
+	};
+
+	private void resizeDrawable(Drawable drawable) {
+		if (null != drawable) {
+			int width = drawable.getIntrinsicWidth();
+			int height = drawable.getIntrinsicHeight();
+			if (width > maxImgWidth) {
+				height = maxImgWidth * height / width;
+				width = maxImgWidth;
+			}
+			drawable.setBounds(0, 0, width, height);
+		}
 	}
 
 	public void loadMore(List<ReBlog> rearticleList) {

@@ -113,6 +113,7 @@ public class AppManager {
 			System.exit(0);
 		}
 		catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }

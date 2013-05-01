@@ -45,9 +45,9 @@ public class UserActivity extends BaseActivity {
 	TextView user_info_work = null;
 	TextView user_info_characters = null;
 	LinearLayout myprogressbar = null;
-	
+
 	RelativeLayout head_common = null;
-	
+
 	// 刷新按钮
 	ImageButton head_refresh = null;
 
@@ -66,8 +66,6 @@ public class UserActivity extends BaseActivity {
 		initView();
 	}
 
-	
-	
 	@Override
 	protected void onResume() {
 		super.onRestart();
@@ -75,7 +73,7 @@ public class UserActivity extends BaseActivity {
 			loginlayout.setVisibility(View.GONE);
 			head_common.setVisibility(View.VISIBLE);
 			initData();
-		}else{
+		} else {
 			usernameEdit.setText("");
 			pwdEdit.setText("");
 			loginlayout.setVisibility(View.VISIBLE);
@@ -83,8 +81,6 @@ public class UserActivity extends BaseActivity {
 			userinfolayout.setVisibility(View.GONE);
 		}
 	}
-
-
 
 	private void initView() {
 
@@ -109,7 +105,7 @@ public class UserActivity extends BaseActivity {
 		user_info_work = (TextView) findViewById(R.id.user_info_work);
 		user_info_characters = (TextView) findViewById(R.id.user_info_characters);
 
-		head_common = (RelativeLayout)findViewById(R.id.head_common);
+		head_common = (RelativeLayout) findViewById(R.id.head_common);
 		head_common.setVisibility(View.GONE);
 		if (null != AppContext.getSessionId()) {
 			loginlayout.setVisibility(View.GONE);
@@ -145,7 +141,7 @@ public class UserActivity extends BaseActivity {
 				login(AppContext.getUserName(), AppContext.getPassword());
 			}
 		});
-		myprogressbar = (LinearLayout)findViewById(R.id.myprogressbar);
+		myprogressbar = (LinearLayout) findViewById(R.id.myprogressbar);
 		myprogressbar.setOnClickListener(UIHelper.noOnclick(this));
 	}
 
@@ -155,7 +151,7 @@ public class UserActivity extends BaseActivity {
 			@Override
 			public void handleMessage(Message msg) {
 				myprogressbar.setVisibility(View.GONE);
-				if (msg.what != -1) {
+				if (msg.what != -1 && null != msg.obj) {
 					LoginUser loginUser = (LoginUser) msg.obj;
 					// 登录成功
 					if (Constants.SUCCESS.equals(loginUser.getLoginResult())) {
@@ -239,7 +235,7 @@ public class UserActivity extends BaseActivity {
 			@Override
 			public void handleMessage(Message msg) {
 
-				if (msg.what != -1) {
+				if (msg.what != -1 && null != msg.obj) {
 					LoginUser loginUser = (LoginUser) msg.obj;
 					// 登录成功
 					if (Constants.SUCCESS.equals(loginUser.getLoginResult())) {

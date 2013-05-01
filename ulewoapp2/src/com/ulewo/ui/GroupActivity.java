@@ -95,17 +95,17 @@ public class GroupActivity extends BaseActivity {
 			public void handleMessage(Message msg) {
 
 				progressBar.setVisibility(View.GONE);
-				if (msg.what != -1) {
+				if (msg.what != -1 && null != msg.obj) {
 					GroupList list = (GroupList) msg.obj;
 					if (adapter == null || page == 1) {
-						adapter = new GroupListAdapter(GroupActivity.this, list.getGroupList(), new AsyncImageLoader(),
+						adapter = new GroupListAdapter(GroupActivity.this,
+								list.getGroupList(), new AsyncImageLoader(),
 								listView);
 						listView.setAdapter(adapter);
 						if (page < list.getPageTotal()) {
 							loadmoreTextView.setVisibility(View.VISIBLE);
 						}
-					}
-					else {
+					} else {
 						loadmore_prgressbar.setVisibility(View.GONE);
 						adapter.loadMore(list.getGroupList());
 						if (page < list.getPageTotal()) {
@@ -113,7 +113,8 @@ public class GroupActivity extends BaseActivity {
 						}
 					}
 					listView.setOnItemClickListener(new OnItemClickListener() {
-						public void onItemClick(AdapterView<?> parent, View view, int postion, long id) {
+						public void onItemClick(AdapterView<?> parent,
+								View view, int postion, long id) {
 
 							Group group = (Group) adapter.getItem(postion);
 							String gid = group.getGid();
@@ -130,13 +131,13 @@ public class GroupActivity extends BaseActivity {
 								intent.putExtra("gUserName", gUserName);
 								intent.putExtra("gMember", gMember);
 								intent.putExtra("gArticleCount", gArticleCount);
-								intent.setClass(GroupActivity.this, ShowGroupActivity.class);
+								intent.setClass(GroupActivity.this,
+										ShowGroupActivity.class);
 								startActivity(intent);
 							}
 						}
 					});
-				}
-				else {
+				} else {
 					((AppException) msg.obj).makeToast(GroupActivity.this);
 					progressBar.setVisibility(View.GONE);
 					loadmoreTextView.setVisibility(View.VISIBLE);
@@ -153,8 +154,7 @@ public class GroupActivity extends BaseActivity {
 					GroupList list = appContext.getGroupList(page, isRefresh);
 					msg.what = 0;
 					msg.obj = list;
-				}
-				catch (AppException e) {
+				} catch (AppException e) {
 					msg.what = -1;
 					msg.obj = e;
 				}

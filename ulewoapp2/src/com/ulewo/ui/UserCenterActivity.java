@@ -118,7 +118,7 @@ public class UserCenterActivity extends BaseActivity {
 			@Override
 			public void handleMessage(Message msg) {
 				myprogressbar.setVisibility(View.GONE);
-				if (msg.what != -1) {
+				if (msg.what != -1 && null != msg.obj) {
 					if (null != msg.obj) {
 						User user = (User) msg.obj;
 						AsyncImageLoader asyncImageLoader = new AsyncImageLoader();

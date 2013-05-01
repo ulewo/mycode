@@ -5,8 +5,35 @@
     android:background="@color/white"
     android:orientation="vertical">
    	<include layout="@layout/common_head"/>
+   	<ImageView 
+   	    android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="100dp"
+		android:src="@drawable/logo"
+   	    />
    	<TextView 
    	    android:id="@+id/more_about_view"
 		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"/>
+		android:layout_height="wrap_content"
+		android:layout_marginTop="50dp"
+		android:textStyle="bold"
+		android:textColor="@color/black"
+		android:gravity="center_horizontal"
+		android:text="@string/about_appname"/>
+   	<TextView 
+   	    android:id="@+id/more_about_view"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:textColor="@color/black"
+		android:gravity="center_horizontal"
+		android:layout_marginTop="10dp"
+		android:text="@string/about_version"/>
+   	<TextView 
+   	    android:id="@+id/more_about_view"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="30dp"
+		android:textColor="@color/black"
+		android:gravity="center_horizontal"
+		android:text="@string/about_role"/>
 </LinearLayout>

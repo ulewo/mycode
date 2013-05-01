@@ -61,4 +61,7 @@
     <string name="check_new_version">检测新版本</string>
     <string name="about">关于</string>
     <string name="exitprogram">退出程序</string>
+    <string name="about_appname">有乐窝移动客户端</string>
+    <string name="about_version">版本：1.0</string>
+    <string name="about_role">2011-2013 ulewo.com 有乐窝 All rights reserved</string>
 </resources>

@@ -23,12 +23,12 @@ import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ulewo.AppContext;
 import com.ulewo.AppException;
 import com.ulewo.R;
 import com.ulewo.bean.UlewoVersion;
-import com.ulewo.service.UpdateService;
 import com.ulewo.util.Constants;
 import com.ulewo.util.StringUtils;
 
@@ -136,7 +136,7 @@ public class MoreActivity extends BaseActivity {
 				progressBar.setVisibility(View.GONE);
 				PackageInfo info = appContext.getPackageInfo();
 				double curVersion = Double.valueOf(info.versionName);
-				if (msg.what != -1) {
+				if (msg.what != -1 && null != msg.obj) {
 					version = (UlewoVersion) msg.obj;
 					if (version.getVersion() > curVersion) {
 						// 创建对话框
@@ -175,14 +175,11 @@ public class MoreActivity extends BaseActivity {
 
 					switch (which) {
 					case AlertDialog.BUTTON_POSITIVE:// "确认更新程序"
-						Intent updateIntent = new Intent(MoreActivity.this,
-								UpdateService.class);
 						String appName = "ulewo";
 						if (version != null) {
 							appName = version.getAppName();
 						}
-						updateIntent.putExtra("app_name", appName);
-						startService(updateIntent);
+						downLoadApk(appName);
 						break;
 					case AlertDialog.BUTTON_NEGATIVE:// "取消"第二个按钮取消对话框
 						break;
@@ -212,45 +209,117 @@ public class MoreActivity extends BaseActivity {
 		}.start();
 	}
 
-	private void download() {
+	/**
+	 * 下载APK
+	 */
+	protected void downLoadApk(final String appName) {
+		final ProgressDialog pd; // 进度条对话框
+		pd = new ProgressDialog(this);
+		pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+		pd.setMessage("正在下载更新");
+		pd.show();
+
+		final Handler handler = new Handler() {
+			@Override
+			public void handleMessage(Message msg) {
+				// TODO Auto-generated method stub
+				super.handleMessage(msg);
+				switch (msg.what) {
+				case -1:
+					Toast.makeText(getApplicationContext(), "下载新版本失败", 1)
+							.show();
+					break;
+				}
+			}
+		};
+
 		new Thread() {
 			@Override
 			public void run() {
-				ProgressDialog pd = null;
-				// 如果相等的话表示当前的sdcard挂载在手机上并且是可用的
 				try {
-					if (Environment.getExternalStorageState().equals(
-							Environment.MEDIA_MOUNTED)) {
-						URL url = new URL("");
-						HttpURLConnection conn = (HttpURLConnection) url
-								.openConnection();
-						conn.setConnectTimeout(5000);
-						// 获取到文件的大小
-						pd.setMax(conn.getContentLength());
-						InputStream is = conn.getInputStream();
-						File file = new File(
-								Environment.getExternalStorageDirectory(),
-								"updata.apk");
-						FileOutputStream fos = new FileOutputStream(file);
-						BufferedInputStream bis = new BufferedInputStream(is);
-						byte[] buffer = new byte[1024];
-						int len;
-						int total = 0;
-						while ((len = bis.read(buffer)) != -1) {
-							fos.write(buffer, 0, len);
-							total += len;
-							// 获取当前下载量
-							pd.setProgress(total);
-						}
-						fos.close();
-						bis.close();
-						is.close();
+					File file = getFileFromServer(appName, pd);
+					if (file != null) {
+						sleep(2000);
+						installApk(file);
+						pd.dismiss(); // 结束掉进度条对话框
+					} else {
+						Message msg = new Message();
+						msg.what = -1;
+						handler.sendMessage(msg);
 					}
 				} catch (Exception e) {
+					Message msg = new Message();
+					msg.what = -1;
+					handler.sendMessage(msg);
+					e.printStackTrace();
 				}
-
 			}
 		}.start();
+	}
+
+	/**
+	 * 从网络上下载更新文件
+	 * 
+	 * @param appName
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public File getFileFromServer(String appName, ProgressDialog pd)
+			throws Exception {
+		// 如果相等的话表示当前的sdcard挂载在手机上并且是可用的
+		FileOutputStream fos = null;
+		BufferedInputStream bis = null;
+		InputStream is = null;
+		try {
+			String path = Constants.APPDOWNLOADURL + "/" + appName;
+			if (Environment.getExternalStorageState().equals(
+					Environment.MEDIA_MOUNTED)) {
+				URL url = new URL(path);
+				HttpURLConnection conn = (HttpURLConnection) url
+						.openConnection();
+				conn.setConnectTimeout(5000);
+				// 获取到文件的大小
+				pd.setMax(conn.getContentLength());
+				is = conn.getInputStream();
+				String sDir = Environment.getExternalStorageDirectory()
+						+ Constants.SEPARATOR + Constants.ULEWO;
+				File destDir = new File(sDir);
+				if (!destDir.exists()) {
+					destDir.mkdirs();
+				}
+				File file = new File(sDir, appName);
+				if (!file.exists()) {
+					file.createNewFile();
+				}
+				fos = new FileOutputStream(file);
+				bis = new BufferedInputStream(is);
+				byte[] buffer = new byte[1024];
+				int len;
+				int total = 0;
+				while ((len = bis.read(buffer)) != -1) {
+					fos.write(buffer, 0, len);
+					total += len;
+					// 获取当前下载量
+					pd.setProgress(total);
+				}
+				return file;
+			} else {
+				return null;
+			}
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			if (null != fos) {
+				fos.close();
+			}
+			if (null != fos) {
+				bis.close();
+			}
+			if (null != fos) {
+				is.close();
+			}
+		}
 	}
 
 	// 安装程序
@@ -260,7 +329,7 @@ public class MoreActivity extends BaseActivity {
 		intent.setAction(Intent.ACTION_VIEW);
 		// 执行的数据类型
 		intent.setDataAndType(Uri.fromFile(file),
-				"application/vnd.Android.package-archive");// 编者按：此处Android应为android，否则造成安装不了
+				"application/vnd.android.package-archive");
 		startActivity(intent);
 	}
 

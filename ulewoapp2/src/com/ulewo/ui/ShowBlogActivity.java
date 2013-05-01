@@ -96,7 +96,6 @@ public class ShowBlogActivity extends BaseActivity {
 
 		authorView.setOnClickListener(authorClickListener);
 
-
 	}
 
 	private void initData() {
@@ -110,7 +109,7 @@ public class ShowBlogActivity extends BaseActivity {
 			public void handleMessage(Message msg) {
 
 				progressBar.setVisibility(View.GONE);
-				if (msg.what != -1) {
+				if (msg.what != -1 && null != msg.obj) {
 					blog = (Blog) msg.obj;
 					titleView.setText(blog.getTitle());
 					authorView.setText(blog.getAuthorName());

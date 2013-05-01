@@ -63,7 +63,7 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:layout_marginTop="3dp">
-		<WebView 
+		<TextView 
 			android:id="@+id/recomment_con"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"

@@ -341,7 +341,7 @@ public class AppContext extends Application {
 			int pageIndex) throws AppException {
 
 		ArticleList list = null;
-		String key = StringUtils.encodeByMD5("groupArticlelist" + "_" + gid);
+		String key = StringUtils.encodeByMD5("groupArticlelist" + "_" + gid+pageIndex);
 		if (isNetworkConnected() && (!isReadDataCache(key) || isRefresh)) {
 			try {
 				list = ApiClient.getGroupArticleList(pageIndex, gid);

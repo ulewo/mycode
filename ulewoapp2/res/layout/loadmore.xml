@@ -13,7 +13,7 @@
   		android:gravity="center"
   		android:textSize="12dp"
   		android:textColor="@color/white"
-  		android:background="#C3C3C3"
+  		android:background="@drawable/loadmorebg"
   		android:text="@string/loadmore"/>
 	<LinearLayout 
 		android:id="@+id/loadmore_progressbar"

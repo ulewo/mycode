@@ -4,12 +4,14 @@ import java.util.List;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.text.Html;
+import android.text.Html.ImageGetter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
-import android.webkit.WebView;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -51,6 +53,8 @@ public class ReArticleListAdapter extends BaseAdapter {
 	EditText hide_postion = null;
 	EditText hide_pid = null;
 
+	private static int maxImgWidth = 200;
+
 	public ReArticleListAdapter(Context context, List<ReArticle> list,
 			View subView, AsyncImageLoader asyncImageLoader, ListView listView) {
 		this.asyncImageLoader = asyncImageLoader;
@@ -67,6 +71,9 @@ public class ReArticleListAdapter extends BaseAdapter {
 		hide_atuserId = (EditText) reSubPanel.findViewById(R.id.hide_atuserId);
 		hide_pid = (EditText) reSubPanel.findViewById(R.id.hide_pid);
 		hide_postion = (EditText) reSubPanel.findViewById(R.id.hide_postion);
+		WindowManager wm = (WindowManager) context
+				.getSystemService(Context.WINDOW_SERVICE);
+		maxImgWidth = wm.getDefaultDisplay().getWidth();
 	}
 
 	@Override
@@ -112,7 +119,6 @@ public class ReArticleListAdapter extends BaseAdapter {
 	private void bindView(final int postion, View view) {
 
 		final ReArticle reArticle = list.get(postion);
-
 		ImageView imageView = (ImageView) view
 				.findViewById(R.id.recomment_icon);
 		String imageUrl = reArticle.getAuthorIcon();
@@ -140,14 +146,7 @@ public class ReArticleListAdapter extends BaseAdapter {
 				.findViewById(R.id.recomment_username);
 		TextView recomment_posttime = (TextView) view
 				.findViewById(R.id.recomment_posttime);
-		WebView recomment_con = (WebView) view.findViewById(R.id.recomment_con);
-		recomment_con.getSettings().setJavaScriptEnabled(false);
-		recomment_con.getSettings().setSupportZoom(true);
-		recomment_con.getSettings().setBuiltInZoomControls(true);
-		recomment_con.getSettings().setDefaultFontSize(13);
-
 		recomment_username.setText(reArticle.getAuthorName());
-
 		recomment_username.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -155,12 +154,27 @@ public class ReArticleListAdapter extends BaseAdapter {
 						reArticle.getAuthorid(), reArticle.getAuthorName());
 			}
 		});
-
 		recomment_posttime.setText(reArticle.getReTime());
-		String body = UIHelper.WEB_STYLE + reArticle.getContent();
-		recomment_con.loadDataWithBaseURL(null, body, "text/html", "utf-8",
-				null);
-		recomment_con.setWebViewClient(UIHelper.getWebViewClient());
+		TextView recomment_con = (TextView) view
+				.findViewById(R.id.recomment_con);
+		/*
+		 * recomment_con.setLayoutParams(new
+		 * LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		 * //recomment_con.seth // recomment_con.refreshDrawableState();
+		 * recomment_con.getSettings().setJavaScriptEnabled(false);
+		 * recomment_con.getSettings().setSupportZoom(true);
+		 * recomment_con.getSettings().setBuiltInZoomControls(true);
+		 * recomment_con.getSettings().setDefaultFontSize(13);
+		 */
+
+		// String body = UIHelper.WEB_STYLE + reArticle.getContent();
+		recomment_con.setText(Html.fromHtml(reArticle.getContent(), imgGetter,
+				null));
+		// Log.v("content", body);
+		/*
+		 * recomment_con.loadDataWithBaseURL(null, body, "text/html", "utf-8",
+		 * null); recomment_con.setWebViewClient(UIHelper.getWebViewClient());
+		 */
 
 		// 回复btn
 		Button item_rebtn = (Button) view.findViewById(R.id.item_rebtn);
@@ -277,4 +291,28 @@ public class ReArticleListAdapter extends BaseAdapter {
 		this.notifyDataSetChanged();
 	}
 
+	ImageGetter imgGetter = new Html.ImageGetter() {
+		@Override
+		public Drawable getDrawable(String source) {
+			Drawable drawable = asyncImageLoader
+					.loadImageFromUrlNoSynchronization(source);
+			if (null != drawable) {
+				resizeDrawable(drawable);
+			}
+			resizeDrawable(drawable);
+			return drawable;
+		}
+	};
+
+	private void resizeDrawable(Drawable drawable) {
+		if (null != drawable) {
+			int width = drawable.getIntrinsicWidth();
+			int height = drawable.getIntrinsicHeight();
+			if (width > maxImgWidth) {
+				height = maxImgWidth * height / width;
+				width = maxImgWidth;
+			}
+			drawable.setBounds(0, 0, width, height);
+		}
+	}
 }

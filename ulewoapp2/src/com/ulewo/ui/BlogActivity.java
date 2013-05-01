@@ -93,7 +93,7 @@ public class BlogActivity extends BaseActivity {
 			@Override
 			public void handleMessage(Message msg) {
 				progressBar.setVisibility(View.GONE);
-				if (msg.what != -1) {
+				if (msg.what != -1 && null != msg.obj) {
 					BlogList list = (BlogList) msg.obj;
 					if (adapter == null || page == 1) {
 						adapter = new BlogListAdapter(BlogActivity.this,

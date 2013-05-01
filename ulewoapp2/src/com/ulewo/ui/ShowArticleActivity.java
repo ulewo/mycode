@@ -79,7 +79,8 @@ public class ShowArticleActivity extends BaseActivity {
 
 				Intent intent = new Intent();
 				intent.putExtra("id", articleId);
-				intent.setClass(ShowArticleActivity.this, ReArticleActivity.class);
+				intent.setClass(ShowArticleActivity.this,
+						ReArticleActivity.class);
 				startActivity(intent);
 			}
 		});
@@ -99,7 +100,7 @@ public class ShowArticleActivity extends BaseActivity {
 			public void handleMessage(Message msg) {
 
 				progressBar.setVisibility(View.GONE);
-				if (msg.what != -1) {
+				if (msg.what != -1 && null != msg.obj) {
 					article = (Article) msg.obj;
 					recommentCount.setText(article.getReNumber() + "");
 					titleView.setText(article.getTitle());

@@ -80,6 +80,36 @@ public class AsyncImageLoader {
 		return null;
 	}
 
+	public Drawable loadImageFromUrlNoSynchronization(String imageUrl) {
+		try {
+			final String fileName = StringUtils.convertUrlToFileName(imageUrl);
+			// 从缓存中取
+			if (imageCache.containsKey(fileName)) {
+				SoftReference<Drawable> softReference = imageCache
+						.get(fileName);
+				Drawable drawable = softReference.get();
+				if (drawable != null) {
+					return drawable;
+				}
+			}
+			// 从sdk中读取
+			Drawable drawable = readFromSDK(fileName);
+			if (null != drawable) {
+				return drawable;
+			}
+
+			// 从网络上下载图片
+			drawable = loadImageFromUrl(imageUrl);
+			// 将图片保存到sd卡
+			save2SDK(drawable, fileName);
+			imageCache.put(imageUrl, new SoftReference<Drawable>(drawable));
+			return drawable;
+		} catch (Exception e) {
+
+		}
+		return null;
+	}
+
 	public static Drawable loadImageFromUrl(String url) {
 
 		URL m;

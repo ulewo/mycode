@@ -73,7 +73,6 @@ public class ReBlogActivity extends BaseActivity {
 
 		progressBar = (LinearLayout) super.findViewById(R.id.myprogressbar);
 		progressBar.setOnClickListener(UIHelper.noOnclick(this));
-		progressBar.setOnClickListener(UIHelper.noOnclick(this));
 		backBtn = (Button) super.findViewById(R.id.head_back);
 		backBtn.setVisibility(View.VISIBLE);
 		backBtn.setOnClickListener(UIHelper.finish(this));
@@ -137,12 +136,12 @@ public class ReBlogActivity extends BaseActivity {
 	}
 
 	private void initData() {
-
+		progressBar.setVisibility(View.VISIBLE);
 		handler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
 				progressBar.setVisibility(View.GONE);
-				if (msg.what != -1) {
+				if (msg.what != -1 && null != msg.obj) {
 					ReBlogList list = (ReBlogList) msg.obj;
 					if (adapter == null || page == 1) {
 						adapter = new ReBlogListAdapter(ReBlogActivity.this,

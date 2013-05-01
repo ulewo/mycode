@@ -23,24 +23,26 @@ public class LoginDialogActivity extends BaseActivity {
 	private ImageButton closBtn;
 	EditText usernameEdit = null;
 	EditText pwdEdit = null;
-	Button button =null;
-	
+	Button button = null;
+
 	LinearLayout myprogressbar = null;
-	
+
 	Handler loginHandler = null;
 	AppContext appContext = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		super.setContentView(R.layout.login_dialog);
-		appContext = (AppContext)getApplication();
+		appContext = (AppContext) getApplication();
 		initView();
 	}
-	private void initView(){
+
+	private void initView() {
 		usernameEdit = (EditText) findViewById(R.id.login_account);
 		pwdEdit = (EditText) findViewById(R.id.login_password);
-		closBtn = (ImageButton)findViewById(R.id.login_close_button);
-		closBtn.setOnClickListener(UIHelper.finish(this));   
+		closBtn = (ImageButton) findViewById(R.id.login_close_button);
+		closBtn.setOnClickListener(UIHelper.finish(this));
 		button = (Button) findViewById(R.id.login_btn_login);
 		button.setOnClickListener(new OnClickListener() {
 			@Override
@@ -52,33 +54,35 @@ public class LoginDialogActivity extends BaseActivity {
 					return;
 				}
 				if (StringUtils.isEmpty(pwdEdit.getText().toString())) {
-					Toast.makeText(LoginDialogActivity.this, R.string.nopassword,
-							Toast.LENGTH_LONG).show();
+					Toast.makeText(LoginDialogActivity.this,
+							R.string.nopassword, Toast.LENGTH_LONG).show();
 					return;
 				}
 				login(usernameEdit.getText().toString(),
 						StringUtils.encodeByMD5(pwdEdit.getText().toString()));
 			}
 		});
-		myprogressbar = (LinearLayout)findViewById(R.id.myprogressbar);
+		myprogressbar = (LinearLayout) findViewById(R.id.myprogressbar);
 	}
+
 	private void login(final String userName, final String password) {
 		myprogressbar.setVisibility(View.VISIBLE);
 		loginHandler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
 				myprogressbar.setVisibility(View.GONE);
-				if (msg.what != -1) {
+				if (msg.what != -1 && null != msg.obj) {
 					LoginUser loginUser = (LoginUser) msg.obj;
 					// 登录成功
 					if (Constants.SUCCESS.equals(loginUser.getLoginResult())) {
 						LoginDialogActivity.this.finish();
 					} else {
-						Toast.makeText(LoginDialogActivity.this, R.string.loginfaill,
-								Toast.LENGTH_SHORT).show();
+						Toast.makeText(LoginDialogActivity.this,
+								R.string.loginfaill, Toast.LENGTH_SHORT).show();
 					}
 				} else {
-					((AppException) msg.obj).makeToast(LoginDialogActivity.this);
+					((AppException) msg.obj)
+							.makeToast(LoginDialogActivity.this);
 				}
 			}
 		};

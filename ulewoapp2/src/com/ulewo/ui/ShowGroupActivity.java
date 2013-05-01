@@ -34,7 +34,7 @@ public class ShowGroupActivity extends BaseActivity {
 	private LinearLayout loadmore_prgressbar = null;
 	ListView listView = null;
 	private ImageButton refreshBtn = null;
-	 private Button backBtn = null;
+	private Button backBtn = null;
 	private String gid;
 	private int page = 1;
 	private boolean isRefresh;
@@ -74,17 +74,19 @@ public class ShowGroupActivity extends BaseActivity {
 		// 设置窝窝标题
 		textView.setText(gName);
 		AsyncImageLoader asyncImageLoader = new AsyncImageLoader();
-		Drawable cachedImage = asyncImageLoader.loadDrawable(groupIcon, new ImageCallback() {
-			public void imageLoaded(Drawable imageDrawable, String imageUrl) {
+		Drawable cachedImage = asyncImageLoader.loadDrawable(groupIcon,
+				new ImageCallback() {
+					public void imageLoaded(Drawable imageDrawable,
+							String imageUrl) {
 
-				group_icon.setImageDrawable(imageDrawable);
-			}
-		});
+						group_icon.setImageDrawable(imageDrawable);
+					}
+				});
 		if (cachedImage == null) {
 			group_icon.setImageResource(R.drawable.icon);
-		}
-		else {
-			group_icon.setImageDrawable(StringUtils.toRoundCornerDrawable(cachedImage, 5));
+		} else {
+			group_icon.setImageDrawable(StringUtils.toRoundCornerDrawable(
+					cachedImage, 5));
 		}
 
 		titView.setText(gName);
@@ -108,6 +110,7 @@ public class ShowGroupActivity extends BaseActivity {
 				loadmoreTextView.setVisibility(View.GONE);
 				loadmore_prgressbar.setVisibility(View.VISIBLE);
 				++page;
+				isRefresh = false;
 				initData();
 			}
 		});
@@ -136,16 +139,16 @@ public class ShowGroupActivity extends BaseActivity {
 			public void handleMessage(Message msg) {
 
 				progressBar.setVisibility(View.GONE);
-				if (msg.what != -1) {
+				if (msg.what != -1 && null != msg.obj) {
 					ArticleList list = (ArticleList) msg.obj;
 					if (adapter == null || page == 1) {
-						adapter = new ArticleListAdapter(ShowGroupActivity.this, list.getArticleList());
+						adapter = new ArticleListAdapter(
+								ShowGroupActivity.this, list.getArticleList());
 						listView.setAdapter(adapter);
 						if (page < list.getPageTotal()) {
 							loadmoreTextView.setVisibility(View.VISIBLE);
 						}
-					}
-					else {
+					} else {
 						loadmore_prgressbar.setVisibility(View.GONE);
 						adapter.loadMore(list.getArticleList());
 						if (page < list.getPageTotal()) {
@@ -153,19 +156,21 @@ public class ShowGroupActivity extends BaseActivity {
 						}
 					}
 					listView.setOnItemClickListener(new OnItemClickListener() {
-						public void onItemClick(AdapterView<?> parent, View view, int postion, long id) {
+						public void onItemClick(AdapterView<?> parent,
+								View view, int postion, long id) {
 
-							String articleId = String.valueOf(adapter.getItemId(postion));
+							String articleId = String.valueOf(adapter
+									.getItemId(postion));
 							if (!"0".equals(articleId)) {
 								Intent intent = new Intent();
 								intent.putExtra("articleId", articleId);
-								intent.setClass(ShowGroupActivity.this, ShowArticleActivity.class);
+								intent.setClass(ShowGroupActivity.this,
+										ShowArticleActivity.class);
 								startActivity(intent);
 							}
 						}
 					});
-				}
-				else {
+				} else {
 					((AppException) msg.obj).makeToast(ShowGroupActivity.this);
 					progressBar.setVisibility(View.GONE);
 					loadmoreTextView.setVisibility(View.VISIBLE);
@@ -179,11 +184,11 @@ public class ShowGroupActivity extends BaseActivity {
 
 				Message msg = new Message();
 				try {
-					ArticleList list = appContext.getGroupArticleList(gid, isRefresh, page);
+					ArticleList list = appContext.getGroupArticleList(gid,
+							isRefresh, page);
 					msg.what = 0;
 					msg.obj = list;
-				}
-				catch (AppException e) {
+				} catch (AppException e) {
 					msg.what = -1;
 					msg.obj = e;
 				}
