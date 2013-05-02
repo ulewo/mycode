@@ -87,6 +87,12 @@
 				  					${message.reUserName }
 				  				</c:if>
 			  				</span>
+			  				<c:if test="${message.atUserId!=''}">
+			  					<span style="color:#008000">回复</span>
+			  					<span class="message_name">
+									<a href="userInfo.jspx?userId=${message.atUserId}">${message.atUserName }</a>
+			  					</span>
+			  				</c:if>
 			  				<span class="note_time nofirst">发表于：${message.postTime}</span>
 			  			</div>
 			  			<div class="re_content">${message.message }</div>
