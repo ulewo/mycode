@@ -72,7 +72,10 @@ public class AsyncImageLoader {
 				Drawable drawable = loadImageFromUrl(imageUrl);
 				// 将图片保存到sd卡
 				save2SDK(drawable, fileName);
-				imageCache.put(imageUrl, new SoftReference<Drawable>(drawable));
+				if (null != drawable) {
+					imageCache.put(imageUrl, new SoftReference<Drawable>(
+							drawable));
+				}
 				Message message = handler.obtainMessage(0, drawable);
 				handler.sendMessage(message);
 			}

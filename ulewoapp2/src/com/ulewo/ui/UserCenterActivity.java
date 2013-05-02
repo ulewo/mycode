@@ -128,8 +128,13 @@ public class UserCenterActivity extends BaseActivity {
 											Drawable imageDrawable,
 											String imageUrl) {
 
-										user_info_icon
-												.setImageDrawable(imageDrawable);
+										if (null != imageDrawable) {
+											user_info_icon
+													.setImageDrawable(imageDrawable);
+										} else {
+											user_info_icon
+													.setImageResource(R.drawable.icon);
+										}
 									}
 								});
 						if (cachedImage == null) {

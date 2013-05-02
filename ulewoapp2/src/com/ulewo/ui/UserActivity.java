@@ -163,9 +163,14 @@ public class UserActivity extends BaseActivity {
 									public void imageLoaded(
 											Drawable imageDrawable,
 											String imageUrl) {
+										if (null != imageDrawable) {
+											user_info_icon
+													.setImageDrawable(imageDrawable);
+										} else {
+											user_info_icon
+													.setImageResource(R.drawable.icon);
+										}
 
-										user_info_icon
-												.setImageDrawable(imageDrawable);
 									}
 								});
 						if (cachedImage == null) {

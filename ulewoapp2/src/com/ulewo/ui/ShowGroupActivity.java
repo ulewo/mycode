@@ -79,7 +79,11 @@ public class ShowGroupActivity extends BaseActivity {
 					public void imageLoaded(Drawable imageDrawable,
 							String imageUrl) {
 
-						group_icon.setImageDrawable(imageDrawable);
+						if (null != imageDrawable) {
+							group_icon.setImageDrawable(imageDrawable);
+						} else {
+							group_icon.setImageResource(R.drawable.icon);
+						}
 					}
 				});
 		if (cachedImage == null) {

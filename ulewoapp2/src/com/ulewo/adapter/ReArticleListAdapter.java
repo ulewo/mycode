@@ -130,8 +130,10 @@ public class ReArticleListAdapter extends BaseAdapter {
 
 						ImageView imageViewByTag = (ImageView) listView
 								.findViewWithTag(imageUrl);
-						if (imageViewByTag != null) {
+						if (null != imageDrawable) {
 							imageViewByTag.setImageDrawable(imageDrawable);
+						} else {
+							imageViewByTag.setImageResource(R.drawable.icon);
 						}
 					}
 				});
