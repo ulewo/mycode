@@ -134,6 +134,24 @@ public class ReBlogListAdapter extends BaseAdapter {
 						reBlog.getAuthorName());
 			}
 		});
+		// 如果at人不为空那么就显示at的人
+		if (StringUtils.isNotEmpty(reBlog.getAtUserId())) {
+			TextView recomment_atrename = (TextView) view
+					.findViewById(R.id.recomment_atrename);
+			recomment_atrename.setVisibility(View.VISIBLE);
+
+			TextView recomment_atusername = (TextView) view
+					.findViewById(R.id.recomment_atusername);
+			recomment_atusername.setVisibility(View.VISIBLE);
+			recomment_atusername.setText(reBlog.getAtUserName());
+			recomment_atusername.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					UIHelper.showUserCenter(v.getContext(),
+							reBlog.getAtUserId(), reBlog.getAtUserId());
+				}
+			});
+		}
 
 		TextView recomment_posttime = (TextView) view
 				.findViewById(R.id.recomment_posttime);

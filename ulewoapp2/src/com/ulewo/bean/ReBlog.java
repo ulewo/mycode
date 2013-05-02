@@ -160,6 +160,8 @@ public class ReBlog implements Serializable {
 			reblog.setAuthorid(obj.getString("authorid"));
 			reblog.setAuthorName(obj.getString("authorName"));
 			reblog.setAuthorIcon(obj.getString("authorIcon"));
+			reblog.setAtUserId(obj.getString("atUserId"));
+			reblog.setAtUserName(obj.getString("atUserName"));
 			/*
 			 * JSONArray jsonArray = new JSONArray(obj.getString("childList"));
 			 * ArrayList<ReBlog> childList = new ArrayList<ReBlog>(); int

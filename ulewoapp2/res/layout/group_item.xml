@@ -28,12 +28,11 @@
 		<TextView 
 			android:layout_width="fill_parent"
 	    	android:layout_height="wrap_content"
-	    	android:layout_marginTop="10dp"
 	    	android:textSize="@dimen/size_13"
 	    	android:textColor="@color/black"
 			android:id="@+id/wowo_tit"/>
 		<RelativeLayout 
-			android:layout_marginTop="10dp"
+			android:layout_marginTop="2dp"
 	   		android:layout_width="fill_parent"
 	    	android:layout_height="wrap_content">
 	    	<!-- 作者 -->

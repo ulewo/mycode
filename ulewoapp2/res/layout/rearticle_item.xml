@@ -27,21 +27,50 @@
 			android:layout_width="fill_parent"
 			android:layout_marginLeft="10dp"
 			android:layout_height="wrap_content">
+			<RelativeLayout 
+			    android:layout_width="fill_parent"
+				android:layout_height="wrap_content">
 			<!-- 回复人姓名 -->
 			<TextView 
 				android:id="@+id/recomment_username"
-				android:layout_width="fill_parent"
+				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:layout_alignParentLeft="true"
 				android:textColor="@color/nameblue"
 				android:textSize="13dp"
 				android:textStyle="bold"
 			/>
+			<!-- at人姓名 -->
+			<TextView 
+			    android:id="@+id/recomment_atrename"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_toRightOf="@id/recomment_username"
+				android:textColor="@color/green"
+				android:text="@string/rename"
+				android:textSize="13dp"
+				android:layout_marginLeft="5dp"
+				android:visibility="gone"
+			    />
+			<TextView 
+				android:id="@+id/recomment_atusername"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_toRightOf="@id/recomment_atrename"
+				android:textColor="@color/nameblue"
+				android:layout_marginLeft="5dp"
+				android:textSize="13dp"
+				android:textStyle="bold"
+				android:visibility="gone"
+			/>
+			</RelativeLayout>
+			
 			<!-- 回复时间 -->
 			<TextView
 				android:id="@+id/recomment_posttime" 
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="10px"
+				android:layout_marginTop="2px"
 				android:textColor="@color/shadeblack"
 				android:textSize="12dp"
 			/>
