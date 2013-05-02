@@ -59,11 +59,24 @@
 		  	</div>
 		  	<div  class="pagination" style="float:none;margin-top:10px;width:auto;display:none;">
 			</div>
-		  	<div class="subArea">
+		  	<div class="subArea" id="reblogform">
 		  		<form id="subform">
-		  			<input type="hidden" name="userId" value="${param.userId }" id="userId">
-			  		<div class="content"><textarea rows="10" cols="80" name="content" id="content"></textarea></div>
-			  		<div class="subbtn">
+		  			<input type="hidden" name="userId" id="userId" value="${param.userId}">
+		  			<input type="hidden" name="atUserName" id="atUserName">
+	  				<input type="hidden" name="atUserId" id="atUserId">
+			  		<div style="margin-left:11px;">
+			  					<div class="blogreply_icon">
+				  				<c:if test="${user!=null}">
+									<img src="../upload/${user.userLittleIcon}" width="37">
+								</c:if>
+								<c:if test="${user==null}">
+									<img src="../upload/default.gif" width="37">
+								</c:if>
+			  				</div>
+			  				<div class="content"><textarea name="content" id="content"></textarea></div>
+	  						<div class="clear"></div>
+	  				</div>
+			  		<div class="subbtn" style="margin-left:55px;">
 			  			<div class="bbtn1">
 			  				<a href="javascript:submitForm()" onfocus="this.blur()" id="sendBtn">发表留言</a>
 			  				<img src="../images/load.gif" id="loading" style="display:none">	

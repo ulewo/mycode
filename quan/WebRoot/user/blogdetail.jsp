@@ -52,25 +52,37 @@
 		  		<div class="messagelist"  id="messagelist">
 				  	
 		  		</div>
-		  	</div>
-		  	<div class="reblogform">
-		  		<form id="subform"> 
-		  		<input type="hidden" name="userId" value="${userId }" id="userId">
-		  		<div class="content"><textarea rows="10" cols="80" name="content" id="content"></textarea></div>
-		  		<div class="subbtn">
-		  			<div class="bbtn1">
-		  				<a href="javascript:subReply('${param.id}')" onfocus="this.blur()" id="sendBtn">发表留言</a>
-		  				<img src="../images/load.gif" id="loading" style="display:none">
-		  			</div>
-		  			<div style="margin-left:20px;padding-top:8px;float:left;">最多输入500字符</div>
-		  		</div>
-		  		</form>
-		  		<c:if test="${user==null}">
-						<div class="shade blogshade" id="shade">
-							<div class="shadeLogin">回复，请先 <a href="javascript:login()">登录</a>&nbsp;&nbsp;<a href="javascript:register()">注册</a></div>
-						</div>
-				</c:if>
-		  	</div>
+		 </div>
+	  	<div class="reblogform" id="reblogform">
+	  		<form id="subform"> 
+	  		<input type="hidden" name="atUserName" id="atUserName">
+	  		<input type="hidden" name="atUserId" id="atUserId">
+	  		<div>
+	  			<div class="blogreply_icon">
+	  				<c:if test="${user!=null}">
+						<img src="../upload/${user.userLittleIcon}" width="37">
+					</c:if>
+					<c:if test="${user==null}">
+						<img src="../upload/default.gif" width="37">
+					</c:if>
+	  			</div>
+	  			<div class="content"><textarea name="content" id="content"></textarea></div>
+	  			<div class="clear"></div>
+	  		</div>
+	  		<div class="subbtn">
+	  			<div class="bbtn1">
+	  				<a href="javascript:subReply('${param.id}')" onfocus="this.blur()" id="sendBtn">发表留言</a>
+	  				<img src="../images/load.gif" id="loading" style="display:none">
+	  			</div>
+	  			<div style="margin-left:20px;padding-top:8px;float:left;">最多输入500字符</div>
+	  		</div>
+	  		</form>
+	  		<c:if test="${user==null}">
+					<div class="shade blogshade" id="shade">
+						<div class="shadeLogin">回复，请先 <a href="javascript:login()">登录</a>&nbsp;&nbsp;<a href="javascript:register()">注册</a></div>
+					</div>
+			</c:if>
+	  	</div>
   		 
  	</div>
  	<div style="clear:left;"></div>

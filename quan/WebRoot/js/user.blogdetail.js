@@ -4,7 +4,6 @@ function refreshcode() {
 }
 
 function subReply(blogId) {
-	var checkCode = $("#checkCode").val();
 	var content = $("#content").val();
 	if (content.trim() == "") {
 		art.dialog.tips("留言不能为空!");
@@ -13,13 +12,6 @@ function subReply(blogId) {
 	if (content.trim().length > 500) {
 		art.dialog.tips("留言内容不能超过500字符!");
 		return;
-	}
-	var quote = ""
-	if ($("#quote_panle").html() != null) {
-		quote = "<div class='quote_panle'>" + $("#infocon").html() + "</div>";
-	}
-	if (quote != "") {
-		blogauthor = $("#quoteUserId").val();
 	}
 	$("#sendBtn").hide();
 	$("#loading").show();
@@ -31,7 +23,8 @@ function subReply(blogId) {
 		data : {
 			content : content,
 			blogId : blogId,
-			quote : quote,
+			atUserName : $("#atUserName").val(),
+			atUserId : $("#atUserId").val(),
 			"time" : new Date()
 		},
 		url : "savaReply.jspx",// 请求的action路径
@@ -48,7 +41,6 @@ function subReply(blogId) {
 			}
 			$("#sendBtn").show();
 			$("#loading").hide();
-			refreshcode();
 		}
 	});
 }
@@ -61,6 +53,9 @@ function resetForm() {
 		$("#checkCode").val("");
 	}
 	$("#content").val("");
+	if ($("#comment_form_at")[0] != null) {
+		$("#comment_form_at").remove();
+	}
 }
 
 this.blogId = "";
@@ -112,7 +107,8 @@ function NotePanle(note) {
 	// 头像
 	$(
 			"<div class='re_icon'><img src='../upload/" + reUserIcon
-					+ "' width='35'></div>").appendTo(this.noteCon);
+					+ "' width='35' style='border:1px solid #9B9B9B'></div>")
+			.appendTo(this.noteCon);
 	// 留言信息
 	var re_info = $("<div class='re_info'></div>").appendTo(this.noteCon);
 	// 姓名，时间，回复
@@ -127,6 +123,16 @@ function NotePanle(note) {
 		$("<span class='note_name'>" + note.userName + "</span>").appendTo(
 				re_name_time);
 	}
+
+	if (note.atUserId != "") {
+		$(
+				"<span style='color:#008000'>&nbsp;回复：</span><span class='note_name'><a href='userInfo.jspx?userId="
+						+ note.atUserId
+						+ "'>"
+						+ note.atUserName
+						+ "</a></span>").appendTo(re_name_time);
+	}
+
 	if (note.sourceFrom == "A") {
 		$(
 				"<span class='note_time nofirst'>发表于:" + note.postTime
@@ -138,11 +144,8 @@ function NotePanle(note) {
 
 	var re_span = $("<span class='nofirst'></span>").appendTo(re_name_time);
 	$("<a href='javascript:void(0)'>回复</a>").bind("click", {
-		id : note.id,
-		quoteUserId : note.userId,
-		name : note.userName,
-		time : note.postTime.substring(0, 19),
-		content : note.content
+		atUserId : note.userId,
+		atUserName : note.userName,
 	}, this.quote).appendTo(re_span);
 	if (userId == sessionUserId) {
 		var del_span = $("<span class='nofirst'></span>")
@@ -162,33 +165,24 @@ NotePanle.prototype = {
 		return this.noteCon;
 	},
 	quote : function(event) {
-		$("#quote_panle").empty();
-		var name = event.data.name;
-		var time = event.data.time;
-		var content = event.data.content;
-		var id = event.data.id;
-		var quoteUserId = event.data.quoteUserId;
-		var quote_panle = $("<div id='quote_panle' class='quote_panle' style='margin-top:10px;'></div>");
-		$("#subform").before(quote_panle);
-		$(
-				"<a href='javascript:delquote()'><img src='../images/001_02.png' width='18' border=0 class='close_icon'></a>")
-				.appendTo(quote_panle);
-		var infocon = $("<div id='infocon'></div>").appendTo(quote_panle);
-		$("<img src='../images/qbar_iconb24.gif' border=0 />")
-				.appendTo(infocon);
-		var b = $("<b></b>").appendTo(infocon);
-		$("<span>&nbsp;回复</span>").appendTo(b);
-		$("<span style='color:#46B'>&nbsp;" + name + "&nbsp;</span>").appendTo(
-				b);
-		$("<span >在<span style='color:#666'>" + time + "</span>的发表</span>")
-				.appendTo(b);
-		$("<div style='margin-top:5px;'>" + content + "</div>").appendTo(
-				infocon);
-		$("<input type='hidden' id='quoteId' value=" + id + ">").appendTo(
-				$("#quote_panle"));
-		$("<input type='hidden' id='quoteUserId' value=" + quoteUserId + ">")
-				.appendTo($("#quote_panle"));
+		if ($("#comment_form_at")[0] != null) {
+			$("#comment_form_at").remove();
+		}
+		var atUserName = event.data.atUserName;
+		var atUserId = event.data.atUserId;
+		$("#atUserId").val(atUserId);
+		$("#atUserName").val(atUserName);
 		$("#content").focus();
+		var quote_panle = $("<div id='comment_form_at' class='comment_form_at' style='margin-top:10px;'></div>");
+		$("#reblogform").before(quote_panle);
+		$("<a href='javasccript:void(0)'>@" + atUserName + "</a>").appendTo(
+				quote_panle);
+		$("<span><img src='../images/delete.png'></span>")
+				.appendTo(quote_panle).bind("click", function() {
+					$("#comment_form_at").remove();
+					$("#atUserId").val("");
+					$("#atUserName").val("");
+				});
 	},
 	del : function(event) {
 		var id = event.data.id;
