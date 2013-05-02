@@ -71,10 +71,10 @@
 			  	<div class="main_message">
 			  		<div class="re_icon">
 				  		<c:if test="${message.reUserId!=null&&message.reUserId!=''}">
-							<img src="../upload/${message.reUserIcon }" width="35">
+							<img src="../upload/${message.reUserIcon }" width="37" style="border:1px solid #9B9B9B">
 						</c:if>
 		  				<c:if test="${message.reUserId==null||message.reUserId==''}">
-		  					<img src="../upload/default.gif" width="35">
+		  					<img src="../upload/default.gif" width="37" style="border:1px solid #9B9B9B">
 		  				</c:if>
 			  		</div>
 			  		<div class="re_info">
