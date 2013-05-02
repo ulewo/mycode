@@ -7,20 +7,22 @@ import com.lhl.enums.NoticeType;
 
 public class NoticeParam {
 
-	//消息类型
+	// 消息类型
 	private NoticeType noticeType;
 
-	//文章ID
+	// 文章ID
 	private int articleId;
 
-	//接受消息的人
+	// 接受消息的人
 	private String receiveUserId;
 
-	//被at的人，也是接受消息的人。
+	// 被at的人，也是接受消息的人。
 	private List<String> atUserIds = new ArrayList<String>();
 
-	//发送消息的人
+	// 发送消息的人
 	private String sendUserId;
+
+	private String userId;
 
 	private int reId;
 
@@ -82,6 +84,14 @@ public class NoticeParam {
 	public void setSendUserId(String sendUserId) {
 
 		this.sendUserId = sendUserId;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 }

@@ -13,6 +13,10 @@ public class BlogReplyVo {
 
 	private String authorName; // 名称
 
+	private String atUserId;
+
+	private String atUserName;
+
 	private String reTime; // 回复时间
 
 	private String sourceFrom;
@@ -79,5 +83,21 @@ public class BlogReplyVo {
 
 	public void setSourceFrom(String sourceFrom) {
 		this.sourceFrom = sourceFrom;
+	}
+
+	public String getAtUserId() {
+		return atUserId;
+	}
+
+	public void setAtUserId(String atUserId) {
+		this.atUserId = atUserId;
+	}
+
+	public String getAtUserName() {
+		return atUserName;
+	}
+
+	public void setAtUserName(String atUserName) {
+		this.atUserName = atUserName;
 	}
 }

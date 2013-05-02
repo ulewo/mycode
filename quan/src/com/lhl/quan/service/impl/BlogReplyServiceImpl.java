@@ -57,14 +57,10 @@ public class BlogReplyServiceImpl implements BlogReplyService {
 
 		blogReply.setPostTime(formate.format(new Date()));
 		String content = blogReply.getContent();
-		String quote = blogReply.getQuote();
 		List<String> referers = new ArrayList<String>();
 		String formatContent = FormatAt.getInstance().GenerateRefererLinks(
 				userDao, content, referers);
 		String subCon = formatContent;
-		if (quote != null && !"".equals(quote)) {
-			subCon = quote + formatContent;
-		}
 		blogReply.setContent(subCon);
 		if (Tools.isEmpty(blogReply.getSourceFrom())) {
 			blogReply.setSourceFrom("P");
@@ -83,6 +79,9 @@ public class BlogReplyServiceImpl implements BlogReplyService {
 		noticeParm.setAtUserIds(referers);
 		noticeParm.setSendUserId(blogReply.getUserId());
 		// 如果At的用户Id为不为空那么就是二级回复
+		if (Tools.isNotEmpty(blogReply.getAtUserId())) {
+			noticeParm.setReceiveUserId(blogReply.getAtUserId());
+		}
 		noticeParm.setReId(id);
 		NoticeThread noticeThread = new NoticeThread(noticeParm);
 		Thread thread = new Thread(noticeThread);

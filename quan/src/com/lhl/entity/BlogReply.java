@@ -26,6 +26,10 @@ public class BlogReply {
 
 	private String reUserIcon;
 
+	private String atUserId;
+
+	private String atUserName;
+
 	private String sourceFrom;
 
 	public String getQuote() {
@@ -114,6 +118,22 @@ public class BlogReply {
 
 	public void setSourceFrom(String sourceFrom) {
 		this.sourceFrom = sourceFrom;
+	}
+
+	public String getAtUserId() {
+		return atUserId;
+	}
+
+	public void setAtUserId(String atUserId) {
+		this.atUserId = atUserId;
+	}
+
+	public String getAtUserName() {
+		return atUserName;
+	}
+
+	public void setAtUserName(String atUserName) {
+		this.atUserName = atUserName;
 	}
 
 }

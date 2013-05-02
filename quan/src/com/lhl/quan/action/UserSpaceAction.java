@@ -51,7 +51,8 @@ public class UserSpaceAction extends BaseAction {
 
 	private static final int MAXLENGTH = 500;
 
-	private final SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private final SimpleDateFormat formate = new SimpleDateFormat(
+			"yyyy-MM-dd HH:mm:ss");
 
 	private static final int SMALL_WIDTH = 60;
 
@@ -74,6 +75,10 @@ public class UserSpaceAction extends BaseAction {
 	private String userId;
 
 	private String userName;
+
+	private String atUserId;
+
+	private String atUserName;
 
 	private String passWord;
 
@@ -147,13 +152,11 @@ public class UserSpaceAction extends BaseAction {
 				if (null != userService.checkUserName(userName)) {
 					result = "{\"result\":\"N\",\"msg\":\"抱歉，昵称已经被使用\"}";
 				}
-			}
-			else {
+			} else {
 				result = "{\"result\":\"N\",\"msg\":\"用户名不能为空\"}";
 			}
 
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			result = "{\"result\":\"N\",\"msg\":\"抱歉，系统异常\"}";
 		}
@@ -168,13 +171,11 @@ public class UserSpaceAction extends BaseAction {
 				if (null != userService.checkEmail(email)) {
 					result = "{\"result\":\"N\",\"msg\":\"抱歉，邮箱已经被使用\"}";
 				}
-			}
-			else {
+			} else {
 				result = "{\"result\":\"N\",\"msg\":\"邮箱不能为空\"}";
 			}
 
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			result = "{\"result\":\"N\",\"msg\":\"抱歉，系统异常\"}";
 		}
 		getOut().write(result);
@@ -200,28 +201,25 @@ public class UserSpaceAction extends BaseAction {
 		try {
 			if (Tools.isEmpty(checkCode)) {
 				message = "验证码错误";
-			}
-			else if (Tools.isEmpty(sessionCcode) || !sessionCcode.equalsIgnoreCase(checkCode)) {
+			} else if (Tools.isEmpty(sessionCcode)
+					|| !sessionCcode.equalsIgnoreCase(checkCode)) {
 				message = "验证码错误";
-			}
-			else if (!email.matches(checkEmail) || Tools.isEmpty(email)) {
+			} else if (!email.matches(checkEmail) || Tools.isEmpty(email)) {
 				message = "邮箱地址不符合规范";
-			}
-			else if (!userName.matches(checkUserName) || Tools.isEmpty(userName) || Tools.getRealLength(userName) < 1
+			} else if (!userName.matches(checkUserName)
+					|| Tools.isEmpty(userName)
+					|| Tools.getRealLength(userName) < 1
 					|| Tools.getRealLength(userName) > 20) {
 				message = "昵称不符合规范";
-			}
-			else if (!passWord.matches(checkPassWord) || Tools.isEmpty(passWord) || passWord.length() < 6
+			} else if (!passWord.matches(checkPassWord)
+					|| Tools.isEmpty(passWord) || passWord.length() < 6
 					|| passWord.length() > 16) {
 				message = "密码不符合规范";
-			}
-			else if (null != userService.checkEmail(email)) {// 后台检测邮箱是否唯一
+			} else if (null != userService.checkEmail(email)) {// 后台检测邮箱是否唯一
 				message = "邮箱已经被占用";
-			}
-			else if (null != userService.checkUserName(userName)) { // 后台检测用户昵称是否唯一
+			} else if (null != userService.checkUserName(userName)) { // 后台检测用户昵称是否唯一
 				message = "用户名已经被占用";
-			}
-			else {
+			} else {
 				User user = new User();
 				user.setUserName(userName);
 				user.setPassword(Tools.encodeByMD5(passWord));
@@ -229,7 +227,8 @@ public class UserSpaceAction extends BaseAction {
 				userId = userService.register(user);
 				if (null != userId) {
 					// 保存Cookie
-					String infor = URLEncoder.encode(userName, "utf-8") + "," + passWord;
+					String infor = URLEncoder.encode(userName, "utf-8") + ","
+							+ passWord;
 
 					// 清除之前的Cookie 信息
 					Cookie cookie = new Cookie("cookieInfo", null);
@@ -249,14 +248,12 @@ public class UserSpaceAction extends BaseAction {
 					loginUser.setUserLittleIcon(user.getUserLittleIcon());
 					getSession().setAttribute("user", loginUser);
 					return SUCCESS;
-				}
-				else {
+				} else {
 					message = "系统异常，请稍后再试";
 					return INPUT;
 				}
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			message = "系统异常，请稍后再试";
 		}
@@ -273,17 +270,14 @@ public class UserSpaceAction extends BaseAction {
 		try {
 			if (Tools.isEmpty(checkCode)) {
 				result = "{\"result\":\"error\",\"msg\":\"验证码不能为空\"}";
-			}
-			else if (Tools.isEmpty(sessionCcode) || !sessionCcode.equalsIgnoreCase(checkCode)) {
+			} else if (Tools.isEmpty(sessionCcode)
+					|| !sessionCcode.equalsIgnoreCase(checkCode)) {
 				result = "{\"result\":\"error\",\"msg\":\"验证码错误\"}";
-			}
-			else if (Tools.isEmpty(userName)) {
+			} else if (Tools.isEmpty(userName)) {
 				result = "{\"result\":\"error\",\"msg\":\"帐号不能为空\"}";
-			}
-			else if (Tools.isEmpty(passWord)) {
+			} else if (Tools.isEmpty(passWord)) {
 				result = "{\"result\":\"error\",\"msg\":\"密码不能为空\"}";
-			}
-			else {
+			} else {
 				User user = userService.login(userName);
 				if (user != null) {
 					// 用户名，密码匹配 登录成功
@@ -291,7 +285,8 @@ public class UserSpaceAction extends BaseAction {
 						// 是否自动登录
 						if ("Y".equals(autoLogin)) {
 							// 自动登录，保存用户名密码到 Cookie
-							String infor = URLEncoder.encode(userName, "utf-8") + "," + passWord;
+							String infor = URLEncoder.encode(userName, "utf-8")
+									+ "," + passWord;
 
 							// 清除之前的Cookie 信息
 							Cookie cookie = new Cookie("cookieInfo", null);
@@ -304,8 +299,7 @@ public class UserSpaceAction extends BaseAction {
 							// 设置最大生命周期为1年。
 							cookieInfo.setMaxAge(31536000);
 							getResponse().addCookie(cookieInfo);
-						}
-						else {
+						} else {
 							Cookie cookie = new Cookie("cookieInfo", null);
 							cookie.setPath("/");
 							cookie.setMaxAge(0);
@@ -329,8 +323,7 @@ public class UserSpaceAction extends BaseAction {
 					result = "{\"result\":\"error\",\"msg\":\"用户不存在\"}";
 				}
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			result = "{\"result\":\"error\",\"msg\":\"抱歉，系统异常\"}";
 		}
 		getOut().write(result);
@@ -346,8 +339,7 @@ public class UserSpaceAction extends BaseAction {
 			cookie.setMaxAge(0);
 			getResponse().addCookie(cookie);
 			getSession().invalidate();
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			message = "error";
 		}
 		JSONObject obj = new JSONObject();
@@ -361,8 +353,7 @@ public class UserSpaceAction extends BaseAction {
 		if (cookieMap.containsKey(name)) {
 			Cookie cookie = (Cookie) cookieMap.get(name);
 			return cookie;
-		}
-		else {
+		} else {
 			return null;
 		}
 	}
@@ -390,20 +381,17 @@ public class UserSpaceAction extends BaseAction {
 			if (Tools.isEmpty(email)) {
 				message = "邮箱不能为空";
 				return INPUT;
-			}
-			else if (Tools.isEmpty(checkCode)) {
+			} else if (Tools.isEmpty(checkCode)) {
 				message = "验证码不能为空";
 				return INPUT;
-			}
-			else if (Tools.isEmpty(sessionCcode) || !sessionCcode.equalsIgnoreCase(checkCode)) {
+			} else if (Tools.isEmpty(sessionCcode)
+					|| !sessionCcode.equalsIgnoreCase(checkCode)) {
 				message = "验证码错误";
 				return INPUT;
-			}
-			else if (null == userService.checkEmail(email)) {// 如果邮箱存在
+			} else if (null == userService.checkEmail(email)) {// 如果邮箱存在
 				message = "邮箱不存在";
 				return INPUT;
-			}
-			else {
+			} else {
 				String activationCode = createCode();
 				// 更新用户激活码
 				User user = new User();
@@ -415,8 +403,7 @@ public class UserSpaceAction extends BaseAction {
 				maillAdress = MailAdress(email);
 			}
 
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return ERROR;
 		}
@@ -440,7 +427,8 @@ public class UserSpaceAction extends BaseAction {
 	// 发送激活邮件
 	private void sendMile(String email, String activationCode) throws Exception {
 
-		String url = "http://www.ulewo.com/user/findPwd.jspx?account=" + email + "&code=" + activationCode;
+		String url = "http://www.ulewo.com/user/findPwd.jspx?account=" + email
+				+ "&code=" + activationCode;
 		String title = "ulewo邮箱找回密码邮件";
 		StringBuffer content = new StringBuffer("亲爱的" + email + "<br><br>");
 		content.append("欢迎使用ulewo找回密码功能。(www.ulewo.com)!<br><br>");
@@ -463,8 +451,7 @@ public class UserSpaceAction extends BaseAction {
 		String web = email.substring(start + 1, end);
 		if ("gmail".equalsIgnoreCase(web)) {
 			maillAdress = "http://www.gmail.com";
-		}
-		else {
+		} else {
 			maillAdress = "http://mail." + web + ".com";
 		}
 		return maillAdress;
@@ -482,8 +469,7 @@ public class UserSpaceAction extends BaseAction {
 				return ERROR;
 			}
 			return SUCCESS;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			return ERROR;
 		}
 	}
@@ -492,20 +478,19 @@ public class UserSpaceAction extends BaseAction {
 
 		String result = "ok";
 
-		if (Tools.isEmpty(account) || Tools.isEmpty(code) || Tools.isEmpty(newPwd)) {
+		if (Tools.isEmpty(account) || Tools.isEmpty(code)
+				|| Tools.isEmpty(newPwd)) {
 			result = "rpwerror";
 		}
 		try {
 			User user = userService.checkEmail(account);
 			if (null == user || !code.equals(user.getActivationCode())) {
 				result = "rpwerror";
-			}
-			else {
+			} else {
 				user.setPassword(Tools.encodeByMD5(newPwd));
 				userService.updateUserSelective(user);
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			result = "error";
 		}
 		JSONObject obj = new JSONObject();
@@ -524,12 +509,11 @@ public class UserSpaceAction extends BaseAction {
 			if (Tools.isEmpty(passWord)) {
 				message = "邮箱不能为空";
 				return INPUT;
-			}
-			else if (Tools.isEmpty(checkCode)) {
+			} else if (Tools.isEmpty(checkCode)) {
 				message = "验证码不能为空";
 				return INPUT;
-			}
-			else if (Tools.isEmpty(sessionCcode) || !sessionCcode.equalsIgnoreCase(checkCode)) {
+			} else if (Tools.isEmpty(sessionCcode)
+					|| !sessionCcode.equalsIgnoreCase(checkCode)) {
 				message = "验证码错误";
 				return INPUT;
 			}
@@ -539,13 +523,11 @@ public class UserSpaceAction extends BaseAction {
 				user.setPassword(Tools.encodeByMD5(passWord));
 				userService.updateUserSelective(user);
 				return SUCCESS;
-			}
-			else {
+			} else {
 				return ERROR;
 			}
 
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			return SUCCESS;
 		}
 	}
@@ -577,14 +559,13 @@ public class UserSpaceAction extends BaseAction {
 			userVo.setPrevisitTime(userInfo.getPrevisitTime());
 			userVo.setMark(userInfo.getMark());
 			messageList = messageService.queryMessage(userId, 0, 10);
-			blogList = blogArticleService.queryBlogByUserIdOrItem(userId, 0, 0, 10);
-		}
-		catch (BaseException e) {
+			blogList = blogArticleService.queryBlogByUserIdOrItem(userId, 0, 0,
+					10);
+		} catch (BaseException e) {
 			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
 			e.printStackTrace();
 			return ERROR;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return ERROR;
 		}
@@ -610,12 +591,12 @@ public class UserSpaceAction extends BaseAction {
 				page = 1;
 			}
 			int noStart = (page - 1) * pageSize;
-			List<Message> list = messageService.queryMessage(userId, noStart, pageSize);
+			List<Message> list = messageService.queryMessage(userId, noStart,
+					pageSize);
 			obj.put("totalPage", pageTotal);
 			obj.put("page", page);
 			obj.put("list", list);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			msg = "error";
 			e.printStackTrace();
 		}
@@ -640,8 +621,7 @@ public class UserSpaceAction extends BaseAction {
 			userBaesInfo.setUserLittleIcon(userInfo.getUserLittleIcon());
 			userBaesInfo.setUserName(userInfo.getUserName());
 			userBaesInfo.setCharacters(userInfo.getCharacters());
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			msg = "error";
 		}
 		JSONObject obj = new JSONObject();
@@ -667,15 +647,14 @@ public class UserSpaceAction extends BaseAction {
 				getOut().print(String.valueOf(obj));
 				return;
 			}
-			/*String sessionCcode = (String) getSession().getAttribute("checkCode");
-			if (Tools.isEmpty(checkCode) || !checkCode.equalsIgnoreCase(sessionCcode)) {
-				result = "fail";
-				msg = "验证码错误";
-				obj.put("msg", msg);
-				obj.put("result", result);
-				getOut().print(String.valueOf(obj));
-				return;
-			}*/
+			/*
+			 * String sessionCcode = (String)
+			 * getSession().getAttribute("checkCode"); if
+			 * (Tools.isEmpty(checkCode) ||
+			 * !checkCode.equalsIgnoreCase(sessionCcode)) { result = "fail"; msg
+			 * = "验证码错误"; obj.put("msg", msg); obj.put("result", result);
+			 * getOut().print(String.valueOf(obj)); return; }
+			 */
 			if (Tools.isEmpty(content) || content.length() > MAXLENGTH) {
 				result = "fail";
 				msg = "输入内容为空或者超过长度";
@@ -690,17 +669,18 @@ public class UserSpaceAction extends BaseAction {
 			message.setReUserId(sessionUser.getUserId());
 			message.setReUserName(sessionUser.getUserName());
 			message.setReUserIcon(sessionUser.getUserLittleIcon());
-			message.setQuote(quote);
 			message.setMessage(Tools.formateHtml(content));
 			message.setUserId(userId);
-			Message resultMsg = messageService.addMessage(message, userId);
+			message.setAtUserId(atUserId);
+			message.setAtUserName(atUserName);
+			Message resultMsg = messageService.addMessage(message);
 			message.setPostTime(resultMsg.getPostTime());
 			message.setId(resultMsg.getId());
+
 			obj.put("note", message);
 			obj.put("result", result);
 			getOut().print(String.valueOf(obj));
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			msg = "error";
 			obj.put("msg", msg);
 			getOut().print(String.valueOf(obj));
@@ -715,14 +695,12 @@ public class UserSpaceAction extends BaseAction {
 		try {
 			if (sessionUser == null) {
 				msg = "noperm";
-			}
-			else {
+			} else {
 				if (!messageService.deletMessage(sessionUser.getUserId(), id)) {
 					msg = "noperm";
 				}
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			msg = "error";
 		}
 		obj.put("msg", msg);
@@ -753,13 +731,11 @@ public class UserSpaceAction extends BaseAction {
 			userVo.setRegisterTime(userInfo.getRegisterTime());
 			userVo.setPrevisitTime(userInfo.getPrevisitTime());
 			userVo.setSex(userInfo.getSex());
-		}
-		catch (BaseException e) {
+		} catch (BaseException e) {
 			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
 			e.printStackTrace();
 			return ERROR;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return SUCCESS;
@@ -788,8 +764,7 @@ public class UserSpaceAction extends BaseAction {
 			updateUser.setAddress(address);
 			updateUser.setCharacters(characters);
 			userService.updateInfo(updateUser);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			result = "error";
 		}
@@ -806,13 +781,11 @@ public class UserSpaceAction extends BaseAction {
 			if (null == userInfo) {
 				return ERROR;
 			}
-		}
-		catch (BaseException e) {
+		} catch (BaseException e) {
 			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
 			e.printStackTrace();
 			return ERROR;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return SUCCESS;
@@ -831,8 +804,7 @@ public class UserSpaceAction extends BaseAction {
 			sessionUser.setUserBigIcon(userIcon);
 			userService.updateUserSelective(sessionUser);
 			result = userIcon;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.out.print(e);
 			result = "error";
 		}
@@ -854,7 +826,9 @@ public class UserSpaceAction extends BaseAction {
 				imgType = userIcon.substring(idx + 1);
 			}
 		}
-		String srcpath = ServletActionContext.getServletContext().getRealPath("/") + userIcon;
+		String srcpath = ServletActionContext.getServletContext().getRealPath(
+				"/")
+				+ userIcon;
 		try {
 			User sessionUser = getSessionUser();
 			File tempfile = new File(srcpath);
@@ -863,7 +837,8 @@ public class UserSpaceAction extends BaseAction {
 			// 裁剪图片
 			BufferedImage subimg = img.getSubimage(x1, y1, width, height);
 			// 放大缩小图片
-			BufferedImage okimg = new BufferedImage(SMALL_WIDTH, SMALL_HEIGHT, BufferedImage.TYPE_INT_RGB);
+			BufferedImage okimg = new BufferedImage(SMALL_WIDTH, SMALL_HEIGHT,
+					BufferedImage.TYPE_INT_RGB);
 			Graphics2D g = okimg.createGraphics();
 			g.drawImage(subimg, 0, 0, SMALL_WIDTH, SMALL_HEIGHT, null);
 
@@ -871,18 +846,19 @@ public class UserSpaceAction extends BaseAction {
 			out = new ByteArrayOutputStream();
 			ImageIO.write(okimg, imgType, out);
 			byte[] data = out.toByteArray();
-			String okSrcPath = ServletActionContext.getServletContext().getRealPath("/") + "upload/avatars/";
+			String okSrcPath = ServletActionContext.getServletContext()
+					.getRealPath("/") + "upload/avatars/";
 			File imagePathFile = new File(okSrcPath);
 			if (!imagePathFile.exists()) {
 				imagePathFile.mkdirs();
 			}
-			File okfile = new File(okSrcPath + sessionUser.getUserId() + "." + imgType);
+			File okfile = new File(okSrcPath + sessionUser.getUserId() + "."
+					+ imgType);
 			imgOut = new FileOutputStream(okfile);
 			imgOut.write(data);
 			imgOut.flush();
 			resultPath = "avatars/" + sessionUser.getUserId() + "." + imgType;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -899,8 +875,7 @@ public class UserSpaceAction extends BaseAction {
 				if (imgOut != null) {
 					imgOut.close();
 				}
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 			}
 			new File(srcpath).delete();
 		}
@@ -920,13 +895,11 @@ public class UserSpaceAction extends BaseAction {
 			if (null == userInfo) {
 				return ERROR;
 			}
-		}
-		catch (BaseException e) {
+		} catch (BaseException e) {
 			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
 			e.printStackTrace();
 			return ERROR;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return SUCCESS;
@@ -950,13 +923,11 @@ public class UserSpaceAction extends BaseAction {
 				if (Tools.encodeByMD5(oldPwd).equals(userInfo.getPassword())) {
 					userInfo.setPassword(Tools.encodeByMD5(newPwd));
 					userService.updateUserSelective(userInfo);
-				}
-				else {
+				} else {
 					result = "pwdError";
 				}
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		JSONObject obj = new JSONObject();
@@ -975,13 +946,11 @@ public class UserSpaceAction extends BaseAction {
 
 		try {
 			createGroups = groupService.queryCreatedGroups(userId);
-		}
-		catch (BaseException e) {
+		} catch (BaseException e) {
 			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
 			e.printStackTrace();
 			return ERROR;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			errMsg = ErrMsgConfig.getErrMsg(10000);
 			e.printStackTrace();
 			return ERROR;
@@ -993,13 +962,11 @@ public class UserSpaceAction extends BaseAction {
 
 		try {
 			joinGroups = groupService.queryJoinedGroups(userId);
-		}
-		catch (BaseException e) {
+		} catch (BaseException e) {
 			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
 			e.printStackTrace();
 			return ERROR;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			errMsg = ErrMsgConfig.getErrMsg(10000);
 			e.printStackTrace();
 			return ERROR;
@@ -1028,14 +995,13 @@ public class UserSpaceAction extends BaseAction {
 				page = 1;
 			}
 			int noStart = (page - 1) * pageSize;
-			articleList = articleService.queryPostTopic(userId, noStart, pageSize);
-		}
-		catch (BaseException e) {
+			articleList = articleService.queryPostTopic(userId, noStart,
+					pageSize);
+		} catch (BaseException e) {
 			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
 			e.printStackTrace();
 			return ERROR;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			errMsg = ErrMsgConfig.getErrMsg(10000);
 			e.printStackTrace();
 			return ERROR;
@@ -1064,14 +1030,13 @@ public class UserSpaceAction extends BaseAction {
 				page = 1;
 			}
 			int noStart = (page - 1) * pageSize;
-			articleList = articleService.queryReTopic(userId, noStart, pageSize);
-		}
-		catch (BaseException e) {
+			articleList = articleService
+					.queryReTopic(userId, noStart, pageSize);
+		} catch (BaseException e) {
 			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
 			e.printStackTrace();
 			return ERROR;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			errMsg = ErrMsgConfig.getErrMsg(10000);
 			e.printStackTrace();
 			return ERROR;
@@ -1324,6 +1289,14 @@ public class UserSpaceAction extends BaseAction {
 	public void setId(int id) {
 
 		this.id = id;
+	}
+
+	public void setAtUserId(String atUserId) {
+		this.atUserId = atUserId;
+	}
+
+	public void setAtUserName(String atUserName) {
+		this.atUserName = atUserName;
 	}
 
 }

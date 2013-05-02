@@ -16,8 +16,8 @@
       		SELECT LAST_INSERT_ID()
     	 </selectKey>
         <![CDATA[
-           insert into message(userid,reuserid,reusername,message,posttime) 
-		values(#userId#,#reUserId#,#reUserName#,#message#,#postTime#)
+           insert into message(userid,reuserid,reusername,atuserid,message,posttime) 
+		values(#userId#,#reUserId#,#reUserName#,#atUserId#,#message#,#postTime#)
         ]]>
 	</insert>
 	
@@ -26,8 +26,10 @@
 		select m.id,m.userid,m.reuserid,m.message,
 		(case when m.reuserid is not null then u.username else m.reusername end)as reUserName,
 		(case when m.reuserid is not null then u.userlittleicon else '' end)as reUserIcon,
+		m.atuserid,
+		au.username as atusername,
 		m.posttime 
-		from message m left join user u on m.reuserid = u.userid where m.userid = #userId#  order by posttime desc limit #offset#,#total#
+		from message m left join user u on m.reuserid = u.userid left join user au on m.atuserid=au.userid where m.userid = #userId#  order by posttime desc limit #offset#,#total#
 	</select>
 
 	<!-- 根据userId查询留言条数 -->

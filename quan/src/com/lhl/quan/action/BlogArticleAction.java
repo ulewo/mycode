@@ -43,6 +43,10 @@ public class BlogArticleAction extends BaseAction {
 
 	private String userId;
 
+	private String atUserId;
+
+	private String atUserName;
+
 	private String title;
 
 	private String content;
@@ -80,7 +84,8 @@ public class BlogArticleAction extends BaseAction {
 					return ERROR;
 				}
 			}
-			int countNumber = blogArticleService.queryCountByUserIdOrItem(userId, itemId);
+			int countNumber = blogArticleService.queryCountByUserIdOrItem(
+					userId, itemId);
 			Pagination.setPageSize(Constant.pageSize50);
 			int pageSize = Pagination.getPageSize();
 			pageTotal = Pagination.getPageTotal(countNumber);
@@ -91,9 +96,9 @@ public class BlogArticleAction extends BaseAction {
 				page = 1;
 			}
 			int noStart = (page - 1) * pageSize;
-			blogList = blogArticleService.queryBlogByUserIdOrItem(userId, itemId, noStart, pageSize);
-		}
-		catch (Exception e) {
+			blogList = blogArticleService.queryBlogByUserIdOrItem(userId,
+					itemId, noStart, pageSize);
+		} catch (Exception e) {
 			e.printStackTrace();
 			return ERROR;
 		}
@@ -111,16 +116,15 @@ public class BlogArticleAction extends BaseAction {
 				blogArticle.setItemId(itemId);
 				blogArticle.setTitle(title);
 				blogArticle.setContent(content);
-				blogArticle.setSummary(SubStringHTML.subStringHTML(content, Constant.CUT_LENTH, "......"));
+				blogArticle.setSummary(SubStringHTML.subStringHTML(content,
+						Constant.CUT_LENTH, "......"));
 				blogArticle.setKeyWord(keyWord);
 				blogArticle.setAllowReplay(allowReplay);
 				blogArticleService.addBlog(blogArticle, sessionUser);
-			}
-			else {
+			} else {
 				return ERROR;
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			return ERROR;
 		}
 		return SUCCESS;
@@ -141,12 +145,10 @@ public class BlogArticleAction extends BaseAction {
 			if (sessionUser != null) {
 				userId = sessionUser.getUserId();
 				itemList = blogItemService.queryBlogItemByUserId(userId);
-			}
-			else {
+			} else {
 				return ERROR;
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			return ERROR;
 		}
 		return SUCCESS;
@@ -159,19 +161,16 @@ public class BlogArticleAction extends BaseAction {
 			blogArticle = blogArticleService.queryBlogById(id);
 			if (null == blogArticle) {
 				return ERROR;
-			}
-			else {
+			} else {
 				userId = blogArticle.getUserId();
 				if (!userId.equals(sessionUser.getUserId())) {
 					return ERROR;
-				}
-				else {
+				} else {
 					itemList = blogItemService.queryBlogItemByUserId(userId);
 				}
 
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			return ERROR;
 		}
 		return SUCCESS;
@@ -184,24 +183,22 @@ public class BlogArticleAction extends BaseAction {
 			blogArticle = blogArticleService.queryBlogById(id);
 			if (null == blogArticle) {
 				return ERROR;
-			}
-			else {
+			} else {
 				userId = blogArticle.getUserId();
 				if (!userId.equals(sessionUser.getUserId())) {
 					return ERROR;
-				}
-				else {
+				} else {
 					blogArticle.setTitle(title);
 					blogArticle.setItemId(itemId);
 					blogArticle.setContent(content);
-					blogArticle.setSummary(SubStringHTML.subStringHTML(content, Constant.CUT_LENTH, "......"));
+					blogArticle.setSummary(SubStringHTML.subStringHTML(content,
+							Constant.CUT_LENTH, "......"));
 					blogArticle.setKeyWord(keyWord);
 					blogArticle.setAllowReplay(allowReplay);
 					blogArticleService.update(blogArticle);
 				}
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			return ERROR;
 		}
 		return SUCCESS;
@@ -214,18 +211,15 @@ public class BlogArticleAction extends BaseAction {
 			blogArticle = blogArticleService.queryBlogById(id);
 			if (null == blogArticle) {
 				return ERROR;
-			}
-			else {
+			} else {
 				userId = blogArticle.getUserId();
 				if (!userId.equals(sessionUser.getUserId())) {
 					return ERROR;
-				}
-				else {
+				} else {
 					blogArticleService.deleteArticle(id);
 				}
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			return ERROR;
 		}
 		return SUCCESS;
@@ -233,7 +227,8 @@ public class BlogArticleAction extends BaseAction {
 
 	public void queryItem() throws IOException {
 
-		List<BlogItem> list = blogItemService.queryBlogItemAndCountByUserId(userId);
+		List<BlogItem> list = blogItemService
+				.queryBlogItemAndCountByUserId(userId);
 		int count = blogArticleService.queryCountByUserIdOrItem(userId, 0);
 		JSONObject obj = new JSONObject();
 		obj.put("list", list);
@@ -251,15 +246,14 @@ public class BlogArticleAction extends BaseAction {
 			blogArticle = blogArticleService.queryBlogById(id);
 			if (null == blogArticle) {
 				return ERROR;
-			}
-			else {
+			} else {
 				blogArticle.setReadCount(blogArticle.getReadCount() + 1);
 				blogArticleService.updateReadCount(blogArticle);
 				userId = blogArticle.getUserId();
-				blogItem = blogItemService.queryBlogItemById(blogArticle.getItemId());
+				blogItem = blogItemService.queryBlogItemById(blogArticle
+						.getItemId());
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return ERROR;
 		}
@@ -271,10 +265,10 @@ public class BlogArticleAction extends BaseAction {
 		String msg = "ok";
 		JSONObject obj = new JSONObject();
 		try {
-			List<BlogReply> list = blogReplyService.queryBlogReplyByBlogId(blogId);
+			List<BlogReply> list = blogReplyService
+					.queryBlogReplyByBlogId(blogId);
 			obj.put("list", list);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			msg = "error";
 			e.printStackTrace();
 		}
@@ -299,15 +293,14 @@ public class BlogArticleAction extends BaseAction {
 				getOut().print(String.valueOf(obj));
 				return;
 			}
-			/*String sessionCcode = (String) getSession().getAttribute("checkCode");
-			if (Tools.isEmpty(checkCode) || !checkCode.equalsIgnoreCase(sessionCcode)) {
-				result = "fail";
-				msg = "验证码错误";
-				obj.put("msg", msg);
-				obj.put("result", result);
-				getOut().print(String.valueOf(obj));
-				return;
-			}*/
+			/*
+			 * String sessionCcode = (String)
+			 * getSession().getAttribute("checkCode"); if
+			 * (Tools.isEmpty(checkCode) ||
+			 * !checkCode.equalsIgnoreCase(sessionCcode)) { result = "fail"; msg
+			 * = "验证码错误"; obj.put("msg", msg); obj.put("result", result);
+			 * getOut().print(String.valueOf(obj)); return; }
+			 */
 			if (Tools.isEmpty(content) || content.length() > MAXLENGTH) {
 				result = "fail";
 				msg = "输入内容为空或者超过长度";
@@ -322,9 +315,11 @@ public class BlogArticleAction extends BaseAction {
 			reply.setUserId(sessionUser.getUserId());
 			reply.setUserName(sessionUser.getUserName());
 			reply.setReUserIcon(sessionUser.getUserLittleIcon());
+			reply.setAtUserId(atUserId);
+			reply.setAtUserName(atUserName);
 			// 检测内容
 			reply.setQuote(quote);
-			//引用回复
+			// 引用回复
 			reply.setContent(content);
 			reply.setBlogId(blogId);
 			BlogReply blogReply = blogReplyService.addReply(reply);
@@ -333,8 +328,7 @@ public class BlogArticleAction extends BaseAction {
 			obj.put("note", reply);
 			obj.put("result", result);
 			getOut().print(String.valueOf(obj));
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			msg = "error";
 			obj.put("msg", msg);
 			getOut().print(String.valueOf(obj));
@@ -349,14 +343,12 @@ public class BlogArticleAction extends BaseAction {
 		try {
 			if (sessionUser == null) {
 				msg = "noperm";
-			}
-			else {
+			} else {
 				if (!blogReplyService.delete(sessionUser.getUserId(), id)) {
 					msg = "noperm";
 				}
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			msg = "error";
 		}
 		obj.put("msg", msg);
@@ -368,13 +360,12 @@ public class BlogArticleAction extends BaseAction {
 		try {
 			User sessionUser = getSessionUser();
 			if (sessionUser != null) {
-				itemList = blogItemService.queryBlogItemByUserId(sessionUser.getUserId());
-			}
-			else {
+				itemList = blogItemService.queryBlogItemByUserId(sessionUser
+						.getUserId());
+			} else {
 				return ERROR;
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			return ERROR;
 		}
 		return SUCCESS;
@@ -393,8 +384,7 @@ public class BlogArticleAction extends BaseAction {
 			item.setItemRang(itemRang);
 			int id = blogItemService.saveItem(item);
 			obj.put("id", id);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			msg = "error";
 		}
@@ -540,6 +530,14 @@ public class BlogArticleAction extends BaseAction {
 	public void setQuote(String quote) {
 
 		this.quote = quote;
+	}
+
+	public void setAtUserId(String atUserId) {
+		this.atUserId = atUserId;
+	}
+
+	public void setAtUserName(String atUserName) {
+		this.atUserName = atUserName;
 	}
 
 }

@@ -59,17 +59,13 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	public Message addMessage(Message message, String userId) throws Exception {
+	public Message addMessage(Message message) throws Exception {
 
 		String content = message.getMessage();
-		String quote = message.getQuote();
 		List<String> referers = new ArrayList<String>();
 		String formatContent = FormatAt.getInstance().GenerateRefererLinks(
 				userDao, content, referers);
 		String subCon = formatContent;
-		if (quote != null && !"".equals(quote)) {
-			subCon = quote + formatContent;
-		}
 		message.setMessage(subCon);
 		message.setPostTime(formate.format(new Date()));
 		messageDao.addMessage(message);
@@ -77,10 +73,20 @@ public class MessageServiceImpl implements MessageService {
 		int id = message.getId();
 		// 启动一个线程发布消息
 		NoticeParam noticeParm = new NoticeParam();
-		noticeParm.setReceiveUserId(message.getUserId());
+		noticeParm.setUserId(message.getUserId());
+		// 如果不是二级回复接受人就是楼主，否则就是@的人。
+		if (Tools.isEmpty(message.getAtUserId())) {
+			noticeParm.setReceiveUserId(message.getUserId());
+		} else {
+			noticeParm.setReceiveUserId(message.getAtUserId());
+		}
 		noticeParm.setNoticeType(NoticeType.REMESSAGE);
 		noticeParm.setAtUserIds(referers);
 		noticeParm.setSendUserId(message.getReUserId());
+
+		if (Tools.isNotEmpty(message.getAtUserId())) {
+			noticeParm.setReceiveUserId(message.getAtUserId());
+		}
 		noticeParm.setReId(id);
 		NoticeThread noticeThread = new NoticeThread(noticeParm);
 		Thread thread = new Thread(noticeThread);

@@ -391,6 +391,8 @@ public class AndroidAction extends BaseAction {
 				vo.setAuthorIcon(Constant.WEBSTIE_IMAGEURL + re.getReUserIcon());
 				vo.setAuthorid(re.getUserId());
 				vo.setAuthorName(re.getUserName());
+				vo.setAtUserId(re.getAtUserId());
+				vo.setAtUserName(re.getAtUserName());
 				vo.setContent(re.getContent());
 				vo.setReTime(re.getPostTime());
 				vo.setSourceFrom(re.getSourceFrom());

@@ -30,7 +30,8 @@ public class NoticeThread implements Runnable {
 
 	private NoticeParam noticeParm;
 
-	private final static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private final static SimpleDateFormat format = new SimpleDateFormat(
+			"yyyy-MM-dd HH:mm:ss");
 
 	public NoticeThread(NoticeParam noticeParm) {
 
@@ -48,37 +49,41 @@ public class NoticeThread implements Runnable {
 		String sendUserId = noticeParm.getSendUserId();
 		List<String> atUserIds = noticeParm.getAtUserIds();
 		int reId = noticeParm.getReId();
+		String userId = noticeParm.getUserId();
 		String url = "";
 		switch (noticeType) {
-		case REARTICLE: //回复主题
+		case REARTICLE: // 回复主题
 			articleDao = (ArticleDao) Springfactory.getBean("articleDao");
 			url = "../group/post.jspx?id=" + articleId + "#re" + reId;
 			reArticle(articleId, receiveUserId, atUserIds, sendUserId, url);
 			break;
-		case ATINARTICLE: //在文章中@
+		case ATINARTICLE: // 在文章中@
 			articleDao = (ArticleDao) Springfactory.getBean("articleDao");
 			url = "../group/post.jspx?id=" + articleId;
 			atInArticle(articleId, atUserIds, sendUserId, url);
 			break;
-		case REBLOG: //回复博客
-			blogArticleDao = (BlogArticleDao) Springfactory.getBean("blogArticleDao");
+		case REBLOG: // 回复博客
+			blogArticleDao = (BlogArticleDao) Springfactory
+					.getBean("blogArticleDao");
 			url = "blogdetail.jspx?id=" + articleId + "#re" + reId;
 			reBlog(articleId, receiveUserId, atUserIds, sendUserId, url);
 			break;
-		case ATINBLOG: //在博客中@
-			blogArticleDao = (BlogArticleDao) Springfactory.getBean("blogArticleDao");
+		case ATINBLOG: // 在博客中@
+			blogArticleDao = (BlogArticleDao) Springfactory
+					.getBean("blogArticleDao");
 			url = "blogdetail.jspx?id=" + articleId;
 			atInBlog(articleId, atUserIds, sendUserId, url);
 			break;
-		case REMESSAGE: //回复博客
-			url = "message.jsp?userId=" + receiveUserId + "#re" + reId;
-			reMessage(receiveUserId, atUserIds, sendUserId, url);
+		case REMESSAGE: // 回复留言
+			url = "message.jsp?userId=" + userId + "#re" + reId;
+			reMessage(userId, receiveUserId, atUserIds, sendUserId, url);
 			break;
 		}
 	}
 
-	//回复主题
-	private void reArticle(int articleId, String receiveUserId, List<String> atUserIds, String sendUserId, String url) {
+	// 回复主题
+	private void reArticle(int articleId, String receiveUserId,
+			List<String> atUserIds, String sendUserId, String url) {
 
 		try {
 			Article article = articleDao.queryTopicById(articleId);
@@ -93,13 +98,13 @@ public class NoticeThread implements Runnable {
 						sendUserName = reUser.getUserName();
 					}
 				}
-				//如果接受用户ID为空，那么就是回复主题
+				// 如果接受用户ID为空，那么就是回复主题
 				if (Tools.isEmpty(receiveUserId)) {
 					receiveUserId = article.getAuthorId();
 				}
-				//如果发送人和接受人不一样就发送消息
+				// 如果发送人和接受人不一样就发送消息
 				if (!receiveUserId.equals(sendUserId)) {
-					//发送消息给被回复的人
+					// 发送消息给被回复的人
 					noticeCon = sendUserName + "在\"" + title + "\"中回复了你";
 					notice = new Notice();
 					notice.setUrl(url);
@@ -110,10 +115,10 @@ public class NoticeThread implements Runnable {
 					notice.setStatus("N");
 					noticeDao.createNotice(notice);
 				}
-				//发送消息给被@的人
+				// 发送消息给被@的人
 				if (atUserIds != null) {
 					for (String atUserId : atUserIds) {
-						//如果发送人@自己，自己就不给自己发信息
+						// 如果发送人@自己，自己就不给自己发信息
 						if (atUserId.equals(sendUserId)) {
 							continue;
 						}
@@ -129,14 +134,14 @@ public class NoticeThread implements Runnable {
 					}
 				}
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	//在文章中@
-	private void atInArticle(int articleId, List<String> atUserIds, String sendUserId, String url) {
+	// 在文章中@
+	private void atInArticle(int articleId, List<String> atUserIds,
+			String sendUserId, String url) {
 
 		try {
 			Article article = articleDao.queryTopicById(articleId);
@@ -147,7 +152,8 @@ public class NoticeThread implements Runnable {
 				if (reUser != null && article != null) {
 					for (String atUserId : atUserIds) {
 						notice = new Notice();
-						noticeCon = reUser.getUserName() + "在文章\"" + article.getTitle() + "\"中提到了你";
+						noticeCon = reUser.getUserName() + "在文章\""
+								+ article.getTitle() + "\"中提到了你";
 						notice.setUrl(url);
 						notice.setUserId(atUserId);
 						notice.setPostTime(format.format(new Date()));
@@ -158,14 +164,14 @@ public class NoticeThread implements Runnable {
 					}
 				}
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	//回复博客
-	private void reBlog(int articleId, String receiveUserId, List<String> atUserIds, String sendUserId, String url) {
+	// 回复博客
+	private void reBlog(int articleId, String receiveUserId,
+			List<String> atUserIds, String sendUserId, String url) {
 
 		try {
 			BlogArticle article = blogArticleDao.queryBlogById(articleId);
@@ -180,13 +186,13 @@ public class NoticeThread implements Runnable {
 						sendUserName = reUser.getUserName();
 					}
 				}
-				//如果接受用户ID为空，那么就是回复主题
+				// 如果接受用户ID为空，那么就是回复主题
 				if (Tools.isEmpty(receiveUserId)) {
 					receiveUserId = article.getUserId();
 				}
-				//如果发送人和接受人不一样就发送消息
+				// 如果发送人和接受人不一样就发送消息
 				if (!receiveUserId.equals(sendUserId)) {
-					//发送消息给被回复的人
+					// 发送消息给被回复的人
 					noticeCon = sendUserName + "在\"" + title + "\"中回复了你";
 					notice = new Notice();
 					notice.setUrl(url);
@@ -197,10 +203,10 @@ public class NoticeThread implements Runnable {
 					notice.setStatus("N");
 					noticeDao.createNotice(notice);
 				}
-				//发送消息给被@的人
+				// 发送消息给被@的人
 				if (atUserIds != null) {
 					for (String atUserId : atUserIds) {
-						//如果发送人@自己，自己就不给自己发信息
+						// 如果发送人@自己，自己就不给自己发信息
 						if (atUserId.equals(sendUserId)) {
 							continue;
 						}
@@ -216,14 +222,14 @@ public class NoticeThread implements Runnable {
 					}
 				}
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	//在文章中@
-	private void atInBlog(int articleId, List<String> atUserIds, String sendUserId, String url) {
+	// 在文章中@
+	private void atInBlog(int articleId, List<String> atUserIds,
+			String sendUserId, String url) {
 
 		try {
 			BlogArticle article = blogArticleDao.queryBlogById(articleId);
@@ -234,7 +240,8 @@ public class NoticeThread implements Runnable {
 				if (reUser != null && article != null) {
 					for (String atUserId : atUserIds) {
 						notice = new Notice();
-						noticeCon = reUser.getUserName() + "在文章\"" + article.getTitle() + "\"中提到了你";
+						noticeCon = reUser.getUserName() + "在文章\""
+								+ article.getTitle() + "\"中提到了你";
 						notice.setUrl(url);
 						notice.setUserId(atUserId);
 						notice.setPostTime(format.format(new Date()));
@@ -245,14 +252,14 @@ public class NoticeThread implements Runnable {
 					}
 				}
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	//留言
-	private void reMessage(String receiveUserId, List<String> atUserIds, String sendUserId, String url) {
+	// 留言
+	private void reMessage(String userId, String receiveUserId,
+			List<String> atUserIds, String sendUserId, String url) {
 
 		try {
 
@@ -265,10 +272,14 @@ public class NoticeThread implements Runnable {
 					sendUserName = reUser.getUserName();
 				}
 			}
-			//如果发送人和接受人不一样就发送消息
+			// 如果发送人和接受人不一样就发送消息
 			if (!receiveUserId.equals(sendUserId)) {
-				//发送消息给被回复的人
-				noticeCon = sendUserName + "给你留言了";
+				// 发送消息给被回复的人
+				if (receiveUserId.equals(userId)) {// 如果接受人和留言板主人一致消息标题
+					noticeCon = sendUserName + "给你留言了";
+				} else {
+					noticeCon = sendUserName + "回复了你的留言了";
+				}
 				notice = new Notice();
 				notice.setUrl(url);
 				notice.setUserId(receiveUserId);
@@ -278,10 +289,10 @@ public class NoticeThread implements Runnable {
 				notice.setStatus("N");
 				noticeDao.createNotice(notice);
 			}
-			//发送消息给被@的人
+			// 发送消息给被@的人
 			if (atUserIds != null) {
 				for (String atUserId : atUserIds) {
-					//如果发送人@自己，自己就不给自己发信息
+					// 如果发送人@自己，自己就不给自己发信息
 					if (atUserId.equals(sendUserId)) {
 						continue;
 					}
@@ -296,8 +307,7 @@ public class NoticeThread implements Runnable {
 					noticeDao.createNotice(notice);
 				}
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

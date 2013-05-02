@@ -29,12 +29,12 @@ public interface MessageService
 
 	/**
 	 * 添加留言
-	 * 
 	 * @param user
+	 * 
 	 * @return TODO
 	 * @throws Exception
 	 */
-	public Message addMessage(Message message, String userId) throws Exception;
+	public Message addMessage(Message message) throws Exception;
 
 	/**
 	 * 
