@@ -96,3 +96,4 @@
 .u_talk_subtn{float:right;display:inline-block;margin-right:2px;}
 .u_talk_subtn a{background:#38A3DB;color:white;height:20px;width:80px;display:block;text-decoration:none;font-size:16px;text-align:center;padding-top:5px;}
 .u_talk_subtn a:hover{color:white;background:#64C5E8}
+.moretalk a{color:#4466BB;font-weight:bolder;}

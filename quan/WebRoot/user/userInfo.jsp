@@ -76,6 +76,8 @@
 			  	<span class="base_tit">积分：</span><span class="base_info">${userVo.mark}</span><br>
 		  	</div>
 		  	</c:if>
+		  	<div class="moretalk"><a href="moretalk.jsp?userId=${param.userId}">更多吐槽&gt;&gt;</a></div>
+		  	<div id="talklist"></div>
 		  	<div class="topblog">
 		  		<div class="topblog_titcon"><span class="topblog_tit">最新博文</span><span class="topblog_link"><a href="blog.jspx?userId=${userId}" target="_blank">进入博客</a></span></div>
 		  		<c:forEach var="blog" items="${blogList}">
@@ -87,7 +89,6 @@
 		  			<span>尚无发表博文</span>
 		  		</c:if>
 		  	</div>
-		  	<div id="talklist"></div>
 		  	<div class="topblog">
 		  		<div class="topblog_titcon"><span class="topblog_tit">最新留言</span><span class="topblog_link"><a href="message.jsp?userId=${userId}" target="_blank">进入留言板</a></span></div>
 		  		<div class="messagelist"  id="messagelist">
