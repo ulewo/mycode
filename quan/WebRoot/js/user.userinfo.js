@@ -8,11 +8,10 @@ function loadUserTalk(page) {
 		cache : true,
 		type : 'GET',
 		dataType : "json",
-		url : 'queryUserTalk.jspx',// 请求的action路径
+		url : 'queryUserTalk.jspx?userId=' + gloableParam.userId,// 请求的action路径
 		success : function(data) {
 			var list = data.list;
 			var length = 0;
-			alert(list.lenth <= 5);
 			if (list.lenth <= 5) {
 				length = list.length;
 			} else {

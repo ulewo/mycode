@@ -71,8 +71,9 @@ function loadTalk() {
 function TalkItem(data) {
 	this.item = $("<div class='talkitem'><div>");
 	$(
-			"<div class='itemicon'><img src='upload/" + data.userIcon
-					+ "' width='37'></div>").appendTo(this.item);
+			"<div class='itemicon'><img src='" + myParam.realPath + "upload/"
+					+ data.userIcon + "' width='37'></div>")
+			.appendTo(this.item);
 	var talkcon = $("<div class='itemcon'></div>").appendTo(this.item);
 	$("<span class='item_user'><a href=''>" + data.userName + "</a></span>")
 			.appendTo(talkcon);
