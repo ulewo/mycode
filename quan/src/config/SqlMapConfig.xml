@@ -22,5 +22,6 @@
    <sqlMap resource="com/lhl/entity/BlogItem.xml" />
    <sqlMap resource="com/lhl/entity/BlogReply.xml" />
    <sqlMap resource="com/lhl/entity/Notice.xml" />
+   <sqlMap resource="com/lhl/entity/Talk.xml" />
 </sqlMapConfig>
 

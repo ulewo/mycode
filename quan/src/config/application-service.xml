@@ -96,7 +96,10 @@
 	     <bean name="noticeService" class="com.lhl.quan.service.impl.NoticeServiceImpl">
 	    	 <property name="noticeDao" ref="noticeDao"/>
 	    </bean>
-	    
+	    <!-- 说说 -->
+	      <bean name="talkservice" class="com.lhl.quan.service.impl.TalkServiceImpl">
+	    	 <property name="talkDao" ref="talkDao"/>
+	    </bean>
 	    
 	<bean name="beanFactory" class="com.lhl.util.Springfactory">
     </bean>
@@ -153,4 +156,8 @@
      <bean name="noticeDao" class="com.lhl.quan.dao.NoticeDao">
     	 <property name="sqlMapClient" ref="sqlMapClient"/>
     </bean>
+     <bean name="talkDao" class="com.lhl.quan.dao.TalkDao">
+    	 <property name="sqlMapClient" ref="sqlMapClient"/>
+    </bean>
+     
 </beans>

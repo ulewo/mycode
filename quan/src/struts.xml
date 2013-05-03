@@ -11,6 +11,9 @@
 			<result name="success">index.jsp</result>
 			<result name="error" type="redirect">error/error.jsp</result>
 		</action>
+		<action name="addTalk" class="talk" method="addTalk"></action>
+		<action name="queryLatstTalk" class="talk" method="queryLatstTalk"></action>
+		<action name="queryTalk" class="talk" method="queryTalk"></action>
 	</package>
 	
 	<!-- 广场 -->
@@ -245,6 +248,8 @@
 			<result name="error" type="redirect">../error/error.jsp</result>
 		</action>
 		
+		<!-- 吐槽 -->
+		<action name="queryUserTalk" class="talk" method="queryUserTalk"></action>
 	</package>
 	
 	<package name="group" namespace="/group" extends="struts-default">
