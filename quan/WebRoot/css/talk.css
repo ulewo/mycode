@@ -1,0 +1,21 @@
+@IMPORT url("public.css");
+.talk{margin-top:10px;}
+.talkarea{float:left;width:218px;border:1px solid #64C5E8;}
+.talkarea textarea{width:214px;height:40px;outline:none;resize:none;margin:0px;border:none;}
+.talkbtn{float:left;display:inline-block;}
+.talkbtn a{display:inline-block;background:#38A3DB;color:white;width:40px;height:31px;padding-top:15px;text-align:center;}
+.talkbtn a:hover{color:white;}
+#talkload{display:none;margin:10px;}
+.talkitem{margin-top:10px;}
+.itemicon{width:37px;float:left;border:1px solid #9A9A9A;}
+#talkcontent{color:#A9A9A9}
+.main .itemcon{float:left;margin-left:10px;width:210px;font-size:12px;}
+.item_user{color:#6CABE1}
+.item_user a{color:#6CABE1;text-decoration:underline;font-size:12px;}
+.main .item_content{color:#666;line-height:20px;}
+.item_time{font-size:11px;display:block;margin-top:5px;color:#9A9A9A;}
+.item_time a{color:#6CABE1}
+.item_time a:hover{color:#6CABE1}
+.moretalk{margin-top:10px;text-align:right;}
+.main .moretalk a{color:#3E62A6;text-decoration:underline;font-size:12px;}
+.main .moretalk a:hover{color:#3E62A6}

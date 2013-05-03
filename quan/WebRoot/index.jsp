@@ -9,9 +9,13 @@
 <meta name="description" content="有乐窝 大型服务社区，让你的生活更精彩 学习经验交流，网络文摘分享 ，游戏娱乐 ......">
 <meta name="keywords" content="小窝窝 大世界 小智慧 大财富 — 有乐窝">
 <script type="text/javascript" src="js/jquery.min.js"></script>
+<!-- <script type="text/javascript" src="js/index.js"></script> -->
+<script type="text/javascript" src="js/util.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="js/talk.js"></script>
 <link rel="stylesheet" type="text/css" href="css/index.css">
 <link rel="stylesheet" type="text/css" href="css/index_new.css">
+<link rel="stylesheet" type="text/css" href="css/talk.css">
 <script type="text/javascript">
 	function createGroup(){
 		var user = "${user}";
@@ -58,6 +62,15 @@
   		</div>
   		<div class="right">
   			<div class="create_wo"><a href="javascript:createWoWo()">创建我的窝窝</a></div>
+  			<div class="talk">
+	  			<div>
+	  				<div class="talkarea"><textarea id="talkcontent">今天你吐槽了吗？</textarea></div>
+	  				<div class="talkbtn"><a href="javascript:void(0)" id="talkBtn">吐槽</a><img src="images/load.gif" id="talkload"></div>
+	  				<div class="clear"></div>
+	  			</div>
+	  			<div id="talklist"></div>
+	  			<div class='moretalk'><a href='moretalk.jsp'>看看大家都在吐槽什么&gt;&gt;</a></div>
+  			</div>
   			<div class="titinfo">每日图文</div>
   			<div>
   				<c:forEach var="article" items="${imgArticle}">

@@ -11,12 +11,14 @@
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
 	<link rel="stylesheet" type="text/css" href="../css/user.userinfo.css">
+	<link rel="stylesheet" type="text/css" href="../css/moretalk.css">
 	<link id="artDialog-skin" href="../dialog/skins/default.css" rel="stylesheet" />
+		<script type="text/javascript" src="../js/jquery.min.js"></script>
 	<script type="text/javascript" src="../js/user.userinfo.js"></script>
 	<script type="text/javascript" src="../js/util.js"></script>
-	<script type="text/javascript" src="../js/jquery.min.js"></script>
 	<script src="../dialog/jquery.artDialog.min.js?skin=default"></script>
 	<script src="../dialog/plugins/iframeTools.js"></script>
+	<script type="text/javascript" src="../js/talk.js"></script>
 	<style type="text/css">
 	#sel_left1 a{background:url(../images/bg.gif) 0px -85px;}
 	#sel_left1 a:hover{text-decoration:none;}
@@ -29,7 +31,27 @@
 	  	<jsp:include page="left.jsp"></jsp:include>
 	  </div>
 	  <div class="right">
-		  	<div class="baseinfoCon">
+		  	<c:if test="${user.userId==param.userId}">
+	  		<div class="u_talk">
+	  			<div class="u_talk_tit">
+	  				<span class='u_talk_titname'>今天你吐槽了吗？</span>
+	  				<span class='u_talk_wordcount'>最多可以输入250字符</span>
+	  				<div class="clear"></div>
+	  			</div>
+	  			<div class="u_talk_textarea"><textarea></textarea></div>
+	  			<div class="u_talk_sub">
+	  				<div class="talkop">
+	  					<a href="javascript:void(0)">图片</a>
+	  				</div>
+	  				<div class="u_talk_subtn">
+	  					<a href="javascript:void(0)">发&nbsp;&nbsp;布</a>
+	  				</div>
+	  				<div class="clear"></div>
+	  			</div>
+	  		</div>
+		  	</c:if>
+		  	<c:if test="${user.userId!=param.userId}">
+		  		<div class="baseinfoCon">
 			  	<span class="base_tit">加入时间：</span><span class="base_info">${userVo.registerTime}</span><br>
 			  	<span class="base_tit">最近登录：</span><span class="base_info">${userVo.previsitTime}</span><br>
 			  	<span class="base_tit">性别：</span><span class="base_info">
@@ -53,6 +75,7 @@
 			  		</span><br>
 			  	<span class="base_tit">积分：</span><span class="base_info">${userVo.mark}</span><br>
 		  	</div>
+		  	</c:if>
 		  	<div class="topblog">
 		  		<div class="topblog_titcon"><span class="topblog_tit">最新博文</span><span class="topblog_link"><a href="blog.jspx?userId=${userId}" target="_blank">进入博客</a></span></div>
 		  		<c:forEach var="blog" items="${blogList}">
@@ -64,6 +87,7 @@
 		  			<span>尚无发表博文</span>
 		  		</c:if>
 		  	</div>
+		  	<div id="talklist"></div>
 		  	<div class="topblog">
 		  		<div class="topblog_titcon"><span class="topblog_tit">最新留言</span><span class="topblog_link"><a href="message.jsp?userId=${userId}" target="_blank">进入留言板</a></span></div>
 		  		<div class="messagelist"  id="messagelist">
@@ -108,6 +132,10 @@
 		</div>
 	<div style="clear:left;"></div>
   </div>
+  <script type="text/javascript">
+  	var gloableParam={};
+  	gloableParam.userId = "${param.userId}";
+  </script>
    <jsp:include page="../common/foot.jsp"/>
   </body>
 </html>

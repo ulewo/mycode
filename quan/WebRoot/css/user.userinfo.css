@@ -82,3 +82,17 @@
 .blogshade{left:-10px;height:130px;width:700px;}
 
 .subArea{position:relative;}
+
+/******************************ÍÂ²Û**********************************/
+.u_talk_tit span{display:inline-block;color:#888888;font-size:14px;}
+.u_talk_titname{float:left;}
+.u_talk_wordcount{float:right;}
+.u_talk_textarea{margin-top:5px;}
+.u_talk_textarea textarea{outline:none;resize:none;width:99%;height:60px;border:2px solid #64C5E8;}
+.u_talk_sub{margin-top:5px;}
+.talkop{float:left;display:inline-block;}
+.talkop a{display:inline-block;background:url("../images/img.gif") 2px center no-repeat;padding:2px;padding-left:20px;text-decoration:none;color:#666;border:1px solid #FFFFFF}
+.talkop a:hover{border:1px solid #64C5E8}
+.u_talk_subtn{float:right;display:inline-block;margin-right:2px;}
+.u_talk_subtn a{background:#38A3DB;color:white;height:20px;width:80px;display:block;text-decoration:none;font-size:16px;text-align:center;padding-top:5px;}
+.u_talk_subtn a:hover{color:white;background:#64C5E8}
