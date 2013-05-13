@@ -11,7 +11,6 @@
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
 	<link rel="stylesheet" type="text/css" href="../css/user.userinfo.css">
-	<link rel="stylesheet" type="text/css" href="../css/moretalk.css">
 	<link id="artDialog-skin" href="../dialog/skins/default.css" rel="stylesheet" />
 		<script type="text/javascript" src="../js/jquery.min.js"></script>
 	<script type="text/javascript" src="../js/user.userinfo.js"></script>
@@ -19,6 +18,8 @@
 	<script src="../dialog/jquery.artDialog.min.js?skin=default"></script>
 	<script src="../dialog/plugins/iframeTools.js"></script>
 	<script type="text/javascript" src="../js/talk.js"></script>
+	<script type="text/javascript" src="../js/user.talk.js"></script>
+	
 	<style type="text/css">
 	#sel_left1 a{background:url(../images/bg.gif) 0px -85px;}
 	#sel_left1 a:hover{text-decoration:none;}
@@ -38,13 +39,14 @@
 	  				<span class='u_talk_wordcount'>最多可以输入250字符</span>
 	  				<div class="clear"></div>
 	  			</div>
-	  			<div class="u_talk_textarea"><textarea></textarea></div>
+	  			<div class="u_talk_textarea"><textarea id="talkcontent"></textarea></div>
 	  			<div class="u_talk_sub">
 	  				<div class="talkop">
 	  					<a href="javascript:void(0)">图片</a>
 	  				</div>
 	  				<div class="u_talk_subtn">
-	  					<a href="javascript:void(0)">发&nbsp;&nbsp;布</a>
+	  					<a href="javascript:void(0)" id="talkBtn">发&nbsp;&nbsp;布</a>
+	  					<img src="../images/load.gif" id="talkload" style="display: none;">
 	  				</div>
 	  				<div class="clear"></div>
 	  			</div>

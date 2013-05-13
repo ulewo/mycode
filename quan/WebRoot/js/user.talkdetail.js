@@ -2,29 +2,20 @@ $(function() {
 	$("#talkBtn").click(function() {
 		addTalk();
 	});
-	loadUserTalk();
+	loadReTalk();
 });
 
-function loadUserTalk(page) {
+function loadReTalk(page) {
 	$.ajax({
 		async : true,
 		cache : true,
 		type : 'GET',
 		dataType : "json",
-		url : 'queryUserTalk.jspx?userId=' + gloableParam.userId,// 请求的action路径
+		url : 'queryReTalk.jspx?talkId=' + GlobalParam.talkId,// 请求的action路径
 		success : function(data) {
 			var list = data.list;
-			if (list == "") {
-				return;
-			}
-			var length = 0;
-			if (list.length <= 5) {
-				length = list.length;
-			} else {
-				length = 5;
-			}
-			for ( var i = 0; i < length; i++) {
-				new TalkItem(list[i]).item.appendTo($("#talklist"));
+			for ( var i = 0, length = list.length; i < length; i++) {
+				new ReTalkItem(list[i]).item.appendTo($("#talklist"));
 			}
 		}
 	});
@@ -36,7 +27,7 @@ function addTalk() {
 		return;
 	}
 	var content = $("#talkcontent").val();
-	if (content.trim() == "" || content.trim() == "今天你吐槽了吗？") {
+	if (content.trim() == "") {
 		alert("吐槽内容不能为空");
 		return;
 	}
@@ -53,23 +44,23 @@ function addTalk() {
 		type : 'POST',
 		dataType : "json",
 		data : {
+			"reTalkId" : GlobalParam.talkId,
 			"content" : content,
+			"atUserId" : $("#hide_atuserId").val(),
+			"atUserName" : $("#hide_atuserName").val(),
 			"time" : new Date()
 		},
-		url : 'addTalk.jspx',// 请求的action路径
+		url : 'addReTalk.jspx',// 请求的action路径
 		success : function(data) {
 			$("#talkBtn").show();
 			$("#talkload").hide();
 			if (data.msg == "success") {
 				$("#talkcontent").val("");
-				$("#talkcontent").css({
-					"color" : "#A9A9A9"
-				});
 				if ($("#talklist").children().length > 0) {
 					$("#talklist").children().eq(0).before(
-							new TalkItem(data.talk).item);
+							new ReTalkItem(data.retalk).item);
 				} else {
-					new TalkItem(data.talk).item.appendTo($("#talklist"));
+					new ReTalkItem(data.retalk).item.appendTo($("#talklist"));
 				}
 			} else if (data.msg == "nologin") {
 				alert("请先登录");
@@ -78,7 +69,6 @@ function addTalk() {
 			} else {
 				alert("服务器异常，请稍候再试");
 			}
-
 		}
 	});
 }

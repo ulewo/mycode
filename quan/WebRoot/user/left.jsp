@@ -26,7 +26,7 @@
 			<div class="clear"></div>
 		</c:if>
 		<c:if test="${user==null||user.userId!=uid}">
-			<a href="message.jsp?userId=${userId}" class="sendMsg">
+			<a href="message.jsp?userId=${uid}" class="sendMsg">
 				发送留言
 			</a>
 		</c:if>

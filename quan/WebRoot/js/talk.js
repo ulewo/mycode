@@ -1,86 +1,84 @@
-/**
- * 添加吐槽
- */
-function addTalk() {
-	var content = $("#talkcontent").val();
-	if (content.trim() == "" || content.trim() == "今天你吐槽了吗？") {
-		alert("吐槽内容不能为空");
-		return;
-	}
-
-	if (content.trim().length > 250) {
-		alert("吐槽内容不能超过250字符");
-		return;
-	}
-	$("#talkBtn").hide();
-	$("#talkload").show();
-	$.ajax({
-		async : true,
-		cache : false,
-		type : 'POST',
-		dataType : "json",
-		data : {
-			"content" : content,
-			"time" : new Date()
-		},
-		url : 'addTalk.jspx',// 请求的action路径
-		success : function(data) {
-			$("#talkBtn").show();
-			$("#talkload").hide();
-			if (data.msg == "success") {
-				$("#talkcontent").val("今天你吐槽了吗？");
-				$("#talkcontent").css({
-					"color" : "#A9A9A9"
-				});
-				if ($("#talklist").children().length > 0) {
-					$("#talklist").children().eq(0).before(
-							new TalkItem(data.talk).item);
-				} else {
-					new TalkItem(data).item.appendTo($("#talklist"));
-				}
-			} else if (data.msg == "nologin") {
-				alert("请先登录");
-			} else if (data.msg == "contentError") {
-				alert("内容不能为空");
-			} else {
-				alert("服务器异常，请稍候再试");
-			}
-
-		}
-	});
-}
-
-function loadTalk() {
-	$.ajax({
-		async : true,
-		cache : true,
-		type : 'GET',
-		dataType : "json",
-		url : 'queryLatstTalk.jspx',// 请求的action路径
-		success : function(data) {
-			$("#talklist").empty();
-			var list = data.list;
-			for ( var i = 0, length = list.length; i < length; i++) {
-				new TalkItem(list[i]).item.appendTo($("#talklist"));
-			}
-		}
-	});
-	setInterval("loadTalk()", 1000 * 60);
-}
-
 function TalkItem(data) {
-	this.item = $("<div class='talkitem'><div>");
+	this.item = $("<div class='talkitem'></div>");
 	$(
 			"<div class='itemicon'><img src='" + myParam.realPath + "upload/"
 					+ data.userIcon + "' width='37'></div>")
 			.appendTo(this.item);
 	var talkcon = $("<div class='itemcon'></div>").appendTo(this.item);
-	$("<span class='item_user'><a href=''>" + data.userName + "</a></span>")
-			.appendTo(talkcon);
+	$(
+			"<span class='item_user'><a href='" + myParam.realPath
+					+ "user/userInfo.jspx?userId=" + data.userId + "'>"
+					+ data.userName + "</a></span>").appendTo(talkcon);
 	$("<span class='item_content'>：" + data.content + "</span>").appendTo(
 			talkcon);
 	$(
-			"<span class='item_time'>" + data.createTime + "<a href=''>("
-					+ data.reCount + "评)</a></span>").appendTo(talkcon);
+			"<span class='item_time'>" + data.createTime + "<a href='"
+					+ myParam.realPath + "user/talkDetail.jspx?userId="
+					+ data.userId + "&talkId=" + data.id + "'>(" + data.reCount
+					+ "评)</a></span>").appendTo(talkcon);
 	$("<div class='clear'></div>").appendTo(this.item);
+}
+
+function ReTalkItem(data) {
+	this.item = $("<div class='talkitem'></div>");
+	$(
+			"<div class='itemicon'><img src='" + myParam.realPath + "upload/"
+					+ data.userIcon + "' width='37'></div>")
+			.appendTo(this.item);
+	var talkcon = $("<div class='itemcon'></div>").appendTo(this.item);
+	$(
+			"<span class='item_user'><a href='" + myParam.realPath
+					+ "user/userInfo.jspx?userId=" + data.userId + "'>"
+					+ data.userName + "</a></span>").appendTo(talkcon);
+	if (data.atUserId != "" && data.atUserId != null) {
+		$(
+				"<span style='color:#008000'>&nbsp;回复&nbsp;</span><span class='item_user'><a href='"
+						+ myParam.realPath
+						+ "user/userInfo.jspx?userId="
+						+ data.atUserId
+						+ "'>"
+						+ data.atUserName
+						+ "</a></span>").appendTo(talkcon);
+	}
+
+	$("<span class='item_content'>：" + data.content + "</span>").appendTo(
+			talkcon);
+	var item_time = $("<span class='item_time'></div>").appendTo(talkcon);
+	$("<span class='item_time_t'>" + data.createTime + "</span>").appendTo(
+			item_time);
+	$("<a href='javascript:void(0)'>回复</a>").bind("click", {
+		atUserId : data.userId,
+		atUserName : data.userName
+	}, this.reTalk).appendTo(
+			$("<span class='item_time_r'></span>").appendTo(item_time));
+	$("<div class='clear'></div>").appendTo(this.item);
+}
+ReTalkItem.prototype = {
+	reTalk : function(event) {
+		var data = event.data;
+		var atUserId = data.atUserId;
+		var atUserName = data.atUserName;
+		if ($("#atpanel")[0] != null) {
+			$("#u_atpanel_userid").text(atUserName);
+			$("#atpanel").css({
+				"display" : "block"
+			});
+		} else {
+			var atpanel = $("<div id='atpanel'></div>");
+			$("#u_talk_textarea_con").before(atpanel);
+			$("<span id='u_atpanel_userid'>" + atUserName + "</span>")
+					.appendTo(atpanel);
+			$(
+					"<span id='u_atpanel_close'><img src='../images/delete.png'></span>")
+					.bind("click", this.deleteAtPanel).appendTo(atpanel);
+		}
+		$("#hide_atuserId").val(atUserId);
+		$("#hide_atuserName").val(atUserName);
+	},
+	deleteAtPanel : function() {
+		if ($("#atpanel")[0] != null) {
+			$("#atpanel").hide();
+		}
+	}
+
 }
