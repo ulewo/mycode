@@ -115,7 +115,6 @@ div.ad_quto2{filter:alpha(opacity=70); opacity:0.7; background-color:none;}
 -moz-border-radius: 4px;
 -webkit-border-radius: 4px}
 .comment_form_at span{display:inline-block;float:right;cursor:pointer;padding-top:5px;}
-.comment_form_textarea{margin-top:5px;}
 .comment_form_textarea textarea{width:500px;height:80px;}
 .comment_form_panel{height:30px;margin-top:2px;}
 .comment_checkcode,.comment_checkcode_img,.comment_checkcode_link{float:left;width:70px;}
@@ -123,7 +122,7 @@ div.ad_quto2{filter:alpha(opacity=70); opacity:0.7; background-color:none;}
 .comment_checkcode input{width:60px;}
 .comment_checkcode_img{padding-top:2px;}
 .comment_checkcode_link{padding-top:9px;}
-.comment_checkcode_rebtn{float:right;margin-right:4px;}
+.comment_checkcode_rebtn{float:right;margin-right:8px;}
 .comment_checkcode_rebtn a{display:inline-block;background:#4682B4;color:#FFFFFF;padding:2px 8px;text-decoration:none;}
 /*修改的css*/
 .fastRe{float:left;margin-left:10px;margin-top:0px}
