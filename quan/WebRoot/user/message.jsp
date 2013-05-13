@@ -31,8 +31,10 @@
 	  </div>
 	  <div class="right">
 		  	<div class="topblog">
-		  		
-		  		<div class="topblog_titcon"><span class="topblog_tit">留言板</span></div>
+		  		<div class="navPath">
+  					<a href="userInfo.jspx?userId=${param.userId}">空间</a>&nbsp;&gt;&gt;&nbsp;吐槽
+  				</div>
+		  		<div class="topblog_titcon" style="height:20px;"><span class="topblog_tit">留言板</span></div>
 		  		<div class="messagelist"  id="messagelist">
 		  		</div>
 		  		<!-- 
