@@ -70,19 +70,18 @@ public class IndexAction extends BaseAction {
 	public String index() {
 
 		try {
-			commendArticle = articleService.queryComendArticle("index", "", 0, 10);
+			commendArticle = articleService.queryComendArticle("index", "", 0,
+					10);
 			imgArticle = articleService.queryImageArticle(0, 4);
-			list = articleService.queryLatestArticle(0, 15);
+			list = articleService.queryLatestArticle(0, 20);
 			activeUserList = userService.queryActiveUsers(0, 15);
 			commendGroupList = groupService.queryGroupsOderArticleCount(0, 5);
-			blogList = blogArticleService.indexLatestBlog(0, 15);
-		}
-		catch (BaseException e) {
+			blogList = blogArticleService.indexLatestBlog(0, 20);
+		} catch (BaseException e) {
 			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
 			e.printStackTrace();
 			return ERROR;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			errMsg = ErrMsgConfig.getErrMsg(10000);
 			e.printStackTrace();
 			return ERROR;
@@ -93,7 +92,8 @@ public class IndexAction extends BaseAction {
 	public String square() {
 
 		try {
-			int countNumber = adminArticleService.queryArticleCount(keyWord, Constant.ISVALIDY);
+			int countNumber = adminArticleService.queryArticleCount(keyWord,
+					Constant.ISVALIDY);
 			Pagination.setPageSize(Constant.pageSize50);
 			int pageSize = Pagination.getPageSize();
 			pageTotal = Pagination.getPageTotal(countNumber);
@@ -104,10 +104,10 @@ public class IndexAction extends BaseAction {
 				page = 1;
 			}
 			int noStart = (page - 1) * pageSize;
-			List<Article> squareList = adminArticleService.queryList(keyWord, Constant.ISVALIDY, noStart, pageSize);
+			List<Article> squareList = adminArticleService.queryList(keyWord,
+					Constant.ISVALIDY, noStart, pageSize);
 			set2Square(squareList);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			errMsg = ErrMsgConfig.getErrMsg(10000);
 			e.printStackTrace();
 			return ERROR;
@@ -155,9 +155,9 @@ public class IndexAction extends BaseAction {
 				page = 1;
 			}
 			int noStart = (page - 1) * pageSize;
-			groupList = groupService.queryGroupsOderArticleCount(noStart, pageSize);
-		}
-		catch (Exception e) {
+			groupList = groupService.queryGroupsOderArticleCount(noStart,
+					pageSize);
+		} catch (Exception e) {
 			errMsg = ErrMsgConfig.getErrMsg(10000);
 			e.printStackTrace();
 			return ERROR;
@@ -168,12 +168,13 @@ public class IndexAction extends BaseAction {
 	public String search() {
 
 		try {
-			//groupList = groupService.searchGroups(keyWord, 0, 10);
+			// groupList = groupService.searchGroups(keyWord, 0, 10);
 			if (Tools.isEmpty(keyWord)) {
 				return SUCCESS;
 			}
 			keyWord = URLDecoder.decode(keyWord, "utf-8");
-			countNumber = articleService.searchTopicCount(keyWord, "", Constant.ISVALIDY);
+			countNumber = articleService.searchTopicCount(keyWord, "",
+					Constant.ISVALIDY);
 			Pagination.setPageSize(10);
 			int pageSize = Pagination.getPageSize();
 			pageTotal = Pagination.getPageTotal(countNumber);
@@ -184,14 +185,13 @@ public class IndexAction extends BaseAction {
 				page = 1;
 			}
 			int noStart = (page - 1) * pageSize;
-			articleList = articleService.searchTopic(keyWord, "", Constant.ISVALIDY, noStart, pageSize);
-		}
-		catch (BaseException e) {
+			articleList = articleService.searchTopic(keyWord, "",
+					Constant.ISVALIDY, noStart, pageSize);
+		} catch (BaseException e) {
 			errMsg = ErrMsgConfig.getErrMsg(e.getCode());
 			e.printStackTrace();
 			return ERROR;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			errMsg = ErrMsgConfig.getErrMsg(10000);
 			e.printStackTrace();
 			return ERROR;
