@@ -25,6 +25,8 @@ public class TalkAction extends BaseAction {
 
 	private int page;
 	private String userId;
+	private Talk talk;
+	private int talkId;
 
 	public void addTalk() {
 		String msg = "success";
@@ -98,7 +100,7 @@ public class TalkAction extends BaseAction {
 
 	public void queryUserTalk() {
 		int countNumber = talkservice.queryTalkCountByUserId(userId);
-		Pagination.setPageSize(Constant.pageSize10);
+		Pagination.setPageSize(5);
 		int pageSize = Pagination.getPageSize();
 		int pageTotal = Pagination.getPageTotal(countNumber);
 		if (page > pageTotal) {
@@ -117,6 +119,19 @@ public class TalkAction extends BaseAction {
 		getOut().print(String.valueOf(obj));
 	}
 
+	public String talkDetail() {
+		try {
+			talk = talkservice.queryDetail(talkId);
+			if (null == talk) {
+				return ERROR;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ERROR;
+		}
+		return SUCCESS;
+	}
+
 	public void setTalkservice(TalkService talkservice) {
 		this.talkservice = talkservice;
 	}
@@ -128,4 +143,13 @@ public class TalkAction extends BaseAction {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
+
+	public Talk getTalk() {
+		return talk;
+	}
+
+	public void setTalkId(int talkId) {
+		this.talkId = talkId;
+	}
+
 }

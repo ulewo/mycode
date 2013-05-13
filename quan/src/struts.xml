@@ -250,6 +250,17 @@
 		
 		<!-- 吐槽 -->
 		<action name="queryUserTalk" class="talk" method="queryUserTalk"></action>
+		
+		<!-- 详情 -->
+		<action name="talkDetail" class="talk" method="talkDetail">
+			<result name="success">talkdetail.jsp</result>
+			<result name="error" type="redirect">../error/error.jsp</result>
+		</action>
+		
+		<!-- 吐槽回复列表 -->
+		<action name="queryReTalk" class="retalk" method="queryReTalk"></action>
+		
+		<action name="addReTalk" class="retalk" method="addReTalk"></action>
 	</package>
 	
 	<package name="group" namespace="/group" extends="struts-default">

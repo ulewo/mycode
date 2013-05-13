@@ -32,4 +32,6 @@ public interface TalkService {
 			String userId);
 
 	public int queryTalkCountByUserId(String userId);
+
+	public Talk queryDetail(int talkId);
 }

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="retalk">
+	<cacheModel id="user-cache" type="LRU" readOnly="true"
+		serialize="false">
+		<flushInterval hours="24" />
+		<property value="500" name="size" />
+	</cacheModel>
+	
+	<typeAlias alias="retalk" type="com.lhl.entity.ReTalk" />
+	
+	<!-- 添加留言 -->
+	<insert id="addretalk" parameterClass="retalk">
+		<selectKey keyProperty="id" resultClass="java.lang.Integer" type="post">
+      		SELECT LAST_INSERT_ID()
+    	 </selectKey>
+        <![CDATA[
+           insert into retalk(talkid,content,createtime,userid,username,usericon,atuserid,atusername) 
+		values(#talkId#,#content#,#createTime#,#userId#,#userName#,#userIcon#,#atUserId#,#atUserName#)
+        ]]>
+	</insert>
+	
+	<!-- 查询留言 -->
+	<select id="queryReTalk"  resultClass="retalk" parameterClass="java.util.Map">
+	    select * from retalk  where talkid = #talkId# order by createtime desc limit #offset#,#total#
+	</select>
+	
+	<!-- 查询留言总条数 -->
+	<select id="queryCount"  resultClass="java.lang.Integer">
+	    select count(id) from retalk where talkid=#talkId#;
+	</select>
+	
+	<!-- 删除回复 -->
+	<delete  id="delteReTalk" >
+		delete from retalk where retalkid =#retalkId#	    
+	</delete>
+	
+</sqlMap>

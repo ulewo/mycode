@@ -23,12 +23,17 @@
 	
 	<!-- 查询留言 -->
 	<select id="queryLatestTalk"  resultClass="talk" parameterClass="java.util.Map">
-	    select * from talk order by createtime desc limit #offset#,#total#
+	    select t.*,(select count(r.id) from retalk r where r.talkid=t.id) recount from talk t order by createtime desc limit #offset#,#total#
 	</select>
 	
 	<!-- 查询留言总条数 -->
 	<select id="queryCount"  resultClass="java.lang.Integer">
 	    select count(id) from talk;
+	</select>
+	
+	<!-- 查询详情 -->
+	<select id="queryDetail"  resultClass="talk">
+	  select t.*,(select count(r.id) from retalk r where r.talkid=t.id) recount from talk t where id = #talkId#
 	</select>
 	
 	<!-- 根据userId查询 总条数-->
@@ -38,6 +43,6 @@
 	
 	<!-- 根据userId查询 说说-->
 	<select id="queryLatestTalkByUserId"  resultClass="talk" parameterClass="java.util.Map">
-	    select * from talk where userid = #userId# order by createtime desc limit #offset#,#total#
+	    select t.*,(select count(r.id) from retalk r where r.talkid=t.id) recount from talk t where userid = #userId# order by createtime desc limit #offset#,#total#
 	</select>
 </sqlMap>

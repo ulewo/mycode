@@ -57,4 +57,9 @@ public class TalkServiceImpl implements TalkService {
 		return talkDao.queryTalkCountByUserId(userId);
 	}
 
+	public Talk queryDetail(int talkId) {
+		Talk talk = talkDao.queryDetail(talkId);
+		talk.setCreateTime(Tools.friendly_time(talk.getCreateTime()));
+		return talk;
+	}
 }

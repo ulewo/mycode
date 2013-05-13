@@ -96,11 +96,15 @@
 	     <bean name="noticeService" class="com.lhl.quan.service.impl.NoticeServiceImpl">
 	    	 <property name="noticeDao" ref="noticeDao"/>
 	    </bean>
+	    
 	    <!-- 说说 -->
-	      <bean name="talkservice" class="com.lhl.quan.service.impl.TalkServiceImpl">
+	    <bean name="talkservice" class="com.lhl.quan.service.impl.TalkServiceImpl">
 	    	 <property name="talkDao" ref="talkDao"/>
 	    </bean>
-	    
+	     <!-- 说说 评论-->
+	      <bean name="reTalkService" class="com.lhl.quan.service.impl.ReTalkServiceImpl">
+	    	 <property name="reTalkDao" ref="reTalkDao"/>
+	    </bean>
 	<bean name="beanFactory" class="com.lhl.util.Springfactory">
     </bean>
      <!-- service 层 end--> 
@@ -157,6 +161,9 @@
     	 <property name="sqlMapClient" ref="sqlMapClient"/>
     </bean>
      <bean name="talkDao" class="com.lhl.quan.dao.TalkDao">
+    	 <property name="sqlMapClient" ref="sqlMapClient"/>
+    </bean>
+     <bean name="reTalkDao" class="com.lhl.quan.dao.ReTalkDao">
     	 <property name="sqlMapClient" ref="sqlMapClient"/>
     </bean>
      

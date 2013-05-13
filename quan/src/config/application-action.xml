@@ -115,5 +115,8 @@
 	<bean id="talk" class="com.lhl.quan.action.TalkAction" scope="prototype">
 	    <property name="talkservice" ref="talkservice"/>
 	</bean>
-	
+	<!-- 说说回复 -->
+	<bean id="retalk" class="com.lhl.quan.action.ReTalkAction" scope="prototype">
+	    <property name="reTalkService" ref="reTalkService"/>
+	</bean>
 </beans>

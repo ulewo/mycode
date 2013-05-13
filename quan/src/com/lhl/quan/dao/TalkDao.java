@@ -43,6 +43,11 @@ public class TalkDao extends SqlMapClientDaoSupport {
 				"talk.queryCount");
 	}
 
+	public Talk queryDetail(int talkId) {
+		return (Talk) this.getSqlMapClientTemplate().queryForObject(
+				"talk.queryDetail", talkId);
+	}
+
 	public List<Talk> queryLatestTalkByUserId(int offset, int total,
 			String userId) {
 		Map<String, Object> parmMap = new HashMap<String, Object>();
