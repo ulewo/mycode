@@ -17,6 +17,7 @@ import java.util.List;
 import com.lhl.admin.dao.AdminArticleDao;
 import com.lhl.admin.service.AdminArticleService;
 import com.lhl.entity.Article;
+import com.lhl.util.Tools;
 
 /**
  * @Title:
@@ -40,9 +41,14 @@ public class AdminArticleServiceImpl implements AdminArticleService {
 	}
 
 	@Override
-	public List<Article> queryList(String keyWord, String isValid, int offset, int total) {
+	public List<Article> queryList(String keyWord, String isValid, int offset,
+			int total) {
 
-		List<Article> list = adminArticleDao.queryArticle(keyWord, isValid, offset, total);
+		List<Article> list = adminArticleDao.queryArticle(keyWord, isValid,
+				offset, total);
+		for (Article article : list) {
+			article.setPostTime(Tools.friendly_time(article.getPostTime()));
+		}
 		return list;
 	}
 

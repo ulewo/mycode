@@ -20,7 +20,7 @@ public class Constant {
 	public static final String ALL_PERA = "A"; // A:登陆用户可以发帖
 
 	public static int pageSize20 = 20; // 查询页数
-
+	public static int pageSize25 = 25; // 查询页数
 	public static int pageSize15 = 15; // 查询页数
 
 	public static int pageSize30 = 30; // 查询页数

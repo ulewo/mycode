@@ -86,7 +86,7 @@ public class BlogArticleAction extends BaseAction {
 			}
 			int countNumber = blogArticleService.queryCountByUserIdOrItem(
 					userId, itemId);
-			Pagination.setPageSize(Constant.pageSize50);
+			Pagination.setPageSize(Constant.pageSize25);
 			int pageSize = Pagination.getPageSize();
 			pageTotal = Pagination.getPageTotal(countNumber);
 			if (page > pageTotal) {
