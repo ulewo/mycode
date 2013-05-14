@@ -3,6 +3,13 @@ $(function() {
 		addTalk();
 	});
 	loadUserTalk();
+
+	$(document).click(function() {
+		$('#talk_img_con').hide();
+	});
+	$("#talk_img_con").click(function(event) {
+		event.stopPropagation();
+	});
 });
 
 function loadUserTalk(page) {
@@ -54,6 +61,7 @@ function addTalk() {
 		dataType : "json",
 		data : {
 			"content" : content,
+			"imgurl" : $("#imgUrl").val(),
 			"time" : new Date()
 		},
 		url : 'addTalk.jspx',// 请求的action路径
@@ -81,4 +89,26 @@ function addTalk() {
 
 		}
 	});
+}
+
+/** *********吐槽图片上传************** */
+function showUploader() {
+	$("#talk_img_con").show();
+}
+function closeUploader() {
+	$("#talk_img_con").hide();
+}
+/** 上传完成* */
+function showImg(imgurl) {
+	$("#imgUrl").val(imgurl);
+	$("#talk_img_fram").hide();
+	$("#talk_img_showimg>img").attr("src", "../upload/" + imgurl);
+	$("#talk_img_showimg").show();
+}
+
+function deleteImg() {
+	$("#imgUrl").val("");
+	$("#talk_img_fram").show();
+	$("#talk_img_showimg>img").attr("src", "");
+	$("#talk_img_showimg").hide();
 }

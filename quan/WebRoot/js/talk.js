@@ -11,11 +11,18 @@ function TalkItem(data) {
 					+ data.userName + "</a></span>").appendTo(talkcon);
 	$("<span class='item_content'>：" + data.content + "</span>").appendTo(
 			talkcon);
-	$(
+	var span = $(
 			"<span class='item_time'>" + data.createTime + "<a href='"
 					+ myParam.realPath + "user/talkDetail.jspx?userId="
 					+ data.userId + "&talkId=" + data.id + "'>(" + data.reCount
 					+ "评)</a></span>").appendTo(talkcon);
+	if (data.imgurl != "") {
+		$(
+				"<a href='" + myParam.realPath + "user/talkDetail.jspx?userId="
+						+ data.userId + "&talkId=" + data.id + "'><img src='"
+						+ myParam.realPath + "images/img.gif' border=0></a>")
+				.appendTo(span);
+	}
 	$("<div class='clear'></div>").appendTo(this.item);
 }
 

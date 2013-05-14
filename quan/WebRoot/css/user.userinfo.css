@@ -89,7 +89,7 @@
 .u_talk_wordcount{float:right;}
 .u_talk_textarea{margin-top:5px;}
 .u_talk_textarea textarea{outline:none;resize:none;width:99%;height:60px;border:2px solid #64C5E8;}
-.u_talk_sub{margin-top:5px;}
+.u_talk_sub{margin-top:5px;position:relative;}
 .talkop{float:left;display:inline-block;}
 .talkop a{display:inline-block;background:url("../images/img.gif") 2px center no-repeat;padding:2px;padding-left:20px;text-decoration:none;color:#666;border:1px solid #FFFFFF}
 .talkop a:hover{border:1px solid #64C5E8}
@@ -121,3 +121,12 @@
 #u_atpanel_userid{float:left;color:#3E79A2;background:#DDECF7;display:inline-block;padding:3px;border-radius: 4px;cursor:pointer;}
 #u_atpanel_close{float:left;display:inline-block;margin-left:5px;padding-top: 2px;};
 #atpanel{height:30px;}
+
+#talk_img_con{position:absolute;border:1px solid #CCCCCC;width:270px;background:white;display:none;}
+.talk_img_tit{background:#F2F2F2;height:15px;padding:5px;}
+.talk_img_tit_tit{display:block;float:left;text-align:center;}
+.talk_img_tit_close{display:block;float:right;margin-right:5px;}
+.talk_img_fram{margin:5px;}
+#talk_img_showimg{display:none;}
+#talk_img_showimg img{max-width:100px;max-height:50px;}
+.talkimg img{max-width:600px;}
