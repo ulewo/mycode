@@ -27,6 +27,7 @@ public class TalkAction extends BaseAction {
 	private String userId;
 	private Talk talk;
 	private int talkId;
+	private String imgurl;
 
 	public void addTalk() {
 		String msg = "success";
@@ -48,6 +49,7 @@ public class TalkAction extends BaseAction {
 			User sessionUser = (User) sessionObj;
 			Talk talk = new Talk();
 			talk.setContent(content);
+			talk.setImgurl(imgurl);
 			talk.setUserId(sessionUser.getUserId());
 			talk.setUserName(sessionUser.getUserName());
 			talk.setUserIcon(sessionUser.getUserLittleIcon());
@@ -150,6 +152,10 @@ public class TalkAction extends BaseAction {
 
 	public void setTalkId(int talkId) {
 		this.talkId = talkId;
+	}
+
+	public void setImgurl(String imgurl) {
+		this.imgurl = imgurl;
 	}
 
 }

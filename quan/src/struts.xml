@@ -593,6 +593,11 @@
 			<result name="error" type="redirect">imageUpload.jsp</result>
 		</action>
 		
+		<action name="talkImageUpload" class="talkImageUpload" method="imageUpload">
+			<result name="success">talkimgupload.jsp</result>
+			<result name="error" type="redirect">talkimgupload.jsp</result>
+		</action>
+		
 		<action name="userAvatarUpload" class="userAvatarUpload" method="imageUpload">
 			<result name="success">userAvatarUpload.jsp</result>
 			<result name="error" type="redirect">userAvatarUpload.jsp</result>

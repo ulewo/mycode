@@ -94,7 +94,10 @@
 
 	<bean id="imageUpload" class="com.lhl.upload.ImageUploadAction" scope="prototype">
 	</bean>
-
+	
+	<bean id="talkImageUpload" class="com.lhl.upload.TalkImageUploadAction" scope="prototype">
+	</bean>
+	
 	<bean id="userAvatarUpload" class="com.lhl.upload.UserAvatarAction" scope="prototype">
 	</bean>
 	
@@ -108,7 +111,6 @@
 		<property name="blogArticleService" ref="blogArticleService"/>
 		<property name="blogReplyService" ref="blogReplyService"/>
 	</bean>
-	
 	<bean id="appdown" class="com.lhl.quan.action.DownAppAction" scope="prototype">
 	</bean>
 	<!-- 说说 -->
