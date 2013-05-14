@@ -40,15 +40,29 @@
 	  				<div class="clear"></div>
 	  			</div>
 	  			<div class="u_talk_textarea"><textarea id="talkcontent"></textarea></div>
+	  			<input type="hidden" id="imgUrl">
 	  			<div class="u_talk_sub">
 	  				<div class="talkop">
-	  					<a href="javascript:void(0)">图片</a>
+	  					<a href="javascript:showUploader()">图片</a>
 	  				</div>
 	  				<div class="u_talk_subtn">
 	  					<a href="javascript:void(0)" id="talkBtn">发&nbsp;&nbsp;布</a>
 	  					<img src="../images/load.gif" id="talkload" style="display: none;">
 	  				</div>
 	  				<div class="clear"></div>
+	  				<div id="talk_img_con">
+	  					<div class="talk_img_tit">
+	  						<span class='talk_img_tit_tit'>图片上传</span>
+	  						<span class='talk_img_tit_close'><a href="javascript:closeUploader()">关闭</a></span>
+	  					</div>
+	  					<div class="talk_img_fram" id="talk_img_fram">
+	  						<iframe src="../imageUpload/talkimgupload.jsp" width="260" height="30" frameborder="0"></iframe>
+	  					</div>
+	  					<div id="talk_img_showimg">
+	  						<img src=""><br>
+	  						<a href="javascript:deleteImg()">删除</a>
+	  					</div>
+	  				</div>
 	  			</div>
 	  		</div>
 		  	</c:if>

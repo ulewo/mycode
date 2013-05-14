@@ -46,6 +46,11 @@
   				<div class="itemcon">
   					<span class="item_user"><a href="userInfo.jspx?userId=${talk.userId}">${talk.userName}</a></span>
   					<span class="item_content">：${talk.content}</span>
+  					<c:if test="${talk.imgurl!=''}">
+  						<div class="talkimg">
+  							<img src="../upload/${talk.imgurl}">
+  						</div>
+  					</c:if>
   					<div>
   						<span class="detail_item_time">${talk.createTime}</span>
   						<span class="detail_item_recount">评论(${talk.reCount})</span>
@@ -58,9 +63,6 @@
   				<input type="hidden" id="hide_atuserName">
 	  			<div class="u_talk_textarea"><textarea id="talkcontent"></textarea></div>
 	  			<div class="u_talk_sub">
-	  				<div class="talkop">
-	  					<a href="javascript:void(0)">图片</a>
-	  				</div>
 	  				<div class="u_talk_subtn">
 	  					<a href="javascript:void(0)" id="talkBtn">评&nbsp;&nbsp;论</a>
 	  					<img src="../images/load.gif" id="talkload" style="display:none;">
