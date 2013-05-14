@@ -17,12 +17,16 @@ import com.lhl.entity.BlogArticle;
 import com.lhl.entity.BlogReply;
 import com.lhl.entity.Group;
 import com.lhl.entity.ReArticle;
+import com.lhl.entity.ReTalk;
+import com.lhl.entity.Talk;
 import com.lhl.entity.User;
 import com.lhl.quan.service.ArticleService;
 import com.lhl.quan.service.BlogArticleService;
 import com.lhl.quan.service.BlogReplyService;
 import com.lhl.quan.service.GroupService;
 import com.lhl.quan.service.ReArticleService;
+import com.lhl.quan.service.ReTalkService;
+import com.lhl.quan.service.TalkService;
 import com.lhl.quan.service.UserService;
 import com.lhl.util.Constant;
 import com.lhl.util.MySessionContext;
@@ -51,6 +55,10 @@ public class AndroidAction extends BaseAction {
 	private BlogArticleService blogArticleService;
 
 	private BlogReplyService blogReplyService;
+
+	private TalkService talkservice;
+
+	private ReTalkService reTalkService;
 
 	private int page;
 
@@ -618,6 +626,53 @@ public class AndroidAction extends BaseAction {
 		getOut().print(String.valueOf(obj));
 	}
 
+	/**
+	 * 查询吐槽
+	 */
+	public void fetchTalk() {
+
+		List<Talk> resultList = new ArrayList<Talk>();
+		try {
+			int countNumber = talkservice.queryTalkCount();
+			Pagination.setPageSize(Constant.pageSize20);
+			int pageSize = Pagination.getPageSize();
+			pageTotal = Pagination.getPageTotal(countNumber);
+			if (page > pageTotal) {
+				page = pageTotal;
+			}
+			if (page < 1) {
+				page = 1;
+			}
+			int noStart = (page - 1) * pageSize;
+			resultList = talkservice.queryLatestTalk(noStart, pageSize);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		JSONObject obj = new JSONObject();
+		obj.put("list", resultList);
+		obj.put("pageTotal", pageTotal);
+		getOut().print(String.valueOf(obj));
+	}
+
+	/**
+	 * 吐槽详情
+	 */
+	public void showTalk() {
+		Talk talk = null;
+		List<ReTalk> list = null;
+		try {
+			talk = talkservice.queryDetail(articleId);
+			int total = reTalkService.queryReTalkCount(articleId);
+			list = reTalkService.queryReTalk(0, total, articleId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		JSONObject obj = new JSONObject();
+		obj.put("talk", talk);
+		obj.put("list", list);
+		getOut().print(String.valueOf(obj));
+	}
+
 	public void fetchVersion() {
 		JSONObject obj = new JSONObject();
 		try {
@@ -729,4 +784,13 @@ public class AndroidAction extends BaseAction {
 	public void setPid(int pid) {
 		this.pid = pid;
 	}
+
+	public void setTalkservice(TalkService talkservice) {
+		this.talkservice = talkservice;
+	}
+
+	public void setReTalkService(ReTalkService reTalkService) {
+		this.reTalkService = reTalkService;
+	}
+
 }
