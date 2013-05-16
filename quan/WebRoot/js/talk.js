@@ -70,22 +70,24 @@ ReTalkItem.prototype = {
 			$("#atpanel").css({
 				"display" : "block"
 			});
+
 		} else {
 			var atpanel = $("<div id='atpanel'></div>");
 			$("#u_talk_textarea_con").before(atpanel);
 			$("<span id='u_atpanel_userid'>" + atUserName + "</span>")
 					.appendTo(atpanel);
 			$(
-					"<span id='u_atpanel_close'><img src='../images/delete.png'></span>")
-					.bind("click", this.deleteAtPanel).appendTo(atpanel);
+					"<span id='u_atpanel_close' style='cursor:pointer'><img src='../images/delete.png'></span>")
+					.bind("click", function() {
+						if ($("#atpanel")[0] != null) {
+							$("#atpanel").hide();
+							$("#hide_atuserId").val("");
+							$("#hide_atuserName").val("");
+						}
+					}).appendTo(atpanel);
 		}
 		$("#hide_atuserId").val(atUserId);
 		$("#hide_atuserName").val(atUserName);
-	},
-	deleteAtPanel : function() {
-		if ($("#atpanel")[0] != null) {
-			$("#atpanel").hide();
-		}
 	}
 
 }

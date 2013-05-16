@@ -46,7 +46,7 @@
   				<div class="itemcon">
   					<span class="item_user"><a href="userInfo.jspx?userId=${talk.userId}">${talk.userName}</a></span>
   					<span class="item_content">：${talk.content}</span>
-  					<c:if test="${talk.imgurl!=''}">
+  					<c:if test="${talk.imgurl!=''&&talk.imgurl!=null}">
   						<div class="talkimg">
   							<img src="../upload/${talk.imgurl}">
   						</div>

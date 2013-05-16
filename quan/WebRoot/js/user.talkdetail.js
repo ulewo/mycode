@@ -62,6 +62,11 @@ function addTalk() {
 				} else {
 					new ReTalkItem(data.retalk).item.appendTo($("#talklist"));
 				}
+				if ($("#atpanel")[0] != null) {
+					$("#atpanel").hide();
+					$("#hide_atuserId").val("");
+					$("#hide_atuserName").val("");
+				}
 			} else if (data.msg == "nologin") {
 				alert("请先登录");
 			} else if (data.msg == "contentError") {
