@@ -80,8 +80,8 @@
 	
 	<!-- 添加成员 -->
 	<insert id="addUser" parameterClass="user">
-		insert into user(userid,email,username,password,userlittleicon,userbigicon,registertime)
-		values(#userId#,#email#,#userName#,#password#,#userLittleIcon#,#userBigIcon#,#registerTime#)
+		insert into user(userid,email,username,password,userlittleicon,userbigicon,registertime,previsittime)
+		values(#userId#,#email#,#userName#,#password#,#userLittleIcon#,#userBigIcon#,#registerTime#,#previsitTime#)
 	</insert>
 	
 	<!-- 通过email非空更新用户信息-->

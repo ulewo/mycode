@@ -28,8 +28,7 @@ public class UserServiceImpl implements UserService, BeanFactoryAware {
 
 	private GroupDao groupDao;
 
-	private final SimpleDateFormat formate = new SimpleDateFormat(
-			"yyyy-MM-dd HH:mm:ss");
+	private final SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	public void setBeanFactory(BeanFactory factory) throws BeansException {
 
@@ -44,8 +43,7 @@ public class UserServiceImpl implements UserService, BeanFactoryAware {
 	public static UserServiceImpl getInstance() {
 
 		if (userServiceImplAt == null)
-			userServiceImplAt = (UserServiceImpl) beanFactory
-					.getBean("userServiceImplAt");
+			userServiceImplAt = (UserServiceImpl) beanFactory.getBean("userServiceImplAt");
 		return userServiceImplAt;
 	}
 
@@ -84,7 +82,8 @@ public class UserServiceImpl implements UserService, BeanFactoryAware {
 		User user = null;
 		if (account.matches(checkEmail)) {// 是邮箱
 			user = checkEmail(account);
-		} else {
+		}
+		else {
 			user = checkUserName(account);
 		}
 
@@ -104,8 +103,9 @@ public class UserServiceImpl implements UserService, BeanFactoryAware {
 		 * user.setShortName(userName.substring(0, 10)); } else {
 		 * user.setShortName(userName); }
 		 */
-		user.setRegisterTime(formate.format(new Date()));
-		user.setPrevisitTime(formate.format(new Date()));
+		String time = formate.format(new Date());
+		user.setRegisterTime(time);
+		user.setPrevisitTime(time);
 		user.setUserLittleIcon("defaultsmall.gif");
 		user.setUserBigIcon("defaultbig.gif");
 		userDao.addUser(user);
@@ -117,9 +117,11 @@ public class UserServiceImpl implements UserService, BeanFactoryAware {
 
 		if (Tools.isNotEmpty(user.getEmail())) {
 			userDao.updateUserSelectiveByEmail(user);
-		} else if (Tools.isNotEmpty(user.getUserId())) {
+		}
+		else if (Tools.isNotEmpty(user.getUserId())) {
 			userDao.updateUserSelectiveByUserId(user);
-		} else {
+		}
+		else {
 			userDao.updateUserSelectiveByUserId(user);
 		}
 	}
@@ -171,6 +173,7 @@ public class UserServiceImpl implements UserService, BeanFactoryAware {
 
 	@Override
 	public List<User> queryActiveUsers(int offset, int total) throws Exception {
+
 		return userDao.queryActiveUser(offset, total);
 	}
 }
