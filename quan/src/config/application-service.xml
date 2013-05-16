@@ -100,10 +100,12 @@
 	    <!-- 说说 -->
 	    <bean name="talkservice" class="com.lhl.quan.service.impl.TalkServiceImpl">
 	    	 <property name="talkDao" ref="talkDao"/>
+	    	 <property name="userDao" ref="userDao"/>
 	    </bean>
 	     <!-- 说说 评论-->
 	      <bean name="reTalkService" class="com.lhl.quan.service.impl.ReTalkServiceImpl">
 	    	 <property name="reTalkDao" ref="reTalkDao"/>
+	    	 <property name="userDao" ref="userDao"/>
 	    </bean>
 	<bean name="beanFactory" class="com.lhl.util.Springfactory">
     </bean>

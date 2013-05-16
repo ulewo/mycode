@@ -20,7 +20,9 @@ public class Constant {
 	public static final String ALL_PERA = "A"; // A:登陆用户可以发帖
 
 	public static int pageSize20 = 20; // 查询页数
+
 	public static int pageSize25 = 25; // 查询页数
+
 	public static int pageSize15 = 15; // 查询页数
 
 	public static int pageSize30 = 30; // 查询页数
@@ -93,6 +95,10 @@ public class Constant {
 
 	public static int NOTICE_TYPE5 = 5; // 留言
 
+	public static int NOTICE_TYPE6 = 6;//吐槽
+
+	public static int NOTICE_TYPE7 = 7;//回复吐槽
+
 	public static int ARTICLE_MARK5 = 5;
 
 	public static int ARTICLE_MARK2 = 2;
@@ -100,5 +106,7 @@ public class Constant {
 	public static String WEBSTIE = "http://ulewo.cloudfoundry.com/";
 
 	public static String WEBSTIE_IMAGEURL = WEBSTIE + "upload/";
+
+	public final static String TYPE_TALK = "talk";
 
 }
