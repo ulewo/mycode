@@ -83,7 +83,7 @@
 
 .subArea{position:relative;}
 
-/******************************�²�**********************************/
+/******************************�²�**********************************/
 .u_talk_tit span{display:inline-block;color:#888888;font-size:14px;}
 .u_talk_titname{float:left;}
 .u_talk_wordcount{float:right;}
@@ -103,7 +103,7 @@
 .main .itemcon{float:left;margin-left:10px;font-size:13px;width:700px;}
 .item_user{color:#6CABE1}
 .item_user a{color:#6CABE1;text-decoration:underline;font-size:13px;}
-.main .item_content{color:#666;line-height:20px;}
+.main .item_content{color:#666;line-height:20px;font-size:13px;font-family:微软雅黑,Verdana,sans-serif,宋体}
 .main .item_content a{color:#4466BB;text-decoration:underline;font-size:13px;}
 .main .item_content a:hover{color:#4466BB}
 .item_time{font-size:13px;display:block;margin-top:5px;color:#9A9A9A;}
