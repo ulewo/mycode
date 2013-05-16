@@ -27,7 +27,7 @@ String realPath = "http://" + request.getServerName() + ":" + request.getServerP
 				<div class="head_s_p"><a href="javascript:void(0)" onclick="logout()">退出</a></div><div class="head_s_p">|</div>
 				<div class="head_s_p"><a href="javascript:createWoWo()">创建窝窝</a></div ><div class="head_s_p">|</div>
 				<div class="head_s_p myspace"><a href="<%=realPath %>user/userInfo.jspx?userId=${user.userId}" id="myspace">我的空间</a></div>
-				<div class="head_s_p welcom"><span class="welcom_name">${user.userName}</span>，欢迎您</div>
+				<div class="head_s_p welcom"><span class="welcom_name" title="${user.userName}">${fn:substring(user.userName,0,8)}</span>，欢迎您</div>
 			</c:otherwise>
 		</c:choose>
 		<div class="clear"></div>
