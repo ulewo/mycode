@@ -3,7 +3,9 @@ $(function() {
 		addTalk();
 	});
 	$("#talkcontent").focus(function() {
-		$(this).val("");
+		if ($(this).val() == "今天你吐槽了吗？") {
+			$(this).val("");
+		}
 		$(this).css({
 			"color" : "#000000"
 		});
@@ -32,7 +34,7 @@ function addTalk() {
 		alert("吐槽内容不能为空");
 		return;
 	}
-
+	alert(content.trim().length);
 	if (content.trim().length > 250) {
 		alert("吐槽内容不能超过250字符");
 		return;
