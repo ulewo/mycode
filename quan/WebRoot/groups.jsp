@@ -18,7 +18,7 @@
   </head>
   
   <body>
-   <jsp:include page="common/head.jsp"/>
+  <%@ include file="common/head.jsp" %>
   <div class="bodycon">
 	  	<c:forEach var="group" items="${groupList}">
 	  		<div class="group">

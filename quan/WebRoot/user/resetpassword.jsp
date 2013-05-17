@@ -20,7 +20,7 @@
 	</style>
   </head>
   <body>
-  <jsp:include page="../common/head.jsp"/>
+ <%@ include file="../common/head.jsp" %>
    <div class="main">
 		<form method="post" id="subform">
 		<input type="hidden" name="account" value="${account}">

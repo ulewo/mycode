@@ -19,7 +19,7 @@
 	</style>
   </head>
   <body>
-  <jsp:include page="../common/head.jsp"/>
+  <%@ include file="../common/head.jsp" %>
    <div class="main">
 	  <div class="left">
 	  	<jsp:include page="left.jsp"></jsp:include>

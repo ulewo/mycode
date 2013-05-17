@@ -31,7 +31,7 @@
 </style>	
 </head>
 <body>
-<jsp:include page="../common/top.jsp"/>
+<%@ include file="../common/head.jsp" %>
 <div class="bodycon">
 <jsp:include page="../common/head.jsp"/>
 		<div class="left">

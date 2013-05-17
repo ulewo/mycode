@@ -5,12 +5,6 @@ _add['fixed'] = true;
 _add['yesText'] = 'yes';
 _add['noText'] = 'no';
 
-var myParam = {};
-function initParam(path, user) {
-	myParam.realPath = path;
-	myParam.user = user;
-}
-
 function showLoginDilog(url) {
 	art.dialog.open(url, {
 		title : '用户登录',
@@ -61,7 +55,8 @@ function showMenue() {
 function search() {
 	var keyWord = $("#searchInput").val();
 	keyWord = encodeURI(encodeURI(keyWord));
-	document.location.href = myParam.realPath+"search.jspx?keyWord=" + keyWord;
+	document.location.href = myParam.realPath + "search.jspx?keyWord="
+			+ keyWord;
 
 }
 
@@ -78,8 +73,7 @@ function login() {
 }
 
 function register() {
-	document.location.href = myParam.realPath
-				+ "user/register.jsp";
+	document.location.href = myParam.realPath + "user/register.jsp";
 }
 
 // 创建窝窝

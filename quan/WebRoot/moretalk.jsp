@@ -14,13 +14,16 @@
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
 	<link rel="stylesheet" type="text/css" href="css/moretalk.css">
-		<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<script type="text/javascript" src="js/talk.js"></script>
 	<script type="text/javascript" src="js/moretalk.js"></script>
-
+	<script type="text/javascript" src="js/emotion.data.js"></script>
+	<style type="text/css">
+	.main .itemcon{width:950px}
+	</style>
   </head>
   <body>
-  <jsp:include page="common/head.jsp"/>
+   <%@ include file="common/head.jsp" %>
   <div class="main">
 		<div class="talktit">大家都在吐槽什么？</div>
 		<div id="talklist"></div>

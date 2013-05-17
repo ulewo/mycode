@@ -4,6 +4,7 @@
 <%
 String realPath = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath()+"/"; 
 %>
+<c:set var="realPath" value="<%=realPath %>"></c:set>
 <link rel="shortcut icon" type="image/x-icon" href="<%=realPath %>images/favicon.ico">
 <link id="artDialog-skin" href="<%=realPath %>dialog/skins/default.css" rel="stylesheet" />
 <script src="<%=realPath %>dialog/jquery.artDialog.min.js?skin=default"></script>
@@ -62,8 +63,10 @@ String realPath = "http://" + request.getServerName() + ":" + request.getServerP
 </div>
 <script type="text/javascript">
 	var user = '${user.userId}';
+	var myParam = {};
+	myParam.realPath = "<%=realPath%>";
+	myParam.user = "${user.userId}";
 	$(function(){
-		initParam("<%=realPath%>",'${user.userId}');
 		loadNotice();
 		$("#searchBtn").bind('click', search);
 		showMenue();

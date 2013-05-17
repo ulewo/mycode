@@ -15,7 +15,7 @@
 	<link rel="stylesheet" type="text/css" href="../css/user.register.css">
   </head>
   <body>
-  <jsp:include page="../common/head.jsp"/>
+ <%@ include file="../common/head.jsp" %>
   <div class="bodycon">
   <div style="text-align:center;font-size:14px;color:red;">${message }</div>
 	<div class="register">

@@ -120,3 +120,11 @@ input.button{text-align:center;width:62px;color:#FFFFFF;background:#4682B4;borde
 .shadeLogin a{color:#FFFFFF}
 textarea{overflow:auto;padding:0px;margin:0px;}
 input{padding:0px;margin:0px;}
+
+/********表情********/
+.pm_emotion{position: absolute; z-index: 99; border: 1px solid #D7D7D7;background: #fff;color: #5F5F5F;box-shadow: 0 2px 10px rgba(0, 0, 0, .1);display:none;}
+.pm_emotion_panel{padding: 10px 5px 10px 10px;}
+.pm_emotions_bd{width: 420px;}
+.pm_emotions_bd a{width: 30px;height: 30px; display:inline-block; float:left;}
+.pm_emotions_bd img{border: 1px solid white;width: 22px;height: 22px;margin: 0;padding: 3px;}
+.pm_emotions_bd a:hover img{border: 1px solid #0095CD;}

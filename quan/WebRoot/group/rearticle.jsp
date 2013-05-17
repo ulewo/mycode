@@ -28,7 +28,7 @@ window.UEDITOR_HOME_URL = "<%=patch%>/ueditor/";
 <script type="text/javascript" src="../ueditor/editor.js"></script>
 </head>
 <body>
-<jsp:include page="../common/head.jsp"/>
+<%@ include file="../common/head.jsp" %>
 <div class="bodycon">
 	<jsp:include page="head.jsp"/>
 	<div class="ad_con">

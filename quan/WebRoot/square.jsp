@@ -15,7 +15,7 @@
   </head>
   
   <body>
-  <jsp:include page="common/head.jsp"/>
+   <%@ include file="common/head.jsp" %>
   <div class="bodycon">
   	<div style="margin-top:10px;padding-right:8px;height:25px;">
   		<div  class="pagination">

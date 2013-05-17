@@ -45,7 +45,7 @@
 	</script>
   </head>
   <body>
-   <jsp:include page="common/head.jsp"/>
+    <%@ include file="common/head.jsp" %>
   <div class="bodycon">
   	 	<div class="searchArea">
   	 		<div class="searchInput"><input type="text" name="keyWord" id="keyWord" class="keyWordInput" value="${keyWord}"></div>

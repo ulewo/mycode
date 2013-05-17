@@ -18,7 +18,7 @@
 <script src="../dialog/artDialog.ext.js"></script>
 </head>
 <body>
-<jsp:include page="../common/head.jsp"/>
+<%@ include file="../common/head.jsp" %>
 <div class="bodycon">
 	<jsp:include page="head.jsp"/>
 	<div class="itemcon">

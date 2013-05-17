@@ -17,6 +17,10 @@
 		var imageUrl = "${resultFileName}";
 		var message = "${message}";
 		$(function(){
+			if(message=="nologin"){
+				alert("请先登录!");
+				return;
+			}
 			if(message=="isBig"){
 				alert("图片太大，请换一张小于1M的图片");
 				return;

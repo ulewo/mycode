@@ -46,3 +46,18 @@
 .groupinfo{float:left;width:140px;margin-left:10px;text-align:left;color:#999999}
 .groupinfo a{font-size:14px;color:#336699;text-decoration:none;font-size:13px;}
 .groupinfo a:hover{text-decoration:underline;}
+
+a.icon_sw_face{display:block;width:18px;height:18px;background:url("../images/icon.png") -275px 2px;float:left;}
+.icon_sw_face:hover{background:url("../images/icon.png") -250px 2px;}
+
+a.icon_sw_img {display:block;width:18px;height:18px;background:url("../images/icon.png") -275px -23px;float:left;margin-left:10px;}
+.icon_sw_img:hover{background:url("../images/icon.png") -250px -23px;}
+
+#talk_img_con{position:absolute;border:1px solid #CCCCCC;width:270px;background:white;display:none;}
+.talk_img_tit{background:#F2F2F2;height:15px;padding:5px;}
+.talk_img_tit_tit{display:block;float:left;text-align:center;}
+.talk_img_tit_close{display:block;float:right;margin-right:5px;}
+.talk_img_fram{margin:5px;}
+#talk_img_showimg{display:none;}
+#talk_img_showimg img{max-width:100px;max-height:50px;}
+.talkimg img{max-width:600px;}

@@ -1,9 +1,36 @@
 $(function() {
+	var content = GlobalParam.content;
+	for ( var emo in emotion_data) {
+		content = content.replace(emo, "&nbsp;<img src='" + myParam.realPath
+				+ "images/emotions/" + emotion_data[emo] + "'>&nbsp;");
+	}
+	$("#item_content").html(content);
 	$("#talkBtn").click(function() {
 		addTalk();
 	});
+
+	$(document).click(function() {
+		$('#pm_emotion_cnt').hide();
+	});
+	$("#pm_emotion_cnt").click(function(event) {
+		event.stopPropagation();
+	});
+
+	$(".pm_emotions_bd").find("a").each(function(index) {
+		$(this).bind("click", function() {
+			var curValue = $("#talkcontent").val();
+			$("#talkcontent").val(curValue + $(this).attr("title"));
+			$("#pm_emotion_cnt").hide();
+		});
+	});
+
 	loadReTalk();
+
 });
+
+function showEmotion() {
+	$("#pm_emotion_cnt").show();
+}
 
 function loadReTalk(page) {
 	$.ajax({

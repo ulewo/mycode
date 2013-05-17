@@ -9,8 +9,12 @@ function TalkItem(data) {
 			"<span class='item_user'><a href='" + myParam.realPath
 					+ "user/userInfo.jspx?userId=" + data.userId + "'>"
 					+ data.userName + "</a></span>").appendTo(talkcon);
-	$("<span class='item_content'>：" + data.content + "</span>").appendTo(
-			talkcon);
+	var content = data.content;
+	for ( var emo in emotion_data) {
+		content = content.replace(emo, "&nbsp;<img src='" + myParam.realPath
+				+ "images/emotions/" + emotion_data[emo] + "'>&nbsp;");
+	}
+	$("<span class='item_content'>：" + content + "</span>").appendTo(talkcon);
 	var span = $(
 			"<span class='item_time'>" + data.createTime + "<a href='"
 					+ myParam.realPath + "user/talkDetail.jspx?userId="
@@ -47,9 +51,13 @@ function ReTalkItem(data) {
 						+ data.atUserName
 						+ "</a></span>").appendTo(talkcon);
 	}
+	var content = data.content;
+	for ( var emo in emotion_data) {
+		content = content.replace(emo, "&nbsp;<img src='" + myParam.realPath
+				+ "images/emotions/" + emotion_data[emo] + "'>&nbsp;");
+	}
 
-	$("<span class='item_content'>：" + data.content + "</span>").appendTo(
-			talkcon);
+	$("<span class='item_content'>：" + content + "</span>").appendTo(talkcon);
 	var item_time = $("<span class='item_time'></div>").appendTo(talkcon);
 	$("<span class='item_time_t'>" + data.createTime + "</span>").appendTo(
 			item_time);
@@ -89,5 +97,4 @@ ReTalkItem.prototype = {
 		$("#hide_atuserId").val(atUserId);
 		$("#hide_atuserName").val(atUserName);
 	}
-
 }

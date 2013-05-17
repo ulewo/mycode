@@ -6,9 +6,21 @@ $(function() {
 
 	$(document).click(function() {
 		$('#talk_img_con').hide();
+		$('#pm_emotion_cnt').hide();
 	});
 	$("#talk_img_con").click(function(event) {
 		event.stopPropagation();
+	});
+	$("#pm_emotion_cnt").click(function(event) {
+		event.stopPropagation();
+	});
+
+	$(".pm_emotions_bd").find("a").each(function(index) {
+		$(this).bind("click", function() {
+			var curValue = $("#talkcontent").val();
+			$("#talkcontent").val(curValue + $(this).attr("title"));
+			$("#pm_emotion_cnt").hide();
+		});
 	});
 });
 
@@ -111,4 +123,9 @@ function deleteImg() {
 	$("#talk_img_fram").show();
 	$("#talk_img_showimg>img").attr("src", "");
 	$("#talk_img_showimg").hide();
+}
+
+/** *************插入表情*************** */
+function showEmotion() {
+	$("#pm_emotion_cnt").show();
 }

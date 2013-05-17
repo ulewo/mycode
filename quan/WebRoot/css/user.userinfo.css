@@ -91,8 +91,13 @@
 .u_talk_textarea textarea{outline:none;resize:none;width:99%;height:60px;border:2px solid #64C5E8;}
 .u_talk_sub{margin-top:5px;position:relative;}
 .talkop{float:left;display:inline-block;}
-.talkop a{display:inline-block;background:url("../images/img.gif") 2px center no-repeat;padding:2px;padding-left:20px;text-decoration:none;color:#666;border:1px solid #FFFFFF}
-.talkop a:hover{border:1px solid #64C5E8}
+
+a.icon_sw_face{display:block;width:18px;height:18px;background:url("../images/icon.png") -275px 2px;float:left;}
+.icon_sw_face:hover{background:url("../images/icon.png") -250px 2px;}
+
+a.icon_sw_img {display:block;width:18px;height:18px;background:url("../images/icon.png") -275px -23px;float:left;margin-left:20px;}
+.icon_sw_img:hover{background:url("../images/icon.png") -250px -23px;}
+
 .u_talk_subtn{float:right;display:inline-block;margin-right:2px;}
 .u_talk_subtn a{background:#38A3DB;color:white;height:20px;width:80px;display:block;text-decoration:none;font-size:16px;text-align:center;padding-top:5px;}
 .u_talk_subtn a:hover{color:white;background:#64C5E8}

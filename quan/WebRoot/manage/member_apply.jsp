@@ -18,7 +18,7 @@
 <script type="text/javascript" src="../js/util.js"></script>
 </head>
 <body>
-<jsp:include page="../common/head.jsp"/>
+<%@ include file="../common/head.jsp" %>
 <div class="maincon">
 	<div class="left">
 		<jsp:include page="menue.jsp"></jsp:include>

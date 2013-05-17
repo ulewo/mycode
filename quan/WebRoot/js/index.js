@@ -18,7 +18,34 @@ $(function() {
 			});
 		}
 	});
+
+	$(document).click(function() {
+		$('#talk_img_con').hide();
+		$('#pm_emotion_cnt').hide();
+	});
+	$("#talk_img_con").click(function(event) {
+		event.stopPropagation();
+	});
+	$("#pm_emotion_cnt").click(function(event) {
+		event.stopPropagation();
+	});
+
+	$(".pm_emotions_bd").find("a").each(function(index) {
+		$(this).bind("click", function() {
+			var curValue = $("#talkcontent").val();
+			if (curValue == "今天你吐槽了吗？") {
+				$("#talkcontent").css({
+					"color" : "#000000"
+				});
+				curValue = "";
+			}
+			$("#talkcontent").val(curValue + $(this).attr("title"));
+			$("#pm_emotion_cnt").hide();
+		});
+	});
+
 	loadTalk();
+
 });
 
 /**
@@ -34,7 +61,6 @@ function addTalk() {
 		alert("吐槽内容不能为空");
 		return;
 	}
-	alert(content.trim().length);
 	if (content.trim().length > 250) {
 		alert("吐槽内容不能超过250字符");
 		return;
@@ -47,6 +73,7 @@ function addTalk() {
 		type : 'POST',
 		dataType : "json",
 		data : {
+			"imgurl" : $("#imgUrl").val(),
 			"content" : content,
 			"time" : new Date()
 		},
@@ -93,4 +120,31 @@ function loadTalk() {
 		}
 	});
 	setInterval("loadTalk()", 1000 * 60 * 5);
+}
+
+/** *********吐槽图片上传************** */
+function showUploader() {
+	$("#talk_img_con").show();
+}
+function closeUploader() {
+	$("#talk_img_con").hide();
+}
+/** 上传完成* */
+function showImg(imgurl) {
+	$("#imgUrl").val(imgurl);
+	$("#talk_img_fram").hide();
+	$("#talk_img_showimg>img").attr("src", "upload/" + imgurl);
+	$("#talk_img_showimg").show();
+}
+
+function deleteImg() {
+	$("#imgUrl").val("");
+	$("#talk_img_fram").show();
+	$("#talk_img_showimg>img").attr("src", "");
+	$("#talk_img_showimg").hide();
+}
+
+/** *************插入表情*************** */
+function showEmotion() {
+	$("#pm_emotion_cnt").show();
 }

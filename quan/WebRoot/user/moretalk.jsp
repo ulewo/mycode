@@ -11,6 +11,7 @@
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
 	<script type="text/javascript" src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/emotion.data.js"></script>
 	<script type="text/javascript">
 	  	var gloableParam={};
 	  	gloableParam.userId = "${param.userId}";
