@@ -427,7 +427,7 @@ public class UserSpaceAction extends BaseAction {
 	// 发送激活邮件
 	private void sendMile(String email, String activationCode) throws Exception {
 
-		String url = "http://localhost:8080/ulewo/user/findPwd.jspx?account="
+		String url = "http://ulewo.cloudfoundry.com/user/findPwd.jspx?account="
 				+ email + "&code=" + activationCode;
 		String title = "ulewo邮箱找回密码邮件";
 		StringBuffer content = new StringBuffer("亲爱的" + email + "<br><br>");
@@ -437,7 +437,7 @@ public class UserSpaceAction extends BaseAction {
 		content.append("如果你的email程序不支持链接点击，请将上面的地址拷贝至你的浏览器(如IE)的地址栏进入。<br><br>");
 		content.append("您的注册邮箱是:" + email + "<br><br>");
 		content.append("希望你在有乐窝社区的体验有益和愉快！<br><br>");
-		content.append("- 有乐窝社区(www.ulewo.com)");
+		content.append("- 有乐窝社区(http://ulewo.cloudfoundry.com)");
 		String[] address = new String[] { email };
 		SendMail.sendEmail(title, String.valueOf(content), address);
 	}
