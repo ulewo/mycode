@@ -1,7 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>  
-<!DOCTYPE html PUBLIC "-void(0)W3Cvoid(0)DTD HTML 4.01 Transitionalvoid(0)EN" "http:void(0)www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
   <head>
     <title>${userVo.userName }的空间--有乐窝</title>
@@ -150,8 +150,7 @@
 	  			</div>
 	  		</div>
 		  	</c:if>
-		  	<c:if test="${user.userId!=param.userId}">
-		  		<div class="baseinfoCon">
+		  	<div class="baseinfoCon">
 			  	<span class="base_tit">加入时间：</span><span class="base_info">${userVo.registerTime}</span><br>
 			  	<span class="base_tit">最近登录：</span><span class="base_info">${userVo.previsitTime}</span><br>
 			  	<span class="base_tit">性别：</span><span class="base_info">
@@ -175,11 +174,12 @@
 			  		</span><br>
 			  	<span class="base_tit">积分：</span><span class="base_info">${userVo.mark}</span><br>
 		  	</div>
-		  	</c:if>
-		  	<div class="moretalk"><a href="moretalk.jsp?userId=${param.userId}">更多吐槽&gt;&gt;</a></div>
-		  	<div id="talklist"></div>
+		  	<div style="padding:10px;border:1px solid #EEEEEE;">
+		  		<div class="topblog_titcon"><span class="topblog_tit">吐槽</span><span class="topblog_link"><a href="moretalk.jsp?userId=${param.userId}">更多吐槽&gt;&gt;</a></div>
+		  		<div id="talklist"></div>
+		  	</div>
 		  	<div class="topblog">
-		  		<div class="topblog_titcon"><span class="topblog_tit">最新博文</span><span class="topblog_link"><a href="blog.jspx?userId=${userId}" target="_blank">进入博客</a></span></div>
+		  		<div class="topblog_titcon"><span class="topblog_tit">最新博文</span><span class="topblog_link"><a href="blog.jspx?userId=${userId}" target="_blank">进入博客&gt;&gt;</a></span></div>
 		  		<c:forEach var="blog" items="${blogList}">
 		  			<div class="blog_link">
 		  				<a href="blogdetail.jspx?id=${blog.id}" target="_blank">${blog.title}</a><span>${blog.reCount}/${blog.readCount}</span>
@@ -190,7 +190,7 @@
 		  		</c:if>
 		  	</div>
 		  	<div class="topblog">
-		  		<div class="topblog_titcon"><span class="topblog_tit">最新留言</span><span class="topblog_link"><a href="message.jsp?userId=${userId}" target="_blank">进入留言板</a></span></div>
+		  		<div class="topblog_titcon"><span class="topblog_tit">最新留言</span><span class="topblog_link"><a href="message.jsp?userId=${userId}" target="_blank">进入留言板&gt;&gt;</a></span></div>
 		  		<div class="messagelist"  id="messagelist">
 			  	<c:forEach var="message" items="${messageList}">
 			  	<div class="main_message">

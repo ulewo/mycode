@@ -34,6 +34,7 @@ function loadUserTalk(page) {
 		success : function(data) {
 			var list = data.list;
 			if (list == "") {
+				$("#talklist").html("木有任何吐槽");
 				return;
 			}
 			var length = 0;
@@ -89,6 +90,7 @@ function addTalk() {
 					$("#talklist").children().eq(0).before(
 							new TalkItem(data.talk).item);
 				} else {
+					$("#talklist").empty();
 					new TalkItem(data.talk).item.appendTo($("#talklist"));
 				}
 			} else if (data.msg == "nologin") {
