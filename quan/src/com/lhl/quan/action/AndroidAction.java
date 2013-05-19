@@ -645,6 +645,10 @@ public class AndroidAction extends BaseAction {
 			}
 			int noStart = (page - 1) * pageSize;
 			resultList = talkservice.queryLatestTalk(noStart, pageSize);
+			for (Talk talk : resultList) {
+				talk.setImgurl(Constant.WEBSTIE_IMAGEURL + talk.getImgurl());
+				talk.setUserIcon(Constant.WEBSTIE_IMAGEURL + talk.getUserIcon());
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

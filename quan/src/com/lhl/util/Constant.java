@@ -95,15 +95,15 @@ public class Constant {
 
 	public static int NOTICE_TYPE5 = 5; // 留言
 
-	public static int NOTICE_TYPE6 = 6;//吐槽
+	public static int NOTICE_TYPE6 = 6;// 吐槽
 
-	public static int NOTICE_TYPE7 = 7;//回复吐槽
+	public static int NOTICE_TYPE7 = 7;// 回复吐槽
 
 	public static int ARTICLE_MARK5 = 5;
 
 	public static int ARTICLE_MARK2 = 2;
 
-	public static String WEBSTIE = "http://ulewo.cloudfoundry.com/";
+	public static String WEBSTIE = "http://192.168.2.224:8080/ulewo/";
 
 	public static String WEBSTIE_IMAGEURL = WEBSTIE + "upload/";
 

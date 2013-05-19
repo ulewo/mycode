@@ -571,6 +571,11 @@
 		<!--用户信息-->
 		<action name="fetchUserInfo" class="android" method="fetchUserInfo">
 		</action>
+		<!-- 吐槽 -->
+		
+		<action name="fetchTalk" class="android" method="fetchTalk">
+		</action>
+		
 		<!--版本信息-->
 		<action name="fetchVersion" class="android" method="fetchVersion">
 		</action>

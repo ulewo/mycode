@@ -110,6 +110,8 @@
 		<property name="userService" ref="userService"/>
 		<property name="blogArticleService" ref="blogArticleService"/>
 		<property name="blogReplyService" ref="blogReplyService"/>
+		<property name="talkservice" ref="talkservice"/>
+		<property name="reTalkService" ref="reTalkService"/>
 	</bean>
 	<bean id="appdown" class="com.lhl.quan.action.DownAppAction" scope="prototype">
 	</bean>
