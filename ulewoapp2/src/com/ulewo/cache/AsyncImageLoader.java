@@ -41,23 +41,25 @@ public class AsyncImageLoader {
 	}
 
 	public Drawable loadDrawable(final String imageUrl,
-			final ImageCallback imageCallback) {
-
+			final ImageCallback imageCallback, boolean readCache) {
 		final String fileName = StringUtils.convertUrlToFileName(imageUrl);
-		// 从内存中读取
-		if (imageCache.containsKey(fileName)) {
-			SoftReference<Drawable> softReference = imageCache.get(fileName);
-			Drawable drawable = softReference.get();
-			if (drawable != null) {
+		// 从缓存中取
+		if (readCache) {
+			// 从内存中读取
+			if (imageCache.containsKey(fileName)) {
+				SoftReference<Drawable> softReference = imageCache
+						.get(fileName);
+				Drawable drawable = softReference.get();
+				if (drawable != null) {
+					return drawable;
+				}
+			}
+			// 从sdk中读取
+			Drawable drawable = readFromSDK(fileName);
+			if (null != drawable) {
 				return drawable;
 			}
 		}
-		// 从sdk中读取
-		Drawable drawable = readFromSDK(fileName);
-		if (null != drawable) {
-			return drawable;
-		}
-
 		final Handler handler = new Handler() {
 			public void handleMessage(Message message) {
 

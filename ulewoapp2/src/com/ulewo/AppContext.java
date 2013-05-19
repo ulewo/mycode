@@ -32,6 +32,7 @@ import com.ulewo.bean.ReArticleList;
 import com.ulewo.bean.ReArticleResult;
 import com.ulewo.bean.ReBlogList;
 import com.ulewo.bean.ReBlogResult;
+import com.ulewo.bean.TalkList;
 import com.ulewo.bean.UlewoVersion;
 import com.ulewo.bean.User;
 import com.ulewo.util.Constants;
@@ -341,7 +342,8 @@ public class AppContext extends Application {
 			int pageIndex) throws AppException {
 
 		ArticleList list = null;
-		String key = StringUtils.encodeByMD5("groupArticlelist" + "_" + gid+pageIndex);
+		String key = StringUtils.encodeByMD5("groupArticlelist" + "_" + gid
+				+ pageIndex);
 		if (isNetworkConnected() && (!isReadDataCache(key) || isRefresh)) {
 			try {
 				list = ApiClient.getGroupArticleList(pageIndex, gid);
@@ -401,6 +403,41 @@ public class AppContext extends Application {
 			}
 		}
 		return loginUser;
+	}
+
+	/**
+	 * 
+	 * description: 文章列表
+	 * 
+	 * @param pageIndex
+	 * @param isRefresh
+	 * @return
+	 * @throws AppException
+	 * @author luohl
+	 */
+	public TalkList getTalkList(int pageIndex, boolean isRefresh)
+			throws AppException {
+
+		TalkList list = null;
+		String key = StringUtils.encodeByMD5("talklist" + "_" + pageIndex);
+		if (isNetworkConnected() && (!isReadDataCache(key) || isRefresh)) {
+			try {
+				list = ApiClient.getTalkList(pageIndex);
+				if (list != null && pageIndex == 1) {
+					saveObject(list, key);
+				}
+			} catch (AppException e) {
+				list = (TalkList) readObject(key);
+				if (list == null)
+					throw e;
+			}
+		} else {
+			list = (TalkList) readObject(key);
+			if (list == null) {
+				throw AppException.network(new HttpException());
+			}
+		}
+		return list;
 	}
 
 	/**

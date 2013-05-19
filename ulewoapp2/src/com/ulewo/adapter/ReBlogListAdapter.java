@@ -116,7 +116,7 @@ public class ReBlogListAdapter extends BaseAdapter {
 							imageViewByTag.setImageResource(R.drawable.icon);
 						}
 					}
-				});
+				}, true);
 		if (cachedImage == null) {
 			imageView.setImageResource(R.drawable.icon);
 		} else {

@@ -29,51 +29,37 @@
         	android:layout_gravity="bottom"
         	android:gravity="center_vertical"  
             android:orientation="horizontal"
-            android:id="@+id/group_id">  
+            android:id="@+id/group_id">
         	<RadioButton 
         		android:id="@+id/radio_article_id"
 				style="@style/main_footbar_radio"
 				android:drawableTop="@drawable/article"
 				android:text="@string/name_article"/>
-			<ImageView
-				style="@style/main_footbar_cutline"
-				android:src="@drawable/widget_bar_cut_off"/>
-				
 			<RadioButton
 				android:id="@+id/radio_blog_id"
 				style="@style/main_footbar_radio"
 				android:drawableTop="@drawable/blog"
 				android:text="@string/name_blog"/>	
-			<ImageView
-				style="@style/main_footbar_cutline"
-				android:src="@drawable/widget_bar_cut_off"/>
-				
 			<RadioButton 
 				android:id="@+id/radio_wowo_id"
 				style="@style/main_footbar_radio"
 				android:drawableTop="@drawable/wowo"
-				android:text="@string/name_wowo"/>	
-			<ImageView
-				style="@style/main_footbar_cutline"
-				android:src="@drawable/widget_bar_cut_off"/>
-				
+				android:text="@string/name_wowo"/>
+			 <RadioButton 
+        		android:id="@+id/radio_talk_id"
+				style="@style/main_footbar_radio"
+				android:drawableTop="@drawable/talk"
+				android:text="@string/name_talk"/>  	
 			<RadioButton 
 				android:id="@+id/radio_user_id"
 				style="@style/main_footbar_radio"
 				android:drawableTop="@drawable/user"
 				android:text="@string/name_user"/>	
-			<ImageView
-				style="@style/main_footbar_cutline"
-				android:src="@drawable/widget_bar_cut_off"/>
-				
 			<RadioButton 
 				android:id="@+id/radio_more_id"
 				style="@style/main_footbar_radio"
 				android:drawableTop="@drawable/more"
 				android:text="@string/name_more"/>	
-			<ImageView
-				style="@style/main_footbar_cutline"
-				android:src="@drawable/widget_bar_cut_off"/>
         </RadioGroup>
     </LinearLayout>  
 </TabHost>

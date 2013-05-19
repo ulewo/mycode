@@ -18,8 +18,18 @@
 		android:paddingLeft="20dp"
 		android:paddingRight="15dp"
 		android:textSize="13dp"
-		android:background="@drawable/widget_bar_back"
-	/>
+		android:background="@drawable/widget_bar_back"/>
+	<!-- 发表吐槽 -->
+	<ImageButton
+	    android:visibility="gone"
+		android:id="@+id/head_post"
+		android:layout_marginTop="5dp"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:layout_marginLeft="5dp"
+		android:button="@null"
+		android:background="@drawable/post_btn_selector"/>
 	<TextView 
         android:id="@+id/main_head_title"
         style="@style/main_head_title"
@@ -40,6 +50,18 @@
 		android:layout_alignParentRight="true"
 		android:button="@null"
 		android:background="@drawable/widget_bar_refresh"/>
+	<!-- 发布 -->
+	<TextView
+	    android:visibility="gone"
+		android:id="@+id/head_post_btn"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentRight="true"
+		android:layout_marginTop="3dp"
+		android:layout_marginRight="5dp"
+		android:textColor="@color/white"
+		android:text="@string/send"
+		android:background="@drawable/title_regist_normal"/>
 	<LinearLayout 
 		android:id="@+id/article_recomment_btn"
 		android:visibility="gone"

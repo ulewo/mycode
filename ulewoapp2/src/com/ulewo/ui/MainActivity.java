@@ -19,6 +19,8 @@ public class MainActivity extends TabActivity {
 
 	private static final String TAG_WOWO = "wowo";
 
+	private static final String TAG_TALK = "talk";
+
 	private static final String TAG_USER = "user";
 
 	private static final String TAG_MORE = "more";
@@ -40,8 +42,13 @@ public class MainActivity extends TabActivity {
 				.setContent(new Intent(this, BlogActivity.class)));
 		tabHost.addTab(tabHost.newTabSpec(TAG_WOWO).setIndicator(TAG_WOWO)
 				.setContent(new Intent(this, GroupActivity.class)));
+
+		tabHost.addTab(tabHost.newTabSpec(TAG_TALK).setIndicator(TAG_TALK)
+				.setContent(new Intent(this, TalkActivity.class)));
+
 		tabHost.addTab(tabHost.newTabSpec(TAG_USER).setIndicator(TAG_USER)
 				.setContent(new Intent(this, UserActivity.class)));
+
 		tabHost.addTab(tabHost.newTabSpec(TAG_MORE).setIndicator(TAG_MORE)
 				.setContent(new Intent(this, MoreActivity.class)));
 
@@ -61,6 +68,9 @@ public class MainActivity extends TabActivity {
 					break;
 				case R.id.radio_wowo_id:
 					tabHost.setCurrentTabByTag(TAG_WOWO);
+					break;
+				case R.id.radio_talk_id:
+					tabHost.setCurrentTabByTag(TAG_TALK);
 					break;
 				case R.id.radio_user_id:
 					tabHost.setCurrentTabByTag(TAG_USER);

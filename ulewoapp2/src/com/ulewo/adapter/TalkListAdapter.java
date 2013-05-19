@@ -1,18 +1,12 @@
 package com.ulewo.adapter;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.List;
+import java.util.ArrayList;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -20,14 +14,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ulewo.R;
-import com.ulewo.bean.Group;
+import com.ulewo.bean.Talk;
 import com.ulewo.cache.AsyncImageLoader;
 import com.ulewo.cache.AsyncImageLoader.ImageCallback;
+import com.ulewo.common.UIHelper;
 import com.ulewo.util.StringUtils;
 
-public class GroupListAdapter extends BaseAdapter {
+public class TalkListAdapter extends BaseAdapter {
 
-	private List<Group> list = null;
+	private ArrayList<Talk> list = null;
 
 	private Context context;
 
@@ -37,7 +32,7 @@ public class GroupListAdapter extends BaseAdapter {
 
 	private ListView listView;
 
-	public GroupListAdapter(Context context, List<Group> list,
+	public TalkListAdapter(Context context, ArrayList<Talk> list,
 			AsyncImageLoader asyncImageLoader, ListView listView) {
 
 		this.context = context;
@@ -63,7 +58,7 @@ public class GroupListAdapter extends BaseAdapter {
 	public long getItemId(int position) {
 
 		if (position < getCount()) {
-			return Long.valueOf(list.get(position).getGid());
+			return Long.valueOf(list.get(position).getId());
 		} else {
 			return 0;
 		}
@@ -80,7 +75,7 @@ public class GroupListAdapter extends BaseAdapter {
 
 		View view;
 		if (convertView == null) {
-			view = this.mInflater.inflate(R.layout.group_item, null);
+			view = this.mInflater.inflate(R.layout.talk_item, null);
 		} else {
 			view = convertView;
 		}
@@ -90,18 +85,16 @@ public class GroupListAdapter extends BaseAdapter {
 
 	private void bindView(int postion, View view) {
 
-		Group blog = list.get(postion);
-		ImageView imageView = (ImageView) view.findViewById(R.id.wowo_icon);
-		TextView titView = (TextView) view.findViewById(R.id.wowo_tit);
-		TextView authorView = (TextView) view
-				.findViewById(R.id.wowo_username_con);
-		TextView memberView = (TextView) view
-				.findViewById(R.id.wowo_member_con);
-		TextView articleView = (TextView) view
-				.findViewById(R.id.wowo_articlecount_con);
+		final Talk talk = list.get(postion);
+		ImageView imageView = (ImageView) view
+				.findViewById(R.id.talk_user_icon);
+		TextView authorView = (TextView) view.findViewById(R.id.talk_username);
+		TextView content = (TextView) view.findViewById(R.id.talk_content);
+		TextView talk_time = (TextView) view.findViewById(R.id.talk_time);
+		TextView recount = (TextView) view.findViewById(R.id.talk_recount);
 
 		// imageView.setImageBitmap(returnBitMap(blog.getGroupIcon()));
-		String imageUrl = blog.getGroupIcon();
+		String imageUrl = talk.getUserIcon();
 		imageView.setTag(imageUrl);
 		Drawable cachedImage = asyncImageLoader.loadDrawable(imageUrl,
 				new ImageCallback() {
@@ -126,39 +119,21 @@ public class GroupListAdapter extends BaseAdapter {
 			imageView.setImageDrawable(StringUtils.toRoundCornerDrawable(
 					cachedImage, 5));
 		}
-
-		titView.setText(blog.getgName());
-		authorView.setText(blog.getgAuthorName());
-		memberView.setText(blog.getgMember() + "");
-		articleView.setText(blog.getgArticleCount() + "");
+		authorView.setText(talk.getUserName());
+		authorView.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				UIHelper.showUserCenter(v.getContext(), talk.getUserId(),
+						talk.getUserName());
+			}
+		});
+		content.setText(talk.getContent());
+		talk_time.setText(talk.getCreateTime());
+		recount.setText(talk.getReCount() + "");
 	}
 
-	private Bitmap returnBitMap(String url) {
-
-		URL myFileUrl = null;
-		Bitmap bitmap = null;
-		try {
-			myFileUrl = new URL(url);
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
-		try {
-			HttpURLConnection conn = (HttpURLConnection) myFileUrl
-					.openConnection();
-			conn.setDoInput(true);
-			conn.connect();
-			InputStream is = conn.getInputStream();
-			bitmap = BitmapFactory.decodeStream(is);
-			is.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return bitmap;
-	}
-
-	public void loadMore(List<Group> groupList) {
-
-		list.addAll(groupList);
+	public void loadMore(ArrayList<Talk> talkList) {
+		list.addAll(talkList);
 		this.notifyDataSetChanged();
 	}
 

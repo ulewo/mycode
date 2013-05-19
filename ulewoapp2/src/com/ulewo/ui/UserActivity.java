@@ -172,7 +172,7 @@ public class UserActivity extends BaseActivity {
 										}
 
 									}
-								});
+								}, false);
 						if (cachedImage == null) {
 							user_info_icon.setImageResource(R.drawable.icon);
 						} else {
@@ -246,6 +246,30 @@ public class UserActivity extends BaseActivity {
 					if (Constants.SUCCESS.equals(loginUser.getLoginResult())) {
 
 						User user = loginUser.getUser();
+
+						AsyncImageLoader asyncImageLoader = new AsyncImageLoader();
+						Drawable cachedImage = asyncImageLoader.loadDrawable(
+								user.getUserLittleIcon(), new ImageCallback() {
+									public void imageLoaded(
+											Drawable imageDrawable,
+											String imageUrl) {
+										if (null != imageDrawable) {
+											user_info_icon
+													.setImageDrawable(imageDrawable);
+										} else {
+											user_info_icon
+													.setImageResource(R.drawable.icon);
+										}
+
+									}
+								}, true);
+						if (cachedImage == null) {
+							user_info_icon.setImageResource(R.drawable.icon);
+						} else {
+							user_info_icon.setImageDrawable(StringUtils
+									.toRoundCornerDrawable(cachedImage, 5));
+						}
+
 						if (Constants.SEX_M.equals(user.getSex())) {
 							user_info_sex
 									.setImageResource(R.drawable.widget_gender_man);

@@ -1,17 +1,15 @@
 package com.ulewo.ui;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -19,91 +17,55 @@ import android.widget.TextView;
 import com.ulewo.AppContext;
 import com.ulewo.AppException;
 import com.ulewo.R;
-import com.ulewo.adapter.ArticleListAdapter;
-import com.ulewo.bean.ArticleList;
+import com.ulewo.adapter.TalkListAdapter;
+import com.ulewo.bean.TalkList;
 import com.ulewo.cache.AsyncImageLoader;
-import com.ulewo.cache.AsyncImageLoader.ImageCallback;
-import com.ulewo.common.UIHelper;
-import com.ulewo.util.StringUtils;
 
-public class ShowGroupActivity extends BaseActivity {
+public class TalkActivity extends BaseActivity {
 
+	private TextView main_head_title = null;
 	private LinearLayout progressBar = null;
+	// 加载更多
 	private View loadMoreView = null;
+	// 加载更多按钮
 	private TextView loadmoreTextView = null;
+	// 加载更多进度条
 	private LinearLayout loadmore_prgressbar = null;
-	ListView listView = null;
+	// 刷新按钮
 	private ImageButton refreshBtn = null;
-	private Button backBtn = null;
-	private String gid;
+	// 发表吐槽按钮
+	private ImageButton postBtn = null;
+	// 全局页码
 	private int page = 1;
-	private boolean isRefresh;
+	// 全局变量是否刷新
+	boolean isRefresh = false;
 
+	ListView listView = null;
+	private TalkListAdapter adapter = null;
+	private Handler handler = null;
 	private AppContext appContext;
-	private ArticleListAdapter adapter = null;
-	private Handler handler;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-		super.setContentView(R.layout.group);
+		super.setContentView(R.layout.talk);
 		appContext = (AppContext) getApplication();
 		initView();
 		initData();
 	}
 
 	private void initView() {
-
-		TextView textView = (TextView) findViewById(R.id.main_head_title);
-
-		Intent intent = getIntent();
-		Bundle bunde = intent.getExtras();
-		this.gid = bunde.getString("gid");
-		String groupIcon = bunde.getString("groupIcon");
-		String gName = bunde.getString("gName");
-		String gUserName = bunde.getString("gUserName");
-		int gMember = bunde.getInt("gMember");
-		int gArticleCount = bunde.getInt("gArticleCount");
-
-		final ImageView group_icon = (ImageView) findViewById(R.id.wowo_icon);
-		TextView titView = (TextView) findViewById(R.id.wowo_tit);
-		TextView authorView = (TextView) findViewById(R.id.wowo_username_con);
-		TextView memberView = (TextView) findViewById(R.id.wowo_member_con);
-		TextView articleView = (TextView) findViewById(R.id.wowo_articlecount_con);
-		// 设置窝窝标题
-		textView.setText(gName);
-		AsyncImageLoader asyncImageLoader = new AsyncImageLoader();
-		Drawable cachedImage = asyncImageLoader.loadDrawable(groupIcon,
-				new ImageCallback() {
-					public void imageLoaded(Drawable imageDrawable,
-							String imageUrl) {
-
-						if (null != imageDrawable) {
-							group_icon.setImageDrawable(imageDrawable);
-						} else {
-							group_icon.setImageResource(R.drawable.icon);
-						}
-					}
-				}, true);
-		if (cachedImage == null) {
-			group_icon.setImageResource(R.drawable.icon);
-		} else {
-			group_icon.setImageDrawable(StringUtils.toRoundCornerDrawable(
-					cachedImage, 5));
-		}
-
-		titView.setText(gName);
-		authorView.setText(gUserName);
-		memberView.setText(gMember + "");
-		articleView.setText(gArticleCount + "");
-
+		main_head_title = (TextView) findViewById(R.id.main_head_title);
+		main_head_title.setText(R.string.name_talk);
 		progressBar = (LinearLayout) findViewById(R.id.myprogressbar);
 		progressBar.setVisibility(View.VISIBLE);
+		listView = (ListView) findViewById(R.id.talk_list_id);
+
 		loadMoreView = View.inflate(this, R.layout.loadmore, null);
-		listView = (ListView) findViewById(R.id.article_list_view_id);
 		listView.addFooterView(loadMoreView);
 
+		// 要先讲加载更多添加到listView中在获取，不然获取不到。
 		loadmore_prgressbar = (LinearLayout) findViewById(R.id.loadmore_progressbar);
 		loadmoreTextView = (TextView) findViewById(R.id.loadmoretextview);
 		loadmoreTextView.setVisibility(View.GONE);
@@ -114,11 +76,9 @@ public class ShowGroupActivity extends BaseActivity {
 				loadmoreTextView.setVisibility(View.GONE);
 				loadmore_prgressbar.setVisibility(View.VISIBLE);
 				++page;
-				isRefresh = false;
 				initData();
 			}
 		});
-
 		refreshBtn = (ImageButton) findViewById(R.id.head_refresh);
 		refreshBtn.setVisibility(View.VISIBLE);
 		refreshBtn.setOnClickListener(new OnClickListener() {
@@ -131,30 +91,37 @@ public class ShowGroupActivity extends BaseActivity {
 				initData();
 			}
 		});
-		backBtn = (Button) super.findViewById(R.id.head_back);
-		backBtn.setVisibility(View.VISIBLE);
-		backBtn.setOnClickListener(UIHelper.finish(this));
+		postBtn = (ImageButton) findViewById(R.id.head_post);
+		postBtn.setVisibility(View.VISIBLE);
+		postBtn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent();
+				intent.setClass(TalkActivity.this, TalkPostActivity.class);
+				startActivity(intent);
+			}
+		});
 	}
 
 	private void initData() {
-
 		handler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
 
 				progressBar.setVisibility(View.GONE);
 				if (msg.what != -1 && null != msg.obj) {
-					ArticleList list = (ArticleList) msg.obj;
+					TalkList list = (TalkList) msg.obj;
 					if (adapter == null || page == 1) {
-						adapter = new ArticleListAdapter(
-								ShowGroupActivity.this, list.getArticleList());
+						adapter = new TalkListAdapter(TalkActivity.this,
+								list.getTalkList(), new AsyncImageLoader(),
+								listView);
 						listView.setAdapter(adapter);
 						if (page < list.getPageTotal()) {
 							loadmoreTextView.setVisibility(View.VISIBLE);
 						}
 					} else {
 						loadmore_prgressbar.setVisibility(View.GONE);
-						adapter.loadMore(list.getArticleList());
+						adapter.loadMore(list.getTalkList());
 						if (page < list.getPageTotal()) {
 							loadmoreTextView.setVisibility(View.VISIBLE);
 						}
@@ -168,14 +135,14 @@ public class ShowGroupActivity extends BaseActivity {
 							if (!"0".equals(articleId)) {
 								Intent intent = new Intent();
 								intent.putExtra("articleId", articleId);
-								intent.setClass(ShowGroupActivity.this,
+								intent.setClass(TalkActivity.this,
 										ShowArticleActivity.class);
 								startActivity(intent);
 							}
 						}
 					});
 				} else {
-					((AppException) msg.obj).makeToast(ShowGroupActivity.this);
+					((AppException) msg.obj).makeToast(TalkActivity.this);
 					progressBar.setVisibility(View.GONE);
 					loadmoreTextView.setVisibility(View.VISIBLE);
 					loadmore_prgressbar.setVisibility(View.GONE);
@@ -188,8 +155,7 @@ public class ShowGroupActivity extends BaseActivity {
 
 				Message msg = new Message();
 				try {
-					ArticleList list = appContext.getGroupArticleList(gid,
-							isRefresh, page);
+					TalkList list = appContext.getTalkList(page, isRefresh);
 					msg.what = 0;
 					msg.obj = list;
 				} catch (AppException e) {
@@ -199,5 +165,14 @@ public class ShowGroupActivity extends BaseActivity {
 				handler.sendMessage(msg);
 			}
 		}.start();
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			isExit();
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 }

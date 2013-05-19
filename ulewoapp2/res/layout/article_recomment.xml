@@ -130,7 +130,6 @@
 			android:layout_below="@id/textarea"
 			android:text="@string/cancel"/>	
 		</LinearLayout>
-		
 </RelativeLayout>
 <include  layout="@layout/progress"/>
 </FrameLayout>

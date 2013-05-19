@@ -34,6 +34,9 @@
 		 <activity android:name=".ui.LoginDialogActivity" android:theme="@android:style/Theme.NoTitleBar"/>
 		 <activity android:name=".ui.AboutActivity" android:theme="@android:style/Theme.NoTitleBar"/>
 		 <activity android:name=".ui.ReBlogActivity" android:theme="@android:style/Theme.NoTitleBar"/>
-    	 <service android:name=".service.UpdateService"></service>
+		 <activity android:name=".ui.TalkActivity" android:theme="@android:style/Theme.NoTitleBar"/>
+		 <activity android:name=".ui.TalkPostActivity" android:theme="@android:style/Theme.NoTitleBar"
+		     	 android:windowSoftInputMode="stateAlwaysVisible|adjustResize"/>
+		 <service android:name=".service.UpdateService"></service>
     </application>
 </manifest>

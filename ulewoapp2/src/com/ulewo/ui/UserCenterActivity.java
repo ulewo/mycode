@@ -65,7 +65,7 @@ public class UserCenterActivity extends BaseActivity {
 		super.setContentView(R.layout.usercenter);
 		appContext = (AppContext) getApplication();
 		initView();
-		fetchUserInfo();
+		fetchUserInfo(true);
 	}
 
 	private void initView() {
@@ -91,7 +91,7 @@ public class UserCenterActivity extends BaseActivity {
 			public void onClick(View paramView) {
 				isRefresh = true;
 				myprogressbar.setVisibility(View.VISIBLE);
-				fetchUserInfo();
+				fetchUserInfo(false);
 			}
 		});
 		head_back = (Button) findViewById(R.id.head_back);
@@ -112,7 +112,7 @@ public class UserCenterActivity extends BaseActivity {
 
 	}
 
-	private void fetchUserInfo() {
+	private void fetchUserInfo(final boolean readCache) {
 
 		userHandler = new Handler() {
 			@Override
@@ -136,7 +136,7 @@ public class UserCenterActivity extends BaseActivity {
 													.setImageResource(R.drawable.icon);
 										}
 									}
-								});
+								}, readCache);
 						if (cachedImage == null) {
 							user_info_icon.setImageResource(R.drawable.icon);
 						} else {

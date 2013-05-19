@@ -37,6 +37,7 @@ import com.ulewo.bean.ReArticleList;
 import com.ulewo.bean.ReArticleResult;
 import com.ulewo.bean.ReBlogList;
 import com.ulewo.bean.ReBlogResult;
+import com.ulewo.bean.TalkList;
 import com.ulewo.bean.UlewoVersion;
 import com.ulewo.bean.User;
 import com.ulewo.util.Constants;
@@ -99,6 +100,9 @@ public class ApiClient {
 
 	private static final String BASEUR_GETVERSION = BASEURL
 			+ "/android/fetchVersion.jspx";
+
+	private static final String BASEUR_GETTALKLIST = BASEURL
+			+ "/android/fetchTalk.jspx";
 
 	private static final String BASEUR_LOGIN = BASEURL + "/android/login.jspx";
 
@@ -383,6 +387,16 @@ public class ApiClient {
 		try {
 			return LoginUser.parse(convertInputStream2JSONObject(http_post(
 					newUrl, params, null)));
+		} catch (AppException e) {
+			throw e;
+		}
+	}
+
+	public static TalkList getTalkList(final int pageIndex) throws AppException {
+		String newUrl = BASEUR_GETTALKLIST + "?page=" + pageIndex;
+		try {
+			return TalkList
+					.parse(convertInputStream2JSONObject(http_get(newUrl)));
 		} catch (AppException e) {
 			throw e;
 		}

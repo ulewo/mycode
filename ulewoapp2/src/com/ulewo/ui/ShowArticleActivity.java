@@ -53,7 +53,7 @@ public class ShowArticleActivity extends BaseActivity {
 		progressBar.setOnClickListener(UIHelper.noOnclick(this));
 		backBtn = (Button) super.findViewById(R.id.head_back);
 		backBtn.setVisibility(View.VISIBLE);
-
+		backBtn.setOnClickListener(UIHelper.finish(this));
 		recommentBtn = (LinearLayout) super
 				.findViewById(R.id.article_recomment_btn);
 		recommentBtn.setVisibility(View.VISIBLE);
@@ -70,8 +70,6 @@ public class ShowArticleActivity extends BaseActivity {
 		authorView = (TextView) findViewById(R.id.article_author);
 		timeView = (TextView) findViewById(R.id.article_time);
 		recountView = (TextView) findViewById(R.id.article_recount);
-
-		backBtn.setOnClickListener(UIHelper.finish(this));
 
 		recommentBtn.setOnClickListener(new OnClickListener() {
 			@Override

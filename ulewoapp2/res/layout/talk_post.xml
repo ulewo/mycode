@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+   	<RelativeLayout 
+		android:orientation="vertical"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent">
+	    <LinearLayout 
+	    	android:id="@+id/common_head"
+	    	android:layout_width="fill_parent" 
+			android:layout_height="wrap_content"
+			android:focusable="true" 
+			android:focusableInTouchMode="true">
+	    	<include layout="@layout/common_head"/>
+	    </LinearLayout>
+	    
+	    <RelativeLayout 
+			android:id="@+id/talk_op"
+			android:layout_alignParentBottom="true"
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent"
+			android:paddingLeft="5dp"
+			android:background="@drawable/userinfo_title_bg">
+	    	<!-- 拍照 -->
+			<ImageButton
+				android:id="@+id/post_camera_btn"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentLeft="true"
+				android:button="@null"
+				android:layout_margin="10dp"
+				android:background="@drawable/post_camera_btn_selector"/>
+			<!-- 图片 -->
+			<ImageButton
+				android:id="@+id/post_photo_btn"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_toRightOf="@id/post_camera_btn"
+				android:button="@null"
+				android:layout_margin="10dp"
+				android:background="@drawable/post_photo_btn_selector"/>
+		</RelativeLayout> 
+	    <ImageView
+				android:id="@+id/talk_pub_image"
+				android:layout_width="60.0dip"
+				android:layout_height="45.0dip"
+				android:layout_marginLeft="5.0dip"
+				android:layout_marginBottom="5.0dip"
+				android:layout_above="@id/talk_op"
+				android:clickable="true"/>
+	    <LinearLayout 
+	    	android:layout_below="@id/common_head"
+	    	android:layout_width="fill_parent" 
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+	    	android:background="@color/white">
+	    	<EditText 
+				android:id="@+id/talk_post_textarea"
+				android:layout_width="fill_parent"
+				android:layout_height="100dp"
+				android:layout_below="@id/retit"
+				android:layout_marginTop="3dp"
+				android:background="@null"
+				android:gravity="top"/>
+	    </LinearLayout>
+	</RelativeLayout>
+	<include layout="@layout/progress"/>
+</FrameLayout>
