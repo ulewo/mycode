@@ -576,6 +576,10 @@
 		<action name="fetchTalk" class="android" method="fetchTalk">
 		</action>
 		
+		<action name="addTalk" class="android" method="addTalk">
+		</action>
+		
+		
 		<!--版本信息-->
 		<action name="fetchVersion" class="android" method="fetchVersion">
 		</action>
