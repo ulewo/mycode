@@ -85,7 +85,7 @@ public class NoticeThread implements Runnable {
 			break;
 		case RETALK:
 			talkDao = (TalkDao) Springfactory.getBean("talkDao");
-			url = "talkDetail.jspx?userId=" + sendUserId + "&talkId=" + articleId;
+			url = "talkDetail.jspx?userId=" + receiveUserId + "&talkId=" + articleId;
 			reTalk(articleId, receiveUserId, atUserIds, sendUserId, url);
 			break;
 		}
