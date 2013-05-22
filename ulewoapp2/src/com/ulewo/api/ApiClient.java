@@ -38,6 +38,7 @@ import com.ulewo.bean.ReArticleResult;
 import com.ulewo.bean.ReBlogList;
 import com.ulewo.bean.ReBlogResult;
 import com.ulewo.bean.TalkList;
+import com.ulewo.bean.TalkResult;
 import com.ulewo.bean.UlewoVersion;
 import com.ulewo.bean.User;
 import com.ulewo.util.Constants;
@@ -65,44 +66,33 @@ public class ApiClient {
 
 	private static final String HOST = BASEURL;
 
-	private static final String BASEURL_ARTICLELIST = BASEURL
-			+ "/android/fetchArticle.jspx";
+	private static final String BASEURL_ARTICLELIST = BASEURL + "/android/fetchArticle.jspx";
 
-	private static final String BASEUR_SHOWARTICLE = BASEURL
-			+ "/android/showArticle.jspx";
+	private static final String BASEUR_SHOWARTICLE = BASEURL + "/android/showArticle.jspx";
 
-	private static final String BASEUR_BLOGLIST = BASEURL
-			+ "/android/fetchBlog.jspx";
+	private static final String BASEUR_BLOGLIST = BASEURL + "/android/fetchBlog.jspx";
 
-	private static final String BASEUR_SHOWBLOG = BASEURL
-			+ "/android/showBlog.jspx";
+	private static final String BASEUR_SHOWBLOG = BASEURL + "/android/showBlog.jspx";
 
-	private static final String BASEUR_REBLOGLIST = BASEURL
-			+ "/android/fetchBlogComment.jspx";
+	private static final String BASEUR_REBLOGLIST = BASEURL + "/android/fetchBlogComment.jspx";
 
-	private static final String BASEUR_ADDREGLOG = BASEURL
-			+ "/android/addBlogComment.jspx";
+	private static final String BASEUR_ADDREGLOG = BASEURL + "/android/addBlogComment.jspx";
 
-	private static final String BASEUR_GROUPLIST = BASEURL
-			+ "/android/fetchWoWo.jspx";
+	private static final String BASEUR_GROUPLIST = BASEURL + "/android/fetchWoWo.jspx";
 
-	private static final String BASEUR_GROUPARTICLELIST = BASEURL
-			+ "/android/fetchArticleByGid.jspx";
+	private static final String BASEUR_GROUPARTICLELIST = BASEURL + "/android/fetchArticleByGid.jspx";
 
-	private static final String BASEUR_RECOMMENT = BASEURL
-			+ "/android/fetchReComment.jspx";
+	private static final String BASEUR_RECOMMENT = BASEURL + "/android/fetchReComment.jspx";
 
-	private static final String BASEUR_SUBRECOMMENT = BASEURL
-			+ "/android/addArticleComment.jspx";
+	private static final String BASEUR_SUBRECOMMENT = BASEURL + "/android/addArticleComment.jspx";
 
-	private static final String BASEUR_FETCHUSERINFO = BASEURL
-			+ "/android/fetchUserInfo.jspx";
+	private static final String BASEUR_FETCHUSERINFO = BASEURL + "/android/fetchUserInfo.jspx";
 
-	private static final String BASEUR_GETVERSION = BASEURL
-			+ "/android/fetchVersion.jspx";
+	private static final String BASEUR_GETVERSION = BASEURL + "/android/fetchVersion.jspx";
 
-	private static final String BASEUR_GETTALKLIST = BASEURL
-			+ "/android/fetchTalk.jspx";
+	private static final String BASEUR_GETTALKLIST = BASEURL + "/android/fetchTalk.jspx";
+
+	private static final String BASEUR_SAVETALK = BASEURL + "/FileUpload/FileUploadServlet";
 
 	private static final String BASEUR_LOGIN = BASEURL + "/android/login.jspx";
 
@@ -123,13 +113,11 @@ public class ApiClient {
 	 * @throws AppException
 	 * @author luohl
 	 */
-	public static ArticleList getArticleList(final int pageIndex)
-			throws AppException {
+	public static ArticleList getArticleList(final int pageIndex) throws AppException {
 
 		String newUrl = BASEURL_ARTICLELIST + "?page=" + pageIndex;
 		try {
-			return ArticleList
-					.parse(convertInputStream2JSONObject(http_get(newUrl)));
+			return ArticleList.parse(convertInputStream2JSONObject(http_get(newUrl)));
 		} catch (AppException e) {
 			throw e;
 		}
@@ -148,8 +136,7 @@ public class ApiClient {
 
 		String newUrl = BASEUR_SHOWARTICLE + "?articleId=" + articleId;
 		try {
-			return Article
-					.parse(convertInputStream2JSONObject(http_get(newUrl)));
+			return Article.parse(convertInputStream2JSONObject(http_get(newUrl)));
 		} catch (AppException e) {
 			throw e;
 		}
@@ -165,22 +152,18 @@ public class ApiClient {
 	 * @throws AppException
 	 * @author luohl
 	 */
-	public static ReArticleList getReArticleList(int articleId, int pageIndex)
-			throws AppException {
+	public static ReArticleList getReArticleList(int articleId, int pageIndex) throws AppException {
 
-		String newUrl = BASEUR_RECOMMENT + "?page=" + pageIndex + "&articleId="
-				+ articleId;
+		String newUrl = BASEUR_RECOMMENT + "?page=" + pageIndex + "&articleId=" + articleId;
 		try {
-			return ReArticleList
-					.parse(convertInputStream2JSONObject(http_get(newUrl)));
+			return ReArticleList.parse(convertInputStream2JSONObject(http_get(newUrl)));
 		} catch (AppException e) {
 			throw e;
 		}
 	}
 
-	public static ReArticleResult addReArticle(String content, int articleId,
-			String sessionId, String userName, String password)
-			throws AppException {
+	public static ReArticleResult addReArticle(String content, int articleId, String sessionId, String userName,
+			String password) throws AppException {
 
 		String newUrl = BASEUR_SUBRECOMMENT;
 		HashMap<String, Object> params = new HashMap<String, Object>();
@@ -192,12 +175,11 @@ public class ApiClient {
 
 		try {
 			ReArticleResult result = ReArticleResult
-					.parse(convertInputStream2JSONObject(http_post(newUrl,
-							params, null)));
+					.parse(convertInputStream2JSONObject(http_post(newUrl, params, null)));
 			if (result.isLogin()) {
-				AppContext.putUserInfo(Constants.SESSIONID,
-						result.getSessionId());
-			} else {
+				AppContext.putUserInfo(Constants.SESSIONID, result.getSessionId());
+			}
+			else {
 				AppContext.removeUserInfo(Constants.SESSIONID);
 			}
 			return result;
@@ -206,9 +188,8 @@ public class ApiClient {
 		}
 	}
 
-	public static ReArticleResult addSubReArticle(String content,
-			int articleId, String atUserId, String pid, String sessionId,
-			String userName, String password) throws AppException {
+	public static ReArticleResult addSubReArticle(String content, int articleId, String atUserId, String pid,
+			String sessionId, String userName, String password) throws AppException {
 
 		String newUrl = BASEUR_SUBRECOMMENT;
 		HashMap<String, Object> params = new HashMap<String, Object>();
@@ -221,12 +202,11 @@ public class ApiClient {
 		params.put(Constants.PASSWORD, password);
 		try {
 			ReArticleResult result = ReArticleResult
-					.parse(convertInputStream2JSONObject(http_post(newUrl,
-							params, null)));
+					.parse(convertInputStream2JSONObject(http_post(newUrl, params, null)));
 			if (result.isLogin()) {
-				AppContext.putUserInfo(Constants.SESSIONID,
-						result.getSessionId());
-			} else {
+				AppContext.putUserInfo(Constants.SESSIONID, result.getSessionId());
+			}
+			else {
 				AppContext.removeUserInfo(Constants.SESSIONID);
 			}
 			return result;
@@ -248,8 +228,7 @@ public class ApiClient {
 
 		String newUrl = BASEUR_BLOGLIST + "?page=" + pageIndex;
 		try {
-			return BlogList
-					.parse(convertInputStream2JSONObject(http_get(newUrl)));
+			return BlogList.parse(convertInputStream2JSONObject(http_get(newUrl)));
 		} catch (AppException e) {
 			throw e;
 		}
@@ -282,14 +261,11 @@ public class ApiClient {
 	 * @return
 	 * @throws AppException
 	 */
-	public static ReBlogList getReBlogList(int articleId, int pageIndex)
-			throws AppException {
+	public static ReBlogList getReBlogList(int articleId, int pageIndex) throws AppException {
 
-		String newUrl = BASEUR_REBLOGLIST + "?page=" + pageIndex
-				+ "&articleId=" + articleId;
+		String newUrl = BASEUR_REBLOGLIST + "?page=" + pageIndex + "&articleId=" + articleId;
 		try {
-			return ReBlogList
-					.parse(convertInputStream2JSONObject(http_get(newUrl)));
+			return ReBlogList.parse(convertInputStream2JSONObject(http_get(newUrl)));
 		} catch (AppException e) {
 			throw e;
 		}
@@ -306,9 +282,9 @@ public class ApiClient {
 	 * @return
 	 * @throws AppException
 	 */
-	public static ReBlogResult addReBlog(String content, int articleId,
-			String sessionId, String userName, String password)
-			throws AppException {
+	public static ReBlogResult addReBlog(String content, int articleId, String sessionId, String userName,
+			String password) throws AppException {
+
 		String newUrl = BASEUR_ADDREGLOG;
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("content", content);
@@ -318,13 +294,11 @@ public class ApiClient {
 		params.put(Constants.PASSWORD, password);
 
 		try {
-			ReBlogResult result = ReBlogResult
-					.parse(convertInputStream2JSONObject(http_post(newUrl,
-							params, null)));
+			ReBlogResult result = ReBlogResult.parse(convertInputStream2JSONObject(http_post(newUrl, params, null)));
 			if (result.isLogin()) {
-				AppContext.putUserInfo(Constants.SESSIONID,
-						result.getSessionId());
-			} else {
+				AppContext.putUserInfo(Constants.SESSIONID, result.getSessionId());
+			}
+			else {
 				AppContext.removeUserInfo(Constants.SESSIONID);
 			}
 			return result;
@@ -342,13 +316,11 @@ public class ApiClient {
 	 * @throws AppException
 	 * @author luohl
 	 */
-	public static GroupList getGroupList(final int pageIdex)
-			throws AppException {
+	public static GroupList getGroupList(final int pageIdex) throws AppException {
 
 		String newUrl = BASEUR_GROUPLIST + "?page=" + pageIdex;
 		try {
-			return GroupList
-					.parse(convertInputStream2JSONObject(http_get(newUrl)));
+			return GroupList.parse(convertInputStream2JSONObject(http_get(newUrl)));
 		} catch (AppException e) {
 			throw e;
 		}
@@ -364,39 +336,63 @@ public class ApiClient {
 	 * @throws AppException
 	 * @author luohl
 	 */
-	public static ArticleList getGroupArticleList(final int pageIndex,
-			final String gid) throws AppException {
+	public static ArticleList getGroupArticleList(final int pageIndex, final String gid) throws AppException {
 
-		String newUrl = BASEUR_GROUPARTICLELIST + "?page=" + pageIndex
-				+ "&gid=" + gid;
+		String newUrl = BASEUR_GROUPARTICLELIST + "?page=" + pageIndex + "&gid=" + gid;
 		try {
-			return ArticleList
-					.parse(convertInputStream2JSONObject(http_get(newUrl)));
+			return ArticleList.parse(convertInputStream2JSONObject(http_get(newUrl)));
 		} catch (AppException e) {
 			throw e;
 		}
 	}
 
-	public static LoginUser login(String userName, String password)
-			throws AppException {
+	public static LoginUser login(String userName, String password) throws AppException {
 
 		String newUrl = BASEUR_LOGIN;
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("userName", userName);
 		params.put("password", password);
 		try {
-			return LoginUser.parse(convertInputStream2JSONObject(http_post(
-					newUrl, params, null)));
+			return LoginUser.parse(convertInputStream2JSONObject(http_post(newUrl, params, null)));
 		} catch (AppException e) {
 			throw e;
 		}
 	}
 
 	public static TalkList getTalkList(final int pageIndex) throws AppException {
+
 		String newUrl = BASEUR_GETTALKLIST + "?page=" + pageIndex;
 		try {
-			return TalkList
-					.parse(convertInputStream2JSONObject(http_get(newUrl)));
+			return TalkList.parse(convertInputStream2JSONObject(http_get(newUrl)));
+		} catch (AppException e) {
+			throw e;
+		}
+	}
+
+	public static TalkResult saveTalk(String content, File file, String sessionId, String userName, String password)
+			throws AppException {
+
+		String newUrl = BASEUR_SAVETALK;
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("content", content);
+		params.put("file", file);
+		params.put(Constants.SESSIONID, sessionId);
+		params.put(Constants.USERNAME, userName);
+		params.put(Constants.PASSWORD, password);
+		try {
+			HashMap<String, File> files = null;
+			if (null != file) {
+				files = new HashMap<String, File>();
+				files.put("file", file);
+			}
+			TalkResult result = TalkResult.parse(convertInputStream2JSONObject(http_post(newUrl, params, files)));
+			if (result.isLogin()) {
+				AppContext.putUserInfo(Constants.SESSIONID, result.getSessionId());
+			}
+			else {
+				AppContext.removeUserInfo(Constants.SESSIONID);
+			}
+			return result;
 		} catch (AppException e) {
 			throw e;
 		}
@@ -409,6 +405,7 @@ public class ApiClient {
 	 * @throws AppException
 	 */
 	public static UlewoVersion getVersion() throws AppException {
+
 		try {
 			JSONObject json = convertInputStream2JSONObject(http_get(BASEUR_GETVERSION));
 			return UlewoVersion.parse(json);
@@ -420,6 +417,7 @@ public class ApiClient {
 	}
 
 	public static User fetchUserInfo(String userId) throws AppException {
+
 		String newUrl = BASEUR_FETCHUSERINFO + "?userId=" + userId;
 		try {
 			return User.parse(convertInputStream2JSONObject(http_get(newUrl)));
@@ -428,8 +426,7 @@ public class ApiClient {
 		}
 	}
 
-	private static JSONObject convertInputStream2JSONObject(InputStream in)
-			throws AppException {
+	private static JSONObject convertInputStream2JSONObject(InputStream in) throws AppException {
 
 		JSONObject jsonObj = null;
 		BufferedInputStream bis = null;
@@ -441,8 +438,7 @@ public class ApiClient {
 			while ((current = bis.read()) != -1) {
 				baf.append((byte) current);
 			}
-			String myString = EncodingUtils.getString(baf.toByteArray(),
-					"UTF-8");
+			String myString = EncodingUtils.getString(baf.toByteArray(), "UTF-8");
 			jsonObj = new JSONObject(myString);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -526,7 +522,8 @@ public class ApiClient {
 				}
 
 			}
-		} while (time < RETRY_TIME);
+		}
+		while (time < RETRY_TIME);
 		return new ByteArrayInputStream(responseBody.getBytes());
 	}
 
@@ -558,8 +555,7 @@ public class ApiClient {
 	 * @param files
 	 * @throws AppException
 	 */
-	private static InputStream http_post(String url,
-			HashMap<String, Object> params, HashMap<String, File> files)
+	private static InputStream http_post(String url, HashMap<String, Object> params, HashMap<String, File> files)
 			throws AppException {
 
 		// System.out.println("post_url==> "+url);
@@ -570,14 +566,12 @@ public class ApiClient {
 		PostMethod httpPost = null;
 
 		// post表单参数处理
-		int length = (params == null ? 0 : params.size())
-				+ (files == null ? 0 : files.size());
+		int length = (params == null ? 0 : params.size()) + (files == null ? 0 : files.size());
 		Part[] parts = new Part[length];
 		int i = 0;
 		if (params != null)
 			for (String name : params.keySet()) {
-				parts[i++] = new StringPart(name, String.valueOf(params
-						.get(name)), UTF_8);
+				parts[i++] = new StringPart(name, String.valueOf(params.get(name)), UTF_8);
 				// System.out.println("post_key==> "+name+"    value==>"+String.valueOf(params.get(name)));
 			}
 		if (files != null)
@@ -596,8 +590,7 @@ public class ApiClient {
 			try {
 				httpClient = getHttpClient();
 				httpPost = getHttpPost(url);
-				httpPost.setRequestEntity(new MultipartRequestEntity(parts,
-						httpPost.getParams()));
+				httpPost.setRequestEntity(new MultipartRequestEntity(parts, httpPost.getParams()));
 				int statusCode = httpClient.executeMethod(httpPost);
 				if (statusCode != HttpStatus.SC_OK) {
 					throw AppException.http(new HttpException());
@@ -634,7 +627,8 @@ public class ApiClient {
 				httpPost.releaseConnection();
 				httpClient = null;
 			}
-		} while (time < RETRY_TIME);
+		}
+		while (time < RETRY_TIME);
 
 		return new ByteArrayInputStream(responseBody.getBytes());
 	}
@@ -643,17 +637,13 @@ public class ApiClient {
 
 		HttpClient httpClient = new HttpClient();
 		// 设置 HttpClient 接收 Cookie,用与浏览器一样的策略
-		httpClient.getParams().setCookiePolicy(
-				CookiePolicy.BROWSER_COMPATIBILITY);
+		httpClient.getParams().setCookiePolicy(CookiePolicy.BROWSER_COMPATIBILITY);
 		// 设置 默认的超时重试处理策略
-		httpClient.getParams().setParameter(HttpMethodParams.RETRY_HANDLER,
-				new DefaultHttpMethodRetryHandler());
+		httpClient.getParams().setParameter(HttpMethodParams.RETRY_HANDLER, new DefaultHttpMethodRetryHandler());
 		// 设置 连接超时时间
-		httpClient.getHttpConnectionManager().getParams()
-				.setConnectionTimeout(TIMEOUT_CONNECTION);
+		httpClient.getHttpConnectionManager().getParams().setConnectionTimeout(TIMEOUT_CONNECTION);
 		// 设置 读数据超时时间
-		httpClient.getHttpConnectionManager().getParams()
-				.setSoTimeout(TIMEOUT_SOCKET);
+		httpClient.getHttpConnectionManager().getParams().setSoTimeout(TIMEOUT_SOCKET);
 		// 设置 字符集
 		httpClient.getParams().setContentCharset(UTF_8);
 		return httpClient;

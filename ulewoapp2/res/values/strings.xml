@@ -19,9 +19,6 @@
     
     <string name="show_article">文章正文</string>
     <string name="show_blog">博客正文</string>
-    <string name="guide_one">儿时友，莫相忘</string>
-    <string name="guide_two">同学情，请珍藏</string>
-    <string name="guide_three">共奋斗，同分享</string>
     <string name="request_timeout">请求网络超时</string>
     <string name="loading">加载中......</string>
     <string name="loadmore">加载更多......</string>
@@ -59,6 +56,10 @@
     <string name="latstversion">已经是最新版本了</string>
     <string name="send">发送</string>
     <string name="posttalk">发布吐槽</string>
+    <string name="choose_image">请选择图片</string>
+   	<string name="delete_image">确定删除该图片吗？</string>
+   	<string name="sure">确定</string>
+    <string name="cancle">取消</string>
     <!-- 更多 -->
     <string name="logout">注销登录</string>
     <string name="check_new_version">检测新版本</string>

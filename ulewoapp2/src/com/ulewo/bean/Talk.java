@@ -1,5 +1,6 @@
 package com.ulewo.bean;
 
+import java.io.File;
 import java.io.Serializable;
 
 import org.json.JSONException;
@@ -9,77 +10,113 @@ import com.ulewo.AppException;
 
 public class Talk implements Serializable {
 	private static final long serialVersionUID = 1L;
+
 	private int id;
+
 	private String userId;
+
 	private String userName;
+
 	private String userIcon;
+
 	private String content;
+
 	private String imgurl;
+
 	private String createTime;
+
 	private int reCount;
 
+	private File file;
+
 	public int getId() {
+
 		return id;
 	}
 
 	public void setId(int id) {
+
 		this.id = id;
 	}
 
 	public String getUserId() {
+
 		return userId;
 	}
 
 	public void setUserId(String userId) {
+
 		this.userId = userId;
 	}
 
 	public String getUserName() {
+
 		return userName;
 	}
 
 	public void setUserName(String userName) {
+
 		this.userName = userName;
 	}
 
 	public String getUserIcon() {
+
 		return userIcon;
 	}
 
 	public void setUserIcon(String userIcon) {
+
 		this.userIcon = userIcon;
 	}
 
 	public String getContent() {
+
 		return content;
 	}
 
 	public void setContent(String content) {
+
 		this.content = content;
 	}
 
 	public String getCreateTime() {
+
 		return createTime;
 	}
 
 	public void setCreateTime(String createTime) {
+
 		this.createTime = createTime;
 	}
 
 	public String getImgurl() {
+
 		return imgurl;
 	}
 
 	public void setImgurl(String imgurl) {
+
 		this.imgurl = imgurl;
 	}
 
 	public int getReCount() {
+
 		return reCount;
 	}
 
 	public void setReCount(int reCount) {
+
 		this.reCount = reCount;
+	}
+
+	public File getFile() {
+
+		return file;
+	}
+
+	public void setFile(File file) {
+
+		this.file = file;
 	}
 
 	public static Talk parse(JSONObject jsonobj) throws AppException {
@@ -88,7 +125,8 @@ public class Talk implements Serializable {
 			JSONObject obj = null;
 			if (!jsonobj.isNull("talk")) {
 				obj = new JSONObject(jsonobj.getString("talk"));
-			} else {
+			}
+			else {
 				obj = jsonobj;
 			}
 			Talk talk = new Talk();
