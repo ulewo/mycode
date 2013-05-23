@@ -1,12 +1,6 @@
 package com.lhl.quan.action;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -94,7 +88,7 @@ public class AndroidAction extends BaseAction {
 
 	private static final int RESULTCODE_LOGINFAILL = 100;
 
-	private File file;
+	private String imageUrl;
 
 	/**
 	 * 
@@ -568,7 +562,7 @@ public class AndroidAction extends BaseAction {
 				User loginUser = new User();
 				loginUser.setUserId(userInfo.getUserId());
 				loginUser.setUserName(userName);
-				loginUser.setUserLittleIcon(Constant.WEBSTIE_IMAGEURL + userInfo.getUserLittleIcon());
+				loginUser.setUserLittleIcon(userInfo.getUserLittleIcon());
 				getSession().setAttribute("user", loginUser);
 				MySessionContext.AddSession(session);
 
@@ -676,22 +670,11 @@ public class AndroidAction extends BaseAction {
 				}
 			}
 			if (isLogin) {
-				InputStream in = getRequest().getInputStream();
-				SimpleDateFormat formater = new SimpleDateFormat("yyyyMM");
-				String realPath = this.request.getSession().getServletContext().getRealPath("/") + "upload/"
-						+ formater.format(new Date()) + ".jpg";
-				OutputStream out = new FileOutputStream(new File(realPath));
-				int len = 0;
-				byte[] temp = new byte[1024];
-				while ((len = in.read(temp)) > 0) {
-					out.write(temp, 0, len);
-				}
-				out.flush();
 				Object sessionObj = session.getAttribute("user");
 				User sessionUser = (User) sessionObj;
 				talk = new Talk();
 				talk.setContent(content);
-				talk.setImgurl("");
+				talk.setImgurl(imageUrl);
 				talk.setUserId(sessionUser.getUserId());
 				talk.setUserName(sessionUser.getUserName());
 				talk.setUserIcon(sessionUser.getUserLittleIcon());
@@ -853,9 +836,9 @@ public class AndroidAction extends BaseAction {
 		this.reTalkService = reTalkService;
 	}
 
-	public File getFile() {
+	public void setImageUrl(String imageUrl) {
 
-		return file;
+		this.imageUrl = imageUrl;
 	}
 
 }
