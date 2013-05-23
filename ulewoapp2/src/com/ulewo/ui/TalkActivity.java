@@ -72,6 +72,11 @@ public class TalkActivity extends BaseActivity {
 		initData();
 	}
 
+	@Override
+	protected void onRestart() {
+		super.onRestart();
+	}
+
 	private void initView() {
 
 		main_head_title = (TextView) findViewById(R.id.main_head_title);
@@ -115,11 +120,23 @@ public class TalkActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 
-				Intent intent = new Intent(TalkActivity.this, TalkPostActivity.class);
-				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				startActivity(intent);
+				Intent intent = new Intent(TalkActivity.this,
+						TalkPostActivity.class);
+				startActivityForResult(intent, 20);
+				// startActivity(intent);
 			}
 		});
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == 20) {
+			progressBar.setVisibility(View.VISIBLE);
+			page = 1;
+			isRefresh = true;
+			initData();
+		}
 	}
 
 	private void initData() {
@@ -132,14 +149,14 @@ public class TalkActivity extends BaseActivity {
 				if (msg.what != -1 && null != msg.obj) {
 					TalkList list = (TalkList) msg.obj;
 					if (adapter == null || page == 1) {
-						adapter = new TalkListAdapter(TalkActivity.this, list.getTalkList(), new AsyncImageLoader(),
+						adapter = new TalkListAdapter(TalkActivity.this,
+								list.getTalkList(), new AsyncImageLoader(),
 								listView);
 						listView.setAdapter(adapter);
 						if (page < list.getPageTotal()) {
 							loadmoreTextView.setVisibility(View.VISIBLE);
 						}
-					}
-					else {
+					} else {
 						loadmore_prgressbar.setVisibility(View.GONE);
 						adapter.loadMore(list.getTalkList());
 						if (page < list.getPageTotal()) {
@@ -147,19 +164,21 @@ public class TalkActivity extends BaseActivity {
 						}
 					}
 					listView.setOnItemClickListener(new OnItemClickListener() {
-						public void onItemClick(AdapterView<?> parent, View view, int postion, long id) {
+						public void onItemClick(AdapterView<?> parent,
+								View view, int postion, long id) {
 
-							String articleId = String.valueOf(adapter.getItemId(postion));
+							String articleId = String.valueOf(adapter
+									.getItemId(postion));
 							if (!"0".equals(articleId)) {
 								Intent intent = new Intent();
 								intent.putExtra("articleId", articleId);
-								intent.setClass(TalkActivity.this, ShowArticleActivity.class);
+								intent.setClass(TalkActivity.this,
+										ShowArticleActivity.class);
 								startActivity(intent);
 							}
 						}
 					});
-				}
-				else {
+				} else {
 					((AppException) msg.obj).makeToast(TalkActivity.this);
 					progressBar.setVisibility(View.GONE);
 					loadmoreTextView.setVisibility(View.VISIBLE);

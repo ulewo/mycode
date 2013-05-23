@@ -92,7 +92,11 @@ public class TalkListAdapter extends BaseAdapter {
 		TextView content = (TextView) view.findViewById(R.id.talk_content);
 		TextView talk_time = (TextView) view.findViewById(R.id.talk_time);
 		TextView recount = (TextView) view.findViewById(R.id.talk_recount);
-
+		ImageView talk_img_icon = (ImageView) view
+				.findViewById(R.id.talk_img_icon);
+		if (talk.getImgurl() != "" && null != talk.getImgurl()) {
+			talk_img_icon.setVisibility(View.VISIBLE);
+		}
 		// imageView.setImageBitmap(returnBitMap(blog.getGroupIcon()));
 		String imageUrl = talk.getUserIcon();
 		imageView.setTag(imageUrl);
