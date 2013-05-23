@@ -115,8 +115,8 @@ public class TalkActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 
-				Intent intent = new Intent();
-				intent.setClass(TalkActivity.this, TalkPostActivity.class);
+				Intent intent = new Intent(TalkActivity.this, TalkPostActivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				startActivity(intent);
 			}
 		});

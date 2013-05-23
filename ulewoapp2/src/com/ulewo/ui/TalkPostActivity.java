@@ -267,7 +267,6 @@ public class TalkPostActivity extends BaseActivity {
 					if (!savedir.exists()) {
 						savedir.mkdirs();
 					}
-
 					String largeFileName = FileUtils.getFileName(theLarge);
 					String largeFilePath = savePath + largeFileName;
 					// 判断是否已存在缩略图
@@ -276,7 +275,7 @@ public class TalkPostActivity extends BaseActivity {
 						imgFile = new File(theThumbnail);
 					}
 					else {
-						// 生成上传的800宽度图片
+						// 生成上传的650宽度图片
 						String thumbFileName = "thumb_" + largeFileName;
 						theThumbnail = savePath + thumbFileName;
 						if (new File(theThumbnail).exists()) {
@@ -285,7 +284,7 @@ public class TalkPostActivity extends BaseActivity {
 						else {
 							try {
 								// 压缩上传的图片
-								ImageUtils.createImageThumbnail(TalkPostActivity.this, theLarge, theThumbnail, 800, 80);
+								ImageUtils.createImageThumbnail(TalkPostActivity.this, theLarge, theThumbnail, 650, 80);
 								imgFile = new File(theThumbnail);
 							} catch (IOException e) {
 								e.printStackTrace();
@@ -358,10 +357,7 @@ public class TalkPostActivity extends BaseActivity {
 				public void handleMessage(Message msg) {
 
 					if (msg.what == 0) {
-						Intent intent = new Intent();
-						intent.putExtra("addBack", "addBack");
-						intent.setClass(TalkPostActivity.this, TalkActivity.class);
-						startActivity(intent);
+						UIHelper.finish(TalkPostActivity.this);
 					}
 					else {
 						((AppException) msg.obj).makeToast(TalkPostActivity.this);
