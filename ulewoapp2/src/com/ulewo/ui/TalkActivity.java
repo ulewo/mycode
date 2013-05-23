@@ -24,25 +24,36 @@ import com.ulewo.cache.AsyncImageLoader;
 public class TalkActivity extends BaseActivity {
 
 	private TextView main_head_title = null;
+
 	private LinearLayout progressBar = null;
+
 	// 加载更多
 	private View loadMoreView = null;
+
 	// 加载更多按钮
 	private TextView loadmoreTextView = null;
+
 	// 加载更多进度条
 	private LinearLayout loadmore_prgressbar = null;
+
 	// 刷新按钮
 	private ImageButton refreshBtn = null;
+
 	// 发表吐槽按钮
 	private ImageButton postBtn = null;
+
 	// 全局页码
 	private int page = 1;
+
 	// 全局变量是否刷新
 	boolean isRefresh = false;
 
 	ListView listView = null;
+
 	private TalkListAdapter adapter = null;
+
 	private Handler handler = null;
+
 	private AppContext appContext;
 
 	@Override
@@ -51,11 +62,18 @@ public class TalkActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		super.setContentView(R.layout.talk);
 		appContext = (AppContext) getApplication();
+		Intent intent = getIntent();
+		Bundle bunde = intent.getExtras();
+		if (bunde != null) {
+			page = 1;
+			isRefresh = true;
+		}
 		initView();
 		initData();
 	}
 
 	private void initView() {
+
 		main_head_title = (TextView) findViewById(R.id.main_head_title);
 		main_head_title.setText(R.string.name_talk);
 		progressBar = (LinearLayout) findViewById(R.id.myprogressbar);
@@ -96,6 +114,7 @@ public class TalkActivity extends BaseActivity {
 		postBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+
 				Intent intent = new Intent();
 				intent.setClass(TalkActivity.this, TalkPostActivity.class);
 				startActivity(intent);
@@ -104,6 +123,7 @@ public class TalkActivity extends BaseActivity {
 	}
 
 	private void initData() {
+
 		handler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
@@ -112,14 +132,14 @@ public class TalkActivity extends BaseActivity {
 				if (msg.what != -1 && null != msg.obj) {
 					TalkList list = (TalkList) msg.obj;
 					if (adapter == null || page == 1) {
-						adapter = new TalkListAdapter(TalkActivity.this,
-								list.getTalkList(), new AsyncImageLoader(),
+						adapter = new TalkListAdapter(TalkActivity.this, list.getTalkList(), new AsyncImageLoader(),
 								listView);
 						listView.setAdapter(adapter);
 						if (page < list.getPageTotal()) {
 							loadmoreTextView.setVisibility(View.VISIBLE);
 						}
-					} else {
+					}
+					else {
 						loadmore_prgressbar.setVisibility(View.GONE);
 						adapter.loadMore(list.getTalkList());
 						if (page < list.getPageTotal()) {
@@ -127,21 +147,19 @@ public class TalkActivity extends BaseActivity {
 						}
 					}
 					listView.setOnItemClickListener(new OnItemClickListener() {
-						public void onItemClick(AdapterView<?> parent,
-								View view, int postion, long id) {
+						public void onItemClick(AdapterView<?> parent, View view, int postion, long id) {
 
-							String articleId = String.valueOf(adapter
-									.getItemId(postion));
+							String articleId = String.valueOf(adapter.getItemId(postion));
 							if (!"0".equals(articleId)) {
 								Intent intent = new Intent();
 								intent.putExtra("articleId", articleId);
-								intent.setClass(TalkActivity.this,
-										ShowArticleActivity.class);
+								intent.setClass(TalkActivity.this, ShowArticleActivity.class);
 								startActivity(intent);
 							}
 						}
 					});
-				} else {
+				}
+				else {
 					((AppException) msg.obj).makeToast(TalkActivity.this);
 					progressBar.setVisibility(View.GONE);
 					loadmoreTextView.setVisibility(View.VISIBLE);

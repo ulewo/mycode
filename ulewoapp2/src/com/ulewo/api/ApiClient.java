@@ -1,11 +1,13 @@
 package com.ulewo.api;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 
 import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
@@ -20,6 +22,12 @@ import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
 import org.apache.commons.httpclient.methods.multipart.Part;
 import org.apache.commons.httpclient.methods.multipart.StringPart;
 import org.apache.commons.httpclient.params.HttpMethodParams;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.ByteArrayBuffer;
 import org.apache.http.util.EncodingUtils;
 import org.json.JSONException;
@@ -92,7 +100,9 @@ public class ApiClient {
 
 	private static final String BASEUR_GETTALKLIST = BASEURL + "/android/fetchTalk.jspx";
 
-	private static final String BASEUR_SAVETALK = BASEURL + "/FileUpload/FileUploadServlet";
+	private static final String BASEUR_SAVETALK = BASEURL + "/android/addTalk.jspx";
+
+	private static final String BASEUR_IMAGEUPLOAD = BASEURL + "/FileUpload";
 
 	private static final String BASEUR_LOGIN = BASEURL + "/android/login.jspx";
 
@@ -372,20 +382,23 @@ public class ApiClient {
 	public static TalkResult saveTalk(String content, File file, String sessionId, String userName, String password)
 			throws AppException {
 
-		String newUrl = BASEUR_SAVETALK;
+		String imageUrl = "";
+		if (null != file) {
+			try {
+				imageUrl = doPost(BASEUR_IMAGEUPLOAD, file);
+			} catch (Exception e) {
+				throw AppException.io(e);
+			}
+		}
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("content", content);
-		params.put("file", file);
+		params.put("imageUrl", imageUrl);
 		params.put(Constants.SESSIONID, sessionId);
 		params.put(Constants.USERNAME, userName);
 		params.put(Constants.PASSWORD, password);
 		try {
-			HashMap<String, File> files = null;
-			if (null != file) {
-				files = new HashMap<String, File>();
-				files.put("file", file);
-			}
-			TalkResult result = TalkResult.parse(convertInputStream2JSONObject(http_post(newUrl, params, files)));
+			TalkResult result = TalkResult
+					.parse(convertInputStream2JSONObject(http_post(BASEUR_SAVETALK, params, null)));
 			if (result.isLogin()) {
 				AppContext.putUserInfo(Constants.SESSIONID, result.getSessionId());
 			}
@@ -393,8 +406,8 @@ public class ApiClient {
 				AppContext.removeUserInfo(Constants.SESSIONID);
 			}
 			return result;
-		} catch (AppException e) {
-			throw e;
+		} catch (Exception e) {
+			throw AppException.http(e);
 		}
 	}
 
@@ -647,6 +660,41 @@ public class ApiClient {
 		// 设置 字符集
 		httpClient.getParams().setContentCharset(UTF_8);
 		return httpClient;
+	}
+
+	public static String doPost(String url, File file) throws Exception {
+
+		org.apache.http.client.HttpClient client = new DefaultHttpClient();
+		HttpPost post = new HttpPost(url);
+		MultipartEntity entity_ = new MultipartEntity();
+		// 添加文件参数  
+		if (file != null && file.exists()) {
+			entity_.addPart("file", new FileBody(file));
+		}
+		post.setEntity(entity_);
+
+		HttpResponse response = client.execute(post);
+		/** 返回状态 **/
+		int statusCode = response.getStatusLine().getStatusCode();
+		StringBuffer sb = new StringBuffer();
+		if (statusCode == HttpStatus.SC_OK) {
+			HttpEntity entity = response.getEntity();
+			if (entity != null) {
+				InputStream instream = entity.getContent();
+				BufferedReader br = new BufferedReader(new InputStreamReader(instream));
+				String tempLine;
+				while ((tempLine = br.readLine()) != null) {
+					sb.append(tempLine);
+				}
+			}
+		}
+		post.abort();
+		String str = String.valueOf(sb);
+		//如果不包含.那么就不是图片
+		if (!str.contains(".")) {
+			return null;
+		}
+		return str;
 	}
 
 }

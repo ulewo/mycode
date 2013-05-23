@@ -262,7 +262,7 @@ public class TalkPostActivity extends BaseActivity {
 
 				if (bitmap != null) {
 					// 存放照片的文件夹
-					String savePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/OSChina/Camera/";
+					String savePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/ulewo/Camera/";
 					File savedir = new File(savePath);
 					if (!savedir.exists()) {
 						savedir.mkdirs();
@@ -341,6 +341,11 @@ public class TalkPostActivity extends BaseActivity {
 	private View.OnClickListener publishClickListener = new View.OnClickListener() {
 		public void onClick(View v) {
 
+			if (null == AppContext.getSessionId()) {
+				UIHelper.showLoginDialog(TalkPostActivity.this);
+				return;
+			}
+			progressBar.setVisibility(View.VISIBLE);
 			//隐藏软键盘
 			imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
@@ -352,14 +357,14 @@ public class TalkPostActivity extends BaseActivity {
 			final Handler handler = new Handler() {
 				public void handleMessage(Message msg) {
 
-					if (msg.what == 1) {
-						//清除之前保存的编辑内容
-						//ac.removeProperty(tempTweetKey, tempTweetImageKey);
-						finish();
+					if (msg.what == 0) {
+						Intent intent = new Intent();
+						intent.putExtra("addBack", "addBack");
+						intent.setClass(TalkPostActivity.this, TalkActivity.class);
+						startActivity(intent);
 					}
 					else {
-						//mMessage.setVisibility(View.GONE);
-						//mForm.setVisibility(View.VISIBLE);
+						((AppException) msg.obj).makeToast(TalkPostActivity.this);
 					}
 				}
 			};
@@ -369,11 +374,9 @@ public class TalkPostActivity extends BaseActivity {
 
 					Message msg = new Message();
 					TalkResult res = null;
-					int what = 0;
 					try {
 						res = appContext.addTalk(content, imgFile);
-						what = 1;
-						msg.what = 1;
+						msg.what = 0;
 						msg.obj = res;
 					} catch (AppException e) {
 						e.printStackTrace();
