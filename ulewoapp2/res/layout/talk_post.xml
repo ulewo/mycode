@@ -31,7 +31,7 @@
 				android:layout_height="wrap_content"
 				android:layout_alignParentLeft="true"
 				android:button="@null"
-				android:layout_margin="10dp"
+				android:layout_margin="8dp"
 				android:background="@drawable/post_camera_btn_selector"/>
 			<!-- 图片 -->
 			<ImageButton
@@ -40,7 +40,7 @@
 				android:layout_height="wrap_content"
 				android:layout_toRightOf="@id/post_camera_btn"
 				android:button="@null"
-				android:layout_margin="10dp"
+				android:layout_margin="8dp"
 				android:background="@drawable/post_photo_btn_selector"/>
 		</RelativeLayout> 
 	    <ImageView
@@ -59,6 +59,7 @@
 	    	android:background="@color/white">
 	    	<EditText 
 				android:id="@+id/talk_post_textarea"
+				android:layout_margin="2dp"
 				android:layout_width="fill_parent"
 				android:layout_height="100dp"
 				android:layout_below="@id/retit"
