@@ -58,7 +58,7 @@ editor.ready(function(){
 });
 
 function submitForm(){
-	if(editor.getContent()==""){
+	if(editor.getContentTxt().trim()==""){
 		alert("内容不能为空");
 		return ;
 	}else{

@@ -105,7 +105,7 @@
 			keyWord = keyWord.replaceHtml();
 			$("#keyWord").val(keyWord);
 		}
-		if(editor.getContent()==""){
+		if(editor.getContentTxt().trim()==""){
 			alert("内容不能为空");
 			return ;
 		}else{

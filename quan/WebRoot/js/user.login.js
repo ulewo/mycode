@@ -70,14 +70,17 @@ function loginDo(redirectUrl) {
 		},
 		url : 'login.jspx',// 请求的action路径
 		success : function(data) {
-			refreshImage();
+
 			if (data.result == "success") {// 登录成功
 				$("#subBtn").html("<a href='javascript:login()'>登录</a>");
 				document.location.href = redirectUrl || "../index.jspx";
 			} else {
+				refreshImage();
 				$("#loginerror").html(
 						"<img src='../images/error.png'/>" + data.msg);
-				$("#subBtn").html("<a href='javascript:loginDo(\""+redirectUrl+"\")'>登录</a>");
+				$("#subBtn").html(
+						"<a href='javascript:loginDo(\"" + redirectUrl
+								+ "\")'>登录</a>");
 			}
 		},
 		error : function() {

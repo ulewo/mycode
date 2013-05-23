@@ -19,7 +19,7 @@
   	<div class="main">
 		<div class="myinfo">
 			<div class="info">
-                <div class="title">优酷Android手机客户端</div>
+                <div class="title">有乐窝Android手机客户端</div>
                 <div class="desc">最新版本: </div><div class="text">V1.0&nbsp;&nbsp;发布日期: 2013.05.01 &nbsp;&nbsp;软件大小: 341kb</div>
                 <div class="desc">版本说明: </div><div class="text">1.实现基本功能模块文章浏览&nbsp;&nbsp;2.回复窝窝文章&nbsp;&nbsp;3.博客文章浏览&nbsp;&nbsp;4.回复博客</div> 
                 <div class="desc">配置要求: </div><div class="text">320x480以上分辨率;支持Android2.2以上系统版本</div>

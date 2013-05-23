@@ -175,7 +175,9 @@
 			  	<span class="base_tit">积分：</span><span class="base_info">${userVo.mark}</span><br>
 		  	</div>
 		  	<div style="padding:10px;border:1px solid #EEEEEE;">
-		  		<div class="topblog_titcon"><span class="topblog_tit">吐槽</span><span class="topblog_link"><a href="moretalk.jsp?userId=${param.userId}">更多吐槽&gt;&gt;</a></div>
+		  		<div class="topblog_titcon">
+		  			<span class="topblog_tit">吐槽</span>
+		  			<span class="topblog_link"><a href="moretalk.jsp?userId=${param.userId}">更多吐槽&gt;&gt;</a></span></div>
 		  		<div id="talklist"></div>
 		  	</div>
 		  	<div class="topblog">
