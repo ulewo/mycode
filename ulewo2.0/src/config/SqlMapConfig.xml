@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMapConfig      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+   <settings useStatementNamespaces="true"
+             cacheModelsEnabled="true"
+             maxSessions="30"
+             maxTransactions="100"
+             maxRequests="1000"
+             defaultStatementTimeout="15"/>
+   <sqlMap resource="com/ulewo/entity/Message.xml" />
+   <sqlMap resource="com/ulewo/entity/Member.xml" />
+</sqlMapConfig>
+

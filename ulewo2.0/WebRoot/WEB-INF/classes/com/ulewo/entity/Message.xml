@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="message">
+	<cacheModel id="user-cache" type="LRU" readOnly="true"
+		serialize="false">
+		<flushInterval hours="24" />
+		<property value="500" name="size" />
+	</cacheModel>
+	
+	<!--映射实体类 -->
+	<typeAlias alias="message" type="com.ulewo.entity.Message" />
+	
+	<!--单笔查询-->
+	<select id="selectById" resultClass="message" parameterClass="java.lang.Integer">
+		select * from board where id= #id#
+	</select>
+	
+	<!--多笔查询-->
+	<select id="selectAll" resultClass="message">
+		select * from board
+	</select>
+	
+	<!-- 添加-->
+	<insert id="add" parameterClass="message">
+		insert into board (id,username,usericon,message,posttime)
+		values(#id#,#userName#,#userIcon#,#message#,#postTime#)
+		<selectKey resultClass="int" keyProperty="id">  
+   	 		select max(id) from message  
+  	 	</selectKey>  
+	</insert>
+	
+	<!--删除-->
+	<delete id="delete" parameterClass="java.lang.Integer"> 
+       delete from board where id = #id#
+	</delete>
+	
+	<!-- 更新 -->
+	<update id="update"  parameterClass="message">
+		update board set 
+		username = #userName#,
+		usericon = #userIcon#,
+		message  = #message#
+	</update>
+</sqlMap>
