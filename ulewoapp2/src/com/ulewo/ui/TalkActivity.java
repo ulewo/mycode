@@ -18,6 +18,7 @@ import com.ulewo.AppContext;
 import com.ulewo.AppException;
 import com.ulewo.R;
 import com.ulewo.adapter.TalkListAdapter;
+import com.ulewo.bean.Talk;
 import com.ulewo.bean.TalkList;
 import com.ulewo.cache.AsyncImageLoader;
 
@@ -74,6 +75,7 @@ public class TalkActivity extends BaseActivity {
 
 	@Override
 	protected void onRestart() {
+
 		super.onRestart();
 	}
 
@@ -120,8 +122,7 @@ public class TalkActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 
-				Intent intent = new Intent(TalkActivity.this,
-						TalkPostActivity.class);
+				Intent intent = new Intent(TalkActivity.this, TalkPostActivity.class);
 				startActivityForResult(intent, 20);
 				// startActivity(intent);
 			}
@@ -130,6 +131,7 @@ public class TalkActivity extends BaseActivity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode == 20) {
 			progressBar.setVisibility(View.VISIBLE);
@@ -147,16 +149,16 @@ public class TalkActivity extends BaseActivity {
 
 				progressBar.setVisibility(View.GONE);
 				if (msg.what != -1 && null != msg.obj) {
-					TalkList list = (TalkList) msg.obj;
+					final TalkList list = (TalkList) msg.obj;
 					if (adapter == null || page == 1) {
-						adapter = new TalkListAdapter(TalkActivity.this,
-								list.getTalkList(), new AsyncImageLoader(),
+						adapter = new TalkListAdapter(TalkActivity.this, list.getTalkList(), new AsyncImageLoader(),
 								listView);
 						listView.setAdapter(adapter);
 						if (page < list.getPageTotal()) {
 							loadmoreTextView.setVisibility(View.VISIBLE);
 						}
-					} else {
+					}
+					else {
 						loadmore_prgressbar.setVisibility(View.GONE);
 						adapter.loadMore(list.getTalkList());
 						if (page < list.getPageTotal()) {
@@ -164,21 +166,27 @@ public class TalkActivity extends BaseActivity {
 						}
 					}
 					listView.setOnItemClickListener(new OnItemClickListener() {
-						public void onItemClick(AdapterView<?> parent,
-								View view, int postion, long id) {
+						public void onItemClick(AdapterView<?> parent, View view, int postion, long id) {
 
-							String articleId = String.valueOf(adapter
-									.getItemId(postion));
-							if (!"0".equals(articleId)) {
+							String talkId = String.valueOf(adapter.getItemId(postion));
+							Talk talk = list.getTalkList().get(postion);
+							if (!"0".equals(talkId)) {
 								Intent intent = new Intent();
-								intent.putExtra("articleId", articleId);
-								intent.setClass(TalkActivity.this,
-										ShowArticleActivity.class);
+								intent.putExtra("talkId", talkId);
+								intent.putExtra("imgUrl", talk.getImgurl());
+								intent.putExtra("username", talk.getUserName());
+								intent.putExtra("usericon", talk.getUserIcon());
+								intent.putExtra("userid", talk.getUserId());
+								intent.putExtra("content", talk.getContent());
+								intent.putExtra("time", talk.getCreateTime());
+								intent.putExtra("recount", talk.getReCount());
+								intent.setClass(TalkActivity.this, ShowTalkActivity.class);
 								startActivity(intent);
 							}
 						}
 					});
-				} else {
+				}
+				else {
 					((AppException) msg.obj).makeToast(TalkActivity.this);
 					progressBar.setVisibility(View.GONE);
 					loadmoreTextView.setVisibility(View.VISIBLE);

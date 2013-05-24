@@ -37,6 +37,7 @@
 		 <activity android:name=".ui.TalkActivity" android:theme="@android:style/Theme.NoTitleBar"/>
 		 <activity android:name=".ui.TalkPostActivity" android:theme="@android:style/Theme.NoTitleBar"
 		     	 android:windowSoftInputMode="stateAlwaysVisible|adjustResize"/>
+		 <activity android:name=".ui.ShowTalkActivity" android:theme="@android:style/Theme.NoTitleBar"/>
 		 <service android:name=".service.UpdateService"></service>
     </application>
 </manifest>

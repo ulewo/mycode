@@ -30,7 +30,7 @@
 			<!-- 作者 -->
 			<TextView 
 				android:id="@+id/talk_username"
-				android:layout_width="fill_parent"
+				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_alignParentLeft="true"
 				android:textColor="@color/nameblue"
@@ -43,6 +43,11 @@
 			    android:layout_height="wrap_content"
 			    android:textColor="@color/black"
 				android:textSize="13dp"/>
+			<ImageView 
+			    android:visibility="gone"
+			    android:id="@+id/talk_img"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"/>
 			<RelativeLayout 
 		   		android:layout_width="fill_parent"
 		    	android:layout_height="wrap_content"
@@ -79,6 +84,7 @@
 		    	    android:layout_width="wrap_content"
 			    	android:layout_height="wrap_content"
 			    	android:layout_toRightOf="@id/talk_recount"
+			    	android:layout_marginLeft="10dp"
 			    	android:src="@drawable/img"
 			    	android:layout_marginTop="3dp"/>
     		</RelativeLayout>
