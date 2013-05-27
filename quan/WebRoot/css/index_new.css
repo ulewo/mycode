@@ -30,9 +30,11 @@ ul li{margin:0px;padding:0px;list-style:none;}
 .create_wo{background:#38A3DB;height:30px;color:#FFFFFF;text-align:center;padding-top:10px;}
 .create_wo a{color:#FFFFFF;}
 .create_wo a:hover{color:#FFFFFF;}
-.day_pic{float:left;width:120px;margin-left:10px;margin-top:10px;}
-.day_pic_img{width:120px;height:80px;overflow:hidden;}
-.day_pic img{width:120px;}
+.day_pic{float:left;width:130px;margin-left:15px;margin-top:10px;}
+a.day_pic_link{width:124px;height:100px;overflow:hidden;display:block;border:1px solid #38A2DB;padding:2px;}
+a.day_pic_link:hover{border:1px solid red;}
+.day_pic_link span{width:124px;height:100px;display:block;overflow: hidden;}
+.day_pic img{width:124px;border:0px;}
 
 .day_pic_tit{text-align:center;padding-top:3px;}
 .day_pic_tit a{color:#333;text-decoration:none;font-size:13px;display:block;width:120px;overflow:hidden;white-space:nowrap;}

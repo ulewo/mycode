@@ -50,7 +50,9 @@
   						</div>
   					</c:if>
   					<div>
-  						<span class="detail_item_time">${talk.createTime}</span>
+  						<span class="detail_item_time">${talk.createTime}
+							<c:if test="${talk.sourceFrom=='A'}">Android</c:if>
+  						</span>
   						<span class="detail_item_recount">评论(${talk.reCount})</span>
   					</div>
   				</div>

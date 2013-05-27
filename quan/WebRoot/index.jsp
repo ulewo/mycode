@@ -30,21 +30,19 @@
 	 <%@ include file="common/head.jsp" %>
   	<div class="main">
   		<div class="left">
-  			<div class="titinfo">本周热点</div>
+  			<div class="titinfo">每日图文</div>
   			<div class="hot">
-  				<c:forEach var="article" items="${commendArticle}">
+  				<div>
+  				<c:set var="num" value="0"/>
+  				<c:forEach var="article" items="${imgArticle}">
+  					<c:set var="num" value="${num+1}"/>
+  					<div class="day_pic" <c:if test="${num==1}">style='margin-left:5px'</c:if> >
+					<a href="group/post.jspx?id=${article.id}" class="day_pic_link"><span class="day_pic_con"><img src="upload/${article.image}"></span></a>
+					<div class="day_pic_tit"><a href="group/post.jspx?id=${article.id}" title="${article.title}" target="_blank">${article.title}</a></div>
+				</div> 
   				</c:forEach>
-	  			<ul class="new_list">
-	  				<c:forEach var="article" items="${commendArticle}" begin="0" end="4">
-	  					<li><a href="group/post.jspx?id=${article.id}" title="${article.title}">${article.title}</a></li>
-  					</c:forEach>
-	  			</ul>
-	  			<ul class="new_list">
-	  				<c:forEach var="article" items="${commendArticle}" begin="5" end="10">
-	  					<li><a href="group/post.jspx?id=${article.id}" title="${article.title}">${article.title}</a></li>
-  					</c:forEach>
-	  			</ul>
-	  			<div class="clear"></div>
+				<div class="clear"></div>
+			  </div>
   			</div>
   			<div class="titinfo">最新文章</div>
 	  			<ul class="new_article_list">
@@ -56,7 +54,7 @@
   			  <div>
 				<ul class="new_blog">
 					<c:forEach var="blog" items="${blogList}">
-						<li><span class="article_tit"><a href="user/blogdetail.jspx?id=${blog.id}" title="${article.title}" target="_blank">${blog.title}</a><span class="sec_span">${blog.postTime} by ${blog.userName}</span></span><span class="article_read">${blog.reCount}回/${blog.readCount}阅</span></li>
+						<li><span class="article_tit"><a href="user/blogdetail.jspx?id=${blog.id}" title="${article.title}" target="_blank" class="sec_span2" style="width:460px;padding-left:0px;">${blog.title}</a><span class="sec_span">${blog.postTime} by ${blog.userName}</span></span><span class="article_read">${blog.reCount}回/${blog.readCount}阅</span></li>
 					</c:forEach>
 	  			</ul>
 	  			</div>
@@ -179,16 +177,6 @@
 	  			<div id="talklist"></div>
 	  			<div class='moretalk'><a href='moretalk.jsp'>看看大家都在吐槽什么&gt;&gt;</a></div>
   			</div>
-  			<div class="titinfo">每日图文</div>
-  			<div>
-  				<c:forEach var="article" items="${imgArticle}">
-  					<div class="day_pic">
-					<div class="day_pic_img"><img src="upload/${article.image}"></div>
-					<div class="day_pic_tit"><a href="group/post.jspx?id=${article.id}" title="${article.title}" target="_blank">${article.title}</a></div>
-				</div> 
-  				</c:forEach>
-				<div class="clear"></div>
-			  </div>	
 	  			<div class="titinfo">推荐窝窝</div>
 	  			<c:forEach var="group" items="${commendGroupList}">
 	  				<div class="recommend_wo">

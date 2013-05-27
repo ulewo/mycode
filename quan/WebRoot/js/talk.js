@@ -20,6 +20,9 @@ function TalkItem(data) {
 					+ myParam.realPath + "user/talkDetail.jspx?userId="
 					+ data.userId + "&talkId=" + data.id + "'>(" + data.reCount
 					+ "评)</a></span>").appendTo(talkcon);
+	if (data.sourceFrom == "A") {
+		$("<span>&nbsp;Android&nbsp;</span>").appendTo(span);
+	}
 	if (data.imgurl != "") {
 		$(
 				"<a href='" + myParam.realPath + "user/talkDetail.jspx?userId="
@@ -61,6 +64,10 @@ function ReTalkItem(data) {
 	var item_time = $("<span class='item_time'></div>").appendTo(talkcon);
 	$("<span class='item_time_t'>" + data.createTime + "</span>").appendTo(
 			item_time);
+	if (data.sourceFrom == "A") {
+		$("<span class='item_time_t'>&nbsp;Android&nbsp;</span>").appendTo(
+				item_time);
+	}
 	$("<a href='javascript:void(0)'>回复</a>").bind("click", {
 		atUserId : data.userId,
 		atUserName : data.userName
