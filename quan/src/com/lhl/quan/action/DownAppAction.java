@@ -40,7 +40,7 @@ public class DownAppAction extends BaseAction {
 			toClient.write(buffer);
 			toClient.flush();
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			// ex.printStackTrace();
 		} finally {
 			if (toClient != null) {
 				try {

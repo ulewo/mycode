@@ -9,6 +9,7 @@ public class Talk {
 	private String imgurl;
 	private String createTime;
 	private int reCount;
+	private String sourceFrom;
 
 	public int getId() {
 		return id;
@@ -73,4 +74,13 @@ public class Talk {
 	public void setReCount(int reCount) {
 		this.reCount = reCount;
 	}
+
+	public String getSourceFrom() {
+		return sourceFrom;
+	}
+
+	public void setSourceFrom(String sourceFrom) {
+		this.sourceFrom = sourceFrom;
+	}
+
 }

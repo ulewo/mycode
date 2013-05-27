@@ -16,8 +16,8 @@
       		SELECT LAST_INSERT_ID()
     	 </selectKey>
         <![CDATA[
-           insert into talk(userid,username,usericon,imgurl,content,createtime) 
-		values(#userId#,#userName#,#userIcon#,#imgurl#,#content#,#createTime#)
+           insert into talk(userid,username,usericon,imgurl,content,createtime,sourcefrom) 
+		values(#userId#,#userName#,#userIcon#,#imgurl#,#content#,#createTime#,#sourceFrom#)
         ]]>
 	</insert>
 	

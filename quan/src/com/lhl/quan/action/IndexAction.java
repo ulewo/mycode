@@ -70,9 +70,9 @@ public class IndexAction extends BaseAction {
 	public String index() {
 
 		try {
-			commendArticle = articleService.queryComendArticle("index", "", 0,
-					10);
-			imgArticle = articleService.queryImageArticle(0, 4);
+			// commendArticle = articleService.queryComendArticle("index", "",
+			// 0,10);
+			imgArticle = articleService.queryImageArticle(0, 5);
 			list = articleService.queryLatestArticle(0, 20);
 			activeUserList = userService.queryActiveUsers(0, 15);
 			commendGroupList = groupService.queryGroupsOderArticleCount(0, 5);

@@ -103,7 +103,7 @@ public class Constant {
 
 	public static int ARTICLE_MARK2 = 2;
 
-	public static String WEBSTIE = "http://192.168.2.224:8080/ulewo/";
+	public static String WEBSTIE = "http://ulewo.cloudfoundry.com/";
 
 	public static String WEBSTIE_IMAGEURL = WEBSTIE + "upload/";
 

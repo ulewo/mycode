@@ -10,6 +10,7 @@ public class ReTalk {
 	private String userIcon;
 	private String atUserId;
 	private String atUserName;
+	private String sourceFrom;
 
 	public int getId() {
 		return id;
@@ -83,4 +84,11 @@ public class ReTalk {
 		this.atUserName = atUserName;
 	}
 
+	public String getSourceFrom() {
+		return sourceFrom;
+	}
+
+	public void setSourceFrom(String sourceFrom) {
+		this.sourceFrom = sourceFrom;
+	}
 }

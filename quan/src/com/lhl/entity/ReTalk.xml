@@ -15,8 +15,8 @@
       		SELECT LAST_INSERT_ID()
     	 </selectKey>
         <![CDATA[
-           insert into retalk(talkid,content,createtime,userid,username,usericon,atuserid,atusername) 
-		values(#talkId#,#content#,#createTime#,#userId#,#userName#,#userIcon#,#atUserId#,#atUserName#)
+           insert into retalk(talkid,content,createtime,userid,username,usericon,atuserid,atusername,sourcefrom) 
+		values(#talkId#,#content#,#createTime#,#userId#,#userName#,#userIcon#,#atUserId#,#atUserName#,#sourceFrom#)
         ]]>
 	</insert>
 	
