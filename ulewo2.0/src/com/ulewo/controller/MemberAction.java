@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ulewo.entity.Member;
-import com.ulewo.service.MemberService;
+import com.ulewo.service.MemberServicebat;
 
 @Controller
 @RequestMapping("/member")
 public class MemberAction {
 	@Autowired
-	private MemberService memberService;
+	private MemberServicebat memberService;
 
 	// 页面跳转，也就是servlet中的foward(); 方式
 	@RequestMapping("/registerMember.do")
