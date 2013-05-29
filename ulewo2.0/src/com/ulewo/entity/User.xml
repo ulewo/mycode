@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="user">
+	<cacheModel id="user-cache" type="LRU" readOnly="true"
+		serialize="false">
+		<flushInterval hours="24" />
+		<property value="500" name="size" />
+	</cacheModel>
+	
+	
+	<typeAlias alias="user" type="com.ulewo.entity.User" />
+	<!-- 
+	<resultMap id="result-user" class="user">  
+		<result property="userId" column="userid"/>
+		<result property="email" column="email"/>
+		<result property="userName" column="username"/>
+		<result property="password" column="password"/>
+		<result property="userLittleIcon" column="userlittleicon"/>
+		<result property="userBigIcon" column="userbigicon"/>
+		<result property="sex" column="sex"/>
+		<result property="characters" column="characters"/>
+		<result property="address" column="address"/>
+		<result property="work" column="work"/>
+		<result property="registerTime" column="registertime"/>
+		<result property="previsitTime" column="previsittime"/>
+		<result property="isValid" column="isvalid"/>
+		<result property="activationCode" column="activationcode"/>
+		<result property="age" column="age" nullValue="0"/>
+		<result property="mark" column="mark" nullValue="0"/>  
+	</resultMap> 
+	 -->
+	<!-- 根据邮箱，用户名查询用户 -->
+	
+	<select id="findUser"  resultClass="user" parameterClass="java.util.Map">
+		select * from user 
+		<dynamic prepend="where">
+		<isNotEmpty property="email">
+         	  <![CDATA[email =  #email#  ]]>
+		</isNotEmpty>
+		<isNotEmpty property="userName">
+         	  <![CDATA[username =  #userName#  ]]>
+		</isNotEmpty>
+		<isNotEmpty property="userId">
+         	  <![CDATA[userid =  #userId#  ]]>
+		</isNotEmpty>
+		</dynamic>
+	</select>
+	
+		<!-- 添加 -->
+	<insert id="addUser" parameterClass="user">
+		insert into user(userid,email,username,password,userlittleicon,userbigicon,registertime,previsittime)
+		values(#userId#,#email#,#userName#,#password#,#userLittleIcon#,#userBigIcon#,#registerTime#,#previsitTime#)
+	</insert>
+	
+	<!--查询用户总数-->
+	<select id="findUsersCount"  resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		select count(userid) from user 
+		<dynamic prepend="where">
+		<isNotEmpty  property="userName">
+         	  <![CDATA[userName like #userName# ]]>
+		</isNotEmpty>
+		</dynamic>
+	</select>
+	
+	<!--多笔查询-->
+	<select id="findAllUsers"  resultClass="user" parameterClass="java.util.Map">
+		select * from user 
+		<dynamic prepend="where">
+			<isNotEmpty property="userName">
+	         	  <![CDATA[userName like #userName# ]]>
+			</isNotEmpty>
+		</dynamic>
+		order by registertime desc limit #offset#,#total#  
+	</select>
+	
+	<!-- 查询最大用户 -->
+	<select id="getMaxUserId" resultClass="java.lang.Integer">
+		select max(userid) from user
+	</select>
+	
+	<!--删除文章-->
+	<delete id="deleteBatch"> 
+       delete from user where userid in ( 
+        <iterate  conjunction=",">#[]#</iterate>) 
+	</delete> 
+	
+	<select id="queryUserDetail"  resultClass="user" parameterClass="java.lang.String">
+		select u.*,(select count(id) from article a where a.authorid = u.userid and a.isvalid = "Y") articleNumber from user u where userid = #userId#
+	</select>
+	
+	<!-- 通过userId非空更新用户信息-->
+	<update id="updateUser" parameterClass="user">
+		update user
+		set userid=#userId#
+        <isNotEmpty prepend="," property="password">
+          password=#password#
+        </isNotEmpty>
+        <isNotEmpty prepend="," property="userLittleIcon">
+          userlittleicon=#userLittleIcon#
+        </isNotEmpty>
+        <isNotEmpty prepend="," property="userBigIcon">
+          userbigicon=#userBigIcon#
+        </isNotEmpty>
+        <isNotEmpty prepend="," property="age">
+          age=#age#
+        </isNotEmpty>
+        <isNotEmpty prepend="," property="sex">
+          sex=#sex#
+        </isNotEmpty>
+        <isNotEmpty prepend="," property="characters">
+          characters=#characters#
+        </isNotEmpty>
+        <isNotEqual  prepend="," compareValue="0"  property="mark">
+          mark=#mark#
+        </isNotEqual>
+        <isNotEmpty prepend="," property="address">
+          address=#address#
+        </isNotEmpty>
+        <isNotEmpty prepend="," property="work">
+          work=#work#
+        </isNotEmpty>
+         <isNotEmpty prepend="," property="previsitTime">
+          previsittime=#previsitTime#
+        </isNotEmpty>
+         <isNotEmpty prepend="," property="isValid">
+          isvalid=#isValid#
+        </isNotEmpty>
+        <isNotEmpty prepend="," property="activationCode">
+          activationcode=#activationCode#
+        </isNotEmpty>
+		where userid=#userId#
+	</update>
+	
+	<!-- 通过userId非空更新用户信息-->
+	<update id="updateUser_userId" parameterClass="user">
+		update user
+		set userid=#userId#,password=#password#,userlittleicon=#userLittleIcon#,userbigicon=#userBigIcon#,
+		age=#age#,sex=#sex#,characters=#characters#,mark=#mark#,address=#address#,work=#work#,
+		previsittime=#previsitTime#,isvalid=#isValid#,activationcode=#activationCode# where userid=#userId#
+	</update>
+	
+	<!--查询活跃成员  
+	<select id="queryActiveUser"  resultMap="result-user" parameterClass="java.util.Map">
+		select u.*,(select count(a.id) from article a where a.authorid = u.userid) as topcount from user u
+		order by topcount desc limit #offset#,#total#  
+	</select>
+	-->
+	
+</sqlMap>

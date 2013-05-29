@@ -20,14 +20,14 @@ import com.ulewo.service.MessageService;
 @Controller
 @RequestMapping("/message")
 public class MessageBoardAction {
-	@Autowired
-	private MessageService messageService;
+	//@Autowired
+	//private MessageService messageService;
 
 	// 页面跳转，也就是servlet中的foward(); 方式
 	@RequestMapping("/queryMessage.do")
 	public ModelAndView getMessage(HttpSession session, HttpServletRequest request) {
 
-		List<Message> list = messageService.queryList();
+		List<Message> list = null;//messageService.queryList();
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("list", list);
 		mv.setViewName("home");

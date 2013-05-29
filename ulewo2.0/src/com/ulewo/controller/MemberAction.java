@@ -16,15 +16,15 @@ import com.ulewo.service.MemberServicebat;
 @Controller
 @RequestMapping("/member")
 public class MemberAction {
-	@Autowired
-	private MemberServicebat memberService;
+	//@Autowired
+	//private MemberServicebat memberService;
 
 	// 页面跳转，也就是servlet中的foward(); 方式
 	@RequestMapping("/registerMember.do")
 	public ModelAndView getMember(HttpSession session,
 			HttpServletRequest request) {
 
-		List<Member> memberList = memberService.queryList();
+		List<Member> memberList = null;//memberService.queryList();
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("memberList", memberList);
 		mv.setViewName("home");

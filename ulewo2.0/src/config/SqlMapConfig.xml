@@ -10,7 +10,6 @@
              maxTransactions="100"
              maxRequests="1000"
              defaultStatementTimeout="15"/>
-   <sqlMap resource="com/ulewo/entity/Message.xml" />
-   <sqlMap resource="com/ulewo/entity/Member.xml" />
+   <sqlMap resource="com/ulewo/entity/User.xml" />
 </sqlMapConfig>
 
