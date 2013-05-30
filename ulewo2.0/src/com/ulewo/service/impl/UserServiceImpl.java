@@ -53,7 +53,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public PaginationResult findUser(String value, QueryUserType type, int offset, int total) {
-		int total = userDao.findUser(value, type)
+
+		//int total = userDao.findUser(value, type)
 		return null;
 	}
 }
