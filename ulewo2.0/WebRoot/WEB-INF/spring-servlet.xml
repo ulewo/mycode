@@ -13,7 +13,16 @@
 		p:defaultEncoding="utf-8" /> -->
      
 	<context:annotation-config />   
-
+	<!-- 
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver"> 
+	    <property name="cache" value="true"/> 
+	    <property name="prefix" value=""/> 
+	    <property name="suffix" value=".vm"/> 
+	</bean> 
+	<bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer"> 
+	    <property name="resourceLoaderPath" value="/WEB-INF/velocity/" /> 
+	</bean>
+	 -->
 	<!--此处是为了解决ajax响应中文乱码问题，必须在context:component-scan之前  --> 
 	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
 		<property name="messageConverters">
