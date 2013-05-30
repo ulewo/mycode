@@ -53,7 +53,7 @@
 	</insert>
 	
 	<!--查询用户总数-->
-	<select id="findUsersCount"  resultClass="java.lang.Integer" parameterClass="java.util.Map">
+	<select id="findUsersCount"  resultClass="java.lang.Integer" parameterClass="java.util.String">
 		select count(userid) from user 
 		<dynamic prepend="where">
 		<isNotEmpty  property="userName">
