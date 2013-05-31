@@ -38,7 +38,22 @@
 		<servlet-name>spring</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-	
+	<filter>
+	    <filter-name>myspacefilter</filter-name>
+	    <filter-class>com.ulewo.filter.MySpaceFilter</filter-class>
+	    <init-param>
+            <param-name>domain</param-name>
+            <param-value>ulewo.com</param-value>
+        </init-param>
+        <init-param>
+            <param-name>subdomain</param-name>
+            <param-value>my.ulewo.com,group.ulewo.com</param-value>
+        </init-param>
+	</filter>
+	<filter-mapping>
+    	<filter-name>myspacefilter</filter-name>
+    	<url-pattern>/*</url-pattern>
+	</filter-mapping>
 	<filter>  
 	    <filter-name>UrlRewriteFilter</filter-name>  
 	    <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>  
