@@ -91,7 +91,7 @@
 	<!-- 通过userId非空更新用户信息-->
 	<update id="updateUser" parameterClass="user">
 		update user
-		set userid=#userId#
+		set 1=1
         <isNotEmpty prepend="," property="password">
           password=#password#
         </isNotEmpty>
