@@ -25,7 +25,7 @@ public class Group {
 
 	private String isCommend; //是否推荐
 
-	private int visitCount; //访问数量
+	private Integer visitCount; //访问数量
 
 	private String isValid; //是否有效  00 有效  01 无效
 
@@ -127,12 +127,12 @@ public class Group {
 		this.isCommend = isCommend;
 	}
 
-	public int getVisitCount() {
+	public Integer getVisitCount() {
 
 		return visitCount;
 	}
 
-	public void setVisitCount(int visitCount) {
+	public void setVisitCount(Integer visitCount) {
 
 		this.visitCount = visitCount;
 	}

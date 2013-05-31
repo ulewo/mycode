@@ -21,7 +21,7 @@ public class User {
 
 	private String characters; // 个性签名
 
-	private int mark; // 积分
+	private Integer mark; // 积分
 
 	private String address; // 籍贯
 
@@ -33,9 +33,9 @@ public class User {
 
 	private String activationCode; // 状态码
 
-	private int articleNumber; // 发帖数量
+	private Integer articleNumber; // 发帖数量
 
-	private int reArticleNumber; // 回帖数量
+	private Integer reArticleNumber; // 回帖数量
 
 	private String isValid;
 
@@ -139,16 +139,6 @@ public class User {
 		this.characters = characters;
 	}
 
-	public int getMark() {
-
-		return mark;
-	}
-
-	public void setMark(int mark) {
-
-		this.mark = mark;
-	}
-
 	public String getAddress() {
 
 		return address;
@@ -199,26 +189,6 @@ public class User {
 		this.activationCode = activationCode;
 	}
 
-	public int getArticleNumber() {
-
-		return articleNumber;
-	}
-
-	public void setArticleNumber(int articleNumber) {
-
-		this.articleNumber = articleNumber;
-	}
-
-	public int getReArticleNumber() {
-
-		return reArticleNumber;
-	}
-
-	public void setReArticleNumber(int reArticleNumber) {
-
-		this.reArticleNumber = reArticleNumber;
-	}
-
 	public String getIsValid() {
 
 		return isValid;
@@ -228,4 +198,35 @@ public class User {
 
 		this.isValid = isValid;
 	}
+
+	public Integer getMark() {
+
+		return mark;
+	}
+
+	public void setMark(Integer mark) {
+
+		this.mark = mark;
+	}
+
+	public Integer getArticleNumber() {
+
+		return articleNumber;
+	}
+
+	public void setArticleNumber(Integer articleNumber) {
+
+		this.articleNumber = articleNumber;
+	}
+
+	public Integer getReArticleNumber() {
+
+		return reArticleNumber;
+	}
+
+	public void setReArticleNumber(Integer reArticleNumber) {
+
+		this.reArticleNumber = reArticleNumber;
+	}
+
 }

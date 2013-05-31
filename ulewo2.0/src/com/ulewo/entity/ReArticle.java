@@ -16,8 +16,6 @@ public class ReArticle {
 
 	private int articleId; // 主题帖Id
 
-	private String quote; // 引用
-
 	private String content; // 回复内容
 
 	private String gid;
@@ -32,8 +30,6 @@ public class ReArticle {
 
 	private String reTime; // 回复时间
 
-	List<ReArticle> childList; // 回复的回复列表
-
 	private String atUserName;
 
 	private String atUserId;
@@ -41,6 +37,8 @@ public class ReArticle {
 	private String atUserIcon;
 
 	private String sourceFrom;
+
+	List<ReArticle> childList; // 回复的回复列表
 
 	public int getId() {
 
@@ -103,10 +101,12 @@ public class ReArticle {
 	}
 
 	public List<ReArticle> getChildList() {
+
 		return childList;
 	}
 
 	public void setChildList(List<ReArticle> childList) {
+
 		this.childList = childList;
 	}
 
@@ -140,53 +140,53 @@ public class ReArticle {
 		this.authorIcon = authorIcon;
 	}
 
-	public String getQuote() {
-
-		return quote;
-	}
-
-	public void setQuote(String quote) {
-
-		this.quote = quote;
-	}
-
 	public String getAtUserName() {
+
 		return atUserName;
 	}
 
 	public void setAtUserName(String atUserName) {
+
 		this.atUserName = atUserName;
 	}
 
 	public String getAtUserId() {
+
 		return atUserId;
 	}
 
 	public void setAtUserId(String atUserId) {
+
 		this.atUserId = atUserId;
 	}
 
 	public String getAtUserIcon() {
+
 		return atUserIcon;
 	}
 
 	public void setAtUserIcon(String atUserIcon) {
+
 		this.atUserIcon = atUserIcon;
 	}
 
 	public Integer getPid() {
+
 		return pid;
 	}
 
 	public void setPid(Integer pid) {
+
 		this.pid = pid;
 	}
 
 	public String getSourceFrom() {
+
 		return sourceFrom;
 	}
 
 	public void setSourceFrom(String sourceFrom) {
+
 		this.sourceFrom = sourceFrom;
 	}
 

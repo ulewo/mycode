@@ -18,8 +18,8 @@ public class Member {
 
 	private String isMember;
 
-	/* O 普通成员  1 管理员 2 圈主*/
-	private int grade;
+	/* O 普通成员  1 管理员 */
+	private Integer grade;
 
 	/*加入时间*/
 	private String joinTime;
@@ -90,16 +90,6 @@ public class Member {
 		this.isMember = isMember;
 	}
 
-	public int getGrade() {
-
-		return grade;
-	}
-
-	public void setGrade(int grade) {
-
-		this.grade = grade;
-	}
-
 	public String getJoinTime() {
 
 		return joinTime;
@@ -128,6 +118,16 @@ public class Member {
 	public void setReCount(int reCount) {
 
 		this.reCount = reCount;
+	}
+
+	public Integer getGrade() {
+
+		return grade;
+	}
+
+	public void setGrade(Integer grade) {
+
+		this.grade = grade;
 	}
 
 }

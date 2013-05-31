@@ -15,7 +15,7 @@ public class BlogArticle {
 
 	private String userName;
 
-	private int itemId;
+	private Integer itemId;
 
 	private String title;
 
@@ -23,9 +23,9 @@ public class BlogArticle {
 
 	private String content;
 
-	private int readCount;
+	private Integer readCount;
 
-	private int reCount;
+	private Integer reCount;
 
 	private String postTime;
 
@@ -51,16 +51,6 @@ public class BlogArticle {
 	public void setUserId(String userId) {
 
 		this.userId = userId;
-	}
-
-	public int getItemId() {
-
-		return itemId;
-	}
-
-	public void setItemId(int itemId) {
-
-		this.itemId = itemId;
 	}
 
 	public String getTitle() {
@@ -91,26 +81,6 @@ public class BlogArticle {
 	public void setContent(String conent) {
 
 		this.content = conent;
-	}
-
-	public int getReadCount() {
-
-		return readCount;
-	}
-
-	public void setReadCount(int readCount) {
-
-		this.readCount = readCount;
-	}
-
-	public int getReCount() {
-
-		return reCount;
-	}
-
-	public void setReCount(int reCount) {
-
-		this.reCount = reCount;
 	}
 
 	public String getPostTime() {
@@ -151,6 +121,36 @@ public class BlogArticle {
 	public void setUserName(String userName) {
 
 		this.userName = userName;
+	}
+
+	public Integer getItemId() {
+
+		return itemId;
+	}
+
+	public void setItemId(Integer itemId) {
+
+		this.itemId = itemId;
+	}
+
+	public Integer getReadCount() {
+
+		return readCount;
+	}
+
+	public void setReadCount(Integer readCount) {
+
+		this.readCount = readCount;
+	}
+
+	public Integer getReCount() {
+
+		return reCount;
+	}
+
+	public void setReCount(Integer reCount) {
+
+		this.reCount = reCount;
 	}
 
 }

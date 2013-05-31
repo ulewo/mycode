@@ -15,7 +15,7 @@ public class Article {
 
 	private String type;// 类型 0:普通帖子 1:投票贴
 
-	private int itemId; // 栏目ID
+	private Integer itemId; // 栏目ID
 
 	private String title; // 标题
 
@@ -31,9 +31,9 @@ public class Article {
 
 	private String postTime; // 发布时间
 
-	private int readNumber; // 阅读次数
+	private Integer readNumber; // 阅读次数
 
-	private int grade; // 帖子等级
+	private Integer grade; // 帖子等级
 
 	private String essence; // 精华
 
@@ -90,16 +90,6 @@ public class Article {
 	public void setType(String type) {
 
 		this.type = type;
-	}
-
-	public int getItemId() {
-
-		return itemId;
-	}
-
-	public void setItemId(int itemId) {
-
-		this.itemId = itemId;
 	}
 
 	public String getTitle() {
@@ -160,26 +150,6 @@ public class Article {
 	public void setPostTime(String postTime) {
 
 		this.postTime = postTime;
-	}
-
-	public int getReadNumber() {
-
-		return readNumber;
-	}
-
-	public void setReadNumber(int readNumber) {
-
-		this.readNumber = readNumber;
-	}
-
-	public int getGrade() {
-
-		return grade;
-	}
-
-	public void setGrade(int grade) {
-
-		this.grade = grade;
 	}
 
 	public String getEssence() {
@@ -320,6 +290,36 @@ public class Article {
 	public void setSummary(String summary) {
 
 		this.summary = summary;
+	}
+
+	public Integer getItemId() {
+
+		return itemId;
+	}
+
+	public void setItemId(Integer itemId) {
+
+		this.itemId = itemId;
+	}
+
+	public Integer getReadNumber() {
+
+		return readNumber;
+	}
+
+	public void setReadNumber(Integer readNumber) {
+
+		this.readNumber = readNumber;
+	}
+
+	public Integer getGrade() {
+
+		return grade;
+	}
+
+	public void setGrade(Integer grade) {
+
+		this.grade = grade;
 	}
 
 }

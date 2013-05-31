@@ -12,7 +12,7 @@ public class ArticleItem {
 
 	private String itemName; //分类名称
 
-	private int itemCode; //栏目编号
+	private Integer itemCode; //栏目编号
 
 	public int getId() {
 
@@ -44,12 +44,12 @@ public class ArticleItem {
 		this.itemName = itemName;
 	}
 
-	public int getItemCode() {
+	public Integer getItemCode() {
 
 		return itemCode;
 	}
 
-	public void setItemCode(int itemCode) {
+	public void setItemCode(Integer itemCode) {
 
 		this.itemCode = itemCode;
 	}

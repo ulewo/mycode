@@ -12,27 +12,15 @@ public class Message {
 
 	private String reUserName;
 
+	private String reUserIcon;
+
 	private String atUserId;
 
 	private String atUserName;
 
-	private String reUserIcon;
-
 	private String message;
 
 	private String postTime;
-
-	private String quote;
-
-	public String getQuote() {
-
-		return quote;
-	}
-
-	public void setQuote(String quote) {
-
-		this.quote = quote;
-	}
 
 	private List<Message> reMessages;
 
@@ -117,18 +105,22 @@ public class Message {
 	}
 
 	public String getAtUserId() {
+
 		return atUserId;
 	}
 
 	public void setAtUserId(String atUserId) {
+
 		this.atUserId = atUserId;
 	}
 
 	public String getAtUserName() {
+
 		return atUserName;
 	}
 
 	public void setAtUserName(String atUserName) {
+
 		this.atUserName = atUserName;
 	}
 
