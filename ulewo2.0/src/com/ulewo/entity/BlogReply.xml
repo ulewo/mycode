@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="blogReply">
+	<cacheModel id="user-cache" type="LRU" readOnly="true"
+		serialize="false">
+		<flushInterval hours="24" />
+		<property value="500" name="size" />
+	</cacheModel>
+	
+	
+	<typeAlias alias="blogReply" type="com.lhl.entity.BlogReply" />
+	
+	<!-- 添加博客分类 -->
+	<insert id="addPeply" parameterClass="blogReply">
+		<selectKey keyProperty="id" resultClass="java.lang.Integer" type="post">
+      		SELECT LAST_INSERT_ID()
+    	 </selectKey>
+        <![CDATA[
+        insert into blog_reply (blogid,content,posttime,userid,username,atuserid,sourcefrom)
+		values(#blogId#,#content#,#postTime#,#userId#,#userName#,#atUserId#,#sourceFrom#);
+        ]]>
+		
+	</insert>
+	
+	<!-- 通过博客ID查询回复 -->
+	<select id="queryReplyByBlogId"  resultClass="blogReply" parameterClass="java.lang.Integer">
+		select m.id,m.userid,m.blogid,m.content,m.sourcefrom,
+		(case when m.userid is not null then u.username else m.username end)as userName,
+		(case when m.userid is not null then u.userlittleicon else '' end)as reUserIcon,
+		m.atuserid,
+		au.username as atusername,
+		m.posttime 
+		from blog_reply m left join user u on m.userid = u.userid left join user au on m.atuserid=au.userid where m.blogid = #blogId# order by posttime asc
+		
+	</select>
+	
+	<!-- 通过ID查询回复 -->
+	<select id="queryPeplyById"  resultClass="blogReply" parameterClass="java.lang.Integer">
+		select * from blog_reply  where id = #id#
+	</select>
+	
+	<!-- 查询数量 -->
+	<select id="queryReplyCountByBlogId"  resultClass="java.lang.Integer" parameterClass="java.lang.Integer">
+		select count(id) from blog_reply  where blogid = #blogId#
+	</select>
+	
+	<!-- 删除回复 -->
+	<delete id="deletePeply" parameterClass="java.lang.Integer">
+		delete from blog_reply where id = #id#
+	</delete>
+</sqlMap>

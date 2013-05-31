@@ -62,4 +62,8 @@ public class UserDao extends BaseDao {
 		return (Integer) this.getSqlMapClientTemplate().queryForObject("user.findUsersCount", userName);
 	}
 
+	public void update(User user) {
+
+	}
+
 }

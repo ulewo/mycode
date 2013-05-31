@@ -23,15 +23,6 @@
          <value>/WEB-INF/classes/config/jdbc.properties</value>
       </property>
    </bean>
-	
-	<bean name="messageService" class="com.ulewo.service.impl.MessageServiceImpl">
-    	 <property name="messageDao" ref="messageDao"/>
-    </bean>
-    
- 	<bean name="messageDao" class="com.ulewo.dao.MessageDao">
-    	 <property name="sqlMapClient" ref="sqlMapClient"/>
-    </bean>
-
    <!-- spring c3p0 连接池 -->
    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
       <property name="driverClass" value="${jdbc.driverClassName}" />

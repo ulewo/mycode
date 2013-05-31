@@ -7,38 +7,42 @@
 		<property value="500" name="size" />
 	</cacheModel>
 	
-	<!--映射实体类 -->
-	<typeAlias alias="message" type="com.ulewo.entity.Message" />
 	
-	<!--单笔查询-->
-	<select id="selectById" resultClass="message" parameterClass="java.lang.Integer">
-		select * from board where id= #id#
-	</select>
+	<typeAlias alias="message" type="com.lhl.entity.Message" />
 	
-	<!--多笔查询-->
-	<select id="selectAll" resultClass="message">
-		select * from board
-	</select>
-	
-	<!-- 添加-->
-	<insert id="add" parameterClass="message">
-		insert into board (id,username,usericon,message,posttime)
-		values(#id#,#userName#,#userIcon#,#message#,#postTime#)
-		<selectKey resultClass="int" keyProperty="id">  
-   	 		select max(id) from message  
-  	 	</selectKey>  
+	<!-- 添加留言 -->
+	<insert id="addMessage" parameterClass="message">
+		<selectKey keyProperty="id" resultClass="java.lang.Integer" type="post">
+      		SELECT LAST_INSERT_ID()
+    	 </selectKey>
+        <![CDATA[
+           insert into message(userid,reuserid,reusername,atuserid,message,posttime) 
+		values(#userId#,#reUserId#,#reUserName#,#atUserId#,#message#,#postTime#)
+        ]]>
 	</insert>
 	
-	<!--删除-->
-	<delete id="delete" parameterClass="java.lang.Integer"> 
-       delete from board where id = #id#
-	</delete>
+	<!-- 根据userId查询留言 -->
+	<select id="queryMessageByUserId"  resultClass="message" parameterClass="java.util.Map">
+		select m.id,m.userid,m.reuserid,m.message,
+		(case when m.reuserid is not null then u.username else m.reusername end)as reUserName,
+		(case when m.reuserid is not null then u.userlittleicon else '' end)as reUserIcon,
+		m.atuserid,
+		au.username as atusername,
+		m.posttime 
+		from message m left join user u on m.reuserid = u.userid left join user au on m.atuserid=au.userid where m.userid = #userId#  order by posttime desc limit #offset#,#total#
+	</select>
+
+	<!-- 根据userId查询留言条数 -->
+	<select id="queryCountByUserId"  resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		select count(id) from message where userId = #userId#
+	</select>
 	
-	<!-- 更新 -->
-	<update id="update"  parameterClass="message">
-		update board set 
-		username = #userName#,
-		usericon = #userIcon#,
-		message  = #message#
-	</update>
+	<!--根据ID获取留言-->
+	<select id="queryMessageById"  resultClass="message" parameterClass="java.lang.Integer">
+		select * from message where id = #id#
+	</select>
+	
+	<delete id="deleteMessage"  parameterClass="java.lang.Integer">
+		delete from  message where id = #id#
+	</delete>
 </sqlMap>

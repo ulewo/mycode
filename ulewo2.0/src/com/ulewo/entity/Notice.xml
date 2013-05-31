@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="notice">
+	<cacheModel id="user-cache" type="LRU" readOnly="true"
+		serialize="false">
+		<flushInterval hours="24" />
+		<property value="500" name="size" />
+	</cacheModel>
+	
+	
+	<typeAlias alias="notice" type="com.lhl.entity.Notice" />
+	
+	<!-- 创建消息 -->
+	<insert id="createNotice" parameterClass="notice">
+		insert into notice(userid,type,url,content,status,posttime)
+		values(#userId#,#type#,#url#,#content#,#status#,#postTime#)
+	</insert>
+	
+	<!-- 通过userId查询通知 -->
+	
+	<select id="queryNoticeByUserId" resultClass="notice" parameterClass="java.util.Map">
+		select * from notice where userid = #userId#
+		<isNotEmpty prepend="and" property="stauts">
+          	   <![CDATA[stauts =  #stauts#  ]]>
+		</isNotEmpty>
+		order by posttime desc;
+	</select>
+	
+	<!-- 查询通知数量 -->
+	<select id="queryNoticeCountByUserId"  resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		select count(*) from notice where userid = #userId#
+		<isNotEmpty prepend="and" property="stauts">
+          	   <![CDATA[stauts =  #stauts#  ]]>
+		</isNotEmpty>
+	</select>
+	
+	<!--更新消息状态-->
+	<update id="updateNotice" parameterClass="notice">
+		update notice set status=#status# where id = #id#
+	</update>
+
+	<!--删除消息-->
+	<delete id="deleteNotice" parameterClass="java.lang.Integer">
+		delete from notice where id = #id#
+	</delete>
+
+	<select id="getNotice" resultClass="notice" parameterClass="java.lang.Integer">
+		select * from notice where id = #id#
+	</select>
+</sqlMap>

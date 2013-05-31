@@ -1,65 +1,191 @@
 package com.ulewo.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.springframework.stereotype.Component;
+import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 import com.ulewo.entity.Member;
+import com.ulewo.util.Constant;
 
-@Component
-public class MemberDao extends BaseDao {
+public class MemberDao extends SqlMapClientDaoSupport {
 
 	/**
+	 * 添加成员
 	 * 
-	 * description: 多笔查询
-	 * 
-	 * @return
-	 * @author haley
+	 * @param member
+	 * @throws Exception
 	 */
-	@SuppressWarnings("unchecked")
-	public List<Member> queryList() {
+	public void addMember(Member member) throws Exception {
 
-		return (List<Member>) this.getSqlMapClientTemplate().queryForList(
-				"member.selectAll");
+		this.getSqlMapClientTemplate().insert("member.addMember", member);
 	}
 
 	/**
-	 * 
-	 * description: 单笔查询
-	 * 
-	 * @return
-	 * @author haley
-	 */
-	public Member findMember(int id) {
-
-		return (Member) this.getSqlMapClientTemplate().queryForObject(
-				"member.selectById", id);
-	}
-
-	/**
-	 * 
-	 * description: 删除
+	 * 删除成员
 	 * 
 	 * @param id
-	 * @author haley
 	 */
-	public void delete(int id) {
+	public void deleteMember(int id) throws Exception {
 
-		this.getSqlMapClientTemplate().delete("member.delete");
+		this.getSqlMapClientTemplate().delete("member.deleteMember", id);
+	}
+
+	/**
+	 * 更新成员
+	 * 
+	 * @param member
+	 */
+	public void updateMemberSelective(Member member) throws Exception {
+
+		this.getSqlMapClientTemplate().update("member.updateMember_selective", member);
+	}
+
+	public Member getMember(int id) throws Exception {
+
+		return (Member) this.getSqlMapClientTemplate().queryForObject("member.getMember", id);
 	}
 
 	/**
 	 * 
-	 * description: 更新
+	 * description: 通过群组编号查询群成员
 	 * 
-	 * @author haley
+	 * @param grade
+	 *            TODO
+	 * @param order
+	 *            更具加入时间倒序，顺序排列
+	 * @param groupNum
+	 * @param itemId
+	 * @param pageNumber
+	 * @param pageSize
+	 * @return
+	 * @author luohl
 	 */
-	public void update(Member member) {
+	public List<Member> queryMembers(String gid, String isMember, String grade, String order, int offset, int total)
+			throws Exception {
 
-		this.getSqlMapClientTemplate().update("member.update", member);
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("gid", gid);
+		parmMap.put("ismember", isMember);
+		parmMap.put("grade", grade);
+		parmMap.put("order", order);
+		parmMap.put("offset", offset);
+		parmMap.put("total", total);
+		return this.getSqlMapClientTemplate().queryForList("member.queryMembers", parmMap);
 	}
 
-	public void add(Member member) {
+	/**
+	 * 根据成员活跃度，即发帖数量 排序
+	 * 
+	 * @param gid
+	 * @param status
+	 * @param offset
+	 * @param total
+	 * @return
+	 */
+	public List<Member> queryActiveMembers(String gid, String status, int offset, int total) throws Exception {
 
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("gid", gid);
+		parmMap.put("ismember", status);
+		parmMap.put("offset", offset);
+		parmMap.put("total", total);
+		return this.getSqlMapClientTemplate().queryForList("member.queryActiveMembers", parmMap);
+	}
+
+	/**
+	 * 查询成员数
+	 * 
+	 * @param status
+	 * @param grade
+	 *            TODO
+	 * @param groupNum
+	 * @return
+	 */
+	public int queryMemberCount(String gid, String ismember, String grade) {
+
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("gid", gid);
+		parmMap.put("ismember", ismember);
+		parmMap.put("grade", grade);
+		return (Integer) this.getSqlMapClientTemplate().queryForObject("member.queryCount", parmMap);
+	}
+
+	/**
+	 * 更具等级查询群成员
+	 * 
+	 * @param gid
+	 * @param status
+	 *            TODO
+	 * @param status
+	 * @param offset
+	 *            TODO
+	 * @param total
+	 *            TODO
+	 * @param offset
+	 * @param total
+	 * @return
+	 */
+	public List<Member> queryMembersByGrade(String gid, String status, String grade, int offset, int total)
+			throws Exception {
+
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("gid", gid);
+		parmMap.put("grade", grade);
+		parmMap.put("ismember", status);
+		parmMap.put("offset", offset);
+		parmMap.put("total", total);
+		return this.getSqlMapClientTemplate().queryForList("member.queryMembersByGrade", parmMap);
+	}
+
+	/**
+	 * 查询群管理员
+	 */
+	public List<Member> queryAdmins(String gid) {
+
+		return this.getSqlMapClientTemplate().queryForList("member.queryAdmins", gid);
+	}
+
+	/**
+	 * 查询成员userid
+	 */
+
+	public List<String> queryMembersIdByGrade(String gid, int grade) {
+
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("gid", gid);
+		parmMap.put("grade", grade);
+		parmMap.put("isMember", Constant.ISVALIDY);
+		return this.getSqlMapClientTemplate().queryForList("member.queryMemberUserIdByGrade", parmMap);
+	}
+
+	/**
+	 * 更具等级查询成员数
+	 * 
+	 * @param gid
+	 * @param grade
+	 * @return
+	 */
+	public int queryMemberCountByGrade(String gid, int grade) throws Exception {
+
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("gid", gid);
+		parmMap.put("grade", grade);
+		parmMap.put("isMember", Constant.ISVALIDY);
+		return (Integer) this.getSqlMapClientTemplate().queryForObject("member.queryCountByGrade", parmMap);
+	}
+
+	public List<Member> queryAllAdmins() throws Exception {
+
+		return this.getSqlMapClientTemplate().queryForList("member.queryAllAdmins");
+	}
+
+	public Member queryMemberByGidAndUserId(String gid, String userId) throws Exception {
+
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("gid", gid);
+		parmMap.put("userId", userId);
+		return (Member) this.getSqlMapClientTemplate().queryForObject("member.queryMemberByGidAndUserId", parmMap);
 	}
 }

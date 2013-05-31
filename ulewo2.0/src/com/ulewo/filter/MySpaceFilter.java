@@ -5,7 +5,6 @@ import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -18,64 +17,60 @@ import org.apache.commons.lang.StringUtils;
 
 public class MySpaceFilter implements Filter {
 
-	private final static String G_SPACE = "g_space";
+	private String domain;
 
-	private final static String G_USER = "g_user";
+	private String[] subDomain;
 
-	private String[] domains;
+	private final static String SPACE = "my";
 
-	private String VM_ENTRY = "/WEB-INF/myspace/index.vm";
+	private final static String GROUP = "group";
 
 	private final static String[] static_ext = { "js", "css", "jpg", "png", "gif", ".html", "ico", "vm", "swf" };
 
-	public void doFilter(ServletRequest req1, ServletResponse res1, FilterChain chain) throws IOException,
+	private ServletContext sContext = null;
+
+	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException,
 			ServletException {
 
-		HttpServletRequest req = (HttpServletRequest) req1;
-		HttpServletResponse res = (HttpServletResponse) res1;
-		String server = req.getServerName();
-		String req_uri = req.getRequestURI();
+		HttpServletRequest request = (HttpServletRequest) req;
+		HttpServletResponse response = (HttpServletResponse) res;
+		String server = request.getServerName();
+		String req_uri = request.getRequestURI();
 		String[] paths = StringUtils.split(req_uri, '/');
 
-		if (!ArrayUtils.contains(domains, server) || (paths.length > 0 && "action".equalsIgnoreCase(paths[0]))
+		if (!ArrayUtils.contains(subDomain, server)
 				|| ArrayUtils.contains(static_ext, req_uri.substring(req_uri.lastIndexOf('.') + 1))) {
 			chain.doFilter(req, res);
 			return;
 		}
-		/*if (paths.length == 0) {
-			res.sendRedirect(LinkTool.home());
-			return;
-		}*/
-		/*Space the_space = Space.GetByIdent(paths[0]);
-		if (the_space == null) {
-			res.sendError(HttpServletResponse.SC_NOT_FOUND);
-			return;
-		}*/
-		StringBuilder vm = new StringBuilder(VM_ENTRY);
-		for (int i = 1; i < paths.length; i++) {
-			vm.append((i == 1) ? '?' : '&');
-			vm.append('p');
-			vm.append(i);
-			vm.append('=');
-			vm.append(paths[i]);
+		int firstIndex = server.indexOf(domain);
+		String newUrl = "";
+		String subDomain = "";
+		for (int i = 1, length = paths.length; i < length; i++) {
+			newUrl = newUrl + "/" + paths[i];
 		}
-		req.setAttribute("request_uri", req.getRequestURI());
-		//req.setAttribute(G_SPACE, the_space);
-		//req.setAttribute(G_USER, User.GetLoginUser(req));
-		RequestDispatcher rd = sContext.getRequestDispatcher(vm.toString());
-		rd.forward(req, res);
+		if (firstIndex != -1 && firstIndex != 0) {
+			subDomain = server.substring(0, firstIndex - 1);
+			if (SPACE.equals(subDomain)) {//访问空间
+				newUrl = "/user" + newUrl + "/" + paths[0];
+			}
+			else if (GROUP.equals(subDomain)) {
+
+			}
+			sContext.getRequestDispatcher(newUrl).forward(request, response);
+		}
 	}
 
-	private ServletContext sContext = null;
-
-	public void init(FilterConfig cfg) throws ServletException {
-
-		domains = StringUtils.split(cfg.getInitParameter("domain"), ',');
-		sContext = cfg.getServletContext();
-	}
-
+	@Override
 	public void destroy() {
 
 	}
 
+	@Override
+	public void init(FilterConfig cfg) throws ServletException {
+
+		domain = cfg.getInitParameter("domain");
+		subDomain = StringUtils.split(cfg.getInitParameter("subdomain"), ',');
+		sContext = cfg.getServletContext();
+	}
 }

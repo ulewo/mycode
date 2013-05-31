@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="blogItem">
+	<cacheModel id="user-cache" type="LRU" readOnly="true"
+		serialize="false">
+		<flushInterval hours="24" />
+		<property value="500" name="size" />
+	</cacheModel>
+	
+	
+	<typeAlias alias="blogItem" type="com.lhl.entity.BlogItem" />
+	
+	<!-- 添加博客分类 -->
+	<insert id="addBlogItem" parameterClass="blogItem">
+		
+		 <selectKey keyProperty="id" resultClass="java.lang.Integer" type="post">
+      		SELECT LAST_INSERT_ID()
+    	 </selectKey>
+        <![CDATA[
+           insert into blog_item (userid,itemname,itemrang)
+		   values(#userId#,#itemName#,#itemRang#);
+        ]]>
+	</insert>
+	
+	<!-- 通过userid查询博客分类 -->
+	<select id="queryBlogItemByUserId"  resultClass="blogItem" parameterClass="java.lang.String">
+		select * from blog_item  where userid = #userId#
+	</select>
+	
+	<!-- 通过userid查询博客分类和文章总数 -->
+	<select id="queryBlogItemAndCountByUserId"  resultClass="blogItem" parameterClass="java.lang.String">
+		select id,itemname,itemrang,(select count(a.id) from blog_article a where a.itemid=i.id) as articleCount from blog_item i where userid = #userId#
+	</select>
+		
+	<!-- 更新分类 -->
+	<update id="updateBlogItem" parameterClass="blogItem">
+		update blog_item  set itemname=#itemName# ,itemrang=#itemRang# where id=#id#
+	</update>
+	
+	<!-- 删除文章分类 -->
+	<delete id="deleteBlogItem" parameterClass="java.lang.Integer">
+		delete from blog_item where id = #id#
+	</delete>
+	
+	<select id="queryBlogItemById"  resultClass="blogItem" parameterClass="java.lang.Integer">
+		select * from blog_item  where id = #id#
+	</select>
+	
+</sqlMap>

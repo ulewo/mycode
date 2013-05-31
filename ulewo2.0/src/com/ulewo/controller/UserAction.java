@@ -146,12 +146,47 @@ public class UserAction {
 		return modelMap;
 	}
 
+	/**
+	 * 用户中心
+	 * @param session
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@ResponseBody
-	@RequestMapping(value = "/{userId}", method = RequestMethod.POST)
+	@RequestMapping(value = "/{userId}", method = RequestMethod.GET)
 	public Map<String, Object> queryUserInfo(HttpSession session, HttpServletRequest request,
 			HttpServletResponse response) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		return modelMap;
 	}
+
+	@ResponseBody
+	@RequestMapping(value = "/blog/{userId}", method = RequestMethod.GET)
+	public Map<String, Object> blogList(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+
+		String str = "博客列表";
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		modelMap.put("blog", str);
+		return modelMap;
+	}
+
+	/**
+	 * 博客详情
+	 * @param session
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/blog/{blogId}{userId}", method = RequestMethod.GET)
+	public Map<String, Object> blogDetail(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+
+		String str = "博客列表";
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		modelMap.put("blog", str);
+		return modelMap;
+	}
+
 }

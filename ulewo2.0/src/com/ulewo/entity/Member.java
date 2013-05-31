@@ -1,119 +1,133 @@
 package com.ulewo.entity;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 public class Member {
+	/*id*/
 	private int id;
+
+	/*组ID*/
+	private String gid;
+
+	/*用户ID*/
 	private String userId;
-	private String password;
+
+	/*用户名称*/
 	private String userName;
+
+	/*用户图标*/
 	private String userIcon;
-	private Integer age;
-	private String sex;
 
-	// 个性签名
-	private String characters;
-	// 注册时间
-	private String registerTime;
+	private String isMember;
 
-	public Integer getAge() {
-		return age;
-	}
+	/* O 普通成员  1 管理员 2 圈主*/
+	private int grade;
 
-	public void setAge(Integer age) {
-		this.age = age;
-	}
+	/*加入时间*/
+	private String joinTime;
 
-	// 住址
-	private String address;
-	// 工作
-	private String work;
+	/*发表的主题帖*/
+	private int topicCount;
+
+	/*回复帖子*/
+	private int reCount;
 
 	public int getId() {
+
 		return id;
 	}
 
 	public void setId(int id) {
+
 		this.id = id;
 	}
 
+	public String getGid() {
+
+		return gid;
+	}
+
+	public void setGid(String gid) {
+
+		this.gid = gid;
+	}
+
 	public String getUserId() {
+
 		return userId;
 	}
 
 	public void setUserId(String userId) {
+
 		this.userId = userId;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
 	public String getUserName() {
+
 		return userName;
 	}
 
 	public void setUserName(String userName) {
+
 		this.userName = userName;
 	}
 
 	public String getUserIcon() {
+
 		return userIcon;
 	}
 
 	public void setUserIcon(String userIcon) {
+
 		this.userIcon = userIcon;
 	}
 
-	public String getCharacters() {
-		return characters;
+	public String getIsMember() {
+
+		return isMember;
 	}
 
-	public void setCharacters(String characters) {
-		this.characters = characters;
+	public void setIsMember(String isMember) {
+
+		this.isMember = isMember;
 	}
 
-	public String getSex() {
-		return sex;
+	public int getGrade() {
+
+		return grade;
 	}
 
-	public void setSex(String sex) {
-		this.sex = sex;
+	public void setGrade(int grade) {
+
+		this.grade = grade;
 	}
 
-	public String getRegisterTime() {
-		return registerTime;
+	public String getJoinTime() {
+
+		return joinTime;
 	}
 
-	public void setRegisterTime(String registerTime) {
-		this.registerTime = registerTime;
+	public void setJoinTime(String joinTime) {
+
+		this.joinTime = joinTime;
 	}
 
-	public String getAddress() {
-		return address;
+	public int getTopicCount() {
+
+		return topicCount;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setTopicCount(int topicCount) {
+
+		this.topicCount = topicCount;
 	}
 
-	public String getWork() {
-		return work;
+	public int getReCount() {
+
+		return reCount;
 	}
 
-	public void setWork(String work) {
-		this.work = work;
-	}
+	public void setReCount(int reCount) {
 
-	public void setRegistertime(Date registertime) {
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd:kk点mm分ss秒");
-		this.registerTime = df.format(registertime);
+		this.reCount = reCount;
 	}
 
 }

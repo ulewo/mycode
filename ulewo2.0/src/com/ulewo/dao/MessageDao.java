@@ -1,59 +1,66 @@
-﻿package com.ulewo.dao;
+package com.ulewo.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.springframework.stereotype.Component;
+import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 import com.ulewo.entity.Message;
 
-@Component
-public class MessageDao extends BaseDao {
+public class MessageDao extends SqlMapClientDaoSupport {
 
 	/**
+	 * 查询所有留言
 	 * 
-	 * description: 多笔查询
-	 * 
+	 * @param email
+	 * @param userName
+	 * @param userId
 	 * @return
-	 * @author haley
+	 * @throws Exception
 	 */
-	@SuppressWarnings("unchecked")
-	public List<Message> queryList() {
+	public List<Message> queryMessage(String userId, int offset, int total) throws Exception {
 
-		return (List<Message>) this.getSqlMapClientTemplate().queryForList("message.selectAll");
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("userId", userId);
+		parmMap.put("offset", offset);
+		parmMap.put("total", total);
+		return (List<Message>) getSqlMapClientTemplate().queryForList("message.queryMessageByUserId", parmMap);
 	}
 
 	/**
+	 * 查询留言条数
 	 * 
-	 * description: 单笔查询
-	 * 
+	 * @param userId
 	 * @return
-	 * @author haley
+	 * @throws Exception
 	 */
-	public Message queryMessage(int id) {
+	public int getCount(String userId) throws Exception {
 
-		return (Message) this.getSqlMapClientTemplate().queryForObject("message.selectById", id);
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("userId", userId);
+		return (Integer) getSqlMapClientTemplate().queryForObject("message.queryCountByUserId", parmMap);
 	}
 
-	/**
-	 * 
-	 * description: 删除
-	 * 
-	 * @param id
-	 * @author haley
-	 */
-	public void delete(int id) {
+	public List<Message> queryReMessage(int id) throws Exception {
 
-		this.getSqlMapClientTemplate().delete("message.delete");
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("id", id);
+		return (List<Message>) getSqlMapClientTemplate().queryForList("message.queryMessageByUserId", parmMap);
 	}
 
-	/**
-	 * 
-	 * description: 更新
-	 * 
-	 * @author haley
-	 */
-	public void update(Message message) {
+	public void addMessage(Message message) throws Exception {
 
-		this.getSqlMapClientTemplate().update("message.update", message);
+		getSqlMapClientTemplate().insert("message.addMessage", message);
+	}
+
+	public Message queryMessageById(int id) {
+
+		return (Message) getSqlMapClientTemplate().queryForObject("message.queryMessageById", id);
+	}
+
+	public void deleteMessage(int id) {
+
+		getSqlMapClientTemplate().delete("message.deleteMessage", id);
 	}
 }

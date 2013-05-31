@@ -1,50 +1,117 @@
 package com.ulewo.service;
 
+import java.util.List;
+
 import com.ulewo.entity.Group;
-import com.ulewo.entity.PaginationResult;
 
 public interface GroupService {
-
 	/**
-	 * 
-	 * description: 分页查询所有群组
-	 * @param offset
-	 * @param total
-	 * @return
-	 * @author luohl
-	 */
-	public PaginationResult queryAllGroups(int offset, int total);
-
-	/**
-	 * description: 所有群组数量
-	 * @return
-	 * @author luohl
-	 */
-	public int queryGroupTotal();
-
-	/**
-	 * 
-	 * description: 通过圈子ID获取圈子详情
-	 * @return
-	 * @author luohl
-	 */
-	public Group queryGroupByGid(String gid);
-
-	/**
-	 * 
-	 * description: 新增圈子
+	 * 创建群组
 	 * @param group
-	 * @author luohl
+	 * @return
+	 * @throws Exception
 	 */
-	public boolean addGroup(Group group);
+
+	public String createGroup(Group group) throws Exception;
 
 	/**
-	 * 
-	 * description: 删除圈子
+	 * 单笔查询群组
 	 * @param gid
 	 * @return
-	 * @author luohl
+	 * @throws Exception
 	 */
-	public boolean deleteGroup(String gid);
+	public Group queryGorup(String gid) throws Exception;
 
+	/**
+	 * 
+	 * description: 查询基本信息
+	 * @return
+	 * @author lhl
+	 */
+	public Group queryGroupExtInfo(String gid) throws Exception;
+
+	/**
+	 * 更新群组
+	 * @param group
+	 * @throws Exception
+	 */
+	public void updateGroup(Group group) throws Exception;
+
+	/**
+	 * 
+	 * description:    查询所有可用的群组 按照群组文章数排序
+	 * @param isvalid
+	 * @param pageNumber
+	 * @param pageSize
+	 * @return
+	 * @author lhl
+	 */
+	List<Group> queryGroupsOderArticleCount(int pageNumber, int pageSize);
+
+	/**
+	 * 
+	 * description:    查询所有可用群数量
+	 * @param isvalid
+	 * @return
+	 * @author lhl
+	 */
+	int queryGroupsCount();
+
+	/**
+	 * 
+	 * description: 查询用户创建的群组数
+	 * @return
+	 * @throws Exception
+	 * @author lhl
+	 */
+	int queryCreatedGroupCount(String userId) throws Exception;
+
+	/**
+	 * 
+	 * description: 查询用户创建的群组
+	 * @param userId
+	 * @return
+	 * @throws Exception
+	 * @author lhl
+	 */
+	List<Group> queryCreatedGroups(String userId) throws Exception;
+
+	/**
+	 * 
+	 * description: 查询参加的群组数量
+	 * @param userId
+	 * @return
+	 * @throws Exception
+	 * @author lhl
+	 */
+	int queryJoinedGroupCount(String userId) throws Exception;
+
+	/**
+	 * 
+	 * description: 查询参加的群组
+	 * @param userId
+	 * @return
+	 * @throws Exception
+	 * @author lhl
+	 */
+	List<Group> queryJoinedGroups(String userId) throws Exception;
+
+	/**
+	 * 
+	 * description: 搜索群组
+	 * @return
+	 * @throws Exception
+	 * @author lhl
+	 */
+	List<Group> searchGroups(String keyWord, int offset, int total) throws Exception;
+
+	/**
+	 * 
+	 * description: 搜索群组数
+	 * @param keyWord
+	 * @return
+	 * @throws Exception
+	 * @author lhl
+	 */
+	int searchGroupCount(String keyWord) throws Exception;
 }

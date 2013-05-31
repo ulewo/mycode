@@ -53,7 +53,7 @@
 	</insert>
 	
 	<!--查询用户总数-->
-	<select id="findUsersCount"  resultClass="java.lang.Integer" parameterClass="java.util.String">
+	<select id="findUsersCount"  resultClass="java.lang.Integer" parameterClass="java.lang.String">
 		select count(userid) from user 
 		<dynamic prepend="where">
 		<isNotEmpty  property="userName">
@@ -74,7 +74,7 @@
 	</select>
 	
 	<!-- 查询最大用户 -->
-	<select id="getMaxUserId" resultClass="java.lang.Integer">
+	<select id="getMaxUserId" resultClass="java.lang.String">
 		select max(userid) from user
 	</select>
 	

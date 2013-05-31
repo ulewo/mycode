@@ -38,157 +38,194 @@ public class User {
 	private int reArticleNumber; // 回帖数量
 
 	private String isValid;
-	
+
 	public String getUserId() {
+
 		return userId;
 	}
 
 	public void setUserId(String userId) {
+
 		this.userId = userId;
 	}
 
 	public String getEmail() {
+
 		return email;
 	}
 
 	public void setEmail(String email) {
+
 		this.email = email;
 	}
 
 	public String getUserName() {
+
 		return userName;
 	}
 
 	public void setUserName(String userName) {
+
 		this.userName = userName;
 	}
 
 	public String getShortName() {
+
 		return shortName;
 	}
 
 	public void setShortName(String shortName) {
+
 		this.shortName = shortName;
 	}
 
 	public String getPassword() {
+
 		return password;
 	}
 
 	public void setPassword(String password) {
+
 		this.password = password;
 	}
 
 	public String getUserLittleIcon() {
+
 		return userLittleIcon;
 	}
 
 	public void setUserLittleIcon(String userLittleIcon) {
+
 		this.userLittleIcon = userLittleIcon;
 	}
 
 	public String getUserBigIcon() {
+
 		return userBigIcon;
 	}
 
 	public void setUserBigIcon(String userBigIcon) {
+
 		this.userBigIcon = userBigIcon;
 	}
 
 	public String getAge() {
+
 		return age;
 	}
 
 	public void setAge(String age) {
+
 		this.age = age;
 	}
 
 	public String getSex() {
+
 		return sex;
 	}
 
 	public void setSex(String sex) {
+
 		this.sex = sex;
 	}
 
 	public String getCharacters() {
+
 		return characters;
 	}
 
 	public void setCharacters(String characters) {
+
 		this.characters = characters;
 	}
 
 	public int getMark() {
+
 		return mark;
 	}
 
 	public void setMark(int mark) {
+
 		this.mark = mark;
 	}
 
 	public String getAddress() {
+
 		return address;
 	}
 
 	public void setAddress(String address) {
+
 		this.address = address;
 	}
 
 	public String getWork() {
+
 		return work;
 	}
 
 	public void setWork(String work) {
+
 		this.work = work;
 	}
 
 	public String getRegisterTime() {
+
 		return registerTime;
 	}
 
 	public void setRegisterTime(String registerTime) {
+
 		this.registerTime = registerTime;
 	}
 
 	public String getPrevisitTime() {
+
 		return previsitTime;
 	}
 
 	public void setPrevisitTime(String previsitTime) {
+
 		this.previsitTime = previsitTime;
 	}
 
 	public String getActivationCode() {
+
 		return activationCode;
 	}
 
 	public void setActivationCode(String activationCode) {
+
 		this.activationCode = activationCode;
 	}
 
 	public int getArticleNumber() {
+
 		return articleNumber;
 	}
 
 	public void setArticleNumber(int articleNumber) {
+
 		this.articleNumber = articleNumber;
 	}
 
 	public int getReArticleNumber() {
+
 		return reArticleNumber;
 	}
 
 	public void setReArticleNumber(int reArticleNumber) {
+
 		this.reArticleNumber = reArticleNumber;
 	}
 
 	public String getIsValid() {
+
 		return isValid;
 	}
 
 	public void setIsValid(String isValid) {
+
 		this.isValid = isValid;
 	}
-	
 }
