@@ -57,13 +57,9 @@ public class ReArticleServiceImpl implements ReArticleService {
 
 		reArticle.setReTime(format.format(new Date()));
 		String content = reArticle.getContent();
-		String quote = reArticle.getQuote();
 		List<String> referers = new ArrayList<String>();
 		String formatContent = FormatAt.getInstance().GenerateRefererLinks(userDao, content, referers);
 		String subCon = formatContent;
-		if (quote != null && !"".equals(quote)) {
-			subCon = quote + formatContent;
-		}
 		reArticle.setContent(subCon);
 		if (StringUtils.isEmpty(reArticle.getSourceFrom())) {
 			reArticle.setSourceFrom("P");
