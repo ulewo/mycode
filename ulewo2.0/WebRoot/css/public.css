@@ -1,0 +1,36 @@
+body{margin:0px auto;text-align:center;}
+.main{margin:0px auto;width:1000px;text-align:left;font-size:13px;}
+.main a{color:#3E62A6}
+input{outline:none;margin:0px;padding:0px;}
+.clear{clear:both;}
+.head_top{width:1000px;height:85px;margin:0px auto;}
+.head_logo{display:inline-block;float:left;padding-top:10px;}
+.android_logo{display: inline-block;float:left;margin-left: 10px;}
+.head_user{display:inline-block;float:right;font-size:14px;position:relative;}
+.head_user .head_s_p{display:inline-block;float:right;padding:3px;}
+.head_user a{color:#3E62A6;text-decoration:none;display:inline-block;padding:1px;}
+.head_user a:hover{background:#64C5E8;color:#ffffff}
+.welcom{color:#666666}
+.head_user div.myspace{background:url('../images/icons.gif') no-repeat 62px -219px;padding-right:10px;padding-bottom:1px;}
+.tool_panle{position:absolute;display:none;height:125px;border:1px solid #64C5E8;left:107px;top:20px;background:#ffffff;text-align:left;padding:0px;z-index:10}
+.tool_panle ul{margin:0px;padding:0px;}
+.tool_panle ul li{margin:3px;list-style:none;padding:0px;}
+.tool_panle ul a{font-size:13px;color:#3E62A6;text-decoration:none;display:block;padding:1px;}
+.tool_panle ul a:hover{background:#64C5E8;color:#FFFFFF}
+#head{background:#64C5E8;height:40px;width:100%;}
+.head_con {margin:0px auto;width:1000px;height:40px;text-align:center;}
+.head_con ul.left{width:600px;float:left;margin:0px;padding:0px;height:35px;background:#64C5E8;border:0px;text-align:center;}
+.head_con ul.left li{float:left;width:100px;list-style:none;margin-left:1px}
+.head_con ul.left li a{text-decoration:none;display:block;padding-top:11px;color:white;height:29px;font-size:14px;}
+.head_con ul.left li a:hover{text-decoration:none;background:#1C91BE;}
+.notice_panle{width:150px;height:30px;position:absolute;left:10px;top:20px;display:none;}
+.tip-arrow{width: 9px;height: 6px;background: url(../images/tip-yellowsimple_arrows.gif) no-repeat;position:absolute;left:130px;top:0px;z-index:3;}
+.tip_con{background:#FFF9C9;border:1px solid #C7BF93;height:20px;position:absolute;left:0px;top:5px;width:150px;padding-top:8px;border-radius: 4px;-moz-border-radius: 4px;-webkit-border-radius: 4px}
+.tip_con a{color:#3E62A6;}
+
+/**************¶¥²¿ËÑË÷******************/
+.head_search .head_search_input{height:27px;margin-top:5px;width:250px;margin-left:40px;float:right;border:1px solid #1C91BE;}
+.head_search .head_search_btn{background:#1C91BE;border:0px;color:#ffffff;font-size:15px;height:29px;width:100px;float:right;margin-top:5px;}
+
+a.btn{background:#4682B4;display:inline-block;text-align:center;padding:5px 5px 0px 5px;height:20px;color:#ffffff;text-decoration:none;font-size:13px;}
+a.btn:hover{background:#38678F}

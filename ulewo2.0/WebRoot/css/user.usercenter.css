@@ -1,0 +1,88 @@
+@import url("public.css");
+.left{width:220px;float:left;}
+.avatar_con{height:85px;background:#4682B4}
+.avatar_con img{border:0px;}
+.user_avatar{float:left;width:60px;margin:10px;background:#FFFFFF;padding:3px;}
+.user_edit{float:left;width:100px;}
+.user_edit a{color:#FFFFFF;font-weight:bold;text-decoration: none;margin-top:30px;display:block;text-align:left;}
+.resume{background: #6E7B8B url('../images/resume24.png') no-repeat left bottom;margin: 10px 0 0 0;color: white;padding: 18px 10px 18px 40px;word-wrap: break-word;overflow: hidden;text-align:left;}
+.opts{margin-top:10px;text-align:center;}
+.opts a{text-decoration:none;}
+.opts .blog{background:#6495ED;width:105px;float:left;background-image:url('../images/space-opts.png');background-position: 18px -70px;background-repeat:no-repeat;display:block;color:#FFFFFF;padding-top:62px;height:17px;}
+.opts .blog:hover{background: #3676E8;background-image:url('../images/space-opts.png');background-position: 18px -70px;background-repeat:no-repeat;}
+.opts .manage{background:#5CACEE;width:105px;float:left;background-image:url('../images/space-opts.png');background-position: 18px -205px;background-repeat:no-repeat;display:block;margin-left:10px;color:#FFFFFF;padding-top:62px;height:17px;}
+.opts .manage:hover{background: #2E94E9;background-image:url('../images/space-opts.png');background-position: 18px -205px;background-repeat:no-repeat;}
+.opts .sendMsg{background:#5CACEE;display:block;height:40px;background-image:url('../images/space-opts.png');background-position: 15px -140px;background-repeat:no-repeat;color:#ffffff;padding-top:20px;padding-left:30px;font-size:14px;text-align:center;}
+.opts .sendMsg:hover{background: #2E94E9;background-image:url('../images/space-opts.png');background-position: 15px -140px;background-repeat:no-repeat;}
+
+.right{float:left;width:750px;margin-left:10px;text-align:left;background:#ffffff;padding:10px;}
+.baseinfoCon{line-height:30px;}
+.base_info{color:#999999}
+.g_gcon{float:left;margin-left:10px;height:70px;width:175px;}
+.g_gon_img{float:left;width:60px;height:60px;border:1px solid #EFEFEF}
+.g_gon_info{float:left;width:100px;height:60px;margin-left:3px;}
+.g_gon_info a{color:#006A92;text-decoration:none;font-size:13px;}
+.g_gon_info a:hover{color:#FF9603;}
+.g_gon_info div{margin-top:3px;}
+
+/********吐槽*********/
+.u_talk_tit span{display:inline-block;color:#888888;font-size:14px;}
+.u_talk_titname{float:left;}
+.u_talk_wordcount{float:right;}
+.u_talk_textarea{margin-top:5px;}
+.u_talk_textarea textarea{outline:none;resize:none;width:99%;height:60px;border:2px solid #64C5E8;}
+.u_talk_sub{margin-top:5px;position:relative;}
+.talkop{float:left;display:inline-block;}
+.u_talk_subtn{float:right;}
+.pm_emotion{position: absolute; z-index: 99; border: 1px solid #D7D7D7;background: #fff;color: #5F5F5F;box-shadow: 0 2px 10px rgba(0, 0, 0, .1);display:none;}
+.pm_emotion_panel{padding: 10px 5px 10px 10px;}
+.pm_emotions_bd{width: 420px;}
+.pm_emotions_bd a{width: 30px;height: 30px; display:inline-block; float:left;}
+.pm_emotions_bd img{border: 1px solid white;width: 22px;height: 22px;margin: 0;padding: 3px;}
+.pm_emotions_bd a:hover img{border: 1px solid #0095CD;}
+
+#talk_img_con{position:absolute;border:1px solid #CCCCCC;width:270px;background:white;display:none;}
+.talk_img_tit{background:#F2F2F2;height:15px;padding:5px;}
+.talk_img_tit_tit{display:block;float:left;text-align:center;}
+.talk_img_tit_close{display:block;float:right;margin-right:5px;}
+.talk_img_fram{margin:5px;}
+#talk_img_showimg{display:none;}
+#talk_img_showimg img{max-width:100px;max-height:50px;}
+.talkimg img{max-width:600px;}
+
+a.icon_sw_face{display:block;width:18px;height:18px;background:url("../images/icon.png") -275px 2px;float:left;}
+.icon_sw_face:hover{background:url("../images/icon.png") -250px 2px;}
+
+a.icon_sw_img {display:block;width:18px;height:18px;background:url("../images/icon.png") -275px -23px;float:left;margin-left:20px;}
+.icon_sw_img:hover{background:url("../images/icon.png") -250px -23px;}
+
+
+.base_tit{font-weight:bold;font-size:13px;}
+.base_info{color:#999999}
+.topblog{border:1px solid #EEEEEE;padding:10px;margin-top:10px;background:#FFFFFF;}
+.topblog_tit{display:inline-block;float:left;font-size:14px;color: #666666;font-weight:bold;}
+
+/**********博客列表********/
+.topblog_link{display:inline-block;float:right;}
+.topblog_link a{color:#4466BB;font-weight:bolder;}
+.blog_link{font-size:13px;margin-top:8px;}
+.blog_link a{color:#4466BB;text-decoration:none;line-height:20px;}
+.blog_link a:hover{color:#0000AA}
+.blog_link span{color:#999999;margin-left:20px;}
+
+/***************动态*****************/
+.trends{border:1px solid #EEEEEE;padding:10px;margin-top:10px;}
+.trends ul{border-bottom:2px solid #64C5E8;padding:0px;margin:0px;list-style:none;height:27px;}
+.trends ul li{float:left;margin-left:5px;display:inline-block;}
+.trends ul li a{display:inline-block;background:#5CACEE;color:#ffffff;text-decoration:none;height:21px;padding:6px 10px 0px 10px}
+.trends ul li a:hover{background:#64C5E8}
+
+/****吐槽***/
+.talk_item{margin-top:10px;}
+.talk_icon{float:left;display:inline-block;border:1px solid #989898;margin-left:6px;}
+.talk_con{float:left;display:inline-block;margin-left:10px;width:670px;}
+.talk_tit span{color:#999999}
+.talk_content{margin-top:10px;}
+.talk_info{margin-top:10px;}
+.talk_info span{color:#999999;display:inline-block;float:left}
+.talk_info a{float:right;display:inline-block;margin-left:10px;}
