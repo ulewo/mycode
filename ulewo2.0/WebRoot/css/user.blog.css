@@ -1,0 +1,16 @@
+@import url("user.public.css");
+.blog_item{background:url("../images/fw_arrow.gif") no-repeat;padding-left:20px;height:23px;margin-left:5px;}
+.blog_item a{text-decoration:none;}
+.blog_item a:hover{text-decoration:underline;}
+.blog_item span{color:#666666;padding-left:10px;}
+.blog_rang{padding-left:8px;margin-top:5px;padding-right:5px;}
+.blog_rang a{text-decoration:none;}
+.blog_rang a:hover{text-decoration:underline;}
+
+/***²©ÎÄÁÐ±í**/
+.blog_list{border:1px solid #EEEEEE;padding:10px;}
+.blog_list_item{margin-top:20px;border-bottom:1px solid #EEEEEE;padding-bottom:20px;}
+.blog_list_tit a{font-weight:bold;font-size:18px;text-decoration:none;color:#333333}
+.blog_item_op{margin-top:5px;}
+.blog_summary{margin-top:10px;font-size:14px;color:#000000;}
+.blog_item_info{color:#666666;margin-top:10px;}

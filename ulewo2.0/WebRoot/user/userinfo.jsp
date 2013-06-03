@@ -12,7 +12,92 @@
 	<%@ include file="../common/head.jsp" %>
 	<div class="main">
 	  <div class="left">
-	  	<jsp:include page="left.jsp"></jsp:include>
+	  	<%@ include file="left.jsp" %>
+	  	<div class="left_item">
+	  		<div class="left_item_tit">关注</div>
+	  		<div class="left_img_p">
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="clear"></div>
+	  		</div>
+	  	</div>
+	  	<div class="left_item">
+	  		<div class="left_item_tit">粉丝</div>
+	  		<div class="left_img_p">
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="clear"></div>
+	  		</div>
+	  	</div>
+	  	<div class="left_item">
+	  		<div class="left_item_tit">Ta创建的窝窝</div>
+	  		<div class="left_img_p">
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="clear"></div>
+	  		</div>
+	  	</div>
+	  	<div class="left_item">
+	  		<div class="left_item_tit">Ta加入的窝窝</div>
+	  		<div class="left_img_p">
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div class="clear"></div>
+	  		</div>
+	  	</div>
+	  	
 	  </div>
 	  <div class="right">
 		  	<c:if test="${user.userId==param.userId}">

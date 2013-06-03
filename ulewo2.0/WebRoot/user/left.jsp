@@ -9,8 +9,24 @@
 </c:if>
 <div class="leftmain">
 	<div class="avatar_con">
-		<div class="user_avatar"><a href="userInfo.jspx?userId=${uid}"><img src="" id="imgcon" style="display:none;" width="60px;" height="60px;"></a></div>
-		<div class="user_edit"><a href="userInfo.jspx?userId=${uid}" id="user_name"></a></div>
+		<div>
+			<div class="user_avatar"><a href="userInfo.jspx?userId=${uid}"><img src="../images/default.gif" id="imgcon" width="60px;" height="60px;"></a></div>
+			<div class="user_edit">
+				<a href="userInfo.jspx?userId=${uid}" class="username" id="user_name">多多洛</a>
+				<div class="user_edit_info">
+					<span><img src="../images/men.png"></span>
+					<a href="" class="edit_info">修改资料</a>
+					<a href="" class="edit_icon">更换头像</a>
+					<div class="clear"></div>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="user_other_info">
+			<span>关注(0)</span>
+			<span>粉丝(0)</span>
+			<span>积分(0)</span>
+		</div>
 	</div>
 	<div class="resume" id="resume">
 	</div>
