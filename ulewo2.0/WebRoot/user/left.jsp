@@ -31,18 +31,17 @@
 	<div class="resume" id="resume">
 	</div>
 	<div class="opts">
-		
-			<a href="addBlog.jspx?userId=${userId}" class="blog">
-				<span class="blog_icon"></span>
-				<span class="blog_tit">发表博文</span>
-			</a>
-			<a href="manage.jspx" class="manage">
-				空间管理
-			</a>
-			<div class="clear"></div>
-			<a href="message.jsp?userId=${uid}" class="sendMsg">
-				发送留言
-			</a>
+		<a href="addBlog.jspx?userId=${userId}" class="blog">
+			<span class="blog_icon"></span>
+			<span class="blog_tit">发表博文</span>
+		</a>
+		<a href="manage.jspx" class="manage">
+			空间管理
+		</a>
+		<div class="clear"></div>
+		<a href="message.jsp?userId=${uid}" class="sendMsg">
+			发送留言
+		</a>
 	</div>
 	<script type="text/javascript" src="../js/user.left.js"></script>
 	<script type="text/javascript">
