@@ -26,7 +26,6 @@ import com.ulewo.util.StringUtils;
 public class ReBlogAction {
 	@Autowired
 	private UserService userService;
-
 	@Autowired
 	private BlogReplyService blogReplyService;
 

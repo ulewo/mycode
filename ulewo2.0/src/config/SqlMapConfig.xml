@@ -10,6 +10,18 @@
              maxTransactions="100"
              maxRequests="1000"
              defaultStatementTimeout="15"/>
+   <sqlMap resource="com/ulewo/entity/Article.xml" />
+   <sqlMap resource="com/ulewo/entity/ReArticle.xml" />
+   <sqlMap resource="com/ulewo/entity/Group.xml" />
+   <sqlMap resource="com/ulewo/entity/ArticleItem.xml" />
+   <sqlMap resource="com/ulewo/entity/Member.xml" />
    <sqlMap resource="com/ulewo/entity/User.xml" />
+   <sqlMap resource="com/ulewo/entity/Message.xml" />
+   <sqlMap resource="com/ulewo/entity/BlogArticle.xml" />
+   <sqlMap resource="com/ulewo/entity/BlogItem.xml" />
+   <sqlMap resource="com/ulewo/entity/BlogReply.xml" />
+   <sqlMap resource="com/ulewo/entity/Notice.xml" />
+   <sqlMap resource="com/ulewo/entity/Talk.xml" />
+   <sqlMap resource="com/ulewo/entity/ReTalk.xml" />
 </sqlMapConfig>
 

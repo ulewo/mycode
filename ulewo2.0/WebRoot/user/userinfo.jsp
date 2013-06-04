@@ -4,6 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<%@ include file="../common/path.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>登陆有乐窝-有乐窝</title>
 <link rel="stylesheet" type="text/css" href="../css/user.usercenter.css">
@@ -100,7 +101,7 @@
 	  	
 	  </div>
 	  <div class="right">
-		  	<c:if test="${user.userId==param.userId}">
+		  	<c:if test="${user.userId==userId}">
 	  		<div class="u_talk">
 	  			<div class="u_talk_tit">
 	  				<span class='u_talk_titname'>今天你吐槽了吗？</span>
@@ -221,13 +222,6 @@
 		  	<div class="baseinfoCon topblog">
 			  	<span class="base_tit">加入时间：</span><span class="base_info">${userVo.registerTime}</span><br>
 			  	<span class="base_tit">最近登录：</span><span class="base_info">${userVo.previsitTime}</span><br>
-			  	<span class="base_tit">性别：</span><span class="base_info">
-			  		<c:choose>
-                   		<c:when test="${userVo.sex =='M' }">男</c:when>
-                   		<c:when test="${userVo.sex =='F' }">女</c:when>
-                   		<c:otherwise>未知</c:otherwise>
-                  	</c:choose>
-			  	</span><br>
 			  	<span class="base_tit">职业：</span><span class="base_info">
 			  		<c:choose>
                    		<c:when test="${!empty userVo.work}">${userVo.work}</c:when>
@@ -240,7 +234,6 @@
                    		<c:otherwise>未知</c:otherwise>
                   	</c:choose>
 			  		</span><br>
-			  	<span class="base_tit">积分：</span><span class="base_info">${userVo.mark}</span><br>
 		  	</div>
 		  	<div class="topblog">
 		  		<div class="topblog_titcon">
@@ -249,21 +242,11 @@
 		  			<div class="clear"></div>
 		  		</div>
 		  		<div id="talklist">
-		  			<div class="blog_link">
-		  				<a href="#">有想法但不会写代码，凭什么让技术合伙人为你的创意打工？</a><span>10/233</span>
-		  			</div>
-		  			<div class="blog_link">
-		  				<a href="#">有想法但不会写代码，凭什么让技术合伙人为你的创意打工？</a><span>10/233</span>
-		  			</div>
-		  			<div class="blog_link">
-		  				<a href="#">有想法但不会写代码，凭什么让技术合伙人为你的创意打工？</a><span>10/233</span>
-		  			</div>
-		  			<div class="blog_link">
-		  				<a href="#">有想法但不会写代码，凭什么让技术合伙人为你的创意打工？</a><span>10/233</span>
-		  			</div>
-		  			<div class="blog_link">
-		  				<a href="#">有想法但不会写代码，凭什么让技术合伙人为你的创意打工？</a><span>10/233</span>
-		  			</div>
+		  			<c:forEach var="blog" items="${bloglist}">
+			  			<div class="blog_link">
+			  				<a href="#">${blog.title}</a><span>${blog.reCount}/${blog.readCount}</span>
+			  			</div>
+		  			</c:forEach>
 		  		</div>
 		  	</div>
 		  	<div class="trends">

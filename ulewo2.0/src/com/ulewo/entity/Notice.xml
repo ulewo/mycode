@@ -8,7 +8,7 @@
 	</cacheModel>
 	
 	
-	<typeAlias alias="notice" type="com.lhl.entity.Notice" />
+	<typeAlias alias="notice" type="com.ulewo.entity.Notice" />
 	
 	<!-- 创建消息 -->
 	<insert id="createNotice" parameterClass="notice">

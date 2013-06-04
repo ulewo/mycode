@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
+import org.springframework.stereotype.Component;
 
 import com.ulewo.entity.BlogReply;
 
@@ -15,7 +16,8 @@ import com.ulewo.entity.BlogReply;
  * @date 2012-3-29
  * @version V1.0
  */
-public class BlogReplyDao extends SqlMapClientDaoSupport {
+@Component
+public class BlogReplyDao extends BaseDao {
 	/**
 	 * 新增分类 description: 函数的目的/功能
 	 * 

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ulewo.dao.ArticleDao;
@@ -27,15 +28,19 @@ import com.ulewo.util.StringUtils;
 
 @Service("articleService")
 public class ArticleServiceImpl implements ArticleService {
-
+	@Autowired
 	private ArticleDao articleDao;
 
+	@Autowired
 	private ArticleItemDao articleItemDao;
 
+	@Autowired
 	private UserDao userDao;
 
+	@Autowired
 	private ReArticleDao reArticleDao;
 
+	@Autowired
 	private NoticeDao noticeDao;
 
 	private final SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ulewo.cache.CacheManager;
@@ -29,11 +30,13 @@ import com.ulewo.util.StringUtils;
  */
 @Service("memberService")
 public class MemberServiceImp implements MemberService {
-
+	@Autowired
 	private MemberDao memberDao;
 
+	@Autowired
 	private UserDao userDao;
 
+	@Autowired
 	private GroupDao groupDao;
 
 	private final SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

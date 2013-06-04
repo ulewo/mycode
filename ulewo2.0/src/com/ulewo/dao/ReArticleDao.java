@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
+import org.springframework.stereotype.Component;
 
 import com.ulewo.entity.ReArticle;
 
@@ -15,7 +16,8 @@ import com.ulewo.entity.ReArticle;
  * @date 2012-3-30
  * @version V1.0
 */
-public class ReArticleDao extends SqlMapClientDaoSupport {
+@Component
+public class ReArticleDao extends BaseDao {
 	/**
 	 * 
 	 * description: 新增回复

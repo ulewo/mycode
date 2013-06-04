@@ -8,7 +8,7 @@
 	</cacheModel>
 	
 	
-	<typeAlias alias="blogItem" type="com.lhl.entity.BlogItem" />
+	<typeAlias alias="blogItem" type="com.ulewo.entity.BlogItem" />
 	
 	<!-- 添加博客分类 -->
 	<insert id="addBlogItem" parameterClass="blogItem">

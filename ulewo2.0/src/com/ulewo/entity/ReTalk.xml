@@ -7,7 +7,7 @@
 		<property value="500" name="size" />
 	</cacheModel>
 	
-	<typeAlias alias="retalk" type="com.lhl.entity.ReTalk" />
+	<typeAlias alias="retalk" type="com.ulewo.entity.ReTalk" />
 	
 	<!-- 添加留言 -->
 	<insert id="addretalk" parameterClass="retalk">

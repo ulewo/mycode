@@ -10,7 +10,7 @@
 <div class="leftmain">
 	<div class="avatar_con">
 		<div>
-			<div class="user_avatar"><a href="userInfo.jspx?userId=${uid}"><img src="../images/default.gif" id="imgcon" width="60px;" height="60px;"></a></div>
+			<div class="user_avatar"><a href="userInfo.jspx?userId=${uid}"><img src="/../images/default.gif" id="imgcon" width="60px;" height="60px;"></a></div>
 			<div class="user_edit">
 				<a href="userInfo.jspx?userId=${uid}" class="username" id="user_name">多多洛</a>
 				<div class="user_edit_info">

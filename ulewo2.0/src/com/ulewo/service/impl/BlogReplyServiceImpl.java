@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ulewo.dao.BlogArticleDao;
@@ -26,13 +27,16 @@ import com.ulewo.util.StringUtils;
 
 @Service("blogReplyService")
 public class BlogReplyServiceImpl implements BlogReplyService {
-
+	@Autowired
 	private BlogReplyDao blogReplyDao;
-
+	
+	@Autowired
 	private BlogArticleDao blogArticleDao;
-
+	
+	@Autowired
 	private UserDao userDao;
-
+	
+	@Autowired
 	private NoticeDao noticeDao;
 
 	private final SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

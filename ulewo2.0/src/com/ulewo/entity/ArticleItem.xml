@@ -8,7 +8,7 @@
 	</cacheModel>
 	
 	
-	<typeAlias alias="articleItem" type="com.lhl.entity.ArticleItem" />
+	<typeAlias alias="articleItem" type="com.ulewo.entity.ArticleItem" />
 	
 	<!-- 添加群文章分类 -->
 	<insert id="addArticleItem" parameterClass="articleItem">

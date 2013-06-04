@@ -8,7 +8,7 @@
 	</cacheModel>
 	
 	
-	<typeAlias alias="talk" type="com.lhl.entity.Talk" />
+	<typeAlias alias="talk" type="com.ulewo.entity.Talk" />
 	
 	<!-- 添加留言 -->
 	<insert id="addtalk" parameterClass="talk">

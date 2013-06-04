@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ulewo.dao.MessageDao;
@@ -19,11 +20,13 @@ import com.ulewo.util.StringUtils;
 
 @Service("messageService")
 public class MessageServiceImpl implements MessageService {
-
+	@Autowired
 	private MessageDao messageDao;
 
+	@Autowired
 	private UserDao userDao;
 
+	@Autowired
 	private NoticeDao noticeDao;
 
 	private final SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

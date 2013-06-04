@@ -3,6 +3,7 @@ package com.ulewo.dao;
 import java.util.List;
 
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
+import org.springframework.stereotype.Component;
 
 import com.ulewo.entity.BlogItem;
 
@@ -13,7 +14,9 @@ import com.ulewo.entity.BlogItem;
  * @date 2012-3-29
  * @version V1.0
 */
-public class BlogItemDao extends SqlMapClientDaoSupport {
+
+@Component
+public class BlogItemDao extends BaseDao {
 	/**
 	 * 新增分类
 	 * description: 函数的目的/功能

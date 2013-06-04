@@ -5,10 +5,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
+import org.springframework.stereotype.Component;
 
 import com.ulewo.entity.ReTalk;
-
-public class ReTalkDao extends SqlMapClientDaoSupport {
+@Component
+public class ReTalkDao extends BaseDao {
 	/**
 	 * 添加说说
 	 * 

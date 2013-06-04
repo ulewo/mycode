@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ulewo.dao.TalkDao;
@@ -19,9 +20,10 @@ import com.ulewo.util.StringUtils;
 
 @Service("talkService")
 public class TalkServiceImpl implements TalkService {
-
+	@Autowired
 	private TalkDao talkDao;
 
+	@Autowired
 	private UserDao userDao;
 
 	public void setTalkDao(TalkDao talkDao) {

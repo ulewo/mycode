@@ -4,9 +4,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<%@ include file="../common/path.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>登陆有乐窝-有乐窝</title>
-<link rel="stylesheet" type="text/css" href="../css/user.blog.css">
+<link rel="stylesheet" type="text/css" href="${realPath}css/user.blog.css">
 </head>
 <body>
 	<%@ include file="../common/head.jsp" %>
@@ -35,66 +36,23 @@
 				<div class="right_top_m">
 					<a href="">空间</a>&gt;&gt;<a href="">博客</a>
 				</div>
-				<div class="blog_list_item">
-					<div class="blog_list_tit"><a href="">【CF 应用开发大赛】有乐窝 大型服务社区，让你的生活更精彩</a></div>
-					<div class="blog_item_op">
-						<span>分类:</span>
-						<a href="">日常记录</a>
-						(<a href="">修改</a>|<a href="">删除</a>)
+				<c:forEach var="blog" items="${result.list}">
+					<div class="blog_list_item">
+						<div class="blog_list_tit"><a href="">${blog.title}</a></div>
+						<div class="blog_item_op">
+							<span>分类:</span>
+							<a href="">${blog.itemName}</a>
+							(<a href="">修改</a>|<a href="">删除</a>)
+						</div>
+						<div class="blog_summary">
+							${blog.summary}
+						</div>
+						<div class="blog_item_info">
+							<span>发布于 ${blog.postTime}，阅读(${blog.readCount})|评论(${blog.reCount})</span>
+							<a href="">阅读全文</a>
+						</div>
 					</div>
-					<div class="blog_summary">
-						湖北的丫们应该都吃过。小时候在家，妈妈炸的翻饺可好吃了。今天自己小试了一把。
-					</div>
-					<div class="blog_item_info">
-						<span>发布于 4个月前，阅读(100)|评论(10)</span>
-						<a href="">阅读全文</a>
-					</div>
-				</div>
-				<div class="blog_list_item">
-					<div class="blog_list_tit"><a href="">【CF 应用开发大赛】有乐窝 大型服务社区，让你的生活更精彩</a></div>
-					<div class="blog_item_op">
-						<span>分类:</span>
-						<a href="">日常记录</a>
-						(<a href="">修改</a>|<a href="">删除</a>)
-					</div>
-					<div class="blog_summary">
-						湖北的丫们应该都吃过。小时候在家，妈妈炸的翻饺可好吃了。今天自己小试了一把。
-					</div>
-					<div class="blog_item_info">
-						<span>发布于 4个月前，阅读(100)|评论(10)</span>
-						<a href="">阅读全文</a>
-					</div>
-				</div>
-				<div class="blog_list_item">
-					<div class="blog_list_tit"><a href="">【CF 应用开发大赛】有乐窝 大型服务社区，让你的生活更精彩</a></div>
-					<div class="blog_item_op">
-						<span>分类:</span>
-						<a href="">日常记录</a>
-						(<a href="">修改</a>|<a href="">删除</a>)
-					</div>
-					<div class="blog_summary">
-						湖北的丫们应该都吃过。小时候在家，妈妈炸的翻饺可好吃了。今天自己小试了一把。
-					</div>
-					<div class="blog_item_info">
-						<span>发布于 4个月前，阅读(100)|评论(10)</span>
-						<a href="">阅读全文</a>
-					</div>
-				</div>
-				<div class="blog_list_item">
-					<div class="blog_list_tit"><a href="">【CF 应用开发大赛】有乐窝 大型服务社区，让你的生活更精彩</a></div>
-					<div class="blog_item_op">
-						<span>分类:</span>
-						<a href="">日常记录</a>
-						(<a href="">修改</a>|<a href="">删除</a>)
-					</div>
-					<div class="blog_summary">
-						湖北的丫们应该都吃过。小时候在家，妈妈炸的翻饺可好吃了。今天自己小试了一把。
-					</div>
-					<div class="blog_item_info">
-						<span>发布于 4个月前，阅读(100)|评论(10)</span>
-						<a href="">阅读全文</a>
-					</div>
-				</div>
+				</c:forEach>
 			</div>
 		</div>
 		<div style="clear:left;"></div>

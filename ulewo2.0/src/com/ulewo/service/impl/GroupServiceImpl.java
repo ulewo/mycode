@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ulewo.dao.ArticleDao;
@@ -19,13 +20,16 @@ import com.ulewo.util.StringUtils;
 
 @Service("groupService")
 public class GroupServiceImpl implements GroupService {
-
+	@Autowired
 	private ArticleDao articleDao;
 
+	@Autowired
 	private GroupDao groupDao;
 
+	@Autowired
 	private MemberDao memberDao;
 
+	@Autowired
 	private UserDao userDao;
 
 	private final SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

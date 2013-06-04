@@ -7,7 +7,7 @@
 		<property value="500" name="size" />
 	</cacheModel>
 	
-	<typeAlias alias="reArticle" type="com.lhl.entity.ReArticle" />
+	<typeAlias alias="reArticle" type="com.ulewo.entity.ReArticle" />
 	
 	<!-- 新增回复-->
 	<insert id="addReArticle" parameterClass="reArticle">

@@ -8,7 +8,7 @@
 	</cacheModel>
 	
 	
-	<typeAlias alias="message" type="com.lhl.entity.Message" />
+	<typeAlias alias="message" type="com.ulewo.entity.Message" />
 	
 	<!-- 添加留言 -->
 	<insert id="addMessage" parameterClass="message">

@@ -6,7 +6,7 @@
 		<flushInterval hours="24" />
 		<property value="500" name="size" />
 	</cacheModel>
-	<typeAlias alias="article" type="com.lhl.entity.Article" />
+	<typeAlias alias="article" type="com.ulewo.entity.Article" />
 	
 	<!-- 添加文章-->
 	<insert id="addArticle" parameterClass="article">

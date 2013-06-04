@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ulewo.dao.BlogArticleDao;
@@ -24,10 +25,13 @@ import com.ulewo.util.StringUtils;
 
 @Service("blogArticleService")
 public class BlogArticleServiceImpl implements BlogArticleService {
+	@Autowired
 	private BlogArticleDao blogArticleDao;
-
+	
+	@Autowired
 	private UserDao userDao;
-
+	
+	@Autowired
 	private NoticeDao noticeDao;
 
 	public void setUserDao(UserDao userDao) {

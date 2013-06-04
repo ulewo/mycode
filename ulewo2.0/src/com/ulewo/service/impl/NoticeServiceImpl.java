@@ -2,6 +2,7 @@ package com.ulewo.service.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ulewo.dao.NoticeDao;
@@ -10,9 +11,14 @@ import com.ulewo.service.NoticeService;
 
 @Service("noticeService")
 public class NoticeServiceImpl implements NoticeService {
-
+	@Autowired
 	private NoticeDao noticeDao;
 
+	public void setNoticeDao(NoticeDao noticeDao) {
+
+		this.noticeDao = noticeDao;
+	}
+	
 	@Override
 	public void updateNotice(Notice notice) {
 
@@ -42,9 +48,6 @@ public class NoticeServiceImpl implements NoticeService {
 		return noticeDao.getNotice(id);
 	}
 
-	public void setNoticeDao(NoticeDao noticeDao) {
 
-		this.noticeDao = noticeDao;
-	}
 
 }

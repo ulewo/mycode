@@ -5,10 +5,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
+import org.springframework.stereotype.Component;
 
 import com.ulewo.entity.Notice;
-
-public class NoticeDao extends SqlMapClientDaoSupport {
+@Component
+public class NoticeDao extends BaseDao {
 
 	/**
 	 * 创建消息

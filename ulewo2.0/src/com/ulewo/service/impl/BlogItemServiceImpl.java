@@ -2,6 +2,7 @@ package com.ulewo.service.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ulewo.dao.BlogItemDao;
@@ -10,7 +11,7 @@ import com.ulewo.service.BlogItemService;
 
 @Service("blogItemService")
 public class BlogItemServiceImpl implements BlogItemService {
-
+	@Autowired
 	private BlogItemDao blogItemDao;
 
 	public void setBlogItemDao(BlogItemDao blogItemDao) {

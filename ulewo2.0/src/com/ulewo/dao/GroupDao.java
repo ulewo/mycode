@@ -5,11 +5,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
+import org.springframework.stereotype.Component;
 
 import com.ulewo.entity.Group;
 import com.ulewo.util.Constant;
 
-public class GroupDao extends SqlMapClientDaoSupport {
+@Component
+public class GroupDao extends BaseDao {
 
 	/**
 	 * 获取最大的id

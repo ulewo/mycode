@@ -8,7 +8,7 @@
 	</cacheModel>
 	
 	
-	<typeAlias alias="group" type="com.lhl.entity.Group" />
+	<typeAlias alias="group" type="com.ulewo.entity.Group" />
 	
 	<!-- 创建群组 -->
 	<insert id="createGroup" parameterClass="group">

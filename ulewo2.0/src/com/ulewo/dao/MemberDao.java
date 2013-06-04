@@ -5,11 +5,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
+import org.springframework.stereotype.Component;
 
 import com.ulewo.entity.Member;
 import com.ulewo.util.Constant;
-
-public class MemberDao extends SqlMapClientDaoSupport {
+@Component
+public class MemberDao extends BaseDao {
 
 	/**
 	 * 添加成员

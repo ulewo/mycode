@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ulewo.dao.ReTalkDao;
@@ -19,9 +20,10 @@ import com.ulewo.util.StringUtils;
 
 @Service("reTalkService")
 public class ReTalkServiceImpl implements ReTalkService {
-
+	@Autowired
 	private ReTalkDao reTalkDao;
 
+	@Autowired
 	private UserDao userDao;
 
 	public void setUserDao(UserDao userDao) {
