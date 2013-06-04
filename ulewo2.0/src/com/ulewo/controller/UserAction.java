@@ -360,7 +360,7 @@ public class UserAction {
 					.queryBlogItemAndCountByUserId(userId);
 			mv.addObject("result", result);
 			mv.addObject("blogItemList", blogItemList);
-			mv.setViewName("/blog");
+			mv.setViewName("blog");
 			return mv;
 		} catch (Exception e) {
 			mv.setViewName("redirect:/../error");
