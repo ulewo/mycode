@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.ulewo.dao.MessageDao;
 import com.ulewo.dao.NoticeDao;
 import com.ulewo.dao.UserDao;
@@ -15,6 +17,7 @@ import com.ulewo.service.MessageService;
 import com.ulewo.util.FormatAt;
 import com.ulewo.util.StringUtils;
 
+@Service("messageService")
 public class MessageServiceImpl implements MessageService {
 
 	private MessageDao messageDao;

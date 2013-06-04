@@ -2,10 +2,13 @@ package com.ulewo.service.impl;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.ulewo.dao.NoticeDao;
 import com.ulewo.entity.Notice;
 import com.ulewo.service.NoticeService;
 
+@Service("noticeService")
 public class NoticeServiceImpl implements NoticeService {
 
 	private NoticeDao noticeDao;

@@ -2,6 +2,8 @@ package com.ulewo.service.impl;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.ulewo.dao.ArticleItemDao;
 import com.ulewo.entity.ArticleItem;
 import com.ulewo.service.ArticleItemService;
@@ -13,6 +15,7 @@ import com.ulewo.service.ArticleItemService;
  * @date 2012-3-29
  * @version V1.0
 */
+@Service("articleItemService")
 public class ArticleItemServiceImpl implements ArticleItemService {
 
 	private ArticleItemDao articleItemDao;

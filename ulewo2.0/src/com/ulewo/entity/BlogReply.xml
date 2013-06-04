@@ -23,14 +23,15 @@
 	</insert>
 	
 	<!-- 通过博客ID查询回复 -->
-	<select id="queryReplyByBlogId"  resultClass="blogReply" parameterClass="java.lang.Integer">
+	<select id="queryReplyByBlogId"  resultClass="blogReply" parameterClass="java.util.Map">
 		select m.id,m.userid,m.blogid,m.content,m.sourcefrom,
 		(case when m.userid is not null then u.username else m.username end)as userName,
 		(case when m.userid is not null then u.userlittleicon else '' end)as reUserIcon,
 		m.atuserid,
 		au.username as atusername,
 		m.posttime 
-		from blog_reply m left join user u on m.userid = u.userid left join user au on m.atuserid=au.userid where m.blogid = #blogId# order by posttime asc
+		from blog_reply m left join user u on m.userid = u.userid left join user au on m.atuserid=au.userid where m.blogid = #blogId# 
+		order by posttime asc limit #offset#,#pageSize#
 		
 	</select>
 	

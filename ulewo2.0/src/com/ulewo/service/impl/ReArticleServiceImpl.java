@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Service;
+
 import com.ulewo.dao.NoticeDao;
 import com.ulewo.dao.ReArticleDao;
 import com.ulewo.dao.UserDao;
@@ -27,6 +29,7 @@ import com.ulewo.util.StringUtils;
  * @date 2012-3-30
  * @version V1.0
  */
+@Service("reArticleService")
 public class ReArticleServiceImpl implements ReArticleService {
 
 	private ReArticleDao reArticleDao;

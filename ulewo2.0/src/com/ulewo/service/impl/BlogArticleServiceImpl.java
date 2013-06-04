@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.ulewo.dao.BlogArticleDao;
 import com.ulewo.dao.NoticeDao;
 import com.ulewo.dao.UserDao;
@@ -16,8 +18,11 @@ import com.ulewo.enums.QueryUserType;
 import com.ulewo.service.BlogArticleService;
 import com.ulewo.util.Constant;
 import com.ulewo.util.FormatAt;
+import com.ulewo.util.Pagination;
+import com.ulewo.util.PaginationResult;
 import com.ulewo.util.StringUtils;
 
+@Service("blogArticleService")
 public class BlogArticleServiceImpl implements BlogArticleService {
 	private BlogArticleDao blogArticleDao;
 
@@ -104,31 +109,29 @@ public class BlogArticleServiceImpl implements BlogArticleService {
 	}
 
 	@Override
-	public List<BlogArticle> queryBlogByUserIdOrItem(String userId, int itemId, int offset, int total) {
+	public List<BlogArticle> queryBlog(String userId, int itemId, int offset, int total) {
 
-		List<BlogArticle> list = new ArrayList<BlogArticle>();
-		if (itemId == 0) {
-			list = blogArticleDao.queryBlogByUserId(userId, offset, total);
-		}
-		else {
-			list = blogArticleDao.queryBlogByItemId(itemId, offset, total);
-		}
+		List<BlogArticle> list = blogArticleDao.queryBlog(userId, itemId, offset, total);
 		for (BlogArticle blog : list) {
 			blog.setPostTime(StringUtils.friendly_time(blog.getPostTime()));
 		}
 		return list;
 	}
 
+	public PaginationResult queryBlogByUserId(String userId, int itemId, int page, int pageSize) {
+
+		int count = blogArticleDao.queryBlogCount(userId, itemId);
+		Pagination pagination = new Pagination(page, count, pageSize);
+		pagination.action();
+		List<BlogArticle> list = queryBlog(userId, itemId, pagination.getOffSet(), pageSize);
+		PaginationResult result = new PaginationResult(page, pagination.getPageTotal(), list);
+		return result;
+	}
+
 	@Override
-	public int queryCountByUserIdOrItem(String userId, int itemId) {
+	public int queryBlogCount(String userId, int itemId) {
 
-		if (itemId == 0) {
-			return blogArticleDao.queryCountByUserId(userId);
-		}
-		else {
-			return blogArticleDao.queryCountByItemId(itemId);
-		}
-
+		return blogArticleDao.queryBlogCount(userId, itemId);
 	}
 
 	private boolean isCurUser(String userId, int id) {

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.ulewo.dao.TalkDao;
 import com.ulewo.dao.UserDao;
 import com.ulewo.entity.NoticeParam;
@@ -15,6 +17,7 @@ import com.ulewo.util.Constant;
 import com.ulewo.util.FormatAt;
 import com.ulewo.util.StringUtils;
 
+@Service("talkService")
 public class TalkServiceImpl implements TalkService {
 
 	private TalkDao talkDao;

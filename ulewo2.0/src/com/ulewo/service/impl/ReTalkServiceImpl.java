@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.ulewo.dao.ReTalkDao;
 import com.ulewo.dao.UserDao;
 import com.ulewo.entity.NoticeParam;
@@ -15,6 +17,7 @@ import com.ulewo.util.Constant;
 import com.ulewo.util.FormatAt;
 import com.ulewo.util.StringUtils;
 
+@Service("reTalkService")
 public class ReTalkServiceImpl implements ReTalkService {
 
 	private ReTalkDao reTalkDao;

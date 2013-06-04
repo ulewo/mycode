@@ -1,7 +1,9 @@
 package com.ulewo.controller;
 
 import java.net.URLEncoder;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
@@ -15,18 +17,32 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.ulewo.entity.BlogArticle;
+import com.ulewo.entity.BlogItem;
 import com.ulewo.entity.SessionUser;
 import com.ulewo.entity.User;
 import com.ulewo.enums.QueryUserType;
+import com.ulewo.service.BlogArticleService;
+import com.ulewo.service.BlogItemService;
 import com.ulewo.service.UserService;
+import com.ulewo.util.Constant;
+import com.ulewo.util.PaginationResult;
 import com.ulewo.util.StringUtils;
+import com.ulewo.vo.UserVo;
 
 @Controller
 @RequestMapping("/user")
 public class UserAction {
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private BlogArticleService blogArticleService;
+
+	@Autowired
+	private BlogItemService blogItemService;
 
 	/**
 	 * 检测用户名是否已经存在
@@ -56,7 +72,7 @@ public class UserAction {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/register/{userName}", method = RequestMethod.POST)
+	@RequestMapping(value = "/register_do", method = RequestMethod.POST)
 	public Map<String, Object> register(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
 		String checkEmail = "^[\\w-]+(\\.[\\w-]+)*@[\\w-]+(\\.[\\w-]+)+$";
@@ -146,6 +162,78 @@ public class UserAction {
 		return modelMap;
 	}
 
+	@ResponseBody
+	@RequestMapping(value = "/login_do", method = RequestMethod.POST)
+	public Map<String, Object> login(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+
+		String account = request.getParameter("account");
+		String password = request.getParameter("password");
+		String checkCode = request.getParameter("checkCode");
+		String autoLogin = request.getParameter("autoLogin");
+		String sessionCode = String.valueOf(session.getAttribute("checkCode"));
+		String message = "";
+		String result = "success";
+		try {
+			if (StringUtils.isEmpty(checkCode)) {
+				message = "验证码不能为空";
+				result = "fail";
+			}
+			else if (StringUtils.isEmpty(sessionCode) || !sessionCode.equalsIgnoreCase(checkCode)) {
+				message = "验证码错误";
+				result = "fail";
+			}
+			else {
+				password = StringUtils.encodeByMD5(password);
+				User user = userService.login(account, password);
+				if (null != user) {
+					if ("Y".equals(autoLogin)) {
+						// 自动登录，保存用户名密码到 Cookie
+						String infor = URLEncoder.encode(account, "utf-8") + "," + password;
+
+						// 清除之前的Cookie 信息
+						Cookie cookie = new Cookie("cookieInfo", null);
+						cookie.setPath("/");
+						cookie.setMaxAge(0);
+
+						// 建用户信息保存到Cookie中
+						Cookie cookieInfo = new Cookie("cookieInfo", infor);
+						cookieInfo.setPath("/");
+						// 设置最大生命周期为1年。
+						cookieInfo.setMaxAge(31536000);
+						response.addCookie(cookieInfo);
+					}
+					else {
+						Cookie cookie = new Cookie("cookieInfo", null);
+						cookie.setPath("/");
+						cookie.setMaxAge(0);
+					}
+					SessionUser sessionUser = new SessionUser();
+					sessionUser.setUserId(user.getUserId());
+					sessionUser.setUserName(user.getUserName());
+					sessionUser.setUserLittleIcon(user.getUserLittleIcon());
+					request.getSession().setAttribute("user", sessionUser);
+					// 更新最后登录时间
+					User loginUser = new User();
+					loginUser.setUserId(user.getUserId());
+					loginUser.setPrevisitTime(StringUtils.dateFormater.get().format(new Date()));
+					userService.updateUser(loginUser);
+				}
+				else {
+					message = "帐号或者密码错误";
+					result = "fail";
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			message = "系统异常，请稍后再试";
+			result = "fail";
+		}
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		modelMap.put("message", message);
+		modelMap.put("result", result);
+		return modelMap;
+	}
+
 	/**
 	 * 用户中心
 	 * @param session
@@ -153,23 +241,119 @@ public class UserAction {
 	 * @param response
 	 * @return
 	 */
-	@ResponseBody
 	@RequestMapping(value = "/{userId}", method = RequestMethod.GET)
-	public Map<String, Object> queryUserInfo(HttpSession session, HttpServletRequest request,
+	public ModelAndView queryUserInfo(@PathVariable String userId, HttpSession session, HttpServletRequest request,
 			HttpServletResponse response) {
 
+		UserVo userVo = new UserVo();
+		ModelAndView mv = new ModelAndView();
+		try {
+			if (StringUtils.isEmpty(userId)) {
+				mv.setViewName("redirect:/../error");
+				return mv;
+			}
+			User user = userService.findUser(userId, QueryUserType.USERID);
+			if (null == user) {
+				mv.setViewName("redirect:/../error");
+				return mv;
+			}
+			userVo.setUserId(user.getUserId());
+			userVo.setUserName(user.getUserName());
+			userVo.setUserLittleIcon(user.getUserLittleIcon());
+			userVo.setAddress(user.getAddress());
+			userVo.setAge(user.getAge());
+			userVo.setCharacters(user.getCharacters());
+			userVo.setMark(user.getMark());
+			userVo.setPrevisitTime(user.getPrevisitTime());
+			userVo.setRegisterTime(user.getRegisterTime());
+			userVo.setSex(user.getSex());
+			userVo.setWork(user.getWork());
+			mv.addObject("user", userVo);
+			List<BlogArticle> list = blogArticleService.queryBlog(userId, 0, 0, 5);
+			mv.addObject("bloglist", list);
+			mv.setViewName("userinfo");
+		} catch (Exception e) {
+			mv.setViewName("redirect:/../error");
+			return mv;
+		}
+		return mv;
+	}
+
+	/**
+	 * ajax查询用户信息 头像，性别，积分，粉丝，关注
+	 * @param userId
+	 * @param session
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/userInfo", method = RequestMethod.GET)
+	public Map<String, Object> queryUserInfoAjax(@PathVariable String userId, HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
+
 		Map<String, Object> modelMap = new HashMap<String, Object>();
-		return modelMap;
+		try {
+			if (StringUtils.isEmpty(userId)) {
+				modelMap.put("result", "fail");
+				return modelMap;
+			}
+			User user = userService.findUser(userId, QueryUserType.USERID);
+			if (null == user) {
+				modelMap.put("result", "fail");
+				return modelMap;
+			}
+			UserVo userVo = new UserVo();
+			userVo.setUserId(user.getUserId());
+			userVo.setUserName(user.getUserName());
+			userVo.setUserLittleIcon(user.getUserLittleIcon());
+			userVo.setAddress(user.getAddress());
+			userVo.setAge(user.getAge());
+			userVo.setCharacters(user.getCharacters());
+			userVo.setMark(user.getMark());
+			userVo.setPrevisitTime(user.getPrevisitTime());
+			userVo.setRegisterTime(user.getRegisterTime());
+			userVo.setSex(user.getSex());
+			userVo.setWork(user.getWork());
+			modelMap.put("result", "success");
+			modelMap.put("user", userVo);
+			return modelMap;
+		} catch (Exception e) {
+			modelMap.put("result", "fail");
+			return modelMap;
+		}
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/blog/{userId}", method = RequestMethod.GET)
-	public Map<String, Object> blogList(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "/blog/{userId}/{itemId}/{page}", method = RequestMethod.GET)
+	public ModelAndView blogList(@PathVariable String userId, @PathVariable String itemId, @PathVariable String page,
+			HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
-		String str = "博客列表";
-		Map<String, Object> modelMap = new HashMap<String, Object>();
-		modelMap.put("blog", str);
-		return modelMap;
+		ModelAndView mv = new ModelAndView();
+		try {
+			if (StringUtils.isEmpty(userId)) {
+				mv.setViewName("redirect:/../error");
+				return mv;
+			}
+			int itemId_int = 0;
+			int page_int = 0;
+			if (StringUtils.isNumber(itemId)) {
+				itemId_int = Integer.parseInt(itemId);
+			}
+			if (StringUtils.isNumber(page)) {
+				page_int = Integer.parseInt(page);
+			}
+			PaginationResult result = blogArticleService.queryBlogByUserId(userId, itemId_int, page_int,
+					Constant.pageSize15);
+			List<BlogItem> blogItem = blogItemService.queryBlogItemAndCountByUserId(userId);
+			mv.addObject("result", result);
+			mv.addObject("blogItem", blogItem);
+			mv.setViewName("blog");
+			return mv;
+		} catch (Exception e) {
+			mv.setViewName("redirect:/../error");
+			return mv;
+		}
 	}
 
 	/**
@@ -179,14 +363,31 @@ public class UserAction {
 	 * @param response
 	 * @return
 	 */
-	@ResponseBody
-	@RequestMapping(value = "/blog/{blogId}{userId}", method = RequestMethod.GET)
-	public Map<String, Object> blogDetail(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "/blog/{blogId}/{userId}", method = RequestMethod.GET)
+	public ModelAndView blogDetail(@PathVariable String userId, @PathVariable String blogId, HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
 
-		String str = "博客列表";
-		Map<String, Object> modelMap = new HashMap<String, Object>();
-		modelMap.put("blog", str);
-		return modelMap;
+		ModelAndView mv = new ModelAndView();
+		try {
+			if (StringUtils.isEmpty(userId)) {
+				mv.setViewName("redirect:/../error");
+				return mv;
+			}
+			int blogId_int = 0;
+			if (StringUtils.isNumber(blogId)) {
+				blogId_int = Integer.parseInt(blogId);
+			}
+			else {
+				mv.setViewName("redirect:/../error");
+				return mv;
+			}
+			BlogArticle blogArticle = blogArticleService.queryBlogById(blogId_int);
+			mv.addObject("detail", blogArticle);
+			mv.setViewName("blog_detail");
+			return mv;
+		} catch (Exception e) {
+			mv.setViewName("redirect:/../error");
+			return mv;
+		}
 	}
-
 }

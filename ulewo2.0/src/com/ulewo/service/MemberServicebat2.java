@@ -3,8 +3,8 @@ package com.ulewo.service;
 import java.util.List;
 
 import com.ulewo.entity.Member;
-import com.ulewo.entity.PaginationResult;
 import com.ulewo.enums.MemberGrade;
+import com.ulewo.util.PaginationResult;
 
 public interface MemberServicebat2 {
 

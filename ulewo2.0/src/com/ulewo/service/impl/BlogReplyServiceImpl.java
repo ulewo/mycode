@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.ulewo.dao.BlogArticleDao;
 import com.ulewo.dao.BlogReplyDao;
 import com.ulewo.dao.NoticeDao;
@@ -18,8 +20,11 @@ import com.ulewo.enums.QueryUserType;
 import com.ulewo.service.BlogReplyService;
 import com.ulewo.util.Constant;
 import com.ulewo.util.FormatAt;
+import com.ulewo.util.Pagination;
+import com.ulewo.util.PaginationResult;
 import com.ulewo.util.StringUtils;
 
+@Service("blogReplyService")
 public class BlogReplyServiceImpl implements BlogReplyService {
 
 	private BlogReplyDao blogReplyDao;
@@ -90,14 +95,17 @@ public class BlogReplyServiceImpl implements BlogReplyService {
 	}
 
 	@Override
-	public List<BlogReply> queryBlogReplyByBlogId(int blogId) {
+	public PaginationResult queryBlogReplyByBlogId(int blogId, int page, int pageSize) {
 
-		List<BlogReply> list = new ArrayList<BlogReply>();
-		list = blogReplyDao.queryReplyByBlogId(blogId);
+		int count = blogReplyDao.queryReplyCountByBlogId(blogId);
+		Pagination pagein = new Pagination(pageSize, count, pageSize);
+		pagein.action();
+		List<BlogReply> list = blogReplyDao.queryReplyByBlogId(blogId, pagein.getOffSet(), pageSize);
 		for (BlogReply reply : list) {
 			reply.setPostTime(StringUtils.friendly_time(reply.getPostTime()));
 		}
-		return list;
+		PaginationResult result = new PaginationResult(pageSize, pagein.getPageTotal(), list);
+		return result;
 	}
 
 	@Override

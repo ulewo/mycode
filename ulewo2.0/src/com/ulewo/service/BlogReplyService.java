@@ -1,8 +1,7 @@
 package com.ulewo.service;
 
-import java.util.List;
-
 import com.ulewo.entity.BlogReply;
+import com.ulewo.util.PaginationResult;
 
 /** 
  * @Title:
@@ -26,7 +25,7 @@ public interface BlogReplyService {
 	 * @throws Exception
 	 * @author luohl
 	 */
-	public List<BlogReply> queryBlogReplyByBlogId(int blogId);
+	public PaginationResult queryBlogReplyByBlogId(int blogId, int page, int pageSize);
 
 	/**
 	 * 

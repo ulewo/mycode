@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.ulewo.dao.ArticleDao;
 import com.ulewo.dao.GroupDao;
 import com.ulewo.dao.MemberDao;
@@ -15,6 +17,7 @@ import com.ulewo.service.GroupService;
 import com.ulewo.util.Constant;
 import com.ulewo.util.StringUtils;
 
+@Service("groupService")
 public class GroupServiceImpl implements GroupService {
 
 	private ArticleDao articleDao;

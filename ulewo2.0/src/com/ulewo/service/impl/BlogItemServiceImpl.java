@@ -2,10 +2,13 @@ package com.ulewo.service.impl;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.ulewo.dao.BlogItemDao;
 import com.ulewo.entity.BlogItem;
 import com.ulewo.service.BlogItemService;
 
+@Service("blogItemService")
 public class BlogItemServiceImpl implements BlogItemService {
 
 	private BlogItemDao blogItemDao;

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.ulewo.cache.CacheManager;
 import com.ulewo.cache.GroupAdminManager;
 import com.ulewo.dao.GroupDao;
@@ -25,6 +27,7 @@ import com.ulewo.util.StringUtils;
  * @date 2012-3-29
  * @version V1.0
  */
+@Service("memberService")
 public class MemberServiceImp implements MemberService {
 
 	private MemberDao memberDao;

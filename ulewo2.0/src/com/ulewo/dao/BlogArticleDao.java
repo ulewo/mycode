@@ -78,53 +78,30 @@ public class BlogArticleDao extends SqlMapClientDaoSupport {
 
 	/**
 	 * 
-	 * description: 根据userId查询文章
+	 * description: 根据userId ,itemId查询文章
 	 * @param id
 	 * @throws Exception
 	 * @author luohl
 	 */
-	public List<BlogArticle> queryBlogByUserId(String userId, int offset, int total) {
+	public List<BlogArticle> queryBlog(String userId, int itemId, int offset, int total) {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("userId", userId);
-		parmMap.put("offset", offset);
-		parmMap.put("total", total);
-		return (List<BlogArticle>) getSqlMapClientTemplate().queryForList("blogArticle.queryBlogByUserId", parmMap);
-	}
-
-	public List<BlogArticle> queryBlogByItemId(int itemId, int offset, int total) {
-
-		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("itemId", itemId);
 		parmMap.put("offset", offset);
 		parmMap.put("total", total);
-		return (List<BlogArticle>) getSqlMapClientTemplate().queryForList("blogArticle.queryBlogByItemId", parmMap);
+		return (List<BlogArticle>) getSqlMapClientTemplate().queryForList("blogArticle.queryBlog", parmMap);
 	}
 
 	/**
-	 * 
-	 * description: 根据用户ID查询总数
+	 * 查询数量
 	 * @param userId
+	 * @param itemId
 	 * @return
-	 * @throws Exception
-	 * @author luohl
 	 */
-	public int queryCountByUserId(String userId) {
+	public int queryBlogCount(String userId, int itemId) {
 
-		return (Integer) this.getSqlMapClientTemplate().queryForObject("blogArticle.queryCountByUserId", userId);
-	}
-
-	/**
-	 * 
-	 * description: 根据分类Id查询总数
-	 * @param userId
-	 * @return
-	 * @throws Exception
-	 * @author luohl
-	 */
-	public int queryCountByItemId(int itemId) {
-
-		return (Integer) this.getSqlMapClientTemplate().queryForObject("blogArticle.queryCountByItemId", itemId);
+		return (Integer) this.getSqlMapClientTemplate().queryForObject("blogArticle.queryBlogCount", userId);
 	}
 
 	public List<BlogArticle> indexLatestBlog(int offset, int total) {

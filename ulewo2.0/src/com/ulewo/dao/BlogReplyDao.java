@@ -1,6 +1,8 @@
 package com.ulewo.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
@@ -28,14 +30,20 @@ public class BlogReplyDao extends SqlMapClientDaoSupport {
 	/**
 	 * 
 	 * description: 根据blogid查询回复
-	 * 
+	 * @param offset TODO
+	 * @param pageSize TODO
 	 * @param id
+	 * 
 	 * @throws Exception
 	 * @author luohl
 	 */
-	public List<BlogReply> queryReplyByBlogId(int blogId) {
+	public List<BlogReply> queryReplyByBlogId(int blogId, int offset, int pageSize) {
 
-		return (List<BlogReply>) getSqlMapClientTemplate().queryForList("blogReply.queryReplyByBlogId", blogId);
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("blogId", blogId);
+		paramMap.put("offset", offset);
+		paramMap.put("pageSize", pageSize);
+		return (List<BlogReply>) getSqlMapClientTemplate().queryForList("blogReply.queryReplyByBlogId", paramMap);
 	}
 
 	/**

@@ -7,8 +7,6 @@ public class UserVo {
 
 	private String userLittleIcon; // 用户小图像
 
-	private String userBigIcon; //用户大图像
-
 	private String age; // 年龄
 
 	private String sex; // 性别
@@ -25,9 +23,9 @@ public class UserVo {
 
 	private String previsitTime; // 上次登陆时间
 
-	private int articleNumber; // 发帖数量
+	private int fansCount; //粉丝数
 
-	private int reArticleNumber; // 回帖数量 
+	private int trackCount; //关注数
 
 	public String getUserId() {
 
@@ -57,16 +55,6 @@ public class UserVo {
 	public void setUserLittleIcon(String userLittleIcon) {
 
 		this.userLittleIcon = userLittleIcon;
-	}
-
-	public String getUserBigIcon() {
-
-		return userBigIcon;
-	}
-
-	public void setUserBigIcon(String userBigIcon) {
-
-		this.userBigIcon = userBigIcon;
 	}
 
 	public String getAge() {
@@ -149,24 +137,24 @@ public class UserVo {
 		this.previsitTime = previsitTime;
 	}
 
-	public int getArticleNumber() {
+	public int getFansCount() {
 
-		return articleNumber;
+		return fansCount;
 	}
 
-	public void setArticleNumber(int articleNumber) {
+	public void setFansCount(int fansCount) {
 
-		this.articleNumber = articleNumber;
+		this.fansCount = fansCount;
 	}
 
-	public int getReArticleNumber() {
+	public int getTrackCount() {
 
-		return reArticleNumber;
+		return trackCount;
 	}
 
-	public void setReArticleNumber(int reArticleNumber) {
+	public void setTrackCount(int trackCount) {
 
-		this.reArticleNumber = reArticleNumber;
+		this.trackCount = trackCount;
 	}
 
 }

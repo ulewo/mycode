@@ -35,23 +35,31 @@
 	</select>
 	
 	<!--通过用户查询文章-->
-	<select id="queryBlogByUserId"  resultClass="blogArticle" parameterClass="java.util.Map">
-		select *,(select count(r.id) from blog_reply r where r.blogid=b.id) as reCount from blog_article b where userid = #userId# order by posttime desc limit #offset#,#total#
-	</select>
-	
-	<!--通过分类查询文章-->
-	<select id="queryBlogByItemId"  resultClass="blogArticle" parameterClass="java.util.Map">
-		select *,(select count(r.id) from blog_reply r where r.blogid=b.id) as reCount from blog_article b where itemid = #itemId# order by posttime desc limit #offset#,#total#
+	<select id="queryBlog"  resultClass="blogArticle" parameterClass="java.util.Map">
+		select *,(select count(r.id) from blog_reply r where r.blogid=b.id) as reCount,i.itemname as itemName from blog_article b 
+		inner join blogitem i on i.id=b.itemid
+		<dynamic prepend="where">
+			<isNotEqual prepend="and" compareValue="0"  property="itemId">
+         	  <![CDATA[itemid = #itemId# ]]>
+			</isNotEqual>
+			<isNotEmpty prepend="and" property="userId">
+         	  <![CDATA[userid = #userId# ]]>
+			</isNotEmpty>
+		</dynamic>
+		order by posttime desc limit #offset#,#total#
 	</select>
 	
 	<!--通过用户查询文章-->
-	<select id="queryCountByUserId"  resultClass="java.lang.Integer" parameterClass="java.lang.String">
-		select count(id) from blog_article where userid = #userId#
-	</select>
-	
-	<!--通过分类查询文章总数-->
-	<select id="queryCountByItemId"  resultClass="java.lang.Integer" parameterClass="java.lang.Integer">
-		select count(id) from blog_article where itemid = #itemId#
+	<select id="queryBlogCount"  resultClass="java.lang.Integer" parameterClass="java.lang.String">
+		select count(id) from blog_article 
+		<dynamic prepend="where">
+			<isNotEqual prepend="and" compareValue="0"  property="itemId">
+         	  <![CDATA[itemid = #itemId# ]]>
+			</isNotEqual>
+			<isNotEmpty prepend="and" property="userId">
+         	  <![CDATA[userid = #userId# ]]>
+			</isNotEmpty>		    
+		</dynamic>
 	</select>
 	
 	<!-- 更新不为空的字段 主要是后台操作更新默写状态 -->

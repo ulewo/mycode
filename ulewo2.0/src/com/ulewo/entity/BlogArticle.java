@@ -31,6 +31,8 @@ public class BlogArticle {
 
 	private String keyWord;
 
+	private int itemName;
+
 	private int allowReplay; //0 所有人可评论   2 禁止评论 
 
 	public int getId() {
@@ -151,6 +153,16 @@ public class BlogArticle {
 	public void setReCount(Integer reCount) {
 
 		this.reCount = reCount;
+	}
+
+	public int getItemName() {
+
+		return itemName;
+	}
+
+	public void setItemName(int itemName) {
+
+		this.itemName = itemName;
 	}
 
 }

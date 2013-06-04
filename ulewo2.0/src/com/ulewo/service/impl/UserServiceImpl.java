@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ulewo.dao.UserDao;
-import com.ulewo.entity.PaginationResult;
 import com.ulewo.entity.User;
 import com.ulewo.enums.QueryUserType;
 import com.ulewo.service.UserService;
+import com.ulewo.util.PaginationResult;
 import com.ulewo.util.StringUtils;
 
 @Service("userService")
@@ -56,5 +56,22 @@ public class UserServiceImpl implements UserService {
 
 		//int total = userDao.findUser(value, type)
 		return null;
+	}
+
+	public User login(String value, String password) {
+
+		User user = null;
+		if (value.contains("@")) {
+			user = userDao.findUser(value, QueryUserType.EMAIL);
+		}
+		else {
+			user = userDao.findUser(value, QueryUserType.USERNAME);
+		}
+		if (user != null && user.getPassword().equals(password)) {
+			return user;
+		}
+		else {
+			return null;
+		}
 	}
 }

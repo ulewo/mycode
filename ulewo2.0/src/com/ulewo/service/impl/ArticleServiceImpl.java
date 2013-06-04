@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Service;
+
 import com.ulewo.dao.ArticleDao;
 import com.ulewo.dao.ArticleItemDao;
 import com.ulewo.dao.NoticeDao;
@@ -23,6 +25,7 @@ import com.ulewo.util.Constant;
 import com.ulewo.util.FormatAt;
 import com.ulewo.util.StringUtils;
 
+@Service("articleService")
 public class ArticleServiceImpl implements ArticleService {
 
 	private ArticleDao articleDao;

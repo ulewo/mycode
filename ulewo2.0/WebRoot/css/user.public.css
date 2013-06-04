@@ -7,9 +7,9 @@
 .user_edit{float:left;width:130px;}
 .user_edit a.username{color:#FFFFFF;font-weight:bold;text-decoration: none;margin-top:15px;display:block;text-align:left;font-size:18px;}
 .user_edit span{display:inline-block;padding-top:8px;float:left;}
-.user_edit a.edit_info{color:#FFFFFF;text-decoration: none;margin-top:10px;display:inline-block;text-align:left;font-size:12px;float:left;margin-left:5px;}
+.user_edit a.edit_info{color:#FFFFFF;text-decoration: none;margin-top:10px;display:inline-block;text-align:left;font-size:10px;float:left;margin-left:5px;font-weight:normal;}
 .user_edit a.edit_info:hover{background:#ffffff;color:#4682B4}
-.user_edit a.edit_icon{color:#FFFFFF;text-decoration: none;margin-top:10px;display:inline-block;text-align:left;font-size:12px;float:left;margin-left:5px;}
+.user_edit a.edit_icon{color:#FFFFFF;text-decoration: none;margin-top:10px;display:inline-block;text-align:left;font-size:10px;float:left;margin-left:5px;font-weight:normal;}
 .user_edit a.edit_icon:hover{background:#ffffff;color:#4682B4}
 .user_other_info{padding-left:10px;color:#ffffff}
 .resume{background: #6E7B8B url('../images/resume24.png') no-repeat left bottom;margin: 10px 0 0 0;color: white;padding: 18px 10px 18px 40px;word-wrap: break-word;overflow: hidden;text-align:left;}

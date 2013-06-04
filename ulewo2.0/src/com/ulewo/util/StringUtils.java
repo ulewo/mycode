@@ -237,4 +237,13 @@ public class StringUtils {
 		}
 
 	}
+
+	public static boolean isNumber(String str) {
+
+		String checkPassWord = "^[0-9]+$";
+		if (!str.matches(checkPassWord)) {
+			return false;
+		}
+		return true;
+	}
 }

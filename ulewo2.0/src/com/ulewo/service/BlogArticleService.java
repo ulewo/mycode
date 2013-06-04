@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ulewo.entity.BlogArticle;
 import com.ulewo.entity.User;
+import com.ulewo.util.PaginationResult;
 
 public interface BlogArticleService {
 	/**
@@ -57,7 +58,17 @@ public interface BlogArticleService {
 	 * @return
 	 * @author luohl
 	 */
-	public List<BlogArticle> queryBlogByUserIdOrItem(String userId, int itemId, int offset, int total);
+	public List<BlogArticle> queryBlog(String userId, int itemId, int offset, int total);
+
+	/**
+	 * 分页查询用户博文
+	 * @param userId
+	 * @param itemId
+	 * @param offset
+	 * @param total
+	 * @return
+	 */
+	public PaginationResult queryBlogByUserId(String userId, int itemId, int page, int pageSize);
 
 	/**
 	 * 
@@ -66,7 +77,7 @@ public interface BlogArticleService {
 	 * @return
 	 * @author luohl
 	 */
-	public int queryCountByUserIdOrItem(String userId, int itemId);
+	public int queryBlogCount(String userId, int itemId);
 
 	public List<BlogArticle> indexLatestBlog(int offset, int total);
 
