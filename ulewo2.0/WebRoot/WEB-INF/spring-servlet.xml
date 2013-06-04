@@ -23,6 +23,10 @@
 	    <property name="resourceLoaderPath" value="/WEB-INF/velocity/" /> 
 	</bean>
 	 -->
+	<mvc:resources location="/css/" mapping="/css/*"/>
+	<mvc:resources location="/images/" mapping="/images/*"/>
+	<mvc:resources location="/js/" mapping="/js/*"/>
+	<mvc:resources location="/upload/" mapping="/upload/*"/>
 	<!--此处是为了解决ajax响应中文乱码问题，必须在context:component-scan之前  --> 
 	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
 		<property name="messageConverters">
