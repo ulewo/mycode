@@ -47,7 +47,7 @@ public class MySpaceFilter implements Filter {
 		String subDomain = "";
 		if (firstIndex != -1 && firstIndex != 0) {
 			subDomain = server.substring(0, firstIndex - 1);
-			if (SPACE.equals(subDomain)) {//访问空间
+			if (SPACE.equals(subDomain)&&!req_uri.contains("reblog")) {//访问空间
 				newUrl = "/user" + req_uri;
 			}
 			else if (GROUP.equals(subDomain)) {
