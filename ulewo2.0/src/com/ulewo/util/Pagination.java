@@ -20,7 +20,12 @@ public class Pagination {
 
 	public void action() {
 
-		pageTotal = countTotal % pageSize == 0 ? countTotal / pageSize : countTotal / pageSize + 1;
+		if (countTotal > 0) {
+			pageTotal = countTotal % pageSize == 0 ? countTotal / pageSize : countTotal / pageSize + 1;
+		}
+		else {
+			pageTotal = 1;
+		}
 
 		if (page <= 1) {
 			page = 1;

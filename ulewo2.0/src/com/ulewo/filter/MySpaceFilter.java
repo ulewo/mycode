@@ -52,7 +52,7 @@ public class MySpaceFilter implements Filter {
 		if (firstIndex != -1 && firstIndex != 0) {
 			subDomain = server.substring(0, firstIndex - 1);
 			if (SPACE.equals(subDomain)) {//访问空间
-				newUrl = "/user" + newUrl + "/" + paths[0];
+				newUrl = "/user" + req_uri;
 			}
 			else if (GROUP.equals(subDomain)) {
 
