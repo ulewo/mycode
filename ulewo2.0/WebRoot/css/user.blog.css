@@ -15,3 +15,28 @@
 .blog_summary{margin-top:10px;font-size:14px;color:#000000;}
 .blog_item_info{color:#666666;margin-top:10px;}
 .blog_item_op_red{color:#AA0000;font-weight:bold;}
+.blog_detail{margin-top:20px;}
+.blog_content{margin-top:10px;font-size:14px;color:#000000;line-height:25px;}
+
+/*******Ã·Ωª*******/
+.blog_reply{border:1px solid #EEEEEE;padding:10px;margin-top:10px;}
+.blog_reply_tit{font-weight:bold;color:#666666;font-size:16px;}
+.blog_reply_form{position:relative;padding-left:10px;margin-top:10px;border:1px solid #EEEEEE;margin-top:10px;padding:10px;}
+.blogreply_icon{float:left;width:37px;border:1px solid #9B9B9B}
+.blog_reply_content{float:left;width:600px;margin-left:10px;}
+.content textarea{width:600px;height:80px;}
+.sub_op{margin-top:10px;}
+.subbtn{float:left;width:80px;}
+.warm_info{float:left;display:inline-block;margin-top:10px;}
+.blogshade{left:5px;top:5px;height:125px;width:700px;}
+
+/******ªÿ∏¥********/
+.reply_item{border-bottom:1px dashed #E5E5E5;padding:15px 0px}
+.reply_usericon{float:left;width:37px;border:1px solid #E5E5E5;padding:1px}
+.reply_con_p{float:left;width:675px;margin-left:10px;}
+.reply_info{margin-top:5px;}
+.reply_time{display:inline-block;float:left;color:#909090}
+.reply_op{display:inline-block;float:right;}
+.note_name{color:#3E62A6}
+.reply_re{padding:0px 8px;color:#008000}
+.reply_con_content{padding-left:5px;line-height:20px;}

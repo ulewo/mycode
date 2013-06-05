@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <link rel="shortcut icon" type="image/x-icon" href="${realPath}images/favicon.ico">
 <script src="${realPath}js/util.js"></script>
+<script src="${realPath}js/jquery.min.js"></script>
 <div class="head_top">
 	<div class="head_logo">
 		<a href="${realPath}index.jspx" onfocus="this.blur()"><img src="${realPath}images/logo.png" border="0" width="200"></a>
@@ -66,8 +67,8 @@
 	myParam.realPath = "${realPath}";
 	myParam.user = "${user.userId}";
 	$(function(){
-		loadNotice();
-		$("#searchBtn").bind('click', search);
+		//loadNotice();
+		/* $("#searchBtn").bind('click', search);
 		showMenue();
 		$("#searchInput").bind("keydown",function(event){
 			event = event||window.event;
@@ -75,6 +76,6 @@
 			if(code==13){//如果是回车键
 				search();
 			}
-		});
+		}); */
 	});
 </script>
