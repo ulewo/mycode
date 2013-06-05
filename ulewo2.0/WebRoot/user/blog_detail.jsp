@@ -37,19 +37,63 @@
 					&gt;&gt;<a href="/${userId}/blog?itemId=${blog.itemId}">${blog.itemName}</a>
 				
 				</div>
-				<div class="blog_list_item">
+				<div class="blog_detail">
 						<div class="blog_list_tit"><a href="">${blog.title}</a></div>
 						<div class="blog_item_op">
 							<span>发布于 ${blog.postTime}，阅读(<span class="blog_item_op_red">${blog.readCount}</span>)|评论(<span class="blog_item_op_red">${blog.reCount}</span>)</span>
 							<c:if test="${user.userId==userId}">(<a href="">修改</a>|<a href="">删除</a>)</c:if>
 						</div>
-						<div class="blog_summary">
+						<div class="blog_content">
 							${blog.content}
 						</div>
 				</div>
 			</div>
+				<div class="blog_reply">
+					<div class="blog_reply_tit">评论</div>
+					<div class="blog_reply_list" id="messagelist">
+					</div>
+				</div>
+				<div class="blog_reply_form">
+					<form id="subform"> 
+				  		<input type="hidden" name="atUserName" id="atUserName">
+				  		<input type="hidden" name="atUserId" id="atUserId">
+				  		<div>
+				  			<div class="blogreply_icon">
+				  				<c:if test="${user!=null}">
+									<img src="../upload/${user.userLittleIcon}" width="37">
+								</c:if>
+								<c:if test="${user==null}">
+									<img src="../upload/default.gif" width="37">
+								</c:if>
+				  			</div>
+				  			<div class="blog_reply_content">
+				  				<div class="content"><textarea name="content" id="content"></textarea></div>
+				  				<div class="sub_op">
+						  			<div class="subbtn">
+						  				<a href="javascript:subReply('${param.id}')" class="btn" onfocus="this.blur()" id="sendBtn">发表留言</a>
+						  				<img src="../images/load.gif" id="loading" style="display:none">
+						  			</div>
+				  					<div class="warm_info">最多输入500字符</div>
+				  				</div>
+				  			</div>
+				  			<div class="clear"></div>
+				  		</div>
+				  	</form>
+			  		<c:if test="${user==null}">
+							<div class="shade blogshade" id="shade">
+								<div class="shadeLogin">回复，请先 <a href="javascript:login()">登录</a>&nbsp;&nbsp;<a href="javascript:register()">注册</a></div>
+							</div>
+					</c:if>
+				</div>
 		</div>
 		<div style="clear:left;"></div>
 	</div>
+	<script type="text/javascript" src="${realPath}js/user.blogreply.js"></script>
+	<script type="text/javascript">
+		var realPath = "${realPath}";
+		var blogId = "${blog.id}";
+		var userId="${userId}";
+		var sessionUserId = "${user.userId}";
+	</script>
 </body>
 </html>
