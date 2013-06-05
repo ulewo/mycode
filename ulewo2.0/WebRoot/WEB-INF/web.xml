@@ -55,12 +55,30 @@
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+	<!-- 
 	<filter>
 		<filter-name>UrlRewriteFilter</filter-name>
 		<filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>UrlRewriteFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	 -->
+	 <filter>
+		<filter-name>space</filter-name>
+		<filter-class>com.ulewo.filter.MySpaceFilter</filter-class>
+		<init-param>
+		    <param-name>domain</param-name>
+		    <param-value>ulewo.com</param-value>
+		</init-param>
+		<init-param>
+		    <param-name>subdomain</param-name>
+		    <param-value>my.ulewo.com,group.ulewo.com</param-value>
+		</init-param>
+	 </filter>
+	 <filter-mapping>
+		<filter-name>space</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	<servlet-mapping>

@@ -17,10 +17,9 @@
 			<div class="left_item">
 				<div class="left_item_tit">博客分类</div>
 				<div class="left_img_p">
-					<div class="blog_item"><a href="">技术分享</a><span>(10)</span></div>
-					<div class="blog_item"><a href="">柴米油盐</a><span>(10)</span></div>
-					<div class="blog_item"><a href="">技术分享</a><span>(10)</span></div>
-					<div class="blog_item"><a href="">柴米油盐</a><span>(10)</span></div>
+					<c:forEach var="item" items="${blogItemList}">
+						<div class="blog_item"><a href="blog?itemId=${item.id}">${item.itemName}</a><span>(${item.articleCount})</span></div>
+					</c:forEach>
 				</div>
 			</div>
 			<div class="left_item">
@@ -34,7 +33,11 @@
 		<div class="right">
 			<div class="blog_list">
 				<div class="right_top_m">
-					<a href="">空间</a>&gt;&gt;<a href="">博客</a>
+					<a href="">空间</a>&gt;&gt;<a href="blog">博客</a>
+					<c:if test="${blogitem!=null}">
+						&gt;&gt;<a href="">${blogitem.itemName}</a>
+					</c:if>
+				
 				</div>
 				<c:forEach var="blog" items="${result.list}">
 					<div class="blog_list_item">
