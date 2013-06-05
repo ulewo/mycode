@@ -36,7 +36,6 @@ public class MySpaceFilter implements Filter {
 		HttpServletResponse response = (HttpServletResponse) res;
 		String server = request.getServerName();
 		String req_uri = request.getRequestURI();
-		String[] paths = StringUtils.split(req_uri, '/');
 
 		if (!ArrayUtils.contains(subDomain, server)
 				|| ArrayUtils.contains(static_ext, req_uri.substring(req_uri.lastIndexOf('.') + 1))) {
@@ -46,9 +45,6 @@ public class MySpaceFilter implements Filter {
 		int firstIndex = server.indexOf(domain);
 		String newUrl = "";
 		String subDomain = "";
-		for (int i = 1, length = paths.length; i < length; i++) {
-			newUrl = newUrl + "/" + paths[i];
-		}
 		if (firstIndex != -1 && firstIndex != 0) {
 			subDomain = server.substring(0, firstIndex - 1);
 			if (SPACE.equals(subDomain)) {//访问空间

@@ -357,6 +357,7 @@ public class UserAction {
 			mv.addObject("result", result);
 			mv.addObject("blogItemList", blogItemList);
 			mv.addObject("blogitem", item);
+			mv.addObject("userId", userId);
 			mv.setViewName("/user/blog");
 			return mv;
 		} catch (Exception e) {
@@ -373,10 +374,11 @@ public class UserAction {
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(value = "/{userId}#blog/{blogId}/", method = RequestMethod.GET)
-	public ModelAndView blogDetail(@PathVariable String userId, @PathVariable String blogId, HttpSession session,
-			HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "/{userId}/blogshow", method = RequestMethod.GET)
+	public ModelAndView blogDetail(@PathVariable String userId, HttpSession session, HttpServletRequest request,
+			HttpServletResponse response) {
 
+		String blogId = request.getParameter("id");
 		ModelAndView mv = new ModelAndView();
 		try {
 			if (StringUtils.isEmpty(userId)) {
@@ -392,10 +394,14 @@ public class UserAction {
 				return mv;
 			}
 			BlogArticle blogArticle = blogArticleService.queryBlogById(blogId_int);
-			mv.addObject("detail", blogArticle);
-			mv.setViewName("blog_detail");
+			List<BlogItem> blogItemList = blogItemService.queryBlogItemAndCountByUserId(userId);
+			mv.addObject("blogItemList", blogItemList);
+			mv.addObject("blog", blogArticle);
+			mv.addObject("userId", userId);
+			mv.setViewName("user/blog_detail");
 			return mv;
 		} catch (Exception e) {
+			e.printStackTrace();
 			mv.setViewName("redirect:/../error");
 			return mv;
 		}

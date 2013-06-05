@@ -34,28 +34,19 @@
 			<div class="blog_list">
 				<div class="right_top_m">
 					<a href="">空间</a>&gt;&gt;<a href="blog">博客</a>
-					<c:if test="${blogitem!=null}">
-						&gt;&gt;<a href="">${blogitem.itemName}</a>
-					</c:if>
+					&gt;&gt;<a href="/${userId}/blog?itemId=${blog.itemId}">${blog.itemName}</a>
 				
 				</div>
-				<c:forEach var="blog" items="${result.list}">
-					<div class="blog_list_item">
-						<div class="blog_list_tit"><a href="/${userId}/blogshow?id=${blog.id}">${blog.title}</a></div>
+				<div class="blog_list_item">
+						<div class="blog_list_tit"><a href="">${blog.title}</a></div>
 						<div class="blog_item_op">
-							<span>分类:</span>
-							<a href="">${blog.itemName}</a>
-							(<a href="">修改</a>|<a href="">删除</a>)
+							<span>发布于 ${blog.postTime}，阅读(<span class="blog_item_op_red">${blog.readCount}</span>)|评论(<span class="blog_item_op_red">${blog.reCount}</span>)</span>
+							<c:if test="${user.userId==userId}">(<a href="">修改</a>|<a href="">删除</a>)</c:if>
 						</div>
 						<div class="blog_summary">
-							${blog.summary}
+							${blog.content}
 						</div>
-						<div class="blog_item_info">
-							<span>发布于 ${blog.postTime}，阅读(${blog.readCount})|评论(${blog.reCount})</span>
-							<a href="/${userId}/blogshow?id=${blog.id}">阅读全文</a>
-						</div>
-					</div>
-				</c:forEach>
+				</div>
 			</div>
 		</div>
 		<div style="clear:left;"></div>
