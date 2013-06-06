@@ -67,5 +67,6 @@
 		</div>
 		<div class="clear"></div>
 	</div>
+	<%@ include file="common/foot.jsp" %>
 </body>
 </html>
