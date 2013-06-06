@@ -43,7 +43,6 @@
 			发送留言
 		</a>
 	</div>
-	<script type="text/javascript" src="../js/user.left.js"></script>
 	<script type="text/javascript">
 		var userId = "${userId}"||"${param.userId}";
 	</script>

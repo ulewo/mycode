@@ -300,5 +300,6 @@
 		</div>
 	<div style="clear:left;"></div>
   </div>
+  <%@ include file="../common/foot.jsp" %>
 </body>
 </html>
