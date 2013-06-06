@@ -59,11 +59,6 @@ public class BlogItem {
 		this.itemName = itemName;
 	}
 
-	public void setItemRang(int itemRang) {
-
-		this.itemRang = itemRang;
-	}
-
 	public int getArticleCount() {
 
 		return articleCount;

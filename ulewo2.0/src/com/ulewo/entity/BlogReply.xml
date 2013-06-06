@@ -16,8 +16,8 @@
       		SELECT LAST_INSERT_ID()
     	 </selectKey>
         <![CDATA[
-        insert into blog_reply (blogid,content,posttime,userid,username,atuserid,sourcefrom)
-		values(#blogId#,#content#,#postTime#,#userId#,#userName#,#atUserId#,#sourceFrom#);
+        insert into blog_reply (blogid,author,content,posttime,userid,username,atuserid,sourcefrom)
+		values(#blogId#,#author#,#content#,#postTime#,#userId#,#userName#,#atUserId#,#sourceFrom#);
         ]]>
 		
 	</insert>
@@ -46,7 +46,27 @@
 	</select>
 	
 	<!-- 删除回复 -->
-	<delete id="deletePeply" parameterClass="java.lang.Integer">
-		delete from blog_reply where id = #id#
+	<delete id="deletePeply" parameterClass="java.util.Map">
+		delete from blog_reply where id = #id#  and author = #author#
 	</delete>
+	
+	<!-- 通过用户查询所有回复 -->
+	<select id="queryAllReply"  resultClass="blogReply" parameterClass="java.util.Map">
+		select * from blog_reply
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="author">
+          	   <![CDATA[author =  #author#  ]]>
+			</isNotEmpty>
+		</dynamic>	
+		order by posttime desc limit #offSet#,#pageSize#
+	</select>
+	
+	<select id="queryAllReplyCount"  resultClass="blogReply" parameterClass="java.util.Map">
+		select count(id) from blog_reply
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="author">
+          	   <![CDATA[author =  #author#  ]]>
+			</isNotEmpty>
+		</dynamic>	
+	</select>
 </sqlMap>

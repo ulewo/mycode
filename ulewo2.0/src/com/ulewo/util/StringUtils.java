@@ -132,6 +132,9 @@ public class StringUtils {
 		if (null == str || "".equals(str)) {
 			return true;
 		}
+		else if ("".equals(str.trim())) {
+			return true;
+		}
 		return false;
 	}
 
@@ -241,13 +244,13 @@ public class StringUtils {
 	public static boolean isNumber(String str) {
 
 		String checkPassWord = "^[0-9]+$";
-		if(null==str){
-			return false;	
+		if (null == str) {
+			return false;
 		}
 		if (!str.matches(checkPassWord)) {
 			return false;
 		}
-		
+
 		return true;
 	}
 }

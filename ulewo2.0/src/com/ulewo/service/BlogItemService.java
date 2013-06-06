@@ -57,4 +57,9 @@ public interface BlogItemService {
 	 */
 	public List<BlogItem> queryBlogItemAndCountByUserId(String userId);
 
+	/**
+	 * 更新分类信息
+	 * @param item
+	 */
+	public void updateItem(BlogItem item);
 }

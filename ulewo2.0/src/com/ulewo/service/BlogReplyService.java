@@ -45,6 +45,20 @@ public interface BlogReplyService {
 	 */
 	public boolean delete(String userId, int id);
 
+	/**
+	 * 通过ID查询回复
+	 * @param id
+	 * @return
+	 */
 	public BlogReply queryBlogReplyById(int id);
+
+	/**
+	 * 查询所有回复
+	 * @param author
+	 * @param page
+	 * @param pageSize
+	 * @return
+	 */
+	public PaginationResult queryAllReply(String author, int page, int pageSize);
 
 }

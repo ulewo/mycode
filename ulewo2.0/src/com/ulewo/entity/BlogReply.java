@@ -14,6 +14,8 @@ public class BlogReply {
 
 	private int blogId;
 
+	private String blogauthor;
+
 	private String content;
 
 	private String postTime;
@@ -130,4 +132,13 @@ public class BlogReply {
 		this.atUserName = atUserName;
 	}
 
+	public String getBlogauthor() {
+
+		return blogauthor;
+	}
+
+	public void setBlogauthor(String blogauthor) {
+
+		this.blogauthor = blogauthor;
+	}
 }

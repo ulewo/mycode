@@ -87,7 +87,7 @@ public class GroupServiceImpl implements GroupService {
 			//throw new BaseException(40000);
 		}
 		group.setMembers(memberDao.queryMemberCount(group.getId(), Constant.ISVALIDY, ""));
-		group.setTopicCount(articleDao.queryTopicCountByGid(group.getId(), 0, Constant.ISVALIDY));
+		//group.setTopicCount(articleDao.queryTopicCountByGid(group.getId(), 0, Constant.ISVALIDY));
 		group.setCreateTime(StringUtils.friendly_time(group.getCreateTime()));
 		return group;
 	}
@@ -120,7 +120,7 @@ public class GroupServiceImpl implements GroupService {
 			group.setMembers(memberDao.queryMemberCount(group.getId(), Constant.ISVALIDY, ""));
 
 			// 设置群文章数量
-			group.setTopicCount(articleDao.queryTopicCountByGid(group.getId(), 0, Constant.ISVALIDY));
+			//group.setTopicCount(articleDao.queryTopicCountByGid(group.getId(), 0, Constant.ISVALIDY));
 			group.setCreateTime(StringUtils.friendly_time(group.getCreateTime()));
 		}
 		return list;

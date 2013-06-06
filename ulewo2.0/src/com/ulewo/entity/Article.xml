@@ -55,9 +55,6 @@
         <isNotEmpty prepend="," property="essence">
 			essence=#essence#
         </isNotEmpty>
-        <isNotEmpty prepend="," property="isValid">
-			isvalid=#isValid#
-        </isNotEmpty>
         <isNotEmpty prepend="," property="sysCode">
 			syscode=#sysCode#
         </isNotEmpty>
@@ -80,9 +77,6 @@
 			<isNotEmpty prepend="and" property="gid">
           	   <![CDATA[gid =  #gid#  ]]>
 			</isNotEmpty>
-			<isNotEmpty prepend="and" property="isValid">
-          	   <![CDATA[isvalid =  #isValid#  ]]>
-			</isNotEmpty>
 		</dynamic>	
 	</select>
 	
@@ -103,9 +97,6 @@
 		<isNotEmpty prepend="and" property="gid">
          	  <![CDATA[a.gid =  #gid#  ]]>
 		</isNotEmpty>
-		<isNotEmpty prepend="and" property="isValid">
-         	  <![CDATA[a.isvalid =  #isValid#  ]]>
-		</isNotEmpty>
 		</dynamic>
 		order by a.grade desc,lastretime desc limit #offset#,#total#
 	</select>
@@ -121,9 +112,6 @@
 		</isNotEqual>
 		<isNotEmpty prepend="and" property="gid">
          	  <![CDATA[a.gid =  #gid#  ]]>
-		</isNotEmpty>
-		<isNotEmpty prepend="and" property="isValid">
-         	  <![CDATA[a.isvalid =  #isValid#  ]]>
 		</isNotEmpty>
 		</dynamic>
 		order by posttime desc limit #offset#,#total#
@@ -141,9 +129,6 @@
 		<isNotEmpty prepend="and" property="gid">
          	  <![CDATA[gid =  #gid#  ]]>
 		</isNotEmpty>
-		<isNotEmpty prepend="and" property="isValid">
-          	   <![CDATA[isvalid =  #isValid#  ]]>
-		</isNotEmpty>
 		</dynamic>
 		order by posttime desc limit  #offset#,#total#
 	</select>
@@ -158,9 +143,6 @@
 		<isNotEmpty prepend="and" property="gid">
          	  <![CDATA[gid =  #gid#  ]]>
 		</isNotEmpty>
-		<isNotEmpty prepend="and" property="isValid">
-          	   <![CDATA[isvalid =  #isValid#  ]]>
-		</isNotEmpty>
 		</dynamic>
 	</select>
 	
@@ -168,31 +150,31 @@
 	<select id="queryTopicByUserId"  resultClass="article" parameterClass="java.util.Map">
 		select a.id,a.gid,a.itemid,i.itemname as itemname,a.title,a.titlestyle,a.authorid,a.posttime,a.readnumber,grade,essence,
 		g.groupname as groupname,(select count(r.id) from rearticle r where r.articleid = a.id) as reNumber 
-		from article a inner join groups g on a.gid=g.id left join articleitem i on a.itemid = i.id where a.isvalid = "Y" and a.authorid = #authorid#
+		from article a inner join groups g on a.gid=g.id left join articleitem i on a.itemid = i.id where  a.authorid = #authorid#
 		order by posttime desc limit #offset#,#total#
 	</select>
 	
 	<!--根据userId查询主题数量-->
 	<select id="queryCountByUserId"  resultClass="java.lang.Integer" parameterClass="java.lang.String">
-		select count(id) from article where isvalid = "Y" and authorid = #authorid#
+		select count(id) from article where authorid = #authorid#
 	</select>
 	
 	<!--根据userId查询回复的文章主题-->
 	<select id="queryTopicByReUserId"  resultClass="article" parameterClass="java.util.Map">
 		select distinct a.id,a.gid,a.itemid,i.itemname as itemname,a.title,a.titlestyle,a.authorid,a.posttime,a.readnumber,grade,essence,
 		g.groupname as groupname,(select count(r.id) from rearticle r where r.articleid = a.id) as reNumber 
-		from article a inner join rearticle r inner join groups g on a.gid=g.id left join articleitem i on a.itemid = i.id where a.isvalid = "Y" and a.id = r.articleid and r.authorid = #authorid# 
+		from article a inner join rearticle r inner join groups g on a.gid=g.id left join articleitem i on a.itemid = i.id where a.id = r.articleid and r.authorid = #authorid# 
 		order by a.posttime desc limit #offset#,#total#
 	</select>
 	
 	<!--根据userId查询回复的文章主题数-->
 	<select id="queryTopicCountByReUserId"  resultClass="java.lang.Integer" parameterClass="java.lang.String">
-		select count(distinct a.id) from article a,rearticle r where a.isvalid = "Y" and a.id = r.articleid and r.authorid = #authorid# 
+		select count(distinct a.id) from article a,rearticle r where a.id = r.articleid and r.authorid = #authorid# 
 	</select>
 	
 	<!-- 今日发表 -->
 	<select id="queryTopicCountByTime"  resultClass="java.lang.Integer" parameterClass="java.util.Map">
-		select count(a.id) from article a  where a.isvalid = "Y" and gid=#gid# and posttime between #startTime# and #endTime#
+		select count(a.id) from article a  where gid=#gid# and posttime between #startTime# and #endTime#
 	</select>
 	
 	<!-- 首页推荐文章 -->
@@ -208,13 +190,13 @@
 	
 	<!-- 首页有图片的文章 -->
 	<select id="queryImageArticle" resultClass="article" parameterClass="java.util.Map">
-		select id,title,image from article a where image !="" and a.isvalid = "Y" order by posttime desc limit  #offset#,#total#
+		select id,title,image from article a where image !=""  order by posttime desc limit  #offset#,#total#
 	</select>
 	
 	<!-- 首页最新的文章 -->
 	<select id="queryLatestArticle" resultClass="article" parameterClass="java.util.Map">
 		select id,title,posttime,gid,(select groupname from groups g where g.id = a.gid) groupname,
 		(select username from user u where u.userid=a.authorid) authorName
-		from article a where image="" and a.isvalid = "Y" order by posttime desc limit  #offset#,#total#
+		from article a where image="" order by posttime desc limit  #offset#,#total#
 	</select>
 </sqlMap>

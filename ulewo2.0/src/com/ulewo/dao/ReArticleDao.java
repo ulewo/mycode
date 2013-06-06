@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 import org.springframework.stereotype.Component;
 
 import com.ulewo.entity.ReArticle;
@@ -25,7 +24,7 @@ public class ReArticleDao extends BaseDao {
 	 * @throws Exception
 	 * @author luohl
 	 */
-	public int addReArticle(ReArticle reArticle) throws Exception {
+	public int addReArticle(ReArticle reArticle) {
 
 		int id = (Integer) this.getSqlMapClientTemplate().insert("reArticle.addReArticle", reArticle);
 		return id;
@@ -38,7 +37,7 @@ public class ReArticleDao extends BaseDao {
 	 * @throws Exception
 	 * @author luohl
 	 */
-	public void deleteReArticle(int id) throws Exception {
+	public void deleteReArticle(int id) {
 
 		this.getSqlMapClientTemplate().delete("reArticle.deleteReArticle", id);
 	}
@@ -50,7 +49,7 @@ public class ReArticleDao extends BaseDao {
 	 * @return
 	 * @author luohl
 	 */
-	public ReArticle getReArticle(int id) throws Exception {
+	public ReArticle getReArticle(int id) {
 
 		return (ReArticle) this.getSqlMapClientTemplate().queryForObject("reArticle.getReArticle", id);
 	}
@@ -62,7 +61,7 @@ public class ReArticleDao extends BaseDao {
 	 * @throws Exception
 	 * @author luohl
 	 */
-	public void updateReArticle(ReArticle reArticle) throws Exception {
+	public void updateReArticle(ReArticle reArticle) {
 
 		this.getSqlMapClientTemplate().update("reArticle.updateReArticle", reArticle);
 	}
@@ -75,7 +74,7 @@ public class ReArticleDao extends BaseDao {
 	 * @throws Exception
 	 * @author luohl
 	 */
-	public int queryReArticleCount(int articleid) throws Exception {
+	public int queryReArticleCount(int articleid) {
 
 		return (Integer) this.getSqlMapClientTemplate().queryForObject("reArticle.queryReArticleCount", articleid);
 	}
@@ -90,7 +89,7 @@ public class ReArticleDao extends BaseDao {
 	 * @throws Exception
 	 * @author luohl
 	 */
-	public List<ReArticle> queryReArticles(int articleid, int offset, int total) throws Exception {
+	public List<ReArticle> queryReArticles(int articleid, int offset, int total) {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("articleid", articleid);
@@ -106,7 +105,7 @@ public class ReArticleDao extends BaseDao {
 	 * @throws Exception
 	 * @author luohl
 	 */
-	public List<ReArticle> queryReArticleByPid(int pid) throws Exception {
+	public List<ReArticle> queryReArticleByPid(int pid) {
 
 		return this.getSqlMapClientTemplate().queryForList("reArticle.queryReArticleByPid", pid);
 	}
@@ -121,7 +120,7 @@ public class ReArticleDao extends BaseDao {
 	 * @throws Exception
 	 * @author luohl
 	 */
-	public ReArticle queryLatestReArticle(int articleid) throws Exception {
+	public ReArticle queryLatestReArticle(int articleid) {
 
 		return (ReArticle) this.getSqlMapClientTemplate().queryForObject("reArticle.queryLatestReArticle", articleid);
 	}

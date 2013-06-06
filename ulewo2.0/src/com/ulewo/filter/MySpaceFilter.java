@@ -25,7 +25,7 @@ public class MySpaceFilter implements Filter {
 
 	private final static String GROUP = "group";
 
-	private final static String[] static_ext = { "js", "css", "jpg", "png", "gif", ".html", "ico", "vm", "swf" };
+	private final static String[] static_ext = { "jsp", "js", "css", "jpg", "png", "gif", ".html", "ico", "vm", "swf" };
 
 	private ServletContext sContext = null;
 
@@ -36,9 +36,10 @@ public class MySpaceFilter implements Filter {
 		HttpServletResponse response = (HttpServletResponse) res;
 		String server = request.getServerName();
 		String req_uri = request.getRequestURI();
-
+		String[] paths = StringUtils.split(req_uri, '/');
 		if (!ArrayUtils.contains(subDomain, server)
-				|| ArrayUtils.contains(static_ext, req_uri.substring(req_uri.lastIndexOf('.') + 1))) {
+				|| (paths.length > 0 && "manage".equalsIgnoreCase(paths[0]) || ArrayUtils.contains(static_ext,
+						req_uri.substring(req_uri.lastIndexOf('.') + 1)))) {
 			chain.doFilter(req, res);
 			return;
 		}
@@ -47,7 +48,7 @@ public class MySpaceFilter implements Filter {
 		String subDomain = "";
 		if (firstIndex != -1 && firstIndex != 0) {
 			subDomain = server.substring(0, firstIndex - 1);
-			if (SPACE.equals(subDomain)&&!req_uri.contains("reblog")) {//访问空间
+			if (SPACE.equals(subDomain) && !req_uri.contains("reblog")) {//访问空间
 				newUrl = "/user" + req_uri;
 			}
 			else if (GROUP.equals(subDomain)) {

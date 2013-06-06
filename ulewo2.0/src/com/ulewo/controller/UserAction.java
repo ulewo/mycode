@@ -48,8 +48,17 @@ public class UserAction {
 
 	@Autowired
 	private BlogReplyService blogReplyService;
-	
+
 	private final static int MAXLENGTH = 250;
+
+	private final static int USERNAME_LENGTH = 20;
+
+	private final static int EMAIL_LENGTH = 100;
+
+	private final static int PWD_MIN_LENGTH = 6;
+
+	private final static int PWD_MAX_LENGTH = 16;
+
 	/**
 	 * 检测用户名是否已经存在
 	 * 
@@ -103,17 +112,17 @@ public class UserAction {
 				message = "验证码错误";
 				result = "fail";
 			}
-			else if (!email.matches(checkEmail) || StringUtils.isEmpty(email)) {
+			else if (!email.matches(checkEmail) || StringUtils.isEmpty(email) || email.length() > EMAIL_LENGTH) {
 				message = "邮箱地址不符合规范";
 				result = "fail";
 			}
-			else if (!userName.matches(checkUserName) || StringUtils.isEmpty(userName)
-					|| StringUtils.getRealLength(userName) < 1 || StringUtils.getRealLength(userName) > 20) {
-				message = "昵称不符合规范";
+			else if (!userName.matches(checkUserName) || StringUtils.isEmpty(userName.trim())
+					|| StringUtils.getRealLength(userName) < 1 || StringUtils.getRealLength(userName) > USERNAME_LENGTH) {
+				message = "用户名不符合规范";
 				result = "fail";
 			}
-			else if (!password.matches(checkPassWord) || StringUtils.isEmpty(password) || password.length() < 6
-					|| password.length() > 16) {
+			else if (!password.matches(checkPassWord) || StringUtils.isEmpty(password)
+					|| password.length() < PWD_MIN_LENGTH || password.length() > PWD_MAX_LENGTH) {
 				message = "密码不符合规范";
 				result = "fail";
 			}
@@ -412,7 +421,7 @@ public class UserAction {
 			return mv;
 		}
 	}
-	
+
 	/**博客回复***/
 	@ResponseBody
 	@RequestMapping(value = "/replayList", method = RequestMethod.GET)
@@ -431,17 +440,17 @@ public class UserAction {
 			page_int = Integer.parseInt(page);
 		}
 		Map<String, Object> modelMap = new HashMap<String, Object>();
-		try{
-			PaginationResult resultList = blogReplyService.queryBlogReplyByBlogId(blogId_int, page_int, Constant.pageSize25);
+		try {
+			PaginationResult resultList = blogReplyService.queryBlogReplyByBlogId(blogId_int, page_int,
+					Constant.pageSize25);
 			modelMap.put("result", result);
 			modelMap.put("paginResult", resultList);
 			return modelMap;
-		}catch(Exception e){
+		} catch (Exception e) {
 			modelMap.put("result", "fail");
 			return modelMap;
 		}
-		
-		
+
 	}
 
 	/**

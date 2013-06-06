@@ -27,10 +27,10 @@ import com.ulewo.util.StringUtils;
 public class BlogArticleServiceImpl implements BlogArticleService {
 	@Autowired
 	private BlogArticleDao blogArticleDao;
-	
+
 	@Autowired
 	private UserDao userDao;
-	
+
 	@Autowired
 	private NoticeDao noticeDao;
 
@@ -128,7 +128,7 @@ public class BlogArticleServiceImpl implements BlogArticleService {
 		Pagination pagination = new Pagination(page, count, pageSize);
 		pagination.action();
 		List<BlogArticle> list = queryBlog(userId, itemId, pagination.getOffSet(), pageSize);
-		PaginationResult result = new PaginationResult(page, pagination.getPageTotal(), list);
+		PaginationResult result = new PaginationResult(page, pagination.getPageTotal(), count, list);
 		return result;
 	}
 

@@ -34,7 +34,7 @@
 		
 	<!-- 更新分类 -->
 	<update id="updateBlogItem" parameterClass="blogItem">
-		update blog_item  set itemname=#itemName# ,itemrang=#itemRang# where id=#id#
+		update blog_item  set itemname=#itemName# ,itemrang=#itemRang# where id=#id# and userid=#userId#
 	</update>
 	
 	<!-- 删除文章分类 -->

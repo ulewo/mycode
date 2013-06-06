@@ -37,7 +37,7 @@ public class MySpaceFilter implements Filter {
 		String req_uri = req.getRequestURI();
 		String[] paths = StringUtils.split(req_uri, '/');
 
-		if (!ArrayUtils.contains(domains, server) || (paths.length > 0 && "action".equalsIgnoreCase(paths[0]))
+		if (!ArrayUtils.contains(domains, server) || (paths.length > 0 && "manage".equalsIgnoreCase(paths[0]))
 				|| ArrayUtils.contains(static_ext, req_uri.substring(req_uri.lastIndexOf('.') + 1))) {
 			chain.doFilter(req, res);
 			return;

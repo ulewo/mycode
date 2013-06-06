@@ -12,7 +12,6 @@ import com.ulewo.dao.BlogArticleDao;
 import com.ulewo.dao.BlogReplyDao;
 import com.ulewo.dao.NoticeDao;
 import com.ulewo.dao.UserDao;
-import com.ulewo.entity.BlogArticle;
 import com.ulewo.entity.BlogReply;
 import com.ulewo.entity.NoticeParam;
 import com.ulewo.entity.User;
@@ -29,13 +28,13 @@ import com.ulewo.util.StringUtils;
 public class BlogReplyServiceImpl implements BlogReplyService {
 	@Autowired
 	private BlogReplyDao blogReplyDao;
-	
+
 	@Autowired
 	private BlogArticleDao blogArticleDao;
-	
+
 	@Autowired
 	private UserDao userDao;
-	
+
 	@Autowired
 	private NoticeDao noticeDao;
 
@@ -108,7 +107,7 @@ public class BlogReplyServiceImpl implements BlogReplyService {
 		for (BlogReply reply : list) {
 			reply.setPostTime(StringUtils.friendly_time(reply.getPostTime()));
 		}
-		PaginationResult result = new PaginationResult(pageSize, pagein.getPageTotal(), list);
+		PaginationResult result = new PaginationResult(pageSize, pagein.getPageTotal(), count, list);
 		return result;
 	}
 
@@ -121,24 +120,7 @@ public class BlogReplyServiceImpl implements BlogReplyService {
 	@Override
 	public boolean delete(String curUserId, int id) {
 
-		// userId，当前用户的userId
-		BlogReply reply = blogReplyDao.queryBlogReplyById(id);
-		// 通过ID查询回复
-		if (null != reply) {
-			// 通过回复获取博客ID
-			BlogArticle article = blogArticleDao.queryBlogById(reply.getBlogId());
-			// 删除 1,博主可以删除评论 article.getUserId() 博主ID
-			if (null != article && article.getUserId().equals(curUserId)) {
-				blogReplyDao.delete(id);
-				return true;
-			}
-			else {
-				return false;
-			}
-		}
-		else {
-			return false;
-		}
+		return blogReplyDao.delete(id, curUserId);
 	}
 
 	public BlogReply queryBlogReplyById(int id) {
@@ -146,5 +128,19 @@ public class BlogReplyServiceImpl implements BlogReplyService {
 		BlogReply reply = blogReplyDao.queryBlogReplyById(id);
 		reply.setPostTime(StringUtils.friendly_time(reply.getPostTime()));
 		return reply;
+	}
+
+	@Override
+	public PaginationResult queryAllReply(String author, int page, int pageSize) {
+
+		int count = blogReplyDao.queryAllReplyCount(author);
+		Pagination pagein = new Pagination(pageSize, count, pageSize);
+		pagein.action();
+		List<BlogReply> list = blogReplyDao.queryAllReply(author, pagein.getOffSet(), pageSize);
+		for (BlogReply reply : list) {
+			reply.setPostTime(StringUtils.friendly_time(reply.getPostTime()));
+		}
+		PaginationResult result = new PaginationResult(pageSize, pagein.getPageTotal(), count, list);
+		return result;
 	}
 }

@@ -9,11 +9,14 @@ public class PaginationResult {
 
 	private int page;
 
-	public PaginationResult(int page, int pageTotal, List<?> list) {
+	private int countTotal;
+
+	public PaginationResult(int page, int pageTotal, int countTotal, List<?> list) {
 
 		this.pageTotal = pageTotal;
 		this.list = list;
 		this.page = page;
+		this.countTotal = countTotal;
 	}
 
 	public PaginationResult() {
@@ -49,4 +52,10 @@ public class PaginationResult {
 
 		return page;
 	}
+
+	public int getCountTotal() {
+
+		return countTotal;
+	}
+
 }

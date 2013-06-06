@@ -24,6 +24,8 @@ import com.ulewo.enums.QueryUserType;
 import com.ulewo.service.ArticleService;
 import com.ulewo.util.Constant;
 import com.ulewo.util.FormatAt;
+import com.ulewo.util.Pagination;
+import com.ulewo.util.PaginationResult;
 import com.ulewo.util.StringUtils;
 
 @Service("articleService")
@@ -74,7 +76,7 @@ public class ArticleServiceImpl implements ArticleService {
 	 * 新增文章
 	 */
 	@Override
-	public void addArticle(Article article, User user) throws Exception {
+	public void addArticle(Article article, User user) {
 
 		String content = article.getContent();
 		String summary = StringUtils.clearHtml(content);
@@ -114,7 +116,7 @@ public class ArticleServiceImpl implements ArticleService {
 	 * 查询主题文章
 	 */
 	@Override
-	public Article queryTopicById(int id) throws Exception {
+	public Article queryTopicById(int id) {
 
 		Article article = articleDao.queryTopicById(id);
 		if (null == article) {
@@ -128,7 +130,7 @@ public class ArticleServiceImpl implements ArticleService {
 	 * 更新文章
 	 */
 	@Override
-	public void updateArticle(Article article) throws Exception {
+	public void updateArticle(Article article) {
 
 		articleDao.updateArticle(article);
 
@@ -138,7 +140,7 @@ public class ArticleServiceImpl implements ArticleService {
 	 * 展示文章详情
 	 */
 	@Override
-	public Article showArticle(int id) throws Exception {
+	public Article showArticle(int id) {
 
 		Article article = articleDao.queryTopicById(id);
 		if (article != null && !Constant.ISVALID01.equals(article.getIsValid())) {
@@ -170,7 +172,7 @@ public class ArticleServiceImpl implements ArticleService {
 	 * 更新非空字段
 	 */
 	@Override
-	public void updateArticleSelective(Article article) throws Exception {
+	public void updateArticleSelective(Article article) {
 
 		Article result = articleDao.queryTopicById(article.getId());
 		if (null == result) {
@@ -188,39 +190,33 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	/**
-	 * 查询圈子文章总数
-	 */
-	@Override
-	public int queryTopicCountByGid(String gid, int itemId, String isValid) throws Exception {
-
-		return articleDao.queryTopicCountByGid(gid, itemId, isValid);
-	}
-
-	/**
 	 * 通过群编号查询主题文章 等级和最后回复时间倒叙排列 多笔查询
 	 */
 	@Override
-	public List<Article> queryTopicOrderByGradeAndLastReTime(String gid, int itemId, String isValid, int offset,
-			int total) throws Exception {
+	public PaginationResult queryTopicOrderByGradeAndLastReTime(String gid, int itemId, int page, int pageSize) {
 
-		List<Article> list = articleDao.queryTopicOrderByGradeAndLastReTime(gid, itemId, isValid, offset, total);
-		setArticleListInfo(list);
-		return list;
+		int count = articleDao.queryTopicCountByGid(gid, itemId);
+		Pagination pagination = new Pagination(page, count, pageSize);
+		pagination.action();
+		List<Article> list = articleDao.queryTopicOrderByGradeAndLastReTime(gid, itemId, pagination.getOffSet(),
+				pageSize);
+		PaginationResult result = new PaginationResult(page, pagination.getPageTotal(), count, list);
+		//setArticleListInfo(list);
+		return result;
 	}
 
 	/**
 	 * 查询文章根据时间倒叙排列
 	 */
 	@Override
-	public List<Article> queryTopicOrderByPostTime(String gid, int itemId, String isValid, int offset, int total)
-			throws Exception {
+	public List<Article> queryTopicOrderByPostTime(String gid, int itemId, String isValid, int offset, int total) {
 
 		List<Article> list = articleDao.queryTopicOrderByPostTime(gid, itemId, isValid, offset, total);
 		setArticleListInfo(list);
 		return list;
 	}
 
-	private void setArticleListInfo(List<Article> list) throws Exception {
+	private void setArticleListInfo(List<Article> list) {
 
 		ReArticle lastReArticle = null; // 最后回复的文章
 		String lastReAuthorId = null; // 最后回复人id
@@ -250,13 +246,13 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public int queryPostTopicCount(String userId) throws Exception {
+	public int queryPostTopicCount(String userId) {
 
 		return articleDao.queryCountByUserId(userId);
 	}
 
 	@Override
-	public List<Article> queryPostTopic(String userId, int offset, int total) throws Exception {
+	public List<Article> queryPostTopic(String userId, int offset, int total) {
 
 		List<Article> list = articleDao.queryTopicByUserId(userId, offset, total);
 		for (Article article : list) {
@@ -266,13 +262,13 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public int queryReTopicCount(String userId) throws Exception {
+	public int queryReTopicCount(String userId) {
 
 		return articleDao.queryTopicCountByReUserId(userId);
 	}
 
 	@Override
-	public List<Article> queryReTopic(String userId, int offset, int total) throws Exception {
+	public List<Article> queryReTopic(String userId, int offset, int total) {
 
 		List<Article> list = articleDao.queryTopicByReUserId(userId, offset, total);
 		for (Article article : list) {
@@ -282,7 +278,7 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public List<Article> aboutArticle(String keyWord, String gid) throws Exception {
+	public List<Article> aboutArticle(String keyWord, String gid) {
 
 		List<Article> list = new ArrayList<Article>();
 		if (null == keyWord) {
@@ -311,7 +307,7 @@ public class ArticleServiceImpl implements ArticleService {
 		return list;
 	}
 
-	public int queryTopicCountByTime(String gid) throws Exception {
+	public int queryTopicCountByTime(String gid) {
 
 		String endTime = formate.format(new Date());
 		String startTime = endTime.substring(0, 10) + " 00:00:00";
@@ -325,8 +321,7 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public List<Article> searchTopic(String keyWord, String gid, String isValid, int offset, int total)
-			throws Exception {
+	public List<Article> searchTopic(String keyWord, String gid, String isValid, int offset, int total) {
 
 		List<Article> list = articleDao.searchTopic(keyWord, gid, isValid, offset, total);
 		for (Article article : list) {
@@ -335,12 +330,12 @@ public class ArticleServiceImpl implements ArticleService {
 		return list;
 	}
 
-	public List<Article> queryList(String keyWord, String isValid, int offset, int total) throws Exception {
+	public List<Article> queryList(String keyWord, String isValid, int offset, int total) {
 
 		return null;
 	}
 
-	public List<Article> queryComendArticle(String sysCode, String subCode, int offset, int total) throws Exception {
+	public List<Article> queryComendArticle(String sysCode, String subCode, int offset, int total) {
 
 		List<Article> list = articleDao.queryComendArticle(sysCode, subCode, offset, total);
 		return list;

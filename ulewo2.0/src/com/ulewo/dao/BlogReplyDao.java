@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 import org.springframework.stereotype.Component;
 
 import com.ulewo.entity.BlogReply;
@@ -66,16 +65,41 @@ public class BlogReplyDao extends BaseDao {
 	 * description: 删除回复
 	 * 
 	 * @param id
+	 * @param author TODO
+	 * @return TODO
 	 * @throws Exception
 	 * @author luohl
 	 */
-	public void delete(int id) {
+	public boolean delete(int id, String author) {
 
-		this.getSqlMapClientTemplate().delete("blogReply.deletePeply", id);
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("id", id);
+		paramMap.put("author", author);
+		int count = this.getSqlMapClientTemplate().delete("blogReply.deletePeply", paramMap);
+		if (count > 0) {
+			return true;
+		}
+		return false;
 	}
 
 	public int queryReplyCountByBlogId(int blogId) {
 
 		return (Integer) this.getSqlMapClientTemplate().queryForObject("blogReply.queryReplyCountByBlogId", blogId);
+	}
+
+	public List<BlogReply> queryAllReply(String author, int offSet, int pageSize) {
+
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("author", author);
+		paramMap.put("offSet", offSet);
+		paramMap.put("pageSize", pageSize);
+		return (List<BlogReply>) getSqlMapClientTemplate().queryForList("blogReply.queryAllReply", paramMap);
+	}
+
+	public int queryAllReplyCount(String author) {
+
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("author", author);
+		return (Integer) getSqlMapClientTemplate().queryForObject("blogReply.queryAllReplyCount", paramMap);
 	}
 }

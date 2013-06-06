@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ulewo.entity.Article;
 import com.ulewo.entity.User;
+import com.ulewo.util.PaginationResult;
 
 public interface ArticleService {
 	/**
@@ -12,55 +13,44 @@ public interface ArticleService {
 	 * @param article
 	 * @author luohl
 	 */
-	public void addArticle(Article article, User user) throws Exception;
+	public void addArticle(Article article, User user);
 
 	/**
 	 * description: 根据ID查询文章
 	 * @param id
 	 * @return
-	 * @throws Exception
+	 * @
 	 * @author luohl
 	 */
-	public Article queryTopicById(int id) throws Exception;
+	public Article queryTopicById(int id);
 
 	/**
 	 * 
 	 * description: 更新文章 全更新
 	 * @param article
-	 * @throws Exception
+	 * @
 	 * @author luohl
 	 */
-	public void updateArticle(Article article) throws Exception;
+	public void updateArticle(Article article);
 
 	/**
 	 * 
 	 * description: 更新不为空的字段
 	 * @param article
-	 * @throws Exception
+	 * @
 	 * @author luohl
 	 */
 
-	public void updateArticleSelective(Article article) throws Exception;
+	public void updateArticleSelective(Article article);
 
 	/**
 	 * 
 	 * description: 显示具体的文章
 	 * @return
-	 * @throws Exception
+	 * @
 	 * @author lhl
 	 */
-	public Article showArticle(int id) throws Exception;
-
-	/**
-	 * 
-	 * description: 根据gid,itemid查询主题总数
-	 * @param gid
-	 * @param itemId
-	 * @param isValid
-	 * @return
-	 * @author lhl
-	 */
-	public int queryTopicCountByGid(String gid, int itemId, String isValid) throws Exception;
+	public Article showArticle(int id);
 
 	/**
 	 * 
@@ -69,11 +59,10 @@ public interface ArticleService {
 	 * @param itemId
 	 * @param isValid
 	 * @return
-	 * @throws Exception
+	 * @
 	 * @author lhl
 	 */
-	public List<Article> queryTopicOrderByGradeAndLastReTime(String gid, int itemId, String isValid, int offset,
-			int total) throws Exception;
+	public PaginationResult queryTopicOrderByGradeAndLastReTime(String gid, int itemId, int page, int pageSize);
 
 	/**
 	 * 
@@ -82,21 +71,20 @@ public interface ArticleService {
 	 * @param itemId
 	 * @param isValid
 	 * @return
-	 * @throws Exception
+	 * @
 	 * @author lhl
 	 */
-	public List<Article> queryTopicOrderByPostTime(String gid, int itemId, String isValid, int offset, int total)
-			throws Exception;
+	public List<Article> queryTopicOrderByPostTime(String gid, int itemId, String isValid, int offset, int total);
 
 	/**
 	 * 
 	 * description: 查询作者发表的主题数量
 	 * @param userId
 	 * @return
-	 * @throws Exception
+	 * @
 	 * @author lhl
 	 */
-	public int queryPostTopicCount(String userId) throws Exception;
+	public int queryPostTopicCount(String userId);
 
 	/**
 	 * 
@@ -105,20 +93,20 @@ public interface ArticleService {
 	 * @param offset TODO
 	 * @param total TODO
 	 * @return
-	 * @throws Exception
+	 * @
 	 * @author lhl
 	 */
-	public List<Article> queryPostTopic(String userId, int offset, int total) throws Exception;
+	public List<Article> queryPostTopic(String userId, int offset, int total);
 
 	/**
 	 * 
 	 * description: 查询作者回复的主题数量
 	 * @param userId
 	 * @return
-	 * @throws Exception
+	 * @
 	 * @author lhl
 	 */
-	public int queryReTopicCount(String userId) throws Exception;
+	public int queryReTopicCount(String userId);
 
 	/**
 	 * 
@@ -127,10 +115,10 @@ public interface ArticleService {
 	 * @param offset TODO
 	 * @param total TODO
 	 * @return
-	 * @throws Exception
+	 * @
 	 * @author lhl
 	 */
-	public List<Article> queryReTopic(String userId, int offset, int total) throws Exception;
+	public List<Article> queryReTopic(String userId, int offset, int total);
 
 	/**
 	 * 
@@ -138,20 +126,20 @@ public interface ArticleService {
 	 * @param keyWord
 	 * @param gid
 	 * @return
-	 * @throws Exception
+	 * @
 	 * @author lhl
 	 */
-	public List<Article> aboutArticle(String keyWord, String gid) throws Exception;
+	public List<Article> aboutArticle(String keyWord, String gid);
 
 	/**
 	 * 
 	 * description: 查询群组当日发帖数量
 	 * @param gid
 	 * @return
-	 * @throws Exception
+	 * @
 	 * @author lhl
 	 */
-	public int queryTopicCountByTime(String gid) throws Exception;
+	public int queryTopicCountByTime(String gid);
 
 	/**
 	 * 
@@ -173,15 +161,14 @@ public interface ArticleService {
 	 * @param offset
 	 * @param total
 	 * @return
-	 * @throws Exception
+	 * @
 	 * @author lhl
 	 */
-	public List<Article> searchTopic(String keyWord, String gid, String isValid, int offset, int total)
-			throws Exception;
+	public List<Article> searchTopic(String keyWord, String gid, String isValid, int offset, int total);
 
-	public List<Article> queryList(String keyWord, String isValid, int offset, int total) throws Exception;
+	public List<Article> queryList(String keyWord, String isValid, int offset, int total);
 
-	public List<Article> queryComendArticle(String sysCode, String subCode, int offset, int total) throws Exception;
+	public List<Article> queryComendArticle(String sysCode, String subCode, int offset, int total);
 
 	public List<Article> queryImageArticle(int offset, int total);
 

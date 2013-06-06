@@ -13,6 +13,8 @@ public class Group {
 
 	private String groupDesc; // 群描述
 
+	private String notice; //公告
+
 	private String groupIcon; // 群图标
 
 	private String groupHeadIcon; // 群logo
@@ -185,6 +187,16 @@ public class Group {
 	public void setAuthorName(String authorName) {
 
 		this.authorName = authorName;
+	}
+
+	public String getNotice() {
+
+		return notice;
+	}
+
+	public void setNotice(String notice) {
+
+		this.notice = notice;
 	}
 
 }

@@ -73,4 +73,10 @@ public class BlogItemServiceImpl implements BlogItemService {
 		return blogItemDao.queryBlogItemById(itemId);
 	}
 
+	@Override
+	public void updateItem(BlogItem item) {
+
+		blogItemDao.update(item);
+	}
+
 }
