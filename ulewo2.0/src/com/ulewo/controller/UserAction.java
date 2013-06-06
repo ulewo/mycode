@@ -267,12 +267,12 @@ public class UserAction {
 		ModelAndView mv = new ModelAndView();
 		try {
 			if (StringUtils.isEmpty(userId)) {
-				mv.setViewName("redirect:/../error");
+				mv.setViewName("redirect:"+Constant.WEBSTIE);
 				return mv;
 			}
 			User user = userService.findUser(userId, QueryUserType.USERID);
 			if (null == user) {
-				mv.setViewName("redirect:/../error");
+				mv.setViewName("redirect:"+Constant.WEBSTIE);
 				return mv;
 			}
 			userVo.setUserId(user.getUserId());
@@ -293,7 +293,7 @@ public class UserAction {
 			mv.setViewName("user/userinfo");
 		} catch (Exception e) {
 			e.printStackTrace();
-			mv.setViewName("redirect:/../error");
+			mv.setViewName("redirect:"+Constant.WEBSTIE);
 			return mv;
 		}
 		return mv;

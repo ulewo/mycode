@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +56,7 @@ public class UserManageAction {
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping(value = "/userinfo")
+	@RequestMapping(value = "/userinfo", method = RequestMethod.GET)
 	public ModelAndView queryUserInfo(HttpSession session) {
 
 		SessionUser user = (SessionUser) session.getAttribute("user");
