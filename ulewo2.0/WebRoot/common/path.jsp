@@ -5,3 +5,9 @@
 String realPath = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath()+"/"; 
 %>
 <c:set var="realPath" value="<%=realPath %>"></c:set>
+<script src="${realPath}js/util.js"></script>
+<script src="${realPath}js/jquery.min.js"></script>
+<script type="text/javascript">
+var global={};
+global.realPath="{${realPath}}";
+</script>

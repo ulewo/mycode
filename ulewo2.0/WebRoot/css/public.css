@@ -28,7 +28,7 @@ textarea{overflow:auto;padding:0px;margin:0px;}
 .tip-arrow{width: 9px;height: 6px;background: url(../images/tip-yellowsimple_arrows.gif) no-repeat;position:absolute;left:130px;top:0px;z-index:3;}
 .tip_con{background:#FFF9C9;border:1px solid #C7BF93;height:20px;position:absolute;left:0px;top:5px;width:150px;padding-top:8px;border-radius: 4px;-moz-border-radius: 4px;-webkit-border-radius: 4px}
 .tip_con a{color:#3E62A6;}
-
+#gototop{position:fixed;bottom: 120px; right: 100px; cursor: pointer; display:none;}
 /**************¶¥²¿ËÑË÷******************/
 .head_search .head_search_input{height:27px;margin-top:5px;width:250px;margin-left:40px;float:right;border:1px solid #1C91BE;}
 .head_search .head_search_btn{background:#1C91BE;border:0px;color:#ffffff;font-size:15px;height:29px;width:100px;float:right;margin-top:5px;}
