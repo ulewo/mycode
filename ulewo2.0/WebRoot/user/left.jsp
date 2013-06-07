@@ -35,7 +35,7 @@
 			<span class="blog_icon"></span>
 			<span class="blog_tit">发表博文</span>
 		</a>
-		<a href="manage.jspx" class="manage">
+		<a href="/manage/userinfo" class="manage">
 			空间管理
 		</a>
 		<div class="clear"></div>

@@ -2,7 +2,7 @@ body{margin:0px auto;text-align:center;}
 .main{margin:0px auto;width:1000px;text-align:left;font-size:13px;}
 .main a{color:#3E62A6}
 input{outline:none;margin:0px;padding:0px;}
-textarea{overflow:auto;padding:0px;margin:0px;}
+textarea{overflow:auto;padding:0px;margin:0px;resize:none;border:none;}
 .clear{clear:both;}
 .head_top{width:1000px;height:85px;margin:0px auto;}
 .head_logo{display:inline-block;float:left;padding-top:10px;}

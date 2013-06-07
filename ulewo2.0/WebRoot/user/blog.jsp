@@ -37,7 +37,6 @@
 					<c:if test="${blogitem!=null}">
 						&gt;&gt;<a href="">${blogitem.itemName}</a>
 					</c:if>
-				
 				</div>
 				<c:forEach var="blog" items="${result.list}">
 					<div class="blog_list_item">
