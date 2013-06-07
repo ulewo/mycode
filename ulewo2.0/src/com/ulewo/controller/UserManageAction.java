@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,11 +65,15 @@ public class UserManageAction {
 			User resultUser = userService.findUser(userId, QueryUserType.USERID);
 			if (null != resultUser) {
 				UserVo userVo = new UserVo();
+				userVo.setUserId(resultUser.getUserId());
+				userVo.setUserName(resultUser.getUserName());
+				userVo.setEmail(resultUser.getEmail());
 				userVo.setAddress(resultUser.getAddress());
 				userVo.setAge(resultUser.getAge());
 				userVo.setCharacters(resultUser.getCharacters());
 				userVo.setSex(resultUser.getSex());
 				userVo.setWork(resultUser.getWork());
+				mv.addObject("userVo", userVo);
 				mv.setViewName("/usermanage/userinfo");
 			}
 		} catch (Exception e) {
@@ -143,22 +146,24 @@ public class UserManageAction {
 		}
 	}
 
+	@RequestMapping(value = "/changepwd", method = RequestMethod.GET)
+	public ModelAndView changepwd(HttpSession session) {
+
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("/usermanage/changepwd");
+		return mv;
+	}
+
 	@ResponseBody
-	@RequestMapping(value = "/changepwd", method = RequestMethod.POST)
-	public Map<String, Object> changepwd(HttpSession session, HttpServletRequest request) {
+	@RequestMapping(value = "/edit_pwd", method = RequestMethod.POST)
+	public Map<String, Object> editPwd(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
-		String account = request.getParameter("account");
 		String oldpwd = request.getParameter("oldpwd");
 		String newpwd = request.getParameter("newpwd");
 		String checkPassWord = "^[0-9a-zA-Z]+$";
 		try {
 			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
-			if (StringUtils.isEmpty(account)) {
-				modelMap.put("message", "帐号不能为空");
-				modelMap.put("result", "fail");
-				return modelMap;
-			}
 			if (!oldpwd.matches(checkPassWord) || StringUtils.isEmpty(oldpwd) || oldpwd.length() < PWD_MIN_LENGTH
 					|| oldpwd.length() > PWD_MAX_LENGTH) {
 				modelMap.put("message", "旧密码不符合规范");
@@ -173,12 +178,6 @@ public class UserManageAction {
 				return modelMap;
 			}
 			User user = new User();
-			if (account.contains("@")) {
-				user = userService.findUser(account, QueryUserType.EMAIL);
-			}
-			else {
-				user = userService.findUser(account, QueryUserType.USERNAME);
-			}
 			if (null != user) {
 				user.setPassword(newpwd);
 				userService.updateUser(user);
@@ -202,7 +201,7 @@ public class UserManageAction {
 	public ModelAndView newblog(HttpSession session) {
 
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("manage/newblog");
+		mv.setViewName("usermanage/new_blog");
 		return mv;
 
 	}

@@ -25,7 +25,9 @@ public class MySpaceFilter implements Filter {
 
 	private final static String GROUP = "group";
 
-	private final static String[] static_ext = { "jsp", "js", "css", "jpg", "png", "gif", ".html", "ico", "vm", "swf" };
+	private final static String[] static_ext = { "jsp", "js", "css", "jpg", "png", "gif", "html", "ico", "vm", "swf" };
+
+	private final static String[] static_jsp = { "new_blog" };
 
 	private ServletContext sContext = null;
 
@@ -42,6 +44,10 @@ public class MySpaceFilter implements Filter {
 						req_uri.substring(req_uri.lastIndexOf('.') + 1)))) {
 			chain.doFilter(req, res);
 			return;
+		}
+		if (ArrayUtils.contains(static_jsp, req_uri.substring(req_uri.lastIndexOf('/') + 1))) {
+			req_uri = req_uri + ".jsp";
+			sContext.getRequestDispatcher(req_uri).forward(request, response);
 		}
 		int firstIndex = server.indexOf(domain);
 		String newUrl = "";

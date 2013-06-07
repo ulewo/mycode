@@ -5,6 +5,8 @@ public class UserVo {
 
 	private String userName; // 用户名
 
+	private String email;
+
 	private String userLittleIcon; // 用户小图像
 
 	private String age; // 年龄
@@ -155,6 +157,16 @@ public class UserVo {
 	public void setTrackCount(int trackCount) {
 
 		this.trackCount = trackCount;
+	}
+
+	public String getEmail() {
+
+		return email;
+	}
+
+	public void setEmail(String email) {
+
+		this.email = email;
 	}
 
 }
