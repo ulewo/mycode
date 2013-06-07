@@ -53,6 +53,6 @@
 		</div>
 		<div style="clear:left;"></div>
 	</div>
-	<%@ include file="../common/foot.jsp" %>
+	<%@ include file="../common/foot_manage.jsp" %>
 </body>
 </html>

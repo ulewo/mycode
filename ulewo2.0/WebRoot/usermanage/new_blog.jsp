@@ -9,7 +9,7 @@
 <title>发表博文-有乐窝</title>
 <link rel="stylesheet" type="text/css" href="../css/user.manage.newblog.css">
 <style type="text/css">
-	#selected2{background:#ffffff}
+	#selected4{background:#ffffff}
 </style>
 <script type="text/javascript">
 	<!--
@@ -77,7 +77,7 @@
 		</div>
 		<div style="clear:left;"></div>
 	</div>
-	<%@ include file="../common/foot.jsp" %>
+	<%@ include file="../common/foot_manage.jsp" %>
 </body>
 <script type="text/javascript">
 	var isHaveImg = false;
