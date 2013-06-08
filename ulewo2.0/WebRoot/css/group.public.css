@@ -1,0 +1,34 @@
+@IMPORT url("public.css");
+.main{margin-top:10px;}
+.group_info_left{float:left;width:800px;}
+.group_icon{width:36px;float:left;}
+.group_icon img{border:0px;width:35px;}
+.group_info_con{float:left;width:750px;}
+.group_title{font-weight:bold;font-size:16px;color:#64C5E8}
+.group_author{margin-top:10px;}
+.group_info_tit{font-size:14px;padding:0px 5px}
+.group_url{margin-top:5px;color:#335DA9}
+.group_desc{margin-top:5px;line-height:20px;}
+.group_info_notice{float:left;width:200px}
+.right_tit{border-bottom:2px solid #64C5E8;font-size:16px;font-weight:bold;color:#64C5E8;padding:0px 0px 3px 5px;}
+
+.group_body{margin-top:15px;}
+.left{width:800px;float:left;}
+.group_tag{list-style:none;border-bottom:2px solid #64C5E8;height:25px;margin:0px;padding:0px;}
+.group_tag li{float:left;width:60px;margin-left:15px;}
+.group_tag li a{background:#64C5E8;color:#ffffff;text-decoration:none;font-size:14px;display:block;width:60px;padding-top:3px;height:20px;text-align:center;border:2px solid #64C5E8}
+.group_tag li a:hover{background:#ffffff;height:22px;color:#494949;border-bottom:0px;}
+.group_tag li a.tag_select{background:#ffffff;height:22px;color:#494949;border-bottom:0px;}
+
+.new_article_p{background:.#F7F8F9;border:1px solid #D4DEE3;padding:5px;margin-top:10px;}
+.new_article_input{border:2px solid #67C1E3;width:700px;height:30px;float:left;cursor:pointer;}
+.new_article_btn{background:#67C1E3;color:#ffffff;float:right;width:80px;padding-top:10px;text-align:center;font-weight:bold;height:24px;cursor:pointer;}
+
+/********·ÖÀà*******/
+.group_item{list-style:none;border-bottom:2px solid #DCDCDC;height:25px;margin:0px;padding:0px;margin-top:10px;]}
+.group_item li{float:left;margin-left:15px;display:inline-block;}
+.group_item li a{color:#494949;text-decoration:none;font-size:14px;display:inline-block;padding:3px 5px 0px 5px;;height:20px;text-align:center;}
+.group_item li a:hover{height:22px;color:#494949;border-bottom:2px solid #64C5E8;color:#64C5E8}
+.group_item li a.select{height:22px;color:#494949;border-bottom:2px solid #64C5E8;color:#64C5E8}
+
+.right{width:200px;float:left;}
