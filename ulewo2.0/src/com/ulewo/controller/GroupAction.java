@@ -1,5 +1,7 @@
 package com.ulewo.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -11,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import sun.security.acl.GroupImpl;
+
+import com.ulewo.entity.ArticleItem;
 import com.ulewo.entity.Group;
 import com.ulewo.service.ArticleItemService;
 import com.ulewo.service.ArticleService;
@@ -101,9 +106,12 @@ public class GroupAction {
 			//查询文章
 			PaginationResult articleResult = articleService.queryTopicOrderByGradeAndLastReTime(gid, itemId_int,
 					page_int, Constant.pageSize15);
+			//查询分类
+			List<ArticleItem> itemList = articleItemService.queryItemByGid(gid);
 			mv.addObject("group", group);
 			mv.addObject("articles", articleResult);
-			mv.setViewName("user/userinfo");
+			mv.addObject("itemList", itemList);
+			mv.setViewName("group/group");
 		} catch (Exception e) {
 			e.printStackTrace();
 			mv.setViewName("redirect:/../error");
