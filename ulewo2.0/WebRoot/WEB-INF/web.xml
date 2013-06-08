@@ -6,7 +6,12 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	id="WebApp_ID"
 	version="3.0">
-	<display-name>msgboard</display-name>
+	<jsp-config> 
+		<taglib>
+			<taglib-uri>/WEB-INF/pager.tld</taglib-uri> 
+			<taglib-location>/WEB-INF/pager.tld</taglib-location> 
+		</taglib>
+	</jsp-config> 
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/spring-servlet.xml;/WEB-INF/classes/config/applicationContext.xml</param-value>
