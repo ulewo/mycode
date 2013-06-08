@@ -40,3 +40,13 @@ a.btn:hover{background:#38678F}
 .shade{position:absolute;background:#FFFFFF;filter:alpha(opacity=40);-moz-opacity:0.4;-khtml-opacity:0.4;opacity: 0.4;width:565px;height:130px;left:-50px;top:-5px;z-index:100}
 .shadeLogin{text-align:center;margin-top:20px;margin-left:100px;z-index:101;background:#000000;width:150px;padding:5px;color:#FFFFFF}
 .shadeLogin a{color:#FFFFFF}
+
+
+/********·ÖÒ³************/
+.pagination{height:25px;width:510px;font-size:13px;}
+.pagination ul{padding:0px;margin:0px;float:left;text-align:center;margin-left:-5px;}
+.pagination li{float:left;margin-left:5px;list-style:none;}
+.pagination a{display:block;width:20px;height:17px;text-decoration:none;color:#2B4A78;padding-top:3px;text-align:center;border: 1px solid #999;border-top: 1px solid #DDD;border-left: 1px solid #DDD;}
+.pagination a:hover,.pagination a:active{border:1px solid #DDD;border-top:1px solid #AAA;border-left:1px solid #AAA;background-color:#D0D3C8;}
+a.prePage,a.nextPage{width:60px;}
+#nowPage{width:20px;height:20px;font-weight:bold;padding-top:4px;border: 1px solid #999;border-left: 1px solid #DDD;height:17px;font-weight: bold;border-top: 1px none #CCC;background: #CCC;color: #666}

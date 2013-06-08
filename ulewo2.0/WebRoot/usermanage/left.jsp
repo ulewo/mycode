@@ -18,13 +18,14 @@
 	</div>
 	<ul class="menue">
 		<li id="selected4"><a href="new_blog">发表博文</a></li>
-		<li id="selected5"><a href="manageItem.jspx">分类管理</a></li>
+		<li id="selected5"><a href="blog_item">分类管理</a></li>
+		<li id="selected6"><a href="blog_reply">评论管理</a></li>
 	</ul>
 	
 	<div class="menue_tit">
 		 消息管理
 	</div>
 	<ul class="menue">
-		<li id="selected6"><a href="notice.jspx">未处理的消息</a></li>
+		<li id="selected7"><a href="notice.jspx">未处理的消息</a></li>
 	</ul>
 </div>

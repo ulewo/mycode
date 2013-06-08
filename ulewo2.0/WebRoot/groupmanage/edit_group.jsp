@@ -7,17 +7,10 @@
 <%@ include file="../common/path.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>发表博文-有乐窝</title>
-<link rel="stylesheet" type="text/css" href="../css/user.manage.newblog.css">
+<link rel="stylesheet" type="text/css" href="../css/group.manage.editgroup.css">
 <style type="text/css">
-#selected4 a{background:#ffffff;color:#333333;font-weight:bold;}fff}
+#selected1 a{background:#ffffff;color:#333333;font-weight:bold;}fff}
 </style>
-<script type="text/javascript">
-	<!--
-		window.UEDITOR_HOME_URL = "${realPath}/ueditor/";
-	//-->
-</script>
-<script type="text/javascript" src="${realPath}ueditor/editor_config_blog.js"></script>
-<script type="text/javascript" src="${realPath}ueditor/editor.js"></script>
 </head>
 <body>
 	<%@ include file="../common/head.jsp" %>
@@ -32,46 +25,41 @@
 						&gt;&gt;<a href="">${blogitem.itemName}</a>
 					</c:if>
 			</div>
-			<div class="form_sub_btn">
-				<a href="" class="btn">发表博文</a>
-			</div>
 			<div class="form_tit">
-				<span class="form_tit_t">标题</span>
+				<span class="form_tit_t">窝窝名称</span>
 				<span class="form_tit_x">（选填）</span>
 			</div>
 			<div class="form_editinput">
 				<div class="form_title_input">
 					<input type="text"/>
 				</div>
-				<div class="form_title_info">存放在</div>
-				<div class="form_title_select">
-					<select>
-						<option>阿萨德发射点发</option>
-						<option>阿萨德发射点发</option>
-						<option>阿萨德发射点发</option>
-					</select>
-					<a href="">分类管理</a>
+				<div class="clear"></div>
+			</div>
+			<div class="form_tit">
+				<span class="form_tit_t">简介</span>
+				<span class="form_tit_x">（选填）</span>
+			</div>
+			<div class="form_editcontent" id="editor">
+				<textarea></textarea>
+			</div>
+			<div class="form_tit">
+				<div class="form_tit_radio">加入权限？</div>
+				<div class="form_con_radio">
+					<input type="radio"/>允许任何人加入
+					<input type="radio"/>需经我审批才能加入
 				</div>
 				<div class="clear"></div>
 			</div>
 			<div class="form_tit">
-				<span class="form_tit_t">内容</span>
-				<span class="form_tit_x">（选填）</span>
-			</div>
-			<div class="form_editcontent" id="editor">
-			
-			</div>
-			<div class="form_tit">
-				<span class="form_tit_t">好的关键字可以让别人更容易找到此篇文章</span>
-				<span class="form_tit_x">（选填）</span>
-			</div>
-			<div class="form_editinput">
-			 	<div class="form_title_input"><input class="editinput" type="password" name="address" value="${userVo.address}"/></div>
-			 	<div class="form_title_info_t">多个关键字用半角逗号隔开，最多3个</div>
-			 	<div class="clear"></div>
+				<div class="form_tit_radio">发帖权限？</div>
+				<div class="form_con_radio">
+					<input type="radio"/>允许任何人加入
+					<input type="radio"/>需经我审批才能加入
+				</div>
+				<div class="clear"></div>
 			</div>
 			<div class="form_sub_btn">
-				<a href="" class="btn">发表博文</a>
+				<a href="" class="btn">确认修改</a>
 			</div>
 		
 		</div>
@@ -80,12 +68,6 @@
 	<%@ include file="../common/foot_manage.jsp" %>
 </body>
 <script type="text/javascript">
-	var isHaveImg = false;
-    var editor = new UE.ui.Editor();
-    editor.render("editor");
-    editor.ready(function(){
-        editor.setContent("");
-    });
     
     function submitForm(){
 		var title = $("#title").val();

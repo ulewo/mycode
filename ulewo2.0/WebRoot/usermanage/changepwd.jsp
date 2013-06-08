@@ -9,7 +9,7 @@
 <title>登陆有乐窝-有乐窝</title>
 <link rel="stylesheet" type="text/css" href="../css/user.manage.userinfo.css">
 <style type="text/css">
-#selected2{background:#ffffff}
+#selected2 a{background:#ffffff;color:#333333;font-weight:bold;}
 </style>
 </head>
 <body>
