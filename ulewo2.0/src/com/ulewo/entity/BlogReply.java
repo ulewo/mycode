@@ -13,9 +13,11 @@ public class BlogReply {
 	private int id;
 
 	private int blogId;
-	
+
+	private String blogTitle;
+
 	private String author;
-	
+
 	private String blogauthor;
 
 	private String content;
@@ -145,11 +147,23 @@ public class BlogReply {
 	}
 
 	public String getAuthor() {
+
 		return author;
 	}
 
 	public void setAuthor(String author) {
+
 		this.author = author;
 	}
-	
+
+	public String getBlogTitle() {
+
+		return blogTitle;
+	}
+
+	public void setBlogTitle(String blogTitle) {
+
+		this.blogTitle = blogTitle;
+	}
+
 }

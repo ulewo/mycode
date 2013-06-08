@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 import org.springframework.stereotype.Component;
 
 import com.ulewo.entity.Group;
@@ -18,7 +17,7 @@ public class GroupDao extends BaseDao {
 	 * @return
 	 * @throws Exception
 	 */
-	public int getMaxGId() throws Exception {
+	public int getMaxGId() {
 
 		Object obj = getSqlMapClientTemplate().queryForObject("group.getMaxGId");
 		if (null == obj) {
@@ -34,7 +33,7 @@ public class GroupDao extends BaseDao {
 	 * 创建群组
 	 * @param group
 	 */
-	public void createGroup(Group group) throws Exception {
+	public void createGroup(Group group) {
 
 		getSqlMapClientTemplate().insert("group.createGroup", group);
 	}
@@ -55,7 +54,7 @@ public class GroupDao extends BaseDao {
 	 * 更新群组(全更新)
 	 * @param group
 	 */
-	public void updateGroup(Group group) throws Exception {
+	public void updateGroup(Group group) {
 
 		getSqlMapClientTemplate().update("group.updateGroup", group);
 	}
@@ -64,7 +63,7 @@ public class GroupDao extends BaseDao {
 	 * 更新群组非空信息
 	 * @param group
 	 */
-	public void updateGroupSelective(Group group) throws Exception {
+	public void updateGroupSelective(Group group) {
 
 		getSqlMapClientTemplate().update("group.updateGroup_selective", group);
 	}
@@ -95,7 +94,7 @@ public class GroupDao extends BaseDao {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<Group> queryGroupsByMemberCount(int offset, int total) throws Exception {
+	public List<Group> queryGroupsByMemberCount(int offset, int total) {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("offset", offset);
@@ -111,7 +110,7 @@ public class GroupDao extends BaseDao {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<Group> queryGroups(String orderBy, int offset, int total) throws Exception {
+	public List<Group> queryGroups(String orderBy, int offset, int total) {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("offset", offset);
@@ -129,7 +128,7 @@ public class GroupDao extends BaseDao {
 	 * @throws Exception
 	 * @author lhl
 	 */
-	public List<Group> queryCreatedGroups(String userId) throws Exception {
+	public List<Group> queryCreatedGroups(String userId) {
 
 		return this.getSqlMapClientTemplate().queryForList("group.queryCreatedGroups", userId);
 	}
@@ -142,7 +141,7 @@ public class GroupDao extends BaseDao {
 	 * @throws Exception
 	 * @author lhl
 	 */
-	public List<Group> queryJoinedGroups(String userId) throws Exception {
+	public List<Group> queryJoinedGroups(String userId) {
 
 		return this.getSqlMapClientTemplate().queryForList("group.queryJoinedGroups", userId);
 	}
@@ -169,7 +168,7 @@ public class GroupDao extends BaseDao {
 	 * @throws Exception
 	 * @author luohl
 	 */
-	public List<Group> queryCreateGroupsByAuthorId(String userId, int offset, int total) throws Exception {
+	public List<Group> queryCreateGroupsByAuthorId(String userId, int offset, int total) {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("userid", userId);
@@ -188,7 +187,7 @@ public class GroupDao extends BaseDao {
 	 * @throws Exception
 	 * @author luohl
 	 */
-	public List<Group> queryJoinGroupsByAuthorId(String userId, int offset, int total) throws Exception {
+	public List<Group> queryJoinGroupsByAuthorId(String userId, int offset, int total) {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("userid", userId);
@@ -198,7 +197,7 @@ public class GroupDao extends BaseDao {
 	}
 
 	/*搜索群组*/
-	public List<Group> searchGroup(String keyWord, int offset, int total) throws Exception {
+	public List<Group> searchGroup(String keyWord, int offset, int total) {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("keyWord", keyWord);
@@ -209,7 +208,7 @@ public class GroupDao extends BaseDao {
 	}
 
 	/*搜索群组数*/
-	public int searchGroupCount(String keyWord) throws Exception {
+	public int searchGroupCount(String keyWord) {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("keyWord", keyWord);

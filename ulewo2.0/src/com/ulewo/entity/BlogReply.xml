@@ -52,20 +52,21 @@
 	
 	<!-- 通过用户查询所有回复 -->
 	<select id="queryAllReply"  resultClass="blogReply" parameterClass="java.util.Map">
-		select * from blog_reply
+		select r.*,u.userlittleicon as reUserIcon,u.username as userName,b.title as blogTitle
+		from blog_reply r left join user u on r.userid = u.userid left join blog_article b on b.id=r.blogid 
 		<dynamic prepend="where">
-			<isNotEmpty prepend="and" property="author">
-          	   <![CDATA[author =  #author#  ]]>
+			<isNotEmpty prepend="and" property="blogauthor">
+          	   <![CDATA[blogauthor =  #blogauthor#  ]]>
 			</isNotEmpty>
 		</dynamic>	
 		order by posttime desc limit #offSet#,#pageSize#
 	</select>
 	
-	<select id="queryAllReplyCount"  resultClass="blogReply" parameterClass="java.util.Map">
+	<select id="queryAllReplyCount"  resultClass="java.lang.Integer" parameterClass="java.util.Map">
 		select count(id) from blog_reply
 		<dynamic prepend="where">
-			<isNotEmpty prepend="and" property="author">
-          	   <![CDATA[author =  #author#  ]]>
+			<isNotEmpty prepend="and" property="blogauthor">
+          	   <![CDATA[blogauthor =  #blogauthor#  ]]>
 			</isNotEmpty>
 		</dynamic>	
 	</select>

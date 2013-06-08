@@ -18,17 +18,17 @@ public interface ArticleItemService {
 	 * @param item
 	 * @author luohl
 	 */
-	public void addItem(ArticleItem item) throws Exception;
+	public void addItem(ArticleItem item);
 
 	/**
 	 * 
 	 * description: 单笔查询分类
 	 * @param itemId
 	 * @return
-	 * @throws Exception
+	 * @
 	 * @author luohl
 	 */
-	public ArticleItem getArticleItem(int itemId) throws Exception;
+	public ArticleItem getArticleItem(int itemId);
 
 	/**
 	 * 更新分类
@@ -36,33 +36,35 @@ public interface ArticleItemService {
 	 * @param item
 	 * @author luohl
 	 */
-	public void update(ArticleItem item) throws Exception;
+	public void update(ArticleItem item);
 
 	/**
 	 * 
 	 * description: 删除分类
 	 * @param id
-	 * @throws Exception
+	 * @
 	 * @author luohl
 	 */
-	public void delete(int id) throws Exception;
+	public void delete(int id);
 
 	/**
 	 * 
 	 * description: 根据gid查询分类
 	 * @param id
-	 * @throws Exception
+	 * @
 	 * @author luohl
 	 */
-	public List<ArticleItem> queryItemByGid(String gid) throws Exception;
+	public List<ArticleItem> queryItemByGid(String gid);
+
+	public List<ArticleItem> queryItemAndTopicCountByGid(String gid);
 
 	/**
 	 * 
 	 * description: 根据gid查询分类数
 	 * @param gid
 	 * @return
-	 * @throws Exception
+	 * @
 	 * @author luohl
 	 */
-	public int queryItemCountByGid(String gid) throws Exception;
+	public int queryItemCountByGid(String gid);
 }

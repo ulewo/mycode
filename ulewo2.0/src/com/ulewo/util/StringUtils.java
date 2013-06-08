@@ -6,6 +6,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+
+import com.ulewo.entity.Group;
+import com.ulewo.service.GroupService;
 
 public class StringUtils {
 	private final static String[] hexDigits = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d",
@@ -252,5 +256,18 @@ public class StringUtils {
 		}
 
 		return true;
+	}
+
+	public static void main(String[] args) {
+
+		GroupService groupService = (GroupService) SpringContextUtil.getBean("");
+		PaginationResult result = groupService.queryGroupsOderArticleCount(0, 10000);
+		List<?> list = result.getList();
+		for (int i = 0; i < list.size(); i++) {
+			Group group = (Group) list.get(i);
+			group.setGroupDesc(clearHtml(group.getGroupDesc()));
+			groupService.updateGroup(group);
+		}
+
 	}
 }

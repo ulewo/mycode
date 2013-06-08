@@ -2,7 +2,6 @@ package com.ulewo.dao;
 
 import java.util.List;
 
-import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 import org.springframework.stereotype.Component;
 
 import com.ulewo.entity.ArticleItem;
@@ -22,7 +21,7 @@ public class ArticleItemDao extends BaseDao {
 	 * @param item
 	 * @author luohl
 	 */
-	public void addItem(ArticleItem item) throws Exception {
+	public void addItem(ArticleItem item) {
 
 		this.getSqlMapClientTemplate().insert("articleItem.addArticleItem", item);
 	}
@@ -32,10 +31,10 @@ public class ArticleItemDao extends BaseDao {
 	 * description: 通过ID单笔查询分类
 	 * @param id
 	 * @return
-	 * @throws Exception
+	 * @
 	 * @author luohl
 	 */
-	public ArticleItem getArticleItemById(int id) throws Exception {
+	public ArticleItem getArticleItemById(int id) {
 
 		return (ArticleItem) this.getSqlMapClientTemplate().queryForObject("articleItem.queryItemById", id);
 	}
@@ -46,7 +45,7 @@ public class ArticleItemDao extends BaseDao {
 	 * @param item
 	 * @author luohl
 	 */
-	public void update(ArticleItem item) throws Exception {
+	public void update(ArticleItem item) {
 
 		this.getSqlMapClientTemplate().update("articleItem.updateArticleItem", item);
 	}
@@ -55,10 +54,10 @@ public class ArticleItemDao extends BaseDao {
 	 * 
 	 * description: 删除分类
 	 * @param id
-	 * @throws Exception
+	 * @
 	 * @author luohl
 	 */
-	public void delete(int id) throws Exception {
+	public void delete(int id) {
 
 		this.getSqlMapClientTemplate().delete("articleItem.deleteArticleItem", id);
 	}
@@ -67,12 +66,18 @@ public class ArticleItemDao extends BaseDao {
 	 * 
 	 * description: 根据gid查询分类
 	 * @param id
-	 * @throws Exception
+	 * @
 	 * @author luohl
 	 */
-	public List<ArticleItem> queryItemByGid(String gid) throws Exception {
+	public List<ArticleItem> queryItemByGid(String gid) {
 
 		return (List<ArticleItem>) getSqlMapClientTemplate().queryForList("articleItem.queryItemByGid", gid);
+	}
+
+	public List<ArticleItem> queryItemAndTopicCountByGid(String gid) {
+
+		return (List<ArticleItem>) getSqlMapClientTemplate().queryForList("articleItem.queryItemAndTopicCountByGid",
+				gid);
 	}
 
 	/**
@@ -80,10 +85,10 @@ public class ArticleItemDao extends BaseDao {
 	 * description: 根据gid查询分类数
 	 * @param gid
 	 * @return
-	 * @throws Exception
+	 * @
 	 * @author luohl
 	 */
-	public int queryItemCountByGid(String gid) throws Exception {
+	public int queryItemCountByGid(String gid) {
 
 		return (Integer) this.getSqlMapClientTemplate().queryForObject("articleItem.queryItemCountByGid", gid);
 	}

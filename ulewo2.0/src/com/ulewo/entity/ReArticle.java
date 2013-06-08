@@ -16,6 +16,8 @@ public class ReArticle {
 
 	private int articleId; // 主题帖Id
 
+	private String articleTitle;
+
 	private String content; // 回复内容
 
 	private String gid;
@@ -188,6 +190,16 @@ public class ReArticle {
 	public void setSourceFrom(String sourceFrom) {
 
 		this.sourceFrom = sourceFrom;
+	}
+
+	public String getArticleTitle() {
+
+		return articleTitle;
+	}
+
+	public void setArticleTitle(String articleTitle) {
+
+		this.articleTitle = articleTitle;
 	}
 
 }

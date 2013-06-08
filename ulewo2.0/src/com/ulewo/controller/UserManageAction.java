@@ -163,7 +163,8 @@ public class UserManageAction {
 		String newpwd = request.getParameter("newpwd");
 		String checkPassWord = "^[0-9a-zA-Z]+$";
 		try {
-			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+			//SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+			String userId = "10001";
 			if (!oldpwd.matches(checkPassWord) || StringUtils.isEmpty(oldpwd) || oldpwd.length() < PWD_MIN_LENGTH
 					|| oldpwd.length() > PWD_MAX_LENGTH) {
 				modelMap.put("message", "旧密码不符合规范");
@@ -177,18 +178,19 @@ public class UserManageAction {
 				modelMap.put("result", "fail");
 				return modelMap;
 			}
-			User user = new User();
-			if (null != user) {
+			User resultUser = userService.findUser(userId, QueryUserType.USERID);
+			if (null != resultUser) {
+				User user = new User();
+				user.setUserId(userId);
 				user.setPassword(newpwd);
 				userService.updateUser(user);
 				modelMap.put("result", "success");
 				return modelMap;
 			}
-			else {
-				modelMap.put("message", "你输入的帐号或者密码错误，修改密码失败");
-				modelMap.put("result", "fail");
-				return modelMap;
-			}
+			modelMap.put("message", "你输入的帐号或者密码错误，修改密码失败");
+			modelMap.put("result", "fail");
+			return modelMap;
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			modelMap.put("result", "fail");
@@ -225,16 +227,16 @@ public class UserManageAction {
 		}
 	}
 
-	@RequestMapping(value = "/blog_item", method = RequestMethod.POST)
+	@RequestMapping(value = "/blog_item", method = RequestMethod.GET)
 	public ModelAndView blogItem(HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
 			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 			String userId = "10001";
-			List<BlogItem> itemList = blogItemService.queryBlogItemByUserId(userId);
+			List<BlogItem> itemList = blogItemService.queryBlogItemAndCountByUserId(userId);
 			mv.addObject("imtes", itemList);
-			mv.setViewName("manage/blog_item");
+			mv.setViewName("usermanage/blog_item");
 			return mv;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -324,6 +326,12 @@ public class UserManageAction {
 		}
 	}
 
+	/**
+	 * 删除分类
+	 * @param session
+	 * @param request
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/delete_item", method = RequestMethod.POST)
 	public Map<String, Object> deleteItem(HttpSession session, HttpServletRequest request) {
@@ -350,7 +358,13 @@ public class UserManageAction {
 		}
 	}
 
-	@RequestMapping(value = "/reply_list", method = RequestMethod.POST)
+	/**
+	 * 博客评论管理
+	 * @param session
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/blog_reply", method = RequestMethod.GET)
 	public ModelAndView replyList(HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
@@ -365,7 +379,7 @@ public class UserManageAction {
 
 			PaginationResult pagResult = blogReplyService.queryAllReply(userId, page_int, Constant.pageSize20);
 			mv.addObject("replyList", pagResult);
-			mv.setViewName("manage/reply_list");
+			mv.setViewName("usermanage/blog_reply");
 			return mv;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -374,6 +388,12 @@ public class UserManageAction {
 		}
 	}
 
+	/**
+	 * 删除评论
+	 * @param session
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value = "/delete_reply", method = RequestMethod.POST)
 	public ModelAndView deleteReply(HttpSession session, HttpServletRequest request) {
 

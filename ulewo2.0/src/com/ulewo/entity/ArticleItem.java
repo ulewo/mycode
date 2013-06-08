@@ -14,6 +14,8 @@ public class ArticleItem {
 
 	private Integer itemCode; //栏目编号
 
+	private int articleCount;
+
 	public int getId() {
 
 		return id;
@@ -52,6 +54,16 @@ public class ArticleItem {
 	public void setItemCode(Integer itemCode) {
 
 		this.itemCode = itemCode;
+	}
+
+	public int getArticleCount() {
+
+		return articleCount;
+	}
+
+	public void setArticleCount(int articleCount) {
+
+		this.articleCount = articleCount;
 	}
 
 }

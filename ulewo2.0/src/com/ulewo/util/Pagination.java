@@ -15,7 +15,7 @@ public class Pagination {
 
 		this.page = page;
 		this.countTotal = countTotal;
-		this.pageSize = countTotal;
+		this.pageSize = pageSize;
 	}
 
 	public void action() {

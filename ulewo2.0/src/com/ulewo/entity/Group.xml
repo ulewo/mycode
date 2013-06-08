@@ -75,16 +75,16 @@
 	
 	<!-- 查询所有群组 根据文章数量排序 -->
 	<select id="queryGroupsByArticleCount"  resultClass="group" parameterClass="java.util.Map">
-		select * from groups g 
+		select g.*,u.username as authorName,
+		(select count(a.id) from article a where a.gid=g.id) as topicCount,
+		(select count(m.id) from member m where m.gid=g.id) as members
+		from groups g inner join user u on u.userid=g.groupauthor
 		<dynamic prepend="where">
 			<isNotEmpty prepend="and" property="keyWord">
          	  <![CDATA[(groupname like #keyWord# or groupdesc like #keyWord#) ]]>
 			</isNotEmpty>
-			<isNotEmpty prepend="and" property="isValid">
-          	   <![CDATA[isvalid =  #isValid#  ]]>
-			</isNotEmpty>
 		</dynamic>
-		order by (select count(id) from article a where a.isvalid='Y' and a.gid = g.id) desc limit #offset#,#total# 
+		order by topicCount desc limit #offset#,#total# 
 	</select>
 	
 	<!-- 查询所有群组，根据成员数-->
@@ -94,11 +94,7 @@
 			<isNotEmpty prepend="and" property="keyWord">
          	  <![CDATA[(groupname like #keyWord# or groupdesc like #keyWord#) ]]>
 			</isNotEmpty>
-			<isNotEmpty prepend="and" property="isValid">
-          	   <![CDATA[isvalid =  #isValid#  ]]>
-			</isNotEmpty>
 		</dynamic>
-		order  by (select count(id) from member m where m.ismember = 'Y' and m.gid = g.id) desc limit #offset#,#total# 
 	</select>
 	<!-- 查询所有群组，根据访问量排序,创建时间 -->
 	<select id="queryGroups"  resultClass="group" parameterClass="java.util.Map">

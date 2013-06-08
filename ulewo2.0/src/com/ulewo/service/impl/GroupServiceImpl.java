@@ -12,10 +12,10 @@ import com.ulewo.dao.GroupDao;
 import com.ulewo.dao.MemberDao;
 import com.ulewo.dao.UserDao;
 import com.ulewo.entity.Group;
-import com.ulewo.entity.User;
-import com.ulewo.enums.QueryUserType;
 import com.ulewo.service.GroupService;
 import com.ulewo.util.Constant;
+import com.ulewo.util.Pagination;
+import com.ulewo.util.PaginationResult;
 import com.ulewo.util.StringUtils;
 
 @Service("groupService")
@@ -35,7 +35,7 @@ public class GroupServiceImpl implements GroupService {
 	private final SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	@Override
-	public String createGroup(Group group) throws Exception {
+	public String createGroup(Group group) {
 
 		// 获取最大的群ID
 		int gid = groupDao.getMaxGId();
@@ -68,9 +68,9 @@ public class GroupServiceImpl implements GroupService {
 	 * 
 	 * @param gid
 	 * @return
-	 * @throws Exception
+	 * @
 	 */
-	public Group queryGorup(String gid) throws Exception {
+	public Group queryGorup(String gid) {
 
 		Group group = groupDao.getGroup(gid);
 		if (null == group) {
@@ -80,7 +80,7 @@ public class GroupServiceImpl implements GroupService {
 		return group;
 	}
 
-	public Group queryGroupExtInfo(String gid) throws Exception {
+	public Group queryGroupExtInfo(String gid) {
 
 		Group group = groupDao.getGroup(gid);
 		if (null == group) {
@@ -93,37 +93,20 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@Override
-	public void updateGroup(Group group) throws Exception {
+	public void updateGroup(Group group) {
 
 		groupDao.updateGroup(group);
 	}
 
 	@Override
-	public List<Group> queryGroupsOderArticleCount(int pageNumber, int pageSize) {
+	public PaginationResult queryGroupsOderArticleCount(int page, int pageSize) {
 
-		List<Group> list = groupDao.queryGroupsByArticleCount(pageNumber, pageSize);
-
-		for (Group group : list) {
-			String groupdesc = group.getGroupDesc().replaceAll("<[.[^<]]*>", "").replaceAll("[\\n|\\r]", "")
-					.replaceAll("&nbsp;", "");
-			group.setGroupDesc(groupdesc);
-			// 查询群作者信息
-			User user = userDao.findUser(group.getGroupAuthor(), QueryUserType.USERID);
-			// 如果群作者不存在，那么群就不展示
-			if (user == null) {
-				continue;
-			}
-			// 设置群作者姓名
-			group.setAuthorName(user.getUserName());
-
-			// 设置群成员数量
-			group.setMembers(memberDao.queryMemberCount(group.getId(), Constant.ISVALIDY, ""));
-
-			// 设置群文章数量
-			//group.setTopicCount(articleDao.queryTopicCountByGid(group.getId(), 0, Constant.ISVALIDY));
-			group.setCreateTime(StringUtils.friendly_time(group.getCreateTime()));
-		}
-		return list;
+		int count = groupDao.queryGroupsCount();
+		Pagination pagination = new Pagination(page, count, pageSize);
+		pagination.action();
+		List<Group> list = groupDao.queryGroupsByArticleCount(pagination.getOffSet(), pageSize);
+		PaginationResult result = new PaginationResult(page, pagination.getPageTotal(), count, list);
+		return result;
 	}
 
 	@Override
@@ -133,41 +116,41 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@Override
-	public int queryCreatedGroupCount(String userId) throws Exception {
+	public int queryCreatedGroupCount(String userId) {
 
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public List<Group> queryCreatedGroups(String userId) throws Exception {
+	public List<Group> queryCreatedGroups(String userId) {
 
 		List<Group> list = groupDao.queryCreatedGroups(userId);
 		return list;
 	}
 
 	@Override
-	public int queryJoinedGroupCount(String userId) throws Exception {
+	public int queryJoinedGroupCount(String userId) {
 
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public List<Group> queryJoinedGroups(String userId) throws Exception {
+	public List<Group> queryJoinedGroups(String userId) {
 
 		List<Group> list = groupDao.queryJoinedGroups(userId);
 		return list;
 	}
 
 	@Override
-	public List<Group> searchGroups(String keyWord, int offset, int total) throws Exception {
+	public List<Group> searchGroups(String keyWord, int offset, int total) {
 
 		return groupDao.searchGroup(keyWord, offset, total);
 	}
 
 	@Override
-	public int searchGroupCount(String keyWord) throws Exception {
+	public int searchGroupCount(String keyWord) {
 
 		return groupDao.searchGroupCount(keyWord);
 	}

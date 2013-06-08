@@ -39,9 +39,8 @@ public class MySpaceFilter implements Filter {
 		String server = request.getServerName();
 		String req_uri = request.getRequestURI();
 		String[] paths = StringUtils.split(req_uri, '/');
-		if (!ArrayUtils.contains(subDomain, server)
-				|| (paths.length > 0 && "manage".equalsIgnoreCase(paths[0]) || ArrayUtils.contains(static_ext,
-						req_uri.substring(req_uri.lastIndexOf('.') + 1)))) {
+		if (!ArrayUtils.contains(subDomain, server) || (paths.length > 0 && "manage".equalsIgnoreCase(paths[0]))
+				|| ArrayUtils.contains(static_ext, req_uri.substring(req_uri.lastIndexOf('.') + 1))) {
 			chain.doFilter(req, res);
 			return;
 		}
@@ -58,6 +57,15 @@ public class MySpaceFilter implements Filter {
 				newUrl = "/user" + req_uri;
 			}
 			else if (GROUP.equals(subDomain)) {
+				if (paths.length == 0) {
+					newUrl = "/group";
+				}
+				else if (paths.length >= 2 && paths[1].equals("manage")) {
+					newUrl = "/groupManage" + req_uri;
+				}
+				else {
+					newUrl = "/group" + req_uri;
+				}
 
 			}
 			sContext.getRequestDispatcher(newUrl).forward(request, response);

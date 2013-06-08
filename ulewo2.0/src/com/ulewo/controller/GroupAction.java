@@ -36,6 +36,36 @@ public class GroupAction {
 	MemberService memberService;
 
 	/**
+	 * 所有圈子
+	 * @param gid
+	 * @param session
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "", method = RequestMethod.GET)
+	public ModelAndView allGroups(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+
+		String page = request.getParameter("page");
+		ModelAndView mv = new ModelAndView();
+		int page_int = 0;
+		if (StringUtils.isNumber(page)) {
+			page_int = Integer.parseInt(page);
+		}
+		try {
+			//所有群组
+			PaginationResult articleResult = groupService.queryGroupsOderArticleCount(page_int, Constant.pageSize10);
+			mv.addObject("result", articleResult);
+			mv.setViewName("group/allgroups");
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.setViewName("redirect:/../error");
+			return mv;
+		}
+		return mv;
+	}
+
+	/**
 	 * 窝窝首页
 	 * @param gid
 	 * @param session

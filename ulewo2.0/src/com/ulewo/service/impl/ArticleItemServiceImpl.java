@@ -27,7 +27,7 @@ public class ArticleItemServiceImpl implements ArticleItemService {
 	}
 
 	@Override
-	public void addItem(ArticleItem item) throws Exception {
+	public void addItem(ArticleItem item) {
 
 		int count = articleItemDao.queryItemCountByGid(item.getGid());
 		if (count >= 8) {
@@ -36,33 +36,39 @@ public class ArticleItemServiceImpl implements ArticleItemService {
 		articleItemDao.addItem(item);
 	}
 
-	public ArticleItem getArticleItem(int itemId) throws Exception {
+	public ArticleItem getArticleItem(int itemId) {
 
 		return articleItemDao.getArticleItemById(itemId);
 	}
 
 	@Override
-	public void update(ArticleItem item) throws Exception {
+	public void update(ArticleItem item) {
 
 		articleItemDao.update(item);
 
 	}
 
 	@Override
-	public void delete(int id) throws Exception {
+	public void delete(int id) {
 
 		articleItemDao.delete(id);
 
 	}
 
 	@Override
-	public List<ArticleItem> queryItemByGid(String gid) throws Exception {
+	public List<ArticleItem> queryItemByGid(String gid) {
 
 		return articleItemDao.queryItemByGid(gid);
 	}
 
 	@Override
-	public int queryItemCountByGid(String gid) throws Exception {
+	public List<ArticleItem> queryItemAndTopicCountByGid(String gid) {
+
+		return articleItemDao.queryItemAndTopicCountByGid(gid);
+	}
+
+	@Override
+	public int queryItemCountByGid(String gid) {
 
 		return articleItemDao.queryItemCountByGid(gid);
 	}
