@@ -1,0 +1,13 @@
+@IMPORT url("group.public.css");
+
+.new_article_input{width:900px;}
+/**ндубоЙгИ***/
+.author_info{margin-top:10px}
+.author_icon{float:left;width:60px;}
+.author_icon img{width:60px;}
+.author_info_con{margin:left;display:inline-block;margin-left:10px;}
+.article_tit{margin-top:5px;}
+.article_tit_title{font-weight:bolder;font-size:20px;color:#494949}
+.article_count{color:#64C5E8}
+.author_info_content{margin-top:10px;color:#999999}
+.article_detail{margin-top:10px;font-size:14px;line-height:25px;}

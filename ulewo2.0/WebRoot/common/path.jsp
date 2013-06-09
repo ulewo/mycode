@@ -4,7 +4,9 @@
 <%
 String realPath = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath()+"/"; 
 %>
-<c:set var="realPath" value="<%=realPath %>"></c:set>
+<c:set var="realPath" value="<%=realPath %>"/>
+<c:set var="myPath" value="http://my.ulewo.com/"/>
+<c:set var="groupPath" value="http://group.ulewo.com/"/>
 <script src="${realPath}js/util.js"></script>
 <script src="${realPath}js/jquery.min.js"></script>
 <script type="text/javascript">
