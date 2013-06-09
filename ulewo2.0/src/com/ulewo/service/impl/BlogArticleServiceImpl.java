@@ -128,7 +128,7 @@ public class BlogArticleServiceImpl implements BlogArticleService {
 		Pagination pagination = new Pagination(page, count, pageSize);
 		pagination.action();
 		List<BlogArticle> list = queryBlog(userId, itemId, pagination.getOffSet(), pageSize);
-		PaginationResult result = new PaginationResult(page, pagination.getPageTotal(), count, list);
+		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
 		return result;
 	}
 

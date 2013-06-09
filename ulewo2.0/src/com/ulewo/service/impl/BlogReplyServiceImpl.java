@@ -107,7 +107,7 @@ public class BlogReplyServiceImpl implements BlogReplyService {
 		for (BlogReply reply : list) {
 			reply.setPostTime(StringUtils.friendly_time(reply.getPostTime()));
 		}
-		PaginationResult result = new PaginationResult(pageSize, pagein.getPageTotal(), count, list);
+		PaginationResult result = new PaginationResult(pagein.getPage(), pagein.getPageTotal(), count, list);
 		return result;
 	}
 
@@ -140,7 +140,7 @@ public class BlogReplyServiceImpl implements BlogReplyService {
 		for (BlogReply reply : list) {
 			reply.setPostTime(StringUtils.friendly_time(reply.getPostTime()));
 		}
-		PaginationResult result = new PaginationResult(pageSize, pagein.getPageTotal(), count, list);
+		PaginationResult result = new PaginationResult(pagein.getPage(), pagein.getPageTotal(), count, list);
 		return result;
 	}
 }

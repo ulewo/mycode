@@ -143,7 +143,7 @@ public class ArticleServiceImpl implements ArticleService {
 	public Article showArticle(int id) {
 
 		Article article = articleDao.queryTopicById(id);
-		if (article != null && !Constant.ISVALID01.equals(article.getIsValid())) {
+		if (article != null) {
 			// 文章作者信息
 			User author = userDao.findUser(article.getAuthorId(), QueryUserType.USERID);
 
@@ -155,15 +155,9 @@ public class ArticleServiceImpl implements ArticleService {
 			if (StringUtils.isEmpty(article.getKeyWord())) {
 				article.setKeyWord(article.getTitle());
 			}
-
 			article.setAuthor(author);
-			// 设置回复数
-			article.setReNumber(reArticleDao.queryReArticleCount(article.getId()));
 			article.setPostTime(StringUtils.friendly_time(article.getPostTime()));
 
-		}
-		else {
-			//	throw new BaseException(30000);
 		}
 		return article;
 	}
@@ -200,7 +194,10 @@ public class ArticleServiceImpl implements ArticleService {
 		pagination.action();
 		List<Article> list = articleDao.queryTopicOrderByGradeAndLastReTime(gid, itemId, pagination.getOffSet(),
 				pageSize);
-		PaginationResult result = new PaginationResult(page, pagination.getPageTotal(), count, list);
+		for (Article article : list) {
+			article.setPostTime(StringUtils.friendly_time(article.getPostTime()));
+		}
+		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
 		//setArticleListInfo(list);
 		return result;
 	}

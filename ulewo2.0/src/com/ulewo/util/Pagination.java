@@ -45,4 +45,9 @@ public class Pagination {
 
 		return offSet;
 	}
+
+	public int getPage() {
+
+		return page;
+	}
 }

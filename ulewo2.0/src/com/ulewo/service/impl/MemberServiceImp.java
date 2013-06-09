@@ -1,24 +1,19 @@
 package com.ulewo.service.impl;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ulewo.cache.CacheManager;
-import com.ulewo.cache.GroupAdminManager;
 import com.ulewo.dao.GroupDao;
 import com.ulewo.dao.MemberDao;
 import com.ulewo.dao.UserDao;
-import com.ulewo.entity.Group;
 import com.ulewo.entity.Member;
-import com.ulewo.entity.User;
-import com.ulewo.enums.QueryUserType;
+import com.ulewo.enums.MemberStatus;
+import com.ulewo.enums.QueryOrder;
 import com.ulewo.service.MemberService;
-import com.ulewo.util.Constant;
+import com.ulewo.util.Pagination;
+import com.ulewo.util.PaginationResult;
 import com.ulewo.util.StringUtils;
 
 /**
@@ -39,224 +34,68 @@ public class MemberServiceImp implements MemberService {
 	@Autowired
 	private GroupDao groupDao;
 
-	private final SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-	public void setMemberDao(MemberDao memberDao) {
-
-		this.memberDao = memberDao;
-	}
-
-	public void setUserDao(UserDao userDao) {
-
-		this.userDao = userDao;
-	}
-
-	public void setGroupDao(GroupDao groupDao) {
-
-		this.groupDao = groupDao;
-	}
-
 	@Override
-	public void addMember(Member member) throws Exception {
+	public void addMember(Member member) {
 
-		member.setJoinTime(formate.format(new Date()));
-		memberDao.addMember(member);
-	}
-
-	@Override
-	public void deleteMember(int[] ids) throws Exception {
-
-		for (int i = 0; i < ids.length; i++) {
-			memberDao.deleteMember(ids[i]);
-		}
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void updateMember(Member member) throws Exception {
+	public void deleteMember(int[] id) {
 
-		memberDao.updateMemberSelective(member);
+		// TODO Auto-generated method stub
 
-	}
-
-	public void acceptMember(int[] ids) throws Exception {
-
-		Member member;
-		for (int i = 0; i < ids.length; i++) {
-			member = new Member();
-			member.setId(ids[i]);
-			member.setIsMember(Constant.ISVALIDY);
-			memberDao.updateMemberSelective(member);
-		}
-	}
-
-	public void set2Admin(int[] ids) throws Exception {
-
-		CacheManager manager = GroupAdminManager.getInstants();
-
-		Member member;
-		for (int i = 0; i < ids.length; i++) {
-			member = memberDao.getMember(ids[i]);
-			if (null != member) {
-				member.setGrade(Constant.grade1);
-				memberDao.updateMemberSelective(member);
-				// 刷新缓存
-				manager.add(member.getGid(), member);
-			}
-
-		}
-	}
-
-	public void cancelAdmin(int[] ids) throws Exception {
-
-		CacheManager manager = GroupAdminManager.getInstants();
-		Member member;
-		for (int i = 0; i < ids.length; i++) {
-			member = memberDao.getMember(ids[i]);
-			if (null != member) {
-				member.setGrade(Constant.grade0);
-				memberDao.updateMemberSelective(member);
-				// 刷新缓存
-				manager.remove(member.getGid(), member);
-			}
-		}
 	}
 
 	@Override
-	public Member getMember(int id) throws Exception {
+	public void updateMember(Member member) {
 
-		return memberDao.getMember(id);
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
-	public List<Member> queryMembers(String gid, String isMember, String order, int offset, int total) throws Exception {
+	public void acceptMember(int[] id) {
 
-		List<Member> list = memberDao.queryMembers(gid, isMember, "", order, offset, total);
-		SetExtendInfo(list);
-		return list;
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
-	public List<Member> queryActiveMembers(String gid, int offset, int total) throws Exception {
+	public Member getMember(int id) {
 
-		List<Member> list = memberDao.queryActiveMembers(gid, Constant.ISVALIDY, offset, total);
-		SetExtendInfo(list);
-		return list;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	public int queryMemberCount(String gid, String ismember) throws Exception {
+	public PaginationResult queryMembers(String gid, MemberStatus memberStatus, QueryOrder queryOrder, int page,
+			int pageSize) {
 
-		return memberDao.queryMemberCount(gid, ismember, "");
-	}
-
-	@Override
-	public List<Member> queryComMembers(String gid, int offset, int total) throws Exception {
-
-		List<Member> list = memberDao.queryMembersByGrade(gid, Constant.ISVALIDY, "0", offset, total);
-		SetExtendInfo(list);
-		return list;
-	}
-
-	public int queryComMemberCount(String gid) throws Exception {
-
-		return memberDao.queryMemberCount(gid, Constant.ISVALIDY, "0");
-	}
-
-	/**
-	 * 判断是不是管理员 description: 函数的目的/功能
-	 * 
-	 * @return
-	 * @author luohl
-	 */
-	public boolean isAdmin(String gid, String curUserId, String type) {
-
-		List<Member> list = memberDao.queryAdmins(gid);
-		List<String> userList = new ArrayList<String>();
+		int count = memberDao.queryMemberCount(gid, memberStatus);
+		Pagination pagination = new Pagination(page, count, pageSize);
+		pagination.action();
+		List<Member> list = memberDao.queryMembers(gid, memberStatus, queryOrder, pagination.getOffSet(), pageSize);
 		for (Member member : list) {
-			userList.add(member.getUserId());
-		}
-		if (userList.contains(curUserId)) {
-			if (Constant.ADMIN_TYPE_S.equals(type)) {
-				Group group = groupDao.getGroup(gid);
-				if (group != null && curUserId.equals(group.getGroupAuthor())) {
-					return true;
-				}
-				else {
-					return false;
-				}
-			}
-			else {
-				return true;
-			}
-		}
-		else {
-			return false;
-		}
-	}
-
-	/**
-	 * 查询圈主
-	 */
-	public Member queryAdmin(String gid) throws Exception {
-
-		List<Member> members = memberDao.queryMembersByGrade(gid, Constant.ISVALIDY, "2", 0, 1);
-		if (members != null && members.size() > 0) {
-			Member admin = members.get(0);
-			User adminUser = userDao.findUser(admin.getUserId(), QueryUserType.USERID);
-			admin.setUserName(adminUser.getUserName());
-			admin.setUserIcon(adminUser.getUserLittleIcon());
-			return admin;
-		}
-		else {
-			//throw new BaseException(10000);
-			return null;
-		}
-	}
-
-	/**
-	 * 查询管理成员
-	 */
-	public List<Member> queryAdmins(String gid) throws Exception {
-
-		List<Member> list = memberDao.queryAdmins(gid);
-		SetExtendInfo(list);
-		return list;
-	}
-
-	private void SetExtendInfo(List<Member> list) throws Exception {
-
-		User user = null;
-		for (Member member : list) {
-			user = userDao.findUser(member.getUserId(), QueryUserType.USERID);
-			if (null != user) {
-				member.setUserName(user.getUserName());
-				member.setUserIcon(user.getUserLittleIcon());
-			}
-			else {
-				list.remove(member);
-			}
 			member.setJoinTime(StringUtils.friendly_time(member.getJoinTime()));
 		}
+		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
+		return result;
 	}
 
-	public List<Member> queryAllAdmins() throws Exception {
+	@Override
+	public int queryMemberCount(String gid, MemberStatus memberStatus) {
 
-		List<Member> list = memberDao.queryAllAdmins();
-		return list;
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
-	public boolean isMember(String gid, String userId) throws Exception {
+	@Override
+	public List<Member> queryActiveMembers(String gid, int offset, int total) {
 
-		Member member = memberDao.queryMemberByGidAndUserId(gid, userId);
-		if (null != member && Constant.ISVALIDY.equals(member.getIsMember())) {
-			return true;
-		}
-		return false;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	public Member getMember(String gid, String userId) throws Exception {
-
-		return memberDao.queryMemberByGidAndUserId(gid, userId);
-	}
 }

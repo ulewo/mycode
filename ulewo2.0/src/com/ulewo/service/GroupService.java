@@ -24,14 +24,6 @@ public interface GroupService {
 	public Group queryGorup(String gid);
 
 	/**
-	 * 
-	 * description: 查询基本信息
-	 * @return
-	 * @author lhl
-	 */
-	public Group queryGroupExtInfo(String gid);
-
-	/**
 	 * 更新群组
 	 * @param group
 	 * @

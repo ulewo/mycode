@@ -80,18 +80,6 @@ public class GroupServiceImpl implements GroupService {
 		return group;
 	}
 
-	public Group queryGroupExtInfo(String gid) {
-
-		Group group = groupDao.getGroup(gid);
-		if (null == group) {
-			//throw new BaseException(40000);
-		}
-		group.setMembers(memberDao.queryMemberCount(group.getId(), Constant.ISVALIDY, ""));
-		//group.setTopicCount(articleDao.queryTopicCountByGid(group.getId(), 0, Constant.ISVALIDY));
-		group.setCreateTime(StringUtils.friendly_time(group.getCreateTime()));
-		return group;
-	}
-
 	@Override
 	public void updateGroup(Group group) {
 
@@ -105,7 +93,7 @@ public class GroupServiceImpl implements GroupService {
 		Pagination pagination = new Pagination(page, count, pageSize);
 		pagination.action();
 		List<Group> list = groupDao.queryGroupsByArticleCount(pagination.getOffSet(), pageSize);
-		PaginationResult result = new PaginationResult(page, pagination.getPageTotal(), count, list);
+		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
 		return result;
 	}
 
