@@ -37,11 +37,6 @@
        delete from group where id in ( 
         <iterate  conjunction=",">#[]#</iterate>) 
 	</delete> 
-	<!-- 更新群信息全更新 -->
-	<update id="updateGroup" parameterClass="group">
-		update groups set groupname=#groupName#,groupdesc=#groupDesc#,groupicon=#groupIcon#,groupheadicon=#groupHeadIcon#,
-        joinperm=#joinPerm#,postperm=#postPerm#,iscommend=#isCommend#,visitcount=#visitCount#,isvalid=#isValid# where id=#id#
-	</update>
 	
 	<!-- 更新群非空信息 -->
 	<update id="updateGroup_selective" parameterClass="group">
@@ -62,18 +57,21 @@
          <isNotEmpty prepend="," property="joinPerm">
 			joinperm=#joinPerm#
         </isNotEmpty>
-        <isNotEqual prepend="," property="postPerm">
+        <isNotEmpty prepend="," property="postPerm">
           postperm=#postPerm#
-        </isNotEqual>
-        <isNotEqual prepend="," property="isCommend">
+        </isNotEmpty>
+        <isNotEmpty prepend="," property="isCommend">
           iscommend=#isCommend#
-        </isNotEqual>
-        <isNotEqual prepend="," property="visitCount">
+        </isNotEmpty>
+        <isNotEqual prepend="," property="visitCount" compareValue="0">
           visitcount=#visitCount#
         </isNotEqual>
-        <isNotEqual prepend="," property="isValid">
+        <isNotEmpty prepend="," property="isValid">
           isvalid=#isValid#
-        </isNotEqual>
+        </isNotEmpty>
+        <isNotEmpty prepend="," property="groupNotice">
+          groupnotice=#groupNotice#
+        </isNotEmpty>
 		where id=#id#
 	</update>
 	

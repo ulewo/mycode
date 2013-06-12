@@ -70,18 +70,34 @@ public class MemberServiceImp implements MemberService {
 	}
 
 	@Override
-	public PaginationResult queryMembers(String gid, MemberStatus memberStatus, QueryOrder queryOrder, int page,
-			int pageSize) {
+	public PaginationResult queryMembers(String gid, MemberStatus memberStatus,
+			QueryOrder queryOrder, int page, int pageSize) {
 
 		int count = memberDao.queryMemberCount(gid, memberStatus);
 		Pagination pagination = new Pagination(page, count, pageSize);
 		pagination.action();
-		List<Member> list = memberDao.queryMembers(gid, memberStatus, queryOrder, pagination.getOffSet(), pageSize);
+		List<Member> list = memberDao.queryMembers(gid, memberStatus,
+				queryOrder, pagination.getOffSet(), pageSize);
 		for (Member member : list) {
 			member.setJoinTime(StringUtils.friendly_time(member.getJoinTime()));
 		}
-		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
+		PaginationResult result = new PaginationResult(pagination.getPage(),
+				pagination.getPageTotal(), count, list);
 		return result;
+	}
+
+	public List<Member> queryMembersIndex(String gid,
+			MemberStatus memberStatus, QueryOrder queryOrder, int offset,
+			int pageSize) {
+		List<Member> list = memberDao.queryMembers(gid, memberStatus,
+				queryOrder, offset, pageSize);
+		return list;
+	}
+
+	public List<Member> queryMembersActiveIndex(String gid,
+			MemberStatus memberStatus, int offset, int pageSize) {
+		return memberDao
+				.queryActiveMembers(gid, memberStatus, offset, pageSize);
 	}
 
 	@Override

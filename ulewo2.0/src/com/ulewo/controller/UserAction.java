@@ -180,7 +180,7 @@ public class UserAction {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/login_do", method = RequestMethod.POST)
+	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
 	public Map<String, Object> login(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
 		String account = request.getParameter("account");
@@ -228,7 +228,7 @@ public class UserAction {
 					sessionUser.setUserId(user.getUserId());
 					sessionUser.setUserName(user.getUserName());
 					sessionUser.setUserLittleIcon(user.getUserLittleIcon());
-					request.getSession().setAttribute("user", sessionUser);
+					session.setAttribute("user", sessionUser);
 					// 更新最后登录时间
 					User loginUser = new User();
 					loginUser.setUserId(user.getUserId());
@@ -380,7 +380,6 @@ public class UserAction {
 			return mv;
 		}
 	}
-
 	/**
 	 * 博客详情
 	 * 
@@ -389,11 +388,9 @@ public class UserAction {
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(value = "/{userId}/blogshow", method = RequestMethod.GET)
-	public ModelAndView blogDetail(@PathVariable String userId, HttpSession session, HttpServletRequest request,
+	@RequestMapping(value = "/{userId}/blog/{blogId}", method = RequestMethod.GET)
+	public ModelAndView blogDetail(@PathVariable String userId,@PathVariable String blogId, HttpSession session, HttpServletRequest request,
 			HttpServletResponse response) {
-
-		String blogId = request.getParameter("id");
 		ModelAndView mv = new ModelAndView();
 		try {
 			if (StringUtils.isEmpty(userId)) {

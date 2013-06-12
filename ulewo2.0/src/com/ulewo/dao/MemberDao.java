@@ -18,7 +18,7 @@ public class MemberDao extends BaseDao {
 	 * 添加成员
 	 * 
 	 * @param member
-	 * @
+	 *            @
 	 */
 	public void addMember(Member member) {
 
@@ -42,17 +42,20 @@ public class MemberDao extends BaseDao {
 	 */
 	public void updateMemberSelective(Member member) {
 
-		this.getSqlMapClientTemplate().update("member.updateMember_selective", member);
+		this.getSqlMapClientTemplate().update("member.updateMember_selective",
+				member);
 	}
 
 	public Member getMember(int id) {
 
-		return (Member) this.getSqlMapClientTemplate().queryForObject("member.getMember", id);
+		return (Member) this.getSqlMapClientTemplate().queryForObject(
+				"member.getMember", id);
 	}
 
 	/**
 	 * 
 	 * description: 通过群组编号查询群成员
+	 * 
 	 * @param queryOrder
 	 *            TODO
 	 * @param groupNum
@@ -63,7 +66,8 @@ public class MemberDao extends BaseDao {
 	 * @return
 	 * @author luohl
 	 */
-	public List<Member> queryMembers(String gid, MemberStatus memberStatus, QueryOrder queryOrder, int offset, int total) {
+	public List<Member> queryMembers(String gid, MemberStatus memberStatus,
+			QueryOrder queryOrder, int offset, int total) {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("gid", gid);
@@ -71,7 +75,8 @@ public class MemberDao extends BaseDao {
 		parmMap.put("order", queryOrder.getValue());
 		parmMap.put("offset", offset);
 		parmMap.put("total", total);
-		return this.getSqlMapClientTemplate().queryForList("member.queryMembers", parmMap);
+		return this.getSqlMapClientTemplate().queryForList(
+				"member.queryMembers", parmMap);
 	}
 
 	/**
@@ -88,7 +93,8 @@ public class MemberDao extends BaseDao {
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("gid", gid);
 		parmMap.put("ismember", memberStatus.getValue());
-		return (Integer) this.getSqlMapClientTemplate().queryForObject("member.queryMemberCount", parmMap);
+		return (Integer) this.getSqlMapClientTemplate().queryForObject(
+				"member.queryMemberCount", parmMap);
 	}
 
 	/**
@@ -100,14 +106,16 @@ public class MemberDao extends BaseDao {
 	 * @param total
 	 * @return
 	 */
-	public List<Member> queryActiveMembers(String gid, String status, int offset, int total) {
+	public List<Member> queryActiveMembers(String gid,
+			MemberStatus memberStatus, int offset, int total) {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("gid", gid);
-		parmMap.put("ismember", status);
+		parmMap.put("ismember", memberStatus.getValue());
 		parmMap.put("offset", offset);
 		parmMap.put("total", total);
-		return this.getSqlMapClientTemplate().queryForList("member.queryActiveMembers", parmMap);
+		return this.getSqlMapClientTemplate().queryForList(
+				"member.queryActiveMembers", parmMap);
 	}
 
 	/**
@@ -125,7 +133,8 @@ public class MemberDao extends BaseDao {
 	 * @param total
 	 * @return
 	 */
-	public List<Member> queryMembersByGrade(String gid, String status, String grade, int offset, int total) {
+	public List<Member> queryMembersByGrade(String gid, String status,
+			String grade, int offset, int total) {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("gid", gid);
@@ -133,7 +142,8 @@ public class MemberDao extends BaseDao {
 		parmMap.put("ismember", status);
 		parmMap.put("offset", offset);
 		parmMap.put("total", total);
-		return this.getSqlMapClientTemplate().queryForList("member.queryMembersByGrade", parmMap);
+		return this.getSqlMapClientTemplate().queryForList(
+				"member.queryMembersByGrade", parmMap);
 	}
 
 	/**
@@ -141,7 +151,8 @@ public class MemberDao extends BaseDao {
 	 */
 	public List<Member> queryAdmins(String gid) {
 
-		return this.getSqlMapClientTemplate().queryForList("member.queryAdmins", gid);
+		return this.getSqlMapClientTemplate().queryForList(
+				"member.queryAdmins", gid);
 	}
 
 	/**
@@ -154,7 +165,8 @@ public class MemberDao extends BaseDao {
 		parmMap.put("gid", gid);
 		parmMap.put("grade", grade);
 		parmMap.put("isMember", Constant.ISVALIDY);
-		return this.getSqlMapClientTemplate().queryForList("member.queryMemberUserIdByGrade", parmMap);
+		return this.getSqlMapClientTemplate().queryForList(
+				"member.queryMemberUserIdByGrade", parmMap);
 	}
 
 	/**
@@ -170,12 +182,14 @@ public class MemberDao extends BaseDao {
 		parmMap.put("gid", gid);
 		parmMap.put("grade", grade);
 		parmMap.put("isMember", Constant.ISVALIDY);
-		return (Integer) this.getSqlMapClientTemplate().queryForObject("member.queryCountByGrade", parmMap);
+		return (Integer) this.getSqlMapClientTemplate().queryForObject(
+				"member.queryCountByGrade", parmMap);
 	}
 
 	public List<Member> queryAllAdmins() {
 
-		return this.getSqlMapClientTemplate().queryForList("member.queryAllAdmins");
+		return this.getSqlMapClientTemplate().queryForList(
+				"member.queryAllAdmins");
 	}
 
 	public Member queryMemberByGidAndUserId(String gid, String userId) {
@@ -183,6 +197,7 @@ public class MemberDao extends BaseDao {
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("gid", gid);
 		parmMap.put("userId", userId);
-		return (Member) this.getSqlMapClientTemplate().queryForObject("member.queryMemberByGidAndUserId", parmMap);
+		return (Member) this.getSqlMapClientTemplate().queryForObject(
+				"member.queryMemberByGidAndUserId", parmMap);
 	}
 }

@@ -32,7 +32,8 @@ public class GroupServiceImpl implements GroupService {
 	@Autowired
 	private UserDao userDao;
 
-	private final SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private final SimpleDateFormat formate = new SimpleDateFormat(
+			"yyyy-MM-dd HH:mm:ss");
 
 	@Override
 	public String createGroup(Group group) {
@@ -51,15 +52,13 @@ public class GroupServiceImpl implements GroupService {
 		}
 		group.setCreateTime(formate.format(new Date()));
 		groupDao.createGroup(group);
-		/*		CacheManager manager = GroupAdminManager.getInstants();
-				Member member = new Member();
-				member.setGid(id);
-				member.setGrade(2);
-				member.setUserId(group.getGroupAuthor());
-				member.setIsMember("Y");
-				member.setJoinTime(formate.format(new Date()));
-				manager.add(id, member);
-				memberDao.addMember(member);*/
+		/*
+		 * CacheManager manager = GroupAdminManager.getInstants(); Member member
+		 * = new Member(); member.setGid(id); member.setGrade(2);
+		 * member.setUserId(group.getGroupAuthor()); member.setIsMember("Y");
+		 * member.setJoinTime(formate.format(new Date())); manager.add(id,
+		 * member); memberDao.addMember(member);
+		 */
 		return id;
 	}
 
@@ -67,22 +66,22 @@ public class GroupServiceImpl implements GroupService {
 	 * 单笔查询群组
 	 * 
 	 * @param gid
-	 * @return
-	 * @
+	 * @return @
 	 */
 	public Group queryGorup(String gid) {
 
 		Group group = groupDao.getGroup(gid);
-		if (null == group) {
-			//	throw new BaseException(40000);
+		if (null != group) {
+			group.setCreateTime(StringUtils.friendly_time(group.getCreateTime()));
 		}
-		group.setCreateTime(StringUtils.friendly_time(group.getCreateTime()));
 		return group;
 	}
 
 	@Override
 	public void updateGroup(Group group) {
-
+		group.setGroupName(StringUtils.clearHtml(group.getGroupName()));
+		group.setGroupDesc(StringUtils.formateHtml(group.getGroupDesc()));
+		group.setGroupNotice(StringUtils.formateHtml(group.getGroupNotice()));
 		groupDao.updateGroup(group);
 	}
 
@@ -92,8 +91,10 @@ public class GroupServiceImpl implements GroupService {
 		int count = groupDao.queryGroupsCount();
 		Pagination pagination = new Pagination(page, count, pageSize);
 		pagination.action();
-		List<Group> list = groupDao.queryGroupsByArticleCount(pagination.getOffSet(), pageSize);
-		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
+		List<Group> list = groupDao.queryGroupsByArticleCount(
+				pagination.getOffSet(), pageSize);
+		PaginationResult result = new PaginationResult(pagination.getPage(),
+				pagination.getPageTotal(), count, list);
 		return result;
 	}
 

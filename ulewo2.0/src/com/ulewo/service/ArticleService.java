@@ -3,7 +3,6 @@ package com.ulewo.service;
 import java.util.List;
 
 import com.ulewo.entity.Article;
-import com.ulewo.entity.User;
 import com.ulewo.util.PaginationResult;
 
 public interface ArticleService {
@@ -13,7 +12,7 @@ public interface ArticleService {
 	 * @param article
 	 * @author luohl
 	 */
-	public void addArticle(Article article, User user);
+	public void addArticle(Article article);
 
 	/**
 	 * description: 根据ID查询文章

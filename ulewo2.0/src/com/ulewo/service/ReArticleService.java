@@ -12,9 +12,8 @@
  */
 package com.ulewo.service;
 
-import java.util.List;
-
 import com.ulewo.entity.ReArticle;
+import com.ulewo.util.PaginationResult;
 
 /**
  * @Title:
@@ -29,21 +28,20 @@ public interface ReArticleService {
 	 * description: 新增回复
 	 * 
 	 * @param reArticle
-	 * @return TODO
-	 * @throws Exception
+	 * @return TODO @
 	 * @author luohl
 	 */
-	public ReArticle addReArticle(ReArticle reArticle) throws Exception;
+	public ReArticle addReArticle(ReArticle reArticle);
 
 	/**
 	 * 
 	 * description: 删除回复
 	 * 
 	 * @param id
-	 * @throws Exception
+	 *            @
 	 * @author luohl
 	 */
-	public void deleteReArticle(int id) throws Exception;
+	public void deleteReArticle(int id);
 
 	/**
 	 * 
@@ -53,28 +51,27 @@ public interface ReArticleService {
 	 * @return
 	 * @author luohl
 	 */
-	public ReArticle getReArticle(int id) throws Exception;
+	public ReArticle getReArticle(int id);
 
 	/**
 	 * 
 	 * description: 更新回复
 	 * 
 	 * @param reArticle
-	 * @throws Exception
+	 *            @
 	 * @author luohl
 	 */
-	public void updateReArticle(ReArticle reArticle) throws Exception;
+	public void updateReArticle(ReArticle reArticle);
 
 	/**
 	 * 
 	 * description: 查询回复总条数
 	 * 
 	 * @param articleid
-	 * @return
-	 * @throws Exception
+	 * @return @
 	 * @author luohl
 	 */
-	public int queryReArticleCount(int articleid) throws Exception;
+	public int queryReArticleCount(int articleid);
 
 	/**
 	 * 
@@ -83,10 +80,10 @@ public interface ReArticleService {
 	 * @param articleid
 	 * @param offset
 	 * @param total
-	 * @return
-	 * @throws Exception
+	 * @return @
 	 * @author luohl
 	 */
-	public List<ReArticle> queryReArticles(int articleid, int offset, int total) throws Exception;
+	public PaginationResult queryReArticles(int articleid, int page,
+			int pageSize);
 
 }

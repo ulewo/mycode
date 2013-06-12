@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="attachedFile">
+	<cacheModel id="user-cache" type="LRU" readOnly="true"
+		serialize="false">
+		<flushInterval hours="24" />
+		<property value="500" name="size" />
+	</cacheModel>
+	
+	
+	<typeAlias alias="attached" type="com.ulewo.entity.AttachedFile" />
+	
+	<!-- 创建附件 -->
+	<insert id="addAttached" parameterClass="attached">
+		insert into attached_file(articleid,gid,filename,fileurl,filetype)
+		values(#articleId#,#gid#,#fileName#,#fileUrl#,#fileType#)
+	</insert>
+	
+	<!-- 通过articleId查询附件 -->
+	
+	<select id="queryAttachedbyArticleId" resultClass="attached" parameterClass="java.util.Map">
+		select * from  attached_file where articleid = #articleId# and filetype = #fileType#
+	</select>
+	
+	<!--删除附件-->
+	<delete id="deleteAttached" parameterClass="java.util.Map">
+		delete from  attached_file where articleid = #articleId# and filetype = #fileType#
+	</delete>
+</sqlMap>

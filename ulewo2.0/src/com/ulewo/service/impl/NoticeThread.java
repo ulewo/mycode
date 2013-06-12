@@ -44,7 +44,7 @@ public class NoticeThread implements Runnable {
 
 	@Override
 	public void run() {
-
+		/*
 		noticeDao = (NoticeDao) Springfactory.getBean("noticeDao");
 		userDao = (UserDao) Springfactory.getBean("userDao");
 		NoticeType noticeType = noticeParm.getNoticeType();
@@ -89,7 +89,7 @@ public class NoticeThread implements Runnable {
 			url = "talkDetail.jspx?userId=" + receiveUserId + "&talkId=" + articleId;
 			reTalk(articleId, receiveUserId, atUserIds, sendUserId, url);
 			break;
-		}
+		}*/
 	}
 
 	// 回复主题

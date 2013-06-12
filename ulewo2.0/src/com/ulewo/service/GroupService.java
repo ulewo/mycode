@@ -8,30 +8,32 @@ import com.ulewo.util.PaginationResult;
 public interface GroupService {
 	/**
 	 * 创建群组
+	 * 
 	 * @param group
-	 * @return
-	 * @
+	 * @return @
 	 */
 
 	public String createGroup(Group group);
 
 	/**
 	 * 单笔查询群组
+	 * 
 	 * @param gid
-	 * @return
-	 * @
+	 * @return @
 	 */
 	public Group queryGorup(String gid);
 
 	/**
 	 * 更新群组
+	 * 
 	 * @param group
-	 * @
+	 *            @
 	 */
 	public void updateGroup(Group group);
 
 	/***
 	 * 查询所有圈子根据文章数量倒序排列
+	 * 
 	 * @param pageNumber
 	 * @param pageSize
 	 * @return
@@ -40,7 +42,8 @@ public interface GroupService {
 
 	/**
 	 * 
-	 * description:    查询所有可用群数量
+	 * description: 查询所有可用群数量
+	 * 
 	 * @param isvalid
 	 * @return
 	 * @author lhl
@@ -50,8 +53,8 @@ public interface GroupService {
 	/**
 	 * 
 	 * description: 查询用户创建的群组数
-	 * @return
-	 * @
+	 * 
+	 * @return @
 	 * @author lhl
 	 */
 	int queryCreatedGroupCount(String userId);
@@ -59,9 +62,9 @@ public interface GroupService {
 	/**
 	 * 
 	 * description: 查询用户创建的群组
+	 * 
 	 * @param userId
-	 * @return
-	 * @
+	 * @return @
 	 * @author lhl
 	 */
 	List<Group> queryCreatedGroups(String userId);
@@ -69,9 +72,9 @@ public interface GroupService {
 	/**
 	 * 
 	 * description: 查询参加的群组数量
+	 * 
 	 * @param userId
-	 * @return
-	 * @
+	 * @return @
 	 * @author lhl
 	 */
 	int queryJoinedGroupCount(String userId);
@@ -79,9 +82,9 @@ public interface GroupService {
 	/**
 	 * 
 	 * description: 查询参加的群组
+	 * 
 	 * @param userId
-	 * @return
-	 * @
+	 * @return @
 	 * @author lhl
 	 */
 	List<Group> queryJoinedGroups(String userId);
@@ -89,8 +92,8 @@ public interface GroupService {
 	/**
 	 * 
 	 * description: 搜索群组
-	 * @return
-	 * @
+	 * 
+	 * @return @
 	 * @author lhl
 	 */
 	List<Group> searchGroups(String keyWord, int offset, int total);
@@ -98,9 +101,9 @@ public interface GroupService {
 	/**
 	 * 
 	 * description: 搜索群组数
+	 * 
 	 * @param keyWord
-	 * @return
-	 * @
+	 * @return @
 	 * @author lhl
 	 */
 	int searchGroupCount(String keyWord);

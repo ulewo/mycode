@@ -7,13 +7,13 @@ package com.ulewo.entity;
  */
 public class Group {
 
-	private String id; //圈子ID
+	private String id; // 圈子ID
 
 	private String groupName; // 群名称
 
 	private String groupDesc; // 群描述
 
-	private String notice; //公告
+	private String groupNotice;// 公告
 
 	private String groupIcon; // 群图标
 
@@ -25,11 +25,11 @@ public class Group {
 
 	private String postPerm; // 发帖权限
 
-	private String isCommend; //是否推荐
+	private String isCommend; // 是否推荐
 
-	private Integer visitCount; //访问数量
+	private Integer visitCount; // 访问数量
 
-	private String isValid; //是否有效  00 有效  01 无效
+	private String isValid; // 是否有效 00 有效 01 无效
 
 	private int members; // 组成员
 
@@ -189,14 +189,12 @@ public class Group {
 		this.authorName = authorName;
 	}
 
-	public String getNotice() {
-
-		return notice;
+	public String getGroupNotice() {
+		return groupNotice;
 	}
 
-	public void setNotice(String notice) {
-
-		this.notice = notice;
+	public void setGroupNotice(String groupNotice) {
+		this.groupNotice = groupNotice;
 	}
 
 }

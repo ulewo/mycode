@@ -12,8 +12,8 @@ import com.ulewo.entity.Group;
 import com.ulewo.service.GroupService;
 
 public class StringUtils {
-	private final static String[] hexDigits = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d",
-			"e", "f" };
+	private final static String[] hexDigits = { "0", "1", "2", "3", "4", "5",
+			"6", "7", "8", "9", "a", "b", "c", "d", "e", "f" };
 
 	public final static ThreadLocal<SimpleDateFormat> dateFormater = new ThreadLocal<SimpleDateFormat>() {
 		@Override
@@ -67,7 +67,8 @@ public class StringUtils {
 	}
 
 	// 时间对比
-	public static boolean BalanceDate(String day1, String day2) throws Exception {
+	public static boolean BalanceDate(String day1, String day2)
+			throws Exception {
 
 		boolean flag = true;
 		DateFormat df = DateFormat.getDateInstance();
@@ -82,18 +83,30 @@ public class StringUtils {
 	public static String clearHtml(String str) {
 
 		if (isNotEmpty(str)) {
-			return str.replaceAll("<[.[^<]]*>", "").replaceAll("[\\n|\\r]", "").replaceAll("&nbsp;", "");
-		}
-		else {
+			return str.replaceAll("<[.[^<]]*>", "").replaceAll("[\\n|\\r]", "")
+					.replaceAll("&nbsp;", "");
+		} else {
 			return str;
 		}
 	}
 
 	public static String formateHtml(String html) {
+		if (isNotEmpty(html)) {
+			html = html.replaceAll(" ", "&nbsp;");
+			html = html.replaceAll("<", "&lt;");
+			html = html.replaceAll("\n", "<br>");
+			return html;
+		}
+		return html;
+	}
 
-		html = html.replaceAll(" ", "&nbsp;");
-		html = html.replaceAll("<", "&lt;");
-		html = html.replaceAll("\n", "<br>");
+	public static String reFormateHtml(String html) {
+		if (isNotEmpty(html)) {
+			html = html.replaceAll("&nbsp;", " ");
+			html = html.replaceAll("&lt;", "<");
+			html = html.replaceAll("<br>", "\n");
+			return html;
+		}
 		return html;
 	}
 
@@ -135,8 +148,7 @@ public class StringUtils {
 
 		if (null == str || "".equals(str)) {
 			return true;
-		}
-		else if ("".equals(str.trim())) {
+		} else if ("".equals(str.trim())) {
 			return true;
 		}
 		return false;
@@ -166,7 +178,9 @@ public class StringUtils {
 		if (curDate.equals(paramDate)) {
 			int hour = (int) ((cal.getTimeInMillis() - time.getTime()) / 3600000);
 			if (hour == 0)
-				ftime = Math.max((cal.getTimeInMillis() - time.getTime()) / 60000, 1) + "分钟前";
+				ftime = Math.max(
+						(cal.getTimeInMillis() - time.getTime()) / 60000, 1)
+						+ "分钟前";
 			else
 				ftime = hour + "小时前";
 			return ftime;
@@ -178,20 +192,18 @@ public class StringUtils {
 		if (days == 0) {
 			int hour = (int) ((cal.getTimeInMillis() - time.getTime()) / 3600000);
 			if (hour == 0)
-				ftime = Math.max((cal.getTimeInMillis() - time.getTime()) / 60000, 1) + "分钟前";
+				ftime = Math.max(
+						(cal.getTimeInMillis() - time.getTime()) / 60000, 1)
+						+ "分钟前";
 			else
 				ftime = hour + "小时前";
-		}
-		else if (days == 1) {
+		} else if (days == 1) {
 			ftime = "昨天";
-		}
-		else if (days == 2) {
+		} else if (days == 2) {
 			ftime = "前天";
-		}
-		else if (days > 2 && days <= 10) {
+		} else if (days > 2 && days <= 10) {
 			ftime = days + "天前";
-		}
-		else if (days > 10) {
+		} else if (days > 10) {
 			ftime = dateFormater2.get().format(time);
 		}
 		return ftime;
@@ -236,10 +248,9 @@ public class StringUtils {
 	public static String pathRelative2Absolutely(String con) {
 
 		if (null != con) {
-			//con = con.replace("../", Constant.WEBSTIE);
+			// con = con.replace("../", Constant.WEBSTIE);
 			return con;
-		}
-		else {
+		} else {
 			return "";
 		}
 
@@ -260,8 +271,10 @@ public class StringUtils {
 
 	public static void main(String[] args) {
 
-		GroupService groupService = (GroupService) SpringContextUtil.getBean("");
-		PaginationResult result = groupService.queryGroupsOderArticleCount(0, 10000);
+		GroupService groupService = (GroupService) SpringContextUtil
+				.getBean("");
+		PaginationResult result = groupService.queryGroupsOderArticleCount(0,
+				10000);
 		List<?> list = result.getList();
 		for (int i = 0; i < list.size(); i++) {
 			Group group = (Group) list.get(i);

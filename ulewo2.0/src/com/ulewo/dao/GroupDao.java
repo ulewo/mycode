@@ -14,16 +14,17 @@ public class GroupDao extends BaseDao {
 
 	/**
 	 * 获取最大的id
+	 * 
 	 * @return
 	 * @throws Exception
 	 */
 	public int getMaxGId() {
 
-		Object obj = getSqlMapClientTemplate().queryForObject("group.getMaxGId");
+		Object obj = getSqlMapClientTemplate()
+				.queryForObject("group.getMaxGId");
 		if (null == obj) {
 			return 10000;
-		}
-		else {
+		} else {
 			return (Integer) obj;
 		}
 
@@ -31,6 +32,7 @@ public class GroupDao extends BaseDao {
 
 	/**
 	 * 创建群组
+	 * 
 	 * @param group
 	 */
 	public void createGroup(Group group) {
@@ -40,6 +42,7 @@ public class GroupDao extends BaseDao {
 
 	/**
 	 * 获取群组信息
+	 * 
 	 * @param gid
 	 * @return
 	 */
@@ -47,23 +50,16 @@ public class GroupDao extends BaseDao {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("gid", gid);
-		return (Group) getSqlMapClientTemplate().queryForObject("group.getGroup", parmMap);
+		return (Group) getSqlMapClientTemplate().queryForObject(
+				"group.getGroup", parmMap);
 	}
 
 	/**
 	 * 更新群组(全更新)
+	 * 
 	 * @param group
 	 */
 	public void updateGroup(Group group) {
-
-		getSqlMapClientTemplate().update("group.updateGroup", group);
-	}
-
-	/**
-	 * 更新群组非空信息
-	 * @param group
-	 */
-	public void updateGroupSelective(Group group) {
 
 		getSqlMapClientTemplate().update("group.updateGroup_selective", group);
 	}
@@ -71,6 +67,7 @@ public class GroupDao extends BaseDao {
 	/**
 	 * 
 	 * description: 查询所有群组，按照文章数排序
+	 * 
 	 * @param groupNum
 	 * @param itemId
 	 * @param pageNumber
@@ -83,11 +80,13 @@ public class GroupDao extends BaseDao {
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("offset", offset);
 		parmMap.put("total", total);
-		return this.getSqlMapClientTemplate().queryForList("group.queryGroupsByArticleCount", parmMap);
+		return this.getSqlMapClientTemplate().queryForList(
+				"group.queryGroupsByArticleCount", parmMap);
 	}
 
 	/**
-	 *  查询所有群组，根据成员数排序
+	 * 查询所有群组，根据成员数排序
+	 * 
 	 * @param isvalid
 	 * @param pageNumber
 	 * @param pageSize
@@ -99,11 +98,13 @@ public class GroupDao extends BaseDao {
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("offset", offset);
 		parmMap.put("total", total);
-		return this.getSqlMapClientTemplate().queryForList("group.queryGroupsByMemberCount", parmMap);
+		return this.getSqlMapClientTemplate().queryForList(
+				"group.queryGroupsByMemberCount", parmMap);
 	}
 
 	/**
 	 * 查询所有群组，根据创建时间，访问量
+	 * 
 	 * @param orderBy
 	 * @param offset
 	 * @param total
@@ -117,12 +118,14 @@ public class GroupDao extends BaseDao {
 		parmMap.put("isValid", Constant.ISVALIDY);
 		parmMap.put("total", total);
 		parmMap.put("orderBy", orderBy);
-		return this.getSqlMapClientTemplate().queryForList("group.queryGroups", parmMap);
+		return this.getSqlMapClientTemplate().queryForList("group.queryGroups",
+				parmMap);
 	}
 
 	/**
 	 * 
 	 * description: 创建的群组
+	 * 
 	 * @param userId
 	 * @return
 	 * @throws Exception
@@ -130,12 +133,14 @@ public class GroupDao extends BaseDao {
 	 */
 	public List<Group> queryCreatedGroups(String userId) {
 
-		return this.getSqlMapClientTemplate().queryForList("group.queryCreatedGroups", userId);
+		return this.getSqlMapClientTemplate().queryForList(
+				"group.queryCreatedGroups", userId);
 	}
 
 	/**
 	 * 
 	 * description: 参加的群组
+	 * 
 	 * @param userId
 	 * @return
 	 * @throws Exception
@@ -143,11 +148,13 @@ public class GroupDao extends BaseDao {
 	 */
 	public List<Group> queryJoinedGroups(String userId) {
 
-		return this.getSqlMapClientTemplate().queryForList("group.queryJoinedGroups", userId);
+		return this.getSqlMapClientTemplate().queryForList(
+				"group.queryJoinedGroups", userId);
 	}
 
 	/**
 	 * 查询所有群组数
+	 * 
 	 * @return
 	 * @throws Exception
 	 */
@@ -155,12 +162,14 @@ public class GroupDao extends BaseDao {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("isValid", Constant.ISVALIDY);
-		return (Integer) this.getSqlMapClientTemplate().queryForObject("group.queryGroupsCount", parmMap);
+		return (Integer) this.getSqlMapClientTemplate().queryForObject(
+				"group.queryGroupsCount", parmMap);
 	}
 
 	/**
 	 * 
 	 * description: 查询创建的群组
+	 * 
 	 * @param userId
 	 * @param offset
 	 * @param total
@@ -168,18 +177,21 @@ public class GroupDao extends BaseDao {
 	 * @throws Exception
 	 * @author luohl
 	 */
-	public List<Group> queryCreateGroupsByAuthorId(String userId, int offset, int total) {
+	public List<Group> queryCreateGroupsByAuthorId(String userId, int offset,
+			int total) {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("userid", userId);
 		parmMap.put("offset", offset);
 		parmMap.put("total", total);
-		return this.getSqlMapClientTemplate().queryForList("group.queryCreateGroupsByAuthorId", parmMap);
+		return this.getSqlMapClientTemplate().queryForList(
+				"group.queryCreateGroupsByAuthorId", parmMap);
 	}
 
 	/**
 	 * 
 	 * description: 查询加入的群组
+	 * 
 	 * @param userId
 	 * @param offset
 	 * @param total
@@ -187,16 +199,18 @@ public class GroupDao extends BaseDao {
 	 * @throws Exception
 	 * @author luohl
 	 */
-	public List<Group> queryJoinGroupsByAuthorId(String userId, int offset, int total) {
+	public List<Group> queryJoinGroupsByAuthorId(String userId, int offset,
+			int total) {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("userid", userId);
 		parmMap.put("offset", offset);
 		parmMap.put("total", total);
-		return this.getSqlMapClientTemplate().queryForList("group.queryTopicByReUserId", parmMap);
+		return this.getSqlMapClientTemplate().queryForList(
+				"group.queryTopicByReUserId", parmMap);
 	}
 
-	/*搜索群组*/
+	/* 搜索群组 */
 	public List<Group> searchGroup(String keyWord, int offset, int total) {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
@@ -204,15 +218,17 @@ public class GroupDao extends BaseDao {
 		parmMap.put("offset", offset);
 		parmMap.put("total", total);
 		parmMap.put("isValid", Constant.ISVALIDY);
-		return this.getSqlMapClientTemplate().queryForList("group.queryGroups", parmMap);
+		return this.getSqlMapClientTemplate().queryForList("group.queryGroups",
+				parmMap);
 	}
 
-	/*搜索群组数*/
+	/* 搜索群组数 */
 	public int searchGroupCount(String keyWord) {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("keyWord", keyWord);
 		parmMap.put("isValid", Constant.ISVALIDY);
-		return (Integer) this.getSqlMapClientTemplate().queryForObject("group.queryGroupsCount", parmMap);
+		return (Integer) this.getSqlMapClientTemplate().queryForObject(
+				"group.queryGroupsCount", parmMap);
 	}
 }

@@ -1,5 +1,7 @@
 package com.ulewo.entity;
 
+import java.util.List;
+
 /**
  * 
  * @Title:
@@ -33,6 +35,8 @@ public class Article {
 
 	private Integer readNumber; // 阅读次数
 
+	private Integer reNumber; // 回复数量
+
 	private Integer grade; // 帖子等级
 
 	private String essence; // 精华
@@ -48,8 +52,6 @@ public class Article {
 	// 需要关联查询的信息
 	private String groupName; // 群组名称 （文章所述群）
 
-	private int reNumber; // 回复数量
-
 	private User author; // 作者 信息
 
 	private String itemName; // 栏目名称
@@ -61,6 +63,10 @@ public class Article {
 	private String lastReTime; // 最后回复时间
 
 	private String summary;
+
+	private AttachedFile file;
+
+	private List<AttachedFile> images;
 
 	public int getId() {
 
@@ -217,11 +223,6 @@ public class Article {
 		return reNumber;
 	}
 
-	public void setReNumber(int reNumber) {
-
-		this.reNumber = reNumber;
-	}
-
 	public User getAuthor() {
 
 		return author;
@@ -320,6 +321,26 @@ public class Article {
 	public void setGrade(Integer grade) {
 
 		this.grade = grade;
+	}
+
+	public AttachedFile getFile() {
+		return file;
+	}
+
+	public void setFile(AttachedFile file) {
+		this.file = file;
+	}
+
+	public List<AttachedFile> getImages() {
+		return images;
+	}
+
+	public void setImages(List<AttachedFile> images) {
+		this.images = images;
+	}
+
+	public void setReNumber(Integer reNumber) {
+		this.reNumber = reNumber;
 	}
 
 }

@@ -12,13 +12,16 @@ import org.springframework.stereotype.Service;
 
 import com.ulewo.dao.ArticleDao;
 import com.ulewo.dao.ArticleItemDao;
+import com.ulewo.dao.AttachedFileDao;
 import com.ulewo.dao.NoticeDao;
 import com.ulewo.dao.ReArticleDao;
 import com.ulewo.dao.UserDao;
 import com.ulewo.entity.Article;
+import com.ulewo.entity.AttachedFile;
 import com.ulewo.entity.NoticeParam;
 import com.ulewo.entity.ReArticle;
 import com.ulewo.entity.User;
+import com.ulewo.enums.FileType;
 import com.ulewo.enums.NoticeType;
 import com.ulewo.enums.QueryUserType;
 import com.ulewo.service.ArticleService;
@@ -45,7 +48,11 @@ public class ArticleServiceImpl implements ArticleService {
 	@Autowired
 	private NoticeDao noticeDao;
 
-	private final SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	@Autowired
+	private AttachedFileDao attachedFileDao;
+
+	private final SimpleDateFormat formate = new SimpleDateFormat(
+			"yyyy-MM-dd HH:mm:ss");
 
 	public void setNoticeDao(NoticeDao noticeDao) {
 
@@ -76,14 +83,13 @@ public class ArticleServiceImpl implements ArticleService {
 	 * 新增文章
 	 */
 	@Override
-	public void addArticle(Article article, User user) {
+	public void addArticle(Article article) {
 
 		String content = article.getContent();
 		String summary = StringUtils.clearHtml(content);
 		if (summary.length() > Constant.summaryLength200) {
 			summary = summary.substring(0, Constant.summaryLength200);
-		}
-		else if (summary.length() == 0) {
+		} else if (summary.length() == 0) {
 			summary = article.getTitle();
 		}
 		article.setSummary(summary + "......");
@@ -91,15 +97,32 @@ public class ArticleServiceImpl implements ArticleService {
 		article.setPostTime(formate.format(new Date()));
 
 		List<String> referers = new ArrayList<String>();
-		String formatContent = FormatAt.getInstance().GenerateRefererLinks(userDao, content, referers);
+		String formatContent = FormatAt.getInstance().GenerateRefererLinks(
+				userDao, content, referers);
 
 		article.setContent(formatContent);
 		int id = articleDao.addArticle(article);
 
 		// 更新用户的积分
-		User curUser = userDao.findUser(user.getUserId(), QueryUserType.USERID);
+		User curUser = userDao.findUser(article.getAuthorId(),
+				QueryUserType.USERID);
 		curUser.setMark(curUser.getMark() + Constant.ARTICLE_MARK5);
 		userDao.update(curUser);
+
+		article.setAuthorName(curUser.getUserName());
+		article.setPostTime(StringUtils.friendly_time(article.getPostTime()));
+		article.setReadNumber(0);
+		article.setReNumber(0);
+
+		/********** 添加附件 ************/
+		if (null != article.getFile()) {
+			AttachedFile file = article.getFile();
+			file.setArticleId(article.getId());
+			file.setFileName(file.getFileUrl().substring(
+					file.getFileUrl().lastIndexOf("/") + 1));
+			file.setFileType(FileType.RAR.getValue());
+			attachedFileDao.addAttached(file);
+		}
 
 		// 启动一个线程发布消息
 		NoticeParam noticeParm = new NoticeParam();
@@ -120,7 +143,7 @@ public class ArticleServiceImpl implements ArticleService {
 
 		Article article = articleDao.queryTopicById(id);
 		if (null == article) {
-			//throw new BaseException(30000);
+			// throw new BaseException(30000);
 		}
 		article.setPostTime(StringUtils.friendly_time(article.getPostTime()));
 		return article;
@@ -145,10 +168,11 @@ public class ArticleServiceImpl implements ArticleService {
 		Article article = articleDao.queryTopicById(id);
 		if (article != null) {
 			// 文章作者信息
-			User author = userDao.findUser(article.getAuthorId(), QueryUserType.USERID);
+			User author = userDao.findUser(article.getAuthorId(),
+					QueryUserType.USERID);
 
 			if (null == author) {
-				//throw new BaseException(30000);
+				// throw new BaseException(30000);
 			}
 
 			// 设置关键字
@@ -157,6 +181,11 @@ public class ArticleServiceImpl implements ArticleService {
 			}
 			article.setAuthor(author);
 			article.setPostTime(StringUtils.friendly_time(article.getPostTime()));
+			List<AttachedFile> list = attachedFileDao.queryAttachedbyArticleId(
+					id, FileType.RAR);
+			if (null != list && list.size() > 0) {
+				article.setFile(list.get(0));
+			}
 
 		}
 		return article;
@@ -170,13 +199,11 @@ public class ArticleServiceImpl implements ArticleService {
 
 		Article result = articleDao.queryTopicById(article.getId());
 		if (null == result) {
-			//throw new BaseException(30000);
-		}
-		else {
+			// throw new BaseException(30000);
+		} else {
 			if (!result.getGid().equals(article.getGid())) {
-				//throw new BaseException(10002);
-			}
-			else {
+				// throw new BaseException(10002);
+			} else {
 				articleDao.updateArticleSelective(article);
 			}
 		}
@@ -187,18 +214,20 @@ public class ArticleServiceImpl implements ArticleService {
 	 * 通过群编号查询主题文章 等级和最后回复时间倒叙排列 多笔查询
 	 */
 	@Override
-	public PaginationResult queryTopicOrderByGradeAndLastReTime(String gid, int itemId, int page, int pageSize) {
+	public PaginationResult queryTopicOrderByGradeAndLastReTime(String gid,
+			int itemId, int page, int pageSize) {
 
 		int count = articleDao.queryTopicCountByGid(gid, itemId);
 		Pagination pagination = new Pagination(page, count, pageSize);
 		pagination.action();
-		List<Article> list = articleDao.queryTopicOrderByGradeAndLastReTime(gid, itemId, pagination.getOffSet(),
-				pageSize);
+		List<Article> list = articleDao.queryTopicOrderByGradeAndLastReTime(
+				gid, itemId, pagination.getOffSet(), pageSize);
 		for (Article article : list) {
 			article.setPostTime(StringUtils.friendly_time(article.getPostTime()));
 		}
-		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
-		//setArticleListInfo(list);
+		PaginationResult result = new PaginationResult(pagination.getPage(),
+				pagination.getPageTotal(), count, list);
+		// setArticleListInfo(list);
 		return result;
 	}
 
@@ -206,9 +235,11 @@ public class ArticleServiceImpl implements ArticleService {
 	 * 查询文章根据时间倒叙排列
 	 */
 	@Override
-	public List<Article> queryTopicOrderByPostTime(String gid, int itemId, String isValid, int offset, int total) {
+	public List<Article> queryTopicOrderByPostTime(String gid, int itemId,
+			String isValid, int offset, int total) {
 
-		List<Article> list = articleDao.queryTopicOrderByPostTime(gid, itemId, isValid, offset, total);
+		List<Article> list = articleDao.queryTopicOrderByPostTime(gid, itemId,
+				isValid, offset, total);
 		setArticleListInfo(list);
 		return list;
 	}
@@ -226,8 +257,7 @@ public class ArticleServiceImpl implements ArticleService {
 				lastReAuthorId = article.getAuthorId();
 				lastReAuthorName = article.getAuthorName();
 				lastReTime = article.getPostTime();
-			}
-			else {
+			} else {
 				lastReTime = lastReArticle.getReTime();
 				lastReAuthorName = lastReArticle.getAuthorName();
 				lastReAuthorId = lastReArticle.getAuthorid();
@@ -251,7 +281,8 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public List<Article> queryPostTopic(String userId, int offset, int total) {
 
-		List<Article> list = articleDao.queryTopicByUserId(userId, offset, total);
+		List<Article> list = articleDao.queryTopicByUserId(userId, offset,
+				total);
 		for (Article article : list) {
 			article.setPostTime(StringUtils.friendly_time(article.getPostTime()));
 		}
@@ -267,7 +298,8 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public List<Article> queryReTopic(String userId, int offset, int total) {
 
-		List<Article> list = articleDao.queryTopicByReUserId(userId, offset, total);
+		List<Article> list = articleDao.queryTopicByReUserId(userId, offset,
+				total);
 		for (Article article : list) {
 			article.setPostTime(StringUtils.friendly_time(article.getPostTime()));
 		}
@@ -284,15 +316,16 @@ public class ArticleServiceImpl implements ArticleService {
 		String[] keyWords = null;
 		if (keyWord.contains(",")) {
 			keyWords = keyWord.split(",");
-		}
-		else if (keyWord.contains("，")) {
+		} else if (keyWord.contains("，")) {
 			keyWords = keyWord.split("，");
 		}
 		Map<String, String> map = new HashMap<String, String>();
 		for (int i = 0; i < keyWords.length; i++) {
-			List<Article> aboutList = articleDao.searchTopic(keyWords[i], gid, Constant.ISVALIDY, 0, 5);
+			List<Article> aboutList = articleDao.searchTopic(keyWords[i], gid,
+					Constant.ISVALIDY, 0, 5);
 			for (Article article : aboutList) {
-				if (null == map.get(article.getTitle()) && !keyWord.equals(article.getKeyWord())) {
+				if (null == map.get(article.getTitle())
+						&& !keyWord.equals(article.getKeyWord())) {
 					list.add(article);
 					map.put(article.getTitle(), article.getTitle());
 				}
@@ -318,23 +351,28 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public List<Article> searchTopic(String keyWord, String gid, String isValid, int offset, int total) {
+	public List<Article> searchTopic(String keyWord, String gid,
+			String isValid, int offset, int total) {
 
-		List<Article> list = articleDao.searchTopic(keyWord, gid, isValid, offset, total);
+		List<Article> list = articleDao.searchTopic(keyWord, gid, isValid,
+				offset, total);
 		for (Article article : list) {
 			article.setPostTime(StringUtils.friendly_time(article.getPostTime()));
 		}
 		return list;
 	}
 
-	public List<Article> queryList(String keyWord, String isValid, int offset, int total) {
+	public List<Article> queryList(String keyWord, String isValid, int offset,
+			int total) {
 
 		return null;
 	}
 
-	public List<Article> queryComendArticle(String sysCode, String subCode, int offset, int total) {
+	public List<Article> queryComendArticle(String sysCode, String subCode,
+			int offset, int total) {
 
-		List<Article> list = articleDao.queryComendArticle(sysCode, subCode, offset, total);
+		List<Article> list = articleDao.queryComendArticle(sysCode, subCode,
+				offset, total);
 		return list;
 	}
 

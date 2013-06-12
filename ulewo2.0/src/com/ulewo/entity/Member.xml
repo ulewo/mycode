@@ -82,7 +82,10 @@
 	
 		<!-- 根据发帖量查询成员 -->
 	<select id="queryActiveMembers" resultClass="member" parameterClass="java.util.Map">
-		select m.* from member m where m.gid = #gid# and m.ismember =  #ismember# order by (select count(a.id) from article a where a.authorid=m.userid) desc 
+		select m.*,
+		u.userlittleicon as userIcon,
+		u.username as userName
+		from member m inner join user u on u.userid = m.userid where m.gid = #gid# and m.ismember =  #ismember# order by (select count(a.id) from article a where a.authorid=m.userid) desc 
 		limit #offset#,#total#
 	</select>
 	

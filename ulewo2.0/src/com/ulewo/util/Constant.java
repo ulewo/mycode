@@ -31,7 +31,7 @@ public class Constant {
 
 	public static int pageSize10 = 10; // 查询页数
 
-	public static int pageSize3 = 24; // 查询页数
+	public static int pageSize3 = 3; // 查询页数
 
 	public static int articleGrade0 = 0; // 普通帖子
 

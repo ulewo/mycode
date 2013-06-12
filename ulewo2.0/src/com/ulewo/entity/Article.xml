@@ -82,7 +82,7 @@
 	
 	<!-- 通过群编号查询主题文章  等级和最后回复时间倒叙排列 多笔查询 -->
 	<select id="queryTopicOrderByGradeAndLastReTime"  resultClass="article" parameterClass="java.util.Map">
-		select a.id,a.gid,a.title,a.summary,a.titlestyle,a.itemid,i.itemname,a.authorid,u.username as authorname,a.posttime,a.readnumber,
+		select a.id,a.gid,a.title,a.summary,a.titlestyle,a.itemid,i.itemname,a.authorid,u.username as authorname,a.posttime,a.readnumber,a.image,
 		(select count(r.id) from rearticle r where r.articleid = a.id) as renumber,a.grade,a.essence,
 		(case when (select count(r.id)  from rearticle r where r.articleid = a.id) > 0
 		then (select r.retime from rearticle r where r.articleid = a.id order by retime desc limit 0,1)
