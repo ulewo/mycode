@@ -40,7 +40,7 @@
 
 		// 图片上传配置区
 		,
-		imageUrl : URL + "jsp/imageUp.jsp" // 图片上传提交地址
+		imageUrl : global.realPath+"/imageUp.jsp" // 图片上传提交地址
 		,
 		imagePath : URL + "jsp/" // 图片修正地址，引用了fixedImagePath,如有特殊需求，可自行配置
 		,imageFieldName:"upfile" //图片数据的key,若此处修改，需要在后台对应文件修改对应参数
@@ -82,7 +82,7 @@
 		,
 		snapscreenHost : '127.0.0.1' // 屏幕截图的server端文件所在的网站地址或者ip，请不要加http://
 		,
-		snapscreenServerUrl : URL + "jsp/imageUp.jsp" // 屏幕截图的server端保存程序，UEditor的范例代码为“URL
+		snapscreenServerUrl : global.realPath+"/imageUp.jsp" // 屏幕截图的server端保存程序，UEditor的范例代码为“URL
 		// +"server/upload/php/snapImgUp.php"”
 		,
 		snapscreenPath : URL + "jsp/"
@@ -91,7 +91,7 @@
 
 		// word转存配置区
 		,
-		wordImageUrl : URL + "jsp/imageUp.jsp" // word转存提交地址
+		wordImageUrl : global.realPath+"/imageUp.jsp" // word转存提交地址
 		,
 		wordImagePath : URL + "jsp/" //
 		// ,wordImageFieldName:"upfile" //word转存表单名若此处修改，需要在后台对应文件修改对应参数

@@ -7,7 +7,7 @@
 <%@ include file="../common/path.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>个人博客-有乐窝</title>
-<link rel="stylesheet" type="text/css" href="${realPath}css/user.blog.css">
+<link rel="stylesheet" type="text/css" href="${realPath}/css/user.blog.css">
 </head>
 <body>
 	<%@ include file="../common/head.jsp" %>
@@ -18,7 +18,7 @@
 				<div class="left_item_tit">博客分类</div>
 				<div class="left_img_p">
 					<c:forEach var="item" items="${blogItemList}">
-						<div class="blog_item"><a href="blog?itemId=${item.id}">${item.itemName}</a><span>(${item.articleCount})</span></div>
+						<div class="blog_item"><a href="${realPath}/user/${userId}/blog/?itemId=${item.id}">${item.itemName}</a><span>(${item.articleCount})</span></div>
 					</c:forEach>
 				</div>
 			</div>
@@ -33,9 +33,9 @@
 		<div class="right">
 			<div class="blog_list">
 				<div class="right_top_m">
-					<a href="">空间</a>&gt;&gt;<a href="blog">博客</a>
-					&gt;&gt;<a href="/${userId}/blog?itemId=${blog.itemId}">${blog.itemName}</a>
-				
+					<a href="${realPath}/user/${userId}">空间</a>&gt;&gt;<a href="${realPath}/user/${userId}/blog">博客</a>
+					&gt;&gt;<a href="${realPath}/user/${userId}/blog/?itemId=${blog.itemId}">${blog.itemName}</a>
+					&gt;&gt;博客正文
 				</div>
 				<div class="blog_detail">
 						<div class="blog_list_tit"><a href="">${blog.title}</a></div>

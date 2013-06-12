@@ -1,16 +1,16 @@
-// 登录
-function login() {
+// 登录跳转
+function goto_login() {
 	var redirectUrl = window.location.href;
 	if (redirectUrl.indexOf("redirectUrl") == -1) {
-		document.location.href ="http://ulewo.com/login?redirectUrl=" + redirectUrl;
+		document.location.href =global.realPath+"/login?redirectUrl=" + redirectUrl;
 	} else {
 		document.location.href = window.location.href;
 	}
 
 }
 
-function register() {
-	document.location.href = "http://ulewo.com/register";
+function goto_register() {
+	document.location.href = global.homePath+"/register";
 }
 
 function logout() {
@@ -57,4 +57,8 @@ function loadNotice() {
 			}
 		});
 	}
+}
+/**刷新验证码**/
+function refreshImage() {
+	$("#codeImage").attr("src", global.realPath+"/common/image.jsp?rand =" + Math.random());
 }

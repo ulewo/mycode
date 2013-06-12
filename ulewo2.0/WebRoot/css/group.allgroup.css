@@ -1,11 +1,12 @@
 @import url("public.css");
 .group_item{padding:10px 5px;border-bottom:1px dotted #E0E0E0}
 .group_icon{float:left;width:50px;}
-.group_con img{width:50px;border:0px;}
-.group_con{float:left;width:940px;}
+.group_icon img{width:50px;border:0px;}
+.group_con{float:left;width:930px;margin-left:10px;}
 .group_title{font-weight:bold;float:left;display:inline-block;}
 .group_title a{color:#333333;font-size:14px;text-decoration:none;}
 .group_op{float:right;display:inline-block;}
 .group_info{margin-top:2px;}
 .group_blue{color:#3E62A6}
 .group_content{margin-top:10px;font-size:13px;line-height:20px;}
+.pagination{margin-top:20px;}

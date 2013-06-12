@@ -20,14 +20,17 @@
 		</div>
 		<div class="right">
 			<div class="right_top_m">
-					<a href="">空间</a>&gt;&gt;<a href="blog">博客</a>
+					<a href="${realPath}/user/${user.userId}">空间</a>&gt;&gt;评论管理
 					<c:if test="${blogitem!=null}">
 						&gt;&gt;<a href="">${blogitem.itemName}</a>
 					</c:if>
 			</div>
 			<c:forEach var="reply" items="${replyList.list}">
 				<div class="item_reply">
-					<div class="user_icon"><a href="/${reply.userId}"><img src="../upload/${reply.reUserIcon}"/></a></div>
+					<div class="user_icon"><a href="/${reply.userId}">
+					<c:if test="${reply.reUserIcon==null}"><img src="../upload/default.gif"/></c:if>
+					<c:if test="${reply.reUserIcon!=null}"><img src="../upload/${reply.reUserIcon}"/></c:if>
+					</a></div>
 					<div class="reply_con">
 						<div class="title_op">
 							<div class="blog_title"><a href="">${reply.blogTitle}</a></div>

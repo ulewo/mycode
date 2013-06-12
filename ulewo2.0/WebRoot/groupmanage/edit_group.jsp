@@ -6,10 +6,10 @@
 <head>
 <%@ include file="../common/path.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>发表博文-有乐窝</title>
-<link rel="stylesheet" type="text/css" href="../css/group.manage.editgroup.css">
+<title>修改窝窝信息-有乐窝</title>
+<link rel="stylesheet" type="text/css" href="${realPath}/css/group.manage.editgroup.css">
 <style type="text/css">
-#selected1 a{background:#ffffff;color:#333333;font-weight:bold;}fff}
+#selected1 a{background:#ffffff;color:#333333;font-weight:bold;}
 </style>
 </head>
 <body>
@@ -19,86 +19,49 @@
 	  		<%@ include file="left.jsp" %>
 		</div>
 		<div class="right">
-			<div class="right_top_m">
-					<a href="">空间</a>&gt;&gt;<a href="blog">博客</a>
-					<c:if test="${blogitem!=null}">
-						&gt;&gt;<a href="">${blogitem.itemName}</a>
-					</c:if>
-			</div>
+			<form id="group_info">
 			<div class="form_tit">
 				<span class="form_tit_t">窝窝名称</span>
-				<span class="form_tit_x">（选填）</span>
+				<span class="form_tit_x">（名称不能超过50字符）</span>
 			</div>
 			<div class="form_editinput">
 				<div class="form_title_input">
-					<input type="text"/>
+					<input type="text" name="groupName" id="group_name" value="${group.groupName}"/>
 				</div>
 				<div class="clear"></div>
 			</div>
 			<div class="form_tit">
 				<span class="form_tit_t">简介</span>
-				<span class="form_tit_x">（选填）</span>
+				<span class="form_tit_x">（简介不能超过500字符）</span>
 			</div>
 			<div class="form_editcontent" id="editor">
-				<textarea></textarea>
+				<textarea name="groupDesc" id="group_desc">${group.groupDesc}</textarea>
 			</div>
 			<div class="form_tit">
 				<div class="form_tit_radio">加入权限？</div>
 				<div class="form_con_radio">
-					<input type="radio"/>允许任何人加入
-					<input type="radio"/>需经我审批才能加入
+					<input type="radio" name="joinPerm" value="Y"  <c:if test="${group.joinPerm=='Y'}">checked="checked"</c:if>/>允许任何人加入
+					<input type="radio" name="joinPerm" value="N" <c:if test="${group.joinPerm=='N'}">checked="checked"</c:if>/>需经我审批才能加入
 				</div>
 				<div class="clear"></div>
 			</div>
 			<div class="form_tit">
 				<div class="form_tit_radio">发帖权限？</div>
 				<div class="form_con_radio">
-					<input type="radio"/>允许任何人加入
-					<input type="radio"/>需经我审批才能加入
+					<input type="radio" name="postPerm" value="A"  <c:if test="${group.postPerm=='A'}">checked="checked"</c:if>/>任何人可以发帖
+					<input type="radio" name="postPerm" value="M"  <c:if test="${group.postPerm=='M'}">checked="checked"</c:if>/>窝窝成员才能发帖
 				</div>
 				<div class="clear"></div>
 			</div>
 			<div class="form_sub_btn">
-				<a href="" class="btn">确认修改</a>
+				<a href="javascript:void(0)" class="btn" id="editBtn">确认修改</a>
+				<span class="result_info"><i id="warm_icon"></i><span id="warm_info"></span></span>
 			</div>
-		
+			</form>
 		</div>
 		<div style="clear:left;"></div>
 	</div>
 	<%@ include file="../common/foot_manage.jsp" %>
+	<script type="text/javascript" src="${realPath}/js/group.manage.editgroup.js"></script>
 </body>
-<script type="text/javascript">
-    
-    function submitForm(){
-		var title = $("#title").val();
-		if(title.trim()==""){
-			alert("标题不能为空");
-			return;
-		}else{
-			title = title.replaceHtml();
-			$("#title").val(title);
-		}
-		
-		var keyWord =  $("#keyWord").val();
-		if(keyWord.trim()==""){
-			alert("关键字不能为空");
-			return;
-		}else{
-			keyWord = keyWord.replaceHtml();
-			$("#keyWord").val(keyWord);
-		}
-		if(editor.getContentTxt().trim()==""){
-			alert("内容不能为空");
-			return ;
-		}else{
-			$("#content").val(editor.getContent());
-		}
-		$(".sendBtn").hide();
-		$(".loading").show();
-		$("#subForm").submit();
-	}
-    
-    function initImg(imageUrls){
-    }
-</script>
 </html>

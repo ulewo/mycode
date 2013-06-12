@@ -14,7 +14,7 @@
 			<div class="user_edit">
 				<a href="userInfo.jspx?userId=${uid}" class="username" id="user_name">多多洛</a>
 				<div class="user_edit_info">
-					<span><img src="../images/men.png"></span>
+					<span><img src="${realPath}/images/men.png"></span>
 					<a href="" class="edit_info">修改资料</a>
 					<a href="" class="edit_icon">更换头像</a>
 					<div class="clear"></div>

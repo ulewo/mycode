@@ -1,17 +1,17 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<link rel="stylesheet"  href="${realPath}css/foot.css" type="text/css"  />
+<link rel="stylesheet"  href="${realPath}/css/foot.css" type="text/css"  />
 <div class="footArea">
 			<div id="footlink">
 				<ul>
-					<li style="margin-left:10px;"><a href="${realPath}index.jspx">首页</a></li>
-					<li style="margin-left:10px;"><a href="${realPath}groups.jspx">窝窝</a></li>
-					<li style="margin-left:10px;"><a href="${realPath}square.jspx">广场</a></li>
+					<li style="margin-left:10px;"><a href="${homePath}">首页</a></li>
+					<li style="margin-left:10px;"><a href="${groupPath}">窝窝</a></li>
+					<li style="margin-left:10px;"><a href="${realPath}/square.jspx">广场</a></li>
 				</ul>
 			<div id="footright">&copy; 2011-2012&nbsp;&nbsp;ulewo.com 有乐窝 All rights reserved.</div>
-			<div id="gototop"><a href="javascript:void(0)" onclick="window.scrollTo(0,0);" onfocus="this.blur()" title="回到顶部"><img border="0" src="${realPath}images/totop.png"></a></div>
-			
+			<div id="gototop"><a href="javascript:void(0)" onclick="window.scrollTo(0,0);" onfocus="this.blur()" title="回到顶部"><img border="0" src="${realPath}/images/totop.png"></a></div>
+				<!-- 
 				<script type="text/javascript" id="bdshare_js" data="type=slide&amp;img=0&amp;pos=right&amp;uid=0" ></script>
 				<script type="text/javascript" id="bdshell_js"></script>
 				<script type="text/javascript">
@@ -24,7 +24,7 @@
 					document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F1535c97f8b589c71b7a6497eda7dac5f' type='text/javascript'%3E%3C/script%3E"));
 				</script>
 			</div>
-			
+			 -->
 	</div>
 </div>
 <script>

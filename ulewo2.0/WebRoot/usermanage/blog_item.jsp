@@ -20,7 +20,7 @@
 		</div>
 		<div class="right">
 			<div class="right_top_m">
-					<a href="">空间</a>&gt;&gt;<a href="blog">博客</a>
+					<a href="${realPath}/user/${user.userId}">空间</a>&gt;&gt;分类管理
 					<c:if test="${blogitem!=null}">
 						&gt;&gt;<a href="">${blogitem.itemName}</a>
 					</c:if>

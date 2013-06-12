@@ -16,8 +16,8 @@
 		window.UEDITOR_HOME_URL = "${realPath}/ueditor/";
 	//-->
 </script>
-<script type="text/javascript" src="${realPath}ueditor/editor_config_blog.js"></script>
-<script type="text/javascript" src="${realPath}ueditor/editor.js"></script>
+<script type="text/javascript" src="${realPath}/ueditor/editor_config_blog.js"></script>
+<script type="text/javascript" src="${realPath}/ueditor/editor.js"></script>
 </head>
 <body>
 	<%@ include file="../common/head.jsp" %>
@@ -27,7 +27,7 @@
 		</div>
 		<div class="right">
 			<div class="right_top_m">
-					<a href="">空间</a>&gt;&gt;<a href="blog">博客</a>
+					<a href="${realPath}/user/${user.userId}">空间</a>&gt;&gt;发表博文
 					<c:if test="${blogitem!=null}">
 						&gt;&gt;<a href="">${blogitem.itemName}</a>
 					</c:if>

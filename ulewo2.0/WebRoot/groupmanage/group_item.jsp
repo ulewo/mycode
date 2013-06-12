@@ -19,12 +19,6 @@
 	  		<%@ include file="left.jsp" %>
 		</div>
 		<div class="right">
-			<div class="right_top_m">
-					<a href="">空间</a>&gt;&gt;<a href="blog">博客</a>
-					<c:if test="${blogitem!=null}">
-						&gt;&gt;<a href="">${blogitem.itemName}</a>
-					</c:if>
-			</div>
 			<div class="item_tit">
 				<div class="item_name">分类名</div>
 				<div class="item_range">排序</div>

@@ -1,9 +1,10 @@
     <%@ page language="java" contentType="text/html; charset=utf-8"
         pageEncoding="utf-8"%>
    <%@ page import="com.ulewo.util.Uploader" %>
-
+<%
+String realPath = "http://" + request.getServerName() +  request.getContextPath(); 
+%>
     <%
-    System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
     request.setCharacterEncoding("utf-8");
 	response.setCharacterEncoding("utf-8");
     Uploader up = new Uploader(request);
@@ -12,5 +13,5 @@
     up.setAllowFiles(fileType);
     up.setMaxSize(10000); //单位KB
     up.upload();
-    response.getWriter().print("{'original':'"+up.getOriginalName()+"','url':'../"+up.getUrl()+"','title':'"+up.getTitle()+"','state':'"+up.getState()+"'}");
+    response.getWriter().print("{'original':'"+up.getOriginalName()+"','url':'"+realPath+"/"+up.getUrl()+"','title':'"+up.getTitle()+"','state':'"+up.getState()+"'}");
     %>

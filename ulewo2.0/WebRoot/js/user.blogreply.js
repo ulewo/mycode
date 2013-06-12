@@ -106,10 +106,15 @@ function NotePanle(note) {
 	// @定位
 	$("<a name='re" + note.id + "'></a>").appendTo(this.noteCon);
 	// 头像
-	$(
-			"<div class='reply_usericon'><img src='../upload/" + reUserIcon
-					+ "' width='35'></div>")
-			.appendTo(this.noteCon);
+	if(reUserIcon!=""&&reUserIcon!=null){
+		$(
+				"<div class='reply_usericon'><img src='../upload/" + reUserIcon
+						+ "' width='35'></div>")
+				.appendTo(this.noteCon);
+	}else{
+		$("<div class='reply_usericon'><img src='../upload/default.gif' width='35'></div>").appendTo(this.noteCon);
+	}
+	
 	// 留言信息
 	var reply_con_p = $("<div class='reply_con_p'></div>").appendTo(this.noteCon);
 	// 姓名,回复内容

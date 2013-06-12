@@ -7,7 +7,7 @@
 <%@ include file="../common/path.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>用户中心-有乐窝</title>
-<link rel="stylesheet" type="text/css" href="../css/user.usercenter.css">
+<link rel="stylesheet" type="text/css" href="${realPath}/css/user.usercenter.css">
 </head>
 <body>
 	<%@ include file="../common/head.jsp" %>

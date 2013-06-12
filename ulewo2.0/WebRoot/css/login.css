@@ -12,7 +12,10 @@
 .login_check{float:left;display:inline-block;margin-top:1px;}
 .login_remember{float:left;margin-left:5px;display:inline-block;}
 .login_remember_info{color:#B52222}
-.right{width:300px;float:left;margin-top:30px;}
+.right{width:300px;float:left;margin-top:15px;}
 .login_right_tit{font-size:16px;font-weight:bold;margin-top:20px;color:#666666}
 .right ul{list-style:none;padding:0px;margin:0px;margin-top:10px;}
 .right ul li{line-height:25px;}
+
+#login_loading{display:none;}
+#remember_login{cursor:pointer;}

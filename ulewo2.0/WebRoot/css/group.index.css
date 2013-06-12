@@ -7,6 +7,8 @@
 .recount{color:#B2B3B2;padding-left:10px;}
 .article_author{display:inline-block;float:right;font-size:14px;}
 .article_summary{margin-top:10px;}
-
+.group_member_icon{float:left;width:50px;}
+.group_member_icon img{width:50px;border:0px}
+#activer_list,#member_list{margin-top:10px;}
 .pagination{margin-top:10px;}
 .right{margin-top:4px;}

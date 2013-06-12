@@ -8,59 +8,41 @@
 <%@ include file="../common/path.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${group.groupName}-有乐窝</title>
-<link rel="stylesheet" type="text/css" href="${realPath}css/group.detail.css">
+<link rel="stylesheet" type="text/css" href="${realPath}/css/group.detail.css">
+<script type="text/javascript">
+<!--
+	window.UEDITOR_HOME_URL = "${realPath}/ueditor/";
+//-->
+global.articleId= "${article.id}";
+</script>
+<script type="text/javascript" src="${realPath}/ueditor/editor_config.js"></script>
+<script type="text/javascript" src="${realPath}/ueditor/editor.js"></script>
+<script type="text/javascript" src="${realPath}/js/group.showarticle.js"></script>
 </head>
 <body>
 	<%@ include file="../common/head.jsp" %>
 	<div class="main">
-		<div class="group_info">
-			<div class="group_info_left">
-				<div>
-					<div class="group_icon"><img src="../upload/${group.groupIcon}"></div>
-					<div class="group_info_con">
-						<div class="group_title">${group.groupName}</div>
-						<div class="group_author">
-							<span class="group_info_tit" style="padding-left:0px;">管理员:</span><a href="">${group.authorName}</a> 
-							<span class="group_info_tit">成员:</span>${group.members} 
-							<span class="group_info_tit">创建时间:</span>${group.createTime}
-						</div>
-						<div class="group_url">http://group.ulewo.com/${group.id}&nbsp;&nbsp;<a href="" class="btn">+立即加入</a></div>
-					</div>
-					<div class="clear"></div>
-				</div>
-				<div class="group_desc">${group.groupDesc}</div>
-			</div>
-			<div class="group_info_notice">
-				<div class="right_tit">公告</div>
-				<div class="group_notic">暂无公告。</div>
-			</div>
-			<div class="clear"></div>
-		</div>
+		<%@ include file="group_info.jsp" %>
 		<div class="group_body">
 			<ul class="group_tag">
-				<li><a href="${realPath}${gid}" class="tag_select">讨&nbsp;&nbsp;论</a></li>
-				<li><a href="${realPath}${gid}/img">图&nbsp;&nbsp;片</a></li>
-				<li><a href="${realPath}${gid}/member">成&nbsp;&nbsp;员</a></li>
+				<li><a href="${realPath}/group//${gid}" class="tag_select">讨&nbsp;&nbsp;论</a></li>
+				<li><a href="${realPath}/group//${gid}/img">图&nbsp;&nbsp;片</a></li>
+				<li><a href="${realPath}/group//${gid}/member">成&nbsp;&nbsp;员</a></li>
 			</ul>
-			<div class="new_article_p">
-				<div class="new_article_input"></div>
-				<div class="new_article_btn">发表帖子</div>
-				<div class="clear"></div>
-			</div>
 			<ul class="group_item">
-				<li style="margin-left:2px;"><a href="${realPath}${gid}" <c:if test="${article.itemId==0}">class="select"</c:if>>全部文章</a></li>
+				<li style="margin-left:2px;"><a href="${realPath}/group/${gid}" <c:if test="${article.itemId==0}">class="select"</c:if>>全部文章</a></li>
 				<c:forEach var="item" items="${itemList}">
-					<li><a href="${realPath}${gid}?itemId=${item.id}" <c:if test="${article.itemId==item.id}">class="select"</c:if>>${item.itemName}</a></li>
+					<li><a href="${realPath}/group/${gid}?itemId=${item.id}" <c:if test="${article.itemId==item.id}">class="select"</c:if>>${item.itemName}</a></li>
 				</c:forEach>
 			</ul>
 			<div class="author_info">
-				<div class="author_icon"><img src="../${article.author.userLittleIcon}"></div>
+				<div class="author_icon"><img src="${article.author.userLittleIcon}"></div>
 				<div class="author_info_con">
 					<div class="article_tit">
 						<span class="article_tit_title">${article.title}</span>
 					</div>
 					<div class="author_info_content">
-						<a href="${myPath}${article.author.userId}">${article.author.userName}</a>&nbsp;
+						<a href="${realPath}/user/${article.author.userId}">${article.author.userName}</a>&nbsp;
 						发表于 ${article.postTime}&nbsp;
 						阅读  ${article.readNumber}&nbsp;
 						回复  ${article.reNumber} 
@@ -70,6 +52,23 @@
 			</div>
 			<div class="article_detail">
 				${article.content}
+			</div>
+			<c:if test="${article.file!=''&&article.file!=null}">
+			<div class="article_attached">
+				<div class="attached_tit">附件</div>
+				<div class="attached_con"><span>${article.file.fileName}</span>&nbsp;&nbsp;<a href="">点击下载</a></div>
+			</div>
+			</c:if>
+			<div class="recomment_tit">共有${article.reNumber}个回帖</div>
+			<div id="recomment"></div>
+			<div id="pager" class="pagination"></div>
+			<div class="new_article_p" id="new_article_p">
+				<div class="new_article_input"></div>
+				<div class="new_article_btn">回复帖子</div>
+				<div class="clear"></div>
+			</div>
+			<div class="add_article" id="add_article">
+				<%@ include file="rearticle.jsp" %>
 			</div>
 		</div>
 		<%@ include file="../common/foot_manage.jsp" %>

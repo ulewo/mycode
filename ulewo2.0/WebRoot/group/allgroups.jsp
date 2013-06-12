@@ -8,7 +8,7 @@
 <%@ include file="../common/path.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>个人博客-有乐窝</title>
-<link rel="stylesheet" type="text/css" href="${realPath}css/group.allgroup.css">
+<link rel="stylesheet" type="text/css" href="${realPath}/css/group.allgroup.css">
 </head>
 <body>
 	<%@ include file="../common/head.jsp" %>
@@ -16,7 +16,7 @@
 		<c:forEach var="group" items="${result.list}">
 			<div class="group_item">
 				<div class="group_icon">
-					<img  src="../${group.groupIcon}">
+					<img  src="${realPath}/upload/${group.groupIcon}" width="50">
 				</div>
 				<div class="group_con">
 					<div class="group_tit">
@@ -25,7 +25,7 @@
 						<div class="clear"></div>
 					</div>
 					<div class="group_info">
-						创建者：<a href="user/userInfo.jspx?userId=10001">${group.authorName}</a>&nbsp;|&nbsp;
+						创建者：<a href="${realPath}/user/${group.groupAuthor}">${group.authorName}</a>&nbsp;|&nbsp;
 						成员数：<span class="group_blue">${group.members}</span>&nbsp;|&nbsp;
 						文章数：<span class="group_blue">${group.topicCount}</span>
 					</div>
@@ -37,6 +37,7 @@
 		<div class="pagination">
 			<p:pager url="" page="${result.page}" pageTotal = "${result.pageTotal }"></p:pager>
 		</div>
+		<%@ include file="../common/foot_manage.jsp" %>
 	</div>
 </body>
 </html>

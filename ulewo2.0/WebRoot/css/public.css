@@ -50,3 +50,10 @@ a.btn:hover{background:#38678F}
 .pagination a:hover,.pagination a:active{border:1px solid #DDD;border-top:1px solid #AAA;border-left:1px solid #AAA;background-color:#D0D3C8;}
 a.prePage,a.nextPage{width:60px;}
 #nowPage{width:20px;height:20px;font-weight:bold;padding-top:4px;border: 1px solid #999;border-left: 1px solid #DDD;height:17px;font-weight: bold;border-top: 1px none #CCC;background: #CCC;color: #666}
+
+
+/********提示信息**********/
+.result_info{float:left;margin-left:10px;color:red;display:none;}
+.result_info i{background:url("../images/icon.png") 0px -46px no-repeat;width:20px;height:20px;display:inline-block;float:left;margin-top:10px;}
+.result_info i.info{background-position:-23px -46px}
+.result_info span{float:left;margin-left:2px;padding-top:13px;}
