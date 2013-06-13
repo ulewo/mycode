@@ -19,8 +19,10 @@ import com.ulewo.entity.ArticleItem;
 import com.ulewo.entity.Group;
 import com.ulewo.entity.SessionUser;
 import com.ulewo.service.ArticleItemService;
+import com.ulewo.service.ArticleService;
 import com.ulewo.service.GroupService;
 import com.ulewo.util.Constant;
+import com.ulewo.util.PaginationResult;
 import com.ulewo.util.StringUtils;
 
 @Controller
@@ -31,6 +33,9 @@ public class GroupMagageAction {
 
 	@Autowired
 	ArticleItemService articleItemService;
+
+	@Autowired
+	ArticleService articleService;
 
 	private final static int GROUPNAEM_LENGTH = 50;
 
@@ -59,8 +64,8 @@ public class GroupMagageAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/{gid}/editGroup.action", method = RequestMethod.POST)
-	public Map<String, Object> editGroup(@PathVariable String gid,
-			HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> editGroup(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
+
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			SessionUser user = (SessionUser) session.getAttribute("user");
@@ -105,16 +110,14 @@ public class GroupMagageAction {
 	 * @return
 	 */
 	@RequestMapping(value = "/{gid}/manage/group_notice", method = RequestMethod.GET)
-	public ModelAndView groupNotice(@PathVariable String gid,
-			HttpSession session, HttpServletRequest request) {
+	public ModelAndView groupNotice(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
 			SessionUser user = (SessionUser) session.getAttribute("user");
 			String userId = "10001";
 			Group group = groupService.queryGorup(gid);
-			group.setGroupNotice(StringUtils.reFormateHtml(group
-					.getGroupNotice()));
+			group.setGroupNotice(StringUtils.reFormateHtml(group.getGroupNotice()));
 			mv.addObject("group", group);
 			mv.addObject("gid", gid);
 			mv.setViewName("/groupmanage/group_notice");
@@ -128,8 +131,8 @@ public class GroupMagageAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/{gid}/editNotice.action", method = RequestMethod.POST)
-	public Map<String, Object> editNotice(@PathVariable String gid,
-			HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> editNotice(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
+
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			SessionUser user = (SessionUser) session.getAttribute("user");
@@ -158,19 +161,55 @@ public class GroupMagageAction {
 	 * @return
 	 */
 	@RequestMapping(value = "/{gid}/manage/group_item", method = RequestMethod.GET)
-	public ModelAndView blogItem(@PathVariable String gid, HttpSession session,
-			HttpServletRequest request) {
+	public ModelAndView blogItem(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
-			SessionUser sessionUser = (SessionUser) session
-					.getAttribute("user");
+			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 			String userId = "10001";
-			List<ArticleItem> itemList = articleItemService
-					.queryItemAndTopicCountByGid(gid);
+			List<ArticleItem> itemList = articleItemService.queryItemAndTopicCountByGid(gid);
 			mv.addObject("imtes", itemList);
 			mv.addObject("gid", gid);
 			mv.setViewName("groupmanage/group_item");
+			return mv;
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.setViewName("redirect:" + Constant.WEBSTIE);
+			return mv;
+		}
+	}
+
+	/**
+	 * 文章管理
+	 * 
+	 * @param session
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/{gid}/manage/group_article", method = RequestMethod.GET)
+	public ModelAndView groupArticle(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
+
+		ModelAndView mv = new ModelAndView();
+		try {
+			String itemId = request.getParameter("itemId");
+			int itemId_int = 0;
+			if (StringUtils.isNumber(itemId)) {
+				itemId_int = Integer.parseInt(itemId);
+			}
+			String page = request.getParameter("page");
+			int page_int = 0;
+			if (StringUtils.isNumber(page)) {
+				page_int = Integer.parseInt(page);
+			}
+			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+			String userId = "10001";
+			List<ArticleItem> itemList = articleItemService.queryItemAndTopicCountByGid(gid);
+			PaginationResult result = articleService.queryTopicOrderByGradeAndLastReTime(gid, itemId_int, page_int,
+					Constant.pageSize25);
+			mv.addObject("itemList", itemList);
+			mv.addObject("result", result);
+			mv.addObject("gid", gid);
+			mv.setViewName("groupmanage/group_article");
 			return mv;
 		} catch (Exception e) {
 			e.printStackTrace();
