@@ -1,0 +1,10 @@
+@import url("group.manage.public.css");
+.articleop{background:#EAEAEA;height:30px;margin-top:10px;padding-left:10px;padding-top:5px;}
+.article_item{height:25px;padding-top:5px;padding-left:10px;}
+.article_item_check{float:left;width:20px;}
+.article_item_check input{margin:0px;padding:0px;}
+.article_item_tit{width:400px;float:left;overflow:hidden;}
+.article_item_itemname{width:100px;float:left;}
+.article_item_username{width:50px;float:left;}
+.article_item_time{width:100px;float:left;}
+.article_item_op{float:left;width:100px;}

@@ -24,7 +24,7 @@ global.gid="${gid}";
 		 文章管理
 	</div>
 	<ul class="menue">
-		<li id="selected4"><a href="">文章管理</a></li>
+		<li id="selected4"><a href="${realPath}/groupManage/${gid}/manage/group_article">文章管理</a></li>
 		<li id="selected5"><a href="manage/group_reply">评论管理</a></li>
 		<li id="selected6"><a href="${realPath}/groupManage/${gid}/manage/group_item">分类管理</a></li>
 	</ul>
