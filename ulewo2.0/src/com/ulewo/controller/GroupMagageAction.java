@@ -205,9 +205,41 @@ public class GroupMagageAction {
 			String userId = "10001";
 			List<ArticleItem> itemList = articleItemService.queryItemAndTopicCountByGid(gid);
 			PaginationResult result = articleService.queryTopicOrderByGradeAndLastReTime(gid, itemId_int, page_int,
-					Constant.pageSize25);
+					Constant.pageSize20);
 			mv.addObject("itemList", itemList);
+			mv.addObject("itemId", itemId_int);
 			mv.addObject("result", result);
+			mv.addObject("gid", gid);
+			mv.setViewName("groupmanage/group_article");
+			return mv;
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.setViewName("redirect:" + Constant.WEBSTIE);
+			return mv;
+		}
+	}
+
+	@RequestMapping(value = "/{gid}/manage/manageArticle", method = RequestMethod.POST)
+	public ModelAndView manageArticle(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
+
+		ModelAndView mv = new ModelAndView();
+		try {
+			String itemId = request.getParameter("itemId");
+			int itemId_int = 0;
+			if (StringUtils.isNumber(itemId)) {
+				itemId_int = Integer.parseInt(itemId);
+			}
+			String page = request.getParameter("page");
+			int page_int = 0;
+			if (StringUtils.isNumber(page)) {
+				page_int = Integer.parseInt(page);
+			}
+			String type = request.getParameter("type");
+			String[] id = request.getParameterValues("id");
+			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+			String userId = "10001";
+			articleService.manangeArticle(userId, gid, id, type);
+			mv.addObject("itemId", itemId_int);
 			mv.addObject("gid", gid);
 			mv.setViewName("groupmanage/group_article");
 			return mv;

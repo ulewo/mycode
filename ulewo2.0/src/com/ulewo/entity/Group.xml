@@ -31,6 +31,10 @@
 		where id = #gid#
 	</select>
 	
+	<select id="getGroupBaseInfo"  resultClass="group" parameterClass="java.lang.String">
+	    select * from groups where id = #gid#
+	</select>
+	
 	<!--删除-->
 	
 	<delete id="deleteBatch"> 

@@ -20,11 +20,11 @@ public class GroupDao extends BaseDao {
 	 */
 	public int getMaxGId() {
 
-		Object obj = getSqlMapClientTemplate()
-				.queryForObject("group.getMaxGId");
+		Object obj = getSqlMapClientTemplate().queryForObject("group.getMaxGId");
 		if (null == obj) {
 			return 10000;
-		} else {
+		}
+		else {
 			return (Integer) obj;
 		}
 
@@ -50,8 +50,12 @@ public class GroupDao extends BaseDao {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("gid", gid);
-		return (Group) getSqlMapClientTemplate().queryForObject(
-				"group.getGroup", parmMap);
+		return (Group) getSqlMapClientTemplate().queryForObject("group.getGroup", parmMap);
+	}
+
+	public Group queryGroupBaseInfo(String gid) {
+
+		return (Group) getSqlMapClientTemplate().queryForObject("group.getGroupBaseInfo", gid);
 	}
 
 	/**
@@ -80,8 +84,7 @@ public class GroupDao extends BaseDao {
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("offset", offset);
 		parmMap.put("total", total);
-		return this.getSqlMapClientTemplate().queryForList(
-				"group.queryGroupsByArticleCount", parmMap);
+		return this.getSqlMapClientTemplate().queryForList("group.queryGroupsByArticleCount", parmMap);
 	}
 
 	/**
@@ -98,8 +101,7 @@ public class GroupDao extends BaseDao {
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("offset", offset);
 		parmMap.put("total", total);
-		return this.getSqlMapClientTemplate().queryForList(
-				"group.queryGroupsByMemberCount", parmMap);
+		return this.getSqlMapClientTemplate().queryForList("group.queryGroupsByMemberCount", parmMap);
 	}
 
 	/**
@@ -118,8 +120,7 @@ public class GroupDao extends BaseDao {
 		parmMap.put("isValid", Constant.ISVALIDY);
 		parmMap.put("total", total);
 		parmMap.put("orderBy", orderBy);
-		return this.getSqlMapClientTemplate().queryForList("group.queryGroups",
-				parmMap);
+		return this.getSqlMapClientTemplate().queryForList("group.queryGroups", parmMap);
 	}
 
 	/**
@@ -133,8 +134,7 @@ public class GroupDao extends BaseDao {
 	 */
 	public List<Group> queryCreatedGroups(String userId) {
 
-		return this.getSqlMapClientTemplate().queryForList(
-				"group.queryCreatedGroups", userId);
+		return this.getSqlMapClientTemplate().queryForList("group.queryCreatedGroups", userId);
 	}
 
 	/**
@@ -148,8 +148,7 @@ public class GroupDao extends BaseDao {
 	 */
 	public List<Group> queryJoinedGroups(String userId) {
 
-		return this.getSqlMapClientTemplate().queryForList(
-				"group.queryJoinedGroups", userId);
+		return this.getSqlMapClientTemplate().queryForList("group.queryJoinedGroups", userId);
 	}
 
 	/**
@@ -162,8 +161,7 @@ public class GroupDao extends BaseDao {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("isValid", Constant.ISVALIDY);
-		return (Integer) this.getSqlMapClientTemplate().queryForObject(
-				"group.queryGroupsCount", parmMap);
+		return (Integer) this.getSqlMapClientTemplate().queryForObject("group.queryGroupsCount", parmMap);
 	}
 
 	/**
@@ -177,15 +175,13 @@ public class GroupDao extends BaseDao {
 	 * @throws Exception
 	 * @author luohl
 	 */
-	public List<Group> queryCreateGroupsByAuthorId(String userId, int offset,
-			int total) {
+	public List<Group> queryCreateGroupsByAuthorId(String userId, int offset, int total) {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("userid", userId);
 		parmMap.put("offset", offset);
 		parmMap.put("total", total);
-		return this.getSqlMapClientTemplate().queryForList(
-				"group.queryCreateGroupsByAuthorId", parmMap);
+		return this.getSqlMapClientTemplate().queryForList("group.queryCreateGroupsByAuthorId", parmMap);
 	}
 
 	/**
@@ -199,15 +195,13 @@ public class GroupDao extends BaseDao {
 	 * @throws Exception
 	 * @author luohl
 	 */
-	public List<Group> queryJoinGroupsByAuthorId(String userId, int offset,
-			int total) {
+	public List<Group> queryJoinGroupsByAuthorId(String userId, int offset, int total) {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("userid", userId);
 		parmMap.put("offset", offset);
 		parmMap.put("total", total);
-		return this.getSqlMapClientTemplate().queryForList(
-				"group.queryTopicByReUserId", parmMap);
+		return this.getSqlMapClientTemplate().queryForList("group.queryTopicByReUserId", parmMap);
 	}
 
 	/* 搜索群组 */
@@ -218,8 +212,7 @@ public class GroupDao extends BaseDao {
 		parmMap.put("offset", offset);
 		parmMap.put("total", total);
 		parmMap.put("isValid", Constant.ISVALIDY);
-		return this.getSqlMapClientTemplate().queryForList("group.queryGroups",
-				parmMap);
+		return this.getSqlMapClientTemplate().queryForList("group.queryGroups", parmMap);
 	}
 
 	/* 搜索群组数 */
@@ -228,7 +221,6 @@ public class GroupDao extends BaseDao {
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("keyWord", keyWord);
 		parmMap.put("isValid", Constant.ISVALIDY);
-		return (Integer) this.getSqlMapClientTemplate().queryForObject(
-				"group.queryGroupsCount", parmMap);
+		return (Integer) this.getSqlMapClientTemplate().queryForObject("group.queryGroupsCount", parmMap);
 	}
 }

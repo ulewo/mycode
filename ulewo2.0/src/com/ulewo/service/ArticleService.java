@@ -43,6 +43,15 @@ public interface ArticleService {
 	public void updateArticleSelective(Article article);
 
 	/**
+	 * 管理文章
+	 * @param gid TODO
+	 * @param userId TODO
+	 * @param ids
+	 * @param type
+	 */
+	public void manangeArticle(String gid, String userId, String[] ids, String type);
+
+	/**
 	 * 
 	 * description: 显示具体的文章
 	 * @return

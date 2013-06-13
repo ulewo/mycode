@@ -13,14 +13,18 @@ import org.springframework.stereotype.Service;
 import com.ulewo.dao.ArticleDao;
 import com.ulewo.dao.ArticleItemDao;
 import com.ulewo.dao.AttachedFileDao;
+import com.ulewo.dao.GroupDao;
 import com.ulewo.dao.NoticeDao;
 import com.ulewo.dao.ReArticleDao;
 import com.ulewo.dao.UserDao;
 import com.ulewo.entity.Article;
 import com.ulewo.entity.AttachedFile;
+import com.ulewo.entity.Group;
 import com.ulewo.entity.NoticeParam;
 import com.ulewo.entity.ReArticle;
 import com.ulewo.entity.User;
+import com.ulewo.enums.ArticleEssence;
+import com.ulewo.enums.ArticleGrade;
 import com.ulewo.enums.FileType;
 import com.ulewo.enums.NoticeType;
 import com.ulewo.enums.QueryUserType;
@@ -51,7 +55,20 @@ public class ArticleServiceImpl implements ArticleService {
 	@Autowired
 	private AttachedFileDao attachedFileDao;
 
+	@Autowired
+	private GroupDao groupDao;
+
 	private final SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+	private static final String TYPE_SETTOP = "0";
+
+	private static final String TYPE_CANCELTOP = "1";
+
+	private static final String TYPE_SETGOOD = "2";
+
+	private static final String TYPE_CANCELGOOD = "3";
+
+	private static final String TYPE_DELETE = "4";
 
 	/**
 	 * 新增文章
@@ -180,6 +197,56 @@ public class ArticleServiceImpl implements ArticleService {
 			}
 		}
 
+	}
+
+	public void manangeArticle(String gid, String userId, String[] ids, String type) {
+
+		Group group = groupDao.queryGroupBaseInfo(gid);
+		if (null == group) {
+			return;
+		}
+		if (!group.getGroupAuthor().equals(userId)) {
+			return;
+		}
+		if (ids != null && StringUtils.isNotEmpty(type)) {
+			if (TYPE_SETTOP.equals(type)) { //设置置顶
+				for (String id : ids) {
+					Article article = new Article();
+					article.setId(Integer.parseInt(id));
+					article.setGrade(ArticleGrade.TOP.getValue());
+					articleDao.updateArticleSelective(article);
+				}
+			}
+			else if (TYPE_CANCELTOP.equals(type)) {//取消置顶
+				for (String id : ids) {
+					Article article = new Article();
+					article.setId(Integer.parseInt(id));
+					article.setGrade(ArticleGrade.NORMAL.getValue());
+					articleDao.updateArticleSelective(article);
+				}
+			}
+			else if (TYPE_SETGOOD.equals(type)) {
+				for (String id : ids) {
+					Article article = new Article();
+					article.setId(Integer.parseInt(id));
+					article.setEssence(ArticleEssence.Essence.getValue());
+					articleDao.updateArticleSelective(article);
+				}
+			}
+			else if (TYPE_CANCELGOOD.equals(type)) {
+				for (String id : ids) {
+					Article article = new Article();
+					article.setId(Integer.parseInt(id));
+					article.setEssence(ArticleEssence.NoEssence.getValue());
+					articleDao.updateArticleSelective(article);
+				}
+			}
+			else if (TYPE_DELETE.equals(type)) {
+				for (String id : ids) {
+					articleDao.deleteArticle(Integer.parseInt(id));
+				}
+			}
+		}
 	}
 
 	/**

@@ -66,6 +66,11 @@ public class ArticleDao extends BaseDao {
 		this.getSqlMapClientTemplate().update("article.updateArticle_selective", article);
 	}
 
+	public void deleteArticle(int id) {
+
+		getSqlMapClientTemplate().delete("article.deleteArticle", id);
+	}
+
 	/**
 	 * 
 	 * description: 根据gid,itemid查询主题总数
