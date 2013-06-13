@@ -1,4 +1,5 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="/WEB-INF/pager.tld" prefix="p"%> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>  
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -7,9 +8,9 @@
 <%@ include file="../common/path.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>登陆有乐窝-有乐窝</title>
-<link rel="stylesheet" type="text/css" href="../css/group.manage.groupreply.css">
+<link rel="stylesheet" type="text/css" href="${realPath}/css/group.manage.groupreply.css">
 <style type="text/css">
-#selected6 a{background:#ffffff;color:#333333;font-weight:bold;}
+#selected5 a{background:#ffffff;color:#333333;font-weight:bold;}
 </style>
 </head>
 <body>
@@ -19,26 +20,25 @@
 	  		<%@ include file="left.jsp" %>
 		</div>
 		<div class="right">
-			<div class="right_top_m">
-					<a href="">空间</a>&gt;&gt;<a href="blog">博客</a>
-					<c:if test="${blogitem!=null}">
-						&gt;&gt;<a href="">${blogitem.itemName}</a>
-					</c:if>
-			</div>
-			<c:forEach var="reply" items="${replyList.list}">
+			<c:forEach var="rearticle" items="${result.list}">
 				<div class="item_reply">
-					<div class="user_icon"><a href="/${reply.userId}"><img src="../upload/${reply.reUserIcon}"/></a></div>
+					<div class="user_icon">
+						<a href="${realPath}/user/${rearticle.authorid}" target="_blank"><img src="${rearticle.authorIcon}"/></a>
+					</div>
 					<div class="reply_con">
 						<div class="title_op">
-							<div class="blog_title"><a href="">${reply.blogTitle}</a></div>
+							<div class="blog_title"><a href="${realPaht}/group/${gid}/topic/${rearticle.articleId}" target="_blank">${rearticle.articleTitle}</a></div>
 							<div class="reply_op"><a href="">删除</a></div>
 							<div class="clear"></div>
 						</div>
-						<div class="reply_content">${reply.content}</div>
+						<div class="reply_content">${rearticle.content}</div>
 					</div>
 					<div class="clear"></div>
 				</div>
 			</c:forEach>
+			<div class="pagination" style="margin-top:10px;">
+				<p:pager url="${realPath}/groupManage/${gid}/manage/article_reply" page="${result.page}" pageTotal = "${result.pageTotal }"></p:pager>
+			</div>
 		</div>
 		<div style="clear:left;"></div>
 	</div>

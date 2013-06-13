@@ -25,7 +25,7 @@ global.gid="${gid}";
 	</div>
 	<ul class="menue">
 		<li id="selected4"><a href="${realPath}/groupManage/${gid}/manage/group_article">文章管理</a></li>
-		<li id="selected5"><a href="manage/group_reply">评论管理</a></li>
+		<li id="selected5"><a href="${realPath}/groupManage/${gid}/manage/article_reply">评论管理</a></li>
 		<li id="selected6"><a href="${realPath}/groupManage/${gid}/manage/group_item">分类管理</a></li>
 	</ul>
 	
@@ -33,7 +33,7 @@ global.gid="${gid}";
 		成员管理
 	</div>
 	<ul class="menue">
-		<li id="selected7"><a href="notice.jspx">窝窝成员</a></li>
-		<li id="selected8"><a href="notice.jspx">成员审批</a></li>
+		<li id="selected7"><a href="${realPath}/groupManage/${gid}/manage/member">窝窝成员</a></li>
+		<li id="selected8"><a href="${realPath}/groupManage/${gid}/manage/member_apply">成员审批</a></li>
 	</ul>
 </div>    
