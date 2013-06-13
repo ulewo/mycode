@@ -86,4 +86,15 @@ public interface ReArticleService {
 	public PaginationResult queryReArticles(int articleid, int page,
 			int pageSize);
 
+	/***
+	 * 分页查询所有窝窝所有回复
+	 * 
+	 * @param gid
+	 * @param page
+	 * @param pageSize
+	 * @return
+	 */
+	public PaginationResult queryReArticleByGid(String gid, int page,
+			int pageSize);
+
 }

@@ -219,4 +219,20 @@ public class ReArticleServiceImpl implements ReArticleService {
 		}
 		return resultList;
 	}
+
+	@Override
+	public PaginationResult queryReArticleByGid(String gid, int page,
+			int pageSize) {
+		int count = reArticleDao.queryReArticleByGid(gid);
+		Pagination pagination = new Pagination(page, count, pageSize);
+		pagination.action();
+		List<ReArticle> list = reArticleDao.queryAllReArticleByGid(gid,
+				pagination.getOffSet(), pageSize);
+		for (ReArticle rearticle : list) {
+			rearticle.setContent(StringUtils.clearHtml(rearticle.getContent()));
+		}
+		PaginationResult result = new PaginationResult(pagination.getPage(),
+				pagination.getPageTotal(), count, list);
+		return result;
+	}
 }

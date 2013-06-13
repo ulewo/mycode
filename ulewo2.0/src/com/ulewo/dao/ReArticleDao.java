@@ -8,31 +8,34 @@ import org.springframework.stereotype.Component;
 
 import com.ulewo.entity.ReArticle;
 
-/** 
+/**
  * @Title:
  * @Description: 回复文章dao数据操作
  * @author luohl
  * @date 2012-3-30
  * @version V1.0
-*/
+ */
 @Component
 public class ReArticleDao extends BaseDao {
 	/**
 	 * 
 	 * description: 新增回复
+	 * 
 	 * @param reArticle
 	 * @throws Exception
 	 * @author luohl
 	 */
 	public int addReArticle(ReArticle reArticle) {
 
-		int id = (Integer) this.getSqlMapClientTemplate().insert("reArticle.addReArticle", reArticle);
+		int id = (Integer) this.getSqlMapClientTemplate().insert(
+				"reArticle.addReArticle", reArticle);
 		return id;
 	}
 
 	/**
 	 * 
 	 * description: 删除回复
+	 * 
 	 * @param id
 	 * @throws Exception
 	 * @author luohl
@@ -45,30 +48,35 @@ public class ReArticleDao extends BaseDao {
 	/**
 	 * 
 	 * description: 单笔查询回复
+	 * 
 	 * @param id
 	 * @return
 	 * @author luohl
 	 */
 	public ReArticle getReArticle(int id) {
 
-		return (ReArticle) this.getSqlMapClientTemplate().queryForObject("reArticle.getReArticle", id);
+		return (ReArticle) this.getSqlMapClientTemplate().queryForObject(
+				"reArticle.getReArticle", id);
 	}
 
 	/**
 	 * 
 	 * description: 更新回复
+	 * 
 	 * @param reArticle
 	 * @throws Exception
 	 * @author luohl
 	 */
 	public void updateReArticle(ReArticle reArticle) {
 
-		this.getSqlMapClientTemplate().update("reArticle.updateReArticle", reArticle);
+		this.getSqlMapClientTemplate().update("reArticle.updateReArticle",
+				reArticle);
 	}
 
 	/**
 	 * 
 	 * description: 查询回复总条数
+	 * 
 	 * @param articleid
 	 * @return
 	 * @throws Exception
@@ -76,12 +84,14 @@ public class ReArticleDao extends BaseDao {
 	 */
 	public int queryReArticleCount(int articleid) {
 
-		return (Integer) this.getSqlMapClientTemplate().queryForObject("reArticle.queryReArticleCount", articleid);
+		return (Integer) this.getSqlMapClientTemplate().queryForObject(
+				"reArticle.queryReArticleCount", articleid);
 	}
 
 	/**
 	 * 
 	 * description: 分页查询回复
+	 * 
 	 * @param articleid
 	 * @param offset
 	 * @param total
@@ -95,11 +105,13 @@ public class ReArticleDao extends BaseDao {
 		parmMap.put("articleid", articleid);
 		parmMap.put("offset", offset);
 		parmMap.put("total", total);
-		return this.getSqlMapClientTemplate().queryForList("reArticle.queryReArticles", parmMap);
+		return this.getSqlMapClientTemplate().queryForList(
+				"reArticle.queryReArticles", parmMap);
 	}
 
 	/**
 	 * description: 根据父ID查询回复
+	 * 
 	 * @param pid
 	 * @return
 	 * @throws Exception
@@ -107,12 +119,14 @@ public class ReArticleDao extends BaseDao {
 	 */
 	public List<ReArticle> queryReArticleByPid(int pid) {
 
-		return this.getSqlMapClientTemplate().queryForList("reArticle.queryReArticleByPid", pid);
+		return this.getSqlMapClientTemplate().queryForList(
+				"reArticle.queryReArticleByPid", pid);
 	}
 
 	/**
 	 * 
 	 * description: 查询最后回复的文章
+	 * 
 	 * @param articleid
 	 * @param offset
 	 * @param total
@@ -122,6 +136,22 @@ public class ReArticleDao extends BaseDao {
 	 */
 	public ReArticle queryLatestReArticle(int articleid) {
 
-		return (ReArticle) this.getSqlMapClientTemplate().queryForObject("reArticle.queryLatestReArticle", articleid);
+		return (ReArticle) this.getSqlMapClientTemplate().queryForObject(
+				"reArticle.queryLatestReArticle", articleid);
+	}
+
+	public int queryReArticleByGid(String gid) {
+		return (Integer) this.getSqlMapClientTemplate().queryForObject(
+				"reArticle.queryAllReArticleCountByGid", gid);
+	}
+
+	public List<ReArticle> queryAllReArticleByGid(String gid, int offset,
+			int total) {
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("gid", gid);
+		parmMap.put("offset", offset);
+		parmMap.put("total", total);
+		return this.getSqlMapClientTemplate().queryForList(
+				"reArticle.queryAllReArticleByGid", parmMap);
 	}
 }

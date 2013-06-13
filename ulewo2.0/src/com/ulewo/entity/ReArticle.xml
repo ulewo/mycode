@@ -67,13 +67,15 @@
 		order by r.retime desc limit 0,1 
 	</select>
 	
-	<select id="queryAllReArticleByGid">
+	<select id="queryAllReArticleByGid" resultClass="reArticle" parameterClass="java.util.Map">
 	    select r.id,r.pid,r.articleid,r.gid,r.content,r.authorid,r.sourcefrom,u.username as authorname,
 	    u.userLittleIcon as authorIcon,a.title as articleTitle
-		from rearticle r inner join user u on u.userid = r.authorid inner join article a on a.id=r.articleid where r.gid = #gid# limit #offset#,#total#
+		from rearticle r inner join user u on u.userid = r.authorid inner join article a on a.id=r.articleid 
+		where r.gid = #gid# order by retime desc limit #offset#,#total#
 	</select>
 	
-	<select id="queryAllReArticleCountByGid" resultClass="reArticle" parameterClass="java.lang.Integer">
+	<select id="queryAllReArticleCountByGid" resultClass="java.lang.Integer" parameterClass="java.lang.String">
 		select count(*) from rearticle where gid = #gid#
 	</select>	
+	
 </sqlMap>

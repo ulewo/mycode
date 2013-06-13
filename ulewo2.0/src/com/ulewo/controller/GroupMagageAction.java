@@ -18,9 +18,13 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ulewo.entity.ArticleItem;
 import com.ulewo.entity.Group;
 import com.ulewo.entity.SessionUser;
+import com.ulewo.enums.MemberStatus;
+import com.ulewo.enums.QueryOrder;
 import com.ulewo.service.ArticleItemService;
 import com.ulewo.service.ArticleService;
 import com.ulewo.service.GroupService;
+import com.ulewo.service.MemberService;
+import com.ulewo.service.ReArticleService;
 import com.ulewo.util.Constant;
 import com.ulewo.util.PaginationResult;
 import com.ulewo.util.StringUtils;
@@ -36,6 +40,11 @@ public class GroupMagageAction {
 
 	@Autowired
 	ArticleService articleService;
+
+	@Autowired
+	ReArticleService reArticleService;
+	@Autowired
+	MemberService memberService;
 
 	private final static int GROUPNAEM_LENGTH = 50;
 
@@ -64,7 +73,8 @@ public class GroupMagageAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/{gid}/editGroup.action", method = RequestMethod.POST)
-	public Map<String, Object> editGroup(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> editGroup(@PathVariable String gid,
+			HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -110,14 +120,16 @@ public class GroupMagageAction {
 	 * @return
 	 */
 	@RequestMapping(value = "/{gid}/manage/group_notice", method = RequestMethod.GET)
-	public ModelAndView groupNotice(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
+	public ModelAndView groupNotice(@PathVariable String gid,
+			HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
 			SessionUser user = (SessionUser) session.getAttribute("user");
 			String userId = "10001";
 			Group group = groupService.queryGorup(gid);
-			group.setGroupNotice(StringUtils.reFormateHtml(group.getGroupNotice()));
+			group.setGroupNotice(StringUtils.reFormateHtml(group
+					.getGroupNotice()));
 			mv.addObject("group", group);
 			mv.addObject("gid", gid);
 			mv.setViewName("/groupmanage/group_notice");
@@ -131,7 +143,8 @@ public class GroupMagageAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/{gid}/editNotice.action", method = RequestMethod.POST)
-	public Map<String, Object> editNotice(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> editNotice(@PathVariable String gid,
+			HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -161,13 +174,16 @@ public class GroupMagageAction {
 	 * @return
 	 */
 	@RequestMapping(value = "/{gid}/manage/group_item", method = RequestMethod.GET)
-	public ModelAndView blogItem(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
+	public ModelAndView blogItem(@PathVariable String gid, HttpSession session,
+			HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
-			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+			SessionUser sessionUser = (SessionUser) session
+					.getAttribute("user");
 			String userId = "10001";
-			List<ArticleItem> itemList = articleItemService.queryItemAndTopicCountByGid(gid);
+			List<ArticleItem> itemList = articleItemService
+					.queryItemAndTopicCountByGid(gid);
 			mv.addObject("imtes", itemList);
 			mv.addObject("gid", gid);
 			mv.setViewName("groupmanage/group_item");
@@ -187,7 +203,8 @@ public class GroupMagageAction {
 	 * @return
 	 */
 	@RequestMapping(value = "/{gid}/manage/group_article", method = RequestMethod.GET)
-	public ModelAndView groupArticle(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
+	public ModelAndView groupArticle(@PathVariable String gid,
+			HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
@@ -201,11 +218,14 @@ public class GroupMagageAction {
 			if (StringUtils.isNumber(page)) {
 				page_int = Integer.parseInt(page);
 			}
-			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+			SessionUser sessionUser = (SessionUser) session
+					.getAttribute("user");
 			String userId = "10001";
-			List<ArticleItem> itemList = articleItemService.queryItemAndTopicCountByGid(gid);
-			PaginationResult result = articleService.queryTopicOrderByGradeAndLastReTime(gid, itemId_int, page_int,
-					Constant.pageSize20);
+			List<ArticleItem> itemList = articleItemService
+					.queryItemAndTopicCountByGid(gid);
+			PaginationResult result = articleService
+					.queryTopicOrderByGradeAndLastReTime(gid, itemId_int,
+							page_int, Constant.pageSize20);
 			mv.addObject("itemList", itemList);
 			mv.addObject("itemId", itemId_int);
 			mv.addObject("result", result);
@@ -220,7 +240,8 @@ public class GroupMagageAction {
 	}
 
 	@RequestMapping(value = "/{gid}/manage/manageArticle", method = RequestMethod.POST)
-	public ModelAndView manageArticle(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
+	public ModelAndView manageArticle(@PathVariable String gid,
+			HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
@@ -236,12 +257,87 @@ public class GroupMagageAction {
 			}
 			String type = request.getParameter("type");
 			String[] id = request.getParameterValues("id");
-			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+			SessionUser sessionUser = (SessionUser) session
+					.getAttribute("user");
 			String userId = "10001";
 			articleService.manangeArticle(userId, gid, id, type);
 			mv.addObject("itemId", itemId_int);
 			mv.addObject("gid", gid);
 			mv.setViewName("groupmanage/group_article");
+			return mv;
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.setViewName("redirect:" + Constant.WEBSTIE);
+			return mv;
+		}
+	}
+
+	@RequestMapping(value = "/{gid}/manage/article_reply", method = RequestMethod.GET)
+	public ModelAndView articleReply(@PathVariable String gid,
+			HttpSession session, HttpServletRequest request) {
+
+		ModelAndView mv = new ModelAndView();
+		try {
+			String page = request.getParameter("page");
+			int page_int = 0;
+			if (StringUtils.isNumber(page)) {
+				page_int = Integer.parseInt(page);
+			}
+			PaginationResult result = reArticleService.queryReArticleByGid(gid,
+					page_int, Constant.pageSize25);
+			mv.addObject("gid", gid);
+			mv.addObject("result", result);
+			mv.setViewName("groupmanage/article_reply");
+			return mv;
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.setViewName("redirect:" + Constant.WEBSTIE);
+			return mv;
+		}
+	}
+
+	@RequestMapping(value = "/{gid}/manage/member", method = RequestMethod.GET)
+	public ModelAndView member(@PathVariable String gid, HttpSession session,
+			HttpServletRequest request) {
+
+		ModelAndView mv = new ModelAndView();
+		try {
+			String page = request.getParameter("page");
+			int page_int = 0;
+			if (StringUtils.isNumber(page)) {
+				page_int = Integer.parseInt(page);
+			}
+			PaginationResult result = memberService.queryMembers(gid,
+					MemberStatus.ISMEMBER, QueryOrder.ASC, page_int,
+					Constant.pageSize20);
+			mv.addObject("gid", gid);
+			mv.addObject("result", result);
+			mv.setViewName("groupmanage/member");
+			return mv;
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.setViewName("redirect:" + Constant.WEBSTIE);
+			return mv;
+		}
+	}
+
+	@RequestMapping(value = "/{gid}/manage/member_apply", method = RequestMethod.GET)
+	public ModelAndView memberApply(@PathVariable String gid,
+			HttpSession session, HttpServletRequest request) {
+
+		ModelAndView mv = new ModelAndView();
+		try {
+			String page = request.getParameter("page");
+			int page_int = 0;
+			if (StringUtils.isNumber(page)) {
+				page_int = Integer.parseInt(page);
+			}
+			PaginationResult result = memberService.queryMembers(gid,
+					MemberStatus.NOTMEMBER, QueryOrder.ASC, page_int,
+					Constant.pageSize20);
+			mv.addObject("gid", gid);
+			mv.addObject("result", result);
+			mv.setViewName("groupmanage/member_apply");
 			return mv;
 		} catch (Exception e) {
 			e.printStackTrace();
