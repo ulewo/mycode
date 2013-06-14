@@ -18,6 +18,8 @@ global.articleId= "${article.id}";
 <script type="text/javascript" src="${realPath}/ueditor/editor_config.js"></script>
 <script type="text/javascript" src="${realPath}/ueditor/editor.js"></script>
 <script type="text/javascript" src="${realPath}/js/group.showarticle.js"></script>
+<script type="text/javascript" src="${realPath}/js/scripts/shCore.js"></script>
+<link type="text/css" rel="stylesheet" href="${realPath}/js/styles/SyntaxHighlighter.css"/>
 </head>
 <body>
 	<%@ include file="../common/head.jsp" %>

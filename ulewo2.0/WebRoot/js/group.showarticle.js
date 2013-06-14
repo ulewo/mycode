@@ -1,5 +1,15 @@
 var editor;
 $(function() {
+	$(".article_detail pre").each(function () {
+        var $this = $(this);
+        if ($this.attr("class")!=null&&$this.attr("class").indexOf("brush:") != -1) {
+            var lang = $this.attr("class").split(';')[0].split(':')[1];
+            $this.attr('name', 'code');
+            $this.attr('class', lang);
+        }
+    });
+    dp.SyntaxHighlighter.HighlightAll('code');
+    
 	$("#new_article_p").bind("click",showAddForm);
 	$("#sub_article_btn").bind("click",addArticle);
 	loadPage(1);
@@ -42,6 +52,15 @@ function loadReComment(articleId,page) {
 					}
 				}
 				new Pager(data.result.pageTotal,10,data.result.page).asHtml().appendTo($("#pager"));
+				$(".outerHeight pre").each(function () {
+			        var $this = $(this);
+			        if ($this.attr("class")!=null&&$this.attr("class").indexOf("brush:") != -1) {
+			            var lang = $this.attr("class").split(';')[0].split(':')[1];
+			            $this.attr('name', 'code');
+			            $this.attr('class', lang);
+			        }
+			    });
+			    dp.SyntaxHighlighter.HighlightAll('code');
 			}else{
 				$("<div class='noinfo'>没有回复,赶紧抢沙发吧！</div>").appendTo($("#recomment"));
 			}

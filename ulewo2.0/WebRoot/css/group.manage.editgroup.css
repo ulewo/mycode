@@ -1,4 +1,5 @@
 @import url("group.manage.public.css");
+.right{padding-top:10px;}
 .form_tit{margin-top:10px;}
 .form_tit_t{font-size:14px;}
 .form_tit_x{color:#ABADB3}
@@ -16,3 +17,7 @@
 
 .form_tit_radio{float:left;width:80px;font-weight:bold;font-size:14px;color:#333333}
 .form_con_radio{float:left;display:inline-block;margin-left:10px;}
+
+.form_sub_btn{margin-top:10px;height:30px;}
+.form_sub_btn a{font-size:14px;padding:8px 10px;font-weight:bold;height:15px;float:left;}
+.form_sub_btn a.cancelbtn{background:#ABADB3;margin-left:10px;}

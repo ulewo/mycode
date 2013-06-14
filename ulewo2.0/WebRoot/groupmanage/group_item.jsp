@@ -28,17 +28,26 @@
 			</div>
 			<c:forEach var="item" items="${imtes}">
 				<div class="item_con">
-					<div class="item_name"><input type="text" value="${item.itemName}" readonly="readonly"></div>
-					<div class="item_range"><input type="text" value="${item.itemCode}" readonly="readonly"></div>
+					<div class="item_name">${item.itemName}</div>
+					<div class="item_range">${item.itemCode}</div>
 					<div class="item_count">${item.articleCount}</div>
-					<div class="item_op"><a href="">修改</a>&nbsp;&nbsp;<a href="">删除</a></div>
+					<div class="item_op"><a href="javascript:void(0)" class="edit_item">修改</a>&nbsp;&nbsp;<a href="">删除</a></div>
 					<div class="clear"></div>
 				</div>
 			</c:forEach>
-			<div class="add_item"><a href="" class="btn">新增分类</a></div>
+				<div class="item_con">
+					<div class="item_name"><input type="text" id="item_name"></div>
+					<div class="item_range"><input type="text" id="item_rang"></div>
+					<div class="item_count">&nbsp;</div>
+					<div class="item_op">
+						<a href="javascript:void(0)" class="edit_item btn" id="save_btn">新增</a>
+						<a href="javascript:void(0)" id="cancel_edit" class="btn">取消</a></div>
+					<div class="clear"></div>
+				</div>
 		</div>
 		<div style="clear:left;"></div>
 	</div>
+	<script type="text/javascript" src="${realPath}/js/group.manage.edititem.js"></script>
 	<%@ include file="../common/foot_manage.jsp" %>
 </body>
 </html>

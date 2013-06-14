@@ -31,7 +31,7 @@ global.gid = "${gid}";
 	<div class="group_info_notice">
 		<div class="right_tit">公告</div>
 		<div class="group_notice">
-			<c:if test="${group.groupNotice==''}">
+			<c:if test="${group.groupNotice==null||group.groupNotice==''}">
 				<div class="group_notice_noinfo">
 					暂无公告
 				</div>
