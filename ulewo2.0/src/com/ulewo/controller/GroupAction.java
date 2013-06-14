@@ -53,8 +53,10 @@ public class GroupAction {
 
 	@Autowired
 	MemberService memberService;
+
 	@Autowired
 	ReArticleService reArticleService;
+
 	private final static int MAX_FILE = 1024 * 200;
 
 	private final static int TITLE_LENGTH = 150, KEYWORD_LENGTH = 150;
@@ -69,8 +71,7 @@ public class GroupAction {
 	 * @return
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public ModelAndView allGroups(HttpSession session,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView allGroups(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
 		String page = request.getParameter("page");
 		ModelAndView mv = new ModelAndView();
@@ -80,8 +81,7 @@ public class GroupAction {
 		}
 		try {
 			// 所有群组
-			PaginationResult articleResult = groupService
-					.queryGroupsOderArticleCount(page_int, Constant.pageSize10);
+			PaginationResult articleResult = groupService.queryGroupsOderArticleCount(page_int, Constant.pageSize10);
 			mv.addObject("result", articleResult);
 			mv.setViewName("group/allgroups");
 		} catch (Exception e) {
@@ -102,8 +102,7 @@ public class GroupAction {
 	 * @return
 	 */
 	@RequestMapping(value = "/{gid}", method = RequestMethod.GET)
-	public ModelAndView queryUserInfo(@PathVariable String gid,
-			HttpSession session, HttpServletRequest request,
+	public ModelAndView queryUserInfo(@PathVariable String gid, HttpSession session, HttpServletRequest request,
 			HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
@@ -128,9 +127,8 @@ public class GroupAction {
 				return mv;
 			}
 			// 查询文章
-			PaginationResult articleResult = articleService
-					.queryTopicOrderByGradeAndLastReTime(gid, itemId_int,
-							page_int, Constant.pageSize15);
+			PaginationResult articleResult = articleService.queryTopicOrderByGradeAndLastReTime(gid, itemId_int,
+					page_int, Constant.pageSize15);
 			// 查询分类
 			List<ArticleItem> itemList = articleItemService.queryItemByGid(gid);
 			mv.addObject("group", group);
@@ -141,7 +139,8 @@ public class GroupAction {
 			mv.addObject("gid", gid);
 			if (itemId_int == 0) {
 				mv.setViewName("group/group");
-			} else {
+			}
+			else {
 				mv.setViewName("group/group_articles");
 			}
 
@@ -155,16 +154,15 @@ public class GroupAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/{gid}/loadMembers", method = RequestMethod.GET)
-	public Map<String, Object> loadMembers(@PathVariable String gid,
-			HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> loadMembers(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
+
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			int total = 12;
 			int total2 = 20;
-			List<Member> activerList = memberService.queryMembersActiveIndex(
-					gid, MemberStatus.ISMEMBER, 0, total);
-			List<Member> memberList = memberService.queryMembersIndex(gid,
-					MemberStatus.ISMEMBER, QueryOrder.ASC, 0, total2);
+			List<Member> activerList = memberService.queryMembersActiveIndex(gid, MemberStatus.ISMEMBER, 0, total);
+			List<Member> memberList = memberService.queryMembersIndex(gid, MemberStatus.ISMEMBER, QueryOrder.ASC, 0,
+					total2);
 			modelMap.put("memberList", memberList);
 			modelMap.put("activerList", activerList);
 			return modelMap;
@@ -175,8 +173,7 @@ public class GroupAction {
 	}
 
 	@RequestMapping(value = "/{gid}/img", method = RequestMethod.GET)
-	public ModelAndView queryImage(@PathVariable String gid,
-			HttpSession session, HttpServletRequest request,
+	public ModelAndView queryImage(@PathVariable String gid, HttpSession session, HttpServletRequest request,
 			HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
@@ -201,9 +198,8 @@ public class GroupAction {
 				return mv;
 			}
 			// 查询文章
-			PaginationResult articleResult = articleService
-					.queryTopicOrderByGradeAndLastReTime(gid, itemId_int,
-							page_int, Constant.pageSize15);
+			PaginationResult articleResult = articleService.queryTopicOrderByGradeAndLastReTime(gid, itemId_int,
+					page_int, Constant.pageSize15);
 			// 查询分类
 			List<ArticleItem> itemList = articleItemService.queryItemByGid(gid);
 			mv.addObject("group", group);
@@ -222,8 +218,7 @@ public class GroupAction {
 	}
 
 	@RequestMapping(value = "/{gid}/member", method = RequestMethod.GET)
-	public ModelAndView queryMember(@PathVariable String gid,
-			HttpSession session, HttpServletRequest request,
+	public ModelAndView queryMember(@PathVariable String gid, HttpSession session, HttpServletRequest request,
 			HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
@@ -242,8 +237,7 @@ public class GroupAction {
 				mv.setViewName("redirect:" + Constant.WEBSTIE);
 				return mv;
 			}
-			PaginationResult result = memberService.queryMembers(gid,
-					MemberStatus.ISMEMBER, QueryOrder.ASC, page_int,
+			PaginationResult result = memberService.queryMembers(gid, MemberStatus.ISMEMBER, QueryOrder.ASC, page_int,
 					Constant.pageSize30);
 			mv.addObject("gid", gid);
 			mv.addObject("group", group);
@@ -258,8 +252,7 @@ public class GroupAction {
 	}
 
 	@RequestMapping(value = "/{gid}/topic/{id}", method = RequestMethod.GET)
-	public ModelAndView showDetail(@PathVariable String gid,
-			@PathVariable String id, HttpSession session,
+	public ModelAndView showDetail(@PathVariable String gid, @PathVariable String id, HttpSession session,
 			HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
@@ -298,8 +291,8 @@ public class GroupAction {
 	}
 
 	@RequestMapping(value = "/fileupload", method = RequestMethod.POST)
-	public ModelAndView fileupload(HttpSession session,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView fileupload(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+
 		ModelAndView mv = new ModelAndView();
 		try {
 			Object user = session.getAttribute("user");
@@ -351,15 +344,14 @@ public class GroupAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/deleteFile.do", method = RequestMethod.POST)
-	public Map<String, Object> deleteFile(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> deleteFile(HttpSession session, HttpServletRequest request) {
+
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			String fileName = request.getParameter("fileName");
 			String userId = request.getParameter("userId");
 			Object user = session.getAttribute("user");
-			if (user == null
-					|| !((SessionUser) user).getUserId().equals(userId)) {
+			if (user == null || !((SessionUser) user).getUserId().equals(userId)) {
 				modelMap.put("result", "fail");
 				return modelMap;
 			}
@@ -367,8 +359,7 @@ public class GroupAction {
 				modelMap.put("result", "fail");
 				return modelMap;
 			}
-			String realPath = session.getServletContext().getRealPath("/")
-					+ "upload/";
+			String realPath = session.getServletContext().getRealPath("/") + "upload/";
 			File file = new File(realPath + fileName);
 			if (file.exists()) {
 				file.delete();
@@ -383,8 +374,8 @@ public class GroupAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/addArticle.action", method = RequestMethod.POST)
-	public Map<String, Object> addArticle(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> addArticle(HttpSession session, HttpServletRequest request) {
+
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			String gid = request.getParameter("gid");
@@ -410,8 +401,7 @@ public class GroupAction {
 				modelMap.put("message", "标题为空，或者超过长度");
 				return modelMap;
 			}
-			if (StringUtils.isNotEmpty(keyWord)
-					&& keyWord.length() > TITLE_LENGTH) {
+			if (StringUtils.isNotEmpty(keyWord) && keyWord.length() > TITLE_LENGTH) {
 				modelMap.put("result", "fail");
 				modelMap.put("message", "关键字太长");
 				return modelMap;
@@ -446,8 +436,8 @@ public class GroupAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/loadReComment", method = RequestMethod.GET)
-	public Map<String, Object> loadReComment(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> loadReComment(HttpSession session, HttpServletRequest request) {
+
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			String id = request.getParameter("id");
@@ -463,8 +453,7 @@ public class GroupAction {
 				return modelMap;
 			}
 			id_int = Integer.parseInt(id);
-			PaginationResult result = reArticleService.queryReArticles(id_int,
-					page_int, Constant.pageSize20);
+			PaginationResult result = reArticleService.queryReArticles(id_int, page_int, Constant.pageSize20);
 			modelMap.put("result", result);
 			return modelMap;
 		} catch (Exception e) {
@@ -475,8 +464,8 @@ public class GroupAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/addReComment.action", method = RequestMethod.POST)
-	public Map<String, Object> addReComment(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> addReComment(HttpSession session, HttpServletRequest request) {
+
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			String content = request.getParameter("content");
@@ -494,8 +483,7 @@ public class GroupAction {
 			String gid = request.getParameter("gid");
 			int articleId_int = Integer.parseInt(articleId);
 
-			SessionUser sessionUser = (SessionUser) session
-					.getAttribute("user");
+			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 			ReArticle reArticle = new ReArticle();
 			reArticle.setArticleId(articleId_int);
 			reArticle.setContent(content);
@@ -514,8 +502,8 @@ public class GroupAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/addSubReComment.action", method = RequestMethod.POST)
-	public Map<String, Object> addSubReComment(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> addSubReComment(HttpSession session, HttpServletRequest request) {
+
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			String content = request.getParameter("content");
@@ -544,8 +532,7 @@ public class GroupAction {
 
 			String atUserName = request.getParameter("atUserName");
 
-			SessionUser sessionUser = (SessionUser) session
-					.getAttribute("user");
+			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 			ReArticle reArticle = new ReArticle();
 			reArticle.setArticleId(articleId_int);
 			reArticle.setContent(StringUtils.formateHtml(content));

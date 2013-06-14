@@ -65,7 +65,7 @@ public class FormatAt {
 			 * else { html.append(origion_str); }
 			 */
 			if (null != user) {
-				html.append("<a href='" + userUrl + user.getUserId() + "' class='referer' target='_blank'>@");
+				html.append("<a href=\"" + userUrl + user.getUserId() + "\" class=\"referer\" target=\"_blank\">@");
 				html.append(userName.trim());
 				html.append("</a> ");
 				referers.add(user.getUserId());

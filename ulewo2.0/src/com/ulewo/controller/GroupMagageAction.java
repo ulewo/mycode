@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ulewo.entity.Article;
 import com.ulewo.entity.ArticleItem;
 import com.ulewo.entity.Group;
 import com.ulewo.entity.SessionUser;
@@ -43,12 +44,15 @@ public class GroupMagageAction {
 
 	@Autowired
 	ReArticleService reArticleService;
+
 	@Autowired
 	MemberService memberService;
 
 	private final static int GROUPNAEM_LENGTH = 50;
 
 	private final static int GROUPDESC_LENGTH = 500;
+
+	private final static int TITLE_LENGTH = 150, KEYWORD_LENGTH = 150;
 
 	@RequestMapping(value = "/{gid}/manage", method = RequestMethod.GET)
 	public ModelAndView manage(@PathVariable String gid, HttpSession session) {
@@ -73,8 +77,7 @@ public class GroupMagageAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/{gid}/editGroup.action", method = RequestMethod.POST)
-	public Map<String, Object> editGroup(@PathVariable String gid,
-			HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> editGroup(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -120,16 +123,14 @@ public class GroupMagageAction {
 	 * @return
 	 */
 	@RequestMapping(value = "/{gid}/manage/group_notice", method = RequestMethod.GET)
-	public ModelAndView groupNotice(@PathVariable String gid,
-			HttpSession session, HttpServletRequest request) {
+	public ModelAndView groupNotice(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
 			SessionUser user = (SessionUser) session.getAttribute("user");
 			String userId = "10001";
 			Group group = groupService.queryGorup(gid);
-			group.setGroupNotice(StringUtils.reFormateHtml(group
-					.getGroupNotice()));
+			group.setGroupNotice(StringUtils.reFormateHtml(group.getGroupNotice()));
 			mv.addObject("group", group);
 			mv.addObject("gid", gid);
 			mv.setViewName("/groupmanage/group_notice");
@@ -143,8 +144,7 @@ public class GroupMagageAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/{gid}/editNotice.action", method = RequestMethod.POST)
-	public Map<String, Object> editNotice(@PathVariable String gid,
-			HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> editNotice(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -174,16 +174,13 @@ public class GroupMagageAction {
 	 * @return
 	 */
 	@RequestMapping(value = "/{gid}/manage/group_item", method = RequestMethod.GET)
-	public ModelAndView blogItem(@PathVariable String gid, HttpSession session,
-			HttpServletRequest request) {
+	public ModelAndView blogItem(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
-			SessionUser sessionUser = (SessionUser) session
-					.getAttribute("user");
+			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 			String userId = "10001";
-			List<ArticleItem> itemList = articleItemService
-					.queryItemAndTopicCountByGid(gid);
+			List<ArticleItem> itemList = articleItemService.queryItemAndTopicCountByGid(gid);
 			mv.addObject("imtes", itemList);
 			mv.addObject("gid", gid);
 			mv.setViewName("groupmanage/group_item");
@@ -203,8 +200,7 @@ public class GroupMagageAction {
 	 * @return
 	 */
 	@RequestMapping(value = "/{gid}/manage/group_article", method = RequestMethod.GET)
-	public ModelAndView groupArticle(@PathVariable String gid,
-			HttpSession session, HttpServletRequest request) {
+	public ModelAndView groupArticle(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
@@ -218,14 +214,11 @@ public class GroupMagageAction {
 			if (StringUtils.isNumber(page)) {
 				page_int = Integer.parseInt(page);
 			}
-			SessionUser sessionUser = (SessionUser) session
-					.getAttribute("user");
+			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 			String userId = "10001";
-			List<ArticleItem> itemList = articleItemService
-					.queryItemAndTopicCountByGid(gid);
-			PaginationResult result = articleService
-					.queryTopicOrderByGradeAndLastReTime(gid, itemId_int,
-							page_int, Constant.pageSize20);
+			List<ArticleItem> itemList = articleItemService.queryItemAndTopicCountByGid(gid);
+			PaginationResult result = articleService.queryTopicOrderByGradeAndLastReTime(gid, itemId_int, page_int,
+					Constant.pageSize20);
 			mv.addObject("itemList", itemList);
 			mv.addObject("itemId", itemId_int);
 			mv.addObject("result", result);
@@ -239,9 +232,98 @@ public class GroupMagageAction {
 		}
 	}
 
+	@RequestMapping(value = "/{gid}/manage/edit_article", method = RequestMethod.GET)
+	public ModelAndView editArticle(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
+
+		ModelAndView mv = new ModelAndView();
+		try {
+			String id = request.getParameter("id");
+
+			if (!StringUtils.isNumber(id)) {
+				mv.setViewName("redirect:" + Constant.WEBSTIE);
+			}
+			int id_int = Integer.parseInt(id);
+			Article article = articleService.queryTopicById(id_int);
+			if (article == null) {
+				mv.setViewName("redirect:" + Constant.WEBSTIE);
+			}
+			article.setContent(article.getContent().replace("\r\n", ""));
+			List<ArticleItem> list = articleItemService.queryItemByGid(gid);
+			mv.addObject("article", article);
+			mv.addObject("gid", gid);
+			mv.addObject("list", list);
+			mv.setViewName("groupmanage/edit_article");
+			return mv;
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.setViewName("redirect:" + Constant.WEBSTIE);
+			return mv;
+		}
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/saveArticle.action", method = RequestMethod.POST)
+	public Map<String, Object> saveArticle(HttpSession session, HttpServletRequest request) {
+
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			String id = request.getParameter("id");
+			String gid = request.getParameter("gid");
+			String title = request.getParameter("title");
+			String itemId = request.getParameter("itemId");
+			int itemId_int = 0;
+			String keyWord = request.getParameter("keyWord");
+			String content = request.getParameter("content");
+			String image = request.getParameter("image");
+			if (StringUtils.isEmpty(gid)) {
+				modelMap.put("result", "fail");
+				modelMap.put("message", "请求参数错误");
+				return modelMap;
+			}
+			if (!StringUtils.isNumber(id)) {
+				modelMap.put("result", "fail");
+				modelMap.put("message", "请求参数错误");
+				return modelMap;
+			}
+			int id_int = Integer.parseInt(id);
+
+			if (StringUtils.isNumber(itemId)) {
+				itemId_int = Integer.parseInt(itemId);
+			}
+
+			if (StringUtils.isEmpty(title) || title.length() > TITLE_LENGTH) {
+				modelMap.put("result", "fail");
+				modelMap.put("message", "标题为空，或者超过长度");
+				return modelMap;
+			}
+			if (StringUtils.isNotEmpty(keyWord) && keyWord.length() > TITLE_LENGTH) {
+				modelMap.put("result", "fail");
+				modelMap.put("message", "关键字太长");
+				return modelMap;
+			}
+			// SessionUser user = (SessionUser) session.getAttribute("user");
+			String userId = "10001";
+			Article article = new Article();
+			article.setId(id_int);
+			article.setGid(gid);
+			article.setItemId(itemId_int);
+			article.setTitle(title);
+			article.setKeyWord(keyWord);
+			article.setContent(content);
+			article.setAuthorId(userId);
+			article.setImage(image);
+			// 添加附件
+			articleService.updateArticle(article, userId);
+			modelMap.put("result", "success");
+			return modelMap;
+		} catch (Exception e) {
+			modelMap.put("result", "fail");
+			return modelMap;
+		}
+	}
+
 	@RequestMapping(value = "/{gid}/manage/manageArticle", method = RequestMethod.POST)
-	public ModelAndView manageArticle(@PathVariable String gid,
-			HttpSession session, HttpServletRequest request) {
+	public ModelAndView manageArticle(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
@@ -257,8 +339,7 @@ public class GroupMagageAction {
 			}
 			String type = request.getParameter("type");
 			String[] id = request.getParameterValues("id");
-			SessionUser sessionUser = (SessionUser) session
-					.getAttribute("user");
+			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 			String userId = "10001";
 			articleService.manangeArticle(userId, gid, id, type);
 			mv.addObject("itemId", itemId_int);
@@ -273,8 +354,7 @@ public class GroupMagageAction {
 	}
 
 	@RequestMapping(value = "/{gid}/manage/article_reply", method = RequestMethod.GET)
-	public ModelAndView articleReply(@PathVariable String gid,
-			HttpSession session, HttpServletRequest request) {
+	public ModelAndView articleReply(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
@@ -283,8 +363,7 @@ public class GroupMagageAction {
 			if (StringUtils.isNumber(page)) {
 				page_int = Integer.parseInt(page);
 			}
-			PaginationResult result = reArticleService.queryReArticleByGid(gid,
-					page_int, Constant.pageSize25);
+			PaginationResult result = reArticleService.queryReArticleByGid(gid, page_int, Constant.pageSize25);
 			mv.addObject("gid", gid);
 			mv.addObject("result", result);
 			mv.setViewName("groupmanage/article_reply");
@@ -297,8 +376,7 @@ public class GroupMagageAction {
 	}
 
 	@RequestMapping(value = "/{gid}/manage/member", method = RequestMethod.GET)
-	public ModelAndView member(@PathVariable String gid, HttpSession session,
-			HttpServletRequest request) {
+	public ModelAndView member(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
@@ -307,8 +385,7 @@ public class GroupMagageAction {
 			if (StringUtils.isNumber(page)) {
 				page_int = Integer.parseInt(page);
 			}
-			PaginationResult result = memberService.queryMembers(gid,
-					MemberStatus.ISMEMBER, QueryOrder.ASC, page_int,
+			PaginationResult result = memberService.queryMembers(gid, MemberStatus.ISMEMBER, QueryOrder.ASC, page_int,
 					Constant.pageSize20);
 			mv.addObject("gid", gid);
 			mv.addObject("result", result);
@@ -322,8 +399,7 @@ public class GroupMagageAction {
 	}
 
 	@RequestMapping(value = "/{gid}/manage/member_apply", method = RequestMethod.GET)
-	public ModelAndView memberApply(@PathVariable String gid,
-			HttpSession session, HttpServletRequest request) {
+	public ModelAndView memberApply(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
@@ -332,8 +408,7 @@ public class GroupMagageAction {
 			if (StringUtils.isNumber(page)) {
 				page_int = Integer.parseInt(page);
 			}
-			PaginationResult result = memberService.queryMembers(gid,
-					MemberStatus.NOTMEMBER, QueryOrder.ASC, page_int,
+			PaginationResult result = memberService.queryMembers(gid, MemberStatus.NOTMEMBER, QueryOrder.ASC, page_int,
 					Constant.pageSize20);
 			mv.addObject("gid", gid);
 			mv.addObject("result", result);

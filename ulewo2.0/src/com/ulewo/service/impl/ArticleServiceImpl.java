@@ -138,14 +138,11 @@ public class ArticleServiceImpl implements ArticleService {
 		return article;
 	}
 
-	/**
-	 * 更新文章
-	 */
-	@Override
-	public void updateArticle(Article article) {
+	public void updateArticle(Article article, String groupAuthor) {
 
-		articleDao.updateArticle(article);
-
+		if (checkPerm(article.getGid(), groupAuthor)) {
+			articleDao.updateArticleSelective(article);
+		}
 	}
 
 	/**
@@ -199,13 +196,21 @@ public class ArticleServiceImpl implements ArticleService {
 
 	}
 
-	public void manangeArticle(String gid, String userId, String[] ids, String type) {
+	private boolean checkPerm(String gid, String groupAuthro) {
 
 		Group group = groupDao.queryGroupBaseInfo(gid);
 		if (null == group) {
-			return;
+			return false;
 		}
-		if (!group.getGroupAuthor().equals(userId)) {
+		if (!group.getGroupAuthor().equals(groupAuthro)) {
+			return false;
+		}
+		return true;
+	}
+
+	public void manangeArticle(String gid, String groupAuthor, String[] ids, String type) {
+
+		if (!checkPerm(gid, groupAuthor)) {
 			return;
 		}
 		if (ids != null && StringUtils.isNotEmpty(type)) {

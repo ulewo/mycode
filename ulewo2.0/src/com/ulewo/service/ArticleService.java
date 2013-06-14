@@ -25,12 +25,12 @@ public interface ArticleService {
 
 	/**
 	 * 
-	 * description: 更新文章 全更新
+	 * description: 管理员更新文章
 	 * @param article
 	 * @
 	 * @author luohl
 	 */
-	public void updateArticle(Article article);
+	public void updateArticle(Article article, String groupAuthor);
 
 	/**
 	 * 

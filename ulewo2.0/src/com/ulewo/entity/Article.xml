@@ -40,6 +40,15 @@
 		<isNotEmpty prepend="," property="itemId">
 			itemid=#itemId# 
     	</isNotEmpty>
+    	<isNotEmpty prepend="," property="title">
+			title=#title# 
+    	</isNotEmpty>
+    	<isNotEmpty prepend="," property="keyWord">
+			keyword=#keyWord# 
+    	</isNotEmpty>
+    	<isNotEmpty prepend="," property="summary">
+			summary=#summary# 
+    	</isNotEmpty>
     	<isNotEmpty prepend="," property="titleStyle">
            titlestyle=#titleStyle# 
         </isNotEmpty>
