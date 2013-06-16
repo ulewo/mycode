@@ -17,6 +17,7 @@
 			<div class="left_item">
 				<div class="left_item_tit">博客分类</div>
 				<div class="left_img_p">
+					<div class="blog_item"><a href="${realPath}/user/${userId}/blog">全部文章</a><span>(${result.countTotal})</span></div>
 					<c:forEach var="item" items="${blogItemList}">
 						<div class="blog_item"><a href="${realPath}/user/${userId}/blog/?itemId=${item.id}">${item.itemName}</a><span>(${item.articleCount})</span></div>
 					</c:forEach>
@@ -44,7 +45,7 @@
 						<div class="blog_item_op">
 							<span>分类:</span>
 							<a href="${realPath}/user/${userId}/blog/?itemId=${blog.itemId}">${blog.itemName}</a>
-							(<a href="">修改</a>|<a href="">删除</a>)
+							<c:if test="${user.userId==userId}">(<a href="">修改</a>|<a href="">删除</a>)(<a href="">修改</a>|<a href="">删除</a>)</c:if>
 						</div>
 						<div class="blog_summary">
 							${blog.summary}
@@ -55,6 +56,9 @@
 						</div>
 					</div>
 				</c:forEach>
+				<c:if test="${empty result.list}">
+					<div class="left_noinfo">没有发现博文</div>
+				</c:if>
 			</div>
 		</div>
 		<div style="clear:left;"></div>

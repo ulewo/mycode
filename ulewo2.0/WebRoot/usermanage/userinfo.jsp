@@ -6,7 +6,7 @@
 <head>
 <%@ include file="../common/path.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>登陆有乐窝-有乐窝</title>
+<title>修改用户信息-有乐窝</title>
 <link rel="stylesheet" type="text/css" href="../css/user.manage.userinfo.css">
 <style type="text/css">
 #selected1 a{background:#ffffff;color:#333333;font-weight:bold;}
@@ -25,6 +25,7 @@
 						&gt;&gt;<a href="">${blogitem.itemName}</a>
 					</c:if>
 			</div>
+			<form id="user_form">
 			<div class="info_item">
 				<div class="info_item_tit">全站唯一ID</div>
 			 	<div class="info_item_text info_item_text_t">${userVo.userId}</div>
@@ -50,36 +51,40 @@
 			</div>
 			<div class="info_item">
 			 	<div class="info_item_tit">年龄</div>
-			 	<div class="info_item_text"><input class="editinput" type="text" name="age" value="${userVo.age}"/></div>
+			 	<div class="info_item_text"><input class="editinput" type="text" name="age" value="${userVo.age}" id="age"/></div>
 			 	<div class="clear"></div>
 			</div>
 			<div class="info_item">
 			 	<div class="info_item_tit">居住地</div>
-			 	<div class="info_item_text"><input class="editinput" type="text" name="address" value="${userVo.address}"/></div>
+			 	<div class="info_item_text"><input class="editinput" type="text" name="address" value="${userVo.address}" id="address"/></div>
 			 	<div class="clear"></div>
 			</div>
 			<div class="info_item">
 			 	<div class="info_item_tit">职业</div>
-			 	<div class="info_item_text"><input class="editinput" type="text" name="work" value="${userVo.work}"/></div>
+			 	<div class="info_item_text"><input class="editinput" type="text" name="work" value="${userVo.work}"id="work" /></div>
 			 	<div class="clear"></div>
 			</div>
 			<div class="info_item">
 			 	<div class="info_item_tit">个性签名<br>不超过100字</div>
 			 	<div class="info_item_text">
-			 		<textarea>${userVo.characters}</textarea>
+			 		<textarea id="characters" name="characters">${userVo.characters}</textarea>
 			 	</div>
 			 	<div class="clear"></div>
 			</div>
 			<div class="info_item">
 			 	<div class="info_item_tit"></div>
-			 	<div class="info_item_text">
-			 		<a href="" class="btn">保存修改</a>
+			 	<div class="info_item_text" style="width:200px;">
+			 		<a href="javascript:void(0)" class="btn" id="saveBtn" style="float:left;">保存修改</a>
+			 		<span class="result_info"><i id="warm_icon"></i><span id="warm_info"></span></span>
+			 		<div class="clear"></div>
 			 	</div>
 			 	<div class="clear"></div>
 			</div>
+			</form>
 		</div>
 		<div style="clear:left;"></div>
 	</div>
+	<script type="text/javascript" src="${realPath}/js/user.manage.userinfo.js"></script>
 	<%@ include file="../common/foot_manage.jsp" %>
 </body>
 </html>

@@ -18,22 +18,22 @@ global.gid="${gid}";
 	<ul class="menue">
 		<li id="selected1"><a href="${realPath}/groupManage/${gid}/manage">窝窝设置</a></li>
 		<li id="selected2"><a href="changepwd">修改头像</a></li>
-		<li id="selected3"><a href="${realPath}/groupManage/${gid}/manage/group_notice">公告管理</a></li>
+		<li id="selected3"><a href="${realPath}/groupManage/${gid}/group_notice">公告管理</a></li>
 	</ul>
 	<div class="menue_tit">
 		 文章管理
 	</div>
 	<ul class="menue">
-		<li id="selected4"><a href="${realPath}/groupManage/${gid}/manage/group_article">文章管理</a></li>
-		<li id="selected5"><a href="${realPath}/groupManage/${gid}/manage/article_reply">评论管理</a></li>
-		<li id="selected6"><a href="${realPath}/groupManage/${gid}/manage/group_item">分类管理</a></li>
+		<li id="selected4"><a href="${realPath}/groupManage/${gid}/group_article">文章管理</a></li>
+		<li id="selected5"><a href="${realPath}/groupManage/${gid}/article_reply">评论管理</a></li>
+		<li id="selected6"><a href="${realPath}/groupManage/${gid}/group_item">分类管理</a></li>
 	</ul>
 	
 	<div class="menue_tit">
 		成员管理
 	</div>
 	<ul class="menue">
-		<li id="selected7"><a href="${realPath}/groupManage/${gid}/manage/member">窝窝成员</a></li>
-		<li id="selected8"><a href="${realPath}/groupManage/${gid}/manage/member_apply">成员审批</a></li>
+		<li id="selected7"><a href="${realPath}/groupManage/${gid}/member">窝窝成员</a></li>
+		<li id="selected8"><a href="${realPath}/groupManage/${gid}/member_apply">成员审批</a></li>
 	</ul>
 </div>    

@@ -8,6 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>用户中心-有乐窝</title>
 <link rel="stylesheet" type="text/css" href="${realPath}/css/user.usercenter.css">
+<link rel="stylesheet" type="text/css" href="${realPath}/css/talk.css">
 </head>
 <body>
 	<%@ include file="../common/head.jsp" %>
@@ -17,91 +18,69 @@
 	  	<div class="left_item">
 	  		<div class="left_item_tit">关注</div>
 	  		<div class="left_img_p">
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="clear"></div>
+	  			<div>
+		  			<c:forEach var="friend" items="${focusList}">
+		  				<div class="left_img_item"><a href="${realPath}/user/${friend.friendId}" title="${friend.friendName}"><img src="${friend.friendIcon}" width="40"></a></div>
+		  			</c:forEach>
+		  			<c:if test="${empty focusList}">
+		  				<div class="left_noinfo">尚未关注其他人</div>
+		  			</c:if>	
+		  			<div class="clear"></div>
+	  			</div>
+	  			<!-- 
+	  			<div class="left_img_p_more"><a href="">显示所有关注(${userVo.focusCount})</a></div>
+	  			 -->
 	  		</div>
 	  	</div>
 	  	<div class="left_item">
 	  		<div class="left_item_tit">粉丝</div>
 	  		<div class="left_img_p">
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="clear"></div>
+	  			<div>
+		  			<c:forEach var="friend" items="${fansList}">
+		  				<div class="left_img_item"><a href="${realPath}/user/${friend.friendId}" title="${friend.friendName}"><img src="${friend.friendIcon}" width="40"></a></div>
+		  			</c:forEach>
+		  			<c:if test="${empty fansList}">
+		  				<div class="left_noinfo">尚无粉丝，精彩分享才能吸引关注</div>
+		  			</c:if>
+		  			<div class="clear"></div>
+	  			</div>
+	  			<!-- 
+	  			<div class="left_img_p_more"><a href="">显示所有粉丝(${userVo.fansCount})</a></div>
+	  			 -->
 	  		</div>
 	  	</div>
 	  	<div class="left_item">
 	  		<div class="left_item_tit">Ta创建的窝窝</div>
 	  		<div class="left_img_p">
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div>
+	  			<c:forEach var="group" items="${createdGroups}">
+	  				<div class="left_img_item"><a href="${realPath}/group/${group.id}" title="${group.groupName}"><img src="${group.groupIcon}" width="40"></a></div>
+	  			</c:forEach>
+	  			<c:if test="${empty createdGroups}">
+		  			<div class="left_noinfo">没有创建任何窝窝</div>
+		  		</c:if>
 	  			<div class="clear"></div>
+	  			</div>
 	  		</div>
 	  	</div>
 	  	<div class="left_item">
 	  		<div class="left_item_tit">Ta加入的窝窝</div>
 	  		<div class="left_img_p">
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
-	  			<div class="left_img_item"><img src="../images/default.gif" width="40"></div>
+	  			<div>
+	  			<c:forEach var="group" items="${joinedGroups}">
+	  				<div class="left_img_item"><a href="${realPath}/group/${group.id}" title="${group.groupName}"><img src="${group.groupIcon}" width="40"></a></div>
+	  			</c:forEach>
+	  			<c:if test="${empty joinedGroups}">
+		  			<div class="left_noinfo">没有加入任何窝窝</div>
+		  		</c:if>
 	  			<div class="clear"></div>
+	  			</div>
 	  		</div>
 	  	</div>
 	  	
 	  </div>
 	  <div class="right">
-		  	<c:if test="${user.userId==userId}">
+		  	<c:if test="${userVo.userId==user.userId}">
 	  		<div class="u_talk">
 	  			<div class="u_talk_tit">
 	  				<span class='u_talk_titname'>今天你吐槽了吗？</span>
@@ -126,7 +105,7 @@
 	  						<span class='talk_img_tit_close'><a href="javascript:closeUploader()">关闭</a></span>
 	  					</div>
 	  					<div class="talk_img_fram" id="talk_img_fram">
-	  						<iframe src="../imageUpload/talkimgupload.jsp" width="260" height="30" frameborder="0"></iframe>
+	  						<iframe src="${realPath}/common/talkimgupload.jsp" width="260" height="30" frameborder="0"></iframe>
 	  					</div>
 	  					<div id="talk_img_showimg">
 	  						<img src=""><br>
@@ -219,34 +198,39 @@
 	  			</div>
 	  		</div>
 		  	</c:if>
-		  	<div class="baseinfoCon topblog">
-			  	<span class="base_tit">加入时间：</span><span class="base_info">${userVo.registerTime}</span><br>
-			  	<span class="base_tit">最近登录：</span><span class="base_info">${userVo.previsitTime}</span><br>
-			  	<span class="base_tit">职业：</span><span class="base_info">
-			  		<c:choose>
-                   		<c:when test="${!empty userVo.work}">${userVo.work}</c:when>
-                   		<c:otherwise>未知</c:otherwise>
-                  	</c:choose>	
-			  	</span><br>
-			  	<span class="base_tit">地址：</span><span class="base_info">
-			  		<c:choose>
-                   		<c:when test="${!empty userVo.address}">${userVo.address}</c:when>
-                   		<c:otherwise>未知</c:otherwise>
-                  	</c:choose>
-			  		</span><br>
-		  	</div>
+		  	<c:if test="${userVo.userId!=user.userId}">
+			  	<div class="baseinfoCon topblog">
+				  	<span class="base_tit">加入时间：</span><span class="base_info">${userVo.registerTime}</span><br>
+				  	<span class="base_tit">最近登录：</span><span class="base_info">${userVo.previsitTime}</span><br>
+				  	<span class="base_tit">职业：</span><span class="base_info">
+				  		<c:choose>
+	                   		<c:when test="${!empty userVo.work}">${userVo.work}</c:when>
+	                   		<c:otherwise>未知</c:otherwise>
+	                  	</c:choose>	
+				  	</span><br>
+				  	<span class="base_tit">地址：</span><span class="base_info">
+				  		<c:choose>
+	                   		<c:when test="${!empty userVo.address}">${userVo.address}</c:when>
+	                   		<c:otherwise>未知</c:otherwise>
+	                  	</c:choose>
+				  		</span><br>
+			  	</div>
+		  	</c:if>
 		  	<div class="topblog">
 		  		<div class="topblog_titcon">
 		  			<span class="topblog_tit">最新博文</span>
-		  			<span class="topblog_link"><a href="moretalk.jsp?userId=${param.userId}">进入博客&gt;&gt;</a></span>
+		  			<span class="topblog_link"><a href="${realPath}/user/${userVo.userId}/blog">进入博客&gt;&gt;</a></span>
 		  			<div class="clear"></div>
 		  		</div>
 		  		<div id="talklist">
 		  			<c:forEach var="blog" items="${bloglist}">
 			  			<div class="blog_link">
-			  				<a href="#">${blog.title}</a><span>${blog.reCount}/${blog.readCount}</span>
+			  				<a href="${realPath}/user/${userVo.userId}/blog/${blog.id}">${blog.title}</a><span>${blog.reCount}/${blog.readCount}</span>
 			  			</div>
 		  			</c:forEach>
+		  			<c:if test="${empty bloglist}">
+		  				<div class="left_noinfo">没有发现博文</div>
+		  			</c:if>
 		  		</div>
 		  	</div>
 		  	<div class="trends">
@@ -300,6 +284,8 @@
 		</div>
 	<div style="clear:left;"></div>
   </div>
+  <script type="text/javascript" src="${realPath}/js/talk.js"></script>
+  <script type="text/javascript" src="${realPath}/js/user.userinfo.js"></script>
   <%@ include file="../common/foot.jsp" %>
 </body>
 </html>

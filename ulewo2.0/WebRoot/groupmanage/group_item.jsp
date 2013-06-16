@@ -31,18 +31,25 @@
 					<div class="item_name">${item.itemName}</div>
 					<div class="item_range">${item.itemCode}</div>
 					<div class="item_count">${item.articleCount}</div>
-					<div class="item_op"><a href="javascript:void(0)" class="edit_item">修改</a>&nbsp;&nbsp;<a href="">删除</a></div>
+					<div class="item_op">
+						<a href="javascript:void(0)" class="edit_item" name="${item.id}">修改</a>&nbsp;&nbsp;
+						<a href="javascript:void(0)" class="deleteItem" count ="${item.articleCount}" name="${item.id}">删除</a>
+					</div>
 					<div class="clear"></div>
 				</div>
 			</c:forEach>
 				<div class="item_con">
-					<div class="item_name"><input type="text" id="item_name"></div>
-					<div class="item_range"><input type="text" id="item_rang"></div>
+					<form action="${realPath}/groupManage/saveItem.do" method="post" id="itemForm">
+					<input type="hidden" name="id" id="itemId">
+					<input type="hidden" name="gid" value="${gid}">
+					<div class="item_name"><input type="text" id="item_name" name="itemName"></div>
+					<div class="item_range"><input type="text" id="item_code" name="itemCode"></div>
 					<div class="item_count">&nbsp;</div>
 					<div class="item_op">
-						<a href="javascript:void(0)" class="edit_item btn" id="save_btn">新增</a>
+						<a href="javascript:void(0)" class="btn" id="save_btn">新增</a>
 						<a href="javascript:void(0)" id="cancel_edit" class="btn">取消</a></div>
 					<div class="clear"></div>
+					</form>
 				</div>
 		</div>
 		<div style="clear:left;"></div>

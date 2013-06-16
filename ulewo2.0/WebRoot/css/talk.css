@@ -1,0 +1,24 @@
+/********ÍÂ²Û*********/
+.talkop{float:left;display:inline-block;margin-top:5px;}
+.pm_emotion{position: absolute; z-index: 99; border: 1px solid #D7D7D7;background: #fff;color: #5F5F5F;box-shadow: 0 2px 10px rgba(0, 0, 0, .1);display:none;}
+.pm_emotion_panel{padding: 10px 5px 10px 10px;}
+.pm_emotions_bd{width: 420px;}
+.pm_emotions_bd a{width: 30px;height: 30px; display:inline-block; float:left;}
+.pm_emotions_bd img{border: 1px solid white;width: 22px;height: 22px;margin: 0;padding: 3px;}
+.pm_emotions_bd a:hover img{border: 1px solid #0095CD;}
+
+#talk_img_con{position:absolute;border:1px solid #CCCCCC;width:270px;background:white;display:none;}
+.talk_img_tit{background:#F2F2F2;height:15px;padding:5px;}
+.talk_img_tit_tit{display:block;float:left;text-align:center;}
+.talk_img_tit_close{display:block;float:right;margin-right:5px;}
+.talk_img_fram{margin:5px;}
+#talk_img_showimg{display:none;}
+#talk_img_showimg a{padding:5px;}
+#talk_img_showimg img{max-width:100px;max-height:50px;}
+.talkimg img{max-width:600px;}
+
+a.icon_sw_face{display:block;width:18px;height:18px;background:url("../images/icon.png") 0px 0px;float:left;}
+.icon_sw_face:hover{background:url("../images/icon.png") -25px 0px;}
+
+a.icon_sw_img {display:block;width:18px;height:18px;background:url("../images/icon.png") 0px -25px;float:left;margin-left:20px;}
+.icon_sw_img:hover{background:url("../images/icon.png") -25px -25px;}

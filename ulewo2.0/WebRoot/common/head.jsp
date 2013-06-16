@@ -52,7 +52,8 @@
 		<ul class="left">
 			<li><a href="${realPath}" class="selected1" onFocus="this.blur()">首&nbsp;页</a></li>
 			<li><a  href="${realPath}/group"  class="selected2" onFocus="this.blur()">窝&nbsp;窝</a></li>
-			<li><a href="${realPath}square.jspx" class="selected3" onFocus="this.blur()">广&nbsp;场</a></li>
+			<li><a  href="${realPath}/group"  class="selected3" onFocus="this.blur()">博&nbsp;客</a></li>
+			<li><a href="${realPath}/square" class="selected4" onFocus="this.blur()">广&nbsp;场</a></li>
 		</ul>
 		<div class="head_search">
 			<input type="button" class="head_search_btn" value="搜索一下" onclick="search()">

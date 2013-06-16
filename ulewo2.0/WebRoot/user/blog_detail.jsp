@@ -17,6 +17,7 @@
 			<div class="left_item">
 				<div class="left_item_tit">博客分类</div>
 				<div class="left_img_p">
+					<div class="blog_item"><a href="${realPath}/user/${userId}/blog">全部文章</a><span>(${countTotal})</span></div>
 					<c:forEach var="item" items="${blogItemList}">
 						<div class="blog_item"><a href="${realPath}/user/${userId}/blog/?itemId=${item.id}">${item.itemName}</a><span>(${item.articleCount})</span></div>
 					</c:forEach>
@@ -60,7 +61,7 @@
 				  		<div>
 				  			<div class="blogreply_icon">
 				  				<c:if test="${user!=null}">
-									<img src="../upload/${user.userLittleIcon}" width="37">
+									<img src="${user.userLittleIcon}" width="37">
 								</c:if>
 								<c:if test="${user==null}">
 									<img src="../upload/default.gif" width="37">

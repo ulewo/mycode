@@ -5,12 +5,13 @@
 .user_avatar{float:left;width:60px;margin:10px;background:#FFFFFF;padding:3px;}
 .user_edit_info{margin-top:5px;}
 .user_edit{float:left;width:130px;}
-.user_edit a.username{color:#FFFFFF;font-weight:bold;text-decoration: none;margin-top:15px;display:block;text-align:left;font-size:18px;}
+.user_edit a.username{color:#FFFFFF;font-weight:bold;text-decoration: none;margin-top:15px;display:block;text-align:left;font-size:18px;overflow:hidden;}
 .user_edit span{display:inline-block;padding-top:8px;float:left;}
-.user_edit a.edit_info{color:#FFFFFF;text-decoration: none;margin-top:10px;display:inline-block;text-align:left;font-size:10px;float:left;margin-left:5px;font-weight:normal;}
+.user_edit a.edit_info{color:#FFFFFF;text-decoration: none;margin-top:10px;display:inline-block;text-align:left;font-size:12px;float:left;margin-left:5px;font-weight:normal;}
 .user_edit a.edit_info:hover{background:#ffffff;color:#4682B4}
-.user_edit a.edit_icon{color:#FFFFFF;text-decoration: none;margin-top:10px;display:inline-block;text-align:left;font-size:10px;float:left;margin-left:5px;font-weight:normal;}
+.user_edit a.edit_icon{color:#FFFFFF;text-decoration: none;margin-top:10px;display:inline-block;text-align:left;font-size:12px;float:left;margin-left:5px;font-weight:normal;}
 .user_edit a.edit_icon:hover{background:#ffffff;color:#4682B4}
+.havefocus{color:#ffffff;padding-left:5px;}
 .user_other_info{padding-left:10px;color:#ffffff}
 .resume{background: #6E7B8B url('../images/resume24.png') no-repeat left bottom;margin: 10px 0 0 0;color: white;padding: 18px 10px 18px 40px;word-wrap: break-word;overflow: hidden;text-align:left;}
 .opts{margin-top:10px;text-align:center;}
@@ -26,6 +27,7 @@
 .left_item{background:#EAEAEA;margin-top:5px;}
 .left_item_tit{border-bottom:2px solid #6E7B8B;font-size:16px;font-weight:bold;padding-left:5px;padding:5px;color:#666666}
 .left_img_p{padding-top:5px;padding-bottom:10px;padding-left:1px;}
-.left_img_item{float:left;width:40px;margin-left:3px;margin-top:2px;}
-
+.left_img_item{float:left;width:40px;margin-left:3px;margin-top:3px;}
+.left_noinfo{padding:10px;color:#999999;margin-top:5px;text-align:center;}
+.left_img_p_more{margin-top:10px;text-align:right;padding-right:5px;}
 .right{float:left;width:750px;margin-left:10px;text-align:left;background:#ffffff;padding:10px;}

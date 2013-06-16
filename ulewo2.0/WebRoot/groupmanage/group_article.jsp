@@ -47,7 +47,7 @@
 						</div>
 						<div class="article_item_username">${article.authorName}</div>
 						<div class="article_item_time">${article.postTime}</div>
-						<div class="article_item_op"><a href="${realPath}/groupManage/${gid}/manage/edit_article?id=${article.id}">修改</a></div>
+						<div class="article_item_op"><a href="${realPath}/groupManage/${gid}/edit_article?id=${article.id}">修改</a></div>
 						<div class="clear"></div>
 					</div>
 				</c:forEach>

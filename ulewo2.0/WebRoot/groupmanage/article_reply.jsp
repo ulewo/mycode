@@ -37,7 +37,7 @@
 				</div>
 			</c:forEach>
 			<div class="pagination" style="margin-top:10px;">
-				<p:pager url="${realPath}/groupManage/${gid}/manage/article_reply" page="${result.page}" pageTotal = "${result.pageTotal }"></p:pager>
+				<p:pager url="${realPath}/groupManage/${gid}/article_reply" page="${result.page}" pageTotal = "${result.pageTotal }"></p:pager>
 			</div>
 		</div>
 		<div style="clear:left;"></div>

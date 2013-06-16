@@ -5,45 +5,120 @@
 <div class="leftmain">
 	<div class="avatar_con">
 		<div>
-			<div class="user_avatar"><a href="userInfo.jspx?userId=${uid}"><img src="/../images/default.gif" id="imgcon" width="60px;" height="60px;"></a></div>
+			<div class="user_avatar"><a href="${realPath}/user/${userId}"><img src="${userVo.userLittleIcon}" id="imgcon" width="60px;" height="60px;"></a></div>
 			<div class="user_edit">
-				<a href="userInfo.jspx?userId=${uid}" class="username" id="user_name">${userVo.userName}</a>
-				<div class="user_edit_info">
-					<span><img src="${realPath}/images/men.png"></span>
+				<a href="${realPath}/user/${userId}" class="username" id="user_name">${userVo.userName}</a>
+				<div class="user_edit_info" id="user_edit_info">
+					<span>
+						<c:if test="${userVo.sex=='M'}">
+							<img src="${realPath}/images/men.png">
+						</c:if>	
+						<c:if test="${userVo.sex=='F'}">
+							<img src="${realPath}/images/women.png">
+						</c:if>	
+					</span>
 					<c:if test="${user.userId==userVo.userId}">
-						<a href="" class="edit_info">修改资料</a>
-						<a href="" class="edit_icon">更换头像</a>
+						<a href="${realPath}/manage/userinfo" class="edit_info">修改资料</a>
+						<a href="${realPath}/manage/usericon" class="edit_icon">更换头像</a>
 					</c:if>
-					<c:if test="${user.userId!=userVo.userId}">
-						<a href="javascript:void(0)" class="edit_info" id="focus_user">关注此人</a>
+					<c:if test="${user.userId!=userVo.userId&&!userVo.haveFocus}">
+						<a href="javascript:focusUser()" class="edit_info" id="focus_user">关注此人</a>
 					</c:if>
-					<div class="clear"></div>
+					<c:if test="${userVo.haveFocus}">
+						<span class="havefocus" id="havefocus">已关注</span>
+						<a href="javascript:cancelFocus()" class="edit_info" id="cancel_focus">取消</a>
+					</c:if>
+					<div class="clear" id="clear"></div>
 				</div>
 			</div>
 			<div class="clear"></div>
 		</div>
 		<div class="user_other_info">
-			<span>关注(0)</span>
-			<span>粉丝(0)</span>
-			<span>积分(0)</span>
+			<span>关注(${userVo.focusCount})</span>
+			<span>粉丝(${userVo.fansCount})</span>
+			<span>积分(${userVo.mark})</span>
 		</div>
 	</div>
 	<div class="resume" id="resume">
+		${userVo.characters}
+		<c:if test="${userVo.characters==null||userVo.characters==''}">
+			这个人很懒，啥也没留下
+		</c:if>
 	</div>
 	<div class="opts">
-		<a href="addBlog.jspx?userId=${userId}" class="blog">
-			<span class="blog_icon"></span>
-			<span class="blog_tit">发表博文</span>
-		</a>
-		<a href="/manage/userinfo" class="manage">
-			空间管理
-		</a>
-		<div class="clear"></div>
-		<a href="message.jsp?userId=${uid}" class="sendMsg">
-			发送留言
-		</a>
+		<c:if test="${user.userId==userVo.userId}">
+			<a href="${realPath}/manage/new_blog" class="blog">
+				<span class="blog_icon"></span>
+				<span class="blog_tit">发表博文</span>
+			</a>
+			<a href="${realPath}/manage/userinfo" class="manage">
+				空间管理
+			</a>
+			<div class="clear"></div>
+		</c:if>
+		<c:if test="${user.userId!=userVo.userId}">
+			<a href="message.jsp?userId=${uid}" class="sendMsg">
+				发送留言
+			</a>
+		</c:if>
 	</div>
 	<script type="text/javascript">
-		var userId = "${userId}"||"${param.userId}";
+		var userId = "${userVo.userId}";
+		var sessionUser = "${user}";
+	</script>
+	<script type="text/javascript">
+		function focusUser(){
+			if(sessionUser==""){
+				alert("请先登录");
+				return;
+			}
+			$.ajax({
+				async : true,
+				cache : false,
+				type : 'POST',
+				dataType : "json",
+				data : {
+					"friendid":userId,
+					"time" : new Date()
+				},
+				url : global.realPath+"/user/focusFriend.do",// 请求的action路径
+				success : function(data) {
+					if(data.result=="success"){
+						$("#focus_user").remove();
+						$("#clear").before($("<span class='havefocus' id='havefocus'>已关注</span><a href='javascript:cancelFocus()' class='edit_info' id='cancel_focus'>取消</a>"));
+					}else{
+						alert(data.message);
+					}
+				}
+			});
+		}
+		
+		function cancelFocus(){
+			if(sessionUser==""){
+				alert("请先登录");
+				return;
+			}
+			$.ajax({
+				async : true,
+				cache : false,
+				type : 'POST',
+				dataType : "json",
+				data : {
+					"friendid":userId,
+					"time" : new Date()
+				},
+				url : global.realPath+"/user/cancelFocus.do",// 请求的action路径
+				success : function(data) {
+					if(data.result=="success"){
+						$("#cancel_focus").remove();
+						$("#havefocus").remove();
+						$("#clear").before($("<a href='javascript:focusUser()' class='edit_info' id='focus_user'>关注此人</a>"));
+					}else{
+						alert(data.rsult.message);
+					}
+				}
+			});
+			
+		}
 	</script>
 </div>

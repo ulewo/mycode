@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <div class="manage_tit">
-	<span class="manage_tit1"><img src="../upload/${user.userLittleIcon}" width="40"></span>
+	<span class="manage_tit1"><img src="${user.userLittleIcon}" width="40"></span>
 	<span class="manage_tit2">空间管理</span>
 </div>
 <div class="menue_p">

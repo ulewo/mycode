@@ -34,7 +34,7 @@
 			<div class="clear"></div>
 			</div>
 			<div class="pagination">
-				<p:pager url="${realPath}/groupManage/${gid}/manage/member" page="${result.page}" pageTotal = "${result.pageTotal }"></p:pager>
+				<p:pager url="${realPath}/groupManage/${gid}/member" page="${result.page}" pageTotal = "${result.pageTotal }"></p:pager>
 			</div>
 		</div>
 		<div style="clear:left;"></div>
