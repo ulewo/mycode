@@ -45,7 +45,12 @@
 		</isNotEmpty>
 		</dynamic>
 	</select>
-	
+	<select id="baseInfo" resultClass="user" parameterClass="java.lang.String">
+	    select userid,email,username,userlittleicon,age,sex,characters,mark,address,work,registertime,previsittime,
+	    (select count(*) from user_friend f where f.userid=u.userid) as focusCount,
+	    (select count(*) from user_friend f where f.friendid=u.userid) as fansCount
+	    from user u where userid= #userId#
+	</select>
 		<!-- 添加 -->
 	<insert id="addUser" parameterClass="user">
 		insert into user(userid,email,username,password,userlittleicon,userbigicon,registertime,previsittime)
@@ -91,7 +96,7 @@
 	<!-- 通过userId非空更新用户信息-->
 	<update id="updateUser" parameterClass="user">
 		update user
-		set 1=1
+		set userid=#userId#
         <isNotEmpty prepend="," property="password">
           password=#password#
         </isNotEmpty>
@@ -110,9 +115,9 @@
         <isNotEmpty prepend="," property="characters">
           characters=#characters#
         </isNotEmpty>
-        <isNotEqual  prepend="," compareValue="0"  property="mark">
+        <isNotEmpty  prepend="," property="mark">
           mark=#mark#
-        </isNotEqual>
+        </isNotEmpty>
         <isNotEmpty prepend="," property="address">
           address=#address#
         </isNotEmpty>
@@ -145,5 +150,4 @@
 		order by topcount desc limit #offset#,#total#  
 	</select>
 	-->
-	
 </sqlMap>

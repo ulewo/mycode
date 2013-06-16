@@ -91,23 +91,18 @@ public class UserManageAction {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/edit_info", method = RequestMethod.POST)
-	public Map<String, Object> queryUserInfoAjax(HttpSession session, HttpServletRequest request) {
+	@RequestMapping(value = "/saveUserInfo.action", method = RequestMethod.POST)
+	public Map<String, Object> saveUserInfo(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 			String userId = "10001";
 			String age = request.getParameter("age");
-			String character = request.getParameter("character");
+			String character = request.getParameter("characters");
 			String sex = request.getParameter("sex");
 			String address = request.getParameter("address");
 			String work = request.getParameter("work");
-			if (sex != null && (SEX_M.equals(sex) || SEX_F.equals(sex))) {
-				modelMap.put("result", "fail");
-				modelMap.put("message", "性别选择错误");
-				return modelMap;
-			}
 			if (!StringUtils.isNumber(age) && StringUtils.isEmpty(age)) {
 				modelMap.put("result", "fail");
 				modelMap.put("message", "年龄必须是数字");

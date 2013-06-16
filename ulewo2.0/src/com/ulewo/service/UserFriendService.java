@@ -1,5 +1,7 @@
 package com.ulewo.service;
 
+import java.util.List;
+
 import com.ulewo.entity.UserFriend;
 import com.ulewo.util.PaginationResult;
 
@@ -39,4 +41,10 @@ public interface UserFriendService {
 	 * @return
 	 */
 	public PaginationResult queryFocus(String userId, int page, int pageSize);
+	
+	public UserFriend queryFocusUser(String userId,String friendId);
+	
+	public List<UserFriend> queryFocus2List(String userId,int offset,int pageSize);
+	
+	public List<UserFriend> queryFans2List(String userId,int offset,int pageSize);
 }

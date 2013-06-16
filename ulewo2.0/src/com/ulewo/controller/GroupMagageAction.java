@@ -122,7 +122,7 @@ public class GroupMagageAction {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/{gid}/manage/group_notice", method = RequestMethod.GET)
+	@RequestMapping(value = "/{gid}/group_notice", method = RequestMethod.GET)
 	public ModelAndView groupNotice(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
@@ -173,8 +173,8 @@ public class GroupMagageAction {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/{gid}/manage/group_item", method = RequestMethod.GET)
-	public ModelAndView blogItem(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
+	@RequestMapping(value = "/{gid}/group_item", method = RequestMethod.GET)
+	public ModelAndView groupItem(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
@@ -192,6 +192,91 @@ public class GroupMagageAction {
 		}
 	}
 
+	@RequestMapping(value = "/saveItem.do", method = RequestMethod.POST)
+	public ModelAndView saveItem(HttpSession session, HttpServletRequest request) {
+
+		ModelAndView mv = new ModelAndView();
+		try {
+			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+			String userId = "10001";
+			String gid = request.getParameter("gid");
+			String itemName = request.getParameter("itemName");
+			String itemCode = request.getParameter("itemCode");
+			if(StringUtils.isEmpty(itemName)){
+				mv.setViewName("redirect:" + Constant.WEBSTIE);
+				return mv;
+			}
+			if(StringUtils.isEmpty(itemCode)){
+				mv.setViewName("redirect:" + Constant.WEBSTIE);
+				return mv;
+			}
+			itemName = itemName.trim();
+			itemCode = itemCode.trim();
+			String id = request.getParameter("id");
+			if((StringUtils.isNotEmpty(id)&&!StringUtils.isNumber(id))||!StringUtils.isNumber(itemCode)){
+				mv.setViewName("redirect:" + Constant.WEBSTIE);
+				return mv;
+			}
+			int id_int = 0;
+			if(StringUtils.isNotEmpty(id)){
+				id_int = Integer.parseInt(id);
+			}
+			int itemCode_int = Integer.parseInt(itemCode);
+			ArticleItem item = new ArticleItem();
+			item.setId(id_int);
+			item.setGid(gid);
+			item.setItemCode(itemCode_int);
+			item.setItemName(itemName);
+			if(articleItemService.saveItem(item)){
+				mv.setViewName("redirect:"+gid+"/group_item");
+				return mv;
+			}else{
+				mv.setViewName("redirect:" + Constant.WEBSTIE);
+				return mv;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.setViewName("redirect:" + Constant.WEBSTIE);
+			return mv;
+		}
+	}
+	
+	@RequestMapping(value = "/{gid}/deleteItem", method = RequestMethod.GET)
+	public ModelAndView deleteItem(@PathVariable String gid,HttpSession session, HttpServletRequest request) {
+
+		ModelAndView mv = new ModelAndView();
+		try {
+			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+			String userId = "10001";
+			if(!checkPerm(gid, userId)){
+				mv.setViewName("redirect:"+gid+"/group_item");
+				return mv;
+			}
+			String id = request.getParameter("id");
+			if(StringUtils.isEmpty(id)||!StringUtils.isNumber(id)){
+				mv.setViewName("redirect:" + Constant.WEBSTIE);
+				return mv;
+			}
+			int id_int = 0;
+			if(StringUtils.isNotEmpty(id)){
+				id_int = Integer.parseInt(id);
+			}
+			if(articleItemService.delete(id_int)){
+				mv.setViewName("redirect:group_item");
+				return mv;
+			}else{
+				mv.setViewName("redirect:" + Constant.WEBSTIE);
+				return mv;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.setViewName("redirect:" + Constant.WEBSTIE);
+			return mv;
+		}
+	}
+	
 	/**
 	 * 文章管理
 	 * 
@@ -199,7 +284,7 @@ public class GroupMagageAction {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/{gid}/manage/group_article", method = RequestMethod.GET)
+	@RequestMapping(value = "/{gid}/group_article", method = RequestMethod.GET)
 	public ModelAndView groupArticle(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
@@ -232,7 +317,7 @@ public class GroupMagageAction {
 		}
 	}
 
-	@RequestMapping(value = "/{gid}/manage/edit_article", method = RequestMethod.GET)
+	@RequestMapping(value = "/{gid}/edit_article", method = RequestMethod.GET)
 	public ModelAndView editArticle(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
@@ -322,7 +407,7 @@ public class GroupMagageAction {
 		}
 	}
 
-	@RequestMapping(value = "/{gid}/manage/manageArticle", method = RequestMethod.POST)
+	@RequestMapping(value = "/{gid}/manageArticle", method = RequestMethod.POST)
 	public ModelAndView manageArticle(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
@@ -353,7 +438,7 @@ public class GroupMagageAction {
 		}
 	}
 
-	@RequestMapping(value = "/{gid}/manage/article_reply", method = RequestMethod.GET)
+	@RequestMapping(value = "/{gid}/article_reply", method = RequestMethod.GET)
 	public ModelAndView articleReply(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
@@ -375,7 +460,7 @@ public class GroupMagageAction {
 		}
 	}
 
-	@RequestMapping(value = "/{gid}/manage/member", method = RequestMethod.GET)
+	@RequestMapping(value = "/{gid}/member", method = RequestMethod.GET)
 	public ModelAndView member(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
@@ -398,7 +483,7 @@ public class GroupMagageAction {
 		}
 	}
 
-	@RequestMapping(value = "/{gid}/manage/member_apply", method = RequestMethod.GET)
+	@RequestMapping(value = "/{gid}/member_apply", method = RequestMethod.GET)
 	public ModelAndView memberApply(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
@@ -419,5 +504,17 @@ public class GroupMagageAction {
 			mv.setViewName("redirect:" + Constant.WEBSTIE);
 			return mv;
 		}
+	}
+	
+	private boolean checkPerm(String gid, String groupAuthor) {
+
+		Group group = groupService.queryGroupBaseInfo(gid);
+		if (null == group) {
+			return false;
+		}
+		if (!group.getGroupAuthor().equals(groupAuthor)) {
+			return false;
+		}
+		return true;
 	}
 }

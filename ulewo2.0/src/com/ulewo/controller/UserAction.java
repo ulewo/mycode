@@ -1,11 +1,15 @@
 package com.ulewo.controller;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,19 +21,26 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ulewo.entity.BlogArticle;
 import com.ulewo.entity.BlogItem;
 import com.ulewo.entity.BlogReply;
+import com.ulewo.entity.Group;
 import com.ulewo.entity.SessionUser;
 import com.ulewo.entity.User;
+import com.ulewo.entity.UserFriend;
 import com.ulewo.enums.QueryUserType;
 import com.ulewo.service.BlogArticleService;
 import com.ulewo.service.BlogItemService;
 import com.ulewo.service.BlogReplyService;
+import com.ulewo.service.GroupService;
+import com.ulewo.service.UserFriendService;
 import com.ulewo.service.UserService;
 import com.ulewo.util.Constant;
+import com.ulewo.util.DrowImage;
 import com.ulewo.util.PaginationResult;
 import com.ulewo.util.StringUtils;
 import com.ulewo.vo.UserVo;
@@ -48,7 +59,13 @@ public class UserAction {
 
 	@Autowired
 	private BlogReplyService blogReplyService;
-
+	
+	@Autowired
+	private UserFriendService userFriendService;
+	
+	@Autowired
+	private GroupService groupService;
+	
 	private final static int MAXLENGTH = 250;
 
 	private final static int USERNAME_LENGTH = 20;
@@ -58,6 +75,10 @@ public class UserAction {
 	private final static int PWD_MIN_LENGTH = 6;
 
 	private final static int PWD_MAX_LENGTH = 16;
+	
+	private final static int MAX_FILE = 1024*1024;
+	
+	private static final int MAXWIDTH = 600;
 
 	/**
 	 * 检测用户名是否已经存在
@@ -262,34 +283,24 @@ public class UserAction {
 	@RequestMapping(value = "/{userId}", method = RequestMethod.GET)
 	public ModelAndView queryUserInfo(@PathVariable String userId, HttpSession session, HttpServletRequest request,
 			HttpServletResponse response) {
-
-		UserVo userVo = new UserVo();
 		ModelAndView mv = new ModelAndView();
 		try {
-			if (StringUtils.isEmpty(userId)) {
+			
+			UserVo userVo = checkUserInfo(userId, session);
+			if(null==userVo){
 				mv.setViewName("redirect:"+Constant.WEBSTIE);
-				return mv;
 			}
-			User user = userService.findUser(userId, QueryUserType.USERID);
-			if (null == user) {
-				mv.setViewName("redirect:"+Constant.WEBSTIE);
-				return mv;
-			}
-			userVo.setUserId(user.getUserId());
-			userVo.setUserName(user.getUserName());
-			userVo.setUserLittleIcon(user.getUserLittleIcon());
-			userVo.setAddress(user.getAddress());
-			userVo.setAge(user.getAge());
-			userVo.setCharacters(user.getCharacters());
-			userVo.setMark(user.getMark());
-			userVo.setPrevisitTime(StringUtils.friendly_time(user.getPrevisitTime()));
-			userVo.setRegisterTime(StringUtils.friendly_time(user.getRegisterTime()));
-			userVo.setSex(user.getSex());
-			userVo.setWork(user.getWork());
 			mv.addObject("userVo", userVo);
 			List<BlogArticle> list = blogArticleService.queryBlog(userId, 0, 0, 5);
+			List<UserFriend> focusList = userFriendService.queryFocus2List(userId, 0, 15);
+			List<UserFriend> fansList = userFriendService.queryFans2List(userId, 0, 15);
+			List<Group> createdGroups = groupService.queryCreatedGroups(userId);
+			List<Group> joinedGroups = groupService.queryJoinedGroups(userId);
+			mv.addObject("focusList", focusList);
+			mv.addObject("fansList", fansList);
 			mv.addObject("bloglist", list);
-			mv.addObject("userId", userId);
+			mv.addObject("createdGroups", createdGroups);
+			mv.addObject("joinedGroups", joinedGroups);
 			mv.setViewName("user/userinfo");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -298,52 +309,43 @@ public class UserAction {
 		}
 		return mv;
 	}
-
-	/**
-	 * ajax查询用户信息 头像，性别，积分，粉丝，关注
-	 * 
-	 * @param userId
-	 * @param session
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/userInfo", method = RequestMethod.GET)
-	public Map<String, Object> queryUserInfoAjax(@PathVariable String userId, HttpSession session,
-			HttpServletRequest request, HttpServletResponse response) {
-
-		Map<String, Object> modelMap = new HashMap<String, Object>();
-		try {
-			if (StringUtils.isEmpty(userId)) {
-				modelMap.put("result", "fail");
-				return modelMap;
-			}
-			User user = userService.findUser(userId, QueryUserType.USERID);
-			if (null == user) {
-				modelMap.put("result", "fail");
-				return modelMap;
-			}
-			UserVo userVo = new UserVo();
-			userVo.setUserId(user.getUserId());
-			userVo.setUserName(user.getUserName());
-			userVo.setUserLittleIcon(user.getUserLittleIcon());
-			userVo.setAddress(user.getAddress());
-			userVo.setAge(user.getAge());
-			userVo.setCharacters(user.getCharacters());
-			userVo.setMark(user.getMark());
-			userVo.setPrevisitTime(user.getPrevisitTime());
-			userVo.setRegisterTime(user.getRegisterTime());
-			userVo.setSex(user.getSex());
-			userVo.setWork(user.getWork());
-			modelMap.put("result", "success");
-			modelMap.put("user", userVo);
-			return modelMap;
-		} catch (Exception e) {
-			modelMap.put("result", "fail");
-			return modelMap;
+	
+	
+	private UserVo checkUserInfo(String userId,HttpSession session){
+		if (StringUtils.isEmpty(userId)) {
+			return null;
 		}
+		User user = userService.queryBaseInfo(userId);
+		if (null == user) {
+			return null;
+		}
+		boolean haveFocus = false;
+		
+		Object obj = session.getAttribute("user");
+		if(obj!=null){
+			UserFriend userFriend = userFriendService.queryFocusUser(((SessionUser)obj).getUserId(),userId);
+			if(null!=userFriend){
+				haveFocus = true;
+			}
+		}
+		UserVo userVo = new UserVo();
+		userVo.setUserId(user.getUserId());
+		userVo.setUserName(user.getUserName());
+		userVo.setUserLittleIcon(user.getUserLittleIcon());
+		userVo.setAddress(user.getAddress());
+		userVo.setAge(user.getAge());
+		userVo.setCharacters(user.getCharacters());
+		userVo.setMark(user.getMark());
+		userVo.setPrevisitTime(StringUtils.friendly_time(user.getPrevisitTime()));
+		userVo.setRegisterTime(StringUtils.friendly_time(user.getRegisterTime()));
+		userVo.setSex(user.getSex());
+		userVo.setWork(user.getWork());
+		userVo.setFansCount(user.getFansCount());
+		userVo.setFocusCount(user.getFocusCount());
+		userVo.setHaveFocus(haveFocus);
+		return userVo;
 	}
+	
 
 	@RequestMapping(value = "/{userId}/blog", method = RequestMethod.GET)
 	public ModelAndView blogList(@PathVariable String userId, HttpSession session, HttpServletRequest request,
@@ -351,10 +353,11 @@ public class UserAction {
 
 		ModelAndView mv = new ModelAndView();
 		try {
-			if (StringUtils.isEmpty(userId)) {
-				mv.setViewName("redirect:/../error");
-				return mv;
+			UserVo userVo = checkUserInfo(userId, session);
+			if(null==userVo){
+				mv.setViewName("redirect:"+Constant.WEBSTIE);
 			}
+			mv.addObject("userVo", userVo);
 			String itemId = request.getParameter("itemId");
 			String page = request.getParameter("page");
 			int itemId_int = 0;
@@ -393,10 +396,11 @@ public class UserAction {
 			HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
 		try {
-			if (StringUtils.isEmpty(userId)) {
-				mv.setViewName("redirect:/../error");
-				return mv;
+			UserVo userVo = checkUserInfo(userId, session);
+			if(null==userVo){
+				mv.setViewName("redirect:"+Constant.WEBSTIE);
 			}
+			mv.addObject("userVo", userVo);
 			int blogId_int = 0;
 			if (StringUtils.isNumber(blogId)) {
 				blogId_int = Integer.parseInt(blogId);
@@ -407,8 +411,10 @@ public class UserAction {
 			}
 			BlogArticle blogArticle = blogArticleService.queryBlogById(blogId_int);
 			List<BlogItem> blogItemList = blogItemService.queryBlogItemAndCountByUserId(userId);
+			int countTotal = blogArticleService.queryBlogCount(userId, 0);
 			mv.addObject("blogItemList", blogItemList);
 			mv.addObject("blog", blogArticle);
+			mv.addObject("countTotal", countTotal);
 			mv.addObject("userId", userId);
 			mv.setViewName("user/blog_detail");
 			return mv;
@@ -546,5 +552,133 @@ public class UserAction {
 		modelMap.put("message", message);
 		modelMap.put("result", result);
 		return modelMap;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/focusFriend.do", method = RequestMethod.POST)
+	public Map<String, Object> focusFriend(HttpSession session, HttpServletRequest request) {
+		String friendId = request.getParameter("friendid");
+		Object sessionObj = session.getAttribute("user");
+		String message = "";
+		String result = "success";
+		try {
+			if (null != sessionObj) {
+				SessionUser user = (SessionUser) sessionObj;
+				String userId = user.getUserId();
+				UserFriend friend = new UserFriend();
+				friend.setUserId(userId);
+				friend.setFriendId(friendId);
+				userFriendService.addFriend(friend);
+			}
+			else {
+				message = "你无权进行此操作";
+				result = "fail";
+			}
+		} catch (Exception e) {
+			message = "操作异常";
+			result = "fail";
+		}
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		modelMap.put("message", message);
+		modelMap.put("result", result);
+		return modelMap;
+	}
+	@ResponseBody
+	@RequestMapping(value = "/cancelFocus.do", method = RequestMethod.POST)
+	public Map<String, Object> cancelFocus(HttpSession session, HttpServletRequest request) {
+		String friendId = request.getParameter("friendid");
+		Object sessionObj = session.getAttribute("user");
+		String message = "";
+		String result = "success";
+		try {
+			if (null != sessionObj) {
+				SessionUser user = (SessionUser) sessionObj;
+				String userId = user.getUserId();
+				userFriendService.deleteFirend(userId, friendId);
+			}
+			else {
+				message = "你无权进行此操作";
+				result = "fail";
+			}
+		} catch (Exception e) {
+			message = "操作异常";
+			result = "fail";
+		}
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		modelMap.put("message", message);
+		modelMap.put("result", result);
+		return modelMap;
+	}
+	
+	@RequestMapping(value = "/talkImgUpload", method = RequestMethod.POST)
+	public ModelAndView fileupload(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView mv = new ModelAndView();
+		try {
+			Object user = session.getAttribute("user");
+			if (null == user) {
+				mv.addObject("result", "fail");
+				mv.addObject("message", "你登陆已超时，请重新登陆");
+				mv.setViewName("common/talkimgupload");
+				return mv;
+			}
+			String realPath = session.getServletContext().getRealPath("/");
+			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+			MultipartFile multipartFile = multipartRequest.getFile("file");
+			long size = multipartFile.getSize();
+			if (size > MAX_FILE) {
+				mv.addObject("result", "fail");
+				mv.addObject("message", "文件超过1M");
+				mv.setViewName("common/talkimgupload");
+				return mv;
+			}
+			String fileName = multipartFile.getOriginalFilename();
+			String suffix = fileName.substring(fileName.lastIndexOf(".")+1);
+			if (!"JPG".equalsIgnoreCase(suffix)&&!"PNG".equalsIgnoreCase(suffix)&&!"gif".equalsIgnoreCase(suffix)
+					&&!"BMP".equalsIgnoreCase(suffix)) {
+				mv.addObject("result", "fail");
+				mv.addObject("message", "文件类型只能是图片");
+				mv.setViewName("common/talkimgupload");
+				return mv;
+			}
+			String current = String.valueOf(System.currentTimeMillis());
+			fileName = current+"."+suffix;
+			SimpleDateFormat formater = new SimpleDateFormat("yyyyMM");
+			String saveDir = formater.format(new Date());
+			String savePath = saveDir + "/" + fileName;
+			String fileDir = realPath + "upload" + "/" + saveDir;
+			File dir = new File(fileDir);
+			if (!dir.exists()) {
+				dir.mkdirs();
+			}
+			String filePath = fileDir + "/" + fileName;
+			File file = new File(filePath);
+			multipartFile.transferTo(file);
+			
+			File fromFile = new File(filePath);
+			BufferedImage srcImage = ImageIO.read(fromFile);
+			int width = srcImage.getWidth();
+			int height = srcImage.getHeight();
+			int w = MAXWIDTH;
+			int h = MAXWIDTH;
+			if (fromFile.length() > 200 * 1024 || width > MAXWIDTH) {
+				if (fromFile.length() > 200 * 1024 && width < MAXWIDTH) {// 图片太大，长宽不大的情况
+					w = width;
+					h = height;
+				}
+				String drowPath = fileDir + "/" + current+"x.jpg";
+				DrowImage.saveImageAsJpg(filePath, drowPath, w, h, false);
+				fromFile.delete();
+				savePath = saveDir + "/" +  current+"x.jpg";
+			}
+			mv.addObject("result", "success");
+			mv.addObject("savePath", savePath);
+			mv.setViewName("common/talkimgupload");
+			return mv;
+		} catch (Exception e) {
+			mv.addObject("result", "fail");
+			mv.setViewName("common/talkimgupload");
+			return mv;
+		}
 	}
 }

@@ -38,6 +38,10 @@ public class User {
 	private Integer reArticleNumber; // 回帖数量
 
 	private String isValid;
+	
+	private int fansCount;
+	
+	private int focusCount;
 
 	public String getUserId() {
 
@@ -199,16 +203,6 @@ public class User {
 		this.isValid = isValid;
 	}
 
-	public Integer getMark() {
-
-		return mark;
-	}
-
-	public void setMark(Integer mark) {
-
-		this.mark = mark;
-	}
-
 	public Integer getArticleNumber() {
 
 		return articleNumber;
@@ -227,6 +221,30 @@ public class User {
 	public void setReArticleNumber(Integer reArticleNumber) {
 
 		this.reArticleNumber = reArticleNumber;
+	}
+
+	public int getFansCount() {
+		return fansCount;
+	}
+
+	public void setFansCount(int fansCount) {
+		this.fansCount = fansCount;
+	}
+
+	public int getFocusCount() {
+		return focusCount;
+	}
+
+	public void setFocusCount(int focusCount) {
+		this.focusCount = focusCount;
+	}
+
+	public Integer getMark() {
+		return mark;
+	}
+
+	public void setMark(Integer mark) {
+		this.mark = mark;
 	}
 
 }

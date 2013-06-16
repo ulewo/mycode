@@ -48,4 +48,6 @@ public interface UserService {
 	 * @return
 	 */
 	public User login(String value, String password);
+	
+	public User queryBaseInfo(String userId);
 }

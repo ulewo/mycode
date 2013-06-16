@@ -27,7 +27,9 @@ public class UserVo {
 
 	private int fansCount; //粉丝数
 
-	private int trackCount; //关注数
+	private int focusCount; //关注数
+	
+	private boolean haveFocus;
 
 	public String getUserId() {
 
@@ -149,14 +151,12 @@ public class UserVo {
 		this.fansCount = fansCount;
 	}
 
-	public int getTrackCount() {
-
-		return trackCount;
+	public int getFocusCount() {
+		return focusCount;
 	}
 
-	public void setTrackCount(int trackCount) {
-
-		this.trackCount = trackCount;
+	public void setFocusCount(int focusCount) {
+		this.focusCount = focusCount;
 	}
 
 	public String getEmail() {
@@ -167,6 +167,14 @@ public class UserVo {
 	public void setEmail(String email) {
 
 		this.email = email;
+	}
+
+	public boolean isHaveFocus() {
+		return haveFocus;
+	}
+
+	public void setHaveFocus(boolean haveFocus) {
+		this.haveFocus = haveFocus;
 	}
 
 }

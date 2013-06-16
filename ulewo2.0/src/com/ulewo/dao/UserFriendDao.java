@@ -14,11 +14,11 @@ public class UserFriendDao extends BaseDao {
 		this.getSqlMapClientTemplate().insert("userFriend.addFriend", friend);
 	}
 
-	public void deleteFriend(String userId, String freindId) {
+	public void deleteFriend(String userId, String friendId) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("userId", userId);
-		map.put("freindId", freindId);
-		this.getSqlMapClientTemplate().delete("userFriend.addFriend", map);
+		map.put("friendId", friendId);
+		this.getSqlMapClientTemplate().delete("userFriend.deleteFriend", map);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -51,4 +51,11 @@ public class UserFriendDao extends BaseDao {
 				"userFriend.queryFocusCount", userId);
 	}
 
+	public UserFriend queryFocusUser(String userId,String friendId){
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("userId", userId);
+		map.put("friendId", friendId);
+		return (UserFriend) this.getSqlMapClientTemplate().queryForObject(
+				"userFriend.queryFocusUser", map);
+	}
 }

@@ -11,12 +11,12 @@
 	
 	<!-- 添加-->
 	<insert id="addFriend" parameterClass="friend">
-		insert into user_friend (userid,friendid,createtime)
-		values(#userid#,#friendid#,#createTime#);
+		insert into user_friend(userid,friendid,createtime)
+		values(#userId#,#friendId#,#createTime#);
 	</insert>
 	
 	<!-- 删除成员 -->
-	<delete id="deleteMember" parameterClass="java.util.Map">
+	<delete id="deleteFriend" parameterClass="java.util.Map">
 		delete from user_friend where userid = #userId# and friendid = #friendId#
 	</delete>
 	
@@ -32,12 +32,16 @@
 	</select>
 	
 	<!-- 查询粉丝 -->
-	<select id="queryFans" resultClass="java.lang.Integer" parameterClass="java.util.Map">
-		select f.userid as friendId,u.username as friendName,u.userlittleicon as friendIcon from user_friend f inner join user u on f.userid=u.userid
+	<select id="queryFans" resultClass="friend" parameterClass="java.util.Map">
+		select f.friendId as userId,f.userid as friendId,u.username as friendName,u.userlittleicon as friendIcon from user_friend f inner join user u on f.userid=u.userid
 		where f.friendid = #userId# order by createtime desc limit #offset#,#total#
 	</select>
 	<!-- 查询粉丝数量 -->
-	<select id="queryFocusCount" resultClass="java.lang.Integer" parameterClass="java.lang.String">
+	<select id="queryfansCount" resultClass="java.lang.Integer" parameterClass="java.lang.String">
 		select count(*) from user_friend where friendid = #userId#
+	</select>
+	
+	<select id="queryFocusUser" resultClass="friend" parameterClass="java.util.Map">
+		select * from user_friend where userid = #userId# and friendid = #friendId#
 	</select>
 </sqlMap>

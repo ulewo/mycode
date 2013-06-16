@@ -34,6 +34,10 @@ public class UserDao extends BaseDao {
 		return null;
 	}
 
+	public User findBaseInfo(String userId){
+		return (User)this.getSqlMapClientTemplate().queryForObject("user.baseInfo",userId);
+	}
+	
 	/**
 	 * 添加用户
 	 * @param user
@@ -63,7 +67,7 @@ public class UserDao extends BaseDao {
 	}
 
 	public void update(User user) {
-
+		this.getSqlMapClientTemplate().update("user.updateUser", user);
 	}
 
 }

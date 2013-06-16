@@ -77,6 +77,10 @@ public class GroupServiceImpl implements GroupService {
 		return group;
 	}
 
+	public Group queryGroupBaseInfo(String gid) {
+		return groupDao.queryGroupBaseInfo(gid);
+	}
+	
 	@Override
 	public void updateGroup(Group group) {
 		group.setGroupName(StringUtils.clearHtml(group.getGroupName()));

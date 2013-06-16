@@ -39,9 +39,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void updateUser(User user) {
-
-		// TODO Auto-generated method stub
-
+		userDao.update(user);
 	}
 
 	@Override
@@ -73,5 +71,9 @@ public class UserServiceImpl implements UserService {
 		else {
 			return null;
 		}
+	}
+	
+	public User queryBaseInfo(String userId){
+		return userDao.findBaseInfo(userId);
 	}
 }

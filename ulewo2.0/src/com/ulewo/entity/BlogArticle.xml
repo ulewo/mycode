@@ -37,7 +37,7 @@
 	<!--通过用户查询文章-->
 	<select id="queryBlog"  resultClass="blogArticle" parameterClass="java.util.Map">
 		select *,(select count(r.id) from blog_reply r where r.blogid=b.id) as reCount,i.itemname as itemName from blog_article b 
-		inner join blog_item i on i.id=b.itemid
+		left outer join blog_item i on i.id=b.itemid
 		<dynamic prepend="where">
 			<isNotEqual prepend="and" compareValue="0"  property="itemId">
          	  <![CDATA[itemid = #itemId# ]]>

@@ -18,7 +18,7 @@ public interface ArticleItemService {
 	 * @param item
 	 * @author luohl
 	 */
-	public void addItem(ArticleItem item);
+	public boolean saveItem(ArticleItem item);
 
 	/**
 	 * 
@@ -45,7 +45,7 @@ public interface ArticleItemService {
 	 * @
 	 * @author luohl
 	 */
-	public void delete(int id);
+	public boolean delete(int id);
 
 	/**
 	 * 

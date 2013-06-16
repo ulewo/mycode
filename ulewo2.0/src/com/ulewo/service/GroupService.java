@@ -23,6 +23,8 @@ public interface GroupService {
 	 */
 	public Group queryGorup(String gid);
 
+	public Group queryGroupBaseInfo(String gid) ;
+	
 	/**
 	 * 更新群组
 	 * 
