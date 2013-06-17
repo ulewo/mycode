@@ -35,7 +35,7 @@ public class ImageUploadAction {
 			if (null == user) {
 				mv.addObject("result", "fail");
 				mv.addObject("message", "你登陆已超时，请重新登陆");
-				mv.setViewName("common/talkimgupload");
+				mv.setViewName("common/imgupload");
 				return mv;
 			}
 			String realPath = session.getServletContext().getRealPath("/");
@@ -45,7 +45,7 @@ public class ImageUploadAction {
 			if (size > MAX_FILE) {
 				mv.addObject("result", "fail");
 				mv.addObject("message", "文件超过1M");
-				mv.setViewName("common/talkimgupload");
+				mv.setViewName("common/imgupload");
 				return mv;
 			}
 			String fileName = multipartFile.getOriginalFilename();
@@ -54,7 +54,7 @@ public class ImageUploadAction {
 					&& !"BMP".equalsIgnoreCase(suffix)) {
 				mv.addObject("result", "fail");
 				mv.addObject("message", "文件类型只能是图片");
-				mv.setViewName("common/talkimgupload");
+				mv.setViewName("common/imgupload");
 				return mv;
 			}
 			String current = String.valueOf(System.currentTimeMillis());

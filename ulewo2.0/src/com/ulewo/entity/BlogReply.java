@@ -16,9 +16,7 @@ public class BlogReply {
 
 	private String blogTitle;
 
-	private String author;
-
-	private String blogauthor;
+	private String blogAuthor;
 
 	private String content;
 
@@ -136,24 +134,13 @@ public class BlogReply {
 		this.atUserName = atUserName;
 	}
 
-	public String getBlogauthor() {
 
-		return blogauthor;
+	public String getBlogAuthor() {
+		return blogAuthor;
 	}
 
-	public void setBlogauthor(String blogauthor) {
-
-		this.blogauthor = blogauthor;
-	}
-
-	public String getAuthor() {
-
-		return author;
-	}
-
-	public void setAuthor(String author) {
-
-		this.author = author;
+	public void setBlogAuthor(String blogAuthor) {
+		this.blogAuthor = blogAuthor;
 	}
 
 	public String getBlogTitle() {

@@ -74,7 +74,7 @@ public class BlogReplyDao extends BaseDao {
 
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("id", id);
-		paramMap.put("author", author);
+		paramMap.put("blogAuthor", author);
 		int count = this.getSqlMapClientTemplate().delete("blogReply.deletePeply", paramMap);
 		if (count > 0) {
 			return true;
@@ -90,7 +90,7 @@ public class BlogReplyDao extends BaseDao {
 	public List<BlogReply> queryAllReply(String author, int offSet, int pageSize) {
 
 		Map<String, Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("author", author);
+		paramMap.put("blogAuthor", author);
 		paramMap.put("offSet", offSet);
 		paramMap.put("pageSize", pageSize);
 		return (List<BlogReply>) getSqlMapClientTemplate().queryForList("blogReply.queryAllReply", paramMap);
@@ -99,7 +99,7 @@ public class BlogReplyDao extends BaseDao {
 	public int queryAllReplyCount(String author) {
 
 		Map<String, Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("author", author);
+		paramMap.put("blogAuthor", author);
 		return (Integer) getSqlMapClientTemplate().queryForObject("blogReply.queryAllReplyCount", paramMap);
 	}
 }

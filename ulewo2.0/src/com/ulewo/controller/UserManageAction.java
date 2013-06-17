@@ -1,9 +1,18 @@
 package com.ulewo.controller;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -54,6 +63,8 @@ public class UserManageAction {
 	private final static String SEX_M = "M";
 
 	private final static String SEX_F = "F";
+	
+	private static final int SMALL_WIDTH =60,SMALL_HEIGHT= 60;
 
 	/**
 	 * 获取用户信息
@@ -179,15 +190,15 @@ public class UserManageAction {
 				return modelMap;
 			}
 			User resultUser = userService.findUser(userId, QueryUserType.USERID);
-			if (null != resultUser) {
+			if (null != resultUser&&resultUser.getPassword().equals(StringUtils.encodeByMD5(oldpwd))) {
 				User user = new User();
 				user.setUserId(userId);
-				user.setPassword(newpwd);
+				user.setPassword(StringUtils.encodeByMD5(newpwd));
 				userService.updateUser(user);
 				modelMap.put("result", "success");
 				return modelMap;
 			}
-			modelMap.put("message", "你输入的帐号或者密码错误，修改密码失败");
+			modelMap.put("message", "你输入的旧密码错误，修改密码失败");
 			modelMap.put("result", "fail");
 			return modelMap;
 
@@ -209,20 +220,109 @@ public class UserManageAction {
 		return mv;
 
 	}
+	@ResponseBody
+	@RequestMapping(value = "/saveUserIcon.action")
+	public Map<String, Object> saveUserIcon(HttpSession session,HttpServletRequest request) {
 
-	@RequestMapping(value = "/iconUpload.action")
-	public ModelAndView iconUpload(HttpSession session) {
-
-		ModelAndView mv = new ModelAndView();
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		String tempimg = request.getParameter("img");
+		String x1= request.getParameter("x1");
+		String y1= request.getParameter("y1");
+		String width= request.getParameter("width");
+		String height= request.getParameter("height");
+		if(!StringUtils.isNumber(x1)||!StringUtils.isNumber(y1)||!StringUtils.isNumber(width)||!StringUtils.isNumber(height)){
+			modelMap.put("result", "fail");
+			modelMap.put("message", "请求参数错误");
+			return modelMap;
+		}
+		int x1_int = Integer.parseInt(x1);
+		int y1_int = Integer.parseInt(y1);
+		int width_int = Integer.parseInt(width);
+		int height_int = Integer.parseInt(height);
 		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
-		String userId = "10001";
-		List<BlogItem> itemList = blogItemService.queryBlogItemByUserId(userId);
-		mv.addObject("itemList", itemList);
-		mv.setViewName("usermanage/new_blog");
-		return mv;
+		String userId = sessionUser.getUserId();
+		String userIcon = "";
+		InputStream tempIn = null;
+		ByteArrayOutputStream out = null;
+		OutputStream imgOut = null;
+		String imgType = "jpg";
+		if (tempimg != null && !"".equals(tempimg)) {
+			int idx = tempimg.lastIndexOf(".");
+			if (idx >= 0) {
+				imgType = tempimg.substring(idx + 1);
+			}
+		}
+		String srcpath = request.getServletContext().getRealPath(
+				"/")
+				+ tempimg;
+		try {
+			File tempfile = new File(srcpath);
+			tempIn = new FileInputStream(tempfile);
+			BufferedImage img = ImageIO.read(tempIn);
+			// 裁剪图片
+			BufferedImage subimg = img.getSubimage(x1_int, y1_int, width_int, height_int);
+			// 放大缩小图片
+			BufferedImage okimg = new BufferedImage(SMALL_WIDTH, SMALL_HEIGHT,
+					BufferedImage.TYPE_INT_RGB);
+			Graphics2D g = okimg.createGraphics();
+			g.drawImage(subimg, 0, 0, SMALL_WIDTH, SMALL_HEIGHT, null);
 
+			// 将图片转为字节数组
+			out = new ByteArrayOutputStream();
+			ImageIO.write(okimg, imgType, out);
+			byte[] data = out.toByteArray();
+			String okSrcPath = request.getServletContext()
+					.getRealPath("/") + "upload/avatars/";
+			File imagePathFile = new File(okSrcPath);
+			if (!imagePathFile.exists()) {
+				imagePathFile.mkdirs();
+			}
+			File okfile = new File(okSrcPath + sessionUser.getUserId() + "."
+					+ imgType);
+			imgOut = new FileOutputStream(okfile);
+			imgOut.write(data);
+			imgOut.flush();
+			
+			int port = request.getServerPort();
+			String realPath = "http://" + request.getServerName()+ ":" + port+  request.getContextPath(); 
+			if(port==80){
+				realPath = "http://" + request.getServerName()+ request.getContextPath(); 
+			}
+			
+			userIcon =realPath+ "/upload/avatars/" + sessionUser.getUserId() + "." + imgType;
+			User user = new User();
+			user.setUserId(userId);
+			user.setUserLittleIcon(userIcon);
+			sessionUser.setUserLittleIcon(userIcon);
+			userService.updateUser(user);
+		} catch (Exception e) {
+			modelMap.put("result", "fail");
+			modelMap.put("message", "系统异常");
+			return modelMap;
+		}
+		finally {
+			try {
+				if (null != tempIn) {
+					tempIn.close();
+					tempIn = null;
+				}
+				if (null != out) {
+					out.close();
+					out = null;
+				}
+				if (imgOut != null) {
+					imgOut.close();
+				}
+			} catch (Exception e) {
+			}
+			new File(srcpath).delete();
+		}
+		modelMap.put("result", "success");
+		modelMap.put("userIcon", userIcon);
+		return modelMap;
 	}
 
+	
 	@RequestMapping(value = "/new_blog")
 	public ModelAndView newblog(HttpSession session) {
 
@@ -257,6 +357,7 @@ public class UserManageAction {
 			article.setItemId(itemId_int);
 			article.setKeyWord(keyword);
 			article.setContent(content);
+			article.setUserId(userId);
 			blogArticleService.addBlog(article);
 			return modelMap;
 		} catch (Exception e) {
@@ -453,7 +554,7 @@ public class UserManageAction {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/delete_reply", method = RequestMethod.POST)
+	@RequestMapping(value = "/delete_reply.action", method = RequestMethod.GET)
 	public ModelAndView deleteReply(HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
@@ -466,7 +567,7 @@ public class UserManageAction {
 			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 			String userId = "10001";
 			if (blogReplyService.delete(userId, id_int)) {
-				mv.setViewName("redirect:replyList");
+				mv.setViewName("redirect:blog_reply");
 			}
 			else {
 				mv.setViewName("redirect:" + Constant.WEBSTIE);

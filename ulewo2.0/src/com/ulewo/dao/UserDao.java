@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.ulewo.entity.User;
 import com.ulewo.enums.QueryUserType;
+import com.ulewo.util.StringUtils;
 
 @Component
 public class UserDao extends BaseDao {
@@ -19,6 +20,9 @@ public class UserDao extends BaseDao {
 	public User findUser(String value, QueryUserType type) {
 
 		Map<String, String> paramMap = new HashMap<String, String>();
+		if(StringUtils.isEmpty(value)){
+			return null;
+		}
 		if (type == QueryUserType.USERID) {
 			paramMap.put("userId", value);
 			return (User) this.getSqlMapClientTemplate().queryForObject("user.findUser", paramMap);
