@@ -1,10 +1,11 @@
 var isHaveImg = false;
-    var editor = new UE.ui.Editor();
-    editor.render("editor");
-    editor.ready(function(){
-        editor.setContent("");
-    });
+var editor;
 $(function(){
+	editor = new UE.ui.Editor();
+	editor.render("editor");
+	editor.ready(function(){
+	    editor.setContent("");
+	});
 	$("#saveBtn").bind("click",addBlog);
 })
 
@@ -49,10 +50,10 @@ function addBlog(){
 		cache : false,
 		type : 'POST',
 		dataType : "json",
-		data : $("#articleform").serialize(),
+		data : $("#blogform").serialize(),
 		url : global.realPath+"/manage/saveblog.action",// 请求的action路径
 		success : function(data) {
-			btnLoaded($("#sub_article_btn"),"发表帖子");
+			btnLoaded($("#saveBtn"),"发表博文");
 			if(data.result=="fail"){
 				warm("show",data.message);
 			}else{
