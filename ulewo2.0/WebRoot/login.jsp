@@ -7,13 +7,16 @@
 <%@ include file="common/path.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>登陆有乐窝-有乐窝</title>
-<link rel="stylesheet" type="text/css" href="${realpath}/css/login.css">
+<link rel="stylesheet" type="text/css" href="${realPath}/css/login.css">
 </head>
 <body>
 	<%@ include file="common/head.jsp" %>
 	<div class="main">
 		<div class="left">
+			<div style="height:30px;padding-left:30px;">
 			<div class="result_info"><i id="warm_icon"></i><span id="warm_info"></span></div>
+			<div class="clear"></div>
+			</div>
 			<div class="login_p" style="margin-top:1px;">
 				<div class="login_tit">账号：</div>
 				<div class="login_input"><input type="text" id="account"></div>
