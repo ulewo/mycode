@@ -3,7 +3,6 @@ package com.ulewo.service;
 import java.util.List;
 
 import com.ulewo.entity.BlogArticle;
-import com.ulewo.entity.User;
 import com.ulewo.util.PaginationResult;
 
 public interface BlogArticleService {
@@ -13,7 +12,7 @@ public interface BlogArticleService {
 	 * @param blogArticle
 	 * @author luohl
 	 */
-	public boolean addBlog(BlogArticle blogArticle, User user);
+	public boolean addBlog(BlogArticle blogArticle);
 
 	/**
 	 * 

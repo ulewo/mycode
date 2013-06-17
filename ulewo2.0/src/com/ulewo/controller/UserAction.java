@@ -59,13 +59,13 @@ public class UserAction {
 
 	@Autowired
 	private BlogReplyService blogReplyService;
-	
+
 	@Autowired
 	private UserFriendService userFriendService;
-	
+
 	@Autowired
 	private GroupService groupService;
-	
+
 	private final static int MAXLENGTH = 250;
 
 	private final static int USERNAME_LENGTH = 20;
@@ -75,9 +75,9 @@ public class UserAction {
 	private final static int PWD_MIN_LENGTH = 6;
 
 	private final static int PWD_MAX_LENGTH = 16;
-	
-	private final static int MAX_FILE = 1024*1024;
-	
+
+	private final static int MAX_FILE = 1024 * 1024;
+
 	private static final int MAXWIDTH = 600;
 
 	/**
@@ -283,12 +283,13 @@ public class UserAction {
 	@RequestMapping(value = "/{userId}", method = RequestMethod.GET)
 	public ModelAndView queryUserInfo(@PathVariable String userId, HttpSession session, HttpServletRequest request,
 			HttpServletResponse response) {
+
 		ModelAndView mv = new ModelAndView();
 		try {
-			
+
 			UserVo userVo = checkUserInfo(userId, session);
-			if(null==userVo){
-				mv.setViewName("redirect:"+Constant.WEBSTIE);
+			if (null == userVo) {
+				mv.setViewName("redirect:" + Constant.WEBSTIE);
 			}
 			mv.addObject("userVo", userVo);
 			List<BlogArticle> list = blogArticleService.queryBlog(userId, 0, 0, 5);
@@ -301,17 +302,17 @@ public class UserAction {
 			mv.addObject("bloglist", list);
 			mv.addObject("createdGroups", createdGroups);
 			mv.addObject("joinedGroups", joinedGroups);
-			mv.setViewName("user/userinfo");
+			mv.setViewName("user/userhome");
 		} catch (Exception e) {
 			e.printStackTrace();
-			mv.setViewName("redirect:"+Constant.WEBSTIE);
+			mv.setViewName("redirect:" + Constant.WEBSTIE);
 			return mv;
 		}
 		return mv;
 	}
-	
-	
-	private UserVo checkUserInfo(String userId,HttpSession session){
+
+	private UserVo checkUserInfo(String userId, HttpSession session) {
+
 		if (StringUtils.isEmpty(userId)) {
 			return null;
 		}
@@ -320,11 +321,11 @@ public class UserAction {
 			return null;
 		}
 		boolean haveFocus = false;
-		
+
 		Object obj = session.getAttribute("user");
-		if(obj!=null){
-			UserFriend userFriend = userFriendService.queryFocusUser(((SessionUser)obj).getUserId(),userId);
-			if(null!=userFriend){
+		if (obj != null) {
+			UserFriend userFriend = userFriendService.queryFocusUser(((SessionUser) obj).getUserId(), userId);
+			if (null != userFriend) {
 				haveFocus = true;
 			}
 		}
@@ -345,7 +346,6 @@ public class UserAction {
 		userVo.setHaveFocus(haveFocus);
 		return userVo;
 	}
-	
 
 	@RequestMapping(value = "/{userId}/blog", method = RequestMethod.GET)
 	public ModelAndView blogList(@PathVariable String userId, HttpSession session, HttpServletRequest request,
@@ -354,8 +354,8 @@ public class UserAction {
 		ModelAndView mv = new ModelAndView();
 		try {
 			UserVo userVo = checkUserInfo(userId, session);
-			if(null==userVo){
-				mv.setViewName("redirect:"+Constant.WEBSTIE);
+			if (null == userVo) {
+				mv.setViewName("redirect:" + Constant.WEBSTIE);
 			}
 			mv.addObject("userVo", userVo);
 			String itemId = request.getParameter("itemId");
@@ -383,6 +383,7 @@ public class UserAction {
 			return mv;
 		}
 	}
+
 	/**
 	 * 博客详情
 	 * 
@@ -392,13 +393,14 @@ public class UserAction {
 	 * @return
 	 */
 	@RequestMapping(value = "/{userId}/blog/{blogId}", method = RequestMethod.GET)
-	public ModelAndView blogDetail(@PathVariable String userId,@PathVariable String blogId, HttpSession session, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView blogDetail(@PathVariable String userId, @PathVariable String blogId, HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
+
 		ModelAndView mv = new ModelAndView();
 		try {
 			UserVo userVo = checkUserInfo(userId, session);
-			if(null==userVo){
-				mv.setViewName("redirect:"+Constant.WEBSTIE);
+			if (null == userVo) {
+				mv.setViewName("redirect:" + Constant.WEBSTIE);
 			}
 			mv.addObject("userVo", userVo);
 			int blogId_int = 0;
@@ -553,10 +555,11 @@ public class UserAction {
 		modelMap.put("result", result);
 		return modelMap;
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "/focusFriend.do", method = RequestMethod.POST)
 	public Map<String, Object> focusFriend(HttpSession session, HttpServletRequest request) {
+
 		String friendId = request.getParameter("friendid");
 		Object sessionObj = session.getAttribute("user");
 		String message = "";
@@ -583,9 +586,11 @@ public class UserAction {
 		modelMap.put("result", result);
 		return modelMap;
 	}
+
 	@ResponseBody
 	@RequestMapping(value = "/cancelFocus.do", method = RequestMethod.POST)
 	public Map<String, Object> cancelFocus(HttpSession session, HttpServletRequest request) {
+
 		String friendId = request.getParameter("friendid");
 		Object sessionObj = session.getAttribute("user");
 		String message = "";
@@ -609,7 +614,7 @@ public class UserAction {
 		modelMap.put("result", result);
 		return modelMap;
 	}
-	
+
 	@RequestMapping(value = "/talkImgUpload", method = RequestMethod.POST)
 	public ModelAndView fileupload(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
@@ -633,16 +638,16 @@ public class UserAction {
 				return mv;
 			}
 			String fileName = multipartFile.getOriginalFilename();
-			String suffix = fileName.substring(fileName.lastIndexOf(".")+1);
-			if (!"JPG".equalsIgnoreCase(suffix)&&!"PNG".equalsIgnoreCase(suffix)&&!"gif".equalsIgnoreCase(suffix)
-					&&!"BMP".equalsIgnoreCase(suffix)) {
+			String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+			if (!"JPG".equalsIgnoreCase(suffix) && !"PNG".equalsIgnoreCase(suffix) && !"gif".equalsIgnoreCase(suffix)
+					&& !"BMP".equalsIgnoreCase(suffix)) {
 				mv.addObject("result", "fail");
 				mv.addObject("message", "文件类型只能是图片");
 				mv.setViewName("common/talkimgupload");
 				return mv;
 			}
 			String current = String.valueOf(System.currentTimeMillis());
-			fileName = current+"."+suffix;
+			fileName = current + "." + suffix;
 			SimpleDateFormat formater = new SimpleDateFormat("yyyyMM");
 			String saveDir = formater.format(new Date());
 			String savePath = saveDir + "/" + fileName;
@@ -654,7 +659,7 @@ public class UserAction {
 			String filePath = fileDir + "/" + fileName;
 			File file = new File(filePath);
 			multipartFile.transferTo(file);
-			
+
 			File fromFile = new File(filePath);
 			BufferedImage srcImage = ImageIO.read(fromFile);
 			int width = srcImage.getWidth();
@@ -666,10 +671,10 @@ public class UserAction {
 					w = width;
 					h = height;
 				}
-				String drowPath = fileDir + "/" + current+"x.jpg";
+				String drowPath = fileDir + "/" + current + "x.jpg";
 				DrowImage.saveImageAsJpg(filePath, drowPath, w, h, false);
 				fromFile.delete();
-				savePath = saveDir + "/" +  current+"x.jpg";
+				savePath = saveDir + "/" + current + "x.jpg";
 			}
 			mv.addObject("result", "success");
 			mv.addObject("savePath", savePath);

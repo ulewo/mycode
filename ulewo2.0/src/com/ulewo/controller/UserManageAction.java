@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ulewo.entity.BlogArticle;
 import com.ulewo.entity.BlogItem;
 import com.ulewo.entity.SessionUser;
 import com.ulewo.entity.User;
 import com.ulewo.enums.QueryUserType;
+import com.ulewo.service.BlogArticleService;
 import com.ulewo.service.BlogItemService;
 import com.ulewo.service.BlogReplyService;
 import com.ulewo.service.UserService;
@@ -34,6 +36,9 @@ public class UserManageAction {
 
 	@Autowired
 	private BlogItemService blogItemService;
+
+	@Autowired
+	private BlogArticleService blogArticleService;
 
 	@Autowired
 	private BlogReplyService blogReplyService;
@@ -150,7 +155,7 @@ public class UserManageAction {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/edit_pwd", method = RequestMethod.POST)
+	@RequestMapping(value = "/save_pwd.action", method = RequestMethod.POST)
 	public Map<String, Object> editPwd(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
@@ -194,13 +199,72 @@ public class UserManageAction {
 		}
 	}
 
+	@RequestMapping(value = "/user_icon")
+	public ModelAndView userIcon(HttpSession session) {
+
+		ModelAndView mv = new ModelAndView();
+		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+		String userId = "10001";
+		mv.setViewName("usermanage/usericon");
+		return mv;
+
+	}
+
+	@RequestMapping(value = "/iconUpload.action")
+	public ModelAndView iconUpload(HttpSession session) {
+
+		ModelAndView mv = new ModelAndView();
+		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+		String userId = "10001";
+		List<BlogItem> itemList = blogItemService.queryBlogItemByUserId(userId);
+		mv.addObject("itemList", itemList);
+		mv.setViewName("usermanage/new_blog");
+		return mv;
+
+	}
+
 	@RequestMapping(value = "/new_blog")
 	public ModelAndView newblog(HttpSession session) {
 
 		ModelAndView mv = new ModelAndView();
+		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+		String userId = "10001";
+		List<BlogItem> itemList = blogItemService.queryBlogItemByUserId(userId);
+		mv.addObject("itemList", itemList);
 		mv.setViewName("usermanage/new_blog");
 		return mv;
 
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/saveblog.action", method = RequestMethod.POST)
+	public Map<String, Object> saveBlog(HttpSession session, HttpServletRequest request) {
+
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+			String userId = "10001";
+			String title = request.getParameter("title");
+			String itemId = request.getParameter("itemId");
+			String keyword = request.getParameter("keyword");
+			String content = request.getParameter("content");
+			int itemId_int = 0;
+			if (StringUtils.isNumber(itemId)) {
+				itemId_int = Integer.parseInt(itemId);
+			}
+			BlogArticle article = new BlogArticle();
+			article.setTitle(title);
+			article.setItemId(itemId_int);
+			article.setKeyWord(keyword);
+			article.setContent(content);
+			blogArticleService.addBlog(article);
+			return modelMap;
+		} catch (Exception e) {
+			e.printStackTrace();
+			modelMap.put("result", "fail");
+			modelMap.put("message", "系统异常，请稍候重试");
+			return modelMap;
+		}
 	}
 
 	@ResponseBody

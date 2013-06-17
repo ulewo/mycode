@@ -52,7 +52,7 @@ public class BlogArticleServiceImpl implements BlogArticleService {
 	private final static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	@Override
-	public boolean addBlog(BlogArticle blogArticle, User user) {
+	public boolean addBlog(BlogArticle blogArticle) {
 
 		blogArticle.setPostTime(format.format(new Date()));
 		String content = blogArticle.getContent();
@@ -63,7 +63,7 @@ public class BlogArticleServiceImpl implements BlogArticleService {
 
 		int blogId = blogArticleDao.addBlog(blogArticle);
 
-		User curUser = userDao.findUser(user.getUserId(), QueryUserType.USERID);
+		User curUser = userDao.findUser(blogArticle.getUserId(), QueryUserType.USERID);
 		curUser.setMark(curUser.getMark() + Constant.ARTICLE_MARK5);
 		userDao.update(curUser);
 
