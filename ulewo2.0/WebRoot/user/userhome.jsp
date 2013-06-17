@@ -105,7 +105,7 @@
 	  						<span class='talk_img_tit_close'><a href="javascript:closeUploader()">关闭</a></span>
 	  					</div>
 	  					<div class="talk_img_fram" id="talk_img_fram">
-	  						<iframe src="${realPath}/common/talkimgupload.jsp" width="260" height="30" frameborder="0"></iframe>
+	  						<iframe src="${realPath}/common/imgupload.jsp" width="260" height="30" frameborder="0"></iframe>
 	  					</div>
 	  					<div id="talk_img_showimg">
 	  						<img src=""><br>
@@ -285,7 +285,7 @@
 	<div style="clear:left;"></div>
   </div>
   <script type="text/javascript" src="${realPath}/js/talk.js"></script>
-  <script type="text/javascript" src="${realPath}/js/user.userinfo.js"></script>
+  <script type="text/javascript" src="${realPath}/js/user.home.js"></script>
   <%@ include file="../common/foot.jsp" %>
 </body>
 </html>

@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%
-String realPath = "http://" + request.getServerName() +  request.getContextPath(); 
+String realPath = "http://" + request.getServerName()+ ":" + request.getServerPort() +  request.getContextPath(); 
 %>
 <c:set var="realPath" value="<%=realPath %>"/>
 <script src="${realPath}/js/jquery.min.js"></script>

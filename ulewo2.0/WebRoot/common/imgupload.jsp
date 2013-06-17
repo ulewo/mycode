@@ -43,7 +43,7 @@
 	</script>
 </head>
 <body>
-<form action="${realPath}/user/talkImgUpload" enctype="multipart/form-data" method="post" style="margin:0px;padding:0px;" id="myform">
+<form action="${realPath}/imageUpload.action" enctype="multipart/form-data" method="post" style="margin:0px;padding:0px;" id="myform">
 	<table width="100%" cellpadding="0" cellspacing="0" style="margin:0px;padding:0px;">
 		<tr>
 			<td><input type="file" name="file" class="fileUpload" id="upload" onchange="uploadImg()"></td>

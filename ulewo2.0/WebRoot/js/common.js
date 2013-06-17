@@ -12,7 +12,7 @@ function warm(type,msg){
 	if(type=="show"){
 		$(".result_info").css({"display":"inline-block"});
 		$("#warm_icon").removeClass("info");
-		$("#warm_icon").css({"display":"inline-block"});
+		$("#warm_icon").css({"display":"inline-block","color":"red"});
 		$("#warm_info").text(msg);
 	}else if(type=="hide"){
 		$('.result_info').hide();
@@ -22,7 +22,7 @@ function warm(type,msg){
 function info(msg){
 	$(".result_info").css({"display":"inline-block"});
 	$("#warm_icon").addClass("info");
-	$("#warm_icon").css({"display":"inline-block"});
+	$("#warm_icon").css({"display":"inline-block","color":"#494949"});
 	$("#warm_info").text(msg);
 	setTimeout(function(){
 		$('.result_info').fadeOut("slow");

@@ -11,7 +11,7 @@
 	<ul class="menue">
 		<li id="selected1"><a href="userinfo">修改个人资料</a></li>
 		<li id="selected2"><a href="changepwd">修改登录密码</a></li>
-		<li id="selected3"><a href="user_icon.jsp">修改头像</a></li>
+		<li id="selected3"><a href="user_icon">修改头像</a></li>
 	</ul>
 	<div class="menue_tit">
 		 博客管理
