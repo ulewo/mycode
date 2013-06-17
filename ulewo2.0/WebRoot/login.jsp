@@ -14,8 +14,11 @@
 	<div class="main">
 		<div class="left">
 			<div style="height:30px;padding-left:30px;">
-			<div class="result_info"><i id="warm_icon"></i><span id="warm_info"></span></div>
-			<div class="clear"></div>
+				<div class="result_info">
+					<i id="warm_icon"></i>
+					<span id="warm_info"></span>
+				</div>
+				<div class="clear"></div>
 			</div>
 			<div class="login_p" style="margin-top:1px;">
 				<div class="login_tit">账号：</div>

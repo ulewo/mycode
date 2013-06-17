@@ -7,7 +7,7 @@
 <%@ include file="../common/path.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>修改用户信息-有乐窝</title>
-<link rel="stylesheet" type="text/css" href="../css/user.manage.userinfo.css">
+<link rel="stylesheet" type="text/css" href="${realPath}/css/user.manage.userinfo.css">
 <style type="text/css">
 #selected1 a{background:#ffffff;color:#333333;font-weight:bold;}
 </style>
