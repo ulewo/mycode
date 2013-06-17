@@ -16,6 +16,7 @@ $(function(){
 	$("#saveBtn").bind("click",saveImg);
 })
 
+
 function showImg(imgUrl){
 	$("#myImg").attr(global.realPath+"/"+imgUrl);
 	cutter.reload(global.realPath+"/upload/"+imgUrl);
