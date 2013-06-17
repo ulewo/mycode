@@ -34,21 +34,6 @@ public class BlogArticleServiceImpl implements BlogArticleService {
 	@Autowired
 	private NoticeDao noticeDao;
 
-	public void setUserDao(UserDao userDao) {
-
-		this.userDao = userDao;
-	}
-
-	public void setNoticeDao(NoticeDao noticeDao) {
-
-		this.noticeDao = noticeDao;
-	}
-
-	public void setBlogArticleDao(BlogArticleDao blogArticleDao) {
-
-		this.blogArticleDao = blogArticleDao;
-	}
-
 	private final static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	@Override
