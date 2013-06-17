@@ -10,7 +10,7 @@
 <link rel="stylesheet" type="text/css" href="${realPath}/css/jquery.Jcrop.css">
 <link rel="stylesheet" type="text/css" href="${realPath}/css/user.manage.public.css">
 <style type="text/css">
-#selected2 a{background:#ffffff;color:#333333;font-weight:bold;}
+#selected3 a{background:#ffffff;color:#333333;font-weight:bold;}
 .saveset{margin-top:10px;}
 .form_are{margin-top:10px;}
 </style>
@@ -32,7 +32,7 @@
 				<div class="form_are">
 					<iframe src="${realPath}/common/imgupload.jsp" id="iframupload" height="30" width="310" frameborder="0"></iframe>
 				</div>
-				<div>
+				<div id="imgarea">
 					<div class="cutarea" id="picture_original">
 						<img src="" id="myImg"/>
 					</div>
@@ -42,8 +42,9 @@
 					<div style="clear:left;"></div>
 				</div>
 				<div class="saveset">
-					<a href="javascript:void(0)" class="btn" id="saveBtn">保存设置</a>
+					<a href="javascript:void(0)" class="btn" id="saveBtn" style="float:left;margin-top:5px;">保存设置</a>
 					<span class="result_info"><i id="warm_icon"></i><span id="warm_info"></span></span>	
+					<div class="clear"></div>
 				</div>
 			</div>
 		</div>

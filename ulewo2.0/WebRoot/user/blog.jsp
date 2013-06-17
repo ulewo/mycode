@@ -44,6 +44,9 @@
 						<div class="blog_list_tit"><a href="${realPath}/user/${userId}/blog/${blog.id}">${blog.title}</a></div>
 						<div class="blog_item_op">
 							<span>分类:</span>
+							<c:if test="${blog.itemId==null||blog.itemId==''}">
+								<a href="${realPath}/user/${userId}/blog">全部分类</a>
+							</c:if>
 							<a href="${realPath}/user/${userId}/blog/?itemId=${blog.itemId}">${blog.itemName}</a>
 							<c:if test="${user.userId==userId}">(<a href="">修改</a>|<a href="">删除</a>)(<a href="">修改</a>|<a href="">删除</a>)</c:if>
 						</div>

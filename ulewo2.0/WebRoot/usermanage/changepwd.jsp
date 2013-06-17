@@ -46,7 +46,7 @@
 			</div>
 			<div class="info_item">
 			 	<div class="info_item_tit"></div>
-			 	<div class="info_item_text">
+			 	<div class="info_item_text subbtn">
 			 		<a href="javascript:void(0)" class="btn" id="saveBtn">修改密码</a>
 			 		<span class="result_info"><i id="warm_icon"></i><span id="warm_info"></span></span>
 			 		<div class="clear"></div>
@@ -57,6 +57,7 @@
 		</div>
 		<div style="clear:left;"></div>
 	</div>
+	<script type="text/javascript" src="${realPath}/js/user.manage.changepwd.js"></script>
 	<%@ include file="../common/foot_manage.jsp" %>
 </body>
 </html>

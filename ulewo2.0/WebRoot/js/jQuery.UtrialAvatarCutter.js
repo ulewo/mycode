@@ -1,7 +1,7 @@
 ﻿jQuery.UtrialAvatarCutter = function(config){
 	var h,w,x,y;
-
-	var os,oh,ow;
+	this.os;
+	var oh,ow;
 
 	var api = null;
 
@@ -25,9 +25,9 @@
 		if(config.purviews){
 			for(i=0,c=config.purviews.length;i<c;++i){
 				if($('#'+config.purviews[i].id+" img").length==0){
-					$('#'+config.purviews[i].id).html("<img src='"+os+"'/>");
+					$('#'+config.purviews[i].id).html("<img src='"+cutter.os+"'/>");
 				}else{
-					$('#'+config.purviews[i].id+" img").attr("src",os);
+					$('#'+config.purviews[i].id+" img").attr("src",cutter.os);
 				}
 			}
 		}
@@ -38,8 +38,8 @@
 	 */
 	this.reload = function(img_url){
 		if(img_url!=null && img_url != ""){
-			os = img_url+"?"+Math.random();
-			$("#"+img_content_id).html("<img id='"+img_id+"' src='"+os+"'/>");
+			this.os = img_url+"?"+Math.random();
+			$("#"+img_content_id).html("<img id='"+img_id+"' src='"+this.os+"'/>");
 			$("#"+img_id).bind("load",
 				function(){
 					check_thums_img();
@@ -77,8 +77,8 @@
 		if(api!=null){
 			api.destroy();
 		}
-		os = $("#"+img_content_id+" img").attr("src");
-		if(os=="")
+		this.os = $("#"+img_content_id+" img").attr("src");
+		if(this.os=="")
 			return;
 		check_thums_img();
 		for(i=0,c=purviews.length;i<c;++i){
@@ -110,6 +110,6 @@
 	}
 
 	this.submit = function(){
-		return {w:w,h:h,x:x,y:y,s:os};
+		return {w:w,h:h,x:x,y:y,s:this.os};
 	}
 }

@@ -71,7 +71,7 @@
 				<div class="form_editcontent" id="editor">
 				
 				</div>
-				<input type="hidden" id="content">
+				<input type="hidden" id="content" name="content">
 				<div class="form_sub_btn">
 					<a href="javascript:void(0)" class="btn" id="saveBtn">发表博文</a>
 					<span class="result_info"><i id="warm_icon"></i><span id="warm_info"></span></span>

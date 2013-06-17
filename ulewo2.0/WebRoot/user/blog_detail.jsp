@@ -35,7 +35,11 @@
 			<div class="blog_list">
 				<div class="right_top_m">
 					<a href="${realPath}/user/${userId}">空间</a>&gt;&gt;<a href="${realPath}/user/${userId}/blog">博客</a>
-					&gt;&gt;<a href="${realPath}/user/${userId}/blog/?itemId=${blog.itemId}">${blog.itemName}</a>
+					&gt;&gt;
+					<c:if test="${blog.itemId==null||blog.itemId==''}">
+						<a href="${realPath}/user/${userId}/blog/">全部分类</a>
+					</c:if>
+					<a href="${realPath}/user/${userId}/blog/?itemId=${blog.itemId}">${blog.itemName}</a>
 					&gt;&gt;博客正文
 				</div>
 				<div class="blog_detail">

@@ -29,12 +29,12 @@
 				<div class="item_reply">
 					<div class="user_icon"><a href="/${reply.userId}">
 					<c:if test="${reply.reUserIcon==null}"><img src="../upload/default.gif"/></c:if>
-					<c:if test="${reply.reUserIcon!=null}"><img src="../upload/${reply.reUserIcon}"/></c:if>
+					<c:if test="${reply.reUserIcon!=null}"><img src="${reply.reUserIcon}"/></c:if>
 					</a></div>
 					<div class="reply_con">
 						<div class="title_op">
-							<div class="blog_title"><a href="">${reply.blogTitle}</a></div>
-							<div class="reply_op"><a href="">删除</a></div>
+							<div class="blog_title"><a href="${realPath}/user/${reply.blogAuthor}/blog/${reply.blogId}">${reply.blogTitle}</a></div>
+							<div class="reply_op"><a href="javascript:deleteReply('${reply.id}')">删除</a></div>
 							<div class="clear"></div>
 						</div>
 						<div class="reply_content">${reply.content}</div>
@@ -45,6 +45,14 @@
 		</div>
 		<div style="clear:left;"></div>
 	</div>
+	<script type="text/javascript">
+		function deleteReply(id){
+			if(confirm("确定要删除此条评论吗？")){
+				document.location.href=global.realPath+"/manage/delete_reply.action?id="+id;
+			}
+		}
+		
+	</script>
 	<%@ include file="../common/foot_manage.jsp" %>
 </body>
 </html>

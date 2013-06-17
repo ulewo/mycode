@@ -7,7 +7,7 @@ function saveInfo(){
 		return;
 	}
 	var oldpwd = $("#oldpwd").val().trim();
-	var newpwd = $("#newpwd").val().treim();
+	var newpwd = $("#newpwd").val().trim();
 	var anewpwd = $("#anewpwd").val().trim();
 	if(oldpwd==""){
 		warm("show","旧密码不能为空");
