@@ -26,7 +26,7 @@ public class ImageUploadAction {
 
 	private static final int MAXWIDTH = 600;
 
-	@RequestMapping(value = "/imageUpload.action", method = RequestMethod.POST)
+	@RequestMapping(value = "/imageUpload", method = RequestMethod.POST)
 	public ModelAndView fileupload(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
