@@ -95,8 +95,9 @@
 	  					<a href="javascript:showUploader();" class="icon_sw_img" title="图片上传"></a>
 	  				</div>
 	  				<div class="u_talk_subtn">
+	  					<span class="result_info"><i id="warm_icon"></i><span id="warm_info"></span></span>
 	  					<a href="javascript:void(0)" id="talkBtn" class="btn">发&nbsp;&nbsp;布</a>
-	  					<img src="../images/load.gif" id="talkload" style="display: none;">
+	  					<div class="clear"></div>
 	  				</div>
 	  				<div class="clear"></div>
 	  				<div id="talk_img_con">
@@ -218,11 +219,39 @@
 		  	</c:if>
 		  	<div class="topblog">
 		  		<div class="topblog_titcon">
+		  			<span class="topblog_tit">最新吐槽</span>
+		  			<span class="topblog_link"><a href="${realPath}/user/${userVo.userId}/blog">更多吐槽&gt;&gt;</a></span>
+		  			<div class="clear"></div>
+		  		</div>
+		  		<div id="talklist">
+		  			<c:forEach var="talk" items="${talkList}">
+			  			<div class="talkitem">
+			  				<div class="itemicon">
+			  					<img src="${talk.userIcon}" width="37">
+			  				</div>
+			  				<div class="itemcon">
+			  					<span class="item_user">
+			  						<a href="${realPath}/user/${talk.userId}">${talk.userName}</a>
+			  					</span>
+			  					<span class="item_content">：${talk.content}</span>
+			  					<span class="item_time">${talk.content}<a href="http://ulewo.cloudfoundry.com:80/user/talkDetail.jspx?userId=10001&amp;talkId=107">(${talk.reCount}评)</a>
+			  					</span>
+			  				</div>
+			  				<div class="clear"></div>
+			  			</div>
+		  			</c:forEach>
+		  			<c:if test="${empty talkList}">
+		  				<div class="left_noinfo">没有发现吐槽</div>
+		  			</c:if>
+		  		</div>
+		  	</div>
+		  	<div class="topblog">
+		  		<div class="topblog_titcon">
 		  			<span class="topblog_tit">最新博文</span>
 		  			<span class="topblog_link"><a href="${realPath}/user/${userVo.userId}/blog">进入博客&gt;&gt;</a></span>
 		  			<div class="clear"></div>
 		  		</div>
-		  		<div id="talklist">
+		  		<div>
 		  			<c:forEach var="blog" items="${bloglist}">
 			  			<div class="blog_link">
 			  				<a href="${realPath}/user/${userVo.userId}/blog/${blog.id}">${blog.title}</a><span>${blog.reCount}/${blog.readCount}</span>
