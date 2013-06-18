@@ -6,8 +6,8 @@
 <head>
 <%@ include file="../common/path.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>登陆有乐窝-有乐窝</title>
-<link rel="stylesheet" type="text/css" href="${realPath}/css/group.manage.groupitem.css">
+<title>窝窝分类管理-有乐窝</title>
+<link rel="stylesheet" type="text/css" href="${realPath}/css/group.manage.item.css">
 <style type="text/css">
 #selected6 a{background:#ffffff;color:#333333;font-weight:bold;}
 </style>
@@ -39,7 +39,7 @@
 				</div>
 			</c:forEach>
 				<div class="item_con">
-					<form action="${realPath}/groupManage/saveItem.do" method="post" id="itemForm">
+					<form action="${realPath}/groupManage/saveItem.action" method="post" id="itemForm">
 					<input type="hidden" name="id" id="itemId">
 					<input type="hidden" name="gid" value="${gid}">
 					<div class="item_name"><input type="text" id="item_name" name="itemName"></div>

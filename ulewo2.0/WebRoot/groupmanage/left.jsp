@@ -10,6 +10,7 @@ global.gid="${gid}";
 <div class="manage_tit">
 	<span class="manage_tit1">窝窝管理</span>
 	<span class="manage_tit2"><a href="${realPath}/group/${gid}">返回窝窝</a></span>
+	<div class="clear"></div>
 </div>
 <div class="menue_p">
 	<div class="menue_tit">

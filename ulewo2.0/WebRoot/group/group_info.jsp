@@ -14,7 +14,7 @@ global.gid = "${gid}";
 			<div class="group_title">
 				${group.groupName}
 				<c:if test="${user.userId==group.groupAuthor}">
-					<a href="${realpath}/groupManage/${gid}/manage" class="btn">管理窝窝</a>
+					<a href="${realPath}/groupManage/${gid}/manage" class="btn">管理窝窝</a>
 				</c:if>
 			</div>
 			<div class="group_author">

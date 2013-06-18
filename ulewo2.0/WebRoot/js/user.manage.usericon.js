@@ -24,6 +24,9 @@ function showImg(imgUrl){
 }
 
 function saveImg(){
+		if($(this).attr("disable")=="disable"){
+			return;
+		}
 		var data = cutter.submit();
 		if (data.s=="") {
 			alert("请先选择图片");
@@ -32,6 +35,8 @@ function saveImg(){
 		var imgPath = data.s;
 		var start = imgPath.lastIndexOf("upload");
 		var userIcon = imgPath.substring(start,data.s.lastIndexOf("?"));
+		warm("hide","");
+		btnLoading($(this),"保存中<img src='"+global.realPath+"/images/load.gif' width='12'>");
 		$.ajax({
 			async : true,
 			cache : false,
@@ -47,6 +52,7 @@ function saveImg(){
 			},
 			url : 'saveUserIcon.action',// 请求的action路径
 			success : function(data) {
+				btnLoaded($("#saveBtn"),"保存设置");
 				$("#imgarea").hide();
 				cutter.os="";
 				if(data.result=="fail"){

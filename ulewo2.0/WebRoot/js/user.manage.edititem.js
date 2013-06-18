@@ -24,10 +24,6 @@ function cancelEdit(){
 }
 
 function saveItem(){
-	if($("#itemId").val()==""&&($(".item_con").children().length>8)){
-		alert("最多只能添加8个分类");
-		return;
-	}
 	var itemName = $("#item_name").val().trim();
 	var item_code = $("#item_code").val().trim();
 	if(itemName==""){
@@ -56,6 +52,6 @@ function deleteItem(){
 		return;
 	}
 	if(confirm("确定要删除分类吗？")){
-		document.location.href=global.realPath+"/groupManage/"+global.gid+"/deleteItem?id="+$(this).attr("name");
+		document.location.href=global.realPath+"/manage/delete_item?id="+$(this).attr("name");
 	}
 }
