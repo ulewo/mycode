@@ -30,6 +30,7 @@ import com.ulewo.entity.BlogItem;
 import com.ulewo.entity.BlogReply;
 import com.ulewo.entity.Group;
 import com.ulewo.entity.SessionUser;
+import com.ulewo.entity.Talk;
 import com.ulewo.entity.User;
 import com.ulewo.entity.UserFriend;
 import com.ulewo.enums.QueryUserType;
@@ -37,6 +38,7 @@ import com.ulewo.service.BlogArticleService;
 import com.ulewo.service.BlogItemService;
 import com.ulewo.service.BlogReplyService;
 import com.ulewo.service.GroupService;
+import com.ulewo.service.TalkService;
 import com.ulewo.service.UserFriendService;
 import com.ulewo.service.UserService;
 import com.ulewo.util.Constant;
@@ -65,6 +67,9 @@ public class UserAction {
 
 	@Autowired
 	private GroupService groupService;
+	
+	@Autowired
+	private TalkService talkService;
 
 	private final static int MAXLENGTH = 250;
 
@@ -299,11 +304,13 @@ public class UserAction {
 			List<UserFriend> fansList = userFriendService.queryFans2List(userId, 0, 15);
 			List<Group> createdGroups = groupService.queryCreatedGroups(userId);
 			List<Group> joinedGroups = groupService.queryJoinedGroups(userId);
+			List<Talk> talkList = talkService.queryLatestTalk(0, 5);
 			mv.addObject("focusList", focusList);
 			mv.addObject("fansList", fansList);
 			mv.addObject("bloglist", list);
 			mv.addObject("createdGroups", createdGroups);
 			mv.addObject("joinedGroups", joinedGroups);
+			mv.addObject("talkList", talkList);
 			mv.setViewName("user/userhome");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -687,5 +694,93 @@ public class UserAction {
 			mv.setViewName("common/talkimgupload");
 			return mv;
 		}
+	}
+	
+	@RequestMapping(value = "/{userId}/talk", method = RequestMethod.GET)
+	public ModelAndView talkList(@PathVariable String userId, HttpSession session, HttpServletRequest request,
+			HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView();
+		try {
+
+			UserVo userVo = checkUserInfo(userId, session);
+			if (null == userVo) {
+				mv.setViewName("redirect:" + Constant.WEBSTIE);
+			}
+			mv.addObject("userVo", userVo);
+			List<UserFriend> focusList = userFriendService.queryFocus2List(userId, 0, 15);
+			List<UserFriend> fansList = userFriendService.queryFans2List(userId, 0, 15);
+			List<Group> createdGroups = groupService.queryCreatedGroups(userId);
+			List<Group> joinedGroups = groupService.queryJoinedGroups(userId);
+			mv.addObject("focusList", focusList);
+			mv.addObject("fansList", fansList);
+			mv.addObject("createdGroups", createdGroups);
+			mv.addObject("joinedGroups", joinedGroups);
+			mv.setViewName("user/talk");
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.setViewName("redirect:" + Constant.WEBSTIE);
+			return mv;
+		}
+		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/saveTalk.action", method = RequestMethod.POST)
+	public Map<String, Object> saveTalk(HttpSession session, HttpServletRequest request) {
+
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			String content = request.getParameter("content");
+			String imgurl  = request.getParameter("imgUrl");
+			if (StringUtils.isEmpty(content) || content.length() > MAXLENGTH) {
+				modelMap.put("message", "吐槽内容不能为空");
+				modelMap.put("result", "fail");
+				return modelMap;
+			}
+			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+			Talk talk = new Talk();
+			talk.setContent(content);
+			talk.setImgurl(imgurl);
+			talk.setUserId(sessionUser.getUserId());
+			talk.setUserName(sessionUser.getUserName());
+			talk.setUserIcon(sessionUser.getUserLittleIcon());
+			talkService.addTalk(talk);
+			talk.setCreateTime(StringUtils.friendly_time(talk.getCreateTime()));
+			modelMap.put("result", "fail");
+			modelMap.put("talk", talk);
+			return modelMap;
+		} catch (Exception e) {
+			modelMap.put("message", "系统异常");
+			modelMap.put("result", "fail");
+			return modelMap;
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/loadTalk.do", method = RequestMethod.POST)
+	public Map<String, Object> loadTalk(HttpSession session, HttpServletRequest request) {
+
+		String friendId = request.getParameter("friendid");
+		Object sessionObj = session.getAttribute("user");
+		String message = "";
+		String result = "success";
+		try {
+			if (null != sessionObj) {
+				SessionUser user = (SessionUser) sessionObj;
+				String userId = user.getUserId();
+				userFriendService.deleteFirend(userId, friendId);
+			}
+			else {
+				message = "你无权进行此操作";
+				result = "fail";
+			}
+		} catch (Exception e) {
+			message = "操作异常";
+			result = "fail";
+		}
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		modelMap.put("message", message);
+		modelMap.put("result", result);
+		return modelMap;
 	}
 }

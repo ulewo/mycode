@@ -29,6 +29,7 @@ public class IndexAction {
 
 	@Autowired
 	MemberService memberService;
+	
 
 	@Autowired
 	BlogArticleService blogArticleService;
@@ -68,6 +69,22 @@ public class IndexAction {
 		try {
 			List<Article> list = articleService.queryLatestArticle(0, 50);
 			mv.addObject("list", list);
+			mv.setViewName("square");
+			return mv;
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.setViewName("redirect:" + Constant.WEBSTIE);
+			return mv;
+		}
+	}
+	
+	@RequestMapping(value = "/blog", method = RequestMethod.GET)
+	public ModelAndView blog(HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+
+		try {
+			//List<BlogArticle> list = blogArticleService.queryCount();
+		//	mv.addObject("list", list);
 			mv.setViewName("square");
 			return mv;
 		} catch (Exception e) {
