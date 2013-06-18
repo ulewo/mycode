@@ -109,4 +109,6 @@ public class Constant {
 
 	public final static String TYPE_TALK = "talk";
 
+	public final static String DEFALUTICON = WEBSTIE + "/upload/defaultsmall.gif";
+
 }

@@ -63,8 +63,8 @@ public class UserManageAction {
 	private final static String SEX_M = "M";
 
 	private final static String SEX_F = "F";
-	
-	private static final int SMALL_WIDTH =60,SMALL_HEIGHT= 60;
+
+	private static final int SMALL_WIDTH = 60, SMALL_HEIGHT = 60;
 
 	/**
 	 * 获取用户信息
@@ -190,7 +190,7 @@ public class UserManageAction {
 				return modelMap;
 			}
 			User resultUser = userService.findUser(userId, QueryUserType.USERID);
-			if (null != resultUser&&resultUser.getPassword().equals(StringUtils.encodeByMD5(oldpwd))) {
+			if (null != resultUser && resultUser.getPassword().equals(StringUtils.encodeByMD5(oldpwd))) {
 				User user = new User();
 				user.setUserId(userId);
 				user.setPassword(StringUtils.encodeByMD5(newpwd));
@@ -220,17 +220,19 @@ public class UserManageAction {
 		return mv;
 
 	}
+
 	@ResponseBody
 	@RequestMapping(value = "/saveUserIcon.action")
-	public Map<String, Object> saveUserIcon(HttpSession session,HttpServletRequest request) {
+	public Map<String, Object> saveUserIcon(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		String tempimg = request.getParameter("img");
-		String x1= request.getParameter("x1");
-		String y1= request.getParameter("y1");
-		String width= request.getParameter("width");
-		String height= request.getParameter("height");
-		if(!StringUtils.isNumber(x1)||!StringUtils.isNumber(y1)||!StringUtils.isNumber(width)||!StringUtils.isNumber(height)){
+		String x1 = request.getParameter("x1");
+		String y1 = request.getParameter("y1");
+		String width = request.getParameter("width");
+		String height = request.getParameter("height");
+		if (!StringUtils.isNumber(x1) || !StringUtils.isNumber(y1) || !StringUtils.isNumber(width)
+				|| !StringUtils.isNumber(height)) {
 			modelMap.put("result", "fail");
 			modelMap.put("message", "请求参数错误");
 			return modelMap;
@@ -252,9 +254,7 @@ public class UserManageAction {
 				imgType = tempimg.substring(idx + 1);
 			}
 		}
-		String srcpath = request.getServletContext().getRealPath(
-				"/")
-				+ tempimg;
+		String srcpath = session.getServletContext().getRealPath("/") + tempimg;
 		try {
 			File tempfile = new File(srcpath);
 			tempIn = new FileInputStream(tempfile);
@@ -262,8 +262,7 @@ public class UserManageAction {
 			// 裁剪图片
 			BufferedImage subimg = img.getSubimage(x1_int, y1_int, width_int, height_int);
 			// 放大缩小图片
-			BufferedImage okimg = new BufferedImage(SMALL_WIDTH, SMALL_HEIGHT,
-					BufferedImage.TYPE_INT_RGB);
+			BufferedImage okimg = new BufferedImage(SMALL_WIDTH, SMALL_HEIGHT, BufferedImage.TYPE_INT_RGB);
 			Graphics2D g = okimg.createGraphics();
 			g.drawImage(subimg, 0, 0, SMALL_WIDTH, SMALL_HEIGHT, null);
 
@@ -271,25 +270,23 @@ public class UserManageAction {
 			out = new ByteArrayOutputStream();
 			ImageIO.write(okimg, imgType, out);
 			byte[] data = out.toByteArray();
-			String okSrcPath = request.getServletContext()
-					.getRealPath("/") + "upload/avatars/";
+			String okSrcPath = session.getServletContext().getRealPath("/") + "upload/avatars/";
 			File imagePathFile = new File(okSrcPath);
 			if (!imagePathFile.exists()) {
 				imagePathFile.mkdirs();
 			}
-			File okfile = new File(okSrcPath + sessionUser.getUserId() + "."
-					+ imgType);
+			File okfile = new File(okSrcPath + sessionUser.getUserId() + "." + imgType);
 			imgOut = new FileOutputStream(okfile);
 			imgOut.write(data);
 			imgOut.flush();
-			
+
 			int port = request.getServerPort();
-			String realPath = "http://" + request.getServerName()+ ":" + port+  request.getContextPath(); 
-			if(port==80){
-				realPath = "http://" + request.getServerName()+ request.getContextPath(); 
+			String realPath = "http://" + request.getServerName() + ":" + port + request.getContextPath();
+			if (port == 80) {
+				realPath = "http://" + request.getServerName() + request.getContextPath();
 			}
-			
-			userIcon =realPath+ "/upload/avatars/" + sessionUser.getUserId() + "." + imgType;
+
+			userIcon = realPath + "/upload/avatars/" + sessionUser.getUserId() + "." + imgType;
 			User user = new User();
 			user.setUserId(userId);
 			user.setUserLittleIcon(userIcon);
@@ -299,8 +296,7 @@ public class UserManageAction {
 			modelMap.put("result", "fail");
 			modelMap.put("message", "系统异常");
 			return modelMap;
-		}
-		finally {
+		} finally {
 			try {
 				if (null != tempIn) {
 					tempIn.close();
@@ -322,7 +318,6 @@ public class UserManageAction {
 		return modelMap;
 	}
 
-	
 	@RequestMapping(value = "/new_blog")
 	public ModelAndView newblog(HttpSession session) {
 
@@ -449,40 +444,52 @@ public class UserManageAction {
 		}
 	}
 
-	@ResponseBody
-	@RequestMapping(value = "/add_item", method = RequestMethod.POST)
-	public Map<String, Object> addtem(HttpSession session, HttpServletRequest request) {
+	@RequestMapping(value = "/saveItem.action", method = RequestMethod.POST)
+	public ModelAndView saveItem(HttpSession session, HttpServletRequest request) {
 
-		Map<String, Object> modelMap = new HashMap<String, Object>();
-		String itemName = request.getParameter("itemName");
-		String range = request.getParameter("range");
+		ModelAndView mv = new ModelAndView();
 		try {
-			if (StringUtils.isEmpty(itemName) || itemName.length() > ITEM_LENGTH) {
-				modelMap.put("result", "fail");
-				modelMap.put("message", "分类名不能超过50字符");
-				return modelMap;
+			String itemName = request.getParameter("itemName");
+			String range = request.getParameter("itemCode");
+			String id = request.getParameter("id");
+			if (null != itemName) {
+				itemName = itemName.trim();
 			}
-			if (StringUtils.isNumber(range)) {
-				modelMap.put("result", "fail");
-				modelMap.put("message", "排序必须是数字");
-				return modelMap;
+			if (null != range) {
+				range = range.trim();
+			}
+			if (null != id) {
+				id = id.trim();
+			}
+			if (StringUtils.isEmpty(itemName) || itemName.length() > ITEM_LENGTH) {
+				mv.setViewName("redirect:" + Constant.WEBSTIE);
+				return mv;
+			}
+			if (!StringUtils.isNumber(range)) {
+				mv.setViewName("redirect:" + Constant.WEBSTIE);
+				return mv;
 			}
 			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
-			String userId = "10001";
-			int range_int = Integer.parseInt("range");
+			String userId = sessionUser.getUserId();
+			int range_int = Integer.parseInt(range);
+
+			int id_int = 0;
+			if (StringUtils.isNotEmpty(id)) {
+				id_int = Integer.parseInt(id);
+			}
+
 			BlogItem item = new BlogItem();
+			item.setId(id_int);
 			item.setItemName(itemName);
 			item.setUserId(userId);
 			item.setItemRang(range_int);
 			blogItemService.saveItem(item);
-			modelMap.put("result", "success");
-			modelMap.put("item", item);
-			return modelMap;
+			mv.setViewName("redirect:blog_item");
+			return mv;
 		} catch (Exception e) {
 			e.printStackTrace();
-			modelMap.put("result", "fail");
-			modelMap.put("message", "系统异常，请稍候重试");
-			return modelMap;
+			mv.setViewName("redirect:" + Constant.WEBSTIE);
+			return mv;
 		}
 	}
 
@@ -492,29 +499,25 @@ public class UserManageAction {
 	 * @param request
 	 * @return
 	 */
-	@ResponseBody
-	@RequestMapping(value = "/delete_item", method = RequestMethod.POST)
-	public Map<String, Object> deleteItem(HttpSession session, HttpServletRequest request) {
+	@RequestMapping(value = "/delete_item", method = RequestMethod.GET)
+	public ModelAndView deleteItem(HttpSession session, HttpServletRequest request) {
 
-		Map<String, Object> modelMap = new HashMap<String, Object>();
-		String id = request.getParameter("id");
+		ModelAndView mv = new ModelAndView();
 		try {
+			String id = request.getParameter("id");
 			if (StringUtils.isEmpty(id) || !StringUtils.isNumber(id)) {
-				modelMap.put("result", "fail");
-				modelMap.put("message", "参数错误");
-				return modelMap;
+				mv.setViewName("redirect:" + Constant.WEBSTIE);
+				return mv;
 			}
 			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
-			String userId = "10001";
+			String userId = sessionUser.getUserId();
 			int id_int = Integer.parseInt(id);
 			blogItemService.delete(userId, id_int);
-			modelMap.put("result", "success");
-			return modelMap;
+			mv.setViewName("redirect:blog_item");
+			return mv;
 		} catch (Exception e) {
-			e.printStackTrace();
-			modelMap.put("result", "fail");
-			modelMap.put("message", "系统异常，请稍候重试");
-			return modelMap;
+			mv.setViewName("redirect:" + Constant.WEBSTIE);
+			return mv;
 		}
 	}
 

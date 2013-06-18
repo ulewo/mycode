@@ -110,7 +110,7 @@ public class UserAction {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/register_do", method = RequestMethod.POST)
+	@RequestMapping(value = "/register.do", method = RequestMethod.POST)
 	public Map<String, Object> register(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
 		String checkEmail = "^[\\w-]+(\\.[\\w-]+)*@[\\w-]+(\\.[\\w-]+)+$";
@@ -119,11 +119,12 @@ public class UserAction {
 
 		String userName = request.getParameter("userName");
 		String email = request.getParameter("email");
-		String password = request.getParameter("password");
-		String checkCode = request.getParameter("checkCode");
+		String password = request.getParameter("pwd");
+		String checkCode = request.getParameter("code");
 		String sessionCode = String.valueOf(session.getAttribute("checkCode"));
 		String message = "";
 		String result = "success";
+		String userId = "";
 		try {
 			if (StringUtils.isEmpty(checkCode)) {
 				message = "验证码不能为空";
@@ -161,8 +162,8 @@ public class UserAction {
 				user.setPassword(StringUtils.encodeByMD5(password));
 				user.setEmail(email);
 				userService.addUser(user);
-				String userId = user.getUserId();
-				if (null != userId) {
+				userId = user.getUserId();
+				if (StringUtils.isNotEmpty(userId)) {
 					// 保存Cookie
 					String infor = URLEncoder.encode(userName, "utf-8") + "," + password;
 
@@ -197,6 +198,7 @@ public class UserAction {
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		modelMap.put("message", message);
 		modelMap.put("result", result);
+		modelMap.put("userId", userId);
 		return modelMap;
 	}
 

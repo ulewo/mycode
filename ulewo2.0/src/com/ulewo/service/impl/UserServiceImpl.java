@@ -9,6 +9,7 @@ import com.ulewo.dao.UserDao;
 import com.ulewo.entity.User;
 import com.ulewo.enums.QueryUserType;
 import com.ulewo.service.UserService;
+import com.ulewo.util.Constant;
 import com.ulewo.util.PaginationResult;
 import com.ulewo.util.StringUtils;
 
@@ -30,7 +31,8 @@ public class UserServiceImpl implements UserService {
 	public synchronized void addUser(User user) {
 
 		String userId = userDao.findMaxUserId();
-		user.setUserId(userId);
+		user.setUserId(Integer.parseInt(userId) + 1 + "");
+		user.setUserLittleIcon(Constant.DEFALUTICON);
 		String date = StringUtils.dateFormater.get().format(new Date());
 		user.setRegisterTime(date);
 		user.setPrevisitTime(date);
@@ -39,6 +41,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void updateUser(User user) {
+
 		userDao.update(user);
 	}
 
@@ -72,8 +75,9 @@ public class UserServiceImpl implements UserService {
 			return null;
 		}
 	}
-	
-	public User queryBaseInfo(String userId){
+
+	public User queryBaseInfo(String userId) {
+
 		return userDao.findBaseInfo(userId);
 	}
 }

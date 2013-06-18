@@ -54,6 +54,8 @@ public class GroupMagageAction {
 
 	private final static int TITLE_LENGTH = 150, KEYWORD_LENGTH = 150;
 
+	private final static int ITEM_LENGTH = 50;
+
 	@RequestMapping(value = "/{gid}/manage", method = RequestMethod.GET)
 	public ModelAndView manage(@PathVariable String gid, HttpSession session) {
 
@@ -197,28 +199,36 @@ public class GroupMagageAction {
 
 		ModelAndView mv = new ModelAndView();
 		try {
-			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
-			String userId = "10001";
 			String gid = request.getParameter("gid");
 			String itemName = request.getParameter("itemName");
 			String itemCode = request.getParameter("itemCode");
-			if(StringUtils.isEmpty(itemName)){
+			String id = request.getParameter("id");
+			if (null != itemName) {
+				itemName = itemName.trim();
+			}
+			if (null != itemCode) {
+				itemCode = itemCode.trim();
+			}
+			if (null != id) {
+				id = id.trim();
+			}
+			if (StringUtils.isEmpty(itemName) || itemName.length() > ITEM_LENGTH) {
 				mv.setViewName("redirect:" + Constant.WEBSTIE);
 				return mv;
 			}
-			if(StringUtils.isEmpty(itemCode)){
+			if (StringUtils.isEmpty(itemCode)) {
 				mv.setViewName("redirect:" + Constant.WEBSTIE);
 				return mv;
 			}
 			itemName = itemName.trim();
 			itemCode = itemCode.trim();
-			String id = request.getParameter("id");
-			if((StringUtils.isNotEmpty(id)&&!StringUtils.isNumber(id))||!StringUtils.isNumber(itemCode)){
+
+			if ((StringUtils.isNotEmpty(id) && !StringUtils.isNumber(id)) || !StringUtils.isNumber(itemCode)) {
 				mv.setViewName("redirect:" + Constant.WEBSTIE);
 				return mv;
 			}
 			int id_int = 0;
-			if(StringUtils.isNotEmpty(id)){
+			if (StringUtils.isNotEmpty(id)) {
 				id_int = Integer.parseInt(id);
 			}
 			int itemCode_int = Integer.parseInt(itemCode);
@@ -227,56 +237,58 @@ public class GroupMagageAction {
 			item.setGid(gid);
 			item.setItemCode(itemCode_int);
 			item.setItemName(itemName);
-			if(articleItemService.saveItem(item)){
-				mv.setViewName("redirect:"+gid+"/group_item");
+			if (articleItemService.saveItem(item)) {
+				mv.setViewName("redirect:" + gid + "/group_item");
 				return mv;
-			}else{
+			}
+			else {
 				mv.setViewName("redirect:" + Constant.WEBSTIE);
 				return mv;
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			mv.setViewName("redirect:" + Constant.WEBSTIE);
 			return mv;
 		}
 	}
-	
+
 	@RequestMapping(value = "/{gid}/deleteItem", method = RequestMethod.GET)
-	public ModelAndView deleteItem(@PathVariable String gid,HttpSession session, HttpServletRequest request) {
+	public ModelAndView deleteItem(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
 			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 			String userId = "10001";
-			if(!checkPerm(gid, userId)){
-				mv.setViewName("redirect:"+gid+"/group_item");
+			if (!checkPerm(gid, userId)) {
+				mv.setViewName("redirect:" + gid + "/group_item");
 				return mv;
 			}
 			String id = request.getParameter("id");
-			if(StringUtils.isEmpty(id)||!StringUtils.isNumber(id)){
+			if (StringUtils.isEmpty(id) || !StringUtils.isNumber(id)) {
 				mv.setViewName("redirect:" + Constant.WEBSTIE);
 				return mv;
 			}
 			int id_int = 0;
-			if(StringUtils.isNotEmpty(id)){
+			if (StringUtils.isNotEmpty(id)) {
 				id_int = Integer.parseInt(id);
 			}
-			if(articleItemService.delete(id_int)){
+			if (articleItemService.delete(id_int)) {
 				mv.setViewName("redirect:group_item");
 				return mv;
-			}else{
+			}
+			else {
 				mv.setViewName("redirect:" + Constant.WEBSTIE);
 				return mv;
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			mv.setViewName("redirect:" + Constant.WEBSTIE);
 			return mv;
 		}
 	}
-	
+
 	/**
 	 * 文章管理
 	 * 
@@ -505,7 +517,7 @@ public class GroupMagageAction {
 			return mv;
 		}
 	}
-	
+
 	private boolean checkPerm(String gid, String groupAuthor) {
 
 		Group group = groupService.queryGroupBaseInfo(gid);
