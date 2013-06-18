@@ -17,3 +17,7 @@
 .register_right_tit{font-size:16px;font-weight:bold;margin-top:20px;color:#666666}
 .right ul{list-style:none;padding:0px;margin:0px;margin-top:10px;}
 .right ul li{line-height:25px;}
+
+.register_submit{float:left;display:inline-block;}
+.register_submit a{float:left;margin-top:3px;}
+.register_submit .result_info{float:left;font-size:13px;}
