@@ -15,9 +15,8 @@
 <script type="text/javascript" src="js/index.js"></script>
 <script type="text/javascript" src="js/talk.js"></script>
 <script type="text/javascript" src="js/emotion.data.js"></script>
-<link rel="stylesheet" type="text/css" href="css/public.css">
-<link rel="stylesheet" type="text/css" href="css/index.css">
-<link rel="stylesheet" type="text/css" href="css/talk.css">
+<link rel="stylesheet" type="text/css" href="${realPath}/css/index.css">
+<link rel="stylesheet" type="text/css" href="${realPath}/css/talk.css">
 <script type="text/javascript">
 	function createGroup(){
 		var user = "${user}";
@@ -203,6 +202,6 @@
   			</div>
   			<div class="clear"></div>
   		</div>
-  	 <jsp:include page="common/foot.jsp"/>
+  	<%@ include file="common/foot.jsp" %>
 </body>
 </html>

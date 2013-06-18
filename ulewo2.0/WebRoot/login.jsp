@@ -13,13 +13,6 @@
 	<%@ include file="common/head.jsp" %>
 	<div class="main">
 		<div class="left">
-			<div style="height:30px;padding-left:30px;">
-				<div class="result_info">
-					<i id="warm_icon"></i>
-					<span id="warm_info"></span>
-				</div>
-				<div class="clear"></div>
-			</div>
 			<div class="login_p" style="margin-top:1px;">
 				<div class="login_tit">账号：</div>
 				<div class="login_input"><input type="text" id="account"></div>
@@ -55,6 +48,7 @@
 				<div class="login_submit">
 					<a href="javascript:void(0)" class="btn" id="login_btn">现在登陆</a>
 					<a href="" class="foregetpsw">忘记密码？</a>
+					<span class="result_info"><i id="warm_icon"></i><span id="warm_info"></span></span>
 				</div>
 			</div>
 		</div>
@@ -76,7 +70,7 @@
 		<div class="clear"></div>
 	</div>
 	<script type="text/javascript">
-	var redirectUrl = "${param.redirectUrl}"||"${homePath}";
+	var redirectUrl = "${param.redirectUrl}"||"${realPath}";
 	</script>
 	<script type="text/javascript" src="js/user.login.js"></script>
 	<%@ include file="common/foot.jsp" %>

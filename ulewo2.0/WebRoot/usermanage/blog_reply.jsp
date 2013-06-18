@@ -28,7 +28,7 @@
 			<c:forEach var="reply" items="${replyList.list}">
 				<div class="item_reply">
 					<div class="user_icon"><a href="/${reply.userId}">
-					<c:if test="${reply.reUserIcon==null}"><img src="../upload/default.gif"/></c:if>
+					<c:if test="${reply.reUserIcon==null}"><img src="${realPath}/upload/default.gif"/></c:if>
 					<c:if test="${reply.reUserIcon!=null}"><img src="${reply.reUserIcon}"/></c:if>
 					</a></div>
 					<div class="reply_con">

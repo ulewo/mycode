@@ -3,6 +3,7 @@
 <div class="manage_tit">
 	<span class="manage_tit1"><img src="${user.userLittleIcon}" width="40" id="user_icon"></span>
 	<span class="manage_tit2">空间管理</span>
+	<div class="clear"></div>
 </div>
 <div class="menue_p">
 	<div class="menue_tit">
