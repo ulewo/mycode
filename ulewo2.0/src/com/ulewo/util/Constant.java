@@ -111,4 +111,6 @@ public class Constant {
 
 	public final static String DEFALUTICON = WEBSTIE + "/upload/defaultsmall.gif";
 
+	public final static String ERRORPAGE = "http://ulewo.com/error";
+
 }

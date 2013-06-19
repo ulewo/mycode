@@ -3,6 +3,7 @@ package com.ulewo.service;
 import java.util.List;
 
 import com.ulewo.entity.Talk;
+import com.ulewo.util.PaginationResult;
 
 public interface TalkService {
 
@@ -24,6 +25,8 @@ public interface TalkService {
 	 * 
 	 * @return
 	 */
+	public PaginationResult queryLatestTalkByPag(int page, int pageSize);
+
 	public List<Talk> queryLatestTalk(int offset, int total);
 
 	public int queryTalkCount();
@@ -31,6 +34,8 @@ public interface TalkService {
 	public List<Talk> queryLatestTalkByUserId(int offset, int total, String userId);
 
 	public int queryTalkCountByUserId(String userId);
+
+	public PaginationResult queryLatestTalkByUserIdByPag(int page, int pageSize, String userId);
 
 	public Talk queryDetail(int talkId);
 }

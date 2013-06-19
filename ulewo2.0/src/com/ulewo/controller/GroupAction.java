@@ -343,7 +343,7 @@ public class GroupAction {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/deleteFile.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/deleteFile.action", method = RequestMethod.POST)
 	public Map<String, Object> deleteFile(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();

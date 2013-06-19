@@ -194,7 +194,7 @@ public class GroupMagageAction {
 		}
 	}
 
-	@RequestMapping(value = "/saveItem.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/saveItem.action", method = RequestMethod.POST)
 	public ModelAndView saveItem(HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();

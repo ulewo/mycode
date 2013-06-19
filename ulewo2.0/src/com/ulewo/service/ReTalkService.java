@@ -3,6 +3,7 @@ package com.ulewo.service;
 import java.util.List;
 
 import com.ulewo.entity.ReTalk;
+import com.ulewo.util.PaginationResult;
 
 public interface ReTalkService {
 
@@ -25,6 +26,8 @@ public interface ReTalkService {
 	 * @return
 	 */
 	public List<ReTalk> queryReTalk(int offset, int total, int talkId);
+
+	public PaginationResult queryReTalkByPag(int page, int pageSize, int talkId);
 
 	public int queryReTalkCount(int talkId);
 

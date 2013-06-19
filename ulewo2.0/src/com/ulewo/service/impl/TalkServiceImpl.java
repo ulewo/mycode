@@ -16,6 +16,8 @@ import com.ulewo.enums.NoticeType;
 import com.ulewo.service.TalkService;
 import com.ulewo.util.Constant;
 import com.ulewo.util.FormatAt;
+import com.ulewo.util.Pagination;
+import com.ulewo.util.PaginationResult;
 import com.ulewo.util.StringUtils;
 
 @Service("talkService")
@@ -96,4 +98,27 @@ public class TalkServiceImpl implements TalkService {
 		talk.setCreateTime(StringUtils.friendly_time(talk.getCreateTime()));
 		return talk;
 	}
+
+	@Override
+	public PaginationResult queryLatestTalkByPag(int page, int pageSize) {
+
+		int count = queryTalkCount();
+		Pagination pagination = new Pagination(page, count, pageSize);
+		pagination.action();
+		List<Talk> list = queryLatestTalk(pagination.getOffSet(), pageSize);
+		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
+		return result;
+	}
+
+	@Override
+	public PaginationResult queryLatestTalkByUserIdByPag(int page, int pageSize, String userId) {
+
+		int count = queryTalkCountByUserId(userId);
+		Pagination pagination = new Pagination(page, count, pageSize);
+		pagination.action();
+		List<Talk> list = queryLatestTalkByUserId(pagination.getOffSet(), pageSize, userId);
+		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
+		return result;
+	}
+
 }

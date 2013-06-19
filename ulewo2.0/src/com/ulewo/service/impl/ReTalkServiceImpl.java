@@ -16,6 +16,8 @@ import com.ulewo.enums.NoticeType;
 import com.ulewo.service.ReTalkService;
 import com.ulewo.util.Constant;
 import com.ulewo.util.FormatAt;
+import com.ulewo.util.Pagination;
+import com.ulewo.util.PaginationResult;
 import com.ulewo.util.StringUtils;
 
 @Service("reTalkService")
@@ -67,6 +69,16 @@ public class ReTalkServiceImpl implements ReTalkService {
 			retalk.setCreateTime(StringUtils.friendly_time(retalk.getCreateTime()));
 		}
 		return list;
+	}
+
+	public PaginationResult queryReTalkByPag(int page, int pageSize, int talkId) {
+
+		int count = queryReTalkCount(talkId);
+		Pagination pagination = new Pagination(page, count, pageSize);
+		pagination.action();
+		List<ReTalk> list = queryReTalk(pagination.getOffSet(), pageSize, talkId);
+		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
+		return result;
 	}
 
 	@Override

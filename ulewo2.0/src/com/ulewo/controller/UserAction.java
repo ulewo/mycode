@@ -29,6 +29,7 @@ import com.ulewo.entity.BlogArticle;
 import com.ulewo.entity.BlogItem;
 import com.ulewo.entity.BlogReply;
 import com.ulewo.entity.Group;
+import com.ulewo.entity.ReTalk;
 import com.ulewo.entity.SessionUser;
 import com.ulewo.entity.Talk;
 import com.ulewo.entity.User;
@@ -38,6 +39,7 @@ import com.ulewo.service.BlogArticleService;
 import com.ulewo.service.BlogItemService;
 import com.ulewo.service.BlogReplyService;
 import com.ulewo.service.GroupService;
+import com.ulewo.service.ReTalkService;
 import com.ulewo.service.TalkService;
 import com.ulewo.service.UserFriendService;
 import com.ulewo.service.UserService;
@@ -67,9 +69,12 @@ public class UserAction {
 
 	@Autowired
 	private GroupService groupService;
-	
+
 	@Autowired
 	private TalkService talkService;
+
+	@Autowired
+	private ReTalkService reTalkService;
 
 	private final static int MAXLENGTH = 250;
 
@@ -279,6 +284,20 @@ public class UserAction {
 		return modelMap;
 	}
 
+	@ResponseBody
+	@RequestMapping(value = "/logout", method = RequestMethod.POST)
+	public Map<String, Object> logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+
+		Cookie cookie = new Cookie("cookieInfo", null);
+		cookie.setPath("/");
+		cookie.setMaxAge(0);
+		response.addCookie(cookie);
+		session.invalidate();
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		modelMap.put("result", "success");
+		return modelMap;
+	}
+
 	/**
 	 * 用户中心
 	 * 
@@ -304,13 +323,11 @@ public class UserAction {
 			List<UserFriend> fansList = userFriendService.queryFans2List(userId, 0, 15);
 			List<Group> createdGroups = groupService.queryCreatedGroups(userId);
 			List<Group> joinedGroups = groupService.queryJoinedGroups(userId);
-			List<Talk> talkList = talkService.queryLatestTalk(0, 5);
 			mv.addObject("focusList", focusList);
 			mv.addObject("fansList", fansList);
 			mv.addObject("bloglist", list);
 			mv.addObject("createdGroups", createdGroups);
 			mv.addObject("joinedGroups", joinedGroups);
-			mv.addObject("talkList", talkList);
 			mv.setViewName("user/userhome");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -474,7 +491,7 @@ public class UserAction {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/saveReplay.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/saveReplay.action", method = RequestMethod.POST)
 	public Map<String, Object> saveReplay(HttpSession session, HttpServletRequest request) {
 
 		String content = request.getParameter("content");
@@ -532,7 +549,7 @@ public class UserAction {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/deleteReplay.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/deleteReplay.action", method = RequestMethod.GET)
 	public Map<String, Object> deleteReply(HttpSession session, HttpServletRequest request) {
 
 		String replyId = request.getParameter("replyId");
@@ -566,7 +583,7 @@ public class UserAction {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/focusFriend.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/focusFriend.action", method = RequestMethod.POST)
 	public Map<String, Object> focusFriend(HttpSession session, HttpServletRequest request) {
 
 		String friendId = request.getParameter("friendid");
@@ -597,7 +614,7 @@ public class UserAction {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/cancelFocus.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/cancelFocus.action", method = RequestMethod.POST)
 	public Map<String, Object> cancelFocus(HttpSession session, HttpServletRequest request) {
 
 		String friendId = request.getParameter("friendid");
@@ -695,10 +712,63 @@ public class UserAction {
 			return mv;
 		}
 	}
-	
+
+	@ResponseBody
+	@RequestMapping(value = "/saveTalk.action", method = RequestMethod.POST)
+	public Map<String, Object> saveTalk(HttpSession session, HttpServletRequest request) {
+
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			String content = request.getParameter("content");
+			String imgurl = request.getParameter("imgUrl");
+			if (StringUtils.isEmpty(content) || content.length() > MAXLENGTH) {
+				modelMap.put("message", "吐槽内容不能为空");
+				modelMap.put("result", "fail");
+				return modelMap;
+			}
+			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+			Talk talk = new Talk();
+			talk.setContent(content);
+			talk.setImgurl(imgurl);
+			talk.setUserId(sessionUser.getUserId());
+			talk.setUserName(sessionUser.getUserName());
+			talk.setUserIcon(sessionUser.getUserLittleIcon());
+			talkService.addTalk(talk);
+			talk.setCreateTime(StringUtils.friendly_time(talk.getCreateTime()));
+			modelMap.put("result", "success");
+			modelMap.put("talk", talk);
+			return modelMap;
+		} catch (Exception e) {
+			e.printStackTrace();
+			modelMap.put("message", "系统异常");
+			modelMap.put("result", "fail");
+			return modelMap;
+		}
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/loadLatestTalk.action", method = RequestMethod.GET)
+	public Map<String, Object> loadLatestTalk(HttpSession session, HttpServletRequest request) {
+
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			String userId = request.getParameter("userId");
+			List<Talk> list = talkService.queryLatestTalkByUserId(0, 5, userId);
+			modelMap.put("result", "success");
+			modelMap.put("list", list);
+			return modelMap;
+		} catch (Exception e) {
+			e.printStackTrace();
+			modelMap.put("result", "fail");
+			return modelMap;
+		}
+
+	}
+
 	@RequestMapping(value = "/{userId}/talk", method = RequestMethod.GET)
 	public ModelAndView talkList(@PathVariable String userId, HttpSession session, HttpServletRequest request,
 			HttpServletResponse response) {
+
 		ModelAndView mv = new ModelAndView();
 		try {
 
@@ -715,6 +785,7 @@ public class UserAction {
 			mv.addObject("fansList", fansList);
 			mv.addObject("createdGroups", createdGroups);
 			mv.addObject("joinedGroups", joinedGroups);
+			mv.addObject("userId", userId);
 			mv.setViewName("user/talk");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -723,64 +794,129 @@ public class UserAction {
 		}
 		return mv;
 	}
-	
+
 	@ResponseBody
-	@RequestMapping(value = "/saveTalk.action", method = RequestMethod.POST)
-	public Map<String, Object> saveTalk(HttpSession session, HttpServletRequest request) {
+	@RequestMapping(value = "/loadTalk.action", method = RequestMethod.GET)
+	public Map<String, Object> loadTalk(HttpSession session, HttpServletRequest request) {
+
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			String userId = request.getParameter("userId");
+			String page = request.getParameter("page");
+			int page_int = 1;
+			if (StringUtils.isNumber(page)) {
+				page_int = Integer.parseInt(page);
+			}
+			PaginationResult data = talkService.queryLatestTalkByUserIdByPag(page_int, Constant.pageSize20, userId);
+			modelMap.put("result", "success");
+			modelMap.put("list", data);
+			return modelMap;
+		} catch (Exception e) {
+			e.printStackTrace();
+			modelMap.put("result", "fail");
+			return modelMap;
+		}
+	}
+
+	@RequestMapping(value = "/{userId}/talk/{talkId}", method = RequestMethod.GET)
+	public ModelAndView talkDetal(@PathVariable String userId, @PathVariable String talkId, HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView mv = new ModelAndView();
+		try {
+
+			UserVo userVo = checkUserInfo(userId, session);
+			if (null == userVo) {
+				mv.setViewName("redirect:" + Constant.WEBSTIE);
+			}
+			if (!StringUtils.isNumber(talkId)) {
+				mv.setViewName("redirect:" + Constant.WEBSTIE);
+			}
+			int talkId_int = Integer.parseInt(talkId);
+			mv.addObject("userVo", userVo);
+			List<UserFriend> focusList = userFriendService.queryFocus2List(userId, 0, 15);
+			List<UserFriend> fansList = userFriendService.queryFans2List(userId, 0, 15);
+			List<Group> createdGroups = groupService.queryCreatedGroups(userId);
+			List<Group> joinedGroups = groupService.queryJoinedGroups(userId);
+			Talk talk = talkService.queryDetail(talkId_int);
+			mv.addObject("focusList", focusList);
+			mv.addObject("fansList", fansList);
+			mv.addObject("createdGroups", createdGroups);
+			mv.addObject("joinedGroups", joinedGroups);
+			mv.addObject("talk", talk);
+			mv.addObject("userId", userId);
+			mv.setViewName("user/talk_detal");
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.setViewName("redirect:" + Constant.WEBSTIE);
+			return mv;
+		}
+		return mv;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/loadReTalk", method = RequestMethod.GET)
+	public Map<String, Object> loadReTalk(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			String talkId = request.getParameter("talkId");
+			if (!StringUtils.isNumber(talkId)) {
+				modelMap.put("result", "fail");
+				modelMap.put("message", "参数错误");
+			}
+			int talkId_int = Integer.parseInt(talkId);
+			PaginationResult data = reTalkService.queryReTalkByPag(1, Constant.pageSize50, talkId_int);
+			modelMap.put("result", "success");
+			modelMap.put("list", data);
+			return modelMap;
+		} catch (Exception e) {
+			e.printStackTrace();
+			modelMap.put("result", "fail");
+			return modelMap;
+		}
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/saveReTalk.action", method = RequestMethod.POST)
+	public Map<String, Object> saveReTalk(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			String content = request.getParameter("content");
-			String imgurl  = request.getParameter("imgUrl");
+			String reTalkId = request.getParameter("talkId");
 			if (StringUtils.isEmpty(content) || content.length() > MAXLENGTH) {
-				modelMap.put("message", "吐槽内容不能为空");
 				modelMap.put("result", "fail");
+				modelMap.put("message", "回复内容不能为空");
 				return modelMap;
 			}
+			if (!StringUtils.isNumber(reTalkId)) {
+				modelMap.put("result", "fail");
+				modelMap.put("message", "请求参数错误");
+				return modelMap;
+			}
+			int reTalkId_int = Integer.parseInt(reTalkId);
+			String atUserId = request.getParameter("atUserId");
+			String atUserName = request.getParameter("atUserName");
 			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
-			Talk talk = new Talk();
-			talk.setContent(content);
-			talk.setImgurl(imgurl);
-			talk.setUserId(sessionUser.getUserId());
-			talk.setUserName(sessionUser.getUserName());
-			talk.setUserIcon(sessionUser.getUserLittleIcon());
-			talkService.addTalk(talk);
-			talk.setCreateTime(StringUtils.friendly_time(talk.getCreateTime()));
-			modelMap.put("result", "fail");
-			modelMap.put("talk", talk);
+			ReTalk retalk = new ReTalk();
+			retalk.setTalkId(reTalkId_int);
+			retalk.setContent(content);
+			retalk.setUserId(sessionUser.getUserId());
+			retalk.setUserName(sessionUser.getUserName());
+			retalk.setUserIcon(sessionUser.getUserLittleIcon());
+			retalk.setAtUserId(atUserId);
+			retalk.setAtUserName(atUserName);
+			reTalkService.addReTalk(retalk);
+			retalk.setCreateTime(StringUtils.friendly_time(retalk.getCreateTime()));
+			modelMap.put("result", "success");
+			modelMap.put("retalk", retalk);
 			return modelMap;
 		} catch (Exception e) {
-			modelMap.put("message", "系统异常");
+			e.printStackTrace();
 			modelMap.put("result", "fail");
 			return modelMap;
 		}
 	}
-	
-	@ResponseBody
-	@RequestMapping(value = "/loadTalk.do", method = RequestMethod.POST)
-	public Map<String, Object> loadTalk(HttpSession session, HttpServletRequest request) {
 
-		String friendId = request.getParameter("friendid");
-		Object sessionObj = session.getAttribute("user");
-		String message = "";
-		String result = "success";
-		try {
-			if (null != sessionObj) {
-				SessionUser user = (SessionUser) sessionObj;
-				String userId = user.getUserId();
-				userFriendService.deleteFirend(userId, friendId);
-			}
-			else {
-				message = "你无权进行此操作";
-				result = "fail";
-			}
-		} catch (Exception e) {
-			message = "操作异常";
-			result = "fail";
-		}
-		Map<String, Object> modelMap = new HashMap<String, Object>();
-		modelMap.put("message", message);
-		modelMap.put("result", result);
-		return modelMap;
-	}
 }
