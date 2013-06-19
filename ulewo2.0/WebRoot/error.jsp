@@ -7,20 +7,21 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>出错啦!  -有乐窝</title>
+<%@ include file="common/path.jsp" %>
 <link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
 <body>
   <%@ include file="common/head.jsp" %>
   <div class="bodycon">
   		<div>
-  			<div class="error_img"><img src="../images/error.jpg"></div>
+  			<div class="error_img"><img src="${realPath}/images/error.jpg"></div>
   			<div class="error_info">
   				<span class="tit">出现此页面可能是由于以下原因引起的：</span>
 				<span>1、登录超时</span>
 				<span>2、你访问的内容被删除</span>
 				<span>3、你没有权限进行此操作</span>
 				<span>4、服务器异常</span>
-				<span><a href="../index.jspx">返回首页</a></span>
+				<span><a href="../">返回首页</a></span>
   			</div>
   			<div class="clear"></div>
   		</div>
