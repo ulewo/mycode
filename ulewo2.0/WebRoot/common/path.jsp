@@ -8,6 +8,7 @@ String realPath = "http://" + request.getServerName()+ ":" + request.getServerPo
 <script src="${realPath}/js/jquery.min.js"></script>
 <script src="${realPath}/js/util.js"></script>
 <script src="${realPath}/js/common.js"></script>
+<script src="${realPath}/js/emotion.data.js"></script>
 <script type="text/javascript">
 var global={};
 global.realPath="${realPath}";
