@@ -52,7 +52,7 @@ public class AuthorityFilter implements Filter {
 			userObj = request.getSession().getAttribute("user");
 		}
 		//以action结尾的没有登录，直接跳闸un到错误页面
-		if (null == userObj && "action".equals(type)) {
+		if (null == userObj && ("action".equals(type)||req_uri.contains("manage")||req_uri.contains("groupManage"))) {
 			response.sendRedirect(Constant.ERRORPAGE);
 		}
 		chain.doFilter(request, response);

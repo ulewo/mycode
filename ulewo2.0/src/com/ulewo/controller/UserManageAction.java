@@ -279,14 +279,7 @@ public class UserManageAction {
 			imgOut = new FileOutputStream(okfile);
 			imgOut.write(data);
 			imgOut.flush();
-
-			int port = request.getServerPort();
-			String realPath = "http://" + request.getServerName() + ":" + port + request.getContextPath();
-			if (port == 80) {
-				realPath = "http://" + request.getServerName() + request.getContextPath();
-			}
-
-			userIcon = realPath + "/upload/avatars/" + sessionUser.getUserId() + "." + imgType;
+			userIcon = "avatars/" + sessionUser.getUserId() + "." + imgType;
 			User user = new User();
 			user.setUserId(userId);
 			user.setUserLittleIcon(userIcon);
@@ -320,9 +313,7 @@ public class UserManageAction {
 
 	@RequestMapping(value = "/new_blog")
 	public ModelAndView newblog(HttpSession session) {
-
 		ModelAndView mv = new ModelAndView();
-		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 		String userId = "10001";
 		List<BlogItem> itemList = blogItemService.queryBlogItemByUserId(userId);
 		mv.addObject("itemList", itemList);

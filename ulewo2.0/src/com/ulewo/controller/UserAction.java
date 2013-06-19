@@ -796,7 +796,7 @@ public class UserAction {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/loadTalk.action", method = RequestMethod.GET)
+	@RequestMapping(value = "/loadTalk", method = RequestMethod.GET)
 	public Map<String, Object> loadTalk(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();

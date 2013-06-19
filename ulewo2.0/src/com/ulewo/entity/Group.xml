@@ -24,7 +24,7 @@
 	
 	<!-- 获取群信息 -->
 	<select id="getGroup"  resultClass="group" parameterClass="java.util.Map">
-	    select g.*,u.username as authorName,
+	    select g.*,g.groupnotice as groupNotice,u.username as authorName,
 		(select count(a.id) from article a where a.gid=g.id) as topicCount,
 		(select count(m.id) from member m where m.gid=g.id) as members
 		from groups g inner join user u on u.userid=g.groupauthor

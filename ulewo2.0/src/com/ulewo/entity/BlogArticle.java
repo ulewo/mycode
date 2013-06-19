@@ -13,6 +13,8 @@ public class BlogArticle {
 
 	private String userId;
 
+	private String userIcon;
+	
 	private String userName;
 
 	private Integer itemId;
@@ -163,5 +165,12 @@ public class BlogArticle {
 		this.itemName = itemName;
 	}
 
+	public String getUserIcon() {
+		return userIcon;
+	}
+
+	public void setUserIcon(String userIcon) {
+		this.userIcon = userIcon;
+	}
 
 }

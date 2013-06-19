@@ -81,4 +81,7 @@ public interface BlogArticleService {
 	public List<BlogArticle> indexLatestBlog(int offset, int total);
 
 	public int queryCount();
+	
+	public PaginationResult queryLatestBlog(int page, int pageSize);
+	
 }

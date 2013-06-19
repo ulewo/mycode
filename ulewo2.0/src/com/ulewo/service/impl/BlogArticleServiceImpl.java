@@ -149,4 +149,12 @@ public class BlogArticleServiceImpl implements BlogArticleService {
 		return blogArticleDao.queryCount();
 	}
 
+	public PaginationResult queryLatestBlog(int page, int pageSize){
+		int count = queryCount();
+		Pagination pagination = new Pagination(page, count, pageSize);
+		pagination.action();
+		List<BlogArticle> list = indexLatestBlog(pagination.getOffSet(), pageSize);
+		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
+		return result;
+	}
 }
