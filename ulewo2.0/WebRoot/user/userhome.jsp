@@ -20,7 +20,7 @@
 	  		<div class="left_img_p">
 	  			<div>
 		  			<c:forEach var="friend" items="${focusList}">
-		  				<div class="left_img_item"><a href="${realPath}/user/${friend.friendId}" title="${friend.friendName}"><img src="${friend.friendIcon}" width="40"></a></div>
+		  				<div class="left_img_item"><a href="${realPath}/user/${friend.friendId}" title="${friend.friendName}"><img src="${realPath}/upload/${friend.friendIcon}" width="40"></a></div>
 		  			</c:forEach>
 		  			<c:if test="${empty focusList}">
 		  				<div class="left_noinfo">尚未关注其他人</div>
@@ -37,7 +37,7 @@
 	  		<div class="left_img_p">
 	  			<div>
 		  			<c:forEach var="friend" items="${fansList}">
-		  				<div class="left_img_item"><a href="${realPath}/user/${friend.friendId}" title="${friend.friendName}"><img src="${friend.friendIcon}" width="40"></a></div>
+		  				<div class="left_img_item"><a href="${realPath}/user/${friend.friendId}" title="${friend.friendName}"><img src="${realPath}/upload/${friend.friendIcon}" width="40"></a></div>
 		  			</c:forEach>
 		  			<c:if test="${empty fansList}">
 		  				<div class="left_noinfo">尚无粉丝，精彩分享才能吸引关注</div>
@@ -54,7 +54,7 @@
 	  		<div class="left_img_p">
 	  			<div>
 	  			<c:forEach var="group" items="${createdGroups}">
-	  				<div class="left_img_item"><a href="${realPath}/group/${group.id}" title="${group.groupName}"><img src="${group.groupIcon}" width="40"></a></div>
+	  				<div class="left_img_item"><a href="${realPath}/group/${group.id}" title="${group.groupName}"><img src="${realPath}/upload/${group.groupIcon}" width="40"></a></div>
 	  			</c:forEach>
 	  			<c:if test="${empty createdGroups}">
 		  			<div class="left_noinfo">没有创建任何窝窝</div>
@@ -68,7 +68,7 @@
 	  		<div class="left_img_p">
 	  			<div>
 	  			<c:forEach var="group" items="${joinedGroups}">
-	  				<div class="left_img_item"><a href="${realPath}/group/${group.id}" title="${group.groupName}"><img src="${group.groupIcon}" width="40"></a></div>
+	  				<div class="left_img_item"><a href="${realPath}/group/${group.id}" title="${group.groupName}"><img src="${realPath}/upload/${group.groupIcon}" width="40"></a></div>
 	  			</c:forEach>
 	  			<c:if test="${empty joinedGroups}">
 		  			<div class="left_noinfo">没有加入任何窝窝</div>

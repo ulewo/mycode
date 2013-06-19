@@ -15,7 +15,7 @@ function loadMoreTalk(page) {
 		cache : true,
 		type : 'GET',
 		dataType : "json",
-		url : global.realPath + '/user/loadTalk.do?userId=' + userId,// 请求的action路径
+		url : global.realPath + '/user/loadTalk?userId=' + userId,// 请求的action路径
 		success : function(data) {
 			$("#loading").hide();
 			var list = data.list.list;

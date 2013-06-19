@@ -17,7 +17,9 @@
 <link rel="stylesheet" href="${realPath}/css/imageload.style.css">
 <link rel="stylesheet" href="${realPath}/css/public.css">
 <script src="${realPath}/js/jquery.wookmark.js"></script>
-
+<style type="text/css">
+.selected4{background:#1C91BE;}
+</style>
 </head>
 <body>
 	 <%@ include file="common/head.jsp" %>

@@ -23,7 +23,7 @@
 			<c:forEach var="rearticle" items="${result.list}">
 				<div class="item_reply">
 					<div class="user_icon">
-						<a href="${realPath}/user/${rearticle.authorid}" target="_blank"><img src="${rearticle.authorIcon}"/></a>
+						<a href="${realPath}/user/${rearticle.authorid}" target="_blank"><img src="${realPath}/upload/${rearticle.authorIcon}"/></a>
 					</div>
 					<div class="reply_con">
 						<div class="title_op">

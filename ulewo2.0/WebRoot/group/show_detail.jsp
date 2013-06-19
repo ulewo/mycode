@@ -38,7 +38,7 @@ global.articleId= "${article.id}";
 				</c:forEach>
 			</ul>
 			<div class="author_info">
-				<div class="author_icon"><img src="${article.author.userLittleIcon}"></div>
+				<div class="author_icon"><img src="${realPath}/upload/${article.author.userLittleIcon}"></div>
 				<div class="author_info_con">
 					<div class="article_tit">
 						<span class="article_tit_title">${article.title}</span>

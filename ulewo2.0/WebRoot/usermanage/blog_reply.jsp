@@ -27,10 +27,11 @@
 			</div>
 			<c:forEach var="reply" items="${replyList.list}">
 				<div class="item_reply">
-					<div class="user_icon"><a href="/${reply.userId}">
-					<c:if test="${reply.reUserIcon==null}"><img src="${realPath}/upload/default.gif"/></c:if>
-					<c:if test="${reply.reUserIcon!=null}"><img src="${reply.reUserIcon}"/></c:if>
-					</a></div>
+					<div class="user_icon">
+					
+						<c:if test="${reply.reUserIcon==null}"><img src="${realPath}/upload/default.gif"/></c:if>
+						<c:if test="${reply.reUserIcon!=null}"><a href="${realPath}/user/${reply.userId}"><img src="${realPath}/upload/${reply.reUserIcon}"/></a></c:if>
+					</div>
 					<div class="reply_con">
 						<div class="title_op">
 							<div class="blog_title"><a href="${realPath}/user/${reply.blogAuthor}/blog/${reply.blogId}">${reply.blogTitle}</a></div>

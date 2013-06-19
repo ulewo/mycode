@@ -51,7 +51,11 @@ function loadReComment(articleId,page) {
 						}
 					}
 				}
-				new Pager(data.result.pageTotal,10,data.result.page).asHtml().appendTo($("#pager"));
+				if(data.result.pageTotal>1){
+					new Pager(data.result.pageTotal,10,data.result.page).asHtml().appendTo($("#pager"));
+				}else{
+					$("#pager").hide();
+				}
 				$(".outerHeight pre").each(function () {
 			        var $this = $(this);
 			        if ($this.attr("class")!=null&&$this.attr("class").indexOf("brush:") != -1) {
@@ -82,9 +86,9 @@ function RePanel(data) {
 	this.outerHeight = $("<div class='outerHeight'></div>");
 	$("<a name=re" + data.id + ">").appendTo(this.outerHeight);
 	// 头像
-	var authorIcon = data.authorIcon || global.realPath+"/upload/defaultsmall.gif";
+	var authorIcon = data.authorIcon==""?global.realPath+"/upload/defaultsmall.gif":global.realPath+"/upload/"+data.authorIcon;
 	this.ui_avatar = $("<div class='ui_avatar'><img src='"+ authorIcon + "' width='30'></div>");
-	if (data.authorid != "") {
+	if (data.authorid != ""&&data.authorid !=null) {
 		this.ui_avatar = $("<div class='ui_avatar'><a href='"+global.realPath+"/user/"
 				+ data.authorid
 				+ "'><img src='"+ authorIcon+ "' width='30' border='0'></a></div>");
@@ -96,11 +100,17 @@ function RePanel(data) {
 	$("<div class='clear'></div>").appendTo(this.outerHeight);
 	this.comments_content = $("<div class='comments_content'></div>").appendTo(
 			this.reComent_Con);
-	$(
-			"<a href='"+global.realPath+"/user/" + data.authorid + "'>"
-					+ data.authorName
-					+ "</a>:<span class='comment_content_word'>" + data.content
-					+ "</span>").appendTo(this.comments_content);
+	
+	if (data.authorid != ""&&data.authorid !=null) {
+		$(
+				"<a href='"+global.realPath+"/user/" + data.authorid + "'>"
+						+ data.authorName
+						+ "</a>:<span class='comment_content_word'>" + data.content
+						+ "</span>").appendTo(this.comments_content);
+	}else{
+		$("<span style='color:#9B9B9B'>"+data.authorName+"</span>:<span class='comment_content_word'>" + data.content+"</span>").appendTo(this.comments_content);
+	}
+	
 	this.comments_op = $("<div class='comments_op'></div>").appendTo(
 			this.comments_content);
 

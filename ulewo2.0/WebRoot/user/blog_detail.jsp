@@ -65,10 +65,10 @@
 				  		<div>
 				  			<div class="blogreply_icon">
 				  				<c:if test="${user!=null}">
-									<img src="${user.userLittleIcon}" width="37">
+									<img src="${realPath}/upload/${user.userLittleIcon}" width="37">
 								</c:if>
 								<c:if test="${user==null}">
-									<img src="../upload/default.gif" width="37">
+									<img src="${realPath}/upload/default.gif" width="37">
 								</c:if>
 				  			</div>
 				  			<div class="blog_reply_content">
@@ -76,7 +76,7 @@
 				  				<div class="sub_op">
 						  			<div class="subbtn">
 						  				<a href="javascript:subReply('${param.id}')" class="btn" onfocus="this.blur()" id="sendBtn">发表留言</a>
-						  				<img src="../images/load.gif" id="loading" style="display:none">
+						  				<img src="${realPath}/images/load.gif" id="loading" style="display:none">
 						  			</div>
 				  					<div class="warm_info">最多输入500字符</div>
 				  				</div>
@@ -93,7 +93,7 @@
 		</div>
 		<div style="clear:left;"></div>
 	</div>
-	<script type="text/javascript" src="${realPath}js/user.blogreply.js"></script>
+	<script type="text/javascript" src="${realPath}/js/user.blogreply.js"></script>
 	<script type="text/javascript">
 		var realPath = "${realPath}";
 		var blogId = "${blog.id}";

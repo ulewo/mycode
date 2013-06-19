@@ -20,7 +20,7 @@
 	  		<div class="left_img_p">
 	  			<div>
 		  			<c:forEach var="friend" items="${focusList}">
-		  				<div class="left_img_item"><a href="${realPath}/user/${friend.friendId}" title="${friend.friendName}"><img src="${friend.friendIcon}" width="40"></a></div>
+		  				<div class="left_img_item"><a href="${realPath}/user/${friend.friendId}" title="${friend.friendName}"><img src="${realPath}/upload/${friend.friendIcon}" width="40"></a></div>
 		  			</c:forEach>
 		  			<c:if test="${empty focusList}">
 		  				<div class="left_noinfo">尚未关注其他人</div>
@@ -37,7 +37,7 @@
 	  		<div class="left_img_p">
 	  			<div>
 		  			<c:forEach var="friend" items="${fansList}">
-		  				<div class="left_img_item"><a href="${realPath}/user/${friend.friendId}" title="${friend.friendName}"><img src="${friend.friendIcon}" width="40"></a></div>
+		  				<div class="left_img_item"><a href="${realPath}/user/${friend.friendId}" title="${friend.friendName}"><img src="${realPath}/upload/${friend.friendIcon}" width="40"></a></div>
 		  			</c:forEach>
 		  			<c:if test="${empty fansList}">
 		  				<div class="left_noinfo">尚无粉丝，精彩分享才能吸引关注</div>
@@ -88,7 +88,7 @@
 				<div>
 					<div class="talkitem">
 		  				<div class="itemicon">
-		  					<img src="../upload/${talk.userIcon}" width="37">
+		  					<img src="${realPath}/upload/${talk.userIcon}" width="37">
 		  				</div>
 		  				<div class="itemcon">
 		  					<span class="item_user"><a href="userInfo.jspx?userId=${talk.userId}">${talk.userName}</a></span>

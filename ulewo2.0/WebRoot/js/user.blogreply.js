@@ -65,13 +65,13 @@ function resetForm() {
 }
 
 function initReply(i) {
-	$("<img src='../images/load.gif'>评论加载中......").appendTo($("#messagelist"));
+	$("<img src='"+realPath+"/images/load.gif'>评论加载中......").appendTo($("#messagelist"));
 	$.ajax({
 		async : true,
 		cache : false,
 		type : 'GET',
 		dataType : "json",
-		url : realPath+"replayList?blogId=" + blogId,// 请求的action路径
+		url : realPath+"/user/replayList?blogId=" + blogId,// 请求的action路径
 		success : function(data) {
 			$("#messagelist").empty();
 			$(".pagination").empty();
@@ -108,11 +108,11 @@ function NotePanle(note) {
 	// 头像
 	if(reUserIcon!=""&&reUserIcon!=null){
 		$(
-				"<div class='reply_usericon'><img src='../upload/" + reUserIcon
+				"<div class='reply_usericon'><img src='"+realPath+"/upload/" + reUserIcon
 						+ "' width='35'></div>")
 				.appendTo(this.noteCon);
 	}else{
-		$("<div class='reply_usericon'><img src='../upload/default.gif' width='35'></div>").appendTo(this.noteCon);
+		$("<div class='reply_usericon'><img src='"+realPath+"/upload/default.gif' width='35'></div>").appendTo(this.noteCon);
 	}
 	
 	// 留言信息
@@ -122,7 +122,7 @@ function NotePanle(note) {
 			.appendTo(reply_con_p);
 	if (note.userId != "") {
 		$(
-				"<span><a href='userInfo.jspx?userId="
+				"<span><a href='"+realPath+"/user/"
 						+ note.userId + "'>" + note.userName + "</a></span>")
 				.appendTo(reply_con_info);
 	} else {
@@ -182,15 +182,16 @@ NotePanle.prototype = {
 		$("#atUserName").val(atUserName);
 		$("#content").focus();
 		var quote_panle = $("<div id='comment_form_at' class='comment_form_at' style='margin-top:10px;'></div>");
-		$("#reblogform").before(quote_panle);
+		$("#subform").before(quote_panle);
 		$("<a href='javasccript:void(0)'>@" + atUserName + "</a>").appendTo(
 				quote_panle);
-		$("<span><img src='../images/delete.png'></span>")
+		$("<span><img src='"+realPath+"/images/delete.png'></span>")
 				.appendTo(quote_panle).bind("click", function() {
 					$("#comment_form_at").remove();
 					$("#atUserId").val("");
 					$("#atUserName").val("");
 				});
+		$("<div class='clear'></div>").appendTo(quote_panle);
 	},
 	del : function(event) {
 		var id = event.data.id;
