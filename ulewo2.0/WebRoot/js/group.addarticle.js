@@ -50,7 +50,7 @@ function deleteFile(){
 			fileName:$("#attached_file").val(),
 			"time" : new Date()
 		},
-		url : global.realPath+"/group/deleteFile.do",// 请求的action路径
+		url : global.realPath+"/group/deleteFile.action",// 请求的action路径
 		success : function(data) {
 			$("#file_deleting").hide();
 			if(data.rsult="success"){

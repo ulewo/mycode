@@ -23,7 +23,7 @@
 .opts .sendMsg{background:#5CACEE;display:block;height:40px;background-image:url('../images/space-opts.png');background-position: 15px -140px;background-repeat:no-repeat;color:#ffffff;padding-top:20px;padding-left:30px;font-size:14px;text-align:center;}
 .opts .sendMsg:hover{background: #2E94E9;background-image:url('../images/space-opts.png');background-position: 15px -140px;background-repeat:no-repeat;}
 .right_top_m{color:#999999}
-/****◊Û≤‡ƒ£øÈ*****/
+/****Â∑¶‰æßÊ®°Âùó*****/
 .left_item{background:#EAEAEA;margin-top:5px;}
 .left_item_tit{border-bottom:2px solid #6E7B8B;font-size:16px;font-weight:bold;padding-left:5px;padding:5px;color:#666666}
 .left_img_p{padding-top:5px;padding-bottom:10px;padding-left:1px;}
@@ -31,3 +31,9 @@
 .left_noinfo{padding:10px;color:#999999;margin-top:5px;text-align:center;}
 .left_img_p_more{margin-top:10px;text-align:right;padding-right:5px;}
 .right{float:left;width:750px;margin-left:10px;text-align:left;background:#ffffff;padding:10px;}
+
+
+#atpanel{margin-top:10px;}
+#u_atpanel_userid{float:left;color:#3E79A2;background:#DDECF7;display:inline-block;padding:3px;border-radius: 4px;cursor:pointer;}
+#u_atpanel_close{float:left;display:inline-block;margin-left:5px;padding-top: 2px;};
+#atpanel{height:30px;}

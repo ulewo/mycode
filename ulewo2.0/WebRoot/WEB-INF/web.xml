@@ -36,6 +36,16 @@
 		<url-pattern>*.do</url-pattern>
 		<url-pattern>*.action</url-pattern>
 	</filter-mapping>
+	<!-- 权限过滤.action结尾的请求必须登录 -->
+	 <filter>
+		<filter-name>authority</filter-name>
+		<filter-class>com.ulewo.filter.AuthorityFilter</filter-class>
+	 </filter>
+	 <filter-mapping>
+		<filter-name>authority</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
 	<!-- 
 	<servlet-mapping>
 		<servlet-name>default</servlet-name>
@@ -91,6 +101,7 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	 -->
+	 
 	<servlet-mapping>
 		<servlet-name>spring</servlet-name>
 		<url-pattern>/</url-pattern>

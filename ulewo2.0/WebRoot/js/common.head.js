@@ -14,8 +14,8 @@ function goto_register() {
 }
 
 function logout() {
-	var redirectUrl = global.realPath + "index.jspx";
-	var url = myParam.realPath + "user/logout.jspx";
+	var redirectUrl = global.realPath;
+	var url =  global.realPath + "/user/logout";
 	$.ajax({
 		async : true,
 		cache : false,
@@ -26,7 +26,7 @@ function logout() {
 		},
 		url : url,// 请求的action路径
 		success : function(data) {
-			if (data.msg == "ok") {// 登录成功
+			if (data.msg == "success") {
 				document.location.href = redirectUrl;
 			}
 		}

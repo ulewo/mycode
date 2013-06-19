@@ -81,7 +81,7 @@
 					"friendid":userId,
 					"time" : new Date()
 				},
-				url : global.realPath+"/user/focusFriend.do",// 请求的action路径
+				url : global.realPath+"/user/focusFriend.action",// 请求的action路径
 				success : function(data) {
 					if(data.result=="success"){
 						$("#focus_user").remove();
@@ -107,7 +107,7 @@
 					"friendid":userId,
 					"time" : new Date()
 				},
-				url : global.realPath+"/user/cancelFocus.do",// 请求的action路径
+				url : global.realPath+"/user/cancelFocus.action",// 请求的action路径
 				success : function(data) {
 					if(data.result=="success"){
 						$("#cancel_focus").remove();

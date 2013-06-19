@@ -13,6 +13,9 @@ $(function() {
 	$(".pm_emotions_bd").find("a").each(function(index) {
 		$(this).bind("click", function() {
 			var curValue = $("#talkcontent").val();
+			if(curValue=="今天你吐槽了吗？"){
+				curValue="";
+			}
 			$("#talkcontent").val(curValue + $(this).attr("title"));
 			$("#pm_emotion_cnt").hide();
 		});
@@ -49,34 +52,33 @@ function showEmotion() {
 function TalkItem(data) {
 	this.item = $("<div class='talkitem'></div>");
 	$(
-			"<div class='itemicon'><img src='" + myParam.realPath + "upload/"
+			"<div class='itemicon'><img src='" + global.realPath + "/upload/"
 					+ data.userIcon + "' width='37'></div>")
 			.appendTo(this.item);
 	var talkcon = $("<div class='itemcon'></div>").appendTo(this.item);
 	$(
-			"<span class='item_user'><a href='" + myParam.realPath
-					+ "user/userInfo.jspx?userId=" + data.userId + "'>"
-					+ data.userName + "</a></span>").appendTo(talkcon);
+			"<span class='item_user'><a href='" + global.realPath + "/user/"
+					+ data.userId + "'>" + data.userName + "</a></span>")
+			.appendTo(talkcon);
 	var content = data.content;
 	for ( var emo in emotion_data) {
-		content = content.replace(emo, "&nbsp;<img src='" + myParam.realPath
-				+ "images/emotions/" + emotion_data[emo] + "'>&nbsp;");
+		content = content.replace(emo, "&nbsp;<img src='" + global.realPath
+				+ "/images/emotions/" + emotion_data[emo] + "'>&nbsp;");
 	}
 	$("<span class='item_content'>：" + content + "</span>").appendTo(talkcon);
 	var span = $(
 			"<span class='item_time'>" + data.createTime + "<a href='"
-					+ myParam.realPath + "user/talkDetail.jspx?userId="
-					+ data.userId + "&talkId=" + data.id + "'>(" + data.reCount
-					+ "评)</a></span>").appendTo(talkcon);
+					+ global.realPath + "/user/" + data.userId + "/talk/"
+					+ data.id + "'>(" + data.reCount + "评)</a></span>")
+			.appendTo(talkcon);
 	if (data.sourceFrom == "A") {
 		$("<span>&nbsp;Android&nbsp;</span>").appendTo(span);
 	}
 	if (data.imgurl != "") {
 		$(
-				"<a href='" + myParam.realPath + "user/talkDetail.jspx?userId="
-						+ data.userId + "&talkId=" + data.id + "'><img src='"
-						+ myParam.realPath + "images/img.gif' border=0></a>")
-				.appendTo(span);
+				"<a href='" + global.realPath + "/user/" + data.userId
+						+ "/talk/" + data.id + "'><img src='" + global.realPath
+						+ "/images/img.gif' border=0></a>").appendTo(span);
 	}
 	$("<div class='clear'></div>").appendTo(this.item);
 }
@@ -84,19 +86,19 @@ function TalkItem(data) {
 function ReTalkItem(data) {
 	this.item = $("<div class='talkitem'></div>");
 	$(
-			"<div class='itemicon'><img src='" + myParam.realPath + "upload/"
+			"<div class='itemicon'><img src='" + global.realPath + "/upload/"
 					+ data.userIcon + "' width='37'></div>")
 			.appendTo(this.item);
 	var talkcon = $("<div class='itemcon'></div>").appendTo(this.item);
 	$(
-			"<span class='item_user'><a href='" + myParam.realPath
-					+ "user/userInfo.jspx?userId=" + data.userId + "'>"
+			"<span class='item_user'><a href='" + global.realPath
+					+ "/user/userInfo.jspx?userId=" + data.userId + "'>"
 					+ data.userName + "</a></span>").appendTo(talkcon);
 	if (data.atUserId != "" && data.atUserId != null) {
 		$(
 				"<span style='color:#008000'>&nbsp;回复&nbsp;</span><span class='item_user'><a href='"
-						+ myParam.realPath
-						+ "user/userInfo.jspx?userId="
+						+ global.realPath
+						+ "/user/userInfo.jspx?userId="
 						+ data.atUserId
 						+ "'>"
 						+ data.atUserName
@@ -104,8 +106,8 @@ function ReTalkItem(data) {
 	}
 	var content = data.content;
 	for ( var emo in emotion_data) {
-		content = content.replace(emo, "&nbsp;<img src='" + myParam.realPath
-				+ "images/emotions/" + emotion_data[emo] + "'>&nbsp;");
+		content = content.replace(emo, "&nbsp;<img src='" + global.realPath
+				+ "/images/emotions/" + emotion_data[emo] + "'>&nbsp;");
 	}
 
 	$("<span class='item_content'>：" + content + "</span>").appendTo(talkcon);
@@ -140,7 +142,8 @@ ReTalkItem.prototype = {
 			$("<span id='u_atpanel_userid'>" + atUserName + "</span>")
 					.appendTo(atpanel);
 			$(
-					"<span id='u_atpanel_close' style='cursor:pointer'><img src='../images/delete.png'></span>")
+					"<span id='u_atpanel_close' style='cursor:pointer'><img src='"
+							+ global.realPath + "/images/delete.png'></span>")
 					.bind("click", function() {
 						if ($("#atpanel")[0] != null) {
 							$("#atpanel").hide();

@@ -220,29 +220,11 @@
 		  	<div class="topblog">
 		  		<div class="topblog_titcon">
 		  			<span class="topblog_tit">最新吐槽</span>
-		  			<span class="topblog_link"><a href="${realPath}/user/${userVo.userId}/blog">更多吐槽&gt;&gt;</a></span>
+		  			<span class="topblog_link"><a href="${realPath}/user/${userVo.userId}/talk">更多吐槽&gt;&gt;</a></span>
 		  			<div class="clear"></div>
 		  		</div>
 		  		<div id="talklist">
-		  			<c:forEach var="talk" items="${talkList}">
-			  			<div class="talkitem">
-			  				<div class="itemicon">
-			  					<img src="${talk.userIcon}" width="37">
-			  				</div>
-			  				<div class="itemcon">
-			  					<span class="item_user">
-			  						<a href="${realPath}/user/${talk.userId}">${talk.userName}</a>
-			  					</span>
-			  					<span class="item_content">：${talk.content}</span>
-			  					<span class="item_time">${talk.content}<a href="http://ulewo.cloudfoundry.com:80/user/talkDetail.jspx?userId=10001&amp;talkId=107">(${talk.reCount}评)</a>
-			  					</span>
-			  				</div>
-			  				<div class="clear"></div>
-			  			</div>
-		  			</c:forEach>
-		  			<c:if test="${empty talkList}">
-		  				<div class="left_noinfo">没有发现吐槽</div>
-		  			</c:if>
+		  		
 		  		</div>
 		  	</div>
 		  	<div class="topblog">
@@ -313,6 +295,9 @@
 		</div>
 	<div style="clear:left;"></div>
   </div>
+  <script type="text/javascript">
+   global.userId="${userId}";
+  </script>
   <script type="text/javascript" src="${realPath}/js/talk.js"></script>
   <script type="text/javascript" src="${realPath}/js/user.home.js"></script>
   <%@ include file="../common/foot.jsp" %>

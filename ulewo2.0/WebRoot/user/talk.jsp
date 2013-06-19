@@ -80,39 +80,21 @@
 	  	
 	  </div>
 	  <div class="right">
-		  	<div class="topblog">
-		  		<div class="topblog_titcon">
-		  			<span class="topblog_tit">最新吐槽</span>
-		  			<span class="topblog_link"><a href="${realPath}/user/${userVo.userId}/blog">更多吐槽&gt;&gt;</a></span>
-		  			<div class="clear"></div>
-		  		</div>
-				<div id="talklist">
-		  			<c:forEach var="talk" items="${talkList}">
-			  			<div class="talkitem">
-			  				<div class="itemicon">
-			  					<img src="${talk.userIcon}" width="37">
-			  				</div>
-			  				<div class="itemcon">
-			  					<span class="item_user">
-			  						<a href="${realPath}/user/${talk.userId}">${talk.userName}</a>
-			  					</span>
-			  					<span class="item_content">：${talk.content}</span>
-			  					<span class="item_time">${talk.content}<a href="http://ulewo.cloudfoundry.com:80/user/talkDetail.jspx?userId=10001&amp;talkId=107">(${talk.reCount}评)</a>
-			  					</span>
-			  				</div>
-			  				<div class="clear"></div>
-			  			</div>
-		  			</c:forEach>
-		  			<c:if test="${empty bloglist}">
-		  				<div class="left_noinfo">没有发现吐槽</div>
-		  			</c:if>
+		  		<div class="right_top_m">
+					<a href="${realPath}/user/${userId}">空间</a>&gt;&gt;<a href="${realPath}/user/${userId}/talk">吐槽</a>
 				</div>
-		  	</div>
+				<div id="talklist">
+  				</div>
+		  		<a href="javascript:void(0)" id="loadmorebtn">加载更多</a>
+				<div id="loading" ><img src="${realPath}/images/load.gif" ></div>
 		</div>
 	<div style="clear:left;"></div>
   </div>
+  <script type="text/javascript">
+  var userId="${userId}";
+  </script>
   <script type="text/javascript" src="${realPath}/js/talk.js"></script>
-  <script type="text/javascript" src="${realPath}/js/user.home.js"></script>
+  <script type="text/javascript" src="${realPath}/js/user.talk.js"></script>
   <%@ include file="../common/foot.jsp" %>
 </body>
 </html>

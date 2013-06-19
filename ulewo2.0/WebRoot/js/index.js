@@ -1,6 +1,18 @@
 $(function(){
 	$("#talkBtn").bind("click",saveTalk);
 	loadTalk();
+	$("#talkcontent").bind("focus",function(){
+		if($(this).val()=="今天你吐槽了吗？"){
+			$(this).val("");
+			$(this).css({"color":"#494949"});
+		}
+	});
+	$("#talkcontent").bind("blur",function(){
+		if($(this).val()==""){
+			$(this).val("今天你吐槽了吗？");
+			$(this).css({"color":"#A9A9A9"});
+		}
+	});
 })
 
 function saveTalk(){
@@ -8,7 +20,7 @@ function saveTalk(){
 		return;
 	}
 	var content = $("#talkcontent").val().trim();
-	if(content==""){
+	if(content==""||content=="今天你吐槽了吗？"){
 		warm("show","吐槽内容不能为空");
 		return;
 	}
@@ -53,7 +65,7 @@ function loadTalk(){
 		cache : false,
 		type : 'GET',
 		dataType : "json",
-		url : global.realPath+"/user/loadLatestTalk.action?userId="+userId,// 请求的action路径
+		url : global.realPath+"/loadLatestTalk",// 请求的action路径
 		success : function(data) {
 			if(data.result=="success"){
 				var length = data.list.length;
@@ -61,11 +73,8 @@ function loadTalk(){
 					for(var i=0;i<length;i++){
 						new TalkItem(data.list[i]).item.appendTo($("#talklist"));
 					}
-				}else{
-					$("<div class='noinfo'>没有吐槽！</div>");
 				}
 			}
 		}
 	});
-	
 }

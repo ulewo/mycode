@@ -4,84 +4,127 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<%@ include file="common/path.jsp" %>
+<%@ include file="../common/path.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>小窝窝 大世界 小智慧 大财富 --有乐窝</title>
-<meta name="description" content="有乐窝 大型服务社区，让你的生活更精彩 学习经验交流，网络文摘分享 ，游戏娱乐 ......">
-<meta name="keywords" content="小窝窝 大世界 小智慧 大财富 — 有乐窝">
-<script type="text/javascript" src="${realPath}/js/index.js"></script>
-<script type="text/javascript" src="${realPath}/js/talk.js"></script>
-<script type="text/javascript" src="${realPath}/js/emotion.data.js"></script>
-<link rel="stylesheet" type="text/css" href="${realPath}/css/index.css">
+<title>用户中心-有乐窝</title>
+<link rel="stylesheet" type="text/css" href="${realPath}/css/user.talkdetail.css">
 <link rel="stylesheet" type="text/css" href="${realPath}/css/talk.css">
 </head>
 <body>
-	<%@ include file="common/head.jsp" %>
-  	<div class="main">
-  		<div class="left">
-  			<div class="titinfo">每日图文</div>
-  			<div class="hot">
-  				<div>
-  				<c:set var="num" value="0"/>
-  				<c:forEach var="article" items="${imgArticle}">
-  					<c:set var="num" value="${num+1}"/>
-  					<div class="day_pic" <c:if test="${num==1}">style='margin-left:5px'</c:if> >
-					<a href="group/post.jspx?id=${article.id}" class="day_pic_link"><span class="day_pic_con"><img src="upload/${article.image}"></span></a>
-					<div class="day_pic_tit"><a href="group/post.jspx?id=${article.id}" title="${article.title}" target="_blank">${article.title}</a></div>
-				</div> 
-  				</c:forEach>
-				<div class="clear"></div>
-			  </div>
-  			</div>
-  			<div class="titinfo">最新文章</div>
-	  			<ul class="new_article_list">
-	  				<c:forEach var="article" items="${list}">
-	  					<li><span class="article_tit"><a href="group/group.jspx?gid=${article.gid}" target="_blank">[${article.groupName}]</a><a href="group/post.jspx?id=${article.id}" class="sec_span2"  title="${article.title}" target="_blank">${article.title}</a></span><span class="article_user">${article.postTime} by ${article.authorName}</span></li>
-	  				</c:forEach>
-	  			</ul>
-  			<div class="titinfo">最新博文</div>
-  			  <div>
-				<ul class="new_blog">
-					<c:forEach var="blog" items="${blogList}">
-						<li><span class="article_tit"><a href="user/blogdetail.jspx?id=${blog.id}" title="${article.title}" target="_blank" class="sec_span2" style="width:460px;padding-left:0px;">${blog.title}</a><span class="sec_span">${blog.postTime} by ${blog.userName}</span></span><span class="article_read">${blog.reCount}回/${blog.readCount}阅</span></li>
-					</c:forEach>
-	  			</ul>
-	  			</div>
-  		</div>
-  		<div class="right">
-  			<div class="create_wo"><a href="javascript:createWoWo()">创建我的窝窝</a></div>
-  			<div class="talk">
+	<%@ include file="../common/head.jsp" %>
+	<div class="main">
+	  <div class="left">
+	  	<%@ include file="left.jsp" %>
+	  	<div class="left_item">
+	  		<div class="left_item_tit">关注</div>
+	  		<div class="left_img_p">
 	  			<div>
-	  				<div class="talkarea"><textarea id="talkcontent">今天你吐槽了吗？</textarea></div>
-	  				<div class="talkbtn"><a href="javascript:void(0)" id="talkBtn">吐槽</a><img src="images/load.gif" id="talkload"></div>
-	  				<div class="clear"></div>
+		  			<c:forEach var="friend" items="${focusList}">
+		  				<div class="left_img_item"><a href="${realPath}/user/${friend.friendId}" title="${friend.friendName}"><img src="${friend.friendIcon}" width="40"></a></div>
+		  			</c:forEach>
+		  			<c:if test="${empty focusList}">
+		  				<div class="left_noinfo">尚未关注其他人</div>
+		  			</c:if>	
+		  			<div class="clear"></div>
 	  			</div>
-	  			<input type="hidden" id="imgUrl">
-	  			<c:if test="${user!=null}">
+	  			<!-- 
+	  			<div class="left_img_p_more"><a href="">显示所有关注(${userVo.focusCount})</a></div>
+	  			 -->
+	  		</div>
+	  	</div>
+	  	<div class="left_item">
+	  		<div class="left_item_tit">粉丝</div>
+	  		<div class="left_img_p">
+	  			<div>
+		  			<c:forEach var="friend" items="${fansList}">
+		  				<div class="left_img_item"><a href="${realPath}/user/${friend.friendId}" title="${friend.friendName}"><img src="${friend.friendIcon}" width="40"></a></div>
+		  			</c:forEach>
+		  			<c:if test="${empty fansList}">
+		  				<div class="left_noinfo">尚无粉丝，精彩分享才能吸引关注</div>
+		  			</c:if>
+		  			<div class="clear"></div>
+	  			</div>
+	  			<!-- 
+	  			<div class="left_img_p_more"><a href="">显示所有粉丝(${userVo.fansCount})</a></div>
+	  			 -->
+	  		</div>
+	  	</div>
+	  	<div class="left_item">
+	  		<div class="left_item_tit">Ta创建的窝窝</div>
+	  		<div class="left_img_p">
+	  			<div>
+	  			<c:forEach var="group" items="${createdGroups}">
+	  				<div class="left_img_item"><a href="${realPath}/group/${group.id}" title="${group.groupName}"><img src="${realPath}/upload/${group.groupIcon}" width="40"></a></div>
+	  			</c:forEach>
+	  			<c:if test="${empty createdGroups}">
+		  			<div class="left_noinfo">没有创建任何窝窝</div>
+		  		</c:if>
+	  			<div class="clear"></div>
+	  			</div>
+	  		</div>
+	  	</div>
+	  	<div class="left_item">
+	  		<div class="left_item_tit">Ta加入的窝窝</div>
+	  		<div class="left_img_p">
+	  			<div>
+	  			<c:forEach var="group" items="${joinedGroups}">
+	  				<div class="left_img_item"><a href="${realPath}/group/${group.id}" title="${group.groupName}"><img src="${realPath}/upload/${group.groupIcon}" width="40"></a></div>
+	  			</c:forEach>
+	  			<c:if test="${empty joinedGroups}">
+		  			<div class="left_noinfo">没有加入任何窝窝</div>
+		  		</c:if>
+	  			<div class="clear"></div>
+	  			</div>
+	  		</div>
+	  	</div>
+	  	
+	  </div>
+	  <div class="right">
+		  	<div>
+		  		<div class="right_top_m">
+					<a href="${realPath}/user/${userId}">空间</a>&gt;&gt;<a href="${realPath}/user/${userId}/talk">吐槽</a>
+					&gt;&gt;吐槽详情
+				</div>
+				<div>
+					<div class="talkitem">
+		  				<div class="itemicon">
+		  					<img src="../upload/${talk.userIcon}" width="37">
+		  				</div>
+		  				<div class="itemcon">
+		  					<span class="item_user"><a href="userInfo.jspx?userId=${talk.userId}">${talk.userName}</a></span>
+		  					<span class="item_content" id="item_content">${talk.content}</span>
+		  					<c:if test="${talk.imgurl!=''&&talk.imgurl!=null}">
+		  						<div class="talkimg">
+		  							<img src="${realPath}/upload/${talk.imgurl}">
+		  						</div>
+		  					</c:if>
+		  					<div>
+		  						<span class="detail_item_time">${talk.createTime}
+									<c:if test="${talk.sourceFrom=='A'}">Android</c:if>
+		  						</span>
+		  						<span class="detail_item_recount">评论(${talk.reCount})</span>
+		  					</div>
+		  				</div>
+		  				<div class="clear"></div>
+		  			</div>
+				</div>
+				<div class="u_talk" id="u_talk_textarea_con">
+  				<input type="hidden" id="hide_atuserId">
+  				<input type="hidden" id="hide_atuserName">
+	  			<div class="u_talk_textarea"><textarea id="talkcontent"></textarea></div>
 	  			<div class="u_talk_sub">
 	  				<div class="talkop">
 	  					<a href="javascript:showEmotion();" class="icon_sw_face" title="表情"></a>
-	  					<a href="javascript:showUploader();" class="icon_sw_img" title="图片上传"></a>
 	  				</div>
-	  				<span class="result_info"><i id="warm_icon"></i><span id="warm_info" style="padding-top:5px;"></span></span>
+	  				<div class="u_talk_subtn">
+	  					<span class="result_info"><i id="warm_icon"></i><span id="warm_info"></span></span>
+	  					<a href="javascript:void(0)" id="talkBtn">评&nbsp;&nbsp;论</a>
+	  					<div class="clear"></div>
+	  				</div>
 	  				<div class="clear"></div>
-	  				<div id="talk_img_con">
-	  					<div class="talk_img_tit">
-	  						<span class='talk_img_tit_tit'>图片上传</span>
-	  						<span class='talk_img_tit_close'><a href="javascript:closeUploader()">关闭</a></span>
-	  					</div>
-	  					<div class="talk_img_fram" id="talk_img_fram">
-	  						<iframe src="${realPath}/common/imgupload.jsp" width="260" height="30" frameborder="0"></iframe>
-	  					</div>
-	  					<div id="talk_img_showimg">
-	  						<img src=""><br>
-	  						<a href="javascript:deleteImg()">删除</a>
-	  					</div>
-	  				</div>
-	  				
 	  				<div class="pm_emotion" id="pm_emotion_cnt">
 		  				<div class="pm_emotion_panel">
-					    	<div class="pm_emotions_bd" style="width:300px;">
+					    	<div class="pm_emotions_bd">
 					            <a href="javascript:void(0)" title="[围观]"><img src="${realPath }/images/emotions/wg_org.gif"></a>
 					            <a href="javascript:void(0)" title="[威武]"><img src="${realPath }/images/emotions/vw_org.gif"></a>
 					            <a href="javascript:void(0)" title="[给力]"><img src="${realPath }/images/emotions/geili_org.gif"></a>
@@ -163,35 +206,20 @@
 					    </div>
 					</div> 
 	  			</div>
-	  			</c:if>
-	  			<div id="talklist"></div>
-	  			<div class='moretalk'><a href='${realPath}/talk'>看看大家都在吐槽什么&gt;&gt;</a></div>
-  			</div>
-	  			<div class="titinfo">推荐窝窝</div>
-	  			<c:forEach var="group" items="${commendGroupList}">
-	  				<div class="recommend_wo">
-  					<div class="wo_img"><a href="group/group.jspx?gid=${group.id}" target="_blank"><img src="upload/${group.groupIcon}"></a></div>
-  					<div class="wo_info">
-  						<div><a href="group/group.jspx?gid=${group.id}" target="_blank">${group.groupName}</a></div>
-  						<div>成员${group.members}人</div>
-  						<div>文章${group.topicCount}篇</div>
-  					</div>
-  					<div class="clear"></div>
-  				</div>
-	  			</c:forEach>
-  				<div class="titinfo">最活跃成员</div>
-			  	<div>
-			  		<c:forEach var="member" items="${activeUserList}">
-				  		<div class="user_img">
-				  			<div><a href="user/userInfo.jspx?userId=${member.userId}" target="_blank"><img src="upload/${member.userLittleIcon}"></a></div>
-				  			<div class="user_img_name"><a href="user/userInfo.jspx?userId=${member.userId}" title="${member.userName}" target="_blank">${member.userName}</a></div>
-				  		</div>
-			  		</c:forEach>
-			  		<div class="clear"></div>
-			  	</div>
-  			</div>
-  			<div class="clear"></div>
-  		</div>
-  	<%@ include file="common/foot.jsp" %>
+	  		</div>
+	  		<div class="re_line">评论：</div>
+	  		<div id="talklist">
+	  		
+	  		</div>
+		  	</div>
+		</div>
+	<div style="clear:left;"></div>
+  </div>
+  <script type="text/javascript">
+  var talkId = "${talk.id}";
+  </script>
+  <script type="text/javascript" src="${realPath}/js/talk.js"></script>
+  <script type="text/javascript" src="${realPath}/js/user.talkdetail.js"></script>
+  <%@ include file="../common/foot.jsp" %>
 </body>
 </html>
