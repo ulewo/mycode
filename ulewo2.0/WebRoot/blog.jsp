@@ -36,6 +36,6 @@
 			<p:pager url="" page="${result.page}" pageTotal = "${result.pageTotal }"></p:pager>
 		</div>
   </div>
-  <%@ include file="../common/foot.jsp" %>
+  <%@ include file="common/foot.jsp" %>
 </body>
 </html>
