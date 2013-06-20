@@ -101,14 +101,6 @@
 				<div id="member_list">
 				
 				</div>
-				<div class="right_tit"  style="margin-top:15px;">
-					热点文章
-				</div>
-				<div id="hotarticle_list" style="text-align:left;">
-					<c:forEach var="article" items="${hotArticlelist}">
-						<a href="" style="display:block;text-align:left;float:none;">${article.title}</a>
-					</c:forEach>
-				</div>
 			</div>
 			<div class="clear"></div>
 		</div>

@@ -131,10 +131,11 @@ public class GroupAction {
 					page_int, Constant.pageSize15);
 			// 查询分类
 			List<ArticleItem> itemList = articleItemService.queryItemByGid(gid);
-			List<Article> hotArticlelist = articleService.queryHotArticle(0, 10);
+		//	List<Article> hotArticlelist = articleService.queryHotArticle(0, 10);
 			mv.addObject("group", group);
 			mv.addObject("group", group);
-			mv.addObject("hotArticlelist", hotArticlelist);
+			mv.addObject("articles", articleResult);
+		//	mv.addObject("hotArticlelist", hotArticlelist);
 			mv.addObject("itemList", itemList);
 			mv.addObject("itemId", itemId_int);
 			mv.addObject("page", page_int);
