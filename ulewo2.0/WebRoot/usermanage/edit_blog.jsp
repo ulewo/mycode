@@ -9,7 +9,6 @@
 <title>发表博文-有乐窝</title>
 <link rel="stylesheet" type="text/css" href="../css/user.manage.newblog.css">
 <style type="text/css">
-#selected4 a{background:#ffffff;color:#333333;font-weight:bold;}
 </style>
 <script type="text/javascript">
 	<!--
@@ -28,10 +27,7 @@
 		</div>
 		<div class="right">
 			<div class="right_top_m">
-					<a href="${realPath}/user/${user.userId}">空间</a>&gt;&gt;发表博文
-					<c:if test="${blogitem!=null}">
-						&gt;&gt;<a href="">${blogitem.itemName}</a>
-					</c:if>
+					<a href="${realPath}/user/${user.userId}">空间</a>&gt;&gt;<a href="${realPath}/user/${user.userId}/blog">博客</a>
 			</div>
 			<form id="blogform">
 				<div class="form_tit">
@@ -40,7 +36,7 @@
 				</div>
 				<div class="form_editinput">
 					<div class="form_title_input">
-						<input type="text" name="title" id="title"/>
+						<input type="text" name="title" id="title" value="${blog.title}"/>
 					</div>
 					<div class="form_title_info">存放在</div>
 					<div class="form_title_select">
@@ -48,7 +44,7 @@
 							<option value=""></option>
 							<option value="0">全部分类</option>
 							<c:forEach var="item" items="${itemList}">
-								<option value="${item.id}">${item.itemName}</option>
+								<option  <c:if test="${blog.itemId==item.id}">selected="selected"</c:if> value="${item.id}">${item.itemName}</option>
 							</c:forEach>
 						</select>
 						<a href="${realPath}/manage/blog_item">分类管理</a>
@@ -60,7 +56,7 @@
 					（<span class="form_tit_x">选填</span>）
 				</div>
 				<div class="form_editinput">
-				 	<div class="form_title_input"><input class="editinput" type="text" name="keyword" id="keyword"/></div>
+				 	<div class="form_title_input"><input class="editinput" type="text" name="keyword" id="keyword" value="${blog.keyWord}"/></div>
 				 	<div class="form_title_info_t">多个关键字用半角逗号隔开，最多3个</div>
 				 	<div class="clear"></div>
 				</div>
@@ -77,6 +73,7 @@
 					<span class="result_info"><i id="warm_icon"></i><span id="warm_info"></span></span>
 			 		<div class="clear"></div>
 				</div>
+				<input type="hidden" name="id" value="${blog.id}">
 			</form>
 		</div>
 		<div style="clear:left;"></div>
@@ -87,8 +84,8 @@
 		editor = new UE.ui.Editor();
 		editor.render("editor");
 		editor.ready(function(){
-		    editor.setContent("");
-		});
+	    editor.setContent('${blog.content}');
+	});
 	</script>
 </body>
 </html>

@@ -19,15 +19,18 @@
 				<div class="left_img_p">
 					<div class="blog_item"><a href="${realPath}/user/${userId}/blog">全部文章</a><span>(${result.countTotal})</span></div>
 					<c:forEach var="item" items="${blogItemList}">
-						<div class="blog_item"><a href="${realPath}/user/${userId}/blog/?itemId=${item.id}">${item.itemName}</a><span>(${item.articleCount})</span></div>
+						<div class="blog_item"><a href="${realPath}/user/${userId}/blog?itemId=${item.id}">${item.itemName}</a><span>(${item.articleCount})</span></div>
 					</c:forEach>
 				</div>
 			</div>
 			<div class="left_item">
 				<div class="left_item_tit">阅读排行</div>
 				<div class="left_img_p">
-					<div class="blog_rang"><a href="">1. 【CF 应用开发大赛】有乐窝 大型服务社区，让你的生活更精彩</a></div>
-					<div class="blog_rang"><a href="">1. 【CF 应用开发大赛】有乐窝 大型服务社区，让你的生活更精彩</a></div>
+					<c:set var="num" value="1"/>
+					<c:forEach var="blog" items="${hotlist}">
+						<div class="blog_rang"><span style="color:#3E62A6">${num}.</span><a href="${realPath}/user/${blog.userId}/blog/${blog.id}">${blog.title}</a></div>
+						<c:set var="num" value="${num+1}"></c:set>
+					</c:forEach>
 				</div>
 			</div>
 		</div>
@@ -47,8 +50,8 @@
 							<c:if test="${blog.itemId==null||blog.itemId==''}">
 								<a href="${realPath}/user/${userId}/blog">全部分类</a>
 							</c:if>
-							<a href="${realPath}/user/${userId}/blog/?itemId=${blog.itemId}">${blog.itemName}</a>
-							<c:if test="${user.userId==userId}">(<a href="">修改</a>|<a href="">删除</a>)(<a href="">修改</a>|<a href="">删除</a>)</c:if>
+							<a href="${realPath}/user/${userId}/blog?itemId=${blog.itemId}">${blog.itemName}</a>
+							<c:if test="${user.userId==userId}">(<a href="${realPath}/manage/edit_blog.action?id=${blog.id}">修改</a>|<a href="javascript:void(0)" name="${blog.id}" class="del">删除</a>)</c:if>
 						</div>
 						<div class="blog_summary">
 							${blog.summary}
@@ -66,5 +69,28 @@
 		</div>
 		<div style="clear:left;"></div>
 	</div>
+	 <%@ include file="../common/foot.jsp" %>
+	 <script type="text/javascript">
+	 $(function(){
+		 $(".del").bind("click",function(){
+			 var id  =$(this).attr("name");
+			 var obj  = $(this);
+			 $.ajax({
+					async : true,
+					cache : false,
+					type : 'GET',
+					dataType : "json",
+					url : global.realPath+"/manage/deleteBlog.action?id="+id,// 请求的action路径
+					success : function(data) {
+						if (data.result == "fail") {
+							alert(data.message);
+						} else {
+							obj.parent().parent().remove();
+						}
+					}
+				});
+		 });
+	 });
+	 </script>
 </body>
 </html>

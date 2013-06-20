@@ -1,11 +1,5 @@
 var isHaveImg = false;
-var editor;
 $(function(){
-	editor = new UE.ui.Editor();
-	editor.render("editor");
-	editor.ready(function(){
-	    editor.setContent("");
-	});
 	$("#saveBtn").bind("click",addBlog);
 })
 

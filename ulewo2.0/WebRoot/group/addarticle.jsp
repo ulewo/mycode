@@ -59,7 +59,7 @@
 <input type="hidden" id="content" name="content">
 <input type="hidden" id="faceImg" name="image">
 <div class="file_upload" id="file_upload">
-	<iframe src="${realpath}/group/fileupload.jsp" width="350" height="30" frameborder="0" id="uploadFrame"></iframe>
+	<iframe src="${realPath}/group/fileupload.jsp" width="350" height="30" frameborder="0" id="uploadFrame"></iframe>
 </div>
 <div class="form_sub_btn">
 	<a href="javascript:void(0)" id="sub_article_btn" class="btn">发表帖子</a>

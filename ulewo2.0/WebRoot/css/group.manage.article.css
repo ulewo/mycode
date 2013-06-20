@@ -6,6 +6,8 @@
 .article_item_check{float:left;width:20px;}
 .article_item_check input{margin:0px;padding:0px;}
 .article_item_tit{width:510px;float:left;overflow:hidden;}
+.article_item_tit a{display:inline-block;float:left;margin-left:5px;margin-top:2px;}
+.article_item_tit_icon{display:inline-block;float:left;margin-left:5px;}
 .article_item_itemname{width:80px;float:left;}
 .article_item_username{width:50px;float:left;}
 .article_item_time{width:80px;float:left;}

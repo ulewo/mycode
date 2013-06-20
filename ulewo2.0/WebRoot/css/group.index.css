@@ -1,9 +1,12 @@
 @IMPORT url("group.public.css");
 .article_posttime{color:#ABADAD;font-size:13px;}
-/*************ндубап╠М***************/
+/*************О©╫О©╫О©╫О©╫О©╫п╠О©╫***************/
 .article_item{margin-top:10px;border-bottom:1px dashed #B2B3B2;padding-bottom:10px;}
 .article_tit a{text-decoration:none;}
 .article_title{display:inline-block;float:left;font-size:14px;}
+.article_title_icon{display:inline-block;float:left;margin-left:5px;}
+.article_title a{float:left;display:inline-block;margin-left:5px;}
+.article_title span{display:inline-block;float:left;margin-left:10px;}
 .recount{color:#B2B3B2;padding-left:10px;}
 .article_author{display:inline-block;float:right;font-size:14px;}
 .article_summary{margin-top:10px;line-height:20px;}

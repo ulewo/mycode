@@ -43,6 +43,7 @@ function saveImg(){
 			type : 'POST',
 			dataType : "json",
 			data : {
+				"gid":global.gid,
 				"img" : userIcon,
 				"x1" : data.x,
 				"y1" : data.y,
@@ -50,7 +51,7 @@ function saveImg(){
 				"height" : data.h,
 				"date" : new Date()
 			},
-			url : 'saveUserIcon.action',// 请求的action路径
+			url : 'saveGroupIcon.action',// 请求的action路径
 			success : function(data) {
 				btnLoaded($("#saveBtn"),"保存设置");
 				$("#imgarea").hide();
@@ -60,7 +61,6 @@ function saveImg(){
 					return;
 				}else{
 					info("保存成功");
-					$("#user_icon").attr("src",global.realPath+"/upload/"+data.userIcon);
 				}
 			}
 		});

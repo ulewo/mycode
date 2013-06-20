@@ -19,15 +19,17 @@
 				<div class="left_img_p">
 					<div class="blog_item"><a href="${realPath}/user/${userId}/blog">全部文章</a><span>(${countTotal})</span></div>
 					<c:forEach var="item" items="${blogItemList}">
-						<div class="blog_item"><a href="${realPath}/user/${userId}/blog/?itemId=${item.id}">${item.itemName}</a><span>(${item.articleCount})</span></div>
+						<div class="blog_item"><a href="${realPath}/user/${userId}/blog?itemId=${item.id}">${item.itemName}</a><span>(${item.articleCount})</span></div>
 					</c:forEach>
 				</div>
 			</div>
 			<div class="left_item">
 				<div class="left_item_tit">阅读排行</div>
 				<div class="left_img_p">
-					<div class="blog_rang"><a href="">1. 【CF 应用开发大赛】有乐窝 大型服务社区，让你的生活更精彩</a></div>
-					<div class="blog_rang"><a href="">1. 【CF 应用开发大赛】有乐窝 大型服务社区，让你的生活更精彩</a></div>
+					<c:forEach var="blog" items="${hotlist}">
+						<div class="blog_rang"><span style="color:#3E62A6">${num}.</span><a href="${realPath}/user/${blog.userId}/blog/${blog.id}">${blog.title}</a></div>
+						<c:set var="num" value="${num+1}"></c:set>
+					</c:forEach>
 				</div>
 			</div>
 		</div>
@@ -39,14 +41,13 @@
 					<c:if test="${blog.itemId==null||blog.itemId==''}">
 						<a href="${realPath}/user/${userId}/blog/">全部分类</a>
 					</c:if>
-					<a href="${realPath}/user/${userId}/blog/?itemId=${blog.itemId}">${blog.itemName}</a>
+					<a href="${realPath}/user/${userId}/blog?itemId=${blog.itemId}">${blog.itemName}</a>
 					&gt;&gt;博客正文
 				</div>
 				<div class="blog_detail">
 						<div class="blog_list_tit"><a href="">${blog.title}</a></div>
 						<div class="blog_item_op">
 							<span>发布于 ${blog.postTime}，阅读(<span class="blog_item_op_red">${blog.readCount}</span>)|评论(<span class="blog_item_op_red">${blog.reCount}</span>)</span>
-							<c:if test="${user.userId==userId}">(<a href="">修改</a>|<a href="">删除</a>)</c:if>
 						</div>
 						<div class="blog_content">
 							${blog.content}
@@ -75,8 +76,9 @@
 				  				<div class="content"><textarea name="content" id="content"></textarea></div>
 				  				<div class="sub_op">
 						  			<div class="subbtn">
-						  				<a href="javascript:subReply('${param.id}')" class="btn" onfocus="this.blur()" id="sendBtn">发表留言</a>
-						  				<img src="${realPath}/images/load.gif" id="loading" style="display:none">
+						  				<a href="javascript:void(0)" class="btn" onfocus="this.blur()" id="sendBtn">发表留言</a>
+						  				<span class="result_info"><i id="warm_icon"></i><span id="warm_info"></span></span>
+						  				<div class="clear"></div>
 						  			</div>
 				  					<div class="warm_info">最多输入500字符</div>
 				  				</div>
@@ -100,5 +102,6 @@
 		var userId="${userId}";
 		var sessionUserId = "${user.userId}";
 	</script>
+	 <%@ include file="../common/foot.jsp" %>
 </body>
 </html>

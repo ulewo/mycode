@@ -18,7 +18,7 @@ global.gid="${gid}";
 	</div>
 	<ul class="menue">
 		<li id="selected1"><a href="${realPath}/groupManage/${gid}/manage">窝窝设置</a></li>
-		<li id="selected2"><a href="changepwd">修改头像</a></li>
+		<li id="selected2"><a href="${realPath}/groupManage/${gid}/group_icon">修改头像</a></li>
 		<li id="selected3"><a href="${realPath}/groupManage/${gid}/group_notice">公告管理</a></li>
 	</ul>
 	<div class="menue_tit">

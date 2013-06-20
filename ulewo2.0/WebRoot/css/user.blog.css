@@ -17,6 +17,7 @@
 .blog_detail{margin-top:20px;}
 .blog_content{margin-top:10px;font-size:14px;color:#000000;line-height:25px;}
 
+/*****博客回复*******/
 .blog_reply{border:1px solid #EEEEEE;padding:10px;margin-top:10px;}
 .blog_reply_tit{font-weight:bold;color:#666666;font-size:16px;}
 .blog_reply_form{position:relative;padding-left:10px;margin-top:10px;border:1px solid #EEEEEE;margin-top:10px;padding:10px;}
@@ -24,7 +25,11 @@
 .blog_reply_content{float:left;width:600px;margin-left:10px;}
 .content textarea{width:600px;height:80px;border:1px solid #999999}
 .sub_op{margin-top:10px;}
-.subbtn{float:left;width:80px;}
+.subbtn{float:left;display:inline-block;width:250px;}
+.subbtn a{float:left;}
+.subbtn .result_info{float:left;}
+.subbtn .result_info i{margin-top:7px;}
+.subbtn .result_info span{padding-top:10px;}
 .warm_info{float:left;display:inline-block;margin-top:10px;}
 .blogshade{left:5px;top:5px;height:125px;width:700px;}
 

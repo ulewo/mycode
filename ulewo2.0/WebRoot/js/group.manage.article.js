@@ -1,37 +1,35 @@
 $(function(){
 	$("#article_item").bind("change",function(){
-		document.location.href=global.realPath+"/groupManage/"+global.gid+"/manage/group_article?itemId="+$(this).val()+"&page="+page;
+		document.location.href=global.realPath+"/groupManage/"+global.gid+"/group_article?itemId="+$(this).val()+"&page="+page;
 		$(this).val();
 	});
 	$("#setTop").bind("click",function(){
-		setTop(1);
+		doOp(0);
 	});
 	$("#cancelTop").bind("click",function(){
-		setTop(0);
+		doOp(1);
 	});
 	$("#setGood").bind("click",function(){
-		setGood(1);
+		doOp(2);
 	});
 	$("#cancelGood").bind("click",function(){
-		setGood(0);
+		doOp(3);
 	});
-	$("#setTitle").bind("click",function(){
-		setTitle();
-	});
+	
 	$("#deleteArticle").bind("click",function(){
-		deleteArticle();
+		if(confirm("确定要删除此条记录吗？")){
+			doOp(4);
+		}
+		
 	});
 });
 
 
-function checkSelect() {
+function doOp(type) {
 	if ($(".checkId:checked").length < 1) {
 		alert("请选择要操作的主题");
-		return false;
+		return 
 	}
-	return true;
-}
-
-function setTop(type){
-	
+	$("#opType").val(type);
+	$("#subform").submit();
 }

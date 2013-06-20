@@ -1,52 +1,50 @@
 $(function(){
 	initReply(1);
+	$("#sendBtn").bind("click",subReply);
 });
 
-
-
-function refreshcode() {
-	$("#checkCodeImage").attr("src",
-			"../common/image.jsp?rand =" + Math.random());
-}
-
-function subReply(blogId) {
+function subReply() {
+	if($(this).attr("disable")=="disable"){
+		return;
+	}
 	var content = $("#content").val();
 	if (content.trim() == "") {
-		art.dialog.tips("留言不能为空!");
+		warm("show","回复内容不能为空");
 		return;
 	}
 	if (content.trim().length > 500) {
-		art.dialog.tips("留言内容不能超过500字符!");
+		warm("show","回复内容不能超过500字符");
 		return;
 	}
-	$("#sendBtn").hide();
-	$("#loading").show();
+	warm("hide","");
+	btnLoading($(this),"发表留言中<img src='"+global.realPath+"/images/load.gif' width='14'>");
 	$.ajax({
 		async : true,
 		cache : false,
 		type : 'POST',
 		dataType : "json",
 		data : {
+			blogAuthor:userId,
 			content : content,
 			blogId : blogId,
 			atUserName : $("#atUserName").val(),
 			atUserId : $("#atUserId").val(),
 			"time" : new Date()
 		},
-		url : "savaReply.jspx",// 请求的action路径
+		url : global.realPath+"/user/saveReplay.action",// 请求的action路径
 		success : function(data) {
+			btnLoaded($("#sendBtn"),"发表留言");
 			if (data.result == "fail") {
-				art.dialog.tips(data.msg);
+				warm("show",data.message);
 			} else {
-				art.dialog.tips("发表成功");
-				$(".nomessage").remove();
-				$("#quote_panle").remove();
-				$(".nomessage").remove();
-				new NotePanle(data.note).asHtml().appendTo($("#messagelist"));
+				$(".noinfo").remove();
+				if($(".reply_item").length>0){
+					$(".reply_item").eq(0).before(new NotePanle(data.note).asHtml());
+				}else{
+					new NotePanle(data.note).asHtml().appendTo($("#messagelist"));
+				}
 				resetForm();
 			}
-			$("#sendBtn").show();
-			$("#loading").hide();
 		}
 	});
 }
@@ -65,7 +63,7 @@ function resetForm() {
 }
 
 function initReply(i) {
-	$("<img src='"+realPath+"/images/load.gif'>评论加载中......").appendTo($("#messagelist"));
+	$("<img src='"+global.realPath+"/images/load.gif'>评论加载中......").appendTo($("#messagelist"));
 	$.ajax({
 		async : true,
 		cache : false,
@@ -86,13 +84,10 @@ function initReply(i) {
 						$(".pagination").show();
 					}
 				} else {
-					$("<span class='nomessage'>尚无任何留言</span>").appendTo(
+					$("<span class='noinfo'>没有评论，速度抢沙发！</span>").appendTo(
 							"#messagelist");
 				}
 
-			} else {
-				alert("加载评论失败!");
-				// document.location.href = "../index.jspx";
 			}
 		}
 	});
@@ -131,7 +126,7 @@ function NotePanle(note) {
 	}
 	if (note.atUserId != ""&&note.atUserId != null) {
 		$(
-				"<span class='reply_re'>回复</span><span><a href='userInfo.jspx?userId="
+				"<span class='reply_re'>回复</span><span><a href='"+realPath+"/user/"
 						+ note.atUserId
 						+ "'>"
 						+ note.atUserName
@@ -196,24 +191,22 @@ NotePanle.prototype = {
 	del : function(event) {
 		var id = event.data.id;
 		var message = event.data.message;
-		$.ajax({
-			async : true,
-			cache : false,
-			type : 'GET',
-			dataType : "json",
-			url : "deleteReply.jspx?id=" + id,// 请求的action路径
-			success : function(data) {
-				if (data.msg == "ok") {
-					message.remove();
-					art.dialog.tips("删除成功");
-				} else if (data.msg == "noperm") {
-					art.dialog.tips("你无权进行此操作");
-				} else {
-					art.dialog.tips("网络异常，请稍后再试");
+		if(confirm("确定要删除此条评论吗？")){
+			$.ajax({
+				async : true,
+				cache : false,
+				type : 'GET',
+				dataType : "json",
+				url : realPath+"/user/deleteReplay.action?replyId=" + id,// 请求的action路径
+				success : function(data) {
+					if (data.result == "success") {
+						message.remove();
+					} else{
+						alert(data.message);
+					}
 				}
-			}
-		});
-
+			});
+		}
 	}
 }
 

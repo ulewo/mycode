@@ -26,7 +26,7 @@ function logout() {
 		},
 		url : url,// 请求的action路径
 		success : function(data) {
-			if (data.msg == "success") {
+			if (data.result == "success") {
 				document.location.href = redirectUrl;
 			}
 		}

@@ -20,14 +20,14 @@
 	  		<%@ include file="left.jsp" %>
 		</div>
 		<div class="right">
+			<form action="${realPath}/groupManage/${gid}/manageArticle.action" method="post" id="subform">
 			<div class="articleop">
 				<a href="javascript:void(0)" class="btn" id="setTop" >置顶</a>
 				<a href="javascript:void(0)" class="btn" id="cancelTop">取消置顶</a>
 				<a href="javascript:void(0)" class="btn" id="setGood">精华</a>
 				<a href="javascript:void(0)" class="btn" id="cancelGood">取消精华</a>
-				<a href="javascript:void(0)" class="btn" id="setTitle">个性标题</a>
 				<a href="javascript:void(0)" class="btn" id="deleteArticle">删除</a>
-				<select id="article_item">
+				<select id="article_item" name="itemId">
 					<option value="">全部分类</option>
 					<c:forEach var="item" items="${itemList}">
 						<option value="${item.id}" <c:if test="${itemId==item.id}">selected="selected""</c:if>>${item.itemName}</option>
@@ -35,12 +35,22 @@
 				</select>
 			</div>
 			<div class="article_list">
-				<form action="" method="post" id="subform">
+				
 				<input type="hidden" value="" id="opType" name="type">
+				<input type="hidden" id="page" name="page" value="${result.page}">
 				<c:forEach var="article" items="${result.list}">
 					<div class="article_item">
 						<div class="article_item_check"><input type="checkbox" name="id" class="checkId" value="${article.id}"></div>
-						<div class="article_item_tit"><a href="${realPath}/group/${gid}/topic/${article.id}" title="${article.title}" target="_blank">${article.title}</a></div>
+						<div class="article_item_tit">
+							<c:if test="${article.grade=='2'}">
+								<div class="article_item_tit_icon"><img src="${realPath}/images/ico-top.gif"></div>
+							</c:if>
+							<c:if test="${article.essence=='Y'}">
+								<div class="article_item_tit_icon"><img src="${realPath}/images/ico-ess.gif"></div>
+							</c:if>
+							<a href="${realPath}/group/${gid}/topic/${article.id}" title="${article.title}" target="_blank">${article.title}</a>
+							
+						</div>
 						<div class="article_item_itemname">
 							${article.itemName}
 							<c:if test="${article.itemName==null}">全部分类</c:if>
@@ -51,11 +61,11 @@
 						<div class="clear"></div>
 					</div>
 				</c:forEach>
-				</form>
 			</div>
 			<div class="pagination" style="margin-left:8px;">
-				<p:pager url="${realPath}/groupManage/${gid}/manage/group_article?itemId=${itemId}" page="${result.page}" pageTotal = "${result.pageTotal }"></p:pager>
+				<p:pager url="${realPath}/groupManage/${gid}/group_article?itemId=${itemId}" page="${result.page}" pageTotal = "${result.pageTotal }"></p:pager>
 			</div>
+		</form>
 		</div>
 		<div style="clear:left;"></div>
 	</div>

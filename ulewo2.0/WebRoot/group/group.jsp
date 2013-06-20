@@ -49,8 +49,15 @@
 					<div class="article_item">
 						<div class="article_tit">
 							<div class="article_title">
+								<c:if test="${article.grade=='2'}">
+									<div class="article_title_icon"><img src="${realPath}/images/ico-top.gif"></div>
+								</c:if>
+								<c:if test="${article.essence=='Y'}">
+									<div class="article_title_icon"><img src="${realPath}/images/ico-ess.gif"></div>
+								</c:if>
 								<a href="${realPath}/group/${gid}/topic/${article.id}">${article.title}</a>
 								<span class="recount">${article.reNumber}/${article.readNumber}</span>
+								<div class="clear"></div>
 							</div>
 							<div class="article_author">
 								<a href="${realPath}/user/${article.authorId}">${article.authorName}</a>
@@ -93,6 +100,14 @@
 				</div>
 				<div id="member_list">
 				
+				</div>
+				<div class="right_tit"  style="margin-top:15px;">
+					热点文章
+				</div>
+				<div id="hotarticle_list" style="text-align:left;">
+					<c:forEach var="article" items="${hotArticlelist}">
+						<a href="" style="display:block;text-align:left;float:none;">${article.title}</a>
+					</c:forEach>
 				</div>
 			</div>
 			<div class="clear"></div>
