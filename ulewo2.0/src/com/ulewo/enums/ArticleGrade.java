@@ -1,7 +1,7 @@
 package com.ulewo.enums;
 
 public enum ArticleGrade {
-	NORMAL(0), TOP(1);
+	NORMAL(0), TOP(2);
 	private int grade;
 
 	ArticleGrade(int grade) {

@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.stereotype.Component;
 
 import com.ulewo.entity.BlogArticle;
+import com.ulewo.enums.BlogOrderType;
 
 /**
  * @Title:
@@ -25,8 +26,7 @@ public class BlogArticleDao extends BaseDao {
 	 */
 	public int addBlog(BlogArticle blogArticle) {
 
-		return (Integer) this.getSqlMapClientTemplate().insert(
-				"blogArticle.addBlogArticle", blogArticle);
+		return (Integer) this.getSqlMapClientTemplate().insert("blogArticle.addBlogArticle", blogArticle);
 	}
 
 	/**
@@ -40,8 +40,7 @@ public class BlogArticleDao extends BaseDao {
 	 */
 	public BlogArticle queryBlogById(int id) {
 
-		return (BlogArticle) this.getSqlMapClientTemplate().queryForObject(
-				"blogArticle.queryTopicById", id);
+		return (BlogArticle) this.getSqlMapClientTemplate().queryForObject("blogArticle.queryTopicById", id);
 	}
 
 	/**
@@ -52,8 +51,7 @@ public class BlogArticleDao extends BaseDao {
 	 */
 	public void update(BlogArticle blogArticle) {
 
-		this.getSqlMapClientTemplate().update(
-				"blogArticle.updateArticle_selective", blogArticle);
+		this.getSqlMapClientTemplate().update("blogArticle.updateArticle_selective", blogArticle);
 	}
 
 	/**
@@ -64,8 +62,7 @@ public class BlogArticleDao extends BaseDao {
 	 */
 	public void updateReadCount(BlogArticle blogArticle) {
 
-		this.getSqlMapClientTemplate().update("blogArticle.updatReadCount",
-				blogArticle);
+		this.getSqlMapClientTemplate().update("blogArticle.updatReadCount", blogArticle);
 	}
 
 	/**
@@ -78,8 +75,7 @@ public class BlogArticleDao extends BaseDao {
 	 */
 	public void deleteBatch(int[] ids) {
 
-		this.getSqlMapClientTemplate().delete("blogArticle.deleteArticleItem",
-				ids);
+		this.getSqlMapClientTemplate().delete("blogArticle.deleteArticleItem", ids);
 	}
 
 	public void delete(int id) {
@@ -90,21 +86,21 @@ public class BlogArticleDao extends BaseDao {
 	/**
 	 * 
 	 * description: 根据userId ,itemId查询文章
-	 * 
+	 * @param orderType TODO
 	 * @param id
+	 * 
 	 * @throws Exception
 	 * @author luohl
 	 */
-	public List<BlogArticle> queryBlog(String userId, int itemId, int offset,
-			int total) {
+	public List<BlogArticle> queryBlog(String userId, int itemId, int offset, int total, BlogOrderType orderType) {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("userId", userId);
 		parmMap.put("itemId", itemId);
 		parmMap.put("offset", offset);
 		parmMap.put("total", total);
-		return (List<BlogArticle>) getSqlMapClientTemplate().queryForList(
-				"blogArticle.queryBlog", parmMap);
+		parmMap.put("orderType", orderType.getValue());
+		return (List<BlogArticle>) getSqlMapClientTemplate().queryForList("blogArticle.queryBlog", parmMap);
 	}
 
 	/**
@@ -115,11 +111,11 @@ public class BlogArticleDao extends BaseDao {
 	 * @return
 	 */
 	public int queryBlogCount(String userId, int itemId) {
+
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("userId", userId);
 		parmMap.put("itemId", itemId);
-		return (Integer) this.getSqlMapClientTemplate().queryForObject(
-				"blogArticle.queryBlogCount", parmMap);
+		return (Integer) this.getSqlMapClientTemplate().queryForObject("blogArticle.queryBlogCount", parmMap);
 	}
 
 	public List<BlogArticle> indexLatestBlog(int offset, int total) {
@@ -127,14 +123,12 @@ public class BlogArticleDao extends BaseDao {
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("offset", offset);
 		parmMap.put("total", total);
-		return (List<BlogArticle>) getSqlMapClientTemplate().queryForList(
-				"blogArticle.indexLatestBlog", parmMap);
+		return (List<BlogArticle>) getSqlMapClientTemplate().queryForList("blogArticle.indexLatestBlog", parmMap);
 	}
 
 	public int queryCount() {
 
-		return (Integer) getSqlMapClientTemplate().queryForObject(
-				"blogArticle.querCount");
+		return (Integer) getSqlMapClientTemplate().queryForObject("blogArticle.querCount");
 	}
 
 }

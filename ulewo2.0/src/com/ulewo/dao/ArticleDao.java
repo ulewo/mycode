@@ -267,4 +267,13 @@ public class ArticleDao extends BaseDao {
 		parmMap.put("total", total);
 		return this.getSqlMapClientTemplate().queryForList("article.queryLatestArticle", parmMap);
 	}
+
+	public List<Article> queryHotArticle(int offset, int total) {
+
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("offset", offset);
+		parmMap.put("total", total);
+		return this.getSqlMapClientTemplate().queryForList("article.queryHotArticle", parmMap);
+	}
+
 }

@@ -426,4 +426,10 @@ public class ArticleServiceImpl implements ArticleService {
 		return list;
 	}
 
+	@Override
+	public List<Article> queryHotArticle(int offset, int total) {
+
+		return articleDao.queryHotArticle(offset, total);
+	}
+
 }

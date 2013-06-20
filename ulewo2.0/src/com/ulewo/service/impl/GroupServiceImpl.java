@@ -32,11 +32,10 @@ public class GroupServiceImpl implements GroupService {
 	@Autowired
 	private UserDao userDao;
 
-	private final SimpleDateFormat formate = new SimpleDateFormat(
-			"yyyy-MM-dd HH:mm:ss");
+	private final SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	@Override
-	public String createGroup(Group group) {
+	public synchronized String createGroup(Group group) {
 
 		// 获取最大的群ID
 		int gid = groupDao.getMaxGId();
@@ -78,11 +77,13 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	public Group queryGroupBaseInfo(String gid) {
+
 		return groupDao.queryGroupBaseInfo(gid);
 	}
-	
+
 	@Override
 	public void updateGroup(Group group) {
+
 		group.setGroupName(StringUtils.clearHtml(group.getGroupName()));
 		group.setGroupDesc(StringUtils.formateHtml(group.getGroupDesc()));
 		group.setGroupNotice(StringUtils.formateHtml(group.getGroupNotice()));
@@ -95,10 +96,8 @@ public class GroupServiceImpl implements GroupService {
 		int count = groupDao.queryGroupsCount();
 		Pagination pagination = new Pagination(page, count, pageSize);
 		pagination.action();
-		List<Group> list = groupDao.queryGroupsByArticleCount(
-				pagination.getOffSet(), pageSize);
-		PaginationResult result = new PaginationResult(pagination.getPage(),
-				pagination.getPageTotal(), count, list);
+		List<Group> list = groupDao.queryGroupsByArticleCount(pagination.getOffSet(), pageSize);
+		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
 		return result;
 	}
 

@@ -3,9 +3,13 @@ package com.ulewo.service;
 import java.util.List;
 
 import com.ulewo.entity.BlogArticle;
+import com.ulewo.enums.BlogOrderType;
 import com.ulewo.util.PaginationResult;
 
 public interface BlogArticleService {
+
+	public boolean saveBlog(BlogArticle blogArticle);
+
 	/**
 	 * 
 	 * description: 新增博文
@@ -54,20 +58,23 @@ public interface BlogArticleService {
 	 * @param userId
 	 * @param offset
 	 * @param total
+	 * @param blogOrderType TODO
 	 * @return
 	 * @author luohl
 	 */
-	public List<BlogArticle> queryBlog(String userId, int itemId, int offset, int total);
+	public List<BlogArticle> queryBlog(String userId, int itemId, int offset, int total, BlogOrderType blogOrderType);
 
 	/**
 	 * 分页查询用户博文
 	 * @param userId
 	 * @param itemId
+	 * @param blogOrderType TODO
 	 * @param offset
 	 * @param total
 	 * @return
 	 */
-	public PaginationResult queryBlogByUserId(String userId, int itemId, int page, int pageSize);
+	public PaginationResult queryBlogByUserId(String userId, int itemId, int page, int pageSize,
+			BlogOrderType blogOrderType);
 
 	/**
 	 * 
@@ -81,7 +88,7 @@ public interface BlogArticleService {
 	public List<BlogArticle> indexLatestBlog(int offset, int total);
 
 	public int queryCount();
-	
+
 	public PaginationResult queryLatestBlog(int page, int pageSize);
-	
+
 }

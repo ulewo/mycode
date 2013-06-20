@@ -212,4 +212,9 @@
 		(select username from user u where u.userid=a.authorid) authorName
 		from article a where image="" order by posttime desc limit  #offset#,#total#
 	</select>
+	
+	<select id="queryHotArticle" resultClass="article" parameterClass="java.util.Map">
+		select id,title from article a order by readnumber desc limit  #offset#,#total#
+	</select>
+	
 </sqlMap>

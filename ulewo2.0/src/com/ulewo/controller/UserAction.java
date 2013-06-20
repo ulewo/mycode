@@ -34,6 +34,7 @@ import com.ulewo.entity.SessionUser;
 import com.ulewo.entity.Talk;
 import com.ulewo.entity.User;
 import com.ulewo.entity.UserFriend;
+import com.ulewo.enums.BlogOrderType;
 import com.ulewo.enums.QueryUserType;
 import com.ulewo.service.BlogArticleService;
 import com.ulewo.service.BlogItemService;
@@ -318,7 +319,7 @@ public class UserAction {
 				mv.setViewName("redirect:" + Constant.WEBSTIE);
 			}
 			mv.addObject("userVo", userVo);
-			List<BlogArticle> list = blogArticleService.queryBlog(userId, 0, 0, 5);
+			List<BlogArticle> list = blogArticleService.queryBlog(userId, 0, 0, 5, BlogOrderType.POSTTIME);
 			List<UserFriend> focusList = userFriendService.queryFocus2List(userId, 0, 15);
 			List<UserFriend> fansList = userFriendService.queryFans2List(userId, 0, 15);
 			List<Group> createdGroups = groupService.queryCreatedGroups(userId);
@@ -395,9 +396,11 @@ public class UserAction {
 				page_int = Integer.parseInt(page);
 			}
 			PaginationResult result = blogArticleService.queryBlogByUserId(userId, itemId_int, page_int,
-					Constant.pageSize15);
+					Constant.pageSize15, BlogOrderType.POSTTIME);
 			List<BlogItem> blogItemList = blogItemService.queryBlogItemAndCountByUserId(userId);
 			BlogItem item = blogItemService.queryBlogItemById(itemId_int);
+			List<BlogArticle> hotlist = blogArticleService.queryBlog(userId, 0, 0, 10, BlogOrderType.READCOUNT);
+			mv.addObject("hotlist", hotlist);
 			mv.addObject("result", result);
 			mv.addObject("blogItemList", blogItemList);
 			mv.addObject("blogitem", item);
@@ -440,6 +443,8 @@ public class UserAction {
 			BlogArticle blogArticle = blogArticleService.queryBlogById(blogId_int);
 			List<BlogItem> blogItemList = blogItemService.queryBlogItemAndCountByUserId(userId);
 			int countTotal = blogArticleService.queryBlogCount(userId, 0);
+			List<BlogArticle> hotlist = blogArticleService.queryBlog(userId, 0, 0, 10, BlogOrderType.READCOUNT);
+			mv.addObject("hotlist", hotlist);
 			mv.addObject("blogItemList", blogItemList);
 			mv.addObject("blog", blogArticle);
 			mv.addObject("countTotal", countTotal);
@@ -485,7 +490,7 @@ public class UserAction {
 	}
 
 	/**
-	 * 保存回复
+	 * 保存博客评论回复
 	 * @param session
 	 * @param request
 	 * @return
@@ -498,6 +503,7 @@ public class UserAction {
 		String atUserId = request.getParameter("atUserId");
 		String atUserName = request.getParameter("atUserName");
 		String blogId = request.getParameter("blogId");
+		String blogAuthor = request.getParameter("blogAuthor");
 		String message = "";
 		String result = "success";
 		Map<String, Object> modelMap = new HashMap<String, Object>();
@@ -518,7 +524,7 @@ public class UserAction {
 				modelMap.put("result", result);
 				return modelMap;
 			}
-			if (!StringUtils.isNumber(blogId)) {
+			if (!StringUtils.isNumber(blogId) || StringUtils.isEmpty(blogAuthor)) {
 				result = "fail";
 				message = "操作错误";
 				modelMap.put("message", message);
@@ -526,7 +532,8 @@ public class UserAction {
 				return modelMap;
 			}
 			BlogReply reply = new BlogReply();
-			User sessionUser = (User) sessionObj;
+			SessionUser sessionUser = (SessionUser) sessionObj;
+			reply.setBlogAuthor(blogAuthor);
 			reply.setUserId(sessionUser.getUserId());
 			reply.setUserName(sessionUser.getUserName());
 			reply.setReUserIcon(sessionUser.getUserLittleIcon());
@@ -538,6 +545,7 @@ public class UserAction {
 			reply.setId(blogReply.getId());
 			reply.setPostTime(blogReply.getPostTime());
 			modelMap.put("result", result);
+			modelMap.put("note", reply);
 			return modelMap;
 		} catch (Exception e) {
 			message = "操作异常";
@@ -552,34 +560,27 @@ public class UserAction {
 	@RequestMapping(value = "/deleteReplay.action", method = RequestMethod.GET)
 	public Map<String, Object> deleteReply(HttpSession session, HttpServletRequest request) {
 
-		String replyId = request.getParameter("replyId");
-		Object sessionObj = session.getAttribute("user");
-		String message = "";
-		String result = "success";
+		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
-			if (null != sessionObj) {
-				SessionUser user = (SessionUser) sessionObj;
-				String userId = user.getUserId();
-				if (StringUtils.isNumber(replyId) && blogReplyService.delete(userId, Integer.parseInt(replyId))) {
-					result = "success";
-				}
-				else {
-					message = "操作错误";
-					result = "fail";
-				}
+			String replyId = request.getParameter("replyId");
+			Object sessionObj = session.getAttribute("user");
+			SessionUser sessionUser = (SessionUser) sessionObj;
+			if (StringUtils.isNumber(replyId)
+					&& blogReplyService.delete(sessionUser.getUserId(), Integer.parseInt(replyId))) {
+				modelMap.put("result", "success");
+				return modelMap;
 			}
 			else {
-				message = "你无权进行此操作";
-				result = "fail";
+				modelMap.put("message", "请求参数错误");
+				modelMap.put("result", "fail");
+				return modelMap;
 			}
+
 		} catch (Exception e) {
-			message = "操作异常";
-			result = "fail";
+			modelMap.put("message", "系统异常");
+			modelMap.put("result", "fail");
+			return modelMap;
 		}
-		Map<String, Object> modelMap = new HashMap<String, Object>();
-		modelMap.put("message", message);
-		modelMap.put("result", result);
-		return modelMap;
 	}
 
 	@ResponseBody

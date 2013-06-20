@@ -1,9 +1,18 @@
 package com.ulewo.controller;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -55,6 +64,8 @@ public class GroupMagageAction {
 	private final static int TITLE_LENGTH = 150, KEYWORD_LENGTH = 150;
 
 	private final static int ITEM_LENGTH = 50;
+
+	private static final int SMALL_WIDTH = 60, SMALL_HEIGHT = 60;
 
 	@RequestMapping(value = "/{gid}/manage", method = RequestMethod.GET)
 	public ModelAndView manage(@PathVariable String gid, HttpSession session) {
@@ -117,6 +128,44 @@ public class GroupMagageAction {
 		}
 	}
 
+	@ResponseBody
+	@RequestMapping(value = "/creteGroup.action", method = RequestMethod.POST)
+	public Map<String, Object> creteGroup(HttpSession session, HttpServletRequest request) {
+
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			String groupName = request.getParameter("groupName");
+			String groupDesc = request.getParameter("groupDesc");
+			String joinPerm = request.getParameter("joinPerm");
+			String postPerm = request.getParameter("postPerm");
+			if (groupName == "" || groupName.length() > GROUPNAEM_LENGTH) {
+				modelMap.put("result", "fail");
+				modelMap.put("message", "窝窝名称为空，或者超过规定长度");
+				return modelMap;
+			}
+			if (groupDesc == "" || groupDesc.length() > GROUPDESC_LENGTH) {
+				modelMap.put("result", "fail");
+				modelMap.put("message", "窝窝简介为空，或者超过规定长度");
+				return modelMap;
+			}
+			Group group = new Group();
+			group.setGroupName(groupName);
+			group.setGroupDesc(groupDesc);
+			group.setJoinPerm(joinPerm);
+			group.setPostPerm(postPerm);
+			group.setGroupAuthor(((SessionUser) session.getAttribute("user")).getUserId());
+			String gid = groupService.createGroup(group);
+			modelMap.put("gid", gid);
+			modelMap.put("result", "success");
+			return modelMap;
+		} catch (Exception e) {
+			e.printStackTrace();
+			modelMap.put("result", "fail");
+			modelMap.put("message", "系统异常");
+			return modelMap;
+		}
+	}
+
 	/**
 	 * 公告管理
 	 * 
@@ -142,6 +191,110 @@ public class GroupMagageAction {
 			mv.setViewName("redirect:" + Constant.WEBSTIE);
 			return mv;
 		}
+	}
+
+	@RequestMapping(value = "/{gid}/group_icon", method = RequestMethod.GET)
+	public ModelAndView groupIcon(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
+
+		ModelAndView mv = new ModelAndView();
+		try {
+			mv.addObject("gid", gid);
+			mv.setViewName("groupmanage/group_icon");
+			return mv;
+		} catch (Exception e) {
+			mv.setViewName("redirect:" + Constant.WEBSTIE);
+			return mv;
+		}
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/{gid}/saveGroupIcon.action")
+	public Map<String, Object> saveUserIcon(HttpSession session, HttpServletRequest request) {
+
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		String gid = request.getParameter("gid");
+		String tempimg = request.getParameter("img");
+		String x1 = request.getParameter("x1");
+		String y1 = request.getParameter("y1");
+		String width = request.getParameter("width");
+		String height = request.getParameter("height");
+		if (!StringUtils.isNumber(x1) || !StringUtils.isNumber(y1) || !StringUtils.isNumber(width)
+				|| !StringUtils.isNumber(height)) {
+			modelMap.put("result", "fail");
+			modelMap.put("message", "请求参数错误");
+			return modelMap;
+		}
+		int x1_int = Integer.parseInt(x1);
+		int y1_int = Integer.parseInt(y1);
+		int width_int = Integer.parseInt(width);
+		int height_int = Integer.parseInt(height);
+		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+		String userId = sessionUser.getUserId();
+		String userIcon = "";
+		InputStream tempIn = null;
+		ByteArrayOutputStream out = null;
+		OutputStream imgOut = null;
+		String imgType = "jpg";
+		if (tempimg != null && !"".equals(tempimg)) {
+			int idx = tempimg.lastIndexOf(".");
+			if (idx >= 0) {
+				imgType = tempimg.substring(idx + 1);
+			}
+		}
+		String srcpath = session.getServletContext().getRealPath("/") + tempimg;
+		try {
+			File tempfile = new File(srcpath);
+			tempIn = new FileInputStream(tempfile);
+			BufferedImage img = ImageIO.read(tempIn);
+			// 裁剪图片
+			BufferedImage subimg = img.getSubimage(x1_int, y1_int, width_int, height_int);
+			// 放大缩小图片
+			BufferedImage okimg = new BufferedImage(SMALL_WIDTH, SMALL_HEIGHT, BufferedImage.TYPE_INT_RGB);
+			Graphics2D g = okimg.createGraphics();
+			g.drawImage(subimg, 0, 0, SMALL_WIDTH, SMALL_HEIGHT, null);
+
+			// 将图片转为字节数组
+			out = new ByteArrayOutputStream();
+			ImageIO.write(okimg, imgType, out);
+			byte[] data = out.toByteArray();
+			String okSrcPath = session.getServletContext().getRealPath("/") + "upload/group/";
+			File imagePathFile = new File(okSrcPath);
+			if (!imagePathFile.exists()) {
+				imagePathFile.mkdirs();
+			}
+			File okfile = new File(okSrcPath + gid + "." + imgType);
+			imgOut = new FileOutputStream(okfile);
+			imgOut.write(data);
+			imgOut.flush();
+			userIcon = "group/" + gid + "." + imgType;
+			Group group = new Group();
+			group.setId(gid);
+			group.setGroupIcon(userIcon);
+			groupService.updateGroup(group);
+		} catch (Exception e) {
+			modelMap.put("result", "fail");
+			modelMap.put("message", "系统异常");
+			return modelMap;
+		} finally {
+			try {
+				if (null != tempIn) {
+					tempIn.close();
+					tempIn = null;
+				}
+				if (null != out) {
+					out.close();
+					out = null;
+				}
+				if (imgOut != null) {
+					imgOut.close();
+				}
+			} catch (Exception e) {
+			}
+			new File(srcpath).delete();
+		}
+		modelMap.put("result", "success");
+		modelMap.put("userIcon", userIcon);
+		return modelMap;
 	}
 
 	@ResponseBody
@@ -419,7 +572,7 @@ public class GroupMagageAction {
 		}
 	}
 
-	@RequestMapping(value = "/{gid}/manageArticle", method = RequestMethod.POST)
+	@RequestMapping(value = "/{gid}/manageArticle.action", method = RequestMethod.POST)
 	public ModelAndView manageArticle(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
@@ -437,11 +590,12 @@ public class GroupMagageAction {
 			String type = request.getParameter("type");
 			String[] id = request.getParameterValues("id");
 			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
-			String userId = "10001";
-			articleService.manangeArticle(userId, gid, id, type);
+			String userId = sessionUser.getUserId();
+			articleService.manangeArticle(gid, userId, id, type);
 			mv.addObject("itemId", itemId_int);
 			mv.addObject("gid", gid);
-			mv.setViewName("groupmanage/group_article");
+			mv.addObject("page", page);
+			mv.setViewName("redirect:group_article");
 			return mv;
 		} catch (Exception e) {
 			e.printStackTrace();

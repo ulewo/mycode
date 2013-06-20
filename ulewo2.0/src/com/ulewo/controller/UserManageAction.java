@@ -313,11 +313,34 @@ public class UserManageAction {
 
 	@RequestMapping(value = "/new_blog")
 	public ModelAndView newblog(HttpSession session) {
+
 		ModelAndView mv = new ModelAndView();
 		String userId = "10001";
 		List<BlogItem> itemList = blogItemService.queryBlogItemByUserId(userId);
 		mv.addObject("itemList", itemList);
 		mv.setViewName("usermanage/new_blog");
+		return mv;
+
+	}
+
+	@RequestMapping(value = "/edit_blog.action")
+	public ModelAndView editBlog(HttpSession session, HttpServletRequest request) {
+
+		ModelAndView mv = new ModelAndView();
+		String id = request.getParameter("id");
+		if (!StringUtils.isNumber(id)) {
+			mv.setViewName("redirect:" + Constant.ERRORPAGE);
+		}
+		String userId = ((SessionUser) session.getAttribute("user")).getUserId();
+		int id_int = Integer.parseInt(id);
+		List<BlogItem> itemList = blogItemService.queryBlogItemByUserId(userId);
+		BlogArticle blog = blogArticleService.queryBlogById(id_int);
+		if (!userId.equals(blog.getUserId())) {
+			mv.setViewName("redirect:" + Constant.ERRORPAGE);
+		}
+		mv.addObject("blog", blog);
+		mv.addObject("itemList", itemList);
+		mv.setViewName("usermanage/edit_blog");
 		return mv;
 
 	}
@@ -328,23 +351,67 @@ public class UserManageAction {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
-			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
-			String userId = "10001";
+			String userId = ((SessionUser) session.getAttribute("user")).getUserId();
 			String title = request.getParameter("title");
 			String itemId = request.getParameter("itemId");
 			String keyword = request.getParameter("keyword");
 			String content = request.getParameter("content");
+			String id = request.getParameter("id");
+			int id_int = 0;
+			if (StringUtils.isNotEmpty(id)) {
+				if (!StringUtils.isNumber(id)) {
+					modelMap.put("result", "fail");
+					modelMap.put("message", "参数错误");
+				}
+				else {
+					id_int = Integer.parseInt(id);
+				}
+
+			}
 			int itemId_int = 0;
 			if (StringUtils.isNumber(itemId)) {
 				itemId_int = Integer.parseInt(itemId);
 			}
 			BlogArticle article = new BlogArticle();
+			article.setId(id_int);
 			article.setTitle(title);
 			article.setItemId(itemId_int);
 			article.setKeyWord(keyword);
 			article.setContent(content);
 			article.setUserId(userId);
-			blogArticleService.addBlog(article);
+			blogArticleService.saveBlog(article);
+			return modelMap;
+		} catch (Exception e) {
+			e.printStackTrace();
+			modelMap.put("result", "fail");
+			modelMap.put("message", "系统异常，请稍候重试");
+			return modelMap;
+		}
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/deleteBlog.action", method = RequestMethod.GET)
+	public Map<String, Object> deleteBlog(HttpSession session, HttpServletRequest request) {
+
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+			String id = request.getParameter("id");
+			int id_int = 0;
+			if (!StringUtils.isNumber(id)) {
+				modelMap.put("result", "fail");
+				modelMap.put("message", "参数错误");
+			}
+			id_int = Integer.parseInt(id);
+			BlogArticle blogArticle = blogArticleService.queryBlogById(id_int);
+			if (blogArticle == null) {
+				modelMap.put("result", "fail");
+				modelMap.put("message", "删除失败");
+			}
+			if (sessionUser.getUserId().equals(blogArticle.getUserId())) {
+				blogArticleService.deleteArticle(id_int);
+				modelMap.put("result", "success");
+			}
 			return modelMap;
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -75,7 +75,7 @@ public class BlogReplyDao extends BaseDao {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("id", id);
 		paramMap.put("blogAuthor", author);
-		int count = this.getSqlMapClientTemplate().delete("blogReply.deletePeply", paramMap);
+		int count = this.getSqlMapClientTemplate().delete("blogReply.deleteReply", paramMap);
 		if (count > 0) {
 			return true;
 		}

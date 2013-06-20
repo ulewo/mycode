@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -43,6 +42,7 @@ public class HomeAction {
 
 	@Autowired
 	TalkService talkService;
+
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView login() {
 
@@ -98,17 +98,17 @@ public class HomeAction {
 	}
 
 	@RequestMapping(value = "/blog", method = RequestMethod.GET)
-	public ModelAndView blog(HttpSession session,HttpServletRequest request) {
+	public ModelAndView blog(HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
 			String page = request.getParameter("page");
 			int page_int = 0;
-			if(StringUtils.isNumber(page)){
+			if (StringUtils.isNumber(page)) {
 				page_int = Integer.parseInt(page);
 			}
 			PaginationResult list = blogArticleService.queryLatestBlog(page_int, Constant.pageSize25);
-			mv.addObject("result",list);
+			mv.addObject("result", list);
 			mv.setViewName("blog");
 			return mv;
 		} catch (Exception e) {
@@ -171,11 +171,23 @@ public class HomeAction {
 			return modelMap;
 		}
 	}
-	
+
 	@RequestMapping(value = "/error", method = RequestMethod.GET)
 	public ModelAndView error() {
+
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("error");
+		return mv;
+	}
+
+	@RequestMapping(value = "/createWoWo", method = RequestMethod.GET)
+	public ModelAndView createWoWo(HttpSession session) {
+
+		ModelAndView mv = new ModelAndView();
+		if (null == session.getAttribute("user")) {
+			mv.setViewName("redirect:" + Constant.ERRORPAGE);
+		}
+		mv.setViewName("create_group");
 		return mv;
 	}
 }

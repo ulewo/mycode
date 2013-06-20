@@ -182,4 +182,5 @@ public interface ArticleService {
 
 	public List<Article> queryLatestArticle(int offset, int total);
 
+	public List<Article> queryHotArticle(int offset, int total);
 }

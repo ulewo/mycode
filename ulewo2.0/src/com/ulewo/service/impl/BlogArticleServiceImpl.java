@@ -14,6 +14,7 @@ import com.ulewo.dao.UserDao;
 import com.ulewo.entity.BlogArticle;
 import com.ulewo.entity.NoticeParam;
 import com.ulewo.entity.User;
+import com.ulewo.enums.BlogOrderType;
 import com.ulewo.enums.NoticeType;
 import com.ulewo.enums.QueryUserType;
 import com.ulewo.service.BlogArticleService;
@@ -35,6 +36,19 @@ public class BlogArticleServiceImpl implements BlogArticleService {
 	private NoticeDao noticeDao;
 
 	private final static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+	@Override
+	public boolean saveBlog(BlogArticle blogArticle) {
+
+		if (blogArticle.getId() == 0) {
+			return addBlog(blogArticle);
+		}
+		else {
+			blogArticleDao.update(blogArticle);
+			return true;
+		}
+
+	}
 
 	@Override
 	public boolean addBlog(BlogArticle blogArticle) {
@@ -98,21 +112,22 @@ public class BlogArticleServiceImpl implements BlogArticleService {
 	}
 
 	@Override
-	public List<BlogArticle> queryBlog(String userId, int itemId, int offset, int total) {
+	public List<BlogArticle> queryBlog(String userId, int itemId, int offset, int total, BlogOrderType blogOrderType) {
 
-		List<BlogArticle> list = blogArticleDao.queryBlog(userId, itemId, offset, total);
+		List<BlogArticle> list = blogArticleDao.queryBlog(userId, itemId, offset, total, blogOrderType);
 		for (BlogArticle blog : list) {
 			blog.setPostTime(StringUtils.friendly_time(blog.getPostTime()));
 		}
 		return list;
 	}
 
-	public PaginationResult queryBlogByUserId(String userId, int itemId, int page, int pageSize) {
+	public PaginationResult queryBlogByUserId(String userId, int itemId, int page, int pageSize,
+			BlogOrderType blogOrderType) {
 
 		int count = blogArticleDao.queryBlogCount(userId, itemId);
 		Pagination pagination = new Pagination(page, count, pageSize);
 		pagination.action();
-		List<BlogArticle> list = queryBlog(userId, itemId, pagination.getOffSet(), pageSize);
+		List<BlogArticle> list = queryBlog(userId, itemId, pagination.getOffSet(), pageSize, blogOrderType);
 		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
 		return result;
 	}
@@ -149,7 +164,8 @@ public class BlogArticleServiceImpl implements BlogArticleService {
 		return blogArticleDao.queryCount();
 	}
 
-	public PaginationResult queryLatestBlog(int page, int pageSize){
+	public PaginationResult queryLatestBlog(int page, int pageSize) {
+
 		int count = queryCount();
 		Pagination pagination = new Pagination(page, count, pageSize);
 		pagination.action();

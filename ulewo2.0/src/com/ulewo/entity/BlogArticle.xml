@@ -46,7 +46,14 @@
          	  <![CDATA[b.userid = #userId# ]]>
 			</isNotEmpty>
 		</dynamic>
-		order by posttime desc limit #offset#,#total#
+		order by
+		<isEqual property="orderType" compareValue="time">
+		     posttime desc
+		</isEqual>
+		<isEqual property="orderType" compareValue="readcount">
+		     readCount desc
+		</isEqual>
+		limit #offset#,#total#
 	</select>
 	
 	<!--通过用户查询文章-->
