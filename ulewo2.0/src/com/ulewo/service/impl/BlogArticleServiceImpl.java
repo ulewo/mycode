@@ -55,6 +55,16 @@ public class BlogArticleServiceImpl implements BlogArticleService {
 
 		blogArticle.setPostTime(format.format(new Date()));
 		String content = blogArticle.getContent();
+
+		String summary = StringUtils.clearHtml(content);
+		if (summary.length() > Constant.summaryLength100) {
+			summary = summary.substring(0, Constant.summaryLength100);
+		}
+		else if (summary.length() == 0) {
+			summary = blogArticle.getTitle();
+		}
+		blogArticle.setSummary(summary + "......");
+
 		List<String> referers = new ArrayList<String>();
 		String formatContent = FormatAt.getInstance().GenerateRefererLinks(userDao, content, referers);
 

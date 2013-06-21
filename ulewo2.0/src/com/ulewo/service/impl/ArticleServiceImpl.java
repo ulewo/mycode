@@ -19,9 +19,7 @@ import com.ulewo.dao.ReArticleDao;
 import com.ulewo.dao.UserDao;
 import com.ulewo.entity.Article;
 import com.ulewo.entity.AttachedFile;
-import com.ulewo.entity.Group;
 import com.ulewo.entity.NoticeParam;
-import com.ulewo.entity.ReArticle;
 import com.ulewo.entity.User;
 import com.ulewo.enums.ArticleEssence;
 import com.ulewo.enums.ArticleGrade;
@@ -78,8 +76,8 @@ public class ArticleServiceImpl implements ArticleService {
 
 		String content = article.getContent();
 		String summary = StringUtils.clearHtml(content);
-		if (summary.length() > Constant.summaryLength200) {
-			summary = summary.substring(0, Constant.summaryLength200);
+		if (summary.length() > Constant.summaryLength100) {
+			summary = summary.substring(0, Constant.summaryLength100);
 		}
 		else if (summary.length() == 0) {
 			summary = article.getTitle();
@@ -140,9 +138,7 @@ public class ArticleServiceImpl implements ArticleService {
 
 	public void updateArticle(Article article, String groupAuthor) {
 
-		if (checkPerm(article.getGid(), groupAuthor)) {
-			articleDao.updateArticleSelective(article);
-		}
+		articleDao.updateArticleSelective(article);
 	}
 
 	/**
@@ -170,8 +166,13 @@ public class ArticleServiceImpl implements ArticleService {
 			if (null != list && list.size() > 0) {
 				article.setFile(list.get(0));
 			}
-
+			//更新阅读数量
+			Article updatearticle = new Article();
+			updatearticle.setId(id);
+			updatearticle.setReadNumber(article.getReadNumber() + 1);
+			articleDao.updateArticle(updatearticle);
 		}
+
 		return article;
 	}
 
@@ -196,23 +197,8 @@ public class ArticleServiceImpl implements ArticleService {
 
 	}
 
-	private boolean checkPerm(String gid, String groupAuthro) {
-
-		Group group = groupDao.queryGroupBaseInfo(gid);
-		if (null == group) {
-			return false;
-		}
-		if (!group.getGroupAuthor().equals(groupAuthro)) {
-			return false;
-		}
-		return true;
-	}
-
 	public void manangeArticle(String gid, String groupAuthor, String[] ids, String type) {
 
-		if (!checkPerm(gid, groupAuthor)) {
-			return;
-		}
 		if (ids != null && StringUtils.isNotEmpty(type)) {
 			if (TYPE_SETTOP.equals(type)) { //设置置顶
 				for (String id : ids) {
@@ -271,46 +257,6 @@ public class ArticleServiceImpl implements ArticleService {
 		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
 		// setArticleListInfo(list);
 		return result;
-	}
-
-	/**
-	 * 查询文章根据时间倒叙排列
-	 */
-	@Override
-	public List<Article> queryTopicOrderByPostTime(String gid, int itemId, String isValid, int offset, int total) {
-
-		List<Article> list = articleDao.queryTopicOrderByPostTime(gid, itemId, isValid, offset, total);
-		setArticleListInfo(list);
-		return list;
-	}
-
-	private void setArticleListInfo(List<Article> list) {
-
-		ReArticle lastReArticle = null; // 最后回复的文章
-		String lastReAuthorId = null; // 最后回复人id
-		String lastReAuthorName = Constant.USER_DEFAULT_NAME; // 最后回复人名称
-		String lastReTime = null; // 最后回复时间
-		for (Article article : list) {
-			// 最后回复的文章
-			lastReArticle = reArticleDao.queryLatestReArticle(article.getId());
-			if (null == lastReArticle) {// 无最后回复，最后回复就是作者
-				lastReAuthorId = article.getAuthorId();
-				lastReAuthorName = article.getAuthorName();
-				lastReTime = article.getPostTime();
-			}
-			else {
-				lastReTime = lastReArticle.getReTime();
-				lastReAuthorName = lastReArticle.getAuthorName();
-				lastReAuthorId = lastReArticle.getAuthorid();
-			}
-			if (StringUtils.isEmpty(article.getItemName())) {
-				article.setItemName("全部分类");
-			}
-			article.setPostTime(StringUtils.friendly_time(article.getPostTime()));
-			article.setLastReAuthorId(lastReAuthorId);
-			article.setLastReAuthorName(lastReAuthorName);
-			article.setLastReTime(StringUtils.friendly_time(lastReTime));
-		}
 	}
 
 	@Override
@@ -410,10 +356,20 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public List<Article> queryImageArticle(int offset, int total) {
+	public List<Article> queryImageArticle(String gid, int offset, int total) {
 
-		List<Article> list = articleDao.queryImageArticle(offset, total);
+		List<Article> list = articleDao.queryImageArticle(gid, offset, total);
 		return list;
+	}
+
+	public PaginationResult queryImageArticle2PagResult(String gid, int page, int pageSize) {
+
+		int count = articleDao.queryImageArticleCount(gid);
+		Pagination pagination = new Pagination(page, count, pageSize);
+		pagination.action();
+		List<Article> list = queryImageArticle(gid, pagination.getOffSet(), pageSize);
+		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
+		return result;
 	}
 
 	@Override

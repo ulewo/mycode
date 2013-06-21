@@ -74,18 +74,6 @@ public interface ArticleService {
 
 	/**
 	 * 
-	 * description: 查询文章根据时间倒叙排列
-	 * @param gid
-	 * @param itemId
-	 * @param isValid
-	 * @return
-	 * @
-	 * @author lhl
-	 */
-	public List<Article> queryTopicOrderByPostTime(String gid, int itemId, String isValid, int offset, int total);
-
-	/**
-	 * 
 	 * description: 查询作者发表的主题数量
 	 * @param userId
 	 * @return
@@ -178,7 +166,9 @@ public interface ArticleService {
 
 	public List<Article> queryComendArticle(String sysCode, String subCode, int offset, int total);
 
-	public List<Article> queryImageArticle(int offset, int total);
+	public List<Article> queryImageArticle(String gid, int offset, int total);
+
+	public PaginationResult queryImageArticle2PagResult(String gid, int page, int pageSize);
 
 	public List<Article> queryLatestArticle(int offset, int total);
 

@@ -12,6 +12,7 @@ import com.ulewo.dao.GroupDao;
 import com.ulewo.dao.MemberDao;
 import com.ulewo.dao.UserDao;
 import com.ulewo.entity.Group;
+import com.ulewo.entity.Member;
 import com.ulewo.service.GroupService;
 import com.ulewo.util.Constant;
 import com.ulewo.util.Pagination;
@@ -46,11 +47,15 @@ public class GroupServiceImpl implements GroupService {
 		if (StringUtils.isEmpty(group.getGroupIcon())) {
 			group.setGroupIcon(Constant.GROUP_DEFAULT_LOGO);
 		}
-		if (StringUtils.isEmpty(group.getGroupHeadIcon())) {
-			group.setGroupHeadIcon(Constant.GROUP_DEFAULT_HEADIMAG);
-		}
-		group.setCreateTime(formate.format(new Date()));
+		String time = formate.format(new Date());
+		group.setCreateTime(time);
 		groupDao.createGroup(group);
+		Member member = new Member();
+		member.setGid(group.getId());
+		member.setIsMember(Constant.ISMEMBER);
+		member.setUserId(group.getGroupAuthor());
+		member.setJoinTime(time);
+		memberDao.addMember(member);
 		/*
 		 * CacheManager manager = GroupAdminManager.getInstants(); Member member
 		 * = new Member(); member.setGid(id); member.setGrade(2);

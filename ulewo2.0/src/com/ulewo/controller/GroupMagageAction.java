@@ -67,6 +67,17 @@ public class GroupMagageAction {
 
 	private static final int SMALL_WIDTH = 60, SMALL_HEIGHT = 60;
 
+	private boolean checkPerm(Group group, String groupAuthro) {
+
+		if (null == group) {
+			return false;
+		}
+		if (!group.getGroupAuthor().equals(groupAuthro)) {
+			return false;
+		}
+		return true;
+	}
+
 	@RequestMapping(value = "/{gid}/manage", method = RequestMethod.GET)
 	public ModelAndView manage(@PathVariable String gid, HttpSession session) {
 
@@ -74,8 +85,11 @@ public class GroupMagageAction {
 
 		try {
 			SessionUser user = (SessionUser) session.getAttribute("user");
-			String userId = "10001";
+			String userId = user.getUserId();
 			Group group = groupService.queryGorup(gid);
+			if (!checkPerm(group, userId)) {
+				mv.setViewName("redirect:" + Constant.ERRORPAGE);
+			}
 			group.setGroupDesc(StringUtils.reFormateHtml(group.getGroupDesc()));
 			mv.addObject("group", group);
 			mv.addObject("gid", gid);
@@ -83,7 +97,7 @@ public class GroupMagageAction {
 			return mv;
 		} catch (Exception e) {
 			e.printStackTrace();
-			mv.setViewName("redirect:" + Constant.WEBSTIE);
+			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
 	}
@@ -95,7 +109,13 @@ public class GroupMagageAction {
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			SessionUser user = (SessionUser) session.getAttribute("user");
-			String userId = "10001";
+			String userId = user.getUserId();
+			Group myGroup = groupService.queryGorup(gid);
+			if (!checkPerm(myGroup, userId)) {
+				modelMap.put("result", "fail");
+				modelMap.put("message", "你无权进行次操作");
+				return modelMap;
+			}
 			String groupName = request.getParameter("groupName");
 			String groupDesc = request.getParameter("groupDesc");
 			String joinPerm = request.getParameter("joinPerm");
@@ -179,8 +199,11 @@ public class GroupMagageAction {
 		ModelAndView mv = new ModelAndView();
 		try {
 			SessionUser user = (SessionUser) session.getAttribute("user");
-			String userId = "10001";
+			String userId = user.getUserId();
 			Group group = groupService.queryGorup(gid);
+			if (!checkPerm(group, userId)) {
+				mv.setViewName("redirect:" + Constant.ERRORPAGE);
+			}
 			group.setGroupNotice(StringUtils.reFormateHtml(group.getGroupNotice()));
 			mv.addObject("group", group);
 			mv.addObject("gid", gid);
@@ -188,7 +211,7 @@ public class GroupMagageAction {
 			return mv;
 		} catch (Exception e) {
 			e.printStackTrace();
-			mv.setViewName("redirect:" + Constant.WEBSTIE);
+			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
 	}
@@ -202,7 +225,7 @@ public class GroupMagageAction {
 			mv.setViewName("groupmanage/group_icon");
 			return mv;
 		} catch (Exception e) {
-			mv.setViewName("redirect:" + Constant.WEBSTIE);
+			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
 	}
@@ -304,7 +327,12 @@ public class GroupMagageAction {
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			SessionUser user = (SessionUser) session.getAttribute("user");
-			String userId = "10001";
+			String userId = user.getUserId();
+			Group mygroup = groupService.queryGorup(gid);
+			if (!checkPerm(mygroup, userId)) {
+				modelMap.put("result", "fail");
+				modelMap.put("message", "你无权进行此操作");
+			}
 			String groupNotice = request.getParameter("groupNotice");
 			Group group = new Group();
 			group.setId(gid);
@@ -334,7 +362,11 @@ public class GroupMagageAction {
 		ModelAndView mv = new ModelAndView();
 		try {
 			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
-			String userId = "10001";
+			String userId = sessionUser.getUserId();
+			Group mygroup = groupService.queryGorup(gid);
+			if (!checkPerm(mygroup, userId)) {
+				mv.setViewName("redirect:" + Constant.ERRORPAGE);
+			}
 			List<ArticleItem> itemList = articleItemService.queryItemAndTopicCountByGid(gid);
 			mv.addObject("imtes", itemList);
 			mv.addObject("gid", gid);
@@ -342,7 +374,7 @@ public class GroupMagageAction {
 			return mv;
 		} catch (Exception e) {
 			e.printStackTrace();
-			mv.setViewName("redirect:" + Constant.WEBSTIE);
+			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
 	}
@@ -366,18 +398,18 @@ public class GroupMagageAction {
 				id = id.trim();
 			}
 			if (StringUtils.isEmpty(itemName) || itemName.length() > ITEM_LENGTH) {
-				mv.setViewName("redirect:" + Constant.WEBSTIE);
+				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 				return mv;
 			}
 			if (StringUtils.isEmpty(itemCode)) {
-				mv.setViewName("redirect:" + Constant.WEBSTIE);
+				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 				return mv;
 			}
 			itemName = itemName.trim();
 			itemCode = itemCode.trim();
 
 			if ((StringUtils.isNotEmpty(id) && !StringUtils.isNumber(id)) || !StringUtils.isNumber(itemCode)) {
-				mv.setViewName("redirect:" + Constant.WEBSTIE);
+				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 				return mv;
 			}
 			int id_int = 0;
@@ -395,13 +427,13 @@ public class GroupMagageAction {
 				return mv;
 			}
 			else {
-				mv.setViewName("redirect:" + Constant.WEBSTIE);
+				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 				return mv;
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			mv.setViewName("redirect:" + Constant.WEBSTIE);
+			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
 	}
@@ -412,14 +444,18 @@ public class GroupMagageAction {
 		ModelAndView mv = new ModelAndView();
 		try {
 			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
-			String userId = "10001";
+			String userId = sessionUser.getUserId();
+			Group mygroup = groupService.queryGorup(gid);
+			if (!checkPerm(mygroup, userId)) {
+				mv.setViewName("redirect:" + Constant.ERRORPAGE);
+			}
 			if (!checkPerm(gid, userId)) {
 				mv.setViewName("redirect:" + gid + "/group_item");
 				return mv;
 			}
 			String id = request.getParameter("id");
 			if (StringUtils.isEmpty(id) || !StringUtils.isNumber(id)) {
-				mv.setViewName("redirect:" + Constant.WEBSTIE);
+				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 				return mv;
 			}
 			int id_int = 0;
@@ -431,13 +467,13 @@ public class GroupMagageAction {
 				return mv;
 			}
 			else {
-				mv.setViewName("redirect:" + Constant.WEBSTIE);
+				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 				return mv;
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			mv.setViewName("redirect:" + Constant.WEBSTIE);
+			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
 	}
@@ -465,7 +501,11 @@ public class GroupMagageAction {
 				page_int = Integer.parseInt(page);
 			}
 			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
-			String userId = "10001";
+			String userId = sessionUser.getUserId();
+			Group mygroup = groupService.queryGorup(gid);
+			if (!checkPerm(mygroup, userId)) {
+				mv.setViewName("redirect:" + Constant.ERRORPAGE);
+			}
 			List<ArticleItem> itemList = articleItemService.queryItemAndTopicCountByGid(gid);
 			PaginationResult result = articleService.queryTopicOrderByGradeAndLastReTime(gid, itemId_int, page_int,
 					Constant.pageSize20);
@@ -477,7 +517,7 @@ public class GroupMagageAction {
 			return mv;
 		} catch (Exception e) {
 			e.printStackTrace();
-			mv.setViewName("redirect:" + Constant.WEBSTIE);
+			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
 	}
@@ -490,12 +530,12 @@ public class GroupMagageAction {
 			String id = request.getParameter("id");
 
 			if (!StringUtils.isNumber(id)) {
-				mv.setViewName("redirect:" + Constant.WEBSTIE);
+				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			}
 			int id_int = Integer.parseInt(id);
 			Article article = articleService.queryTopicById(id_int);
 			if (article == null) {
-				mv.setViewName("redirect:" + Constant.WEBSTIE);
+				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			}
 			article.setContent(article.getContent().replace("\r\n", ""));
 			List<ArticleItem> list = articleItemService.queryItemByGid(gid);
@@ -506,7 +546,7 @@ public class GroupMagageAction {
 			return mv;
 		} catch (Exception e) {
 			e.printStackTrace();
-			mv.setViewName("redirect:" + Constant.WEBSTIE);
+			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
 	}
@@ -551,8 +591,13 @@ public class GroupMagageAction {
 				modelMap.put("message", "关键字太长");
 				return modelMap;
 			}
-			// SessionUser user = (SessionUser) session.getAttribute("user");
-			String userId = "10001";
+			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+			String userId = sessionUser.getUserId();
+			Group mygroup = groupService.queryGorup(gid);
+			if (!checkPerm(mygroup, userId)) {
+				modelMap.put("result", "fail");
+				modelMap.put("message", "你无权进行此操作");
+			}
 			Article article = new Article();
 			article.setId(id_int);
 			article.setGid(gid);
@@ -599,7 +644,7 @@ public class GroupMagageAction {
 			return mv;
 		} catch (Exception e) {
 			e.printStackTrace();
-			mv.setViewName("redirect:" + Constant.WEBSTIE);
+			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
 	}
@@ -621,7 +666,7 @@ public class GroupMagageAction {
 			return mv;
 		} catch (Exception e) {
 			e.printStackTrace();
-			mv.setViewName("redirect:" + Constant.WEBSTIE);
+			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
 	}
@@ -644,7 +689,7 @@ public class GroupMagageAction {
 			return mv;
 		} catch (Exception e) {
 			e.printStackTrace();
-			mv.setViewName("redirect:" + Constant.WEBSTIE);
+			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
 	}
@@ -667,7 +712,7 @@ public class GroupMagageAction {
 			return mv;
 		} catch (Exception e) {
 			e.printStackTrace();
-			mv.setViewName("redirect:" + Constant.WEBSTIE);
+			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
 	}

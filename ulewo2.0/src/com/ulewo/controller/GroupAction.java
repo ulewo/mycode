@@ -2,6 +2,7 @@ package com.ulewo.controller;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -118,12 +119,12 @@ public class GroupAction {
 		}
 		try {
 			if (StringUtils.isEmpty(gid)) {
-				mv.setViewName("redirect:" + Constant.WEBSTIE);
+				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 				return mv;
 			}
 			Group group = groupService.queryGorup(gid);
 			if (null == group) {
-				mv.setViewName("redirect:" + Constant.WEBSTIE);
+				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 				return mv;
 			}
 			// 查询文章
@@ -131,11 +132,11 @@ public class GroupAction {
 					page_int, Constant.pageSize15);
 			// 查询分类
 			List<ArticleItem> itemList = articleItemService.queryItemByGid(gid);
-		//	List<Article> hotArticlelist = articleService.queryHotArticle(0, 10);
-			mv.addObject("group", group);
+			//	List<Article> hotArticlelist = articleService.queryHotArticle(0, 10);
+			mv.addObject("memberStatus", memberStatus(session, gid));
 			mv.addObject("group", group);
 			mv.addObject("articles", articleResult);
-		//	mv.addObject("hotArticlelist", hotArticlelist);
+			//	mv.addObject("hotArticlelist", hotArticlelist);
 			mv.addObject("itemList", itemList);
 			mv.addObject("itemId", itemId_int);
 			mv.addObject("page", page_int);
@@ -153,6 +154,24 @@ public class GroupAction {
 			return mv;
 		}
 		return mv;
+	}
+
+	private String memberStatus(HttpSession session, String gid) {
+
+		Object sessionObj = session.getAttribute("user");
+		if (null == sessionObj) {
+			return "";
+		}
+		else {
+			String userId = ((SessionUser) sessionObj).getUserId();
+			Member member = memberService.queryMemberByGidAndUserId(gid, userId);
+			if (null == member) {
+				return "";
+			}
+			else {
+				return member.getIsMember();
+			}
+		}
 	}
 
 	@ResponseBody
@@ -180,36 +199,39 @@ public class GroupAction {
 			HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
-		String itemId = request.getParameter("itemId");
-		String page = request.getParameter("page");
-		int itemId_int = 0;
-		int page_int = 1;
-		if (StringUtils.isNumber(itemId)) {
-			itemId_int = Integer.parseInt(itemId);
-		}
-		if (StringUtils.isNumber(page)) {
-			page_int = Integer.parseInt(page);
-		}
 		try {
 			if (StringUtils.isEmpty(gid)) {
-				mv.setViewName("redirect:" + Constant.WEBSTIE);
+				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 				return mv;
 			}
 			Group group = groupService.queryGorup(gid);
 			if (null == group) {
-				mv.setViewName("redirect:" + Constant.WEBSTIE);
+				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 				return mv;
 			}
-			// 查询文章
-			PaginationResult articleResult = articleService.queryTopicOrderByGradeAndLastReTime(gid, itemId_int,
-					page_int, Constant.pageSize15);
-			// 查询分类
-			List<ArticleItem> itemList = articleItemService.queryItemByGid(gid);
+			int page_int = 0;
+			String page = request.getParameter("page");
+			if (StringUtils.isNumber(page)) {
+				page_int = Integer.parseInt(page);
+			}
+
+			PaginationResult result = articleService.queryImageArticle2PagResult(group.getId(), page_int,
+					Constant.pageSize30);
+			List<Article> list = (List<Article>) result.getList();
+			List<Article> square1 = new ArrayList<Article>();
+			List<Article> square2 = new ArrayList<Article>();
+			List<Article> square3 = new ArrayList<Article>();
+			List<Article> square4 = new ArrayList<Article>();
+			set2Square(square1, square2, square3, square4, list);
+			mv.addObject("square1", square1);
+			mv.addObject("square2", square2);
+			mv.addObject("square3", square3);
+			mv.addObject("square4", square4);
+			mv.addObject("page", result.getPage());
+			mv.addObject("pageTotal", result.getPageTotal());
+			mv.setViewName("square");
+			mv.addObject("memberStatus", memberStatus(session, gid));
 			mv.addObject("group", group);
-			mv.addObject("articles", articleResult);
-			mv.addObject("itemList", itemList);
-			mv.addObject("itemId", itemId_int);
-			mv.addObject("page", page_int);
 			mv.addObject("gid", gid);
 			mv.setViewName("group/group_img");
 		} catch (Exception e) {
@@ -218,6 +240,79 @@ public class GroupAction {
 			return mv;
 		}
 		return mv;
+	}
+
+	private void set2Square(List<Article> square1, List<Article> square2, List<Article> square3, List<Article> square4,
+			List<Article> squareList) {
+
+		int num = 0;
+		int j = 0;
+		for (Article article : squareList) {
+			j++;
+			if (1 + num * 4 == j) {
+				square1.add(article);
+				continue;
+			}
+			if (2 + num * 4 == j) {
+				square2.add(article);
+				continue;
+			}
+			if (3 + num * 4 == j) {
+				square3.add(article);
+				continue;
+			}
+			if (4 + num * 4 == j) {
+				square4.add(article);
+				num++;
+				continue;
+			}
+		}
+	}
+
+	/*****
+	 * 加入圈子
+	 * @param session
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/joinGroup.action", method = RequestMethod.GET)
+	public Map<String, String> joinGroup(HttpSession session, HttpServletRequest request) {
+
+		Map<String, String> modelMap = new HashMap<String, String>();
+		try {
+			String gid = request.getParameter("gid");
+			String userId = ((SessionUser) session.getAttribute("user")).getUserId();
+			Member member = new Member();
+			member.setGid(gid);
+			member.setUserId(userId);
+			return memberService.joinGroup(member);
+		} catch (Exception e) {
+			e.printStackTrace();
+			modelMap.put("result", "fail");
+			modelMap.put("message", "系统异常");
+			return modelMap;
+		}
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/existGroup.action", method = RequestMethod.GET)
+	public Map<String, String> existGroup(HttpSession session, HttpServletRequest request) {
+
+		Map<String, String> modelMap = new HashMap<String, String>();
+		try {
+			String gid = request.getParameter("gid");
+			String userId = ((SessionUser) session.getAttribute("user")).getUserId();
+			Member member = new Member();
+			member.setGid(gid);
+			member.setUserId(userId);
+			return memberService.existGroup(member);
+		} catch (Exception e) {
+			e.printStackTrace();
+			modelMap.put("result", "fail");
+			modelMap.put("message", "系统异常");
+			return modelMap;
+		}
 	}
 
 	@RequestMapping(value = "/{gid}/member", method = RequestMethod.GET)
@@ -232,17 +327,18 @@ public class GroupAction {
 		}
 		try {
 			if (StringUtils.isEmpty(gid)) {
-				mv.setViewName("redirect:" + Constant.WEBSTIE);
+				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 				return mv;
 			}
 			Group group = groupService.queryGorup(gid);
 			if (null == group) {
-				mv.setViewName("redirect:" + Constant.WEBSTIE);
+				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 				return mv;
 			}
 			PaginationResult result = memberService.queryMembers(gid, MemberStatus.ISMEMBER, QueryOrder.ASC, page_int,
 					Constant.pageSize30);
 			mv.addObject("gid", gid);
+			mv.addObject("memberStatus", memberStatus(session, gid));
 			mv.addObject("group", group);
 			mv.addObject("result", result);
 			mv.setViewName("group/group_member");
@@ -265,12 +361,12 @@ public class GroupAction {
 		}
 		try {
 			if (StringUtils.isEmpty(gid)) {
-				mv.setViewName("redirect:" + Constant.WEBSTIE);
+				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 				return mv;
 			}
 			Group group = groupService.queryGorup(gid);
 			if (null == group) {
-				mv.setViewName("redirect:" + Constant.WEBSTIE);
+				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 				return mv;
 			}
 			Article article = articleService.showArticle(id_int);
@@ -280,6 +376,7 @@ public class GroupAction {
 			}
 			// 查询分类
 			List<ArticleItem> itemList = articleItemService.queryItemByGid(gid);
+			mv.addObject("memberStatus", memberStatus(session, gid));
 			mv.addObject("group", group);
 			mv.addObject("gid", gid);
 			mv.addObject("itemList", itemList);
@@ -409,8 +506,8 @@ public class GroupAction {
 				modelMap.put("message", "关键字太长");
 				return modelMap;
 			}
-			// SessionUser user = (SessionUser) session.getAttribute("user");
-			String userId = "10001";
+			SessionUser user = (SessionUser) session.getAttribute("user");
+			String userId = user.getUserId();
 			Article article = new Article();
 			article.setGid(gid);
 			article.setItemId(itemId_int);

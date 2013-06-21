@@ -11,14 +11,19 @@
 	
 	<!-- 增加成员-->
 	<insert id="addMember" parameterClass="member">
-		insert into member (gid,userid,ismember,grade,jointime)
-		values(#gid#,#userId#,#isMember#,#grade#,#joinTime#);
+		insert into member (gid,userid,ismember,jointime)
+		values(#gid#,#userId#,#isMember#,#joinTime#);
 	</insert>
 	
 	<!-- 删除成员 -->
 	<delete id="deleteMember" parameterClass="java.lang.Integer">
 		delete from member where id = #id#
 	</delete>
+	
+	<delete id="deleteMemberByGidAndUserId" parameterClass="java.util.Map">
+		delete from member where gid = #gid# and userid = #userId#
+	</delete>
+	
 	
 	<!-- 非空更新群成员信息 -->
 	<!-- 更新群非空信息 -->

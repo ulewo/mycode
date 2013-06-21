@@ -1,5 +1,6 @@
 package com.ulewo.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,12 +17,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ulewo.entity.Article;
 import com.ulewo.entity.BlogArticle;
+import com.ulewo.entity.Group;
 import com.ulewo.entity.Talk;
 import com.ulewo.service.ArticleService;
 import com.ulewo.service.BlogArticleService;
 import com.ulewo.service.GroupService;
-import com.ulewo.service.MemberService;
 import com.ulewo.service.TalkService;
+import com.ulewo.service.UserService;
 import com.ulewo.util.Constant;
 import com.ulewo.util.PaginationResult;
 import com.ulewo.util.StringUtils;
@@ -35,7 +37,7 @@ public class HomeAction {
 	ArticleService articleService;
 
 	@Autowired
-	MemberService memberService;
+	UserService userService;
 
 	@Autowired
 	BlogArticleService blogArticleService;
@@ -59,6 +61,7 @@ public class HomeAction {
 		return mv;
 	}
 
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public ModelAndView manage(HttpSession session) {
 
@@ -66,34 +69,79 @@ public class HomeAction {
 
 		try {
 			List<Article> list = articleService.queryLatestArticle(0, 20);
-			List<Article> imgArticle = articleService.queryImageArticle(0, 5);
+			List<Article> imgArticle = articleService.queryImageArticle(null, 0, 5);
 			List<BlogArticle> blogList = blogArticleService.indexLatestBlog(0, 20);
+			List<Group> groupList = (List<Group>) groupService.queryGroupsOderArticleCount(0, 10).getList();
 			mv.addObject("list", list);
 			mv.addObject("imgArticle", imgArticle);
 			mv.addObject("blogList", blogList);
+			mv.addObject("groupList", groupList);
 			mv.setViewName("home");
 			return mv;
 		} catch (Exception e) {
 			e.printStackTrace();
-			mv.setViewName("redirect:" + Constant.WEBSTIE);
+			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
 	}
 
 	@RequestMapping(value = "/square", method = RequestMethod.GET)
-	public ModelAndView square(HttpSession session) {
+	public ModelAndView square(HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
 
 		try {
-			List<Article> list = articleService.queryLatestArticle(0, 50);
-			mv.addObject("list", list);
+			String page = request.getParameter("page");
+			int page_int = 0;
+			if (StringUtils.isNumber(page)) {
+				page_int = Integer.parseInt(page);
+			}
+			PaginationResult result = articleService.queryImageArticle2PagResult(null, page_int, Constant.pageSize30);
+			List<Article> list = (List<Article>) result.getList();
+			List<Article> square1 = new ArrayList<Article>();
+			List<Article> square2 = new ArrayList<Article>();
+			List<Article> square3 = new ArrayList<Article>();
+			List<Article> square4 = new ArrayList<Article>();
+			set2Square(square1, square2, square3, square4, list);
+			mv.addObject("square1", square1);
+			mv.addObject("square2", square2);
+			mv.addObject("square3", square3);
+			mv.addObject("square4", square4);
+			mv.addObject("page", result.getPage());
+			mv.addObject("pageTotal", result.getPageTotal());
 			mv.setViewName("square");
 			return mv;
 		} catch (Exception e) {
 			e.printStackTrace();
-			mv.setViewName("redirect:" + Constant.WEBSTIE);
+			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
+		}
+	}
+
+	private void set2Square(List<Article> square1, List<Article> square2, List<Article> square3, List<Article> square4,
+			List<Article> squareList) {
+
+		int num = 0;
+		int j = 0;
+		for (Article article : squareList) {
+			j++;
+			if (1 + num * 4 == j) {
+				square1.add(article);
+				continue;
+			}
+			if (2 + num * 4 == j) {
+				square2.add(article);
+				continue;
+			}
+			if (3 + num * 4 == j) {
+				square3.add(article);
+				continue;
+			}
+			if (4 + num * 4 == j) {
+				square4.add(article);
+				num++;
+				continue;
+			}
 		}
 	}
 
@@ -113,7 +161,7 @@ public class HomeAction {
 			return mv;
 		} catch (Exception e) {
 			e.printStackTrace();
-			mv.setViewName("redirect:" + Constant.WEBSTIE);
+			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
 	}
@@ -135,6 +183,21 @@ public class HomeAction {
 		}
 	}
 
+	@ResponseBody
+	@RequestMapping(value = "/loadGroupAndMember", method = RequestMethod.GET)
+	public Map<String, Object> loadGroupAndMember(HttpSession session, HttpServletRequest request) {
+
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			PaginationResult groupResult = groupService.queryGroupsOderArticleCount(1, Constant.pageSize15);
+			return modelMap;
+		} catch (Exception e) {
+			e.printStackTrace();
+			modelMap.put("result", "fail");
+			return modelMap;
+		}
+	}
+
 	@RequestMapping(value = "/talk", method = RequestMethod.GET)
 	public ModelAndView talk(HttpSession session) {
 
@@ -145,7 +208,7 @@ public class HomeAction {
 			return mv;
 		} catch (Exception e) {
 			e.printStackTrace();
-			mv.setViewName("redirect:" + Constant.WEBSTIE);
+			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
 	}

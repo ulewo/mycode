@@ -1,6 +1,7 @@
 package com.ulewo.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ulewo.entity.Member;
 import com.ulewo.enums.MemberStatus;
@@ -15,6 +16,11 @@ import com.ulewo.util.PaginationResult;
  * @version V1.0
  */
 public interface MemberService {
+
+	public Map<String, String> joinGroup(Member member);
+
+	public Map<String, String> existGroup(Member member);
+
 	public void addMember(Member member);
 
 	/**
@@ -65,8 +71,8 @@ public interface MemberService {
 	 * @return
 	 * @author luohl
 	 */
-	public PaginationResult queryMembers(String gid, MemberStatus memberStatus,
-			QueryOrder queryOrder, int page, int pageSize);
+	public PaginationResult queryMembers(String gid, MemberStatus memberStatus, QueryOrder queryOrder, int page,
+			int pageSize);
 
 	/**
 	 * 首页查询成员
@@ -78,12 +84,10 @@ public interface MemberService {
 	 * @param pageSize
 	 * @return
 	 */
-	public List<Member> queryMembersIndex(String gid,
-			MemberStatus memberStatus, QueryOrder queryOrder, int offset,
+	public List<Member> queryMembersIndex(String gid, MemberStatus memberStatus, QueryOrder queryOrder, int offset,
 			int pageSize);
 
-	public List<Member> queryMembersActiveIndex(String gid,
-			MemberStatus memberStatus, int offset, int pageSize);
+	public List<Member> queryMembersActiveIndex(String gid, MemberStatus memberStatus, int offset, int pageSize);
 
 	/**
 	 * 查询成员数
@@ -105,4 +109,5 @@ public interface MemberService {
 	 */
 	public List<Member> queryActiveMembers(String gid, int offset, int total);
 
+	public Member queryMemberByGidAndUserId(String gid, String userId);
 }

@@ -18,7 +18,7 @@ import com.ulewo.entity.User;
 import com.ulewo.enums.NoticeType;
 import com.ulewo.enums.QueryUserType;
 import com.ulewo.util.Constant;
-import com.ulewo.util.Springfactory;
+import com.ulewo.util.SpringUtil;
 import com.ulewo.util.StringUtils;
 
 public class NoticeThread implements Runnable {
@@ -44,9 +44,9 @@ public class NoticeThread implements Runnable {
 
 	@Override
 	public void run() {
-		/*
-		noticeDao = (NoticeDao) Springfactory.getBean("noticeDao");
-		userDao = (UserDao) Springfactory.getBean("userDao");
+
+		noticeDao = (NoticeDao) SpringUtil.getObject("noticeDao");
+		userDao = (UserDao) SpringUtil.getObject("userDao");
 		NoticeType noticeType = noticeParm.getNoticeType();
 		int articleId = noticeParm.getArticleId();
 		String receiveUserId = noticeParm.getReceiveUserId();
@@ -57,22 +57,22 @@ public class NoticeThread implements Runnable {
 		String url = "";
 		switch (noticeType) {
 		case REARTICLE: // 回复主题
-			articleDao = (ArticleDao) Springfactory.getBean("articleDao");
+			articleDao = (ArticleDao) SpringUtil.getObject("articleDao");
 			url = "../group/post.jspx?id=" + articleId + "#re" + reId;
 			reArticle(articleId, receiveUserId, atUserIds, sendUserId, url);
 			break;
 		case ATINARTICLE: // 在文章中@
-			articleDao = (ArticleDao) Springfactory.getBean("articleDao");
+			articleDao = (ArticleDao) SpringUtil.getObject("articleDao");
 			url = "../group/post.jspx?id=" + articleId;
 			atInArticle(articleId, atUserIds, sendUserId, url);
 			break;
 		case REBLOG: // 回复博客
-			blogArticleDao = (BlogArticleDao) Springfactory.getBean("blogArticleDao");
+			blogArticleDao = (BlogArticleDao) SpringUtil.getObject("blogArticleDao");
 			url = "blogdetail.jspx?id=" + articleId + "#re" + reId;
 			reBlog(articleId, receiveUserId, atUserIds, sendUserId, url);
 			break;
 		case ATINBLOG: // 在博客中@
-			blogArticleDao = (BlogArticleDao) Springfactory.getBean("blogArticleDao");
+			blogArticleDao = (BlogArticleDao) SpringUtil.getObject("blogArticleDao");
 			url = "blogdetail.jspx?id=" + articleId;
 			atInBlog(articleId, atUserIds, sendUserId, url);
 			break;
@@ -85,11 +85,11 @@ public class NoticeThread implements Runnable {
 			atInTalk(articleId, atUserIds, sendUserId, url);
 			break;
 		case RETALK:
-			talkDao = (TalkDao) Springfactory.getBean("talkDao");
+			talkDao = (TalkDao) SpringUtil.getObject("talkDao");
 			url = "talkDetail.jspx?userId=" + receiveUserId + "&talkId=" + articleId;
 			reTalk(articleId, receiveUserId, atUserIds, sendUserId, url);
 			break;
-		}*/
+		}
 	}
 
 	// 回复主题

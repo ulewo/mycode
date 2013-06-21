@@ -252,12 +252,20 @@ public class ArticleDao extends BaseDao {
 		return this.getSqlMapClientTemplate().queryForList("article.queryComendArticle", parmMap);
 	}
 
-	public List<Article> queryImageArticle(int offset, int total) {
+	public List<Article> queryImageArticle(String gid, int offset, int total) {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("gid", gid);
 		parmMap.put("offset", offset);
 		parmMap.put("total", total);
 		return this.getSqlMapClientTemplate().queryForList("article.queryImageArticle", parmMap);
+	}
+
+	public int queryImageArticleCount(String gid) {
+
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("gid", gid);
+		return (Integer) this.getSqlMapClientTemplate().queryForObject("article.queryImageArticleCount", parmMap);
 	}
 
 	public List<Article> queryLatestArticle(int offset, int total) {

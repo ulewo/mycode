@@ -14,6 +14,7 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +26,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ulewo.entity.BlogArticle;
 import com.ulewo.entity.BlogItem;
+import com.ulewo.entity.Notice;
 import com.ulewo.entity.SessionUser;
 import com.ulewo.entity.User;
 import com.ulewo.enums.QueryUserType;
 import com.ulewo.service.BlogArticleService;
 import com.ulewo.service.BlogItemService;
 import com.ulewo.service.BlogReplyService;
+import com.ulewo.service.NoticeService;
 import com.ulewo.service.UserService;
 import com.ulewo.util.Constant;
 import com.ulewo.util.PaginationResult;
@@ -51,6 +54,9 @@ public class UserManageAction {
 
 	@Autowired
 	private BlogReplyService blogReplyService;
+
+	@Autowired
+	private NoticeService noticeService;
 
 	private final static int CHARACTER_LENGTH = 200;
 
@@ -75,7 +81,7 @@ public class UserManageAction {
 	public ModelAndView queryUserInfo(HttpSession session) {
 
 		SessionUser user = (SessionUser) session.getAttribute("user");
-		String userId = "10001";
+		String userId = user.getUserId();
 		ModelAndView mv = new ModelAndView();
 		try {
 			User resultUser = userService.findUser(userId, QueryUserType.USERID);
@@ -94,7 +100,7 @@ public class UserManageAction {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			mv.setViewName("redirect:" + Constant.WEBSTIE);
+			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
 		return mv;
@@ -113,7 +119,7 @@ public class UserManageAction {
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
-			String userId = "10001";
+			String userId = sessionUser.getUserId();
 			String age = request.getParameter("age");
 			String character = request.getParameter("characters");
 			String sex = request.getParameter("sex");
@@ -174,8 +180,8 @@ public class UserManageAction {
 		String newpwd = request.getParameter("newpwd");
 		String checkPassWord = "^[0-9a-zA-Z]+$";
 		try {
-			//SessionUser sessionUser = (SessionUser) session.getAttribute("user");
-			String userId = "10001";
+			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+			String userId = sessionUser.getUserId();
 			if (!oldpwd.matches(checkPassWord) || StringUtils.isEmpty(oldpwd) || oldpwd.length() < PWD_MIN_LENGTH
 					|| oldpwd.length() > PWD_MAX_LENGTH) {
 				modelMap.put("message", "旧密码不符合规范");
@@ -214,8 +220,6 @@ public class UserManageAction {
 	public ModelAndView userIcon(HttpSession session) {
 
 		ModelAndView mv = new ModelAndView();
-		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
-		String userId = "10001";
 		mv.setViewName("usermanage/usericon");
 		return mv;
 
@@ -428,7 +432,7 @@ public class UserManageAction {
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
-			String userId = "10001";
+			String userId = sessionUser.getUserId();
 			List<BlogItem> itemList = blogItemService.queryBlogItemByUserId(userId);
 			modelMap.put("items", itemList);
 			return modelMap;
@@ -446,14 +450,14 @@ public class UserManageAction {
 		ModelAndView mv = new ModelAndView();
 		try {
 			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
-			String userId = "10001";
+			String userId = sessionUser.getUserId();
 			List<BlogItem> itemList = blogItemService.queryBlogItemAndCountByUserId(userId);
 			mv.addObject("imtes", itemList);
 			mv.setViewName("usermanage/blog_item");
 			return mv;
 		} catch (Exception e) {
 			e.printStackTrace();
-			mv.setViewName("redirect:" + Constant.WEBSTIE);
+			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
 	}
@@ -483,7 +487,7 @@ public class UserManageAction {
 				return modelMap;
 			}
 			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
-			String userId = "10001";
+			String userId = sessionUser.getUserId();
 			int id_int = Integer.parseInt(id);
 			int range_int = Integer.parseInt("range");
 			BlogItem item = new BlogItem();
@@ -520,11 +524,11 @@ public class UserManageAction {
 				id = id.trim();
 			}
 			if (StringUtils.isEmpty(itemName) || itemName.length() > ITEM_LENGTH) {
-				mv.setViewName("redirect:" + Constant.WEBSTIE);
+				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 				return mv;
 			}
 			if (!StringUtils.isNumber(range)) {
-				mv.setViewName("redirect:" + Constant.WEBSTIE);
+				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 				return mv;
 			}
 			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
@@ -546,7 +550,7 @@ public class UserManageAction {
 			return mv;
 		} catch (Exception e) {
 			e.printStackTrace();
-			mv.setViewName("redirect:" + Constant.WEBSTIE);
+			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
 	}
@@ -564,7 +568,7 @@ public class UserManageAction {
 		try {
 			String id = request.getParameter("id");
 			if (StringUtils.isEmpty(id) || !StringUtils.isNumber(id)) {
-				mv.setViewName("redirect:" + Constant.WEBSTIE);
+				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 				return mv;
 			}
 			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
@@ -574,7 +578,7 @@ public class UserManageAction {
 			mv.setViewName("redirect:blog_item");
 			return mv;
 		} catch (Exception e) {
-			mv.setViewName("redirect:" + Constant.WEBSTIE);
+			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
 	}
@@ -596,15 +600,14 @@ public class UserManageAction {
 		}
 		try {
 			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
-			String userId = "10001";
-
+			String userId = sessionUser.getUserId();
 			PaginationResult pagResult = blogReplyService.queryAllReply(userId, page_int, Constant.pageSize20);
 			mv.addObject("replyList", pagResult);
 			mv.setViewName("usermanage/blog_reply");
 			return mv;
 		} catch (Exception e) {
 			e.printStackTrace();
-			mv.setViewName("redirect:" + Constant.WEBSTIE);
+			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
 	}
@@ -626,18 +629,97 @@ public class UserManageAction {
 		}
 		try {
 			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
-			String userId = "10001";
+			String userId = sessionUser.getUserId();
 			if (blogReplyService.delete(userId, id_int)) {
 				mv.setViewName("redirect:blog_reply");
 			}
 			else {
-				mv.setViewName("redirect:" + Constant.WEBSTIE);
+				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			}
 			return mv;
 		} catch (Exception e) {
 			e.printStackTrace();
-			mv.setViewName("redirect:" + Constant.WEBSTIE);
+			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
+		}
+	}
+
+	@RequestMapping(value = "/notice", method = RequestMethod.GET)
+	public ModelAndView notice(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView mv = new ModelAndView();
+		try {
+			String userId = ((SessionUser) session.getAttribute("user")).getUserId();
+			List<Notice> list = noticeService.queryNoticeByUserId(userId, Constant.STATUSYN);
+			mv.addObject("list", list);
+			mv.setViewName("usermanage/notice");
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.setViewName("redirect:" + Constant.ERRORPAGE);
+			return mv;
+		}
+		return mv;
+	}
+
+	@RequestMapping(value = "/readNotice", method = RequestMethod.POST)
+	public ModelAndView deleteNotice(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView mv = new ModelAndView();
+		try {
+			String ids[] = request.getParameterValues("ids");
+			if (ids == null) {
+				mv.setViewName("redirect:" + Constant.ERRORPAGE);
+			}
+			for (int i = 0; i < ids.length; i++) {
+				int id = Integer.parseInt(ids[i]);
+				noticeService.deleteNotice(id);
+			}
+			mv.setViewName("manage/notice.action");
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.setViewName("redirect:" + Constant.ERRORPAGE);
+			return mv;
+		}
+		return mv;
+	}
+
+	@RequestMapping(value = "/noticeDetail", method = RequestMethod.POST)
+	public ModelAndView noticeDetail(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView mv = new ModelAndView();
+		try {
+			String noticeId = request.getParameter("id");
+			if (!StringUtils.isNumber(noticeId)) {
+				mv.setViewName("redirect:" + Constant.ERRORPAGE);
+				return mv;
+			}
+			int noticeId_int = Integer.parseInt(noticeId);
+			Notice notice = noticeService.getNotice(noticeId_int);
+			String url = notice.getUrl();
+			noticeService.deleteNotice(noticeId_int);
+			mv.setViewName("redirect:" + url);
+		} catch (Exception e) {
+			e.printStackTrace();
+			mv.setViewName("redirect:" + Constant.ERRORPAGE);
+			return mv;
+		}
+		return mv;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/noticeCount", method = RequestMethod.GET)
+	public Map<String, Object> noticeCount(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			String userId = ((SessionUser) session.getAttribute("user")).getUserId();
+			int count = noticeService.queryNoticeCountByUserId(userId, Constant.STATUSYN);
+			modelMap.put("count", count);
+			return modelMap;
+		} catch (Exception e) {
+			e.printStackTrace();
+			modelMap.put("result", "fail");
+			return modelMap;
 		}
 	}
 }

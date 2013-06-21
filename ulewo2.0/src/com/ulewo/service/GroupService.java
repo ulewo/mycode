@@ -10,6 +10,7 @@ public interface GroupService {
 	 * 创建群组
 	 * 
 	 * @param group
+	 * @param member TODO
 	 * @return @
 	 */
 

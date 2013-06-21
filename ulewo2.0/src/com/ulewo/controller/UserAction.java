@@ -316,7 +316,7 @@ public class UserAction {
 
 			UserVo userVo = checkUserInfo(userId, session);
 			if (null == userVo) {
-				mv.setViewName("redirect:" + Constant.WEBSTIE);
+				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			}
 			mv.addObject("userVo", userVo);
 			List<BlogArticle> list = blogArticleService.queryBlog(userId, 0, 0, 5, BlogOrderType.POSTTIME);
@@ -332,7 +332,7 @@ public class UserAction {
 			mv.setViewName("user/userhome");
 		} catch (Exception e) {
 			e.printStackTrace();
-			mv.setViewName("redirect:" + Constant.WEBSTIE);
+			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
 		return mv;
@@ -382,7 +382,7 @@ public class UserAction {
 		try {
 			UserVo userVo = checkUserInfo(userId, session);
 			if (null == userVo) {
-				mv.setViewName("redirect:" + Constant.WEBSTIE);
+				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			}
 			mv.addObject("userVo", userVo);
 			String itemId = request.getParameter("itemId");
@@ -429,7 +429,7 @@ public class UserAction {
 		try {
 			UserVo userVo = checkUserInfo(userId, session);
 			if (null == userVo) {
-				mv.setViewName("redirect:" + Constant.WEBSTIE);
+				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			}
 			mv.addObject("userVo", userVo);
 			int blogId_int = 0;
@@ -441,6 +441,10 @@ public class UserAction {
 				return mv;
 			}
 			BlogArticle blogArticle = blogArticleService.queryBlogById(blogId_int);
+			BlogArticle updateReadNumber = new BlogArticle();
+			updateReadNumber.setId(blogArticle.getId());
+			updateReadNumber.setReadCount(blogArticle.getReadCount() + 1);
+			blogArticleService.updateReadCount(blogArticle);
 			List<BlogItem> blogItemList = blogItemService.queryBlogItemAndCountByUserId(userId);
 			int countTotal = blogArticleService.queryBlogCount(userId, 0);
 			List<BlogArticle> hotlist = blogArticleService.queryBlog(userId, 0, 0, 10, BlogOrderType.READCOUNT);
@@ -775,7 +779,7 @@ public class UserAction {
 
 			UserVo userVo = checkUserInfo(userId, session);
 			if (null == userVo) {
-				mv.setViewName("redirect:" + Constant.WEBSTIE);
+				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			}
 			mv.addObject("userVo", userVo);
 			List<UserFriend> focusList = userFriendService.queryFocus2List(userId, 0, 15);
@@ -790,7 +794,7 @@ public class UserAction {
 			mv.setViewName("user/talk");
 		} catch (Exception e) {
 			e.printStackTrace();
-			mv.setViewName("redirect:" + Constant.WEBSTIE);
+			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
 		return mv;
@@ -828,10 +832,10 @@ public class UserAction {
 
 			UserVo userVo = checkUserInfo(userId, session);
 			if (null == userVo) {
-				mv.setViewName("redirect:" + Constant.WEBSTIE);
+				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			}
 			if (!StringUtils.isNumber(talkId)) {
-				mv.setViewName("redirect:" + Constant.WEBSTIE);
+				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			}
 			int talkId_int = Integer.parseInt(talkId);
 			mv.addObject("userVo", userVo);
@@ -849,7 +853,7 @@ public class UserAction {
 			mv.setViewName("user/talk_detal");
 		} catch (Exception e) {
 			e.printStackTrace();
-			mv.setViewName("redirect:" + Constant.WEBSTIE);
+			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
 		return mv;
@@ -919,5 +923,4 @@ public class UserAction {
 			return modelMap;
 		}
 	}
-
 }

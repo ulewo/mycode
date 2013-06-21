@@ -23,7 +23,7 @@ public class FormatAt {
 
 	private final SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-	private static String userUrl = "../user/userInfo.jspx?userId=";
+	private static String userUrl = Constant.WEBSTIE + "user/";
 
 	public static FormatAt getInstance(String... type) {
 
@@ -31,7 +31,7 @@ public class FormatAt {
 			instance = new FormatAt();
 		}
 		if (null != type && type.length > 0 && Constant.TYPE_TALK.equals(type[0])) {
-			userUrl = Constant.WEBSTIE + "user/userInfo.jspx?userId=";
+			userUrl = Constant.WEBSTIE + "user/";
 		}
 		return instance;
 	}
