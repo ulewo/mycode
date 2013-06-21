@@ -47,7 +47,7 @@
 				<div class="login_tit"></div>
 				<div class="login_submit">
 					<a href="javascript:void(0)" class="btn" id="login_btn">现在登陆</a>
-					<a href="" class="foregetpsw">忘记密码？</a>
+					<!-- <a href="" class="foregetpsw">忘记密码？</a> -->
 					<span class="result_info"><i id="warm_icon"></i><span id="warm_info"></span></span>
 				</div>
 			</div>

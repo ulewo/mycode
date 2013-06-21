@@ -8,12 +8,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>出错啦!  -有乐窝</title>
 <%@ include file="common/path.jsp" %>
-<link rel="stylesheet" type="text/css" href="css/index.css">
+<link rel="stylesheet" type="text/css" href="${realPath}/css/index.css">
 </head>
 <body>
   <%@ include file="common/head.jsp" %>
-  <div class="bodycon">
-  		<div>
+  <div class="main">
+  		<div style="margin-top:10px;">
   			<div class="error_img"><img src="${realPath}/images/error.jpg"></div>
   			<div class="error_info">
   				<span class="tit">出现此页面可能是由于以下原因引起的：</span>

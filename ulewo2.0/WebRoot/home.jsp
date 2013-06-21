@@ -26,8 +26,8 @@
   				<c:forEach var="article" items="${imgArticle}">
   					<c:set var="num" value="${num+1}"/>
   					<div class="day_pic" <c:if test="${num==1}">style='margin-left:5px'</c:if> >
-					<a href="group/post.jspx?id=${article.id}" class="day_pic_link"><span class="day_pic_con"><img src="upload/${article.image}"></span></a>
-					<div class="day_pic_tit"><a href="group/post.jspx?id=${article.id}" title="${article.title}" target="_blank">${article.title}</a></div>
+					<a href="${realPath}/group/${article.gid}/topic/${article.id}" target="_blank" class="day_pic_link"><span class="day_pic_con"><img src="upload/${article.image}"></span></a>
+					<div class="day_pic_tit"><a href="${realPath}/group/${article.gid}/topic/${article.id}" title="${article.title}" target="_blank">${article.title}</a></div>
 				</div> 
   				</c:forEach>
 				<div class="clear"></div>
@@ -36,14 +36,25 @@
   			<div class="titinfo">最新文章</div>
 	  			<ul class="new_article_list">
 	  				<c:forEach var="article" items="${list}">
-	  					<li><span class="article_tit"><a href="group/group.jspx?gid=${article.gid}" target="_blank">[${article.groupName}]</a><a href="group/post.jspx?id=${article.id}" class="sec_span2"  title="${article.title}" target="_blank">${article.title}</a></span><span class="article_user">${article.postTime} by ${article.authorName}</span></li>
+	  					<li>
+	  						<span class="article_tit">
+	  						<a href="${realPath}/group/${article.gid}?itemId=${article.itemId}" target="_blank" title="${article.title}">[${article.groupName}]</a>
+	  						<a href="${realPath}/group/${article.gid}/topic/${article.id}" class="sec_span2"  title="${article.title}" target="_blank">${article.title}</a></span>
+	  						<span class="article_user">${article.postTime} by ${article.authorName}</span>
+	  					</li>
 	  				</c:forEach>
 	  			</ul>
   			<div class="titinfo">最新博文</div>
   			  <div>
-				<ul class="new_blog">
+				<ul class="new_article_list">
 					<c:forEach var="blog" items="${blogList}">
-						<li><span class="article_tit"><a href="user/blogdetail.jspx?id=${blog.id}" title="${article.title}" target="_blank" class="sec_span2" style="width:460px;padding-left:0px;">${blog.title}</a><span class="sec_span">${blog.postTime} by ${blog.userName}</span></span><span class="article_read">${blog.reCount}回/${blog.readCount}阅</span></li>
+						<li>
+							<span class="article_tit">
+								<a href="${realPath}/user/${blog.userId}/blog/${blog.id}" target="_blank" title="${blog.title}" target="_blank" class="sec_span2" style="width:460px;padding-left:0px;">${blog.title}</a>
+								<span class="sec_span">${blog.postTime} by ${blog.userName}</span>
+							</span>
+							<span class="article_read">${blog.reCount}回/${blog.readCount}阅</span>
+						</li>
 					</c:forEach>
 	  			</ul>
 	  			</div>
@@ -168,17 +179,18 @@
 	  			<div class='moretalk'><a href='${realPath}/talk'>看看大家都在吐槽什么&gt;&gt;</a></div>
   			</div>
 	  			<div class="titinfo">推荐窝窝</div>
-	  			<c:forEach var="group" items="${commendGroupList}">
+	  			<c:forEach var="group" items="${groupList}">
 	  				<div class="recommend_wo">
-  					<div class="wo_img"><a href="group/group.jspx?gid=${group.id}" target="_blank"><img src="upload/${group.groupIcon}"></a></div>
+  					<div class="wo_img"><a href="${realPath}/group/${group.id}" target="_blank"><img src="${realPath}/upload/${group.groupIcon}"></a></div>
   					<div class="wo_info">
-  						<div><a href="group/group.jspx?gid=${group.id}" target="_blank">${group.groupName}</a></div>
+  						<div><a href="${realPath}/group/${group.id}" target="_blank">${group.groupName}</a></div>
   						<div>成员${group.members}人</div>
   						<div>文章${group.topicCount}篇</div>
   					</div>
   					<div class="clear"></div>
   				</div>
 	  			</c:forEach>
+	  			<!-- 
   				<div class="titinfo">最活跃成员</div>
 			  	<div>
 			  		<c:forEach var="member" items="${activeUserList}">
@@ -189,6 +201,7 @@
 			  		</c:forEach>
 			  		<div class="clear"></div>
 			  	</div>
+			  	 -->
   			</div>
   			<div class="clear"></div>
   		</div>

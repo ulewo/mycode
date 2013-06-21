@@ -59,7 +59,7 @@
 		</div>
 		<div class="right">
 			<div class="register_register">
-				已有账号？<a href="">直接登陆</a>	
+				已有账号？<a href="${realPath}/login">直接登陆</a>	
 			</div>
 			<div class="register_right_tit">
 				为什么要注册？
