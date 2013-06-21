@@ -27,9 +27,9 @@ global.articleId= "${article.id}";
 		<%@ include file="group_info.jsp" %>
 		<div class="group_body">
 			<ul class="group_tag">
-				<li><a href="${realPath}/group//${gid}" class="tag_select">讨&nbsp;&nbsp;论</a></li>
-				<li><a href="${realPath}/group//${gid}/img">图&nbsp;&nbsp;片</a></li>
-				<li><a href="${realPath}/group//${gid}/member">成&nbsp;&nbsp;员</a></li>
+				<li><a href="${realPath}/group/${gid}" class="tag_select">讨&nbsp;&nbsp;论</a></li>
+				<li><a href="${realPath}/group/${gid}/img">图&nbsp;&nbsp;片</a></li>
+				<li><a href="${realPath}/group/${gid}/member">成&nbsp;&nbsp;员</a></li>
 			</ul>
 			<ul class="group_item">
 				<li style="margin-left:2px;"><a href="${realPath}/group/${gid}" <c:if test="${article.itemId==0}">class="select"</c:if>>全部文章</a></li>

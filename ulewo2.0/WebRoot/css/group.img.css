@@ -1,23 +1,5 @@
-@import url("public.css");
+@IMPORT url("group.public.css");
 .part{float:left;width:240px;margin-left:10px;}
-
- #container {
-        -webkit-column-count: 5��
-        /*-webkit-column-gap: 10px��
-        -webkit-column-rule: 5px solid #333��
-        -webkit-column-width: 210px��*/
-
-        -moz-column-count: 5��
-        /*-moz-column-gap: 20px��
-        -moz-column-rule: 5px solid #333��
-        -moz-column-width: 210px��*/
-
-        column-count: 5��
-        /*column-gap: 10px��
-        column-rule: 5px solid #333��
-        column-width: 210px��*/
-    }
-
 .single{
 text-align:left;
 width: 235px;
@@ -35,13 +17,6 @@ overflow:hidden;
 .single_tit a{text-decoration:none;color: #006A92}
 .single_tit a:hover{text-decoration:underline;}
 .single_con{margin-top:10px;width:210px;}
-.group{margin-top:10px;width:1000px;}
-.group_icon{float:left;width:65px;border:1px solid #D7D7D7}
-.group_info{float:left;width:900px;text-align:left;margin-left:10px;}
-.group_info a{text-decoration:none;color:#006A92}
-.group_info a:hover{text-decoration:underline;}
-.group_name,.group_author{height:20px;}
-.group_desc{color:#999999;line-height:20px;}
 .single_img img{max-width:208px;width:expression(this.width>208?"208":width)}
 .single_img{margin-top:5px;}
 .readInfo{width:235px;margin-top:5px;}

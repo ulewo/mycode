@@ -6,12 +6,17 @@
 .group_info_con{float:left;width:715px;margin-left:10px;}
 .group_title{font-weight:bold;font-size:16px;color:#64C5E8}
 .group_title a.btn{font-size:13px;font-weight:normal;height:16px;padding-top:3px;}
-.group_author{margin-top:5px;}
+.group_author{margin-top:2px;}
 .group_info_tit{font-size:14px;padding:0px 5px}
 .group_url{margin-top:5px;color:#335DA9}
 .group_url a{background:#FCA01F;height:16px;padding:3px 8px 0px 8px;}
 .group_url a:hover{background:#EE8700}
-
+.group_url_con{display:inline-block;float:left;margin-top:5px;}
+.group_joinstatus{display:inline-block;float:left;margin-left:5px;background:#F0F1F0;padding:2px;}
+.group_joinstatus .joined{color:#696A69}
+.group_joinstatus .joined a{background:#F0F1F0;}
+.apply{color:red;}
+.group_joinstatus .result_info{float:left;margin-left:5px;}
 .group_desc{margin-top:5px;line-height:20px;}
 .group_info_notice{float:left;width:200px;margin-left:15px;}
 

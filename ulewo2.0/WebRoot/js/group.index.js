@@ -1,6 +1,5 @@
 $(function(){
 	loadMember();
-	loadHotArticle();
 });
 
 
@@ -30,22 +29,6 @@ function loadMember(){
 				$("<div class='noinfo'>暂时没有成员</div>").appendTo($("#activer_list"));
 			}
 			
-		}
-	});
-}
-
-function loadHotArticle(){
-	$.ajax({
-		async : true,
-		cache : false,
-		type : 'GET',
-		dataType : "json",
-		url : global.realPath+"/group/"+global.gid+"/loadHotArticle",// 请求的action路径
-		success : function(data) {
-			var articlelist = data.articlelist;
-			for(var i=0,length=articlelist.length;i<length;i++){
-				$("<div class='group_member_icon'><a href='"+global.realPath+"/user/"+articlelist[i].id+"' title='"+articlelist[i].title+"'>articlelist[i].title</a></div>").appendTo($("#member_list"));
-			}
 		}
 	});
 }

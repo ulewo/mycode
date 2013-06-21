@@ -19,10 +19,20 @@ global.gid = "${gid}";
 			</div>
 			<div class="group_author">
 				<span class="group_info_tit" style="padding-left:0px;">管理员:</span><a href="${realPath}/user/${group.groupAuthor}">${group.authorName}</a> 
-				<span class="group_info_tit">成员:</span>${group.members} 
+				<span class="group_info_tit">成员:</span><span id="memberCount">${group.members}</span>
 				<span class="group_info_tit">创建时间:</span>${group.createTime}
 			</div>
-			<div class="group_url">http://ulewo.com/group/${group.id}&nbsp;&nbsp;<a href="" class="btn">+立即加入</a></div>
+			<div class="group_url">
+				<div class="group_url_con">http://ulewo.com/group/${group.id}</div>
+				<c:if test="${user.userId!=group.groupAuthor}">
+					<div class="group_joinstatus" id="group_joinstatus">
+							<c:if test="${memberStatus==''}"><a href="javascript:void(0)" class="btn" id="joinBtn">+立即加入</a></c:if>
+							<c:if test="${memberStatus=='Y'}"><span class="joined" id="joined">已加入|<a href="javascript:void(0)" id="existBtn">退出</a></span></c:if>
+							<c:if test="${memberStatus=='N'}"><span class="apply">已申请加入,等待管理员的审核</span></c:if>
+					</div>
+				</c:if>
+				<div class="clear"></div>
+			</div>
 		</div>
 		<div class="clear"></div>
 	</div>
@@ -40,5 +50,6 @@ global.gid = "${gid}";
 		</div>
 	</div>
 	<div class="clear"></div>
+	<script type="text/javascript" src="${realPath}/js/group.public.js"></script>
 </div>
 		

@@ -6,9 +6,9 @@
 
 <div class="head_top">
 	<div class="head_logo">
-		<a href="${realPath}" onfocus="this.blur()"><img src="${realPath}/images/logo.png" border="0" width="200"></a>
+		<a href="${realPath}" onfocus="this.blur()"><img src="${realPath}/images/logo.png" border="0" width="80"></a>
 	</div>
-	<div class="android_logo"><a href="${realPath}ulewoapp.jsp"><img src="${realPath}/images/andriod_logo.png" border="0"></a></div>
+	<!-- <div class="android_logo"><a href="${realPath}ulewoapp.jsp"><img src="${realPath}/images/andriod_logo.png" border="0"></a></div> -->
 	<div class="head_user">
 		<c:choose>
 			<c:when test="${user==null}">
@@ -55,10 +55,12 @@
 			<li><a  href="${realPath}/blog"  class="selected3" onFocus="this.blur()">博&nbsp;客</a></li>
 			<li><a href="${realPath}/square" class="selected4" onFocus="this.blur()">广&nbsp;场</a></li>
 		</ul>
+		<!-- 
 		<div class="head_search">
 			<input type="button" class="head_search_btn" value="搜索一下" onclick="search()">
 			<input type="text" class="head_search_input" id="searchInput" name="keyWord">
 			<div class="clear"></div>
 		</div>
+		 -->
 	</div>
 </div>

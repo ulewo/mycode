@@ -1,7 +1,7 @@
 @IMPORT url("public.css");
 .selected1{background:#1C91BE;}
 .left{width:720px;float:left;}
-.right{width:260px;margin-left:20px;float:left;}
+.right{width:260px;margin-left:20px;float:left;margin-top:10px;}
 .titinfo{border-bottom:2px solid #38A2DB;font-size:18px;color:#38A2DB;padding:5px;margin-top:10px;}
 ul{margin:0px;padding:0px;}
 ul li{margin:0px;padding:0px;list-style:none;}
@@ -24,7 +24,7 @@ ul li{margin:0px;padding:0px;list-style:none;}
 .new_blog li span{color:#888;font-size:13px;}
 
 .create_wo{background:#38A3DB;height:30px;color:#FFFFFF;text-align:center;padding-top:10px;}
-.create_wo a{color:#FFFFFF;}
+.create_wo a{color:#FFFFFF;text-decoration:none;font-size:16px;display:block;width:100%;height:30px;}
 .create_wo a:hover{color:#FFFFFF;}
 .day_pic{float:left;width:130px;margin-left:15px;margin-top:10px;}
 a.day_pic_link{width:124px;height:100px;overflow:hidden;display:block;border:1px solid #38A2DB;padding:2px;}

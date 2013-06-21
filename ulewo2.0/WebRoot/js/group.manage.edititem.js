@@ -34,8 +34,8 @@ function saveItem(){
 		alert("分类名称不能为空！");
 		return;
 	}
-	if(itemName.length>50){
-		alert("分类名称不能超过50字符！");
+	if(itemName.length>10){
+		alert("分类名称不能超过10字符！");
 		return;
 	}
 	if(item_code==""){

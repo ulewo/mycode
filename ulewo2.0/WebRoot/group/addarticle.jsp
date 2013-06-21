@@ -50,7 +50,7 @@
 <div class="form_editcontent" id="editor">
 
 </div>
-<div class="form_tit">
+<div class="form_tit" style="display:none;">
 	<span class="form_tit_t">附件</span>
 	（<span class="form_tit_x">大小不能超过100K，只能是.rar文件</span>）
 </div>
@@ -58,7 +58,7 @@
 <input type="hidden" name="gid"  value="${gid}"/>
 <input type="hidden" id="content" name="content">
 <input type="hidden" id="faceImg" name="image">
-<div class="file_upload" id="file_upload">
+<div class="file_upload" id="file_upload" style="display:none;">
 	<iframe src="${realPath}/group/fileupload.jsp" width="350" height="30" frameborder="0" id="uploadFrame"></iframe>
 </div>
 <div class="form_sub_btn">

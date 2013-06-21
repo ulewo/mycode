@@ -19,7 +19,7 @@
 					</span>
 					<c:if test="${user.userId==userVo.userId}">
 						<a href="${realPath}/manage/userinfo" class="edit_info">修改资料</a>
-						<a href="${realPath}/manage/usericon" class="edit_icon">更换头像</a>
+						<a href="${realPath}/manage/user_icon" class="edit_icon">更换头像</a>
 					</c:if>
 					<c:if test="${user.userId!=userVo.userId&&!userVo.haveFocus}">
 						<a href="javascript:focusUser()" class="edit_info" id="focus_user">关注此人</a>
@@ -57,7 +57,7 @@
 			<div class="clear"></div>
 		</c:if>
 		<c:if test="${user.userId!=userVo.userId}">
-			<a href="message.jsp?userId=${uid}" class="sendMsg">
+			<a href="javascript:void(0)" class="sendMsg">
 				发送留言
 			</a>
 		</c:if>

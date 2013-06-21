@@ -244,7 +244,7 @@
 		  			</c:if>
 		  		</div>
 		  	</div>
-		  	<div class="trends">
+		  	<div class="trends" style="display:none;">
 		  		<ul>
 		  			<li><a href="####">所有动态</a></li>
 		  			<li><a href="####">吐槽</a></li>

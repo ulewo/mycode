@@ -27,6 +27,6 @@
 		 消息管理
 	</div>
 	<ul class="menue">
-		<li id="selected7"><a href="notice.jspx">未处理的消息</a></li>
+		<li id="selected7"><a href="notice">未处理的消息</a></li>
 	</ul>
 </div>
