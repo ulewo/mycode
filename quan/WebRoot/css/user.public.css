@@ -14,7 +14,7 @@ body{background:#F9F9F9;}
 .opts .blog:hover{background: #3676E8;background-image:url('../images/space-opts.png');background-position: 18px -70px;background-repeat:no-repeat;}
 .opts .manage{background:#5CACEE;width:105px;float:left;background-image:url('../images/space-opts.png');background-position: 18px -205px;background-repeat:no-repeat;display:block;margin-left:10px;color:#FFFFFF;padding-top:62px;height:17px;}
 .opts .manage:hover{background: #2E94E9;background-image:url('../images/space-opts.png');background-position: 18px -205px;background-repeat:no-repeat;}
-.opts .sendMsg{background:#5CACEE;display:block;height:40px;background-image:url('../images/space-opts.png');background-position: 15px -140px;background-repeat:no-repeat;color:#ffffff;padding-top:20px;padding-left:30px;font-size:14px;}
+.opts .sendMsg{background:#5CACEE;display:block;height:40px;background-image:url('../images/space-opts.png');background-position: 15px -140px;background-repeat:no-repeat;color:#ffffff;padding-top:20px;padding-left:30px;font-size:14px;text-align:center;}
 .opts .sendMsg:hover{background: #2E94E9;background-image:url('../images/space-opts.png');background-position: 15px -140px;background-repeat:no-repeat;}
 .right{float:left;width:750px;margin-left:10px;text-align:left;background:#ffffff;padding:10px;}
 .navPath{color:#999999;height:25px;}
