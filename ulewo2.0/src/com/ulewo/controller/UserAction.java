@@ -410,11 +410,14 @@ public class UserAction {
 			BlogItem item = blogItemService.queryBlogItemById(itemId_int);
 			List<BlogArticle> hotlist = blogArticleService.queryBlog(userId, 0,
 					0, 10, BlogOrderType.READCOUNT);
+			int totalCount = blogArticleService.queryBlogCount(userId, 0);
 			mv.addObject("hotlist", hotlist);
 			mv.addObject("result", result);
 			mv.addObject("blogItemList", blogItemList);
 			mv.addObject("blogitem", item);
+			mv.addObject("itemId", itemId_int);
 			mv.addObject("userId", userId);
+			mv.addObject("totalCount", totalCount);
 			mv.setViewName("/user/blog");
 			return mv;
 		} catch (Exception e) {
@@ -776,7 +779,7 @@ public class UserAction {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/loadLatestTalk.action", method = RequestMethod.GET)
+	@RequestMapping(value = "/loadLatestTalk", method = RequestMethod.GET)
 	public Map<String, Object> loadLatestTalk(HttpSession session,
 			HttpServletRequest request) {
 
