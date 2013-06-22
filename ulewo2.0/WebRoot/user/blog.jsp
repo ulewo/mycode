@@ -1,4 +1,5 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="/WEB-INF/pager.tld" prefix="p"%> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>  
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -17,7 +18,7 @@
 			<div class="left_item">
 				<div class="left_item_tit">博客分类</div>
 				<div class="left_img_p">
-					<div class="blog_item"><a href="${realPath}/user/${userId}/blog">全部文章</a><span>(${result.countTotal})</span></div>
+					<div class="blog_item"><a href="${realPath}/user/${userId}/blog">全部文章</a><span>(${totalCount})</span></div>
 					<c:forEach var="item" items="${blogItemList}">
 						<div class="blog_item"><a href="${realPath}/user/${userId}/blog?itemId=${item.id}">${item.itemName}</a><span>(${item.articleCount})</span></div>
 					</c:forEach>
@@ -65,6 +66,14 @@
 				<c:if test="${empty result.list}">
 					<div class="left_noinfo">没有发现博文</div>
 				</c:if>
+				<div class="pagination">
+					<c:if test="${itemId==0}">
+						<p:pager url="${realPath}/user/${userId}/blog" page="${result.page}" pageTotal = "${result.pageTotal }"></p:pager>
+					</c:if>
+					<c:if test="${itemId!=0}">
+						<p:pager url="${realPath}/user/${userId}/blog?itemId=${itemId}" page="${result.page}" pageTotal = "${result.pageTotal }"></p:pager>
+					</c:if>
+				</div>
 			</div>
 		</div>
 		<div style="clear:left;"></div>

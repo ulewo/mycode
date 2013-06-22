@@ -4,6 +4,10 @@ $(function(){
 })
 
 function saveTalk(){
+	if(global.userId==""){
+		alert("请先登录");
+		return;
+	}
 	if($(this).attr("disable")=="disable"){
 		return;
 	}
@@ -53,7 +57,7 @@ function loadTalk(){
 		cache : false,
 		type : 'GET',
 		dataType : "json",
-		url : global.realPath+"/user/loadLatestTalk.action?userId="+userId,// 请求的action路径
+		url : global.realPath+"/user/loadLatestTalk?userId="+userId,// 请求的action路径
 		success : function(data) {
 			if(data.result=="success"){
 				var length = data.list.length;
@@ -62,7 +66,7 @@ function loadTalk(){
 						new TalkItem(data.list[i]).item.appendTo($("#talklist"));
 					}
 				}else{
-					$("<div class='noinfo'>没有吐槽！</div>");
+					$("<div class='noinfo'>没有吐槽！</div>").appendTo($("#talklist"));
 				}
 			}
 		}

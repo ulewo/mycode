@@ -50,7 +50,7 @@ a.btn:hover{background:#38678F}
 .pagination a:hover,.pagination a:active{border:1px solid #DDD;border-top:1px solid #AAA;border-left:1px solid #AAA;background-color:#D0D3C8;}
 a.prePage,a.nextPage{width:60px;}
 #nowPage{width:20px;height:20px;font-weight:bold;padding-top:4px;border: 1px solid #999;border-left: 1px solid #DDD;height:17px;font-weight: bold;border-top: 1px none #CCC;background: #CCC;color: #666}
-.noinfo{text-align:center;padding-top:10px;color:#494949}
+.noinfo{text-align:center;padding-top:10px;color:#999}
 
 /********��ʾ��Ϣ**********/
 .result_info{float:left;margin-left:10px;color:red;display:none;}

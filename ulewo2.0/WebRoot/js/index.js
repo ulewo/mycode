@@ -16,6 +16,10 @@ $(function(){
 })
 
 function saveTalk(){
+	if(global.userId==""){
+		alert("请先登录");
+		return;
+	}
 	if($(this).attr("disable")=="disable"){
 		return;
 	}

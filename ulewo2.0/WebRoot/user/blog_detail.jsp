@@ -91,7 +91,7 @@
 				  	</form>
 			  		<c:if test="${user==null}">
 							<div class="shade blogshade" id="shade">
-								<div class="shadeLogin">回复，请先 <a href="javascript:login()">登录</a>&nbsp;&nbsp;<a href="javascript:register()">注册</a></div>
+								<div class="shadeLogin">回复，请先 <a href="javascript:goto_login()">登录</a>&nbsp;&nbsp;<a href="javascript:goto_register()">注册</a></div>
 							</div>
 					</c:if>
 				</div>
