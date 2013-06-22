@@ -7,7 +7,7 @@
 		<div>
 			<div class="user_avatar"><a href="${realPath}/user/${userId}"><img src="${realPath}/upload/${userVo.userLittleIcon}" id="imgcon" width="60px;" height="60px;"></a></div>
 			<div class="user_edit">
-				<a href="${realPath}/user/${userId}" class="username" id="user_name">${userVo.userName}</a>
+				<a href="${realPath}/user/${userVo.userId}" class="username" id="user_name">${userVo.userName}</a>
 				<div class="user_edit_info" id="user_edit_info">
 					<span>
 						<c:if test="${userVo.sex=='M'}">

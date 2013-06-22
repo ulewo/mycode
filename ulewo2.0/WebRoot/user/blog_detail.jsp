@@ -8,6 +8,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>个人博客-有乐窝</title>
 <link rel="stylesheet" type="text/css" href="${realPath}/css/user.blog.css">
+<script type="text/javascript" src="${realPath}/js/scripts/shCore.js"></script>
+<link type="text/css" rel="stylesheet" href="${realPath}/js/styles/SyntaxHighlighter.css"/>
 </head>
 <body>
 	<%@ include file="../common/head.jsp" %>
@@ -26,6 +28,7 @@
 			<div class="left_item">
 				<div class="left_item_tit">阅读排行</div>
 				<div class="left_img_p">
+					<c:set var="num" value="1"/>
 					<c:forEach var="blog" items="${hotlist}">
 						<div class="blog_rang"><span style="color:#3E62A6">${num}.</span><a href="${realPath}/user/${blog.userId}/blog/${blog.id}">${blog.title}</a></div>
 						<c:set var="num" value="${num+1}"></c:set>
