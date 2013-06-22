@@ -60,7 +60,7 @@
 	  			</div>
   		</div>
   		<div class="right">
-  			<div class="create_wo"><a href="${realPath}/createWoWo">创建我的窝窝</a></div>
+  			<div class="create_wo"><a href="javascript:createWoWo()">创建我的窝窝</a></div>
   			<div class="talk">
 	  			<div>
 	  				<div class="talkarea"><textarea id="talkcontent">今天你吐槽了吗？</textarea></div>

@@ -66,3 +66,12 @@ function loadNotice() {
 		});
 	}
 }
+
+function createWoWo(){
+	if (global.userId == "") {
+		alert("请先登录");
+		return;
+	}else{
+		document.location.href=global.realPath+"/createWoWo";
+	}
+}

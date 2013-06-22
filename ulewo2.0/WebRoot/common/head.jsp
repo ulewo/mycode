@@ -19,7 +19,7 @@
 			</c:when>
 			<c:otherwise>
 				<div class="head_s_p"><a href="javascript:void(0)" onclick="logout()">退出</a></div><div class="head_s_p">|</div>
-				<div class="head_s_p"><a href="${realPath}/createWoWo">创建窝窝</a></div ><div class="head_s_p">|</div>
+				<div class="head_s_p"><a href="javascript:createWoWo()">创建窝窝</a></div ><div class="head_s_p">|</div>
 				<div class="head_s_p myspace"><a href="${realPath}/user/${user.userId}" id="myspace">我的空间</a></div>
 				<div class="head_s_p welcom">
 					<span class="welcom_name" title="${user.userName}">
