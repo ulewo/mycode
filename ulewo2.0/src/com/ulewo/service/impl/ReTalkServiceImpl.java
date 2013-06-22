@@ -38,14 +38,16 @@ public class ReTalkServiceImpl implements ReTalkService {
 		this.reTalkDao = reTalkDao;
 	}
 
-	private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private SimpleDateFormat format = new SimpleDateFormat(
+			"yyyy-MM-dd HH:mm:ss");
 
 	@Override
 	public void addReTalk(ReTalk retalk) {
 
 		String cotent = StringUtils.clearHtml(retalk.getContent());
 		List<String> referers = new ArrayList<String>();
-		String formatContent = FormatAt.getInstance(Constant.TYPE_TALK).GenerateRefererLinks(userDao, cotent, referers);
+		String formatContent = FormatAt.getInstance(Constant.TYPE_TALK)
+				.GenerateRefererLinks(userDao, cotent, referers);
 		retalk.setContent(formatContent);
 		retalk.setCreateTime(format.format(new Date()));
 		reTalkDao.addReTalk(retalk);
@@ -55,7 +57,11 @@ public class ReTalkServiceImpl implements ReTalkService {
 		noticeParm.setNoticeType(NoticeType.RETALK);
 		noticeParm.setAtUserIds(referers);
 		noticeParm.setSendUserId(retalk.getUserId());
-		noticeParm.setReceiveUserId(retalk.getAtUserId());
+		String receiveUserId = retalk.getAtUserId();
+		if (StringUtils.isEmpty(retalk.getAtUserId())) {
+			receiveUserId = retalk.getTalkUserId();
+		}
+		noticeParm.setReceiveUserId(receiveUserId);
 		NoticeThread noticeThread = new NoticeThread(noticeParm);
 		Thread thread = new Thread(noticeThread);
 		thread.start();
@@ -66,7 +72,8 @@ public class ReTalkServiceImpl implements ReTalkService {
 
 		List<ReTalk> list = reTalkDao.queryReTalk(offset, total, talkId);
 		for (ReTalk retalk : list) {
-			retalk.setCreateTime(StringUtils.friendly_time(retalk.getCreateTime()));
+			retalk.setCreateTime(StringUtils.friendly_time(retalk
+					.getCreateTime()));
 		}
 		return list;
 	}
@@ -76,8 +83,10 @@ public class ReTalkServiceImpl implements ReTalkService {
 		int count = queryReTalkCount(talkId);
 		Pagination pagination = new Pagination(page, count, pageSize);
 		pagination.action();
-		List<ReTalk> list = queryReTalk(pagination.getOffSet(), pageSize, talkId);
-		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
+		List<ReTalk> list = queryReTalk(pagination.getOffSet(), pageSize,
+				talkId);
+		PaginationResult result = new PaginationResult(pagination.getPage(),
+				pagination.getPageTotal(), count, list);
 		return result;
 	}
 

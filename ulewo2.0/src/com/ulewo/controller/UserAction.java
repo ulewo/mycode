@@ -101,15 +101,14 @@ public class UserAction {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/checkUserName/{userName}", method = RequestMethod.GET)
-	public Map<String, Object> checkUserName(@PathVariable String userName, HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> checkUserName(@PathVariable String userName,
+			HttpSession session, HttpServletRequest request) {
 
 		User user = userService.findUser(userName, QueryUserType.USERNAME);
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		if (null != user) {
 			modelMap.put("result", "fail");
-		}
-		else {
+		} else {
 			modelMap.put("result", "succuess");
 		}
 		return modelMap;
@@ -122,7 +121,8 @@ public class UserAction {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/register.do", method = RequestMethod.POST)
-	public Map<String, Object> register(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public Map<String, Object> register(HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
 
 		String checkEmail = "^[\\w-]+(\\.[\\w-]+)*@[\\w-]+(\\.[\\w-]+)+$";
 		String checkUserName = "^[\\w\\u4e00-\\u9fa5]+$";
@@ -140,34 +140,34 @@ public class UserAction {
 			if (StringUtils.isEmpty(checkCode)) {
 				message = "验证码不能为空";
 				result = "fail";
-			}
-			else if (StringUtils.isEmpty(sessionCode) || !sessionCode.equalsIgnoreCase(checkCode)) {
+			} else if (StringUtils.isEmpty(sessionCode)
+					|| !sessionCode.equalsIgnoreCase(checkCode)) {
 				message = "验证码错误";
 				result = "fail";
-			}
-			else if (!email.matches(checkEmail) || StringUtils.isEmpty(email) || email.length() > EMAIL_LENGTH) {
+			} else if (!email.matches(checkEmail) || StringUtils.isEmpty(email)
+					|| email.length() > EMAIL_LENGTH) {
 				message = "邮箱地址不符合规范";
 				result = "fail";
-			}
-			else if (!userName.matches(checkUserName) || StringUtils.isEmpty(userName.trim())
-					|| StringUtils.getRealLength(userName) < 1 || StringUtils.getRealLength(userName) > USERNAME_LENGTH) {
+			} else if (!userName.matches(checkUserName)
+					|| StringUtils.isEmpty(userName.trim())
+					|| StringUtils.getRealLength(userName) < 1
+					|| StringUtils.getRealLength(userName) > USERNAME_LENGTH) {
 				message = "用户名不符合规范";
 				result = "fail";
-			}
-			else if (!password.matches(checkPassWord) || StringUtils.isEmpty(password)
-					|| password.length() < PWD_MIN_LENGTH || password.length() > PWD_MAX_LENGTH) {
+			} else if (!password.matches(checkPassWord)
+					|| StringUtils.isEmpty(password)
+					|| password.length() < PWD_MIN_LENGTH
+					|| password.length() > PWD_MAX_LENGTH) {
 				message = "密码不符合规范";
 				result = "fail";
-			}
-			else if (null != userService.findUser(email, QueryUserType.EMAIL)) {// 后台检测邮箱是否唯一
+			} else if (null != userService.findUser(email, QueryUserType.EMAIL)) {// 后台检测邮箱是否唯一
 				message = "邮箱已经被占用";
 				result = "fail";
-			}
-			else if (null != userService.findUser(userName, QueryUserType.USERNAME)) { // 后台检测用户昵称是否唯一
+			} else if (null != userService.findUser(userName,
+					QueryUserType.USERNAME)) { // 后台检测用户昵称是否唯一
 				message = "用户名已经被占用";
 				result = "fail";
-			}
-			else {
+			} else {
 				User user = new User();
 				user.setUserName(userName);
 				user.setPassword(StringUtils.encodeByMD5(password));
@@ -176,7 +176,8 @@ public class UserAction {
 				userId = user.getUserId();
 				if (StringUtils.isNotEmpty(userId)) {
 					// 保存Cookie
-					String infor = URLEncoder.encode(userName, "utf-8") + "," + password;
+					String infor = URLEncoder.encode(userName, "utf-8") + ","
+							+ password;
 
 					// 清除之前的Cookie 信息
 					Cookie cookie = new Cookie("cookieInfo", null);
@@ -195,8 +196,7 @@ public class UserAction {
 					sessionUser.setUserName(userName);
 					sessionUser.setUserLittleIcon(user.getUserLittleIcon());
 					session.setAttribute("user", sessionUser);
-				}
-				else {
+				} else {
 					message = "系统异常，请稍后再试";
 					result = "fail";
 				}
@@ -215,7 +215,8 @@ public class UserAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
-	public Map<String, Object> login(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public Map<String, Object> login(HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
 
 		String account = request.getParameter("account");
 		String password = request.getParameter("password");
@@ -228,18 +229,18 @@ public class UserAction {
 			if (StringUtils.isEmpty(checkCode)) {
 				message = "验证码不能为空";
 				result = "fail";
-			}
-			else if (StringUtils.isEmpty(sessionCode) || !sessionCode.equalsIgnoreCase(checkCode)) {
+			} else if (StringUtils.isEmpty(sessionCode)
+					|| !sessionCode.equalsIgnoreCase(checkCode)) {
 				message = "验证码错误";
 				result = "fail";
-			}
-			else {
+			} else {
 				password = StringUtils.encodeByMD5(password);
 				User user = userService.login(account, password);
 				if (null != user) {
 					if ("Y".equals(autoLogin)) {
 						// 自动登录，保存用户名密码到 Cookie
-						String infor = URLEncoder.encode(account, "utf-8") + "," + password;
+						String infor = URLEncoder.encode(account, "utf-8")
+								+ "," + password;
 
 						// 清除之前的Cookie 信息
 						Cookie cookie = new Cookie("cookieInfo", null);
@@ -252,8 +253,7 @@ public class UserAction {
 						// 设置最大生命周期为1年。
 						cookieInfo.setMaxAge(31536000);
 						response.addCookie(cookieInfo);
-					}
-					else {
+					} else {
 						Cookie cookie = new Cookie("cookieInfo", null);
 						cookie.setPath("/");
 						cookie.setMaxAge(0);
@@ -266,10 +266,10 @@ public class UserAction {
 					// 更新最后登录时间
 					User loginUser = new User();
 					loginUser.setUserId(user.getUserId());
-					loginUser.setPrevisitTime(StringUtils.dateFormater.get().format(new Date()));
+					loginUser.setPrevisitTime(StringUtils.dateFormater.get()
+							.format(new Date()));
 					userService.updateUser(loginUser);
-				}
-				else {
+				} else {
 					message = "帐号或者密码错误";
 					result = "fail";
 				}
@@ -287,7 +287,8 @@ public class UserAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/logout", method = RequestMethod.POST)
-	public Map<String, Object> logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public Map<String, Object> logout(HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
 
 		Cookie cookie = new Cookie("cookieInfo", null);
 		cookie.setPath("/");
@@ -308,7 +309,8 @@ public class UserAction {
 	 * @return
 	 */
 	@RequestMapping(value = "/{userId}", method = RequestMethod.GET)
-	public ModelAndView queryUserInfo(@PathVariable String userId, HttpSession session, HttpServletRequest request,
+	public ModelAndView queryUserInfo(@PathVariable String userId,
+			HttpSession session, HttpServletRequest request,
 			HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
@@ -319,9 +321,12 @@ public class UserAction {
 				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			}
 			mv.addObject("userVo", userVo);
-			List<BlogArticle> list = blogArticleService.queryBlog(userId, 0, 0, 5, BlogOrderType.POSTTIME);
-			List<UserFriend> focusList = userFriendService.queryFocus2List(userId, 0, 15);
-			List<UserFriend> fansList = userFriendService.queryFans2List(userId, 0, 15);
+			List<BlogArticle> list = blogArticleService.queryBlog(userId, 0, 0,
+					5, BlogOrderType.POSTTIME);
+			List<UserFriend> focusList = userFriendService.queryFocus2List(
+					userId, 0, 15);
+			List<UserFriend> fansList = userFriendService.queryFans2List(
+					userId, 0, 15);
 			List<Group> createdGroups = groupService.queryCreatedGroups(userId);
 			List<Group> joinedGroups = groupService.queryJoinedGroups(userId);
 			mv.addObject("focusList", focusList);
@@ -351,7 +356,8 @@ public class UserAction {
 
 		Object obj = session.getAttribute("user");
 		if (obj != null) {
-			UserFriend userFriend = userFriendService.queryFocusUser(((SessionUser) obj).getUserId(), userId);
+			UserFriend userFriend = userFriendService.queryFocusUser(
+					((SessionUser) obj).getUserId(), userId);
 			if (null != userFriend) {
 				haveFocus = true;
 			}
@@ -375,7 +381,8 @@ public class UserAction {
 	}
 
 	@RequestMapping(value = "/{userId}/blog", method = RequestMethod.GET)
-	public ModelAndView blogList(@PathVariable String userId, HttpSession session, HttpServletRequest request,
+	public ModelAndView blogList(@PathVariable String userId,
+			HttpSession session, HttpServletRequest request,
 			HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
@@ -395,11 +402,14 @@ public class UserAction {
 			if (StringUtils.isNumber(page)) {
 				page_int = Integer.parseInt(page);
 			}
-			PaginationResult result = blogArticleService.queryBlogByUserId(userId, itemId_int, page_int,
-					Constant.pageSize15, BlogOrderType.POSTTIME);
-			List<BlogItem> blogItemList = blogItemService.queryBlogItemAndCountByUserId(userId);
+			PaginationResult result = blogArticleService.queryBlogByUserId(
+					userId, itemId_int, page_int, Constant.pageSize15,
+					BlogOrderType.POSTTIME);
+			List<BlogItem> blogItemList = blogItemService
+					.queryBlogItemAndCountByUserId(userId);
 			BlogItem item = blogItemService.queryBlogItemById(itemId_int);
-			List<BlogArticle> hotlist = blogArticleService.queryBlog(userId, 0, 0, 10, BlogOrderType.READCOUNT);
+			List<BlogArticle> hotlist = blogArticleService.queryBlog(userId, 0,
+					0, 10, BlogOrderType.READCOUNT);
 			mv.addObject("hotlist", hotlist);
 			mv.addObject("result", result);
 			mv.addObject("blogItemList", blogItemList);
@@ -422,7 +432,8 @@ public class UserAction {
 	 * @return
 	 */
 	@RequestMapping(value = "/{userId}/blog/{blogId}", method = RequestMethod.GET)
-	public ModelAndView blogDetail(@PathVariable String userId, @PathVariable String blogId, HttpSession session,
+	public ModelAndView blogDetail(@PathVariable String userId,
+			@PathVariable String blogId, HttpSession session,
 			HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
@@ -435,19 +446,21 @@ public class UserAction {
 			int blogId_int = 0;
 			if (StringUtils.isNumber(blogId)) {
 				blogId_int = Integer.parseInt(blogId);
-			}
-			else {
+			} else {
 				mv.setViewName("redirect:/../error");
 				return mv;
 			}
-			BlogArticle blogArticle = blogArticleService.queryBlogById(blogId_int);
+			BlogArticle blogArticle = blogArticleService
+					.queryBlogById(blogId_int);
 			BlogArticle updateReadNumber = new BlogArticle();
 			updateReadNumber.setId(blogArticle.getId());
 			updateReadNumber.setReadCount(blogArticle.getReadCount() + 1);
-			blogArticleService.updateReadCount(blogArticle);
-			List<BlogItem> blogItemList = blogItemService.queryBlogItemAndCountByUserId(userId);
+			blogArticleService.updateReadCount(updateReadNumber);
+			List<BlogItem> blogItemList = blogItemService
+					.queryBlogItemAndCountByUserId(userId);
 			int countTotal = blogArticleService.queryBlogCount(userId, 0);
-			List<BlogArticle> hotlist = blogArticleService.queryBlog(userId, 0, 0, 10, BlogOrderType.READCOUNT);
+			List<BlogArticle> hotlist = blogArticleService.queryBlog(userId, 0,
+					0, 10, BlogOrderType.READCOUNT);
 			mv.addObject("hotlist", hotlist);
 			mv.addObject("blogItemList", blogItemList);
 			mv.addObject("blog", blogArticle);
@@ -462,10 +475,11 @@ public class UserAction {
 		}
 	}
 
-	/**博客回复***/
+	/** 博客回复 ***/
 	@ResponseBody
 	@RequestMapping(value = "/replayList", method = RequestMethod.GET)
-	public Map<String, Object> replay(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> replay(HttpSession session,
+			HttpServletRequest request) {
 
 		String blogId = request.getParameter("blogId");
 		String page = request.getParameter("page");
@@ -481,8 +495,9 @@ public class UserAction {
 		}
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
-			PaginationResult resultList = blogReplyService.queryBlogReplyByBlogId(blogId_int, page_int,
-					Constant.pageSize25);
+			PaginationResult resultList = blogReplyService
+					.queryBlogReplyByBlogId(blogId_int, page_int,
+							Constant.pageSize25);
 			modelMap.put("result", result);
 			modelMap.put("paginResult", resultList);
 			return modelMap;
@@ -495,13 +510,15 @@ public class UserAction {
 
 	/**
 	 * 保存博客评论回复
+	 * 
 	 * @param session
 	 * @param request
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/saveReplay.action", method = RequestMethod.POST)
-	public Map<String, Object> saveReplay(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> saveReplay(HttpSession session,
+			HttpServletRequest request) {
 
 		String content = request.getParameter("content");
 		String atUserId = request.getParameter("atUserId");
@@ -528,7 +545,8 @@ public class UserAction {
 				modelMap.put("result", result);
 				return modelMap;
 			}
-			if (!StringUtils.isNumber(blogId) || StringUtils.isEmpty(blogAuthor)) {
+			if (!StringUtils.isNumber(blogId)
+					|| StringUtils.isEmpty(blogAuthor)) {
 				result = "fail";
 				message = "操作错误";
 				modelMap.put("message", message);
@@ -562,7 +580,8 @@ public class UserAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/deleteReplay.action", method = RequestMethod.GET)
-	public Map<String, Object> deleteReply(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> deleteReply(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -570,11 +589,11 @@ public class UserAction {
 			Object sessionObj = session.getAttribute("user");
 			SessionUser sessionUser = (SessionUser) sessionObj;
 			if (StringUtils.isNumber(replyId)
-					&& blogReplyService.delete(sessionUser.getUserId(), Integer.parseInt(replyId))) {
+					&& blogReplyService.delete(sessionUser.getUserId(),
+							Integer.parseInt(replyId))) {
 				modelMap.put("result", "success");
 				return modelMap;
-			}
-			else {
+			} else {
 				modelMap.put("message", "请求参数错误");
 				modelMap.put("result", "fail");
 				return modelMap;
@@ -589,7 +608,8 @@ public class UserAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/focusFriend.action", method = RequestMethod.POST)
-	public Map<String, Object> focusFriend(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> focusFriend(HttpSession session,
+			HttpServletRequest request) {
 
 		String friendId = request.getParameter("friendid");
 		Object sessionObj = session.getAttribute("user");
@@ -603,8 +623,7 @@ public class UserAction {
 				friend.setUserId(userId);
 				friend.setFriendId(friendId);
 				userFriendService.addFriend(friend);
-			}
-			else {
+			} else {
 				message = "你无权进行此操作";
 				result = "fail";
 			}
@@ -620,7 +639,8 @@ public class UserAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/cancelFocus.action", method = RequestMethod.POST)
-	public Map<String, Object> cancelFocus(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> cancelFocus(HttpSession session,
+			HttpServletRequest request) {
 
 		String friendId = request.getParameter("friendid");
 		Object sessionObj = session.getAttribute("user");
@@ -631,8 +651,7 @@ public class UserAction {
 				SessionUser user = (SessionUser) sessionObj;
 				String userId = user.getUserId();
 				userFriendService.deleteFirend(userId, friendId);
-			}
-			else {
+			} else {
 				message = "你无权进行此操作";
 				result = "fail";
 			}
@@ -647,7 +666,8 @@ public class UserAction {
 	}
 
 	@RequestMapping(value = "/talkImgUpload", method = RequestMethod.POST)
-	public ModelAndView fileupload(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView fileupload(HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
@@ -670,7 +690,9 @@ public class UserAction {
 			}
 			String fileName = multipartFile.getOriginalFilename();
 			String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
-			if (!"JPG".equalsIgnoreCase(suffix) && !"PNG".equalsIgnoreCase(suffix) && !"gif".equalsIgnoreCase(suffix)
+			if (!"JPG".equalsIgnoreCase(suffix)
+					&& !"PNG".equalsIgnoreCase(suffix)
+					&& !"gif".equalsIgnoreCase(suffix)
 					&& !"BMP".equalsIgnoreCase(suffix)) {
 				mv.addObject("result", "fail");
 				mv.addObject("message", "文件类型只能是图片");
@@ -720,7 +742,8 @@ public class UserAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/saveTalk.action", method = RequestMethod.POST)
-	public Map<String, Object> saveTalk(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> saveTalk(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -731,7 +754,8 @@ public class UserAction {
 				modelMap.put("result", "fail");
 				return modelMap;
 			}
-			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+			SessionUser sessionUser = (SessionUser) session
+					.getAttribute("user");
 			Talk talk = new Talk();
 			talk.setContent(content);
 			talk.setImgurl(imgurl);
@@ -753,7 +777,8 @@ public class UserAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/loadLatestTalk.action", method = RequestMethod.GET)
-	public Map<String, Object> loadLatestTalk(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> loadLatestTalk(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -771,7 +796,8 @@ public class UserAction {
 	}
 
 	@RequestMapping(value = "/{userId}/talk", method = RequestMethod.GET)
-	public ModelAndView talkList(@PathVariable String userId, HttpSession session, HttpServletRequest request,
+	public ModelAndView talkList(@PathVariable String userId,
+			HttpSession session, HttpServletRequest request,
 			HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
@@ -782,8 +808,10 @@ public class UserAction {
 				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			}
 			mv.addObject("userVo", userVo);
-			List<UserFriend> focusList = userFriendService.queryFocus2List(userId, 0, 15);
-			List<UserFriend> fansList = userFriendService.queryFans2List(userId, 0, 15);
+			List<UserFriend> focusList = userFriendService.queryFocus2List(
+					userId, 0, 15);
+			List<UserFriend> fansList = userFriendService.queryFans2List(
+					userId, 0, 15);
 			List<Group> createdGroups = groupService.queryCreatedGroups(userId);
 			List<Group> joinedGroups = groupService.queryJoinedGroups(userId);
 			mv.addObject("focusList", focusList);
@@ -802,7 +830,8 @@ public class UserAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/loadTalk", method = RequestMethod.GET)
-	public Map<String, Object> loadTalk(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> loadTalk(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -812,7 +841,8 @@ public class UserAction {
 			if (StringUtils.isNumber(page)) {
 				page_int = Integer.parseInt(page);
 			}
-			PaginationResult data = talkService.queryLatestTalkByUserIdByPag(page_int, Constant.pageSize20, userId);
+			PaginationResult data = talkService.queryLatestTalkByUserIdByPag(
+					page_int, Constant.pageSize20, userId);
 			modelMap.put("result", "success");
 			modelMap.put("list", data);
 			return modelMap;
@@ -824,7 +854,8 @@ public class UserAction {
 	}
 
 	@RequestMapping(value = "/{userId}/talk/{talkId}", method = RequestMethod.GET)
-	public ModelAndView talkDetal(@PathVariable String userId, @PathVariable String talkId, HttpSession session,
+	public ModelAndView talkDetal(@PathVariable String userId,
+			@PathVariable String talkId, HttpSession session,
 			HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
@@ -839,8 +870,10 @@ public class UserAction {
 			}
 			int talkId_int = Integer.parseInt(talkId);
 			mv.addObject("userVo", userVo);
-			List<UserFriend> focusList = userFriendService.queryFocus2List(userId, 0, 15);
-			List<UserFriend> fansList = userFriendService.queryFans2List(userId, 0, 15);
+			List<UserFriend> focusList = userFriendService.queryFocus2List(
+					userId, 0, 15);
+			List<UserFriend> fansList = userFriendService.queryFans2List(
+					userId, 0, 15);
 			List<Group> createdGroups = groupService.queryCreatedGroups(userId);
 			List<Group> joinedGroups = groupService.queryJoinedGroups(userId);
 			Talk talk = talkService.queryDetail(talkId_int);
@@ -861,7 +894,8 @@ public class UserAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/loadReTalk", method = RequestMethod.GET)
-	public Map<String, Object> loadReTalk(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public Map<String, Object> loadReTalk(HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -871,7 +905,8 @@ public class UserAction {
 				modelMap.put("message", "参数错误");
 			}
 			int talkId_int = Integer.parseInt(talkId);
-			PaginationResult data = reTalkService.queryReTalkByPag(1, Constant.pageSize50, talkId_int);
+			PaginationResult data = reTalkService.queryReTalkByPag(1,
+					Constant.pageSize50, talkId_int);
 			modelMap.put("result", "success");
 			modelMap.put("list", data);
 			return modelMap;
@@ -884,28 +919,32 @@ public class UserAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/saveReTalk.action", method = RequestMethod.POST)
-	public Map<String, Object> saveReTalk(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public Map<String, Object> saveReTalk(HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			String content = request.getParameter("content");
-			String reTalkId = request.getParameter("talkId");
+			String talkId = request.getParameter("talkId");
 			if (StringUtils.isEmpty(content) || content.length() > MAXLENGTH) {
 				modelMap.put("result", "fail");
 				modelMap.put("message", "回复内容不能为空");
 				return modelMap;
 			}
-			if (!StringUtils.isNumber(reTalkId)) {
+			if (!StringUtils.isNumber(talkId)) {
 				modelMap.put("result", "fail");
 				modelMap.put("message", "请求参数错误");
 				return modelMap;
 			}
-			int reTalkId_int = Integer.parseInt(reTalkId);
+			int talkId_int = Integer.parseInt(talkId);
+			String talkUserId = request.getParameter("talkUserId");
 			String atUserId = request.getParameter("atUserId");
 			String atUserName = request.getParameter("atUserName");
-			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+			SessionUser sessionUser = (SessionUser) session
+					.getAttribute("user");
 			ReTalk retalk = new ReTalk();
-			retalk.setTalkId(reTalkId_int);
+			retalk.setTalkId(talkId_int);
+			retalk.setTalkUserId(talkUserId);
 			retalk.setContent(content);
 			retalk.setUserId(sessionUser.getUserId());
 			retalk.setUserName(sessionUser.getUserName());
@@ -913,7 +952,8 @@ public class UserAction {
 			retalk.setAtUserId(atUserId);
 			retalk.setAtUserName(atUserName);
 			reTalkService.addReTalk(retalk);
-			retalk.setCreateTime(StringUtils.friendly_time(retalk.getCreateTime()));
+			retalk.setCreateTime(StringUtils.friendly_time(retalk
+					.getCreateTime()));
 			modelMap.put("result", "success");
 			modelMap.put("retalk", retalk);
 			return modelMap;

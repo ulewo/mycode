@@ -4,7 +4,9 @@ public class ReTalk {
 	private int id;
 
 	private int talkId;
-
+	
+	private String talkUserId;
+	
 	private String content;
 
 	private String createTime;
@@ -119,5 +121,13 @@ public class ReTalk {
 	public void setSourceFrom(String sourceFrom) {
 
 		this.sourceFrom = sourceFrom;
+	}
+
+	public String getTalkUserId() {
+		return talkUserId;
+	}
+
+	public void setTalkUserId(String talkUserId) {
+		this.talkUserId = talkUserId;
 	}
 }

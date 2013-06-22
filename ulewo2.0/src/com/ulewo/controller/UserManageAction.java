@@ -674,7 +674,7 @@ public class UserManageAction {
 				int id = Integer.parseInt(ids[i]);
 				noticeService.deleteNotice(id);
 			}
-			mv.setViewName("manage/notice.action");
+			mv.setViewName("redirect:notice");
 		} catch (Exception e) {
 			e.printStackTrace();
 			mv.setViewName("redirect:" + Constant.ERRORPAGE);
@@ -683,7 +683,7 @@ public class UserManageAction {
 		return mv;
 	}
 
-	@RequestMapping(value = "/noticeDetail", method = RequestMethod.POST)
+	@RequestMapping(value = "/noticeDetail", method = RequestMethod.GET)
 	public ModelAndView noticeDetail(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();

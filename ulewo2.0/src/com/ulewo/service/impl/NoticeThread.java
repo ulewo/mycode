@@ -58,46 +58,46 @@ public class NoticeThread implements Runnable {
 		switch (noticeType) {
 		case REARTICLE: // 回复主题
 			articleDao = (ArticleDao) SpringUtil.getObject("articleDao");
-			url = "../group/post.jspx?id=" + articleId + "#re" + reId;
-			reArticle(articleId, receiveUserId, atUserIds, sendUserId, url);
+			reArticle(articleId, receiveUserId, atUserIds, sendUserId, reId);
 			break;
 		case ATINARTICLE: // 在文章中@
 			articleDao = (ArticleDao) SpringUtil.getObject("articleDao");
-			url = "../group/post.jspx?id=" + articleId;
+			//url = "../group/post.jspx?id=" + articleId;
 			atInArticle(articleId, atUserIds, sendUserId, url);
 			break;
 		case REBLOG: // 回复博客
 			blogArticleDao = (BlogArticleDao) SpringUtil.getObject("blogArticleDao");
-			url = "blogdetail.jspx?id=" + articleId + "#re" + reId;
-			reBlog(articleId, receiveUserId, atUserIds, sendUserId, url);
+			//url = "blogdetail.jspx?id=" + articleId + "#re" + reId;
+			reBlog(articleId, receiveUserId, atUserIds, sendUserId, reId);
 			break;
 		case ATINBLOG: // 在博客中@
 			blogArticleDao = (BlogArticleDao) SpringUtil.getObject("blogArticleDao");
-			url = "blogdetail.jspx?id=" + articleId;
+			//url = "blogdetail.jspx?id=" + articleId;
 			atInBlog(articleId, atUserIds, sendUserId, url);
 			break;
 		case REMESSAGE: // 回复留言
-			url = "message.jsp?userId=" + userId + "#re" + reId;
+			//url = "message.jsp?userId=" + userId + "#re" + reId;
 			reMessage(userId, receiveUserId, atUserIds, sendUserId, url);
 			break;
 		case ATINTALK:
-			url = "talkDetail.jspx?userId=" + sendUserId + "&talkId=" + articleId;
+			//url = "talkDetail.jspx?userId=" + sendUserId + "&talkId=" + articleId;
 			atInTalk(articleId, atUserIds, sendUserId, url);
 			break;
 		case RETALK:
 			talkDao = (TalkDao) SpringUtil.getObject("talkDao");
-			url = "talkDetail.jspx?userId=" + receiveUserId + "&talkId=" + articleId;
+			//url = "talkDetail.jspx?userId=" + receiveUserId + "&talkId=" + articleId;
 			reTalk(articleId, receiveUserId, atUserIds, sendUserId, url);
 			break;
 		}
 	}
 
 	// 回复主题
-	private void reArticle(int articleId, String receiveUserId, List<String> atUserIds, String sendUserId, String url) {
+	private void reArticle(int articleId, String receiveUserId, List<String> atUserIds, String sendUserId, int reId) {
 
 		try {
 			Article article = articleDao.queryTopicById(articleId);
 			if (article != null) {
+			String url = Constant.WEBSTIE+"group/"+article.getGid()+"/topic/" + articleId ;
 				String title = article.getTitle();
 				String noticeCon = "";
 				Notice notice = null;
@@ -153,6 +153,7 @@ public class NoticeThread implements Runnable {
 
 		try {
 			Article article = articleDao.queryTopicById(articleId);
+			url = Constant.WEBSTIE+"group/"+article.getGid()+"/topic/" + articleId;
 			if (StringUtils.isNotEmpty(sendUserId)) {
 				User reUser = userDao.findUser(sendUserId, QueryUserType.USERID);
 				Notice notice;
@@ -180,11 +181,12 @@ public class NoticeThread implements Runnable {
 	}
 
 	// 回复博客
-	private void reBlog(int articleId, String receiveUserId, List<String> atUserIds, String sendUserId, String url) {
+	private void reBlog(int articleId, String receiveUserId, List<String> atUserIds, String sendUserId, int reId) {
 
 		try {
 			BlogArticle article = blogArticleDao.queryBlogById(articleId);
 			if (article != null) {
+			String	url = Constant.WEBSTIE+"user/"+article.getUserId()+"/blog/" + articleId ;
 				String title = article.getTitle();
 				String noticeCon = "";
 				Notice notice = null;
@@ -241,6 +243,7 @@ public class NoticeThread implements Runnable {
 
 		try {
 			BlogArticle article = blogArticleDao.queryBlogById(articleId);
+			url = Constant.WEBSTIE+"user/"+article.getUserId()+"/blog/" + articleId ;
 			if (StringUtils.isNotEmpty(sendUserId)) {
 				User reUser = userDao.findUser(sendUserId, QueryUserType.USERID);
 				Notice notice;
@@ -326,6 +329,7 @@ public class NoticeThread implements Runnable {
 
 		try {
 			if (StringUtils.isNotEmpty(sendUserId)) {
+				url = Constant.WEBSTIE+"user/" + sendUserId + "/talk/"+articleId;
 				User reUser = userDao.findUser(sendUserId, QueryUserType.USERID);
 				Notice notice;
 				String noticeCon = "";
@@ -355,6 +359,7 @@ public class NoticeThread implements Runnable {
 		try {
 			Talk talk = talkDao.queryDetail(articleId);
 			if (talk != null) {
+				url = Constant.WEBSTIE+"user/" + receiveUserId + "/talk/"+articleId;
 				String noticeCon = "";
 				Notice notice = null;
 				String sendUserName = "";

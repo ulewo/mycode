@@ -170,7 +170,7 @@ public class ArticleServiceImpl implements ArticleService {
 			Article updatearticle = new Article();
 			updatearticle.setId(id);
 			updatearticle.setReadNumber(article.getReadNumber() + 1);
-			articleDao.updateArticle(updatearticle);
+			articleDao.updateArticleSelective(updatearticle);
 		}
 
 		return article;
