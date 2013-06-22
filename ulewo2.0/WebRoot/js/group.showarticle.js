@@ -148,7 +148,7 @@ function SubRePanel(data) {
 	this.comment_sub = $("<div class='comtent_sub'></div>");
 	$("<a name=re" + data.id + ">").appendTo(this.comment_sub);
 	this.ui_avatar = $(
-			"<div class='ui_avatar'><img src='" + data.authorIcon
+			"<div class='ui_avatar'><img src='"+global.realPath +"/upload/"+data.authorIcon
 					+ "' width='30'></div>").appendTo(this.comment_sub);
 	this.comments_content_sub = $("<div class='comments_content_sub'></div>")
 			.appendTo(this.comment_sub);

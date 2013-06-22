@@ -6,7 +6,7 @@
 <head>
 <%@ include file="../common/path.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>用户中心-有乐窝</title>
+<title>吐槽-有乐窝</title>
 <link rel="stylesheet" type="text/css" href="${realPath}/css/user.talkdetail.css">
 <link rel="stylesheet" type="text/css" href="${realPath}/css/talk.css">
 </head>

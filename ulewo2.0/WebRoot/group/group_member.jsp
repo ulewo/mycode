@@ -7,7 +7,7 @@
 <head>
 <%@ include file="../common/path.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>${group.groupName}-有乐窝</title>
+<title>${group.groupName} 成员-有乐窝</title>
 <link rel="stylesheet" type="text/css" href="${realPath}/css/group.member.css">
 </head>
 <body>
@@ -23,7 +23,7 @@
 			<div class="member_con">
 				<c:forEach var="member" items="${result.list}">
 					<div class="member_item">
-						<div class="member_icon"><a href="${realPath}/user/${member.userId}"><img src="${member.userIcon}"></a></div>
+						<div class="member_icon"><a href="${realPath}/user/${member.userId}"><img src="${realPath}/upload/${member.userIcon}"></a></div>
 						<div class="member_info">
 							<div class="member_name"><a href="${realPath}/user/${member.userId}">${member.userName}</a></div>
 							<div class="article_count">主题:<span>${member.topicCount}</span></div>

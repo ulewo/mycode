@@ -7,7 +7,7 @@
 <head>
 <%@ include file="../common/path.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>个人博客-有乐窝</title>
+<title>窝窝-有乐窝</title>
 <link rel="stylesheet" type="text/css" href="${realPath}/css/group.allgroup.css">
 </head>
 <body>
@@ -21,7 +21,7 @@
 				<div class="group_con">
 					<div class="group_tit">
 						<div class="group_title"><a href="${group.id}">${group.groupName}</a></div>
-						<div class="group_op"><a href="" class="btn">+加入窝窝</a></div>
+						<!-- <div class="group_op"><a href="" class="btn">+加入窝窝</a></div> -->
 						<div class="clear"></div>
 					</div>
 					<div class="group_info">
