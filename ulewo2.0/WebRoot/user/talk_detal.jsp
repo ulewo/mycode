@@ -217,6 +217,7 @@
   </div>
   <script type="text/javascript">
   var talkId = "${talk.id}";
+  var talkUserId="${talk.userId}"
   </script>
   <script type="text/javascript" src="${realPath}/js/talk.js"></script>
   <script type="text/javascript" src="${realPath}/js/user.talkdetail.js"></script>

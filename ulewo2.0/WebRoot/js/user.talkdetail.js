@@ -74,6 +74,7 @@ function addTalk() {
 		dataType : "json",
 		data : {
 			"talkId" : talkId,
+			"talkUserId":talkUserId,
 			"content" : content,
 			"atUserId" : $("#hide_atuserId").val(),
 			"atUserName" : $("#hide_atuserName").val(),

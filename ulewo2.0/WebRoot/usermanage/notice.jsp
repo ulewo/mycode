@@ -44,7 +44,7 @@
 				<c:forEach var="notice" items="${list}">
 					<div class="notice_list">
 						<div><input type="checkbox" name="ids" value="${notice.id}" class="check"></div>
-						<div><a href="noticeDetail.jspx?id=${notice.id}">${notice.content}</a></div>
+						<div><a href="noticeDetail?id=${notice.id}">${notice.content}</a></div>
 						<span>${notice.postTime}</span>
 					</div>
 				</c:forEach>
