@@ -6,7 +6,7 @@
 <head>
 <%@ include file="../common/path.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>登陆有乐窝-有乐窝</title>
+<title>修改密码-有乐窝</title>
 <link rel="stylesheet" type="text/css" href="../css/user.manage.userinfo.css">
 <style type="text/css">
 #selected2 a{background:#ffffff;color:#333333;font-weight:bold;}

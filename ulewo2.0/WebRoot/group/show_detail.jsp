@@ -8,6 +8,8 @@
 <%@ include file="../common/path.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${article.title}-有乐窝</title>
+<meta name="description" content="${article.title}">
+<meta name="keywords" content="${article.title}">
 <link rel="stylesheet" type="text/css" href="${realPath}/css/group.detail.css">
 <script type="text/javascript">
 <!--

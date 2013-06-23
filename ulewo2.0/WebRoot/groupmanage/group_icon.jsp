@@ -6,7 +6,7 @@
 <head>
 <%@ include file="../common/path.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>修改用户信息-有乐窝</title>
+<title>窝窝头像管理-有乐窝</title>
 <link rel="stylesheet" type="text/css" href="${realPath}/css/jquery.Jcrop.css">
 <link rel="stylesheet" type="text/css" href="${realPath}/css/group.manage.public.css">
 <style type="text/css">

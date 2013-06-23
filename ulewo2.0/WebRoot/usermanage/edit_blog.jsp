@@ -6,7 +6,7 @@
 <head>
 <%@ include file="../common/path.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>发表博文-有乐窝</title>
+<title>更新博文-有乐窝</title>
 <link rel="stylesheet" type="text/css" href="../css/user.manage.newblog.css">
 <style type="text/css">
 </style>

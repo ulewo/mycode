@@ -6,7 +6,7 @@
 <head>
 <%@ include file="../common/path.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>窝窝分类管理-有乐窝</title>
+<title>窝窝文章分类管理-有乐窝</title>
 <link rel="stylesheet" type="text/css" href="${realPath}/css/group.manage.item.css">
 <style type="text/css">
 #selected6 a{background:#ffffff;color:#333333;font-weight:bold;}

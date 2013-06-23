@@ -7,7 +7,7 @@
 <head>
 <%@ include file="../common/path.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>登陆有乐窝-有乐窝</title>
+<title>窝窝成员管理-有乐窝</title>
 <link rel="stylesheet" type="text/css" href="${realPath}/css/group.manage.member.css">
 <style type="text/css">
 #selected7 a{background:#ffffff;color:#333333;font-weight:bold;}

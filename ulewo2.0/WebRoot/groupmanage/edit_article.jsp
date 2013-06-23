@@ -6,7 +6,7 @@
 <head>
 <%@ include file="../common/path.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>修改窝窝信息-有乐窝</title>
+<title>修改文章-有乐窝</title>
 <link rel="stylesheet" type="text/css" href="${realPath}/css/group.manage.editgroup.css">
 <style type="text/css">
 #selected4 a{background:#ffffff;color:#333333;font-weight:bold;}

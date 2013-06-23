@@ -6,7 +6,7 @@
 <head>
 <%@ include file="../common/path.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>修改用户信息-有乐窝</title>
+<title>消息中心-有乐窝</title>
 <link rel="stylesheet" type="text/css" href="${realPath}/css/user.manage.public.css">
 <style type="text/css">
 #selected7 a{background:#ffffff;color:#333333;font-weight:bold;}
