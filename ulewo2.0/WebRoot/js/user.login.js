@@ -8,11 +8,19 @@ $(function(){
 			$("#remember_check").attr("checked", true);
 		}
 	});
-})
+	
+	document.onkeydown = function(e){
+	    var ev = document.all ? window.event : e;  
+	    if(ev.keyCode==13) {// 如（ev.ctrlKey && ev.keyCode==13）为ctrl+Center 触发  
+	    	login();
+	    }  
+	};
+});
 
 // 登录
 function login() {
-	if($(this).attr("disable")=="disable"){
+	var obj = $("#login_btn");
+	if(obj.attr("disable")=="disable"){
 		return;
 	}
 	var account = $("#account").val().trim();
@@ -39,7 +47,7 @@ function login() {
 	//清除错误信息
 	warm("hide","");
 	//登陆等待
-	btnLoading($(this),"登录中<img src='images/load.gif' width=12'>");
+	btnLoading(obj,"登录中<img src='images/load.gif' width=12'>");
 	$.ajax({
 		async : true,
 		cache : false,

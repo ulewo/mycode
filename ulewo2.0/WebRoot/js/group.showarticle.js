@@ -375,6 +375,7 @@ function addArticle(){
 	if($(this).attr("disable")=="disable"){
 		return;
 	}
+	var content = editor.getContentTxt().trim();
 	if(content==""){
 		warm("show","内容不能为空");
 		return ;
