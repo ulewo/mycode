@@ -72,7 +72,7 @@
 						 ${article.summary}
 					</div>
 					<c:if test="${article.image!=''&&article.image!=null}">
-							<div class="article_attachedimg"><a href="${realPath}/group/${gid}/topic/${article.id}"><img src="${realPath}/upload/${article.image}" style="max-width:150px;"/></a></div>
+							<div class="article_attachedimg"><a href="${realPath}/group/${gid}/topic/${article.id}"><img src="${article.image}" style="max-width:150px;"/></a></div>
 					</c:if>
 				</div>
 			</c:forEach>

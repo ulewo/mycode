@@ -26,7 +26,7 @@
   				<c:forEach var="article" items="${imgArticle}">
   					<c:set var="num" value="${num+1}"/>
   					<div class="day_pic" <c:if test="${num==1}">style='margin-left:5px'</c:if> >
-					<a href="${realPath}/group/${article.gid}/topic/${article.id}" target="_blank" class="day_pic_link"><span class="day_pic_con"><img src="upload/${article.image}"></span></a>
+					<a href="${realPath}/group/${article.gid}/topic/${article.id}" target="_blank" class="day_pic_link"><span class="day_pic_con"><img src="${article.image}"></span></a>
 					<div class="day_pic_tit"><a href="${realPath}/group/${article.gid}/topic/${article.id}" title="${article.title}" target="_blank">${article.title}</a></div>
 				</div> 
   				</c:forEach>
