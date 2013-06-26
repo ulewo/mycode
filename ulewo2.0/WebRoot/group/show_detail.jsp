@@ -66,11 +66,26 @@ global.articleId= "${article.id}";
 			<div class="recomment_tit">共有${article.reNumber}个回帖</div>
 			<div id="recomment"></div>
 			<div id="pager" class="pagination"></div>
-			<div class="new_article_p" id="new_article_p">
-				<div class="new_article_input"></div>
-				<div class="new_article_btn">回复帖子</div>
-				<div class="clear"></div>
-			</div>
+			
+			
+			<c:if test="${user!=null}">
+				<div class="new_article_p" id="new_article_p">
+					<div class="new_article_input"></div>
+					<div class="new_article_btn">回复帖子</div>
+					<div class="clear"></div>
+				</div>
+			</c:if>
+			<c:if test="${user==null}">
+				<div class="new_article_p">
+					<div class="new_article_input"></div>
+					<div class="new_article_btn">回复帖子</div>
+					<div class="clear"></div>
+					<div class="add_hide">
+						<div class="shadeLogin" style="margin-top:10px;margin-left:150px;">回帖，请先 <a href="javascript:goto_login()">登录</a>&nbsp;&nbsp;<a href="javascript:goto_register()">注册</a></div>
+					</div>
+				</div>
+			</c:if>
+			
 			<div class="add_article" id="add_article">
 				<%@ include file="rearticle.jsp" %>
 			</div>

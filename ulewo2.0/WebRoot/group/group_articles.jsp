@@ -39,11 +39,23 @@
 					<li><a href="${realPath}/group/${gid}?itemId=${item.id}" <c:if test="${itemId==item.id}">class="select"</c:if>>${item.itemName}</a></li>
 				</c:forEach>
 			</ul>
-			<div class="new_article_p" id="new_article_p">
-				<div class="new_article_input"></div>
-				<div class="new_article_btn">发表帖子</div>
-				<div class="clear"></div>
-			</div>
+			<c:if test="${user!=null}">
+					<div class="new_article_p" id="new_article_p">
+					<div class="new_article_input"></div>
+					<div class="new_article_btn">发表帖子</div>
+					<div class="clear"></div>
+				</div>
+				</c:if>
+				<c:if test="${user==null}">
+					<div class="new_article_p">
+					<div class="new_article_input"></div>
+					<div class="new_article_btn">发表帖子</div>
+					<div class="clear"></div>
+					<div class="add_hide">
+						<div class="shadeLogin" style="margin-top:10px;margin-left:150px;">发帖，请先 <a href="javascript:goto_login()">登录</a>&nbsp;&nbsp;<a href="javascript:goto_register()">注册</a></div>
+					</div>
+				</div>
+			</c:if>
 			<div class="add_article" id="add_article">
 				<%@ include file="addarticle.jsp" %>
 			</div>
