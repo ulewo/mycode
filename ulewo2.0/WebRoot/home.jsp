@@ -202,6 +202,11 @@
 			  		<div class="clear"></div>
 			  	</div>
 			  	 -->
+			  	 <div class="app_info">
+			  	 	<div><img src="${realPath}/images/appIcon.png"></div>
+			  	 	<div><img src="${realPath}/images/qrcodebig.png"></div>
+			  	 	<div>扫一扫下载有乐窝安卓客户端</div>
+			  	 </div>
   			</div>
   			<div class="clear"></div>
   		</div>

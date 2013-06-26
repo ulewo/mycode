@@ -10,9 +10,9 @@
 	</div>
 	<!-- <div class="android_logo"><a href="${realPath}ulewoapp.jsp"><img src="${realPath}/images/andriod_logo.png" border="0"></a></div> -->
 	<div class="head_user">
+		<div class="head_s_p"><a href="${realPath}/app">客户端</a></div><div class="head_s_p">|</div>
 		<c:choose>
 			<c:when test="${user==null}">
-				<div class="head_s_p"><a href="javascript:createWoWo()">创建窝窝</a></div><div class="head_s_p">|</div>
 				<div class="head_s_p"><a href="javascript:goto_register()">注册</a></div><div class="head_s_p">|</div>
 				<div class="head_s_p"><a href="javascript:goto_login()">登录</a></div><div class="head_s_p">|</div>
 				<div class="head_s_p welcom">游客，欢迎您</div>

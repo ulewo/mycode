@@ -79,3 +79,6 @@ a.day_pic_link:hover{border:1px solid red;}
 /******吐槽*********/
 .u_talk_sub .result_info{float:right;}
 .u_talk_sub .result_info i{margin-top:3px;}
+
+.app_info{text-align:center;margin-top:30px;}
+.app_info div{margin-top:10px;}

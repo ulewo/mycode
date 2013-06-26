@@ -4,7 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<%@ include file="../common/path.jsp" %>
+<%@ include file="common/path.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>吐槽-有乐窝</title>
 <meta name="description" content="有乐窝 大型服务社区，让你的生活更精彩 学习经验交流，网络文摘分享 ，游戏娱乐 ......">
@@ -14,7 +14,7 @@
 <script type="text/javascript" src="${realPath}/js/moretalk.js"></script>
 </head>
 <body>
-	<%@ include file="../common/head.jsp" %>
+	<%@ include file="common/head.jsp" %>
 	<div class="main">
 		<div class="talktit">大家都在吐槽什么？</div>
 		<div id="talklist">
