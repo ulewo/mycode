@@ -74,37 +74,37 @@ public class ApiClient {
 
 	private static final String HOST = BASEURL;
 
-	private static final String BASEURL_ARTICLELIST = BASEURL + "/android/fetchArticle.jspx";
+	private static final String BASEURL_ARTICLELIST = BASEURL + "/android/fetchArticle";
 
-	private static final String BASEUR_SHOWARTICLE = BASEURL + "/android/showArticle.jspx";
+	private static final String BASEUR_SHOWARTICLE = BASEURL + "/android/showArticle";
 
-	private static final String BASEUR_BLOGLIST = BASEURL + "/android/fetchBlog.jspx";
+	private static final String BASEUR_BLOGLIST = BASEURL + "/android/fetchBlog";
 
-	private static final String BASEUR_SHOWBLOG = BASEURL + "/android/showBlog.jspx";
+	private static final String BASEUR_SHOWBLOG = BASEURL + "/android/showBlog";
 
-	private static final String BASEUR_REBLOGLIST = BASEURL + "/android/fetchBlogComment.jspx";
+	private static final String BASEUR_REBLOGLIST = BASEURL + "/android/fetchBlogComment";
 
-	private static final String BASEUR_ADDREGLOG = BASEURL + "/android/addBlogComment.jspx";
+	private static final String BASEUR_ADDREGLOG = BASEURL + "/android/addBlogComment";
 
-	private static final String BASEUR_GROUPLIST = BASEURL + "/android/fetchWoWo.jspx";
+	private static final String BASEUR_GROUPLIST = BASEURL + "/android/fetchWoWo";
 
-	private static final String BASEUR_GROUPARTICLELIST = BASEURL + "/android/fetchArticleByGid.jspx";
+	private static final String BASEUR_GROUPARTICLELIST = BASEURL + "/android/fetchArticleByGid";
 
-	private static final String BASEUR_RECOMMENT = BASEURL + "/android/fetchReComment.jspx";
+	private static final String BASEUR_RECOMMENT = BASEURL + "/android/fetchReComment";
 
-	private static final String BASEUR_SUBRECOMMENT = BASEURL + "/android/addArticleComment.jspx";
+	private static final String BASEUR_SUBRECOMMENT = BASEURL + "/android/addArticleComment";
 
-	private static final String BASEUR_FETCHUSERINFO = BASEURL + "/android/fetchUserInfo.jspx";
+	private static final String BASEUR_FETCHUSERINFO = BASEURL + "/android/fetchUserInfo";
 
-	private static final String BASEUR_GETVERSION = BASEURL + "/android/fetchVersion.jspx";
+	private static final String BASEUR_GETVERSION = BASEURL + "/android/fetchVersion";
 
-	private static final String BASEUR_GETTALKLIST = BASEURL + "/android/fetchTalk.jspx";
+	private static final String BASEUR_GETTALKLIST = BASEURL + "/android/fetchTalk";
 
-	private static final String BASEUR_SAVETALK = BASEURL + "/android/addTalk.jspx";
+	private static final String BASEUR_SAVETALK = BASEURL + "/android/addTalk";
 
 	private static final String BASEUR_IMAGEUPLOAD = BASEURL + "/FileUpload";
 
-	private static final String BASEUR_LOGIN = BASEURL + "/android/login.jspx";
+	private static final String BASEUR_LOGIN = BASEURL + "/android/login";
 
 	public static final int RESULTCODE_SUCCESS = 200;
 
