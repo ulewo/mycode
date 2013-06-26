@@ -42,7 +42,7 @@ public class Constant {
 
 	public static int ARTICLE_MARK2 = 2;
 
-	public static String WEBSTIE = "http://localhost/";
+	public static String WEBSTIE = "http://ulewo.com/";
 
 	public static String WEBSTIE_IMAGEURL = WEBSTIE + "upload/";
 

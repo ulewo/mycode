@@ -31,7 +31,8 @@
 	
 	<!-- 单笔查询文章-->
 	<select id="queryTopicById"  resultClass="blogArticle" parameterClass="java.lang.Integer">
-		select *,i.itemname itemName,(select count(r.id) from blog_reply r where r.blogid=b.id) as reCount from blog_article b left outer join blog_item i on b.itemid = i.id where b.id = #id#
+		select *,i.itemname itemName,u.username as userName,(select count(r.id) from blog_reply r where r.blogid=b.id) as reCount from blog_article b left outer join blog_item i on b.itemid = i.id inner join user u
+		on u.userid = b.userid where b.id = #id#
 	</select>
 	
 	<!--通过用户查询文章-->

@@ -44,8 +44,7 @@ public class ReArticleServiceImpl implements ReArticleService {
 	@Autowired
 	private NoticeDao noticeDao;
 
-	private SimpleDateFormat format = new SimpleDateFormat(
-			"yyyy-MM-dd HH:mm:ss");
+	private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	public void setReArticleDao(ReArticleDao reArticleDao) {
 
@@ -68,8 +67,7 @@ public class ReArticleServiceImpl implements ReArticleService {
 		reArticle.setReTime(format.format(new Date()));
 		String content = reArticle.getContent();
 		List<String> referers = new ArrayList<String>();
-		String formatContent = FormatAt.getInstance().GenerateRefererLinks(
-				userDao, content, referers);
+		String formatContent = FormatAt.getInstance().GenerateRefererLinks(userDao, content, referers);
 		String subCon = formatContent;
 		reArticle.setContent(subCon);
 		if (StringUtils.isEmpty(reArticle.getSourceFrom())) {
@@ -77,10 +75,8 @@ public class ReArticleServiceImpl implements ReArticleService {
 		}
 		int id = reArticleDao.addReArticle(reArticle);
 
-		if (!"".equals(reArticle.getAuthorid())
-				&& reArticle.getAuthorid() != null) {
-			User user = userDao.findUser(reArticle.getAuthorid(),
-					QueryUserType.USERID);
+		if (!"".equals(reArticle.getAuthorid()) && reArticle.getAuthorid() != null) {
+			User user = userDao.findUser(reArticle.getAuthorid(), QueryUserType.USERID);
 			User reUser = new User();
 			reUser.setUserLittleIcon(user.getUserLittleIcon());
 			reUser.setUserName(user.getUserName());
@@ -88,8 +84,7 @@ public class ReArticleServiceImpl implements ReArticleService {
 		}
 		reArticle.setId(id);
 		reArticle.setReTime(StringUtils.friendly_time(reArticle.getReTime()));
-		User curUser = userDao.findUser(reArticle.getAuthorid(),
-				QueryUserType.USERID);
+		User curUser = userDao.findUser(reArticle.getAuthorid(), QueryUserType.USERID);
 		curUser.setMark(curUser.getMark() + Constant.ARTICLE_MARK2);
 		userDao.update(curUser);
 
@@ -145,19 +140,17 @@ public class ReArticleServiceImpl implements ReArticleService {
 	 * 回复的文章
 	 */
 	@Override
-	public PaginationResult queryReArticles(int articleid, int page,
-			int pageSize) {
+	public PaginationResult queryReArticles(int articleid, int page, int pageSize) {
+
 		int count = reArticleDao.queryReArticleCount(articleid);
-		List<ReArticle> list = reArticleDao
-				.queryReArticles(articleid, 0, count);
+		List<ReArticle> list = reArticleDao.queryReArticles(articleid, 0, count);
 		List<ReArticle> allReArticle = formateList(list);
 		int reCount = allReArticle == null ? 0 : allReArticle.size();
 		Pagination pagination = new Pagination(page, reCount, pageSize);
 		pagination.action();
-		List<ReArticleVo> resultList = getListbyPageNum(pagination.getOffSet(),
-				pageSize, allReArticle);
-		PaginationResult result = new PaginationResult(pagination.getPage(),
-				pagination.getPageTotal(), reCount, resultList);
+		List<ReArticleVo> resultList = getListbyPageNum(pagination.getOffSet(), pageSize, allReArticle);
+		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), reCount,
+				resultList);
 		return result;
 	}
 
@@ -171,13 +164,13 @@ public class ReArticleServiceImpl implements ReArticleService {
 					List<ReArticle> child = new ArrayList<ReArticle>();
 					child.add(reArticle);
 					map.put(reArticle.getPid(), child);
-				} else {
+				}
+				else {
 					List<ReArticle> child = map.get(reArticle.getPid());
 					child.add(reArticle);
 				}
 			}
-			reArticle
-					.setReTime(StringUtils.friendly_time(reArticle.getReTime()));
+			reArticle.setReTime(StringUtils.friendly_time(reArticle.getReTime()));
 		}
 
 		for (ReArticle reArticle : list) {
@@ -190,8 +183,7 @@ public class ReArticleServiceImpl implements ReArticleService {
 		return resultlist;
 	}
 
-	private List<ReArticleVo> getListbyPageNum(int start, int pageSize,
-			List<ReArticle> reArticleList) {
+	private List<ReArticleVo> getListbyPageNum(int start, int pageSize, List<ReArticle> reArticleList) {
 
 		List<ReArticleVo> resultList = new ArrayList<ReArticleVo>();
 		ReArticleVo vo = null;
@@ -211,7 +203,12 @@ public class ReArticleServiceImpl implements ReArticleService {
 			vo.setAuthorName(reArticle.getAuthorName());
 			vo.setContent(reArticle.getContent());
 			vo.setId(reArticle.getId());
-			vo.setPid(reArticle.getPid());
+			if (reArticle.getPid() == null) {
+				vo.setPid(0);
+			}
+			else {
+				vo.setPid(reArticle.getPid());
+			}
 			vo.setReTime(reArticle.getReTime());
 			vo.setSourceFrom(reArticle.getSourceFrom());
 			vo.setChildList(reArticle.getChildList());
@@ -221,18 +218,16 @@ public class ReArticleServiceImpl implements ReArticleService {
 	}
 
 	@Override
-	public PaginationResult queryReArticleByGid(String gid, int page,
-			int pageSize) {
+	public PaginationResult queryReArticleByGid(String gid, int page, int pageSize) {
+
 		int count = reArticleDao.queryReArticleByGid(gid);
 		Pagination pagination = new Pagination(page, count, pageSize);
 		pagination.action();
-		List<ReArticle> list = reArticleDao.queryAllReArticleByGid(gid,
-				pagination.getOffSet(), pageSize);
+		List<ReArticle> list = reArticleDao.queryAllReArticleByGid(gid, pagination.getOffSet(), pageSize);
 		for (ReArticle rearticle : list) {
 			rearticle.setContent(StringUtils.clearHtml(rearticle.getContent()));
 		}
-		PaginationResult result = new PaginationResult(pagination.getPage(),
-				pagination.getPageTotal(), count, list);
+		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
 		return result;
 	}
 }

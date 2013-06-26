@@ -4,6 +4,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -96,5 +99,15 @@ public class ImageUploadAction {
 			mv.setViewName("common/imgupload");
 			return mv;
 		}
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/FileUpload", method = RequestMethod.POST)
+	public Map<String, Object> logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+
+		modelMap.put("result", "success");
+		return modelMap;
 	}
 }

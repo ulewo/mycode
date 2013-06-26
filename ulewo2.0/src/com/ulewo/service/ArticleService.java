@@ -172,5 +172,9 @@ public interface ArticleService {
 
 	public List<Article> queryLatestArticle(int offset, int total);
 
+	public int queryAllCount();
+
+	public PaginationResult queryLatestArticle2PagResult(int page, int pageSize);
+
 	public List<Article> queryHotArticle(int offset, int total);
 }

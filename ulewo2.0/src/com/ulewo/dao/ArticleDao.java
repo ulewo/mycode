@@ -88,6 +88,11 @@ public class ArticleDao extends BaseDao {
 		return (Integer) this.getSqlMapClientTemplate().queryForObject("article.queryTopicCountByGid", parmMap);
 	}
 
+	public int queryAllCount() {
+
+		return (Integer) this.getSqlMapClientTemplate().queryForObject("article.queryTopicCount");
+	}
+
 	/**
 	 * 
 	 * description: 通过群编号查询主题文章  等级和最后回复时间倒叙排列 多笔查询

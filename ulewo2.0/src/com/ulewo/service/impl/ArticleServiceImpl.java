@@ -382,6 +382,21 @@ public class ArticleServiceImpl implements ArticleService {
 		return list;
 	}
 
+	public int queryAllCount() {
+
+		return articleDao.queryAllCount();
+	}
+
+	public PaginationResult queryLatestArticle2PagResult(int page, int pageSize) {
+
+		int count = queryAllCount();
+		Pagination pagination = new Pagination(page, count, pageSize);
+		pagination.action();
+		List<Article> list = queryLatestArticle(pagination.getOffSet(), pageSize);
+		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
+		return result;
+	}
+
 	@Override
 	public List<Article> queryHotArticle(int offset, int total) {
 

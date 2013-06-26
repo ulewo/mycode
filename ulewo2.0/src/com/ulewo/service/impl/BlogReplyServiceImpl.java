@@ -101,7 +101,7 @@ public class BlogReplyServiceImpl implements BlogReplyService {
 	public PaginationResult queryBlogReplyByBlogId(int blogId, int page, int pageSize) {
 
 		int count = blogReplyDao.queryReplyCountByBlogId(blogId);
-		Pagination pagein = new Pagination(pageSize, count, pageSize);
+		Pagination pagein = new Pagination(page, count, pageSize);
 		pagein.action();
 		List<BlogReply> list = blogReplyDao.queryReplyByBlogId(blogId, pagein.getOffSet(), pageSize);
 		for (BlogReply reply : list) {
