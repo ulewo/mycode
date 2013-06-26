@@ -100,12 +100,12 @@ public class ShowTalkActivity extends BaseActivity {
 						talk_img.setImageDrawable(imageDrawable);
 					}
 					else {
-						talk_img.setImageResource(R.drawable.icon);
+						talk_img.setImageResource(R.drawable.imgloading);
 					}
 				}
 			}, true);
 			if (cachedImage == null) {
-				talk_img.setImageResource(R.drawable.icon);
+				talk_img.setImageResource(R.drawable.imgloading);
 			}
 			else {
 				talk_img.setImageDrawable(StringUtils.toRoundCornerDrawable(cachedImage, 5));
