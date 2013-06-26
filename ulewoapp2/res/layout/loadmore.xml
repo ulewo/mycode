@@ -4,21 +4,21 @@
 	android:id="@+id/loadmore"
 	android:orientation="vertical"
 	android:layout_width="match_parent"
-  	android:layout_height="wrap_content">
+  	android:layout_height="35dp">
   	<TextView
 		android:id="@+id/loadmoretextview"
 		android:layout_width="match_parent"
-  		android:layout_height="wrap_content"
-  		android:padding="5dp"
+  		android:layout_height="fill_parent"
+  		android:padding="10dp"
   		android:gravity="center"
-  		android:textSize="12dp"
-  		android:textColor="@color/white"
-  		android:background="@drawable/loadmorebg"
+  		android:textSize="13dp"
+  		android:textColor="@color/black"
+  		android:background="#F9F9F9"
   		android:text="@string/loadmore"/>
 	<LinearLayout 
 		android:id="@+id/loadmore_progressbar"
 		android:layout_width="match_parent"
-  		android:layout_height="wrap_content"
+  		android:layout_height="fill_parent"
   		android:gravity="center"
   		android:visibility="gone"
   		android:orientation="horizontal">
@@ -32,6 +32,7 @@
 			android:layout_height="wrap_content"
 			android:text="@string/loading"
 			android:layout_marginLeft="5dp"
+			android:textSize="13dp"
 			android:textColor="@color/black"/>
   	</LinearLayout>
 </LinearLayout>

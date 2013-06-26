@@ -7,24 +7,14 @@
     <RelativeLayout 
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
-        <ScrollView
-            android:layout_width="fill_parent"
-        	android:layout_height="fill_parent">
-        	<LinearLayout 
-        	    android:layout_width="fill_parent"
-				android:layout_height="fill_parent"
-				android:orientation="vertical">
-	        	<LinearLayout 
-	        	    android:id="@+id/talk_detail_layout"
-	        	    android:layout_width="fill_parent"
-					android:layout_height="wrap_content"/>
-	        	<View style="@style/detail_cut_line"/>
-				<LinearLayout 
-				    android:id="@+id/retalk_list"
-					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"/>
-			</LinearLayout>
-		</ScrollView> 
+        <LinearLayout 
+		    	android:id="@+id/common_head"
+		    	android:layout_width="fill_parent" 
+				android:layout_height="wrap_content"
+				android:focusable="true" 
+				android:focusableInTouchMode="true">
+		<include layout="@layout/common_head"/>
+		</LinearLayout>
 		<LinearLayout 
 			android:id="@+id/talk_subform"
 			android:layout_alignParentBottom="true"
@@ -56,6 +46,27 @@
 				android:textColor="@color/black"
 				android:text="发送"/>
 		</LinearLayout>
+        <ScrollView
+            android:layout_width="fill_parent"
+        	android:layout_height="wrap_content"
+        	android:layout_below="@id/common_head"
+        	android:layout_above="@id/talk_subform">
+        	<LinearLayout 
+        	    android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:orientation="vertical">
+	        	<LinearLayout 
+	        	    android:id="@+id/talk_detail_layout"
+	        	    android:layout_width="fill_parent"
+					android:layout_height="wrap_content"/>
+	        	<View style="@style/detail_cut_line"/>
+				<LinearLayout 
+				    android:id="@+id/retalk_list"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:orientation="vertical"/>
+			</LinearLayout>
+		</ScrollView> 
     </RelativeLayout>
 	<include layout="@layout/progress"/>
 </FrameLayout>
