@@ -108,7 +108,7 @@
 				
 				</div>
 				<div class="right_tit" style="margin-top:15px;">
-					<span>最活跃成员</span>
+					<span>窝窝成员</span>
 					<a href="${realPath}/group/${gid}/member">更多</a>
 					<div class="clear"></div>
 				</div>
