@@ -56,8 +56,7 @@ public class StringUtils {
 
 		try {
 			return dateFormater.get().parse(sdate);
-		}
-		catch (ParseException e) {
+		} catch (ParseException e) {
 			return null;
 		}
 	}
@@ -176,8 +175,7 @@ public class StringUtils {
 
 		try {
 			return Integer.parseInt(str);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 		}
 		return defValue;
 	}
@@ -203,8 +201,7 @@ public class StringUtils {
 
 		try {
 			return Long.parseLong(obj);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 		}
 		return 0;
 	}
@@ -218,8 +215,7 @@ public class StringUtils {
 
 		try {
 			return Boolean.parseBoolean(b);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 		}
 		return false;
 	}
@@ -236,8 +232,7 @@ public class StringUtils {
 				byte[] results = md.digest(originString.getBytes());
 				String resultString = byteArrayToHexString(results);
 				return resultString.toUpperCase();
-			}
-			catch (Exception ex) {
+			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
 		}
@@ -270,8 +265,7 @@ public class StringUtils {
 		DateFormat df = DateFormat.getDateInstance();
 		try {
 			flag = df.parse(day1).before(df.parse(day2));
-		}
-		catch (ParseException e) {
+		} catch (ParseException e) {
 			throw e;
 		}
 		return flag;
@@ -316,7 +310,7 @@ public class StringUtils {
 	 */
 	public static boolean isNotEmpty(String str) {
 
-		if (null != str && !"".equals(str)) {
+		if (null != str && !"".equals(str) && !"null".equals(str)) {
 			return true;
 		}
 		return false;
