@@ -1,11 +1,20 @@
 package com.ulewo.controller;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -264,6 +273,67 @@ public class HomeAction {
 			return mv;
 		}
 		mv.setViewName("create_group");
+		return mv;
+	}
+
+	@RequestMapping(value = "/downloadApp", method = RequestMethod.GET)
+	public void downApp(HttpSession session, HttpServletRequest request,
+			HttpServletResponse response) {
+		InputStream in = null;
+		BufferedInputStream bf = null;
+		OutputStream toClient = null;
+		try {
+			// path是指欲下载的文件的路径。
+			String realpath = session.getServletContext().getRealPath("/");
+			ResourceBundle rb = ResourceBundle.getBundle("config.config");
+			String app_name = rb.getString("app_name");
+			File file = new File(realpath + "app" + "/" + app_name);
+			in = new FileInputStream(file);
+			bf = new BufferedInputStream(in);
+			byte[] buffer = new byte[bf.available()];
+			bf.read(buffer);
+			// 清空response
+			response.reset();
+			// 设置response的Header
+			response.addHeader("Content-Disposition", "attachment;filename="
+					+ new String(app_name.getBytes("utf-8"), "ISO-8859-1"));
+			response.addHeader("Content-Length", "" + file.length());
+			toClient = new BufferedOutputStream(response.getOutputStream());
+			response.setContentType("application/octet-stream");
+			toClient.write(buffer);
+			toClient.flush();
+		} catch (Exception ex) {
+			// ex.printStackTrace();
+		} finally {
+			if (toClient != null) {
+				try {
+					toClient.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if (bf != null) {
+				try {
+					bf.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if (in != null) {
+				try {
+					in.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	@RequestMapping(value = "/app", method = RequestMethod.GET)
+	public ModelAndView fileupload(HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("ulewoapp");
 		return mv;
 	}
 }

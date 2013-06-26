@@ -85,13 +85,15 @@ public class AndroidAction {
 
 	/**
 	 * 查询最新文章
+	 * 
 	 * @param session
 	 * @param request
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/fetchArticle", method = RequestMethod.GET)
-	public Map<String, Object> fetchArticle(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> fetchArticle(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -100,7 +102,8 @@ public class AndroidAction {
 			if (StringUtils.isNumber(page)) {
 				page_int = Integer.parseInt(page);
 			}
-			PaginationResult result = articleService.queryLatestArticle2PagResult(page_int, Constant.pageSize20);
+			PaginationResult result = articleService
+					.queryLatestArticle2PagResult(page_int, Constant.pageSize20);
 			List<Article> list = (List<Article>) result.getList();
 			List<ArticleVo> resultList = new ArrayList<ArticleVo>();
 			ArticleVo vo = null;
@@ -127,13 +130,15 @@ public class AndroidAction {
 
 	/**
 	 * 展示详情
+	 * 
 	 * @param session
 	 * @param request
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/showArticle", method = RequestMethod.GET)
-	public Map<String, Object> showArticle(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> showArticle(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -148,7 +153,8 @@ public class AndroidAction {
 				vo = new ArticleVo();
 				vo.setAuthorId(article.getAuthorId());
 				vo.setAuthorName(article.getAuthorName());
-				vo.setContent(StringUtils.pathRelative2Absolutely(article.getContent()));
+				vo.setContent(StringUtils.pathRelative2Absolutely(article
+						.getContent()));
 				vo.setId(article.getId());
 				vo.setPostTime(article.getPostTime());
 				vo.setReadNumber(article.getReadNumber());
@@ -165,13 +171,15 @@ public class AndroidAction {
 
 	/**
 	 * 查询回复
+	 * 
 	 * @param session
 	 * @param request
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/fetchReComment", method = RequestMethod.GET)
-	public Map<String, Object> fetchReComment(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> fetchReComment(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -185,7 +193,8 @@ public class AndroidAction {
 			if (StringUtils.isNumber(page)) {
 				page_int = Integer.parseInt(page);
 			}
-			PaginationResult result = reArticleService.queryReArticles(articleId_int, page_int, Constant.pageSize10);
+			PaginationResult result = reArticleService.queryReArticles(
+					articleId_int, page_int, Constant.pageSize10);
 			modelMap.put("list", result.getList());
 			modelMap.put("pageTotal", result.getPageTotal());
 			return modelMap;
@@ -195,15 +204,17 @@ public class AndroidAction {
 		}
 	}
 
-	/**添加评论
-	 * 评论时候先获取session如果获取不到就登录，然后重新设置sesssion.
+	/**
+	 * 添加评论 评论时候先获取session如果获取不到就登录，然后重新设置sesssion.
+	 * 
 	 * @param session
 	 * @param request
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/addArticleComment", method = RequestMethod.POST)
-	public Map<String, Object> addArticleComment(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> addArticleComment(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		ReArticleVo vo = null;
@@ -230,8 +241,7 @@ public class AndroidAction {
 				androidsession = session;
 				if (!login2(session, userName, password)) {
 					isLogin = false;
-				}
-				else {
+				} else {
 					sessionId = session.getId();
 					MySessionContext.AddSession(session);
 				}
@@ -292,8 +302,7 @@ public class AndroidAction {
 				session.setAttribute("user", sessionUser);
 				MySessionContext.AddSession(session);
 				return true;
-			}
-			else {
+			} else {
 				return false;
 			}
 		} catch (Exception e) {
@@ -303,14 +312,16 @@ public class AndroidAction {
 	}
 
 	/**
-	 *	查询博客
+	 * 查询博客
+	 * 
 	 * @param session
 	 * @param request
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/fetchBlog", method = RequestMethod.GET)
-	public Map<String, Object> fetchBlog(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> fetchBlog(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -320,7 +331,8 @@ public class AndroidAction {
 			if (StringUtils.isNumber(page)) {
 				page_int = Integer.parseInt(page);
 			}
-			PaginationResult result = blogArticleService.queryLatestBlog(page_int, Constant.pageSize20);
+			PaginationResult result = blogArticleService.queryLatestBlog(
+					page_int, Constant.pageSize20);
 			List<BlogArticle> list = (List<BlogArticle>) result.getList();
 			BlogVo vo = null;
 			for (BlogArticle blog : list) {
@@ -345,7 +357,8 @@ public class AndroidAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/showBlog", method = RequestMethod.GET)
-	public Map<String, Object> showBlog(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> showBlog(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -375,7 +388,8 @@ public class AndroidAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/fetchBlogComment", method = RequestMethod.GET)
-	public Map<String, Object> fetchBlogComment(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> fetchBlogComment(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -390,8 +404,8 @@ public class AndroidAction {
 			if (StringUtils.isNumber(page)) {
 				page_int = Integer.parseInt(page);
 			}
-			PaginationResult result = blogReplyService.queryBlogReplyByBlogId(articleId_int, page_int,
-					Constant.pageSize10);
+			PaginationResult result = blogReplyService.queryBlogReplyByBlogId(
+					articleId_int, page_int, Constant.pageSize10);
 			List<BlogReply> reArticleList = (List<BlogReply>) result.getList();
 			BlogReplyVo vo = null;
 			for (BlogReply re : reArticleList) {
@@ -418,13 +432,15 @@ public class AndroidAction {
 
 	/**
 	 * 添加博客回复
+	 * 
 	 * @param session
 	 * @param request
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/addBlogComment", method = RequestMethod.POST)
-	public Map<String, Object> addBlogComment(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> addBlogComment(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		BlogReplyVo vo = null;
@@ -445,8 +461,7 @@ public class AndroidAction {
 				androidsession = session;
 				if (!login2(session, userName, password)) {
 					isLogin = false;
-				}
-				else {
+				} else {
 					sessionId = session.getId();
 					MySessionContext.AddSession(session);
 				}
@@ -486,13 +501,15 @@ public class AndroidAction {
 
 	/**
 	 * 查询窝窝
+	 * 
 	 * @param session
 	 * @param request
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/fetchWoWo", method = RequestMethod.GET)
-	public Map<String, Object> fetchWoWo(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> fetchWoWo(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -502,7 +519,8 @@ public class AndroidAction {
 			if (StringUtils.isNumber(page)) {
 				page_int = Integer.parseInt(page);
 			}
-			PaginationResult result = groupService.queryGroupsOderArticleCount(page_int, Constant.pageSize20);
+			PaginationResult result = groupService.queryGroupsOderArticleCount(
+					page_int, Constant.pageSize20);
 			List<Group> list = (List<Group>) result.getList();
 			GroupVo vo = null;
 			for (Group group : list) {
@@ -513,7 +531,8 @@ public class AndroidAction {
 				vo.setGid(group.getId());
 				vo.setgMember(group.getMembers());
 				vo.setgName(group.getGroupName());
-				vo.setGroupIcon(Constant.WEBSTIE_IMAGEURL + group.getGroupIcon());
+				vo.setGroupIcon(Constant.WEBSTIE_IMAGEURL
+						+ group.getGroupIcon());
 				resultList.add(vo);
 			}
 			modelMap.put("list", resultList);
@@ -527,13 +546,15 @@ public class AndroidAction {
 
 	/**
 	 * 窝窝文章
+	 * 
 	 * @param session
 	 * @param request
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/fetchArticleByGid", method = RequestMethod.GET)
-	public Map<String, Object> fetchArticleByGid(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> fetchArticleByGid(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -544,8 +565,9 @@ public class AndroidAction {
 			if (StringUtils.isNumber(page)) {
 				page_int = Integer.parseInt(page);
 			}
-			PaginationResult result = articleService.queryTopicOrderByGradeAndLastReTime(gid, 0, page_int,
-					Constant.pageSize20);
+			PaginationResult result = articleService
+					.queryTopicOrderByGradeAndLastReTime(gid, 0, page_int,
+							Constant.pageSize20);
 			List<Article> list = (List<Article>) result.getList();
 			ArticleVo vo = null;
 			for (Article article : list) {
@@ -570,6 +592,7 @@ public class AndroidAction {
 
 	/**
 	 * 登录
+	 * 
 	 * @param session
 	 * @param request
 	 * @return
@@ -577,7 +600,8 @@ public class AndroidAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public Map<String, Object> login(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> login(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -599,7 +623,8 @@ public class AndroidAction {
 				MySessionContext.AddSession(session);
 				userVo = new UserVo();
 				userVo.setUserId(userInfo.getUserId());
-				userVo.setUserLittleIcon(Constant.WEBSTIE_IMAGEURL + userInfo.getUserLittleIcon());
+				userVo.setUserLittleIcon(Constant.WEBSTIE_IMAGEURL
+						+ userInfo.getUserLittleIcon());
 				userVo.setUserName(userInfo.getUserName());
 				userVo.setWork(userInfo.getWork());
 				userVo.setAddress(userInfo.getAddress());
@@ -610,8 +635,7 @@ public class AndroidAction {
 				userVo.setPrevisitTime(userInfo.getPrevisitTime());
 				userVo.setMark(userInfo.getMark());
 				userVo.setSessionId(session.getId());
-			}
-			else {
+			} else {
 				loginResult = "fail";
 			}
 			modelMap.put("user", userVo);
@@ -625,13 +649,15 @@ public class AndroidAction {
 
 	/**
 	 * 获取用户信息
+	 * 
 	 * @param session
 	 * @param request
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/fetchUserInfo", method = RequestMethod.GET)
-	public Map<String, Object> fetchUserInfo(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> fetchUserInfo(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -640,7 +666,8 @@ public class AndroidAction {
 			User userInfo = userService.findUser(userId, QueryUserType.USERID);
 			if (userInfo != null) {
 				userVo = new UserVo();
-				userVo.setUserLittleIcon(Constant.WEBSTIE_IMAGEURL + userInfo.getUserLittleIcon());
+				userVo.setUserLittleIcon(Constant.WEBSTIE_IMAGEURL
+						+ userInfo.getUserLittleIcon());
 				userVo.setUserId(userInfo.getUserId());
 				userVo.setUserName(userInfo.getUserName());
 				userVo.setWork(userInfo.getWork());
@@ -662,13 +689,15 @@ public class AndroidAction {
 
 	/**
 	 * 获取吐槽
+	 * 
 	 * @param session
 	 * @param request
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/fetchTalk", method = RequestMethod.GET)
-	public Map<String, Object> fetchTalk(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> fetchTalk(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -677,7 +706,8 @@ public class AndroidAction {
 			if (StringUtils.isNumber(page)) {
 				page_int = Integer.parseInt(page);
 			}
-			PaginationResult result = talkService.queryLatestTalkByPag(page_int, Constant.pageSize20);
+			PaginationResult result = talkService.queryLatestTalkByPag(
+					page_int, Constant.pageSize20);
 			List<Talk> resultList = (List<Talk>) result.getList();
 			for (Talk talk : resultList) {
 				if (StringUtils.isNotEmpty(talk.getImgurl())) {
@@ -697,13 +727,15 @@ public class AndroidAction {
 
 	/**
 	 * 新增吐槽
+	 * 
 	 * @param session
 	 * @param request
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/addTalk", method = RequestMethod.POST)
-	public Map<String, Object> addTalk(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> addTalk(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		boolean isLogin = true;
@@ -719,8 +751,7 @@ public class AndroidAction {
 				androidsession = session;
 				if (!login2(session, userName, password)) {
 					isLogin = false;
-				}
-				else {
+				} else {
 					sessionId = session.getId();
 					MySessionContext.AddSession(session);
 				}
@@ -737,7 +768,8 @@ public class AndroidAction {
 				talk.setUserIcon(sessionUser.getUserLittleIcon());
 				talk.setSourceFrom("A");
 				talkService.addTalk(talk);
-				talk.setCreateTime(StringUtils.friendly_time(talk.getCreateTime()));
+				talk.setCreateTime(StringUtils.friendly_time(talk
+						.getCreateTime()));
 			}
 			modelMap.put("talk", talk);
 			modelMap.put("sessionId", sessionId);
@@ -751,7 +783,8 @@ public class AndroidAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/fetchReTalk", method = RequestMethod.GET)
-	public Map<String, Object> fetchReTalk(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> fetchReTalk(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -765,7 +798,8 @@ public class AndroidAction {
 			if (StringUtils.isNumber(page)) {
 				page_int = Integer.parseInt(page);
 			}
-			PaginationResult result = reTalkService.queryReTalkByPag(page_int, Constant.pageSize20, talkId_int);
+			PaginationResult result = reTalkService.queryReTalkByPag(page_int,
+					Constant.pageSize20, talkId_int);
 			List<ReTalk> list = (List<ReTalk>) result.getList();
 			modelMap.put("list", list);
 			modelMap.put("pageTotal", result.getPageTotal());
@@ -778,13 +812,15 @@ public class AndroidAction {
 
 	/**
 	 * 回复吐槽
+	 * 
 	 * @param session
 	 * @param request
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/addReTalk", method = RequestMethod.POST)
-	public Map<String, Object> addReTalk(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> addReTalk(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		ReTalk retalk = null;
@@ -805,8 +841,7 @@ public class AndroidAction {
 				androidsession = session;
 				if (!login2(session, userName, password)) {
 					isLogin = false;
-				}
-				else {
+				} else {
 					sessionId = session.getId();
 					MySessionContext.AddSession(session);
 				}
@@ -822,7 +857,8 @@ public class AndroidAction {
 				retalk.setUserIcon(sessionUser.getUserLittleIcon());
 				retalk.setSourceFrom("A");
 				reTalkService.addReTalk(retalk);
-				retalk.setCreateTime(StringUtils.friendly_time(retalk.getCreateTime()));
+				retalk.setCreateTime(StringUtils.friendly_time(retalk
+						.getCreateTime()));
 			}
 			modelMap.put("retalk", retalk);
 			modelMap.put("sessionId", sessionId);
@@ -839,7 +875,8 @@ public class AndroidAction {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/fetchVersion", method = RequestMethod.GET)
-	public Map<String, Object> fetchVersion(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> fetchVersion(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -854,4 +891,5 @@ public class AndroidAction {
 			return modelMap;
 		}
 	}
+
 }

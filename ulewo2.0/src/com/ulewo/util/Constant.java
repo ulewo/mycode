@@ -42,13 +42,14 @@ public class Constant {
 
 	public static int ARTICLE_MARK2 = 2;
 
-	public static String WEBSTIE = "http://ulewo.com/";
+	public static String WEBSTIE = "http://www.ulewo.com/";
 
 	public static String WEBSTIE_IMAGEURL = WEBSTIE + "upload/";
 
 	public final static String TYPE_TALK = "talk";
 
-	public final static String DEFALUTICON = WEBSTIE + "/upload/defaultsmall.gif";
+	public final static String DEFALUTICON = WEBSTIE
+			+ "/upload/defaultsmall.gif";
 
 	public final static String ERRORPAGE = "http://ulewo.com/error";
 
