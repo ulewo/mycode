@@ -202,9 +202,8 @@ public class ReBlogActivity extends BaseActivity {
 						inputMethodManager.hideSoftInputFromWindow(
 								recomment_input.getWindowToken(), 0);
 					} else {
-						Intent intent = new Intent();
-						intent.setClass(ReBlogActivity.this, UserActivity.class);
-						startActivity(intent);
+						UIHelper.showLoginDialog(ReBlogActivity.this);
+						return;
 					}
 				} else {
 					((AppException) msg.obj).makeToast(ReBlogActivity.this);

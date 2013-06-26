@@ -368,7 +368,6 @@ public class TalkPostActivity extends BaseActivity {
 				UIHelper.showLoginDialog(TalkPostActivity.this);
 				return;
 			}
-			progressBar.setVisibility(View.VISIBLE);
 			// 隐藏软键盘
 			imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
@@ -377,6 +376,7 @@ public class TalkPostActivity extends BaseActivity {
 				UIHelper.ToastMessage(v.getContext(), "请输入吐槽内容");
 				return;
 			}
+			progressBar.setVisibility(View.VISIBLE);
 			final Handler handler = new Handler() {
 				public void handleMessage(Message msg) {
 
@@ -415,7 +415,7 @@ public class TalkPostActivity extends BaseActivity {
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			isExit();
+			UIHelper.finish(this);
 		}
 		return super.onKeyDown(keyCode, event);
 	}

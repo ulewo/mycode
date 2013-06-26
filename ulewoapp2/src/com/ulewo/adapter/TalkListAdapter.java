@@ -94,13 +94,15 @@ public class TalkListAdapter extends BaseAdapter {
 		TextView recount = (TextView) view.findViewById(R.id.talk_recount);
 		ImageView talk_img_icon = (ImageView) view
 				.findViewById(R.id.talk_img_icon);
-		if (talk.getImgurl() != "" && null != talk.getImgurl()) {
+		if (StringUtils.isNotEmpty(talk.getImgurl())) {
 			talk_img_icon.setVisibility(View.VISIBLE);
+		} else {
+			talk_img_icon.setVisibility(View.GONE);
 		}
 		// imageView.setImageBitmap(returnBitMap(blog.getGroupIcon()));
-		String imageUrl = talk.getUserIcon();
-		imageView.setTag(imageUrl);
-		Drawable cachedImage = asyncImageLoader.loadDrawable(imageUrl,
+		String userIcon = talk.getUserIcon();
+		imageView.setTag(userIcon);
+		Drawable cachedImage = asyncImageLoader.loadDrawable(userIcon,
 				new ImageCallback() {
 					public void imageLoaded(Drawable imageDrawable,
 							String imageUrl) {

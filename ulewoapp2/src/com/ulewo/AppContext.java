@@ -32,6 +32,8 @@ import com.ulewo.bean.ReArticleList;
 import com.ulewo.bean.ReArticleResult;
 import com.ulewo.bean.ReBlogList;
 import com.ulewo.bean.ReBlogResult;
+import com.ulewo.bean.ReTalkList;
+import com.ulewo.bean.ReTalkResult;
 import com.ulewo.bean.TalkList;
 import com.ulewo.bean.TalkResult;
 import com.ulewo.bean.UlewoVersion;
@@ -61,7 +63,8 @@ public class AppContext extends Application {
 	 * @throws AppException
 	 * @author luohl
 	 */
-	public ArticleList getArticleList(int pageIndex, boolean isRefresh) throws AppException {
+	public ArticleList getArticleList(int pageIndex, boolean isRefresh)
+			throws AppException {
 
 		ArticleList list = null;
 		String key = StringUtils.encodeByMD5("articlelist" + "_" + pageIndex);
@@ -76,8 +79,7 @@ public class AppContext extends Application {
 				if (list == null)
 					throw e;
 			}
-		}
-		else {
+		} else {
 			list = (ArticleList) readObject(key);
 			if (list == null) {
 				throw AppException.network(new HttpException());
@@ -105,8 +107,7 @@ public class AppContext extends Application {
 			} catch (AppException e) {
 				throw e;
 			}
-		}
-		else {
+		} else {
 			throw AppException.network(new HttpException());
 		}
 		return article;
@@ -123,7 +124,8 @@ public class AppContext extends Application {
 	 * @throws AppException
 	 * @author luohl
 	 */
-	public ReArticleList getReArticleList(int articleId, int pageIndex, boolean isRefresh) throws AppException {
+	public ReArticleList getReArticleList(int articleId, int pageIndex,
+			boolean isRefresh) throws AppException {
 
 		ReArticleList list = null;
 		if (isNetworkConnected()) {
@@ -132,54 +134,52 @@ public class AppContext extends Application {
 			} catch (AppException e) {
 				throw e;
 			}
-		}
-		else {
+		} else {
 			throw AppException.network(new HttpException());
 		}
 		return list;
 	}
 
-	public ReArticleResult addReArticle(String content, int articleId) throws AppException {
-
-		ReArticleResult result = null;
-		if (isNetworkConnected()) {
-			try {
-				result = ApiClient.addReArticle(content, articleId, getSessionId(), getUserName(), getPassword());
-				if (result.isLogin()) {
-					putUserInfo(Constants.SESSIONID, result.getSessionId());
-				}
-				else {
-					removeUserInfo(Constants.SESSIONID);
-				}
-			} catch (AppException e) {
-				throw e;
-			}
-		}
-		else {
-			throw AppException.network(new HttpException());
-		}
-		return result;
-	}
-
-	public ReArticleResult addSubReArticle(String content, int articleId, String atUserId, String hide_pid)
+	public ReArticleResult addReArticle(String content, int articleId)
 			throws AppException {
 
 		ReArticleResult result = null;
 		if (isNetworkConnected()) {
 			try {
-				result = ApiClient.addSubReArticle(content, articleId, atUserId, hide_pid, getSessionId(),
-						getUserName(), getPassword());
+				result = ApiClient.addReArticle(content, articleId,
+						getSessionId(), getUserName(), getPassword());
 				if (result.isLogin()) {
 					putUserInfo(Constants.SESSIONID, result.getSessionId());
-				}
-				else {
+				} else {
 					removeUserInfo(Constants.SESSIONID);
 				}
 			} catch (AppException e) {
 				throw e;
 			}
+		} else {
+			throw AppException.network(new HttpException());
 		}
-		else {
+		return result;
+	}
+
+	public ReArticleResult addSubReArticle(String content, int articleId,
+			String atUserId, String hide_pid) throws AppException {
+
+		ReArticleResult result = null;
+		if (isNetworkConnected()) {
+			try {
+				result = ApiClient.addSubReArticle(content, articleId,
+						atUserId, hide_pid, getSessionId(), getUserName(),
+						getPassword());
+				if (result.isLogin()) {
+					putUserInfo(Constants.SESSIONID, result.getSessionId());
+				} else {
+					removeUserInfo(Constants.SESSIONID);
+				}
+			} catch (AppException e) {
+				throw e;
+			}
+		} else {
 			throw AppException.network(new HttpException());
 		}
 		return result;
@@ -195,7 +195,8 @@ public class AppContext extends Application {
 	 * @throws AppException
 	 * @author luohl
 	 */
-	public BlogList getBlogList(int pageIndex, boolean isRefresh) throws AppException {
+	public BlogList getBlogList(int pageIndex, boolean isRefresh)
+			throws AppException {
 
 		BlogList list = null;
 		String key = StringUtils.encodeByMD5("bloglist" + "_" + pageIndex);
@@ -210,8 +211,7 @@ public class AppContext extends Application {
 				if (list == null)
 					throw e;
 			}
-		}
-		else {
+		} else {
 			list = (BlogList) readObject(key);
 			if (list == null) {
 				throw AppException.network(new HttpException());
@@ -238,8 +238,7 @@ public class AppContext extends Application {
 			} catch (AppException e) {
 				throw e;
 			}
-		}
-		else {
+		} else {
 			throw AppException.network(new HttpException());
 		}
 		return blog;
@@ -253,7 +252,8 @@ public class AppContext extends Application {
 	 * @return
 	 * @throws AppException
 	 */
-	public ReBlogList getReBlogList(int articleId, int pageIndex) throws AppException {
+	public ReBlogList getReBlogList(int articleId, int pageIndex)
+			throws AppException {
 
 		ReBlogList list = null;
 		if (isNetworkConnected()) {
@@ -262,8 +262,7 @@ public class AppContext extends Application {
 			} catch (AppException e) {
 				throw e;
 			}
-		}
-		else {
+		} else {
 			throw AppException.network(new HttpException());
 		}
 		return list;
@@ -277,23 +276,23 @@ public class AppContext extends Application {
 	 * @throws AppException
 	 */
 
-	public ReBlogResult addReBlog(String content, int articleId) throws AppException {
+	public ReBlogResult addReBlog(String content, int articleId)
+			throws AppException {
 
 		ReBlogResult result = null;
 		if (isNetworkConnected()) {
 			try {
-				result = ApiClient.addReBlog(content, articleId, getSessionId(), getUserName(), getPassword());
+				result = ApiClient.addReBlog(content, articleId,
+						getSessionId(), getUserName(), getPassword());
 				if (result.isLogin()) {
 					putUserInfo(Constants.SESSIONID, result.getSessionId());
-				}
-				else {
+				} else {
 					removeUserInfo(Constants.SESSIONID);
 				}
 			} catch (AppException e) {
 				throw e;
 			}
-		}
-		else {
+		} else {
 			throw AppException.network(new HttpException());
 		}
 		return result;
@@ -309,7 +308,8 @@ public class AppContext extends Application {
 	 * @throws AppException
 	 * @author luohl
 	 */
-	public GroupList getGroupList(int pageIndex, boolean isRefresh) throws AppException {
+	public GroupList getGroupList(int pageIndex, boolean isRefresh)
+			throws AppException {
 
 		GroupList list = null;
 		String key = StringUtils.encodeByMD5("grouplist" + "_" + pageIndex);
@@ -324,8 +324,7 @@ public class AppContext extends Application {
 				if (list == null)
 					throw e;
 			}
-		}
-		else {
+		} else {
 			list = (GroupList) readObject(key);
 			if (list == null) {
 				throw AppException.network(new HttpException());
@@ -343,10 +342,12 @@ public class AppContext extends Application {
 	 * @throws AppException
 	 * @author luohl
 	 */
-	public ArticleList getGroupArticleList(String gid, boolean isRefresh, int pageIndex) throws AppException {
+	public ArticleList getGroupArticleList(String gid, boolean isRefresh,
+			int pageIndex) throws AppException {
 
 		ArticleList list = null;
-		String key = StringUtils.encodeByMD5("groupArticlelist" + "_" + gid + pageIndex);
+		String key = StringUtils.encodeByMD5("groupArticlelist" + "_" + gid
+				+ pageIndex);
 		if (isNetworkConnected() && (!isReadDataCache(key) || isRefresh)) {
 			try {
 				list = ApiClient.getGroupArticleList(pageIndex, gid);
@@ -358,8 +359,7 @@ public class AppContext extends Application {
 				if (list == null)
 					throw e;
 			}
-		}
-		else {
+		} else {
 			list = (ArticleList) readObject(key);
 			if (list == null) {
 				throw AppException.network(new HttpException());
@@ -378,7 +378,8 @@ public class AppContext extends Application {
 	 * @throws AppException
 	 * @author luohl
 	 */
-	public LoginUser login(String userName, String password, boolean isLogin) throws AppException {
+	public LoginUser login(String userName, String password, boolean isLogin)
+			throws AppException {
 
 		LoginUser loginUser = null;
 		String key = StringUtils.encodeByMD5("user");
@@ -399,8 +400,7 @@ public class AppContext extends Application {
 				if (loginUser == null)
 					throw e;
 			}
-		}
-		else {
+		} else {
 			loginUser = (LoginUser) readObject(key);
 			if (loginUser == null) {
 				throw AppException.network(new HttpException());
@@ -419,7 +419,8 @@ public class AppContext extends Application {
 	 * @throws AppException
 	 * @author luohl
 	 */
-	public TalkList getTalkList(int pageIndex, boolean isRefresh) throws AppException {
+	public TalkList getTalkList(int pageIndex, boolean isRefresh)
+			throws AppException {
 
 		TalkList list = null;
 		String key = StringUtils.encodeByMD5("talklist" + "_" + pageIndex);
@@ -434,8 +435,7 @@ public class AppContext extends Application {
 				if (list == null)
 					throw e;
 			}
-		}
-		else {
+		} else {
 			list = (TalkList) readObject(key);
 			if (list == null) {
 				throw AppException.network(new HttpException());
@@ -446,6 +446,7 @@ public class AppContext extends Application {
 
 	/**
 	 * 新增吐槽
+	 * 
 	 * @param content
 	 * @param file
 	 * @return
@@ -456,18 +457,80 @@ public class AppContext extends Application {
 		TalkResult result = null;
 		if (isNetworkConnected()) {
 			try {
-				result = ApiClient.saveTalk(content, file, getSessionId(), getUserName(), getPassword());
+				result = ApiClient.saveTalk(content, file, getSessionId(),
+						getUserName(), getPassword());
 				if (result.isLogin()) {
 					putUserInfo(Constants.SESSIONID, result.getSessionId());
-				}
-				else {
+				} else {
 					removeUserInfo(Constants.SESSIONID);
 				}
 			} catch (AppException e) {
 				throw e;
 			}
+		} else {
+			throw AppException.network(new HttpException());
 		}
-		else {
+		return result;
+	}
+
+	/**
+	 * 吐槽回复列表
+	 * 
+	 * @param pageIndex
+	 * @param isRefresh
+	 * @return
+	 * @throws AppException
+	 */
+	public ReTalkList reTalkList(int pageIndex, boolean isRefresh, int talkId)
+			throws AppException {
+
+		ReTalkList list = null;
+		String key = StringUtils.encodeByMD5("retalklist" + "_" + talkId);
+		if (isNetworkConnected() && (!isReadDataCache(key) || isRefresh)) {
+			try {
+				list = ApiClient.getReTalkList(pageIndex, talkId);
+				if (list != null && pageIndex == 1) {
+					saveObject(list, key);
+				}
+			} catch (AppException e) {
+				list = (ReTalkList) readObject(key);
+				if (list == null)
+					throw e;
+			}
+		} else {
+			list = (ReTalkList) readObject(key);
+			if (list == null) {
+				throw AppException.network(new HttpException());
+			}
+		}
+		return list;
+	}
+
+	/**
+	 * 回复吐槽
+	 * 
+	 * @param content
+	 * @param file
+	 * @return
+	 * @throws AppException
+	 */
+	public ReTalkResult addReTalk(String content, int talkId)
+			throws AppException {
+
+		ReTalkResult result = null;
+		if (isNetworkConnected()) {
+			try {
+				result = ApiClient.addReTalk(talkId, content, getSessionId(),
+						getUserName(), getPassword());
+				if (result.isLogin()) {
+					putUserInfo(Constants.SESSIONID, result.getSessionId());
+				} else {
+					removeUserInfo(Constants.SESSIONID);
+				}
+			} catch (AppException e) {
+				throw e;
+			}
+		} else {
 			throw AppException.network(new HttpException());
 		}
 		return result;
@@ -481,7 +544,8 @@ public class AppContext extends Application {
 	 * @return
 	 * @throws AppException
 	 */
-	public User fetchUserInfo(String userId, boolean isRefresh) throws AppException {
+	public User fetchUserInfo(String userId, boolean isRefresh)
+			throws AppException {
 
 		User user = null;
 		String key = StringUtils.encodeByMD5(userId);
@@ -496,8 +560,7 @@ public class AppContext extends Application {
 				if (user == null)
 					throw e;
 			}
-		}
-		else {
+		} else {
 			user = (User) readObject(key);
 			if (user == null) {
 				throw AppException.network(new HttpException());
@@ -515,8 +578,7 @@ public class AppContext extends Application {
 			} catch (AppException e) {
 				throw e;
 			}
-		}
-		else {
+		} else {
 			throw AppException.network(new HttpException());
 		}
 		return version;
@@ -543,7 +605,8 @@ public class AppContext extends Application {
 
 		boolean exist = false;
 
-		String sDir = Environment.getExternalStorageDirectory() + Constants.SEPARATOR + Constants.ULEWO;
+		String sDir = Environment.getExternalStorageDirectory()
+				+ Constants.SEPARATOR + Constants.ULEWO;
 		File file = new File(sDir, cachefile);
 		if (file.exists()) {
 			exist = true;
@@ -583,12 +646,14 @@ public class AppContext extends Application {
 	 */
 	public boolean saveObject(Serializable ser, String fileName) {
 
-		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+		if (Environment.getExternalStorageState().equals(
+				Environment.MEDIA_MOUNTED)) {
 			FileOutputStream fos = null;
 			ObjectOutputStream oos = null;
 			try {
 
-				String sDir = Environment.getExternalStorageDirectory() + Constants.SEPARATOR + Constants.ULEWO;
+				String sDir = Environment.getExternalStorageDirectory()
+						+ Constants.SEPARATOR + Constants.ULEWO;
 				File destDir = new File(sDir);
 				if (!destDir.exists()) {
 					destDir.mkdirs();
@@ -631,10 +696,12 @@ public class AppContext extends Application {
 	 */
 	public Serializable readObject(String fileName) {
 
-		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+		if (Environment.getExternalStorageState().equals(
+				Environment.MEDIA_MOUNTED)) {
 			FileInputStream fis = null;
 			ObjectInputStream ois = null;
-			String sDir = Environment.getExternalStorageDirectory() + Constants.SEPARATOR + Constants.ULEWO;
+			String sDir = Environment.getExternalStorageDirectory()
+					+ Constants.SEPARATOR + Constants.ULEWO;
 			try {
 				File file = new File(sDir, fileName);
 				if (!file.exists()) {
@@ -667,8 +734,10 @@ public class AppContext extends Application {
 
 	public Serializable deleteObject(String fileName) {
 
-		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-			String sDir = Environment.getExternalStorageDirectory() + Constants.SEPARATOR + Constants.ULEWO;
+		if (Environment.getExternalStorageState().equals(
+				Environment.MEDIA_MOUNTED)) {
+			String sDir = Environment.getExternalStorageDirectory()
+					+ Constants.SEPARATOR + Constants.ULEWO;
 			File file = new File(sDir, fileName);
 			if (file.exists()) {
 				file.delete();
@@ -726,13 +795,11 @@ public class AppContext extends Application {
 			if (!StringUtils.isEmpty(extraInfo)) {
 				if (extraInfo.toLowerCase().equals("cmnet")) {
 					netType = NETTYPE_CMNET;
-				}
-				else {
+				} else {
 					netType = NETTYPE_CMWAP;
 				}
 			}
-		}
-		else if (nType == ConnectivityManager.TYPE_WIFI) {
+		} else if (nType == ConnectivityManager.TYPE_WIFI) {
 			netType = NETTYPE_WIFI;
 		}
 		return netType;
