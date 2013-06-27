@@ -1,5 +1,11 @@
 $(function(){
 	loadNotice();
+	$("#searchInput").bind("keydown",function(event){
+		var ev = document.all ? window.event : event;  
+	    if(ev.keyCode==13) {// 如（ev.ctrlKey && ev.keyCode==13）为ctrl+Center 触发  
+	    	search();
+	    }  
+	});
 })
 // 登录跳转
 function goto_login() {
