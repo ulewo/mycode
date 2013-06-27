@@ -6,7 +6,7 @@
 <head>
 <%@ include file="../common/path.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>${blog.title}个人博客-有乐窝</title>
+<title>${blog.title}-有乐窝</title>
 <meta name="description" content="${blog.title} -有乐窝">
 <meta name="keywords" content="${blog.title} -有乐窝">
 <link rel="stylesheet" type="text/css" href="${realPath}/css/user.blog.css">

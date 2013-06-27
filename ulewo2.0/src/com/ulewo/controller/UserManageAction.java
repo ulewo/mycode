@@ -60,7 +60,8 @@ public class UserManageAction {
 
 	private final static int CHARACTER_LENGTH = 200;
 
-	private final static int ADDRESS_LENGTH = 50, WORK_LENGTH = 50, ITEM_LENGTH = 50;
+	private final static int ADDRESS_LENGTH = 50, WORK_LENGTH = 50,
+			ITEM_LENGTH = 50;
 
 	private final static int PWD_MIN_LENGTH = 6;
 
@@ -74,6 +75,7 @@ public class UserManageAction {
 
 	/**
 	 * 获取用户信息
+	 * 
 	 * @param session
 	 * @return
 	 */
@@ -84,7 +86,8 @@ public class UserManageAction {
 		String userId = user.getUserId();
 		ModelAndView mv = new ModelAndView();
 		try {
-			User resultUser = userService.findUser(userId, QueryUserType.USERID);
+			User resultUser = userService
+					.findUser(userId, QueryUserType.USERID);
 			if (null != resultUser) {
 				UserVo userVo = new UserVo();
 				userVo.setUserId(resultUser.getUserId());
@@ -108,17 +111,20 @@ public class UserManageAction {
 
 	/**
 	 * 更新用户信息
+	 * 
 	 * @param session
 	 * @param request
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/saveUserInfo.action", method = RequestMethod.POST)
-	public Map<String, Object> saveUserInfo(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> saveUserInfo(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
-			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+			SessionUser sessionUser = (SessionUser) session
+					.getAttribute("user");
 			String userId = sessionUser.getUserId();
 			String age = request.getParameter("age");
 			String character = request.getParameter("characters");
@@ -140,7 +146,8 @@ public class UserManageAction {
 				modelMap.put("message", "工作信息不能超过50字符");
 				return modelMap;
 			}
-			if (null != character && character.trim().length() > CHARACTER_LENGTH) {
+			if (null != character
+					&& character.trim().length() > CHARACTER_LENGTH) {
 				modelMap.put("result", "fail");
 				modelMap.put("message", "个性签名不能超过150字符");
 				return modelMap;
@@ -173,30 +180,37 @@ public class UserManageAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/save_pwd.action", method = RequestMethod.POST)
-	public Map<String, Object> editPwd(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> editPwd(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		String oldpwd = request.getParameter("oldpwd");
 		String newpwd = request.getParameter("newpwd");
 		String checkPassWord = "^[0-9a-zA-Z]+$";
 		try {
-			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+			SessionUser sessionUser = (SessionUser) session
+					.getAttribute("user");
 			String userId = sessionUser.getUserId();
-			if (!oldpwd.matches(checkPassWord) || StringUtils.isEmpty(oldpwd) || oldpwd.length() < PWD_MIN_LENGTH
+			if (!oldpwd.matches(checkPassWord) || StringUtils.isEmpty(oldpwd)
+					|| oldpwd.length() < PWD_MIN_LENGTH
 					|| oldpwd.length() > PWD_MAX_LENGTH) {
 				modelMap.put("message", "旧密码不符合规范");
 				modelMap.put("result", "fail");
 				return modelMap;
 			}
 
-			if (!newpwd.matches(checkPassWord) || StringUtils.isEmpty(newpwd) || newpwd.length() < PWD_MIN_LENGTH
+			if (!newpwd.matches(checkPassWord) || StringUtils.isEmpty(newpwd)
+					|| newpwd.length() < PWD_MIN_LENGTH
 					|| newpwd.length() > PWD_MAX_LENGTH) {
 				modelMap.put("message", "新密码不符合规范");
 				modelMap.put("result", "fail");
 				return modelMap;
 			}
-			User resultUser = userService.findUser(userId, QueryUserType.USERID);
-			if (null != resultUser && resultUser.getPassword().equals(StringUtils.encodeByMD5(oldpwd))) {
+			User resultUser = userService
+					.findUser(userId, QueryUserType.USERID);
+			if (null != resultUser
+					&& resultUser.getPassword().equals(
+							StringUtils.encodeByMD5(oldpwd))) {
 				User user = new User();
 				user.setUserId(userId);
 				user.setPassword(StringUtils.encodeByMD5(newpwd));
@@ -227,7 +241,8 @@ public class UserManageAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/saveUserIcon.action")
-	public Map<String, Object> saveUserIcon(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> saveUserIcon(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		String tempimg = request.getParameter("img");
@@ -235,7 +250,8 @@ public class UserManageAction {
 		String y1 = request.getParameter("y1");
 		String width = request.getParameter("width");
 		String height = request.getParameter("height");
-		if (!StringUtils.isNumber(x1) || !StringUtils.isNumber(y1) || !StringUtils.isNumber(width)
+		if (!StringUtils.isNumber(x1) || !StringUtils.isNumber(y1)
+				|| !StringUtils.isNumber(width)
 				|| !StringUtils.isNumber(height)) {
 			modelMap.put("result", "fail");
 			modelMap.put("message", "请求参数错误");
@@ -264,9 +280,11 @@ public class UserManageAction {
 			tempIn = new FileInputStream(tempfile);
 			BufferedImage img = ImageIO.read(tempIn);
 			// 裁剪图片
-			BufferedImage subimg = img.getSubimage(x1_int, y1_int, width_int, height_int);
+			BufferedImage subimg = img.getSubimage(x1_int, y1_int, width_int,
+					height_int);
 			// 放大缩小图片
-			BufferedImage okimg = new BufferedImage(SMALL_WIDTH, SMALL_HEIGHT, BufferedImage.TYPE_INT_RGB);
+			BufferedImage okimg = new BufferedImage(SMALL_WIDTH, SMALL_HEIGHT,
+					BufferedImage.TYPE_INT_RGB);
 			Graphics2D g = okimg.createGraphics();
 			g.drawImage(subimg, 0, 0, SMALL_WIDTH, SMALL_HEIGHT, null);
 
@@ -274,12 +292,14 @@ public class UserManageAction {
 			out = new ByteArrayOutputStream();
 			ImageIO.write(okimg, imgType, out);
 			byte[] data = out.toByteArray();
-			String okSrcPath = session.getServletContext().getRealPath("/") + "upload/avatars/";
+			String okSrcPath = session.getServletContext().getRealPath("/")
+					+ "upload/avatars/";
 			File imagePathFile = new File(okSrcPath);
 			if (!imagePathFile.exists()) {
 				imagePathFile.mkdirs();
 			}
-			File okfile = new File(okSrcPath + sessionUser.getUserId() + "." + imgType);
+			File okfile = new File(okSrcPath + sessionUser.getUserId() + "."
+					+ imgType);
 			imgOut = new FileOutputStream(okfile);
 			imgOut.write(data);
 			imgOut.flush();
@@ -319,7 +339,8 @@ public class UserManageAction {
 	public ModelAndView newblog(HttpSession session) {
 
 		ModelAndView mv = new ModelAndView();
-		String userId = "10001";
+		String userId = ((SessionUser) session.getAttribute("user"))
+				.getUserId();
 		List<BlogItem> itemList = blogItemService.queryBlogItemByUserId(userId);
 		mv.addObject("itemList", itemList);
 		mv.setViewName("usermanage/new_blog");
@@ -335,7 +356,8 @@ public class UserManageAction {
 		if (!StringUtils.isNumber(id)) {
 			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 		}
-		String userId = ((SessionUser) session.getAttribute("user")).getUserId();
+		String userId = ((SessionUser) session.getAttribute("user"))
+				.getUserId();
 		int id_int = Integer.parseInt(id);
 		List<BlogItem> itemList = blogItemService.queryBlogItemByUserId(userId);
 		BlogArticle blog = blogArticleService.queryBlogById(id_int);
@@ -351,11 +373,13 @@ public class UserManageAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/saveblog.action", method = RequestMethod.POST)
-	public Map<String, Object> saveBlog(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> saveBlog(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
-			String userId = ((SessionUser) session.getAttribute("user")).getUserId();
+			String userId = ((SessionUser) session.getAttribute("user"))
+					.getUserId();
 			String title = request.getParameter("title");
 			String itemId = request.getParameter("itemId");
 			String keyword = request.getParameter("keyword");
@@ -366,8 +390,7 @@ public class UserManageAction {
 				if (!StringUtils.isNumber(id)) {
 					modelMap.put("result", "fail");
 					modelMap.put("message", "参数错误");
-				}
-				else {
+				} else {
 					id_int = Integer.parseInt(id);
 				}
 
@@ -395,11 +418,13 @@ public class UserManageAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/deleteBlog.action", method = RequestMethod.GET)
-	public Map<String, Object> deleteBlog(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> deleteBlog(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
-			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+			SessionUser sessionUser = (SessionUser) session
+					.getAttribute("user");
 			String id = request.getParameter("id");
 			int id_int = 0;
 			if (!StringUtils.isNumber(id)) {
@@ -427,13 +452,16 @@ public class UserManageAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/loadItem", method = RequestMethod.POST)
-	public Map<String, Object> loadItem(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> loadItem(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
-			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+			SessionUser sessionUser = (SessionUser) session
+					.getAttribute("user");
 			String userId = sessionUser.getUserId();
-			List<BlogItem> itemList = blogItemService.queryBlogItemByUserId(userId);
+			List<BlogItem> itemList = blogItemService
+					.queryBlogItemByUserId(userId);
 			modelMap.put("items", itemList);
 			return modelMap;
 		} catch (Exception e) {
@@ -449,9 +477,11 @@ public class UserManageAction {
 
 		ModelAndView mv = new ModelAndView();
 		try {
-			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+			SessionUser sessionUser = (SessionUser) session
+					.getAttribute("user");
 			String userId = sessionUser.getUserId();
-			List<BlogItem> itemList = blogItemService.queryBlogItemAndCountByUserId(userId);
+			List<BlogItem> itemList = blogItemService
+					.queryBlogItemAndCountByUserId(userId);
 			mv.addObject("imtes", itemList);
 			mv.setViewName("usermanage/blog_item");
 			return mv;
@@ -464,7 +494,8 @@ public class UserManageAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/edit_item", method = RequestMethod.POST)
-	public Map<String, Object> editItem(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> editItem(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		String id = request.getParameter("id");
@@ -476,7 +507,8 @@ public class UserManageAction {
 				modelMap.put("message", "参数错误");
 				return modelMap;
 			}
-			if (StringUtils.isEmpty(itemName) || itemName.length() > ITEM_LENGTH) {
+			if (StringUtils.isEmpty(itemName)
+					|| itemName.length() > ITEM_LENGTH) {
 				modelMap.put("result", "fail");
 				modelMap.put("message", "分类名不能超过50字符");
 				return modelMap;
@@ -486,7 +518,8 @@ public class UserManageAction {
 				modelMap.put("message", "排序必须是数字");
 				return modelMap;
 			}
-			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+			SessionUser sessionUser = (SessionUser) session
+					.getAttribute("user");
 			String userId = sessionUser.getUserId();
 			int id_int = Integer.parseInt(id);
 			int range_int = Integer.parseInt("range");
@@ -523,7 +556,8 @@ public class UserManageAction {
 			if (null != id) {
 				id = id.trim();
 			}
-			if (StringUtils.isEmpty(itemName) || itemName.length() > ITEM_LENGTH) {
+			if (StringUtils.isEmpty(itemName)
+					|| itemName.length() > ITEM_LENGTH) {
 				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 				return mv;
 			}
@@ -531,7 +565,8 @@ public class UserManageAction {
 				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 				return mv;
 			}
-			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+			SessionUser sessionUser = (SessionUser) session
+					.getAttribute("user");
 			String userId = sessionUser.getUserId();
 			int range_int = Integer.parseInt(range);
 
@@ -557,12 +592,14 @@ public class UserManageAction {
 
 	/**
 	 * 删除分类
+	 * 
 	 * @param session
 	 * @param request
 	 * @return
 	 */
 	@RequestMapping(value = "/delete_item", method = RequestMethod.GET)
-	public ModelAndView deleteItem(HttpSession session, HttpServletRequest request) {
+	public ModelAndView deleteItem(HttpSession session,
+			HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
@@ -571,7 +608,8 @@ public class UserManageAction {
 				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 				return mv;
 			}
-			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+			SessionUser sessionUser = (SessionUser) session
+					.getAttribute("user");
 			String userId = sessionUser.getUserId();
 			int id_int = Integer.parseInt(id);
 			blogItemService.delete(userId, id_int);
@@ -585,12 +623,14 @@ public class UserManageAction {
 
 	/**
 	 * 博客评论管理
+	 * 
 	 * @param session
 	 * @param request
 	 * @return
 	 */
 	@RequestMapping(value = "/blog_reply", method = RequestMethod.GET)
-	public ModelAndView replyList(HttpSession session, HttpServletRequest request) {
+	public ModelAndView replyList(HttpSession session,
+			HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
 		int page_int = 0;
@@ -599,9 +639,11 @@ public class UserManageAction {
 			page_int = Integer.parseInt(page);
 		}
 		try {
-			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+			SessionUser sessionUser = (SessionUser) session
+					.getAttribute("user");
 			String userId = sessionUser.getUserId();
-			PaginationResult pagResult = blogReplyService.queryAllReply(userId, page_int, Constant.pageSize20);
+			PaginationResult pagResult = blogReplyService.queryAllReply(userId,
+					page_int, Constant.pageSize20);
 			mv.addObject("replyList", pagResult);
 			mv.setViewName("usermanage/blog_reply");
 			return mv;
@@ -614,12 +656,14 @@ public class UserManageAction {
 
 	/**
 	 * 删除评论
+	 * 
 	 * @param session
 	 * @param request
 	 * @return
 	 */
 	@RequestMapping(value = "/delete_reply.action", method = RequestMethod.GET)
-	public ModelAndView deleteReply(HttpSession session, HttpServletRequest request) {
+	public ModelAndView deleteReply(HttpSession session,
+			HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
 		int id_int = 0;
@@ -628,12 +672,12 @@ public class UserManageAction {
 			id_int = Integer.parseInt(page);
 		}
 		try {
-			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+			SessionUser sessionUser = (SessionUser) session
+					.getAttribute("user");
 			String userId = sessionUser.getUserId();
 			if (blogReplyService.delete(userId, id_int)) {
 				mv.setViewName("redirect:blog_reply");
-			}
-			else {
+			} else {
 				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			}
 			return mv;
@@ -645,12 +689,15 @@ public class UserManageAction {
 	}
 
 	@RequestMapping(value = "/notice", method = RequestMethod.GET)
-	public ModelAndView notice(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView notice(HttpSession session, HttpServletRequest request,
+			HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
-			String userId = ((SessionUser) session.getAttribute("user")).getUserId();
-			List<Notice> list = noticeService.queryNoticeByUserId(userId, Constant.STATUSYN);
+			String userId = ((SessionUser) session.getAttribute("user"))
+					.getUserId();
+			List<Notice> list = noticeService.queryNoticeByUserId(userId,
+					Constant.STATUSYN);
 			mv.addObject("list", list);
 			mv.setViewName("usermanage/notice");
 		} catch (Exception e) {
@@ -662,7 +709,8 @@ public class UserManageAction {
 	}
 
 	@RequestMapping(value = "/readNotice", method = RequestMethod.POST)
-	public ModelAndView deleteNotice(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView deleteNotice(HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
@@ -684,7 +732,8 @@ public class UserManageAction {
 	}
 
 	@RequestMapping(value = "/noticeDetail", method = RequestMethod.GET)
-	public ModelAndView noticeDetail(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView noticeDetail(HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
@@ -708,12 +757,15 @@ public class UserManageAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/noticeCount", method = RequestMethod.GET)
-	public Map<String, Object> noticeCount(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public Map<String, Object> noticeCount(HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
-			String userId = ((SessionUser) session.getAttribute("user")).getUserId();
-			int count = noticeService.queryNoticeCountByUserId(userId, Constant.STATUSYN);
+			String userId = ((SessionUser) session.getAttribute("user"))
+					.getUserId();
+			int count = noticeService.queryNoticeCountByUserId(userId,
+					Constant.STATUSYN);
 			modelMap.put("count", count);
 			return modelMap;
 		} catch (Exception e) {
