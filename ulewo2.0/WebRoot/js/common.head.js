@@ -75,3 +75,14 @@ function createWoWo(){
 		document.location.href=global.realPath+"/createWoWo";
 	}
 }
+
+function search(){
+	var keyword = $("#searchInput").val().trim();
+	if(keyword==""){
+		alert("请输入关键字");
+		return;
+	}else{
+		keyword = encodeURI(encodeURI(keyword)); 
+		document.location.href=global.realPath+"/search?q="+keyword;
+	}
+}

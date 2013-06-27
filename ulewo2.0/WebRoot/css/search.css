@@ -1,0 +1,17 @@
+@IMPORT url("public.css");
+.search{width:500px;margin:0px auto;margin-top:20px;}
+.search .head_search_input{height:27px;margin-top:5px;width:350px;margin-left:40px;float:right;border:1px solid #1C91BE;}
+.search .head_search_btn{background:#1C91BE;border:0px;color:#ffffff;font-size:15px;height:29px;width:100px;float:right;margin-top:5px;}
+.searchtype{margin-top:10px;}
+.searchtype ul{list-style:none;height:25px;border-bottom:2px solid #DCDCDC;margin:0px;padding:0px;}
+.searchtype ul li{float:left;margin-left:10px;display:inline-block;}
+.searchtype ul li a{display:inline-block;color:#888;font-weight:bold;text-decoration:none;font-size:15px;padding:3px 8px 5px 8px}
+.searchtype ul li a:hover{border-bottom:2px solid #64C5E8;color:#64C5E8}
+.searchtype ul li a.cur_type{border-bottom:2px solid #64C5E8;color:#64C5E8}
+.hilight{color:red}
+.item{padding:10px 5px}
+.title a{font-weight:bold;text-decoration:none;font-size:16px;}
+.title a:hover{color:#C00}
+.url{color:#40AA53;margin-top:5px;}
+.summary{margin-top:5px;line-height:20px;}
+.info{margin-top:5px;color:#666}

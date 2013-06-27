@@ -55,11 +55,5 @@
 			<li><a  href="${realPath}/blog"  class="selected3" onFocus="this.blur()">博&nbsp;客</a></li>
 			<li><a href="${realPath}/square" class="selected4" onFocus="this.blur()">广&nbsp;场</a></li>
 		</ul>
-		
-		<div class="head_search">
-			<input type="button" class="head_search_btn" value="搜索一下" onclick="search()">
-			<input type="text" class="head_search_input" id="searchInput" name="keyWord">
-			<div class="clear"></div>
-		</div>
 	</div>
 </div>
