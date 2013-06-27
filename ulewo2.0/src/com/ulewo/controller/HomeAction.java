@@ -62,6 +62,14 @@ public class HomeAction {
 		return mv;
 	}
 
+	@RequestMapping(value = "/restpwd", method = RequestMethod.GET)
+	public ModelAndView restPwd() {
+
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("rest_pwd");
+		return mv;
+	}
+
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public ModelAndView register() {
 
@@ -78,12 +86,9 @@ public class HomeAction {
 
 		try {
 			List<Article> list = articleService.queryLatestArticle(0, 20);
-			List<Article> imgArticle = articleService.queryImageArticle(null,
-					0, 5);
-			List<BlogArticle> blogList = blogArticleService.indexLatestBlog(0,
-					20);
-			List<Group> groupList = (List<Group>) groupService
-					.queryGroupsOderArticleCount(0, 10).getList();
+			List<Article> imgArticle = articleService.queryImageArticle(null, 0, 5);
+			List<BlogArticle> blogList = blogArticleService.indexLatestBlog(0, 20);
+			List<Group> groupList = (List<Group>) groupService.queryGroupsOderArticleCount(0, 10).getList();
 			mv.addObject("list", list);
 			mv.addObject("imgArticle", imgArticle);
 			mv.addObject("blogList", blogList);
@@ -108,9 +113,7 @@ public class HomeAction {
 			if (StringUtils.isNumber(page)) {
 				page_int = Integer.parseInt(page);
 			}
-			PaginationResult result = articleService
-					.queryImageArticle2PagResult(null, page_int,
-							Constant.pageSize30);
+			PaginationResult result = articleService.queryImageArticle2PagResult(null, page_int, Constant.pageSize30);
 			List<Article> list = (List<Article>) result.getList();
 			List<Article> square1 = new ArrayList<Article>();
 			List<Article> square2 = new ArrayList<Article>();
@@ -132,8 +135,7 @@ public class HomeAction {
 		}
 	}
 
-	private void set2Square(List<Article> square1, List<Article> square2,
-			List<Article> square3, List<Article> square4,
+	private void set2Square(List<Article> square1, List<Article> square2, List<Article> square3, List<Article> square4,
 			List<Article> squareList) {
 
 		int num = 0;
@@ -170,8 +172,7 @@ public class HomeAction {
 			if (StringUtils.isNumber(page)) {
 				page_int = Integer.parseInt(page);
 			}
-			PaginationResult list = blogArticleService.queryLatestBlog(
-					page_int, Constant.pageSize25);
+			PaginationResult list = blogArticleService.queryLatestBlog(page_int, Constant.pageSize25);
 			mv.addObject("result", list);
 			mv.setViewName("blog");
 			return mv;
@@ -184,8 +185,7 @@ public class HomeAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/loadLatestTalk", method = RequestMethod.GET)
-	public Map<String, Object> loadTalk(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> loadTalk(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -202,13 +202,11 @@ public class HomeAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/loadGroupAndMember", method = RequestMethod.GET)
-	public Map<String, Object> loadGroupAndMember(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> loadGroupAndMember(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
-			PaginationResult groupResult = groupService
-					.queryGroupsOderArticleCount(1, Constant.pageSize15);
+			PaginationResult groupResult = groupService.queryGroupsOderArticleCount(1, Constant.pageSize15);
 			return modelMap;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -234,8 +232,7 @@ public class HomeAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/loadMoreTalk", method = RequestMethod.GET)
-	public Map<String, Object> loadMoreTalk(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> loadMoreTalk(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -244,8 +241,7 @@ public class HomeAction {
 			if (StringUtils.isNumber(page)) {
 				page_int = Integer.parseInt(page);
 			}
-			PaginationResult data = talkService.queryLatestTalkByPag(page_int,
-					Constant.pageSize30);
+			PaginationResult data = talkService.queryLatestTalkByPag(page_int, Constant.pageSize30);
 			modelMap.put("result", "success");
 			modelMap.put("list", data);
 			return modelMap;
@@ -277,8 +273,8 @@ public class HomeAction {
 	}
 
 	@RequestMapping(value = "/downloadApp", method = RequestMethod.GET)
-	public void downApp(HttpSession session, HttpServletRequest request,
-			HttpServletResponse response) {
+	public void downApp(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+
 		InputStream in = null;
 		BufferedInputStream bf = null;
 		OutputStream toClient = null;
@@ -330,8 +326,8 @@ public class HomeAction {
 	}
 
 	@RequestMapping(value = "/app", method = RequestMethod.GET)
-	public ModelAndView fileupload(HttpSession session,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView fileupload(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("ulewoapp");
 		return mv;

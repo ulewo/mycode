@@ -1,5 +1,7 @@
 package com.ulewo.service;
 
+import java.util.Map;
+
 import com.ulewo.entity.User;
 import com.ulewo.enums.QueryUserType;
 import com.ulewo.util.PaginationResult;
@@ -48,6 +50,22 @@ public interface UserService {
 	 * @return
 	 */
 	public User login(String value, String password);
-	
+
 	public User queryBaseInfo(String userId);
+
+	/**
+	 * 发送重置密码连接  返回邮箱类型
+	 * @param user
+	 * @return
+	 */
+	public String sendRestPwd(User user) throws Exception;
+
+	/**
+	 * 重置密码
+	 * @param account
+	 * @param activationCode
+	 * @param pwd
+	 * @return
+	 */
+	public Map<String, Object> resetPwd(String account, String activationCode, String pwd);
 }
