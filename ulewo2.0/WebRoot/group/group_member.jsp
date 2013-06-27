@@ -39,7 +39,7 @@
 				<p:pager url="${realPath}/group/${gid}/member" page="${result.page}" pageTotal = "${result.pageTotal }"></p:pager>
 			</div>
 		</div>
-		<%@ include file="../common/foot_manage.jsp" %>
+		<%@ include file="../common/foot.jsp" %>
 	</div>
 </body>
 </html>

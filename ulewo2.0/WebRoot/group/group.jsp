@@ -118,7 +118,7 @@
 			</div>
 			<div class="clear"></div>
 		</div>
-		<%@ include file="../common/foot_manage.jsp" %>
+		<%@ include file="../common/foot.jsp" %>
 	</div>
 </body>
 </html>

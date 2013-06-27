@@ -297,9 +297,6 @@
 		</div>
 	<div style="clear:left;"></div>
   </div>
-  <script type="text/javascript">
-   global.userId="${userId}";
-  </script>
   <script type="text/javascript" src="${realPath}/js/talk.js"></script>
   <script type="text/javascript" src="${realPath}/js/user.home.js"></script>
   <%@ include file="../common/foot.jsp" %>
