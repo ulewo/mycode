@@ -203,7 +203,7 @@
 			  	</div>
 			  	 -->
 			  	 <div class="app_info">
-			  	 	<div><img src="${realPath}/images/appIcon.png"></div>
+			  	 	<div><a href="${realPath}/app"><img src="${realPath}/images/appIcon.png"></a></div>
 			  	 	<div><img src="${realPath}/images/qrcodebig.png"></div>
 			  	 	<div>扫一扫下载有乐窝安卓客户端</div>
 			  	 </div>
