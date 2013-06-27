@@ -13,20 +13,23 @@ function warm(type,msg){
 		$(".result_info").css({"display":"inline-block"});
 		$("#warm_icon").removeClass("info");
 		$("#warm_icon").css({"display":"inline-block","color":"red"});
-		$("#warm_info").text(msg);
+		$("#warm_info").html(msg);
 	}else if(type=="hide"){
 		$('.result_info').hide();
 	}
 }
 
-function info(msg){
+function info(msg,autohide){
+	var auto = autohide==null?true:autohide;
 	$(".result_info").css({"display":"inline-block"});
 	$("#warm_icon").addClass("info");
 	$("#warm_icon").css({"display":"inline-block","color":"#494949"});
-	$("#warm_info").text(msg);
-	setTimeout(function(){
-		$('.result_info').fadeOut("slow");
-	},2000);
+	$("#warm_info").html(msg);
+	if(auto){
+		setTimeout(function(){
+			$('.result_info').fadeOut("slow");
+		},2000);
+	}
 }
 
 function Pager(totalPage, pageNum, page) {
