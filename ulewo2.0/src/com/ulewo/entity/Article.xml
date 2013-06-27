@@ -134,35 +134,6 @@
 		order by posttime desc limit #offset#,#total#
 	</select>
 
-	<!-- 搜索文章 -->
-	<select id="searchTopic"  resultClass="article" parameterClass="java.util.Map">
-		select id,gid,itemid,title,summary,keyword,(select u.username from user u where u.userid = a.authorid) authorName,authorid,subcode,posttime,readnumber,
-		(select count(r.id) from rearticle r where r.articleid = a.id) reNumber,image from article a
-		<dynamic prepend="where"> 
-		<isNotEmpty prepend="and" property="keyWord">
-         	  <![CDATA[(content like #keyWord# or title like #keyWord#) ]]>
-		</isNotEmpty>
-		
-		<isNotEmpty prepend="and" property="gid">
-         	  <![CDATA[gid =  #gid#  ]]>
-		</isNotEmpty>
-		</dynamic>
-		order by posttime desc limit  #offset#,#total#
-	</select>
-	
-	<!-- 搜索文章数量 -->
-	<select id="searchTopicCount"  resultClass="java.lang.Integer" parameterClass="java.util.Map">
-		select count(id) from article
-		<dynamic prepend="where"> 
-		<isNotEmpty prepend="and" property="keyWord">
-         	  <![CDATA[(content like #keyWord# or title like #keyWord#) ]]>
-		</isNotEmpty>
-		<isNotEmpty prepend="and" property="gid">
-         	  <![CDATA[gid =  #gid#  ]]>
-		</isNotEmpty>
-		</dynamic>
-	</select>
-	
 	<!--根据userId查询主题文章-->
 	<select id="queryTopicByUserId"  resultClass="article" parameterClass="java.util.Map">
 		select a.id,a.gid,a.itemid,i.itemname as itemname,a.title,a.titlestyle,a.authorid,a.posttime,a.readnumber,grade,essence,
@@ -231,6 +202,36 @@
 	
 	<select id="queryHotArticle" resultClass="article" parameterClass="java.util.Map">
 		select id,title from article a order by readnumber desc limit  #offset#,#total#
+	</select>
+	
+	
+		<!-- 搜索文章 -->
+	<select id="searchTopic"  resultClass="article" parameterClass="java.util.Map">
+		select id,gid,itemid,title,summary,keyword,(select u.username from user u where u.userid = a.authorid) authorName,authorid,subcode,posttime,readnumber,
+		(select count(r.id) from rearticle r where r.articleid = a.id) reNumber,image from article a
+		<dynamic prepend="where"> 
+		<isNotEmpty prepend="and" property="keyWord">
+         	  <![CDATA[(content like #keyWord# or title like #keyWord#) ]]>
+		</isNotEmpty>
+		
+		<isNotEmpty prepend="and" property="gid">
+         	  <![CDATA[gid =  #gid#  ]]>
+		</isNotEmpty>
+		</dynamic>
+		order by posttime desc limit  #offset#,#total#
+	</select>
+	
+	<!-- 搜索文章数量 -->
+	<select id="searchTopicCount"  resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		select count(id) from article
+		<dynamic prepend="where"> 
+		<isNotEmpty prepend="and" property="keyWord">
+         	  <![CDATA[(content like #keyWord# or title like #keyWord#) ]]>
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="gid">
+         	  <![CDATA[gid =  #gid#  ]]>
+		</isNotEmpty>
+		</dynamic>
 	</select>
 	
 </sqlMap>

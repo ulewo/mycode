@@ -307,7 +307,7 @@ public class ArticleServiceImpl implements ArticleService {
 		}
 		Map<String, String> map = new HashMap<String, String>();
 		for (int i = 0; i < keyWords.length; i++) {
-			List<Article> aboutList = articleDao.searchTopic(keyWords[i], gid, Constant.ISVALIDY, 0, 5);
+			List<Article> aboutList = articleDao.searchTopic(keyWords[i], gid, 0, 5);
 			for (Article article : aboutList) {
 				if (null == map.get(article.getTitle()) && !keyWord.equals(article.getKeyWord())) {
 					list.add(article);
@@ -329,24 +329,34 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public int searchTopicCount(String keyWord, String gid, String isValid) {
+	public int searchTopicCount(String keyWord, String gid) {
 
-		return articleDao.searchTopicCount(keyWord, gid, isValid);
+		return articleDao.searchTopicCount(keyWord, gid);
 	}
 
 	@Override
-	public List<Article> searchTopic(String keyWord, String gid, String isValid, int offset, int total) {
+	public List<Article> searchTopic(String keyWord, String gid, int offset, int total, boolean isHilight) {
 
-		List<Article> list = articleDao.searchTopic(keyWord, gid, isValid, offset, total);
+		List<Article> list = articleDao.searchTopic(keyWord, gid, offset, total);
 		for (Article article : list) {
 			article.setPostTime(StringUtils.friendly_time(article.getPostTime()));
+			if (isHilight) {
+				article.setTitle(article.getTitle().replace(keyWord, "<span class='hilight'>" + keyWord + "</span>"));
+				article.setSummary(article.getSummary()
+						.replace(keyWord, "<span class='hilight'>" + keyWord + "</span>"));
+			}
 		}
 		return list;
 	}
 
-	public List<Article> queryList(String keyWord, String isValid, int offset, int total) {
+	public PaginationResult searchTopic2PageResult(String keyWord, String gid, int page, int pageSize, boolean isHilight) {
 
-		return null;
+		int count = searchTopicCount(keyWord, gid);
+		Pagination pagination = new Pagination(page, count, pageSize);
+		pagination.action();
+		List<Article> list = searchTopic(keyWord, gid, pagination.getOffSet(), pageSize, isHilight);
+		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
+		return result;
 	}
 
 	public List<Article> queryComendArticle(String sysCode, String subCode, int offset, int total) {

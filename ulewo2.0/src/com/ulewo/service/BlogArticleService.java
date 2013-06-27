@@ -91,4 +91,9 @@ public interface BlogArticleService {
 
 	public PaginationResult queryLatestBlog(int page, int pageSize);
 
+	public int searchBlogCount(String keyword);
+
+	public List<BlogArticle> searchBlog(String keyword, int offset, int total, boolean isHilight);
+
+	public PaginationResult searchBlog2PageResult(String keyword, int page, int pageSize, boolean isHilight);
 }

@@ -146,23 +146,24 @@ public interface ArticleService {
 	 * @return
 	 * @author lhl
 	 */
-	public int searchTopicCount(String keyWord, String gid, String isValid);
+	public int searchTopicCount(String keyWord, String gid);
 
 	/**
 	 * 
 	 * description: 搜索文章
 	 * @param keyWord
 	 * @param gid
-	 * @param isValid
 	 * @param offset
 	 * @param total
+	 * @param isHilight TODO
+	 * @param isValid
 	 * @return
 	 * @
 	 * @author lhl
 	 */
-	public List<Article> searchTopic(String keyWord, String gid, String isValid, int offset, int total);
+	public List<Article> searchTopic(String keyWord, String gid, int offset, int total, boolean isHilight);
 
-	public List<Article> queryList(String keyWord, String isValid, int offset, int total);
+	public PaginationResult searchTopic2PageResult(String keyWord, String gid, int page, int pageSize, boolean isHilight);
 
 	public List<Article> queryComendArticle(String sysCode, String subCode, int offset, int total);
 

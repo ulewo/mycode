@@ -128,7 +128,6 @@ public class ArticleDao extends BaseDao {
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("gid", gid);
 		parmMap.put("itemId", itemId);
-		parmMap.put("isValid", isValid);
 		parmMap.put("offset", offset);
 		parmMap.put("total", total);
 		return this.getSqlMapClientTemplate().queryForList("article.queryTopicOrderByPostTime", parmMap);
@@ -143,12 +142,11 @@ public class ArticleDao extends BaseDao {
 	 * @return
 	 * @author lhl
 	 */
-	public int searchTopicCount(String keyWord, String gid, String isValid) {
+	public int searchTopicCount(String keyWord, String gid) {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("keyWord", "%" + keyWord + "%");
 		parmMap.put("gid", gid);
-		parmMap.put("isValid", isValid);
 		return (Integer) this.getSqlMapClientTemplate().queryForObject("article.searchTopicCount", parmMap);
 	}
 
@@ -164,12 +162,11 @@ public class ArticleDao extends BaseDao {
 	 * @
 	 * @author lhl
 	 */
-	public List<Article> searchTopic(String keyWord, String gid, String isValid, int offset, int total) {
+	public List<Article> searchTopic(String keyWord, String gid, int offset, int total) {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("keyWord", "%" + keyWord + "%");
 		parmMap.put("gid", gid);
-		parmMap.put("isValid", isValid);
 		parmMap.put("offset", offset);
 		parmMap.put("total", total);
 		return this.getSqlMapClientTemplate().queryForList("article.searchTopic", parmMap);

@@ -183,4 +183,33 @@ public class BlogArticleServiceImpl implements BlogArticleService {
 		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
 		return result;
 	}
+
+	public int searchBlogCount(String keyword) {
+
+		return blogArticleDao.searchBlogCount(keyword);
+	}
+
+	public List<BlogArticle> searchBlog(String keyword, int offset, int total, boolean isHilight) {
+
+		List<BlogArticle> list = blogArticleDao.searchBlog(keyword, offset, total);
+
+		for (BlogArticle blog : list) {
+			blog.setPostTime(StringUtils.friendly_time(blog.getPostTime()));
+			if (isHilight) {
+				blog.setTitle(blog.getTitle().replace(keyword, "<span class='hilight'>" + keyword + "</span>"));
+				blog.setSummary(blog.getSummary().replace(keyword, "<span class='hilight'>" + keyword + "</span>"));
+			}
+		}
+		return list;
+	}
+
+	public PaginationResult searchBlog2PageResult(String keyword, int page, int pageSize, boolean isHilight) {
+
+		int count = searchBlogCount(keyword);
+		Pagination pagination = new Pagination(page, count, pageSize);
+		pagination.action();
+		List<BlogArticle> list = searchBlog(keyword, pagination.getOffSet(), pageSize, isHilight);
+		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
+		return result;
+	}
 }

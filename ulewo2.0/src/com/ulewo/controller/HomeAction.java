@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,6 +54,10 @@ public class HomeAction {
 
 	@Autowired
 	TalkService talkService;
+
+	private static final String TYPE_BLOG = "blog";
+
+	private static final String TYPE_GROUP = "group";
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView login() {
@@ -331,5 +336,36 @@ public class HomeAction {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("ulewoapp");
 		return mv;
+	}
+
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	public ModelAndView search(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView mv = new ModelAndView();
+		try {
+			String type = request.getParameter("type");
+			String keyword = request.getParameter("q");
+			keyword = URLDecoder.decode(keyword, "utf-8");
+			String page = request.getParameter("page");
+			int page_int = 1;
+			if (StringUtils.isNumber(page)) {
+				page_int = Integer.parseInt(page);
+			}
+			PaginationResult result = null;
+			if (TYPE_BLOG.equals(type)) {
+				result = blogArticleService.searchBlog2PageResult(keyword, page_int, Constant.pageSize25, true);
+			}
+			else {
+				result = articleService.searchTopic2PageResult(keyword, null, page_int, Constant.pageSize25, true);
+			}
+			mv.addObject("result", result);
+			mv.addObject("keyword", keyword);
+			mv.addObject("type", type);
+			mv.setViewName("search");
+			return mv;
+		} catch (Exception e) {
+			mv.setViewName("redirect:" + Constant.ERRORPAGE);
+			return mv;
+		}
 	}
 }
