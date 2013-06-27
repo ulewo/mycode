@@ -10,7 +10,7 @@
 					<li style="margin-left:10px;"><a href="${realPath}/blog">博客</a></li>
 					<li style="margin-left:10px;"><a href="${realPath}/square">广场</a></li>
 				</ul>
-			<div id="footright">&copy; 2011-2012&nbsp;&nbsp;ulewo.com 有乐窝 All rights reserved.</div>
+			<div id="footright">&copy; 2011-2013&nbsp;&nbsp;ulewo.com 有乐窝 All rights reserved.</div>
 			<div id="gototop"><a href="javascript:void(0)" onclick="window.scrollTo(0,0);" onfocus="this.blur()" title="回到顶部"><img border="0" src="${realPath}/images/totop.png"></a></div>
 	</div>
 </div>
