@@ -175,6 +175,8 @@ public interface ArticleService {
 
 	public int queryAllCount();
 
+	public List<Article> queryTopicOrderByPostTime(String gid, int itemId, int offset, int total);
+
 	public PaginationResult queryLatestArticle2PagResult(int page, int pageSize);
 
 	public List<Article> queryHotArticle(int offset, int total);

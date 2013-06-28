@@ -402,9 +402,18 @@ public class ArticleServiceImpl implements ArticleService {
 		int count = queryAllCount();
 		Pagination pagination = new Pagination(page, count, pageSize);
 		pagination.action();
-		List<Article> list = queryLatestArticle(pagination.getOffSet(), pageSize);
+		List<Article> list = queryTopicOrderByPostTime(null, 0, pagination.getOffSet(), pageSize);
 		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
 		return result;
+	}
+
+	public List<Article> queryTopicOrderByPostTime(String gid, int itemId, int offset, int total) {
+
+		List<Article> list = articleDao.queryTopicOrderByPostTime(gid, itemId, offset, total);
+		for (Article article : list) {
+			article.setPostTime(StringUtils.friendly_time(article.getPostTime()));
+		}
+		return list;
 	}
 
 	@Override

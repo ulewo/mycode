@@ -123,7 +123,7 @@ public class ArticleDao extends BaseDao {
 	 * @
 	 * @author lhl
 	 */
-	public List<Article> queryTopicOrderByPostTime(String gid, int itemId, String isValid, int offset, int total) {
+	public List<Article> queryTopicOrderByPostTime(String gid, int itemId, int offset, int total) {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("gid", gid);
