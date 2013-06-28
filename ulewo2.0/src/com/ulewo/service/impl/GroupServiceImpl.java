@@ -102,10 +102,6 @@ public class GroupServiceImpl implements GroupService {
 		Pagination pagination = new Pagination(page, count, pageSize);
 		pagination.action();
 		List<Group> list = groupDao.queryGroupsByArticleCount(pagination.getOffSet(), pageSize);
-		for (Group group : list) {
-			group.setGroupDesc(StringUtils.clearHtml(group.getGroupDesc()));
-			groupDao.updateGroup(group);
-		}
 		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
 		return result;
 	}
