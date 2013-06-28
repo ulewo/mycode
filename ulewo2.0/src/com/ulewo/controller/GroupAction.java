@@ -1,6 +1,10 @@
 package com.ulewo.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,17 +29,23 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ulewo.entity.Article;
 import com.ulewo.entity.ArticleItem;
 import com.ulewo.entity.AttachedFile;
+import com.ulewo.entity.AttachedUser;
 import com.ulewo.entity.Group;
 import com.ulewo.entity.Member;
 import com.ulewo.entity.ReArticle;
 import com.ulewo.entity.SessionUser;
+import com.ulewo.entity.User;
 import com.ulewo.enums.MemberStatus;
 import com.ulewo.enums.QueryOrder;
+import com.ulewo.enums.QueryUserType;
 import com.ulewo.service.ArticleItemService;
 import com.ulewo.service.ArticleService;
+import com.ulewo.service.AttachedFileService;
+import com.ulewo.service.AttachedUserService;
 import com.ulewo.service.GroupService;
 import com.ulewo.service.MemberService;
 import com.ulewo.service.ReArticleService;
+import com.ulewo.service.UserService;
 import com.ulewo.util.Constant;
 import com.ulewo.util.PaginationResult;
 import com.ulewo.util.StringUtils;
@@ -58,7 +68,16 @@ public class GroupAction {
 	@Autowired
 	ReArticleService reArticleService;
 
-	private final static int MAX_FILE = 1024 * 200;
+	@Autowired
+	AttachedFileService attachedFileService;
+
+	@Autowired
+	UserService userService;
+
+	@Autowired
+	AttachedUserService attachedUserService;
+
+	private final static int MAX_FILE = 1024 * 500;
 
 	private final static int TITLE_LENGTH = 150, KEYWORD_LENGTH = 150;
 
@@ -408,13 +427,13 @@ public class GroupAction {
 			long size = multipartFile.getSize();
 			if (size > MAX_FILE) {
 				mv.addObject("result", "fail");
-				mv.addObject("message", "文件超过200kb");
+				mv.addObject("message", "文件超过500kb");
 				mv.setViewName("group/fileupload");
 				return mv;
 			}
 			String fileName = multipartFile.getOriginalFilename();
-			String suffix = fileName.substring(fileName.lastIndexOf("."));
-			if ("rar".equalsIgnoreCase(suffix)) {
+			String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+			if (!"rar".equalsIgnoreCase(suffix) && !"zip".equalsIgnoreCase(suffix)) {
 				mv.addObject("result", "fail");
 				mv.addObject("message", "文件类型只能是.rar 压缩文件");
 				mv.setViewName("group/fileupload");
@@ -422,13 +441,14 @@ public class GroupAction {
 			}
 			SimpleDateFormat formater = new SimpleDateFormat("yyyyMM");
 			String saveDir = formater.format(new Date());
-			String savePath = saveDir + "/" + fileName;
+			String realName = String.valueOf(System.currentTimeMillis()) + "." + suffix;
+			String savePath = saveDir + "/" + realName;
 			String fileDir = realPath + "upload" + "/" + saveDir;
 			File dir = new File(fileDir);
 			if (!dir.exists()) {
 				dir.mkdirs();
 			}
-			String filePath = fileDir + "/" + fileName;
+			String filePath = fileDir + "/" + realName;
 			File file = new File(filePath);
 			multipartFile.transferTo(file);
 			mv.addObject("result", "success");
@@ -473,6 +493,121 @@ public class GroupAction {
 	}
 
 	@ResponseBody
+	@RequestMapping(value = "/downloadFile.action", method = RequestMethod.GET)
+	public Map<String, Object> downloadFile(HttpSession session, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			String fileId = request.getParameter("fileId");
+			if (!StringUtils.isNumber(fileId)) {
+				modelMap.put("result", "fail");
+				modelMap.put("message", "请求参数错误");
+				return modelMap;
+			}
+			int fileId_int = Integer.parseInt(fileId);
+			AttachedFile attachedFile = attachedFileService.queryFileById(fileId_int);
+			if (null == attachedFile) {
+				modelMap.put("result", "fail");
+				modelMap.put("message", "附件不存在");
+				return modelMap;
+			}
+			String userId = ((SessionUser) session.getAttribute("user")).getUserId();
+			//判断当前用户是否是发布资源的人
+			Article article = articleService.queryTopicById(attachedFile.getArticleId());
+			User articleAuthor = userService.findUser(article.getAuthorId(), QueryUserType.USERID);
+			if (userId.equals(articleAuthor.getUserId())) {
+				modelMap.put("result", "success");
+				return modelMap;
+			}
+			//判断用户是否下载过
+			AttachedUser attachedUser = attachedUserService.queryAttachedUser(fileId_int, userId);
+			if (attachedUser == null) {
+				User user = userService.findUser(userId, QueryUserType.USERID);
+				if (user.getMark() < attachedFile.getMark()) {
+					modelMap.put("result", "fail");
+					modelMap.put("message", "你当前的积分是" + user.getMark() + ",积分不够");
+					return modelMap;
+				}
+			}
+			modelMap.put("result", "success");
+			return modelMap;
+		} catch (Exception e) {
+			modelMap.put("result", "fail");
+			modelMap.put("message", "系统异常");
+			return modelMap;
+		}
+	}
+
+	@RequestMapping(value = "/downloadFileDo.action", method = RequestMethod.GET)
+	public void downloadFileDo(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+
+		InputStream in = null;
+		OutputStream out = null;
+		File file = null;
+		try {
+			String fileId = request.getParameter("fileId");
+			if (!StringUtils.isNumber(fileId)) {
+				return;
+			}
+			int fileId_int = Integer.parseInt(fileId);
+			AttachedFile attachedFile = attachedFileService.queryFileById(fileId_int);
+			if (null == attachedFile) {
+				return;
+			}
+			String userId = ((SessionUser) session.getAttribute("user")).getUserId();
+			//判断当前用户是否是发布资源的人
+			Article article = articleService.queryTopicById(attachedFile.getArticleId());
+			User articleAuthor = userService.findUser(article.getAuthorId(), QueryUserType.USERID);
+			if (!userId.equals(articleAuthor.getUserId())) {
+				//非当前用户判断用户是否下载过
+				AttachedUser attachedUser = attachedUserService.queryAttachedUser(fileId_int, userId);
+				if (attachedUser == null) {
+					User user = userService.findUser(userId, QueryUserType.USERID);
+					if (user.getMark() < attachedFile.getMark()) {
+						return;
+					}
+					else {
+						//非当前用户，没有下载过，积分也够
+						//扣除积分
+						user.setMark(user.getMark() - attachedFile.getMark());
+						userService.updateUser(user);
+						//给发布信息的人加积分
+						User author = userService.findUser(article.getAuthorId(), QueryUserType.USERID);
+						author.setMark(author.getMark() + attachedFile.getMark());
+						userService.updateUser(author);
+						//记录已经下载过
+						AttachedUser attachedUser2 = new AttachedUser();
+						attachedUser2.setAttachedId(fileId_int);
+						attachedUser2.setUserId(userId);
+						attachedUserService.createAttachedUser(attachedUser2);
+					}
+				}
+			}
+			//更新附件下载数量
+			attachedFile.setDcount(attachedFile.getDcount() + 1);
+			attachedFileService.updateAttachedFile(attachedFile);
+			//开始下载
+			String realPath = session.getServletContext().getRealPath("/") + "upload/";
+			String filePath = realPath + attachedFile.getFileUrl();
+			file = new File(filePath);
+			in = new FileInputStream(file);
+			out = response.getOutputStream();
+			response.setContentType("application/octet-stream; charset=UTF-8");
+			response.setHeader("Content-Disposition",
+					"attachment; filename=" + URLEncoder.encode(attachedFile.getFileName(), "UTF-8"));
+			byte[] byteData = new byte[1024 * 5];
+			int len = 0;
+			while ((len = in.read(byteData)) != -1) {
+				out.write(byteData, 0, len); // write
+			}
+			out.flush();
+		} catch (Exception e) {
+
+		}
+	}
+
+	@ResponseBody
 	@RequestMapping(value = "/addArticle.action", method = RequestMethod.POST)
 	public Map<String, Object> addArticle(HttpSession session, HttpServletRequest request) {
 
@@ -484,6 +619,9 @@ public class GroupAction {
 			int itemId_int = 0;
 			String keyWord = request.getParameter("keyWord");
 			String attached_file = request.getParameter("attached_file");
+			String attached_file_name = request.getParameter("attached_file_name");
+			String mark = request.getParameter("mark");
+
 			String content = request.getParameter("content");
 			String image = request.getParameter("image");
 			if (StringUtils.isEmpty(gid)) {
@@ -491,6 +629,13 @@ public class GroupAction {
 				modelMap.put("message", "请求参数错误");
 				return modelMap;
 			}
+
+			if (!StringUtils.isNumber(mark)) {
+				modelMap.put("result", "fail");
+				modelMap.put("message", "下载积分只能是数字");
+				return modelMap;
+			}
+			int mark_int = Integer.parseInt(mark);
 
 			if (StringUtils.isNumber(itemId)) {
 				itemId_int = Integer.parseInt(itemId);
@@ -517,13 +662,14 @@ public class GroupAction {
 			article.setAuthorId(userId);
 			article.setImage(image);
 			// 添加附件
-			if (StringUtils.isNotEmpty(attached_file)) {
+			if (StringUtils.isNotEmpty(attached_file) && StringUtils.isNotEmpty(attached_file_name)) {
 				AttachedFile file = new AttachedFile();
 				file.setFileUrl(attached_file);
+				file.setFileName(attached_file_name);
+				file.setMark(mark_int);
 				file.setGid(gid);
 				article.setFile(file);
 			}
-
 			articleService.addArticle(article);
 			modelMap.put("result", "success");
 			modelMap.put("article", article);

@@ -12,18 +12,40 @@
 	
 	<!-- 创建附件 -->
 	<insert id="addAttached" parameterClass="attached">
-		insert into attached_file(articleid,gid,filename,fileurl,filetype)
-		values(#articleId#,#gid#,#fileName#,#fileUrl#,#fileType#)
+		insert into attached_file(articleid,gid,filename,fileurl,filetype,mark)
+		values(#articleId#,#gid#,#fileName#,#fileUrl#,#fileType#,#mark#)
 	</insert>
 	
 	<!-- 通过articleId查询附件 -->
 	
 	<select id="queryAttachedbyArticleId" resultClass="attached" parameterClass="java.util.Map">
-		select * from  attached_file where articleid = #articleId# and filetype = #fileType#
+		select id,articleid,gid,filename,mark,dcount from  attached_file where articleid = #articleId# and filetype = #fileType#
+	</select>
+	
+	<select id="queryAttachedbyId" resultClass="attached" parameterClass="java.lang.Integer">
+		select * from  attached_file where id = #id#
 	</select>
 	
 	<!--删除附件-->
 	<delete id="deleteAttached" parameterClass="java.util.Map">
 		delete from  attached_file where articleid = #articleId# and filetype = #fileType#
 	</delete>
+	
+	<update id="updateAttached" parameterClass="attached">
+		update attached_file
+		set id=#id#
+		<isNotEmpty prepend="," property="fileName">
+			filename=#fileName# 
+    	</isNotEmpty>
+    	<isNotEmpty prepend="," property="fileUrl">
+			fileurl=#fileUrl# 
+    	</isNotEmpty>
+    	<isNotEmpty prepend="," property="mark">
+			mark=#mark# 
+    	</isNotEmpty>
+    	<isNotEmpty prepend="," property="dcount">
+			dcount=#dcount# 
+    	</isNotEmpty>
+		where id=#id#
+	</update>
 </sqlMap>

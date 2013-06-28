@@ -13,7 +13,9 @@ public class AttachedFile {
 
 	private String fileType;
 
-	private int mark;
+	private Integer mark;
+
+	private Integer dcount;
 
 	public int getId() {
 
@@ -75,14 +77,24 @@ public class AttachedFile {
 		this.fileType = fileType;
 	}
 
-	public int getMark() {
+	public Integer getMark() {
 
 		return mark;
 	}
 
-	public void setMark(int mark) {
+	public void setMark(Integer mark) {
 
 		this.mark = mark;
+	}
+
+	public Integer getDcount() {
+
+		return dcount;
+	}
+
+	public void setDcount(Integer dcount) {
+
+		this.dcount = dcount;
 	}
 
 }

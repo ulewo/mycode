@@ -17,8 +17,11 @@ public interface AttachedFileService {
 
 	public void deleteAttached(int articleId, FileType fileType);
 
-	public List<AttachedFile> queryAttachedbyArticleId(int articleId,
-			FileType fileType);
+	public List<AttachedFile> queryAttachedbyArticleId(int articleId, FileType fileType);
 
 	public void addAttachedPatch(List<AttachedFile> list);
+
+	public AttachedFile queryFileById(int id);
+
+	public void updateAttachedFile(AttachedFile file);
 }

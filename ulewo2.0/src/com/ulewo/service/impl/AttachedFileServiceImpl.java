@@ -17,24 +17,36 @@ public class AttachedFileServiceImpl implements AttachedFileService {
 
 	@Override
 	public void addAttached(AttachedFile file) {
+
 		attachedFileDao.addAttached(file);
 	}
 
 	@Override
 	public void deleteAttached(int articleId, FileType fileType) {
+
 		attachedFileDao.deleteAttached(articleId, fileType);
 	}
 
 	@Override
-	public List<AttachedFile> queryAttachedbyArticleId(int articleId,
-			FileType fileType) {
+	public List<AttachedFile> queryAttachedbyArticleId(int articleId, FileType fileType) {
+
 		return attachedFileDao.queryAttachedbyArticleId(articleId, fileType);
 	}
 
 	public void addAttachedPatch(List<AttachedFile> list) {
+
 		for (AttachedFile file : list) {
 			addAttached(file);
 		}
 	}
 
+	public AttachedFile queryFileById(int id) {
+
+		return attachedFileDao.queryFileById(id);
+	}
+
+	public void updateAttachedFile(AttachedFile file) {
+
+		attachedFileDao.updateAttachedFile(file);
+	}
 }

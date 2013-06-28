@@ -106,7 +106,6 @@ public class ArticleServiceImpl implements ArticleService {
 		if (null != article.getFile()) {
 			AttachedFile file = article.getFile();
 			file.setArticleId(article.getId());
-			file.setFileName(file.getFileUrl().substring(file.getFileUrl().lastIndexOf("/") + 1));
 			file.setFileType(FileType.RAR.getValue());
 			attachedFileDao.addAttached(file);
 		}
