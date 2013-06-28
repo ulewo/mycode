@@ -25,5 +25,6 @@
    <sqlMap resource="com/ulewo/entity/ReTalk.xml" />
    <sqlMap resource="com/ulewo/entity/AttachedFile.xml" />
    <sqlMap resource="com/ulewo/entity/UserFriend.xml" />
+   <sqlMap resource="com/ulewo/entity/AttachedUser.xml" />
 </sqlMapConfig>
 
