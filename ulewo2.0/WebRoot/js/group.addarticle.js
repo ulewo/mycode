@@ -10,6 +10,7 @@ function showAddForm(){
 	$("#add_article").show();
 	$("#article_title").val("");
 	$("#article_keyword").val("");
+	$("#attached_file_name").val("");
 	$("#attached_file").val("");
 	$("#content").val("");
 	$("#uploadFrame").show();
@@ -30,12 +31,15 @@ function cancelAdd(){
 	$("#add_article").hide();
 }
 
-
+/*********附件上传回调函数***********/
 function showFile(filePath){
-	var fileName = filePath.substring(filePath.indexOf("/")+1);
 	$("#attached_file").val(filePath);
-	$("<div class='file_con'><a href=''>"+fileName+"</a>&nbsp;&nbsp;<a href='javascript:deleteFile()'>删除</a><img src='"+global.realPath+"/images/load.gif' id='file_deleting'></div>").appendTo($("#file_upload"));
+	$("<div class='file_con'><a href='javascript:void(0)'>"+$("#attached_file_name").val()+"</a>&nbsp;&nbsp;<a href='javascript:deleteFile()'>删除</a><img src='"+global.realPath+"/images/load.gif' id='file_deleting'></div>").appendTo($("#file_upload"));
 	$("#uploadFrame").hide();
+}
+
+function setFileName(fileName){
+	$("#attached_file_name").val(fileName);
 }
 
 function deleteFile(){
@@ -71,6 +75,7 @@ function addArticle(){
 	var article_item = $("#article_item").val();
 	var article_keyword = $("#article_keyword").val().trim();
 	var content = editor.getContentTxt().trim();
+	var mark =  $("#mark").val().trim();
 	if(article_title==""){
 		warm("show","标题不能为空");
 		return;
@@ -90,7 +95,10 @@ function addArticle(){
 		warm("show","关键字不能超过150");
 		return;
 	}
-	
+	if(!mark.isNumber()){
+		warm("show","下载积分只能是数字");
+		return;
+	}
 	if(content==""){
 		warm("show","内容不能为空");
 		return ;
@@ -151,3 +159,4 @@ function initImg(imageUrls){
 		$("#faceImg").val(imageUrls[0].url);
 	}
 }
+

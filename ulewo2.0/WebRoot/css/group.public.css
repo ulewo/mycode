@@ -65,7 +65,9 @@
 
 #add_article{display:none;border:1px solid #ABADB3;padding:8px;margin-top:10px;}
 .file_upload{margin-top:5px;}
-
+.file_upload_frame{float:left;display:inline-block;}
+.file_upload_mark{float:left;display:inline-block;}
+.file_upload_mark input{width:50px;}
 .file_con{margin-top:5px;}
 .file_con a{display:inline-block;}
 #file_deleting{display:none;}

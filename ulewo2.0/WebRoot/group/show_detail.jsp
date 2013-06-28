@@ -60,7 +60,12 @@ global.articleId= "${article.id}";
 			<c:if test="${article.file!=''&&article.file!=null}">
 			<div class="article_attached">
 				<div class="attached_tit">附件</div>
-				<div class="attached_con"><span>${article.file.fileName}</span>&nbsp;&nbsp;<a href="">点击下载</a></div>
+				<div class="attached_con">
+					<span class="filename">${article.file.fileName}</span>&nbsp;&nbsp;
+					<span class="mark">所需积分：${article.file.mark}</span>&nbsp;&nbsp;
+					<span class="dccount">下载：<span id="dcount">${article.file.dcount}</span></span>&nbsp;&nbsp;
+					<a href="javascript:void(0)" name="${article.file.id}" id="downloadFile">点击下载</a>
+				</div>
 			</div>
 			</c:if>
 			<div class="recomment_tit">共有${article.reNumber}个回帖</div>

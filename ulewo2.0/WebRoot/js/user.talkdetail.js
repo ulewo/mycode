@@ -13,14 +13,6 @@ $(function() {
 		event.stopPropagation();
 	});
 
-	$(".pm_emotions_bd").find("a").each(function(index) {
-		$(this).bind("click", function() {
-			var curValue = $("#talkcontent").val();
-			$("#talkcontent").val(curValue + $(this).attr("title"));
-			$("#pm_emotion_cnt").hide();
-		});
-	});
-
 	loadReTalk();
 	
 	$("#talkBtn").bind("click",addTalk);

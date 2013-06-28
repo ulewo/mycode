@@ -13,7 +13,38 @@ $(function() {
 	$("#new_article_p").bind("click",showAddForm);
 	$("#sub_article_btn").bind("click",addArticle);
 	loadPage(1);
+	$("#downloadFile").bind("click",downloadFile);
 })
+
+//下载附件
+function downloadFile(){
+	if(global.userId==""){
+		alert("请先登录");
+		return;
+	}
+	if($(this).attr("disable")=="disable"){
+		return;
+	}
+	btnLoading($(this),"获取资源中<img src='"+global.realPath+"/images/load.gif' width='14'>");
+	var fileId = $(this).attr("name");
+	$.ajax({
+		async : true,
+		cache : false,
+		type : 'GET',
+		dataType : "json",
+		url : global.realPath + "/group/downloadFile.action?fileId="+fileId,// 请求的action路径
+		success : function(data) {
+			btnLoaded($("#downloadFile"),"点击下载");
+			if(data.result=="fail"){
+				alert(data.message);
+			}else{
+				$("#dcount").text(parseInt($("#dcount").text())+1);
+				document.location.href=global.realPath+"/group/downloadFileDo.action?fileId="+fileId;
+			}
+		}
+	});
+}
+
 //分页
 function loadPage(page){
 	loadReComment(global.articleId,page);

@@ -30,10 +30,12 @@
 			if(imageName==""){
 				alert("请选择文件");
 				return false;
-			}else if(type!=".rar"&&type!=".RAR"){
+			}else if(type!=".rar"&&type!=".RAR"&&type!=".ZIP"&&type!=".zip"){
 				alert("请选择压缩文件");
 				return false;
 			}else{
+				var fileName = imageName.substring(imageName.lastIndexOf("\\")+1);
+				parent.setFileName(fileName);
 				$("#loadingimage").show();
 				$("#myform").submit();
 			}
