@@ -355,7 +355,7 @@ public class GroupAction {
 				return mv;
 			}
 			PaginationResult result = memberService.queryMembers(gid, MemberStatus.ISMEMBER, QueryOrder.ASC, page_int,
-					Constant.pageSize30);
+					28);
 			mv.addObject("gid", gid);
 			mv.addObject("memberStatus", memberStatus(session, gid));
 			mv.addObject("group", group);
