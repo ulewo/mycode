@@ -12,7 +12,9 @@ import com.ulewo.dao.TalkDao;
 import com.ulewo.dao.UserDao;
 import com.ulewo.entity.NoticeParam;
 import com.ulewo.entity.Talk;
+import com.ulewo.entity.User;
 import com.ulewo.enums.NoticeType;
+import com.ulewo.enums.QueryUserType;
 import com.ulewo.service.TalkService;
 import com.ulewo.util.Constant;
 import com.ulewo.util.FormatAt;
@@ -38,17 +40,23 @@ public class TalkServiceImpl implements TalkService {
 		this.userDao = userDao;
 	}
 
-	private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private SimpleDateFormat format = new SimpleDateFormat(
+			"yyyy-MM-dd HH:mm:ss");
 
 	@Override
 	public void addTalk(Talk talk) {
 
 		String cotent = StringUtils.clearHtml(talk.getContent());
 		List<String> referers = new ArrayList<String>();
-		String formatContent = FormatAt.getInstance(Constant.TYPE_TALK).GenerateRefererLinks(userDao, cotent, referers);
+		String formatContent = FormatAt.getInstance(Constant.TYPE_TALK)
+				.GenerateRefererLinks(userDao, cotent, referers);
 		talk.setContent(formatContent);
 		talk.setCreateTime(format.format(new Date()));
 		talkDao.addTalk(talk);
+
+		User curUser = userDao.findUser(talk.getUserId(), QueryUserType.USERID);
+		curUser.setMark(curUser.getMark() + Constant.ARTICLE_MARK1);
+		userDao.update(curUser);
 
 		NoticeParam noticeParm = new NoticeParam();
 		noticeParm.setArticleId(talk.getId());
@@ -77,9 +85,11 @@ public class TalkServiceImpl implements TalkService {
 	}
 
 	@Override
-	public List<Talk> queryLatestTalkByUserId(int offset, int total, String userId) {
+	public List<Talk> queryLatestTalkByUserId(int offset, int total,
+			String userId) {
 
-		List<Talk> list = talkDao.queryLatestTalkByUserId(offset, total, userId);
+		List<Talk> list = talkDao
+				.queryLatestTalkByUserId(offset, total, userId);
 		for (Talk talk : list) {
 			talk.setCreateTime(StringUtils.friendly_time(talk.getCreateTime()));
 		}
@@ -106,18 +116,22 @@ public class TalkServiceImpl implements TalkService {
 		Pagination pagination = new Pagination(page, count, pageSize);
 		pagination.action();
 		List<Talk> list = queryLatestTalk(pagination.getOffSet(), pageSize);
-		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
+		PaginationResult result = new PaginationResult(pagination.getPage(),
+				pagination.getPageTotal(), count, list);
 		return result;
 	}
 
 	@Override
-	public PaginationResult queryLatestTalkByUserIdByPag(int page, int pageSize, String userId) {
+	public PaginationResult queryLatestTalkByUserIdByPag(int page,
+			int pageSize, String userId) {
 
 		int count = queryTalkCountByUserId(userId);
 		Pagination pagination = new Pagination(page, count, pageSize);
 		pagination.action();
-		List<Talk> list = queryLatestTalkByUserId(pagination.getOffSet(), pageSize, userId);
-		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
+		List<Talk> list = queryLatestTalkByUserId(pagination.getOffSet(),
+				pageSize, userId);
+		PaginationResult result = new PaginationResult(pagination.getPage(),
+				pagination.getPageTotal(), count, list);
 		return result;
 	}
 

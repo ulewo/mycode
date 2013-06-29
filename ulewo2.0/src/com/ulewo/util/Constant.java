@@ -42,6 +42,8 @@ public class Constant {
 
 	public static int ARTICLE_MARK2 = 2;
 
+	public static int ARTICLE_MARK1 = 1;
+
 	public static String WEBSTIE = "http://www.ulewo.com/";
 
 	public static String WEBSTIE_IMAGEURL = WEBSTIE + "upload/";
