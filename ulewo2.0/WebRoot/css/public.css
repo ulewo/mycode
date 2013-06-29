@@ -1,6 +1,7 @@
 body{margin:0px auto;text-align:center;}
 .main{margin:0px auto;width:1000px;text-align:left;font-size:13px;}
 .main a{color:#3E62A6}
+.main a img{border:0px;}
 input{outline:none;margin:0px;padding:0px;}
 textarea{overflow:auto;padding:0px;margin:0px;resize:none;border:none;}
 .clear{clear:both;}
@@ -76,3 +77,9 @@ a.prePage,a.nextPage{width:60px;}
 .tip-arrow{width: 9px;height: 6px;background: url(../images/tip-yellowsimple_arrows.gif) no-repeat;position:absolute;left:130px;top:0px;z-index:3;}
 .tip_con{background:#FFF9C9;border:1px solid #C7BF93;height:20px;position:absolute;left:0px;top:5px;width:150px;padding-top:8px;border-radius: 4px;-moz-border-radius: 4px;-webkit-border-radius: 4px}
 .tip_con a{color:#3E62A6;}
+
+/*****消息框******/
+.tips{width:150px;height:50px;position:fixed;top:400px;background:#64C5E8;padding:3px;font-size:13px;}
+.tipscon{border:1px solid #494949;text-align:center;background:#ffffff;height:33px;padding-top:15px;}
+.tipscon span{display:inline-block;}
+.tipscon img{display: inline-block;margin-left:5px;}

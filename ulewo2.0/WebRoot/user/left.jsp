@@ -36,7 +36,7 @@
 		<div class="user_other_info">
 			<span>关注(${userVo.focusCount})</span>
 			<span>粉丝(${userVo.fansCount})</span>
-			<span>积分(${userVo.mark})</span>
+			<span>积分(<span id="mark">${userVo.mark}</span>)</span>
 		</div>
 	</div>
 	<div class="resume" id="resume">

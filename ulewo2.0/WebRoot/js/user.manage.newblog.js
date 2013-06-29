@@ -51,7 +51,11 @@ function addBlog(){
 			if(data.result=="fail"){
 				warm("show",data.message);
 			}else{
-				document.location.href=global.realPath+"/user/"+global.userId+"/blog";
+				tipsInfo("5分已到碗里");
+				setTimeout(function(){
+					document.location.href=global.realPath+"/user/"+global.userId+"/blog";
+				},2000);
+				
 			}
 		}
 	});

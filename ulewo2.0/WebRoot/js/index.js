@@ -58,6 +58,7 @@ function saveTalk(){
 				}
 				$("#talkcontent").val("");
 				deleteImg();
+				tipsInfo("1分已到碗里");
 			}
 		}
 	});

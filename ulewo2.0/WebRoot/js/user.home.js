@@ -46,6 +46,9 @@ function saveTalk(){
 				}
 				$("#talkcontent").val("");
 				deleteImg();
+				var mark = $("#mark");
+				mark.text(parseInt(mark.text())+1);
+				tipsInfo("1分已到碗里");
 			}
 		}
 	});

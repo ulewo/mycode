@@ -126,6 +126,7 @@ function addArticle(){
 				}else{
 					new ArticleItem(data.article).article_item.appendTo($("#article_item_list"));
 				}
+				tipsInfo("5分已到碗里");
 			}
 		}
 	});

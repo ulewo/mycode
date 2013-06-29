@@ -37,7 +37,7 @@ a.day_pic_link:hover{border:1px solid red;}
 .day_pic_tit a:hover{color:#FF6600;}
 
 .recommend_wo{margin-top:10px;}
-.wo_img{width:65px;float:left;margin-left:10px;border:1px solid #C0C0C0;padding:2px;}
+.wo_img{width:60px;float:left;margin-left:10px;border:1px solid #C0C0C0;padding:2px;}
 .wo_img img{width:60px;height:60px;}
 .wo_info{color:#888;width:155px;margin-left:20px;float:left;font-size:13px;}
 .wo_info a{color:#333;text-decoration:none;font-size:13px;}

@@ -319,6 +319,7 @@ Recoment_form_panel.prototype = {
 				$("#recoment_form_panel").before(
 						new SubRePanel(data.reArticle).asHtml());
 				$("#recoment_form_panel").remove();
+				tipsInfo("2分已到碗里");
 			}
 		});
 	}
@@ -430,6 +431,7 @@ function addArticle(){
 				cancelAdd();
 				$(".noinfo").remove();
 				new RePanel(data.reArticle).asHtml().appendTo($("#recomment"));
+				tipsInfo("2分已到碗里");
 			}
 		}
 	});

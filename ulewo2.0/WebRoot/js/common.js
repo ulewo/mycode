@@ -19,6 +19,25 @@ function warm(type,msg){
 	}
 }
 
+function tipsInfo(msg){
+	setTimeout(function(){
+		var tips;
+		if($("#tips")[0]==null){
+			tips = $("<div class='tips' id='tips'></div>").appendTo($("body"));
+			$("<div class='tipscon'><span>"+msg+"</span><img src='"+global.realPath+"/images/good.png' width='15'></div>").appendTo(tips);
+			var width = parseInt($(document.body).outerWidth(true));
+			var tipswidth = tips.width();
+			tips.css({"left":(width-tipswidth)/2});
+		}else{
+			tips = $("#tips");
+			tips.show();
+			tips.css({"top":"400px"});
+		}
+		tips.animate({top:150},1000).fadeOut(1000);
+	},1);
+	
+}
+
 function info(msg,autohide){
 	var auto = autohide==null?true:autohide;
 	$(".result_info").css({"display":"inline-block"});
