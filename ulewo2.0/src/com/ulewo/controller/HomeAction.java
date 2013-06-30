@@ -35,6 +35,7 @@ import com.ulewo.service.GroupService;
 import com.ulewo.service.TalkService;
 import com.ulewo.service.UserService;
 import com.ulewo.util.Constant;
+import com.ulewo.util.ErrorReport;
 import com.ulewo.util.PaginationResult;
 import com.ulewo.util.StringUtils;
 
@@ -85,15 +86,18 @@ public class HomeAction {
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
-	public ModelAndView manage(HttpSession session) {
+	public ModelAndView index(HttpSession session) {
 
 		ModelAndView mv = new ModelAndView();
 
 		try {
 			List<Article> list = articleService.queryLatestArticle(0, 20);
-			List<Article> imgArticle = articleService.queryImageArticle(null, 0, 5);
-			List<BlogArticle> blogList = blogArticleService.indexLatestBlog(0, 20);
-			List<Group> groupList = (List<Group>) groupService.queryGroupsOderArticleCount(0, 10).getList();
+			List<Article> imgArticle = articleService.queryImageArticle(null,
+					0, 5);
+			List<BlogArticle> blogList = blogArticleService.indexLatestBlog(0,
+					20);
+			List<Group> groupList = (List<Group>) groupService
+					.queryGroupsOderArticleCount(0, 10).getList();
 			mv.addObject("list", list);
 			mv.addObject("imgArticle", imgArticle);
 			mv.addObject("blogList", blogList);
@@ -101,7 +105,10 @@ public class HomeAction {
 			mv.setViewName("home");
 			return mv;
 		} catch (Exception e) {
-			e.printStackTrace();
+			String errorMethod = "HomeAction-->index()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
@@ -118,7 +125,9 @@ public class HomeAction {
 			if (StringUtils.isNumber(page)) {
 				page_int = Integer.parseInt(page);
 			}
-			PaginationResult result = articleService.queryImageArticle2PagResult(null, page_int, Constant.pageSize30);
+			PaginationResult result = articleService
+					.queryImageArticle2PagResult(null, page_int,
+							Constant.pageSize30);
 			List<Article> list = (List<Article>) result.getList();
 			List<Article> square1 = new ArrayList<Article>();
 			List<Article> square2 = new ArrayList<Article>();
@@ -134,13 +143,17 @@ public class HomeAction {
 			mv.setViewName("square");
 			return mv;
 		} catch (Exception e) {
-			e.printStackTrace();
+			String errorMethod = "HomeAction-->square()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
 	}
 
-	private void set2Square(List<Article> square1, List<Article> square2, List<Article> square3, List<Article> square4,
+	private void set2Square(List<Article> square1, List<Article> square2,
+			List<Article> square3, List<Article> square4,
 			List<Article> squareList) {
 
 		int num = 0;
@@ -177,12 +190,16 @@ public class HomeAction {
 			if (StringUtils.isNumber(page)) {
 				page_int = Integer.parseInt(page);
 			}
-			PaginationResult list = blogArticleService.queryLatestBlog(page_int, Constant.pageSize25);
+			PaginationResult list = blogArticleService.queryLatestBlog(
+					page_int, Constant.pageSize25);
 			mv.addObject("result", list);
 			mv.setViewName("blog");
 			return mv;
 		} catch (Exception e) {
-			e.printStackTrace();
+			String errorMethod = "HomeAction-->blog()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
@@ -190,7 +207,8 @@ public class HomeAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/loadLatestTalk", method = RequestMethod.GET)
-	public Map<String, Object> loadTalk(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> loadTalk(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -199,7 +217,10 @@ public class HomeAction {
 			modelMap.put("list", list);
 			return modelMap;
 		} catch (Exception e) {
-			e.printStackTrace();
+			String errorMethod = "HomeAction-->loadTalk()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			modelMap.put("result", "fail");
 			return modelMap;
 		}
@@ -207,14 +228,19 @@ public class HomeAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/loadGroupAndMember", method = RequestMethod.GET)
-	public Map<String, Object> loadGroupAndMember(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> loadGroupAndMember(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
-			PaginationResult groupResult = groupService.queryGroupsOderArticleCount(1, Constant.pageSize15);
+			PaginationResult groupResult = groupService
+					.queryGroupsOderArticleCount(1, Constant.pageSize15);
 			return modelMap;
 		} catch (Exception e) {
-			e.printStackTrace();
+			String errorMethod = "HomeAction-->loadGroupAndMember()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			modelMap.put("result", "fail");
 			return modelMap;
 		}
@@ -229,7 +255,10 @@ public class HomeAction {
 			mv.setViewName("talk");
 			return mv;
 		} catch (Exception e) {
-			e.printStackTrace();
+			String errorMethod = "HomeAction-->talk()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
@@ -237,7 +266,8 @@ public class HomeAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/loadMoreTalk", method = RequestMethod.GET)
-	public Map<String, Object> loadMoreTalk(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> loadMoreTalk(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -246,12 +276,16 @@ public class HomeAction {
 			if (StringUtils.isNumber(page)) {
 				page_int = Integer.parseInt(page);
 			}
-			PaginationResult data = talkService.queryLatestTalkByPag(page_int, Constant.pageSize30);
+			PaginationResult data = talkService.queryLatestTalkByPag(page_int,
+					Constant.pageSize30);
 			modelMap.put("result", "success");
 			modelMap.put("list", data);
 			return modelMap;
 		} catch (Exception e) {
-			e.printStackTrace();
+			String errorMethod = "HomeAction-->loadMoreTalk()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			modelMap.put("result", "fail");
 			return modelMap;
 		}
@@ -278,7 +312,8 @@ public class HomeAction {
 	}
 
 	@RequestMapping(value = "/downloadApp", method = RequestMethod.GET)
-	public void downApp(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public void downApp(HttpSession session, HttpServletRequest request,
+			HttpServletResponse response) {
 
 		InputStream in = null;
 		BufferedInputStream bf = null;
@@ -331,7 +366,8 @@ public class HomeAction {
 	}
 
 	@RequestMapping(value = "/app", method = RequestMethod.GET)
-	public ModelAndView fileupload(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView fileupload(HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("ulewoapp");
@@ -339,7 +375,8 @@ public class HomeAction {
 	}
 
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
-	public ModelAndView search(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView search(HttpSession session, HttpServletRequest request,
+			HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
@@ -353,10 +390,11 @@ public class HomeAction {
 			}
 			PaginationResult result = null;
 			if (TYPE_BLOG.equals(type)) {
-				result = blogArticleService.searchBlog2PageResult(keyword, page_int, Constant.pageSize25, true);
-			}
-			else {
-				result = articleService.searchTopic2PageResult(keyword, null, page_int, Constant.pageSize25, true);
+				result = blogArticleService.searchBlog2PageResult(keyword,
+						page_int, Constant.pageSize25, true);
+			} else {
+				result = articleService.searchTopic2PageResult(keyword, null,
+						page_int, Constant.pageSize25, true);
 			}
 			mv.addObject("result", result);
 			mv.addObject("keyword", keyword);
@@ -364,6 +402,10 @@ public class HomeAction {
 			mv.setViewName("search");
 			return mv;
 		} catch (Exception e) {
+			String errorMethod = "HomeAction-->search()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}

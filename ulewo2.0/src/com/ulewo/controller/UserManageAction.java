@@ -36,6 +36,7 @@ import com.ulewo.service.BlogReplyService;
 import com.ulewo.service.NoticeService;
 import com.ulewo.service.UserService;
 import com.ulewo.util.Constant;
+import com.ulewo.util.ErrorReport;
 import com.ulewo.util.PaginationResult;
 import com.ulewo.util.StringUtils;
 import com.ulewo.vo.UserVo;
@@ -102,7 +103,10 @@ public class UserManageAction {
 				mv.setViewName("/usermanage/userinfo");
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			String errorMethod = "UserManageAction-->queryUserInfo()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
@@ -163,7 +167,10 @@ public class UserManageAction {
 			modelMap.put("result", "success");
 			return modelMap;
 		} catch (Exception e) {
-			e.printStackTrace();
+			String errorMethod = "UserManageAction-->saveUserInfo()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			modelMap.put("result", "fail");
 			modelMap.put("message", "系统异常，请稍候重试");
 			return modelMap;
@@ -223,7 +230,10 @@ public class UserManageAction {
 			return modelMap;
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			String errorMethod = "UserManageAction-->editPwd()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			modelMap.put("result", "fail");
 			modelMap.put("message", "系统异常，请稍候重试");
 			return modelMap;
@@ -310,6 +320,10 @@ public class UserManageAction {
 			sessionUser.setUserLittleIcon(userIcon);
 			userService.updateUser(user);
 		} catch (Exception e) {
+			String errorMethod = "UserManageAction-->saveUserIcon()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			modelMap.put("result", "fail");
 			modelMap.put("message", "系统异常");
 			return modelMap;
@@ -409,7 +423,10 @@ public class UserManageAction {
 			blogArticleService.saveBlog(article);
 			return modelMap;
 		} catch (Exception e) {
-			e.printStackTrace();
+			String errorMethod = "UserManageAction-->saveBlog()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			modelMap.put("result", "fail");
 			modelMap.put("message", "系统异常，请稍候重试");
 			return modelMap;
@@ -443,7 +460,10 @@ public class UserManageAction {
 			}
 			return modelMap;
 		} catch (Exception e) {
-			e.printStackTrace();
+			String errorMethod = "UserManageAction-->deleteBlog()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			modelMap.put("result", "fail");
 			modelMap.put("message", "系统异常，请稍候重试");
 			return modelMap;
@@ -465,7 +485,10 @@ public class UserManageAction {
 			modelMap.put("items", itemList);
 			return modelMap;
 		} catch (Exception e) {
-			e.printStackTrace();
+			String errorMethod = "UserManageAction-->loadItem()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			modelMap.put("result", "fail");
 			modelMap.put("message", "系统异常，请稍候重试");
 			return modelMap;
@@ -486,7 +509,10 @@ public class UserManageAction {
 			mv.setViewName("usermanage/blog_item");
 			return mv;
 		} catch (Exception e) {
-			e.printStackTrace();
+			String errorMethod = "UserManageAction-->blogItem()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
@@ -532,7 +558,10 @@ public class UserManageAction {
 			modelMap.put("result", "success");
 			return modelMap;
 		} catch (Exception e) {
-			e.printStackTrace();
+			String errorMethod = "UserManageAction-->editItem()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			modelMap.put("result", "fail");
 			modelMap.put("message", "系统异常，请稍候重试");
 			return modelMap;
@@ -584,7 +613,10 @@ public class UserManageAction {
 			mv.setViewName("redirect:blog_item");
 			return mv;
 		} catch (Exception e) {
-			e.printStackTrace();
+			String errorMethod = "UserManageAction-->saveItem()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
@@ -616,6 +648,10 @@ public class UserManageAction {
 			mv.setViewName("redirect:blog_item");
 			return mv;
 		} catch (Exception e) {
+			String errorMethod = "UserManageAction-->deleteItem()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
@@ -648,7 +684,10 @@ public class UserManageAction {
 			mv.setViewName("usermanage/blog_reply");
 			return mv;
 		} catch (Exception e) {
-			e.printStackTrace();
+			String errorMethod = "UserManageAction-->replyList()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
@@ -682,7 +721,10 @@ public class UserManageAction {
 			}
 			return mv;
 		} catch (Exception e) {
-			e.printStackTrace();
+			String errorMethod = "UserManageAction-->deleteReply()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
@@ -701,7 +743,10 @@ public class UserManageAction {
 			mv.addObject("list", list);
 			mv.setViewName("usermanage/notice");
 		} catch (Exception e) {
-			e.printStackTrace();
+			String errorMethod = "UserManageAction-->notice()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
@@ -724,7 +769,10 @@ public class UserManageAction {
 			}
 			mv.setViewName("redirect:notice");
 		} catch (Exception e) {
-			e.printStackTrace();
+			String errorMethod = "UserManageAction-->deleteNotice()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
@@ -748,7 +796,10 @@ public class UserManageAction {
 			noticeService.deleteNotice(noticeId_int);
 			mv.setViewName("redirect:" + url);
 		} catch (Exception e) {
-			e.printStackTrace();
+			String errorMethod = "UserManageAction-->noticeDetail()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
@@ -769,7 +820,10 @@ public class UserManageAction {
 			modelMap.put("count", count);
 			return modelMap;
 		} catch (Exception e) {
-			e.printStackTrace();
+			String errorMethod = "UserManageAction-->noticeCount()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			modelMap.put("result", "fail");
 			return modelMap;
 		}

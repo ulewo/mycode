@@ -36,6 +36,7 @@ import com.ulewo.service.GroupService;
 import com.ulewo.service.MemberService;
 import com.ulewo.service.ReArticleService;
 import com.ulewo.util.Constant;
+import com.ulewo.util.ErrorReport;
 import com.ulewo.util.PaginationResult;
 import com.ulewo.util.StringUtils;
 
@@ -96,7 +97,10 @@ public class GroupMagageAction {
 			mv.setViewName("/groupmanage/edit_group");
 			return mv;
 		} catch (Exception e) {
-			e.printStackTrace();
+			String errorMethod = "GroupMagageAction-->manage()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
@@ -104,7 +108,8 @@ public class GroupMagageAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/{gid}/editGroup.action", method = RequestMethod.POST)
-	public Map<String, Object> editGroup(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> editGroup(@PathVariable String gid,
+			HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -141,7 +146,10 @@ public class GroupMagageAction {
 			modelMap.put("gid", gid);
 			return modelMap;
 		} catch (Exception e) {
-			e.printStackTrace();
+			String errorMethod = "GroupMagageAction-->editGroup()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			modelMap.put("result", "fail");
 			modelMap.put("message", "系统异常");
 			return modelMap;
@@ -150,7 +158,8 @@ public class GroupMagageAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/creteGroup.action", method = RequestMethod.POST)
-	public Map<String, Object> creteGroup(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> creteGroup(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -173,13 +182,17 @@ public class GroupMagageAction {
 			group.setGroupDesc(groupDesc);
 			group.setJoinPerm(joinPerm);
 			group.setPostPerm(postPerm);
-			group.setGroupAuthor(((SessionUser) session.getAttribute("user")).getUserId());
+			group.setGroupAuthor(((SessionUser) session.getAttribute("user"))
+					.getUserId());
 			String gid = groupService.createGroup(group);
 			modelMap.put("gid", gid);
 			modelMap.put("result", "success");
 			return modelMap;
 		} catch (Exception e) {
-			e.printStackTrace();
+			String errorMethod = "GroupMagageAction-->creteGroup()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			modelMap.put("result", "fail");
 			modelMap.put("message", "系统异常");
 			return modelMap;
@@ -194,7 +207,8 @@ public class GroupMagageAction {
 	 * @return
 	 */
 	@RequestMapping(value = "/{gid}/group_notice", method = RequestMethod.GET)
-	public ModelAndView groupNotice(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
+	public ModelAndView groupNotice(@PathVariable String gid,
+			HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
@@ -204,20 +218,25 @@ public class GroupMagageAction {
 			if (!checkPerm(group, userId)) {
 				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			}
-			group.setGroupNotice(StringUtils.reFormateHtml(group.getGroupNotice()));
+			group.setGroupNotice(StringUtils.reFormateHtml(group
+					.getGroupNotice()));
 			mv.addObject("group", group);
 			mv.addObject("gid", gid);
 			mv.setViewName("/groupmanage/group_notice");
 			return mv;
 		} catch (Exception e) {
-			e.printStackTrace();
+			String errorMethod = "GroupMagageAction-->groupNotice()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
 	}
 
 	@RequestMapping(value = "/{gid}/group_icon", method = RequestMethod.GET)
-	public ModelAndView groupIcon(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
+	public ModelAndView groupIcon(@PathVariable String gid,
+			HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
@@ -225,6 +244,10 @@ public class GroupMagageAction {
 			mv.setViewName("groupmanage/group_icon");
 			return mv;
 		} catch (Exception e) {
+			String errorMethod = "GroupMagageAction-->group_icon()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
@@ -232,7 +255,8 @@ public class GroupMagageAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/{gid}/saveGroupIcon.action")
-	public Map<String, Object> saveUserIcon(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> saveUserIcon(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		String gid = request.getParameter("gid");
@@ -241,7 +265,8 @@ public class GroupMagageAction {
 		String y1 = request.getParameter("y1");
 		String width = request.getParameter("width");
 		String height = request.getParameter("height");
-		if (!StringUtils.isNumber(x1) || !StringUtils.isNumber(y1) || !StringUtils.isNumber(width)
+		if (!StringUtils.isNumber(x1) || !StringUtils.isNumber(y1)
+				|| !StringUtils.isNumber(width)
 				|| !StringUtils.isNumber(height)) {
 			modelMap.put("result", "fail");
 			modelMap.put("message", "请求参数错误");
@@ -270,9 +295,11 @@ public class GroupMagageAction {
 			tempIn = new FileInputStream(tempfile);
 			BufferedImage img = ImageIO.read(tempIn);
 			// 裁剪图片
-			BufferedImage subimg = img.getSubimage(x1_int, y1_int, width_int, height_int);
+			BufferedImage subimg = img.getSubimage(x1_int, y1_int, width_int,
+					height_int);
 			// 放大缩小图片
-			BufferedImage okimg = new BufferedImage(SMALL_WIDTH, SMALL_HEIGHT, BufferedImage.TYPE_INT_RGB);
+			BufferedImage okimg = new BufferedImage(SMALL_WIDTH, SMALL_HEIGHT,
+					BufferedImage.TYPE_INT_RGB);
 			Graphics2D g = okimg.createGraphics();
 			g.drawImage(subimg, 0, 0, SMALL_WIDTH, SMALL_HEIGHT, null);
 
@@ -280,7 +307,8 @@ public class GroupMagageAction {
 			out = new ByteArrayOutputStream();
 			ImageIO.write(okimg, imgType, out);
 			byte[] data = out.toByteArray();
-			String okSrcPath = session.getServletContext().getRealPath("/") + "upload/group/";
+			String okSrcPath = session.getServletContext().getRealPath("/")
+					+ "upload/group/";
 			File imagePathFile = new File(okSrcPath);
 			if (!imagePathFile.exists()) {
 				imagePathFile.mkdirs();
@@ -295,6 +323,10 @@ public class GroupMagageAction {
 			group.setGroupIcon(userIcon);
 			groupService.updateGroup(group);
 		} catch (Exception e) {
+			String errorMethod = "GroupMagageAction-->saveUserIcon()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			modelMap.put("result", "fail");
 			modelMap.put("message", "系统异常");
 			return modelMap;
@@ -322,7 +354,8 @@ public class GroupMagageAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/{gid}/editNotice.action", method = RequestMethod.POST)
-	public Map<String, Object> editNotice(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> editNotice(@PathVariable String gid,
+			HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -342,7 +375,10 @@ public class GroupMagageAction {
 			modelMap.put("gid", gid);
 			return modelMap;
 		} catch (Exception e) {
-			e.printStackTrace();
+			String errorMethod = "GroupMagageAction-->editNotice()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			modelMap.put("result", "fail");
 			modelMap.put("message", "系统异常");
 			return modelMap;
@@ -357,23 +393,29 @@ public class GroupMagageAction {
 	 * @return
 	 */
 	@RequestMapping(value = "/{gid}/group_item", method = RequestMethod.GET)
-	public ModelAndView groupItem(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
+	public ModelAndView groupItem(@PathVariable String gid,
+			HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
-			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+			SessionUser sessionUser = (SessionUser) session
+					.getAttribute("user");
 			String userId = sessionUser.getUserId();
 			Group mygroup = groupService.queryGorup(gid);
 			if (!checkPerm(mygroup, userId)) {
 				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			}
-			List<ArticleItem> itemList = articleItemService.queryItemAndTopicCountByGid(gid);
+			List<ArticleItem> itemList = articleItemService
+					.queryItemAndTopicCountByGid(gid);
 			mv.addObject("imtes", itemList);
 			mv.addObject("gid", gid);
 			mv.setViewName("groupmanage/group_item");
 			return mv;
 		} catch (Exception e) {
-			e.printStackTrace();
+			String errorMethod = "GroupMagageAction-->group_item()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
@@ -397,7 +439,8 @@ public class GroupMagageAction {
 			if (null != id) {
 				id = id.trim();
 			}
-			if (StringUtils.isEmpty(itemName) || itemName.length() > ITEM_LENGTH) {
+			if (StringUtils.isEmpty(itemName)
+					|| itemName.length() > ITEM_LENGTH) {
 				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 				return mv;
 			}
@@ -408,7 +451,8 @@ public class GroupMagageAction {
 			itemName = itemName.trim();
 			itemCode = itemCode.trim();
 
-			if ((StringUtils.isNotEmpty(id) && !StringUtils.isNumber(id)) || !StringUtils.isNumber(itemCode)) {
+			if ((StringUtils.isNotEmpty(id) && !StringUtils.isNumber(id))
+					|| !StringUtils.isNumber(itemCode)) {
 				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 				return mv;
 			}
@@ -425,25 +469,29 @@ public class GroupMagageAction {
 			if (articleItemService.saveItem(item)) {
 				mv.setViewName("redirect:" + gid + "/group_item");
 				return mv;
-			}
-			else {
+			} else {
 				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 				return mv;
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			String errorMethod = "GroupMagageAction-->saveItem()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
 	}
 
 	@RequestMapping(value = "/{gid}/deleteItem", method = RequestMethod.GET)
-	public ModelAndView deleteItem(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
+	public ModelAndView deleteItem(@PathVariable String gid,
+			HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
-			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+			SessionUser sessionUser = (SessionUser) session
+					.getAttribute("user");
 			String userId = sessionUser.getUserId();
 			Group mygroup = groupService.queryGorup(gid);
 			if (!checkPerm(mygroup, userId)) {
@@ -465,14 +513,16 @@ public class GroupMagageAction {
 			if (articleItemService.delete(id_int)) {
 				mv.setViewName("redirect:group_item");
 				return mv;
-			}
-			else {
+			} else {
 				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 				return mv;
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			String errorMethod = "GroupMagageAction-->deleteItem()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
@@ -486,7 +536,8 @@ public class GroupMagageAction {
 	 * @return
 	 */
 	@RequestMapping(value = "/{gid}/group_article", method = RequestMethod.GET)
-	public ModelAndView groupArticle(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
+	public ModelAndView groupArticle(@PathVariable String gid,
+			HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
@@ -500,15 +551,18 @@ public class GroupMagageAction {
 			if (StringUtils.isNumber(page)) {
 				page_int = Integer.parseInt(page);
 			}
-			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+			SessionUser sessionUser = (SessionUser) session
+					.getAttribute("user");
 			String userId = sessionUser.getUserId();
 			Group mygroup = groupService.queryGorup(gid);
 			if (!checkPerm(mygroup, userId)) {
 				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			}
-			List<ArticleItem> itemList = articleItemService.queryItemAndTopicCountByGid(gid);
-			PaginationResult result = articleService.queryTopicOrderByGradeAndLastReTime(gid, itemId_int, page_int,
-					Constant.pageSize20);
+			List<ArticleItem> itemList = articleItemService
+					.queryItemAndTopicCountByGid(gid);
+			PaginationResult result = articleService
+					.queryTopicOrderByGradeAndLastReTime(gid, itemId_int,
+							page_int, Constant.pageSize20);
 			mv.addObject("itemList", itemList);
 			mv.addObject("itemId", itemId_int);
 			mv.addObject("result", result);
@@ -516,14 +570,18 @@ public class GroupMagageAction {
 			mv.setViewName("groupmanage/group_article");
 			return mv;
 		} catch (Exception e) {
-			e.printStackTrace();
+			String errorMethod = "GroupMagageAction-->groupArticle()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
 	}
 
 	@RequestMapping(value = "/{gid}/edit_article", method = RequestMethod.GET)
-	public ModelAndView editArticle(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
+	public ModelAndView editArticle(@PathVariable String gid,
+			HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
@@ -545,7 +603,10 @@ public class GroupMagageAction {
 			mv.setViewName("groupmanage/edit_article");
 			return mv;
 		} catch (Exception e) {
-			e.printStackTrace();
+			String errorMethod = "GroupMagageAction-->editArticle()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
@@ -553,7 +614,8 @@ public class GroupMagageAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/saveArticle.action", method = RequestMethod.POST)
-	public Map<String, Object> saveArticle(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> saveArticle(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -586,12 +648,14 @@ public class GroupMagageAction {
 				modelMap.put("message", "标题为空，或者超过长度");
 				return modelMap;
 			}
-			if (StringUtils.isNotEmpty(keyWord) && keyWord.length() > TITLE_LENGTH) {
+			if (StringUtils.isNotEmpty(keyWord)
+					&& keyWord.length() > TITLE_LENGTH) {
 				modelMap.put("result", "fail");
 				modelMap.put("message", "关键字太长");
 				return modelMap;
 			}
-			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+			SessionUser sessionUser = (SessionUser) session
+					.getAttribute("user");
 			String userId = sessionUser.getUserId();
 			Group mygroup = groupService.queryGorup(gid);
 			if (!checkPerm(mygroup, userId)) {
@@ -607,18 +671,23 @@ public class GroupMagageAction {
 			article.setContent(content);
 			article.setAuthorId(userId);
 			article.setImage(image);
-			// 添加附件
 			articleService.updateArticle(article, userId);
 			modelMap.put("result", "success");
 			return modelMap;
 		} catch (Exception e) {
+			String errorMethod = "GroupMagageAction-->saveArticle()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			modelMap.put("result", "fail");
+			modelMap.put("message", "系统异常");
 			return modelMap;
 		}
 	}
 
 	@RequestMapping(value = "/{gid}/manageArticle.action", method = RequestMethod.POST)
-	public ModelAndView manageArticle(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
+	public ModelAndView manageArticle(@PathVariable String gid,
+			HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
@@ -628,13 +697,10 @@ public class GroupMagageAction {
 				itemId_int = Integer.parseInt(itemId);
 			}
 			String page = request.getParameter("page");
-			int page_int = 0;
-			if (StringUtils.isNumber(page)) {
-				page_int = Integer.parseInt(page);
-			}
 			String type = request.getParameter("type");
 			String[] id = request.getParameterValues("id");
-			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+			SessionUser sessionUser = (SessionUser) session
+					.getAttribute("user");
 			String userId = sessionUser.getUserId();
 			articleService.manangeArticle(gid, userId, id, type);
 			mv.addObject("itemId", itemId_int);
@@ -643,14 +709,18 @@ public class GroupMagageAction {
 			mv.setViewName("redirect:group_article");
 			return mv;
 		} catch (Exception e) {
-			e.printStackTrace();
+			String errorMethod = "GroupMagageAction-->manageArticle()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
 	}
 
 	@RequestMapping(value = "/{gid}/article_reply", method = RequestMethod.GET)
-	public ModelAndView articleReply(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
+	public ModelAndView articleReply(@PathVariable String gid,
+			HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
@@ -659,20 +729,25 @@ public class GroupMagageAction {
 			if (StringUtils.isNumber(page)) {
 				page_int = Integer.parseInt(page);
 			}
-			PaginationResult result = reArticleService.queryReArticleByGid(gid, page_int, Constant.pageSize25);
+			PaginationResult result = reArticleService.queryReArticleByGid(gid,
+					page_int, Constant.pageSize25);
 			mv.addObject("gid", gid);
 			mv.addObject("result", result);
 			mv.setViewName("groupmanage/article_reply");
 			return mv;
 		} catch (Exception e) {
-			e.printStackTrace();
+			String errorMethod = "GroupMagageAction-->articleReply()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
 	}
 
 	@RequestMapping(value = "/{gid}/member", method = RequestMethod.GET)
-	public ModelAndView member(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
+	public ModelAndView member(@PathVariable String gid, HttpSession session,
+			HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
@@ -681,21 +756,26 @@ public class GroupMagageAction {
 			if (StringUtils.isNumber(page)) {
 				page_int = Integer.parseInt(page);
 			}
-			PaginationResult result = memberService.queryMembers(gid, MemberStatus.ISMEMBER, QueryOrder.ASC, page_int,
+			PaginationResult result = memberService.queryMembers(gid,
+					MemberStatus.ISMEMBER, QueryOrder.ASC, page_int,
 					Constant.pageSize20);
 			mv.addObject("gid", gid);
 			mv.addObject("result", result);
 			mv.setViewName("groupmanage/member");
 			return mv;
 		} catch (Exception e) {
-			e.printStackTrace();
+			String errorMethod = "GroupMagageAction-->member()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
 	}
 
 	@RequestMapping(value = "/{gid}/member_apply", method = RequestMethod.GET)
-	public ModelAndView memberApply(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
+	public ModelAndView memberApply(@PathVariable String gid,
+			HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
@@ -704,14 +784,18 @@ public class GroupMagageAction {
 			if (StringUtils.isNumber(page)) {
 				page_int = Integer.parseInt(page);
 			}
-			PaginationResult result = memberService.queryMembers(gid, MemberStatus.NOTMEMBER, QueryOrder.ASC, page_int,
+			PaginationResult result = memberService.queryMembers(gid,
+					MemberStatus.NOTMEMBER, QueryOrder.ASC, page_int,
 					Constant.pageSize20);
 			mv.addObject("gid", gid);
 			mv.addObject("result", result);
 			mv.setViewName("groupmanage/member_apply");
 			return mv;
 		} catch (Exception e) {
-			e.printStackTrace();
+			String errorMethod = "GroupMagageAction-->memberApply()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}

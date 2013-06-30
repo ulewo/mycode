@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ulewo.util.DrowImage;
+import com.ulewo.util.ErrorReport;
 
 @Controller
 public class ImageUploadAction {
@@ -30,7 +31,8 @@ public class ImageUploadAction {
 	private static final int MAXWIDTH = 600;
 
 	@RequestMapping(value = "/imageUpload", method = RequestMethod.POST)
-	public ModelAndView fileupload(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView fileupload(HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
@@ -53,7 +55,9 @@ public class ImageUploadAction {
 			}
 			String fileName = multipartFile.getOriginalFilename();
 			String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
-			if (!"JPG".equalsIgnoreCase(suffix) && !"PNG".equalsIgnoreCase(suffix) && !"gif".equalsIgnoreCase(suffix)
+			if (!"JPG".equalsIgnoreCase(suffix)
+					&& !"PNG".equalsIgnoreCase(suffix)
+					&& !"gif".equalsIgnoreCase(suffix)
 					&& !"BMP".equalsIgnoreCase(suffix)) {
 				mv.addObject("result", "fail");
 				mv.addObject("message", "文件类型只能是图片");
@@ -95,6 +99,10 @@ public class ImageUploadAction {
 			mv.setViewName("common/imgupload");
 			return mv;
 		} catch (Exception e) {
+			String errorMethod = "ImageUploadAction-->fileupload()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			mv.addObject("result", "fail");
 			mv.setViewName("common/imgupload");
 			return mv;
@@ -103,7 +111,8 @@ public class ImageUploadAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/FileUpload", method = RequestMethod.POST)
-	public Map<String, Object> logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public Map<String, Object> logout(HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 

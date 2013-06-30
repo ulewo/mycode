@@ -36,6 +36,7 @@ import com.ulewo.service.ReTalkService;
 import com.ulewo.service.TalkService;
 import com.ulewo.service.UserService;
 import com.ulewo.util.Constant;
+import com.ulewo.util.ErrorReport;
 import com.ulewo.util.MySessionContext;
 import com.ulewo.util.PaginationResult;
 import com.ulewo.util.StringUtils;
@@ -122,8 +123,11 @@ public class AndroidAction {
 			modelMap.put("pageTotal", result.getPageTotal());
 			return modelMap;
 		} catch (Exception e) {
+			String errorMethod = "AndroidAction-->fetchArticle()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			modelMap.put("result", "fail");
-			e.printStackTrace();
 			return modelMap;
 		}
 	}
@@ -164,6 +168,10 @@ public class AndroidAction {
 			modelMap.put("article", vo);
 			return modelMap;
 		} catch (Exception e) {
+			String errorMethod = "AndroidAction-->showArticle()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			modelMap.put("result", "fail");
 			return modelMap;
 		}
@@ -199,6 +207,10 @@ public class AndroidAction {
 			modelMap.put("pageTotal", result.getPageTotal());
 			return modelMap;
 		} catch (Exception e) {
+			String errorMethod = "AndroidAction-->fetchReComment()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			modelMap.put("result", "fail");
 			return modelMap;
 		}
@@ -285,6 +297,10 @@ public class AndroidAction {
 			modelMap.put("isLogin", isLogin);
 			return modelMap;
 		} catch (Exception e) {
+			String errorMethod = "AndroidAction-->addArticleComment()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			modelMap.put("result", "fail");
 			return modelMap;
 		}
@@ -306,7 +322,10 @@ public class AndroidAction {
 				return false;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			String errorMethod = "AndroidAction-->login2()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 		}
 		return false;
 	}
@@ -350,6 +369,10 @@ public class AndroidAction {
 			modelMap.put("pageTotal", result.getPageTotal());
 			return modelMap;
 		} catch (Exception e) {
+			String errorMethod = "AndroidAction-->fetchBlog()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			modelMap.put("result", "fail");
 			return modelMap;
 		}
@@ -381,6 +404,10 @@ public class AndroidAction {
 			modelMap.put("blog", vo);
 			return modelMap;
 		} catch (Exception e) {
+			String errorMethod = "AndroidAction-->showBlog()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			modelMap.put("result", "fail");
 			return modelMap;
 		}
@@ -425,6 +452,10 @@ public class AndroidAction {
 			modelMap.put("pageTotal", result.getPageTotal());
 			return modelMap;
 		} catch (Exception e) {
+			String errorMethod = "AndroidAction-->fetchBlogComment()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			modelMap.put("result", "fail");
 			return modelMap;
 		}
@@ -494,6 +525,10 @@ public class AndroidAction {
 			modelMap.put("isLogin", isLogin);
 			return modelMap;
 		} catch (Exception e) {
+			String errorMethod = "AndroidAction-->addBlogComment()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			modelMap.put("result", "fail");
 			return modelMap;
 		}
@@ -539,6 +574,10 @@ public class AndroidAction {
 			modelMap.put("pageTotal", result.getPageTotal());
 			return modelMap;
 		} catch (Exception e) {
+			String errorMethod = "AndroidAction-->fetchWoWo()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			modelMap.put("result", "fail");
 			return modelMap;
 		}
@@ -585,6 +624,10 @@ public class AndroidAction {
 			modelMap.put("pageTotal", result.getPageTotal());
 			return modelMap;
 		} catch (Exception e) {
+			String errorMethod = "AndroidAction-->fetchArticleByGid()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			modelMap.put("result", "fail");
 			return modelMap;
 		}
@@ -642,6 +685,10 @@ public class AndroidAction {
 			modelMap.put("loginResult", loginResult);
 			return modelMap;
 		} catch (Exception e) {
+			String errorMethod = "AndroidAction-->login()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			modelMap.put("result", "fail");
 			return modelMap;
 		}
@@ -682,6 +729,10 @@ public class AndroidAction {
 			modelMap.put("user", userVo);
 			return modelMap;
 		} catch (Exception e) {
+			String errorMethod = "AndroidAction-->fetchUserInfo()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			modelMap.put("result", "fail");
 			return modelMap;
 		}
@@ -720,6 +771,10 @@ public class AndroidAction {
 			modelMap.put("pageTotal", result.getPageTotal());
 			return modelMap;
 		} catch (Exception e) {
+			String errorMethod = "AndroidAction-->fetchTalk()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			modelMap.put("result", "fail");
 			return modelMap;
 		}
@@ -776,6 +831,10 @@ public class AndroidAction {
 			modelMap.put("isLogin", isLogin);
 			return modelMap;
 		} catch (Exception e) {
+			String errorMethod = "AndroidAction-->addTalk()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			modelMap.put("result", "fail");
 			return modelMap;
 		}
@@ -805,6 +864,10 @@ public class AndroidAction {
 			modelMap.put("pageTotal", result.getPageTotal());
 			return modelMap;
 		} catch (Exception e) {
+			String errorMethod = "AndroidAction-->fetchReTalk()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			modelMap.put("result", "fail");
 			return modelMap;
 		}
@@ -865,6 +928,10 @@ public class AndroidAction {
 			modelMap.put("isLogin", isLogin);
 			return modelMap;
 		} catch (Exception e) {
+			String errorMethod = "AndroidAction-->addReTalk()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			modelMap.put("result", "fail");
 			return modelMap;
 		}
@@ -887,6 +954,10 @@ public class AndroidAction {
 			modelMap.put("app_name", app_name);
 			return modelMap;
 		} catch (Exception e) {
+			String errorMethod = "AndroidAction-->fetchVersion()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
 			modelMap.put("result", "fail");
 			return modelMap;
 		}
