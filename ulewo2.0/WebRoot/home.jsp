@@ -6,6 +6,7 @@
 <head>
 <%@ include file="common/path.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta property="qc:admins" content="3441214375776375" />
 <title>小窝窝 大世界 小智慧 大财富 --有乐窝</title>
 <meta name="description" content="有乐窝 大型服务社区，让你的生活更精彩 学习经验交流，网络文摘分享 ，游戏娱乐 ......">
 <meta name="keywords" content="小窝窝 大世界 小智慧 大财富 — 有乐窝">
