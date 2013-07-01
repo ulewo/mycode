@@ -24,7 +24,7 @@ function cancelEdit(){
 }
 
 function saveItem(){
-	if($("#itemId").val()==""&&($(".item_con").children().length>8)){
+	if($("#itemId").val()==""&&($(".item_con").length>8)){
 		alert("最多只能添加8个分类");
 		return;
 	}
