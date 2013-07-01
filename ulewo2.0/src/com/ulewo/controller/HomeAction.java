@@ -25,6 +25,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import weibo4j.Account;
+import weibo4j.Oauth;
+import weibo4j.Users;
+import weibo4j.http.AccessToken;
+import weibo4j.model.User;
+import weibo4j.model.WeiboException;
+import weibo4j.org.json.JSONException;
+import weibo4j.org.json.JSONObject;
+
 import com.ulewo.entity.Article;
 import com.ulewo.entity.BlogArticle;
 import com.ulewo.entity.Group;
@@ -92,12 +101,9 @@ public class HomeAction {
 
 		try {
 			List<Article> list = articleService.queryLatestArticle(0, 20);
-			List<Article> imgArticle = articleService.queryImageArticle(null,
-					0, 5);
-			List<BlogArticle> blogList = blogArticleService.indexLatestBlog(0,
-					20);
-			List<Group> groupList = (List<Group>) groupService
-					.queryGroupsOderArticleCount(0, 10).getList();
+			List<Article> imgArticle = articleService.queryImageArticle(null, 0, 5);
+			List<BlogArticle> blogList = blogArticleService.indexLatestBlog(0, 20);
+			List<Group> groupList = (List<Group>) groupService.queryGroupsOderArticleCount(0, 10).getList();
 			mv.addObject("list", list);
 			mv.addObject("imgArticle", imgArticle);
 			mv.addObject("blogList", blogList);
@@ -125,9 +131,7 @@ public class HomeAction {
 			if (StringUtils.isNumber(page)) {
 				page_int = Integer.parseInt(page);
 			}
-			PaginationResult result = articleService
-					.queryImageArticle2PagResult(null, page_int,
-							Constant.pageSize30);
+			PaginationResult result = articleService.queryImageArticle2PagResult(null, page_int, Constant.pageSize30);
 			List<Article> list = (List<Article>) result.getList();
 			List<Article> square1 = new ArrayList<Article>();
 			List<Article> square2 = new ArrayList<Article>();
@@ -152,8 +156,7 @@ public class HomeAction {
 		}
 	}
 
-	private void set2Square(List<Article> square1, List<Article> square2,
-			List<Article> square3, List<Article> square4,
+	private void set2Square(List<Article> square1, List<Article> square2, List<Article> square3, List<Article> square4,
 			List<Article> squareList) {
 
 		int num = 0;
@@ -190,8 +193,7 @@ public class HomeAction {
 			if (StringUtils.isNumber(page)) {
 				page_int = Integer.parseInt(page);
 			}
-			PaginationResult list = blogArticleService.queryLatestBlog(
-					page_int, Constant.pageSize25);
+			PaginationResult list = blogArticleService.queryLatestBlog(page_int, Constant.pageSize25);
 			mv.addObject("result", list);
 			mv.setViewName("blog");
 			return mv;
@@ -207,8 +209,7 @@ public class HomeAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/loadLatestTalk", method = RequestMethod.GET)
-	public Map<String, Object> loadTalk(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> loadTalk(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -228,13 +229,11 @@ public class HomeAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/loadGroupAndMember", method = RequestMethod.GET)
-	public Map<String, Object> loadGroupAndMember(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> loadGroupAndMember(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
-			PaginationResult groupResult = groupService
-					.queryGroupsOderArticleCount(1, Constant.pageSize15);
+			PaginationResult groupResult = groupService.queryGroupsOderArticleCount(1, Constant.pageSize15);
 			return modelMap;
 		} catch (Exception e) {
 			String errorMethod = "HomeAction-->loadGroupAndMember()<br>";
@@ -266,8 +265,7 @@ public class HomeAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/loadMoreTalk", method = RequestMethod.GET)
-	public Map<String, Object> loadMoreTalk(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> loadMoreTalk(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -276,8 +274,7 @@ public class HomeAction {
 			if (StringUtils.isNumber(page)) {
 				page_int = Integer.parseInt(page);
 			}
-			PaginationResult data = talkService.queryLatestTalkByPag(page_int,
-					Constant.pageSize30);
+			PaginationResult data = talkService.queryLatestTalkByPag(page_int, Constant.pageSize30);
 			modelMap.put("result", "success");
 			modelMap.put("list", data);
 			return modelMap;
@@ -312,8 +309,7 @@ public class HomeAction {
 	}
 
 	@RequestMapping(value = "/downloadApp", method = RequestMethod.GET)
-	public void downApp(HttpSession session, HttpServletRequest request,
-			HttpServletResponse response) {
+	public void downApp(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
 		InputStream in = null;
 		BufferedInputStream bf = null;
@@ -366,8 +362,7 @@ public class HomeAction {
 	}
 
 	@RequestMapping(value = "/app", method = RequestMethod.GET)
-	public ModelAndView fileupload(HttpSession session,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView fileupload(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("ulewoapp");
@@ -375,8 +370,7 @@ public class HomeAction {
 	}
 
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
-	public ModelAndView search(HttpSession session, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView search(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
@@ -390,11 +384,10 @@ public class HomeAction {
 			}
 			PaginationResult result = null;
 			if (TYPE_BLOG.equals(type)) {
-				result = blogArticleService.searchBlog2PageResult(keyword,
-						page_int, Constant.pageSize25, true);
-			} else {
-				result = articleService.searchTopic2PageResult(keyword, null,
-						page_int, Constant.pageSize25, true);
+				result = blogArticleService.searchBlog2PageResult(keyword, page_int, Constant.pageSize25, true);
+			}
+			else {
+				result = articleService.searchTopic2PageResult(keyword, null, page_int, Constant.pageSize25, true);
 			}
 			mv.addObject("result", result);
 			mv.addObject("keyword", keyword);
@@ -409,5 +402,49 @@ public class HomeAction {
 			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
+	}
+
+	@RequestMapping(value = "/open_weibo", method = RequestMethod.GET)
+	public ModelAndView open_weibo(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+
+		String code = request.getParameter("code");
+		//获取token
+		Oauth oauth = new Oauth();
+		AccessToken accessToken = null;
+		String token = "";
+		try {
+			accessToken = oauth.getAccessTokenByCode(code);
+		} catch (WeiboException e) {
+			e.printStackTrace();
+		}
+		if (null != accessToken) {
+			token = accessToken.getAccessToken();
+		}
+		//获取UID
+		String uid = "";
+		Account am = new Account();
+		am.client.setToken(token);
+		try {
+			JSONObject uidJson = am.getUid();
+			try {
+				uid = uidJson.getString("uid");
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			System.out.println(uid);
+		} catch (WeiboException e) {
+			e.printStackTrace();
+		}
+		//获取用户信息
+		Users um = new Users();
+		um.client.setToken(token);
+		try {
+			User user = um.showUserById(uid);
+		} catch (WeiboException e) {
+			e.printStackTrace();
+		}
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("ulewoapp");
+		return mv;
 	}
 }

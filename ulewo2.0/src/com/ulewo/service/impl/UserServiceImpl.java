@@ -167,4 +167,12 @@ public class UserServiceImpl implements UserService {
 			return modelMap;
 		}
 	}
+
+	public User WeiBoRegister(weibo4j.model.User user) {
+
+		User myUser = new User();
+		myUser.setUserName(user.getScreenName());
+		addUser(myUser);
+		return myUser;
+	}
 }

@@ -68,4 +68,6 @@ public interface UserService {
 	 * @return
 	 */
 	public Map<String, Object> resetPwd(String account, String activationCode, String pwd);
+
+	public User WeiBoRegister(weibo4j.model.User user);
 }
