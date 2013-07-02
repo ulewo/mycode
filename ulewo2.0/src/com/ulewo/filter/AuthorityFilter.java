@@ -28,14 +28,12 @@ import com.ulewo.service.impl.UserServiceImpl;
 import com.ulewo.util.Constant;
 
 public class AuthorityFilter implements Filter {
-	private final static String[] static_ext = { "js", "css", "jpg", "png",
-			"gif", "html", "ico", "vm", "swf" };
+	private final static String[] static_ext = { "js", "css", "jpg", "png", "gif", "html", "ico", "vm", "swf" };
 
-	private final SimpleDateFormat formate = new SimpleDateFormat(
-			"yyyy-MM-dd HH:mm:ss");
+	private final SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-	public void doFilter(ServletRequest req, ServletResponse res,
-			FilterChain chain) throws IOException, ServletException {
+	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException,
+			ServletException {
 
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) res;
@@ -54,12 +52,20 @@ public class AuthorityFilter implements Filter {
 			userObj = request.getSession().getAttribute("user");
 		}
 		// 以action结尾的没有登录，直接跳闸un到错误页面
-		if (null == userObj
-				&& ("action".equals(type) || req_uri.contains("manage") || req_uri
-						.contains("groupManage"))) {
+		if (null == userObj && ("action".equals(type) || req_uri.contains("manage") || req_uri.contains("groupManage"))) {
 			response.sendRedirect(Constant.ERRORPAGE);
 			return;
 		}
+
+		/*if (null == userObj && ("action".equals(type) || req_uri.contains("manage") || req_uri.contains("groupManage"))
+				|| req_uri.contains("admin")) {
+			response.sendRedirect(Constant.ERRORPAGE);
+			return;
+		}//后台管理
+		else if (null != userObj && req_uri.contains("admin") && !((SessionUser) userObj).getUserId().equals("10000")) {
+			response.sendRedirect(Constant.ERRORPAGE);
+			return;
+		}*/
 		chain.doFilter(request, response);
 	}
 
@@ -72,10 +78,8 @@ public class AuthorityFilter implements Filter {
 				if (info != null && !"".equals(info)) {
 					String infos[] = info.split(",");
 					WebApplicationContext webApplicationContext = WebApplicationContextUtils
-							.getWebApplicationContext(req.getSession()
-									.getServletContext());
-					UserService userService = (UserServiceImpl) webApplicationContext
-							.getBean("userService");
+							.getWebApplicationContext(req.getSession().getServletContext());
+					UserService userService = (UserServiceImpl) webApplicationContext.getBean("userService");
 					User user = userService.login(infos[0], infos[1]);
 					if (user != null) {
 						SessionUser loginUser = new SessionUser();
@@ -99,7 +103,8 @@ public class AuthorityFilter implements Filter {
 		if (cookieMap.containsKey(name)) {
 			Cookie cookie = (Cookie) cookieMap.get(name);
 			return cookie;
-		} else {
+		}
+		else {
 			return null;
 		}
 	}

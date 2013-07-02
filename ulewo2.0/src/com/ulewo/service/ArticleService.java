@@ -180,4 +180,23 @@ public interface ArticleService {
 	public PaginationResult queryLatestArticle2PagResult(int page, int pageSize);
 
 	public List<Article> queryHotArticle(int offset, int total);
+
+	/***********后台管理接口*************/
+
+	/**
+	 * 
+	 * @param page
+	 * @param pageSize
+	 * @param keyWord     关键字
+	 * @param queryType	  文章类型，所有 ，有图片，没有图片的
+	 * @return
+	 */
+	public PaginationResult queryAllArticleByAdmin(int page, int pageSize, String keyWord);
+
+	/**
+	 * 查询已经选择的文章
+	 * @param ids
+	 * @return
+	 */
+	public List<Article> getArticleInIds(String[] ids);
 }

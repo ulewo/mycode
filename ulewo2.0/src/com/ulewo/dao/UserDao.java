@@ -1,6 +1,7 @@
 package com.ulewo.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Component;
@@ -20,7 +21,7 @@ public class UserDao extends BaseDao {
 	public User findUser(String value, QueryUserType type) {
 
 		Map<String, String> paramMap = new HashMap<String, String>();
-		if(StringUtils.isEmpty(value)){
+		if (StringUtils.isEmpty(value)) {
 			return null;
 		}
 		if (type == QueryUserType.USERID) {
@@ -38,10 +39,11 @@ public class UserDao extends BaseDao {
 		return null;
 	}
 
-	public User findBaseInfo(String userId){
-		return (User)this.getSqlMapClientTemplate().queryForObject("user.baseInfo",userId);
+	public User findBaseInfo(String userId) {
+
+		return (User) this.getSqlMapClientTemplate().queryForObject("user.baseInfo", userId);
 	}
-	
+
 	/**
 	 * 添加用户
 	 * @param user
@@ -67,10 +69,26 @@ public class UserDao extends BaseDao {
 	 */
 	public int findUserCount(String userName) {
 
-		return (Integer) this.getSqlMapClientTemplate().queryForObject("user.findUsersCount", userName);
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("userName", userName);
+		return (Integer) this.getSqlMapClientTemplate().queryForObject("user.findUsersCount", parmMap);
+	}
+
+	/**
+	 * 查询用户
+	 * @param user
+	 */
+	public List<User> findAllUsers(String userName, int offset, int total) {
+
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("userName", userName);
+		parmMap.put("offset", offset);
+		parmMap.put("total", total);
+		return this.getSqlMapClientTemplate().queryForList("user.findAllUsers", parmMap);
 	}
 
 	public void update(User user) {
+
 		this.getSqlMapClientTemplate().update("user.updateUser", user);
 	}
 

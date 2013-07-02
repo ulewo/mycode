@@ -421,4 +421,19 @@ public class ArticleServiceImpl implements ArticleService {
 		return articleDao.queryHotArticle(offset, total);
 	}
 
+	@Override
+	public PaginationResult queryAllArticleByAdmin(int page, int pageSize, String keyWord) {
+
+		if (StringUtils.isEmpty(keyWord)) {
+			return queryLatestArticle2PagResult(page, pageSize);
+		}
+		else {
+			return searchTopic2PageResult(keyWord, null, page, pageSize, true);
+		}
+	}
+
+	public List<Article> getArticleInIds(String[] ids) {
+
+		return articleDao.getArticleInIds(ids);
+	}
 }

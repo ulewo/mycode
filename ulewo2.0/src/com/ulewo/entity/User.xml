@@ -58,11 +58,11 @@
 	</insert>
 	
 	<!--查询用户总数-->
-	<select id="findUsersCount"  resultClass="java.lang.Integer" parameterClass="java.lang.String">
+	<select id="findUsersCount"  resultClass="java.lang.Integer" parameterClass="java.util.Map">
 		select count(userid) from user 
 		<dynamic prepend="where">
 		<isNotEmpty  property="userName">
-         	  <![CDATA[userName like #userName# ]]>
+         	  <![CDATA[userName like '%$userName$%' ]]>
 		</isNotEmpty>
 		</dynamic>
 	</select>
@@ -72,7 +72,7 @@
 		select * from user 
 		<dynamic prepend="where">
 			<isNotEmpty property="userName">
-	         	  <![CDATA[userName like #userName# ]]>
+	         	  <![CDATA[userName like '%$userName$%' ]]>
 			</isNotEmpty>
 		</dynamic>
 		order by registertime desc limit #offset#,#total#  

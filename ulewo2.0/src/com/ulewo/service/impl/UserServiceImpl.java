@@ -2,6 +2,7 @@ package com.ulewo.service.impl;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -13,6 +14,7 @@ import com.ulewo.entity.User;
 import com.ulewo.enums.QueryUserType;
 import com.ulewo.service.UserService;
 import com.ulewo.util.Constant;
+import com.ulewo.util.Pagination;
 import com.ulewo.util.PaginationResult;
 import com.ulewo.util.SendMail;
 import com.ulewo.util.StringUtils;
@@ -174,5 +176,19 @@ public class UserServiceImpl implements UserService {
 		myUser.setUserName(user.getScreenName());
 		addUser(myUser);
 		return myUser;
+	}
+
+	public PaginationResult findAllUsers(String userName, int page, int pageSize) {
+
+		int count = userDao.findUserCount(userName);
+		Pagination pagination = new Pagination(page, count, pageSize);
+		pagination.action();
+		List<User> list = userDao.findAllUsers(userName, pagination.getOffSet(), pageSize);
+		for (User user : list) {
+			user.setRegisterTime(StringUtils.friendly_time(user.getRegisterTime()));
+			user.setPrevisitTime(StringUtils.friendly_time(user.getPrevisitTime()));
+		}
+		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
+		return result;
 	}
 }

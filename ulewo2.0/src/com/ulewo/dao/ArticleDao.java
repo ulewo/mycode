@@ -286,4 +286,9 @@ public class ArticleDao extends BaseDao {
 		return this.getSqlMapClientTemplate().queryForList("article.queryHotArticle", parmMap);
 	}
 
+	public List<Article> getArticleInIds(String[] ids) {
+
+		return this.getSqlMapClientTemplate().queryForList("article.getArticleInIds", ids);
+	}
+
 }

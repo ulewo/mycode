@@ -120,7 +120,7 @@
 	
 	<!-- 查询文章根据时间倒叙排列 -->
 	<select id="queryTopicOrderByPostTime"  resultClass="article">
-		select a.id,a.gid,a.itemid,a.title,a.titlestyle,a.authorid,u.username as authorname,a.posttime,a.readnumber,
+		select a.id,a.gid,a.itemid,a.title,a.titlestyle,a.authorid,u.username as authorname,a.posttime,a.readnumber,a.image,
 		(select count(r.id) from rearticle r where r.articleid = a.id) as renumber from article a  
 		inner join user u on a.authorid = u.userid
 		<dynamic prepend="where">
@@ -232,6 +232,13 @@
          	  <![CDATA[gid =  #gid#  ]]>
 		</isNotEmpty>
 		</dynamic>
+	</select>
+	
+	<select id="getArticleInIds"  resultClass="article">
+		select * from article where id in  
+		<iterate open="(" close=")" conjunction="," > 
+              #[]# 
+        </iterate> 
 	</select>
 	
 </sqlMap>
