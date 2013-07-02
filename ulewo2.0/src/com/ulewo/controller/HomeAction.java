@@ -376,7 +376,9 @@ public class HomeAction {
 		try {
 			String type = request.getParameter("type");
 			String keyword = request.getParameter("q");
-			keyword = URLDecoder.decode(keyword, "utf-8");
+			if (null != keyword) {
+				keyword = URLDecoder.decode(keyword, "utf-8");
+			}
 			String page = request.getParameter("page");
 			int page_int = 1;
 			if (StringUtils.isNumber(page)) {
