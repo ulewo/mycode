@@ -1,0 +1,7 @@
+@import url("admin.public.css");
+.article_item{margin-top:10px;}
+.item_checkbox{width:20px;float:left;}
+.item_title{float:left;width:560px;}
+.item_time{float:left;width:100px}
+.item_user{float:left;width:100px;}
+input.tagInput{background:pink;border:0px;color:#ffffff;width:30px;margin-left:5px;}

@@ -1,0 +1,11 @@
+@import url("admin.public.css");
+.user_item{margin-top:10px;}
+.item_checkbox{width:20px;float:left;padding-top:25px;}
+.item_icon{float:left;width:60px;}
+.item_icon img{float:left;width:60px;}
+.info{float:left;width:600px;margin-left:10px;}
+.item_time{float:left;width:100px}
+.item_user{float:left;width:100px;}
+.timeinfo{margin-top:20px;}
+.timeinfo span{color:#666666;}
+.timeinfo .previsttime{padding-left:10px;}
