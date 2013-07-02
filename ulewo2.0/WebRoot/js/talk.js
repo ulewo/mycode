@@ -92,13 +92,13 @@ function ReTalkItem(data) {
 	var talkcon = $("<div class='itemcon'></div>").appendTo(this.item);
 	$(
 			"<span class='item_user'><a href='" + global.realPath
-					+ "/user/userInfo.jspx?userId=" + data.userId + "'>"
+					+ "/user/" + data.userId + "'>"
 					+ data.userName + "</a></span>").appendTo(talkcon);
 	if (data.atUserId != "" && data.atUserId != null) {
 		$(
 				"<span style='color:#008000'>&nbsp;回复&nbsp;</span><span class='item_user'><a href='"
 						+ global.realPath
-						+ "/user/userInfo.jspx?userId="
+						+ "/user/"
 						+ data.atUserId
 						+ "'>"
 						+ data.atUserName
