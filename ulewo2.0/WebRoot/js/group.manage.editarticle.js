@@ -1,5 +1,6 @@
-function addArticle(){
-	if($(this).attr("disable")=="disable"){
+function submitForm(){
+	var subBtn = $("#sub_article_btn");
+	if(subBtn.attr("disable")=="disable"){
 		return;
 	}
 	var article_title = $("#article_title").val().trim();
@@ -33,7 +34,7 @@ function addArticle(){
 		$("#content").val(editor.getContent());
 	}
 	warm("hide","");
-	btnLoading($(this),"发表中<img src='"+global.realPath+"/images/load.gif' width='14'>");
+	btnLoading(subBtn,"发表中<img src='"+global.realPath+"/images/load.gif' width='14'>");
 	$.ajax({
 		async : true,
 		cache : false,
@@ -42,7 +43,7 @@ function addArticle(){
 		data : $("#articleform").serialize(),
 		url : global.realPath+"/groupManage/saveArticle.action",// 请求的action路径
 		success : function(data) {
-			btnLoaded($("#sub_article_btn"),"修改帖子");
+			btnLoaded(subBtn,"修改帖子");
 			if(data.result=="fail"){
 				warm("show",data.message);
 			}else{

@@ -73,7 +73,7 @@
 					<span class="result_info"><i id="warm_icon"></i><span id="warm_info"></span></span>
 			 		<div class="clear"></div>
 				</div>
-				<input type="hidden" name="id" value="${blog.id}">
+				<input type="hidden" name="id" value="${blog.id}" id="blogId">
 			</form>
 		</div>
 		<div style="clear:left;"></div>

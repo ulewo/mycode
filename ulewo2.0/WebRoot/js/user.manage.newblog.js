@@ -1,10 +1,11 @@
 var isHaveImg = false;
 $(function(){
-	$("#saveBtn").bind("click",addBlog);
+	$("#saveBtn").bind("click",submitForm);
 })
 
-function addBlog(){
-	if($(this).attr("disable")=="disable"){
+function submitForm(){
+	var subBtn = $("#saveBtn");
+	if(subBtn.attr("disable")=="disable"){
 		return;
 	}
 	var title = $("#title").val().trim();
@@ -38,7 +39,7 @@ function addBlog(){
 		$("#content").val(editor.getContent());
 	}
 	warm("hide","");
-	btnLoading($(this),"发表中<img src='"+global.realPath+"/images/load.gif' width='14'>");
+	btnLoading(subBtn,"发表中<img src='"+global.realPath+"/images/load.gif' width='14'>");
 	$.ajax({
 		async : true,
 		cache : false,
@@ -47,14 +48,18 @@ function addBlog(){
 		data : $("#blogform").serialize(),
 		url : global.realPath+"/manage/saveblog.action",// 请求的action路径
 		success : function(data) {
-			btnLoaded($("#saveBtn"),"发表博文");
+			btnLoaded(subBtn,"发表博文");
 			if(data.result=="fail"){
 				warm("show",data.message);
 			}else{
-				tipsInfo("5分已到碗里");
-				setTimeout(function(){
+				if($("#blogId")[0]==null){
+					tipsInfo("5分已到碗里");
+					setTimeout(function(){
+						document.location.href=global.realPath+"/user/"+global.userId+"/blog";
+					},2000);
+				}else{
 					document.location.href=global.realPath+"/user/"+global.userId+"/blog";
-				},2000);
+				}
 				
 			}
 		}

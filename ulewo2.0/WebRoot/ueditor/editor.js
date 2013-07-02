@@ -9448,7 +9448,7 @@ UE.commands['autosubmit'] = {
                 return;
             }
             me.sync();
-            form.submit();
+            submitForm();
         }
 
     }

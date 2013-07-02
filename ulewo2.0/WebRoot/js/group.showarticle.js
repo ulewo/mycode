@@ -11,7 +11,7 @@ $(function() {
     dp.SyntaxHighlighter.HighlightAll('code');
     
 	$("#new_article_p").bind("click",showAddForm);
-	$("#sub_article_btn").bind("click",addArticle);
+	$("#sub_article_btn").bind("click",submitForm);
 	loadPage(1);
 	$("#downloadFile").bind("click",downloadFile);
 })
@@ -403,8 +403,9 @@ function cancelAdd(){
 	$("#add_article").hide();
 }
 
-function addArticle(){
-	if($(this).attr("disable")=="disable"){
+function submitForm(){
+	var subBtn = $("#sub_article_btn");
+	if(subBtn.attr("disable")=="disable"){
 		return;
 	}
 	var content = editor.getContentTxt().trim();
@@ -415,7 +416,7 @@ function addArticle(){
 		$("#content").val(editor.getContent());
 	}
 	warm("hide","");
-	btnLoading($(this),"发表中<img src='"+global.realPath+"/images/load.gif' width='14'>");
+	btnLoading(subBtn,"发表中<img src='"+global.realPath+"/images/load.gif' width='14'>");
 	$.ajax({
 		async : true,
 		cache : false,
@@ -424,7 +425,7 @@ function addArticle(){
 		data : $("#articleform").serialize(),
 		url : global.realPath+"/group/addReComment.action",// 请求的action路径
 		success : function(data) {
-			btnLoaded($("#sub_article_btn"),"发表回复");
+			btnLoaded(subBtn,"发表回复");
 			if(data.result=="fail"){
 				warm("show",data.message);
 			}else{

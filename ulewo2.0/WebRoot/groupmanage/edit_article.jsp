@@ -88,7 +88,7 @@
 			    editor.setContent('${article.content}');
 			});
 			
-			$("#sub_article_btn").bind("click",addArticle);
+			$("#sub_article_btn").bind("click",submitForm);
 		})
 	</script>
 </body>
