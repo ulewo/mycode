@@ -31,6 +31,8 @@ public class Article {
 
 	private String authorName;
 
+	private String authorIcon;
+
 	private String postTime; // 发布时间
 
 	private Integer readNumber; // 阅读次数
@@ -324,23 +326,38 @@ public class Article {
 	}
 
 	public AttachedFile getFile() {
+
 		return file;
 	}
 
 	public void setFile(AttachedFile file) {
+
 		this.file = file;
 	}
 
 	public List<AttachedFile> getImages() {
+
 		return images;
 	}
 
 	public void setImages(List<AttachedFile> images) {
+
 		this.images = images;
 	}
 
 	public void setReNumber(Integer reNumber) {
+
 		this.reNumber = reNumber;
+	}
+
+	public String getAuthorIcon() {
+
+		return authorIcon;
+	}
+
+	public void setAuthorIcon(String authorIcon) {
+
+		this.authorIcon = authorIcon;
 	}
 
 }

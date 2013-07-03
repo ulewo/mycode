@@ -235,7 +235,7 @@
 	</select>
 	
 	<select id="getArticleInIds"  resultClass="article">
-		select * from article where id in  
+		select a.title,a.id,a.authorid,a.image,a.summary,a.gid,a.posttime,u.username authorName,u.userLittleIcon as authorIcon from article a inner join user u on a.authorid = u.userid where id in  
 		<iterate open="(" close=")" conjunction="," > 
               #[]# 
         </iterate> 

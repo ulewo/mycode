@@ -434,6 +434,10 @@ public class ArticleServiceImpl implements ArticleService {
 
 	public List<Article> getArticleInIds(String[] ids) {
 
-		return articleDao.getArticleInIds(ids);
+		List<Article> list = articleDao.getArticleInIds(ids);
+		for (Article article : list) {
+			article.setPostTime(StringUtils.friendly_time(article.getPostTime()));
+		}
+		return list;
 	}
 }
