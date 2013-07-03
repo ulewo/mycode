@@ -11,9 +11,12 @@
 <meta name="description" content="${article.title}">
 <meta name="keywords" content="${article.title}">
 <link rel="stylesheet" type="text/css" href="${realPath}/css/group.detail.css">
+<script type="text/javascript" src="${realPath}/ueditor2/ueditor.config.js"></script>
+<script type="text/javascript" src="${realPath}/ueditor2/ueditor.all.js"></script>
+<script type="text/javascript" src="${realPath}/ueditor2/ueditor.parse.js"></script>
 <script type="text/javascript">
 <!--
-	window.UEDITOR_HOME_URL = "${realPath}/ueditor/";
+	window.UEDITOR_HOME_URL = "${realPath}/ueditor2/";
 //-->
 global.articleId= "${article.id}";
 </script>
