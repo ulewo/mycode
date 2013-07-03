@@ -1,6 +1,6 @@
 var editor;
 $(function() {
-	$(".article_detail pre").each(function () {
+/*	$(".article_detail pre").each(function () {
         var $this = $(this);
         if ($this.attr("class")!=null&&$this.attr("class").indexOf("brush:") != -1) {
             var lang = $this.attr("class").split(';')[0].split(':')[1];
@@ -9,7 +9,9 @@ $(function() {
         }
     });
     dp.SyntaxHighlighter.HighlightAll('code');
-    
+    */
+	var s = {"highlightJsUrl":window.UEDITOR_HOME_URL+"third-party/SyntaxHighlighter/shCore.js","highlightCssUrl":window.UEDITOR_HOME_URL+"third-party/SyntaxHighlighter/shCoreDefault.css"}
+	uParse("div .article_detail",s);
 	$("#new_article_p").bind("click",showAddForm);
 	$("#sub_article_btn").bind("click",submitForm);
 	loadPage(1);
