@@ -86,4 +86,4 @@ a.prePage,a.nextPage{width:60px;}
 
 .hilight{color:red}
 
-#remote_load{position:absolute;width:100%;height:900px;z-index:99999;background:red;top:0px;left:0px;}
+#remote_load{position:fixed;width:100%;height:900px;z-index:99999;background:red;top:0px;left:0px;opacity: 0.3;filter: alpha(opacity = 30);background-color: #ccc;z-index: 1999;}
