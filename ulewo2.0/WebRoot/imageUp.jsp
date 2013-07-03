@@ -1,9 +1,9 @@
     <%@ page language="java" contentType="text/html; charset=utf-8"
         pageEncoding="utf-8"%>
    <%@ page import="com.ulewo.util.Uploader" %>
-<%
-String realPath = "http://" + request.getServerName() +  request.getContextPath(); 
-%>
+	<%
+	String realPath = "http://" + request.getServerName() +  request.getContextPath(); 
+	%>
     <%
     request.setCharacterEncoding("utf-8");
 	response.setCharacterEncoding("utf-8");
