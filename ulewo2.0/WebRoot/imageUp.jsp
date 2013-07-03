@@ -2,7 +2,7 @@
         pageEncoding="utf-8"%>
    <%@ page import="com.ulewo.util.Uploader" %>
 	<%
-	String realPath = "http://" + request.getServerName() +  request.getContextPath(); 
+	String realPath = "http://" + request.getServerName()+ ":" + request.getServerPort() +  request.getContextPath(); 
 	%>
     <%
     request.setCharacterEncoding("utf-8");
