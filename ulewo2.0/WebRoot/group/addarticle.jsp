@@ -58,7 +58,6 @@
 <input type="hidden" name="attached_file" id="attached_file" />
 <input type="hidden" name="gid"  value="${gid}"/>
 <input type="hidden" id="content" name="content">
-<input type="hidden" id="faceImg" name="image">
 <div class="file_upload" id="file_upload">
 	<div class="file_upload_frame"><iframe src="${realPath}/group/fileupload.jsp" width="350" height="30" frameborder="0" id="uploadFrame"></iframe></div>
 	<div class="file_upload_mark">下载附件所需积分:<input type="text" name="mark" id="mark" value="0"></div>

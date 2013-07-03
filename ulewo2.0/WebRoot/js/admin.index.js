@@ -46,7 +46,7 @@ function loadArticle(page,keyWord) {
 function ArticleItem(data){
 	this.item = $("<div class='article_item'></div>");
 	var item_checkbox = $("<div class='item_checkbox'></div>").appendTo(this.item);
-	$("<input type='checkBox' value='"+data.id+"'>").bind("click",{id:data.id},this.addArticle).appendTo(item_checkbox);
+	$("<input type='checkBox' id='"+data.id+"_input' value='"+data.id+"'>").bind("click",{id:data.id,title:data.title},this.addArticle).appendTo(item_checkbox);
 	var title = $("<div class='item_title'>" +
 			"<a href='"+global.realPath+"/group/"+data.gid+"/topic/"+data.id+"' target='_blank'>"+data.title+"</a>" +
 			"</div>").appendTo(this.item);
@@ -61,6 +61,23 @@ function ArticleItem(data){
 ArticleItem.prototype = {
 		addArticle : function(event) {
 		var id = event.data.id;
-		$("<input type='text' name='ids' value="+id+" class='tagInput'>").appendTo("#myform");
+		var title = event.data.title;
+		if($(this).attr("checked")&&$("#"+id+"_tag")[0]==null){
+			new TitleTag(id,title).tag.appendTo("#myform");
+		}else if(!$(this).attr("checked")&&$("#"+id+"_tag")[0]!=null){
+			$("#"+id+"_tag").remove();
+		}
+		
 	}
+};
+
+function TitleTag(id,title){
+	title = title.substring(0,5);
+	this.tag = $("<span class='titletag' id='"+id+"_tag'></span>");
+	$("<input type='hidden' name='ids' value="+id+">").appendTo(this.tag);
+	$("<span class=tag_title>"+title+"</span>").appendTo(this.tag);
+	$("<span class='del_tag'></span>").appendTo(this.tag).bind("click",function(){
+		$(this).parent().remove();
+		$("#"+id+"_input").attr("checked",false);
+	});
 }

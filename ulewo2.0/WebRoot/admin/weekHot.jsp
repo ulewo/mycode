@@ -8,16 +8,35 @@
 <%@ include file="../common/path.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>管理文章-有乐窝</title>
-<link rel="stylesheet" type="text/css" href="${realPath}/css/admin.index.css">
-<style type="text/css">
-#selected1 a{background:#ffffff;color:#333333;font-weight:bold;}
+<link rel="stylesheet" type="text/css" href="${realPath}/css/blog.css">
+<style>
+.goto_ulewo{margin-top:20px;}
+.goto_ulewo a{color:#999999;text-decoration:none;text-align:left;font-size:16px;}
+.weekhot{text-align:center;font-size:16px;font-weight:bold;}
+.article_attachedimg{display:inline-block;border:1px solid #B2B3B2;padding:2px;margin-top:10px;max-height:200px;overflow:hidden;}
 </style>
 </head>
 <body>
 	<%@ include file="../common/head.jsp" %>
 	<div class="main">
+		<div class="goto_ulewo"><a href="">去有乐窝</a></div>
+		<div class="weekhot">有乐窝一周精选</div>
 		<c:forEach var="article" items="${list}">
-			<div>${article.title}</div>
+			<div class="blogitem">
+				<div class="user_icon"><a href="${realPath}/user/${article.authorId}"><img src="${realPath}/upload/${article.authorIcon}"></a></div>
+				<div class="blog_con">
+					<div class="blog_title"><a href="${realPath}/group/${article.gid}/topic/${article.id}">${article.title}</a></div>
+					<div class="blog_summary">${article.summary}</div>
+					<c:if test="${article.image!=null&&article.image!=''}">
+						<div class="article_attachedimg"><a href="${realPath}/group/${gid}/topic/${article.id}"><img src="${article.image}" style="max-width:150px;"/></a></div>
+					</c:if>
+					<div class="user_time">
+						<span>${article.authorName}</span>
+						<span>${article.postTime}</span>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
 		</c:forEach>
 	</div>
 	<%@ include file="../common/foot_manage.jsp" %>

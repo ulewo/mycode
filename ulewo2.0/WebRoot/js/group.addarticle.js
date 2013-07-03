@@ -159,8 +159,11 @@ function ArticleItem(article){
 }
 /*******图片上传回调函数*******/
 function initImg(imageUrls){
-	if(imageUrls.length>0){
-		$("#faceImg").val(imageUrls[0].url);
+	if(imageUrls!=null){
+		for(var i=0;i<imageUrls.length;i++){
+			$("<input type='hidden' name='image' value="+imageUrls[0]+">").appendTo($("#articleform"));
+		}
 	}
+	
 }
 
