@@ -10,6 +10,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ulewo.dao.ArticleDao;
 import com.ulewo.dao.NoticeDao;
 import com.ulewo.dao.ReArticleDao;
 import com.ulewo.dao.UserDao;
@@ -39,6 +40,9 @@ public class ReArticleServiceImpl implements ReArticleService {
 	private ReArticleDao reArticleDao;
 
 	@Autowired
+	private ArticleDao articleDao;
+
+	@Autowired
 	private UserDao userDao;
 
 	@Autowired
@@ -64,7 +68,8 @@ public class ReArticleServiceImpl implements ReArticleService {
 	@Override
 	public ReArticle addReArticle(ReArticle reArticle) {
 
-		reArticle.setReTime(format.format(new Date()));
+		String reTime = format.format(new Date());
+		reArticle.setReTime(reTime);
 		String content = reArticle.getContent();
 		List<String> referers = new ArrayList<String>();
 		String formatContent = FormatAt.getInstance().GenerateRefererLinks(userDao, content, referers);
@@ -74,6 +79,9 @@ public class ReArticleServiceImpl implements ReArticleService {
 			reArticle.setSourceFrom("P");
 		}
 		int id = reArticleDao.addReArticle(reArticle);
+
+		//更新最后回复时间
+		articleDao.updateLastReTime(reArticle.getArticleId(), reTime);
 
 		if (!"".equals(reArticle.getAuthorid()) && reArticle.getAuthorid() != null) {
 			User user = userDao.findUser(reArticle.getAuthorid(), QueryUserType.USERID);

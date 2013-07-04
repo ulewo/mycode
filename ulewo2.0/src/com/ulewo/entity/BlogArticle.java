@@ -14,7 +14,7 @@ public class BlogArticle {
 	private String userId;
 
 	private String userIcon;
-	
+
 	private String userName;
 
 	private Integer itemId;
@@ -34,6 +34,10 @@ public class BlogArticle {
 	private String keyWord;
 
 	private String itemName;
+
+	private String image;
+
+	private String allImage;
 
 	private int allowReplay; //0 所有人可评论   2 禁止评论 
 
@@ -158,19 +162,43 @@ public class BlogArticle {
 	}
 
 	public String getItemName() {
+
 		return itemName;
 	}
 
 	public void setItemName(String itemName) {
+
 		this.itemName = itemName;
 	}
 
 	public String getUserIcon() {
+
 		return userIcon;
 	}
 
 	public void setUserIcon(String userIcon) {
+
 		this.userIcon = userIcon;
+	}
+
+	public String getImage() {
+
+		return image;
+	}
+
+	public void setImage(String image) {
+
+		this.image = image;
+	}
+
+	public String getAllImage() {
+
+		return allImage;
+	}
+
+	public void setAllImage(String allImage) {
+
+		this.allImage = allImage;
 	}
 
 }

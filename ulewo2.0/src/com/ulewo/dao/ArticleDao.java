@@ -66,6 +66,14 @@ public class ArticleDao extends BaseDao {
 		this.getSqlMapClientTemplate().update("article.updateArticle_selective", article);
 	}
 
+	public void updateLastReTime(int id, String lastReTime) {
+
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("id", id);
+		parmMap.put("lastReTime", lastReTime);
+		this.getSqlMapClientTemplate().update("article.updateLastReTime", parmMap);
+	}
+
 	public void deleteArticle(int id) {
 
 		getSqlMapClientTemplate().delete("article.deleteArticle", id);

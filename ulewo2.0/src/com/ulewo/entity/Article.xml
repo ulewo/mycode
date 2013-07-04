@@ -10,8 +10,8 @@
 	
 	<!-- 添加文章-->
 	<insert id="addArticle" parameterClass="article">
-		insert into article (gid,type,itemid,title,content,summary,keyword,authorid,posttime,image)
-		values(#gid#,#type#,#itemId#,#title#,#content#,#summary#,#keyWord#,#authorId#,#postTime#,#image#)
+		insert into article (gid,type,itemid,title,content,summary,keyword,authorid,posttime,lastretime,image,allimage)
+		values(#gid#,#type#,#itemId#,#title#,#content#,#summary#,#keyWord#,#authorId#,#postTime#,#postTime#,#image#,#allImage#)
 		<selectKey resultClass="int" keyProperty="id">  
    	 		select max(id) from article  
   	 	</selectKey>  
@@ -70,10 +70,15 @@
         <isNotEmpty prepend="," property="subCode">
 			subcode=#subCode#
         </isNotEmpty>
-         <isNotEmpty prepend="," property="image">
+        <isNotEmpty prepend="," property="image">
 			image=#image#
         </isNotEmpty>
 		where id=#id#
+	</update>
+	
+	<!-- 更新最后回复时间 -->
+	<update id="updateLastReTime" parameterClass="java.util.Map">
+		update article set lastretime=#lastReTime# where id=#id#
 	</update>
 	
 	<delete id="deleteArticle" parameterClass="java.lang.Integer">
@@ -99,12 +104,8 @@
 	
 	<!-- 通过群编号查询主题文章  等级和最后回复时间倒叙排列 多笔查询 -->
 	<select id="queryTopicOrderByGradeAndLastReTime"  resultClass="article" parameterClass="java.util.Map">
-		select a.id,a.gid,a.title,a.summary,a.titlestyle,a.itemid,i.itemname,a.authorid,u.username as authorname,a.posttime,a.readnumber,a.image,
-		(select count(r.id) from rearticle r where r.articleid = a.id) as renumber,a.grade,a.essence,
-		(case when (select count(r.id)  from rearticle r where r.articleid = a.id) > 0
-		then (select r.retime from rearticle r where r.articleid = a.id order by retime desc limit 0,1)
-		else a.posttime end
-		) as lastretime from  article a 
+		select a.id,a.gid,a.title,a.summary,a.titlestyle,a.itemid,i.itemname,a.authorid,u.username as authorname,a.posttime,a.readnumber,a.image,a.allimage,
+		(select count(r.id) from rearticle r where r.articleid = a.id) as renumber,a.grade,a.essence from  article a 
 		inner join user u on a.authorid = u.userid
 		left join articleitem i on a.itemid = i.id
 		<dynamic prepend="where">

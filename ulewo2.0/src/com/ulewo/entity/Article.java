@@ -51,6 +51,8 @@ public class Article {
 
 	private String image; // 图片 推荐的文章需要图片
 
+	private String allImage;//保存所有的图片，图片之间用|隔开
+
 	// 需要关联查询的信息
 	private String groupName; // 群组名称 （文章所述群）
 
@@ -358,6 +360,16 @@ public class Article {
 	public void setAuthorIcon(String authorIcon) {
 
 		this.authorIcon = authorIcon;
+	}
+
+	public String getAllImage() {
+
+		return allImage;
+	}
+
+	public void setAllImage(String allImage) {
+
+		this.allImage = allImage;
 	}
 
 }

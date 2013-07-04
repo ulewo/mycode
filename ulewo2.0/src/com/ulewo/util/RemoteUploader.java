@@ -116,7 +116,8 @@ public class RemoteUploader {
 				e.printStackTrace();
 			}
 		}
-		String realPath = "http://" + request.getServerName() + request.getContextPath();
+		String port = request.getServerPort() == 80 ? "" : ":" + request.getServerPort();
+		String realPath = "http://" + request.getServerName() + port + request.getContextPath();
 		for (int i = 0; i < outSrc.length; i++) {
 			originalName += realPath + "/" + outSrc[i] + "ue_separate_ue";
 		}

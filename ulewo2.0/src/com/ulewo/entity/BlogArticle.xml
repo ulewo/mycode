@@ -14,8 +14,8 @@
       		SELECT LAST_INSERT_ID()
     	 </selectKey>
         <![CDATA[
-        insert into blog_article (userid,itemid,title,summary,content,posttime,keyword,allowreplay)
-		values(#userId#,#itemId#,#title#,#summary#,#content#,#postTime#,#keyWord#,#allowReplay#)
+        insert into blog_article (userid,itemid,title,summary,content,posttime,keyword,allowreplay,image,allimage)
+		values(#userId#,#itemId#,#title#,#summary#,#content#,#postTime#,#keyWord#,#allowReplay#,#image#,#allImage#)
         ]]>
 	</insert>
 	
