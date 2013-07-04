@@ -16,7 +16,7 @@
 		window.UEDITOR_HOME_URL = "${realPath}/ueditor/";
 	//-->
 </script>
-<script type="text/javascript" src="${realPath}/ueditor/editor_config_blog.js"></script>
+<script type="text/javascript" src="${realPath}/ueditor/editor_config.js"></script>
 <script type="text/javascript" src="${realPath}/ueditor/editor.js"></script>
 <script type="text/javascript" src="${realPath}/js/user.manage.newblog.js"></script>
 </head>
@@ -84,6 +84,8 @@
 	<%@ include file="../common/foot_manage.jsp" %>
 	<script type="text/javascript">
 		var editor;
+		//window.UEDITOR_CONFIG.initialFrameWidth = parseInt(width-20);
+	    window.UEDITOR_CONFIG.maxImageSideLength = 720;//图片最大宽度
 		editor = new UE.ui.Editor();
 		editor.render("editor");
 		editor.ready(function(){

@@ -1,5 +1,5 @@
 $(function(){
-	$(".blog_content pre").each(function () {
+/*	$(".blog_content pre").each(function () {
         var $this = $(this);
         if ($this.attr("class")!=null&&$this.attr("class").indexOf("brush:") != -1) {
             var lang = $this.attr("class").split(';')[0].split(':')[1];
@@ -7,7 +7,9 @@ $(function(){
             $this.attr('class', lang);
         }
     });
-    dp.SyntaxHighlighter.HighlightAll('code');
+    dp.SyntaxHighlighter.HighlightAll('code');*/
+    var s = {"highlightJsUrl":window.UEDITOR_HOME_URL+"third-party/SyntaxHighlighter/shCore.js","highlightCssUrl":window.UEDITOR_HOME_URL+"third-party/SyntaxHighlighter/shCoreDefault.css"}
+	uParse("div .blog_content",s);
 	initReply(1);
 	$("#sendBtn").bind("click",subReply);
 });

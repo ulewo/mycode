@@ -48,13 +48,13 @@ function submitForm(){
 		data : $("#blogform").serialize(),
 		url : global.realPath+"/manage/saveblog.action",// 请求的action路径
 		success : function(data) {
-			btnLoaded(subBtn,"发表博文");
 			if(data.result=="fail"){
 				warm("show",data.message);
 			}else{
 				if($("#blogId")[0]==null){
 					tipsInfo("5分已到碗里");
 					setTimeout(function(){
+						btnLoaded(subBtn,"发表博文");
 						document.location.href=global.realPath+"/user/"+global.userId+"/blog";
 					},2000);
 				}else{
@@ -67,4 +67,9 @@ function submitForm(){
 }
 /********编辑器图片上传回调函数**********/
 function initImg(imageUrls){
+	if(imageUrls!=null){
+		for(var i=0;i<imageUrls.length;i++){
+			$("<input type='hidden' name='image' value="+imageUrls[i]+">").appendTo($("#blogform"));
+		}
+	}
 }

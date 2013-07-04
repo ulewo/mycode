@@ -18,6 +18,7 @@ function showAddForm(){
 	if(editor==null){
 		var width = $("#add_article").outerWidth(true);
 		window.UEDITOR_CONFIG.initialFrameWidth = parseInt(width-20);
+		window.UEDITOR_CONFIG.maxImageSideLength = 900;//图片最大宽度
 		editor = new UE.ui.Editor();
 		editor.render("editor");
 	}
@@ -150,9 +151,15 @@ function ArticleItem(article){
 	$("<div class='clear'></div>").appendTo(article_tit);
 	
 	$("<div class='article_summary'>"+article.summary+"</div>").appendTo(this.article_item);
-	
-	if(article.image!=""){
-		$("<div class='article_attachedimg'><a href='"+global.realPath+"/group/"+article.gid+"/topic/"+article.id+"'><img src='"+article.image+"' style='max-width:150px;'/></a></div>").appendTo(this.article_item);
+	if(article.allImage!=""&&article.allImage!=null){
+		var images = article.allImage.split("|");
+		for(var i=0,length=images.length;i<length;i++){
+			if(i>2){
+				break;
+			}
+			$("<div class='article_attachedimg'><a href='"+global.realPath+"/group/"+article.gid+"/topic/"+article.id+"'><img src='"+images[i]+"' style='max-width:150px;'/></a></div>").appendTo(this.article_item);
+		}
+		
 	}
 	
 	
@@ -161,7 +168,7 @@ function ArticleItem(article){
 function initImg(imageUrls){
 	if(imageUrls!=null){
 		for(var i=0;i<imageUrls.length;i++){
-			$("<input type='hidden' name='image' value="+imageUrls[0]+">").appendTo($("#articleform"));
+			$("<input type='hidden' name='image' value="+imageUrls[i]+">").appendTo($("#articleform"));
 		}
 	}
 	

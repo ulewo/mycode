@@ -13,11 +13,11 @@
 <link rel="stylesheet" type="text/css" href="${realPath}/css/group.index.css">
 <script type="text/javascript">
 <!--
-	window.UEDITOR_HOME_URL = "${realPath}/ueditor2/";
+	window.UEDITOR_HOME_URL = "${realPath}/ueditor/";
 //-->
 </script>
-<script type="text/javascript" src="${realPath}/ueditor2/ueditor.config.js"></script>
-<script type="text/javascript" src="${realPath}/ueditor2/ueditor.all.js"></script>
+<script type="text/javascript" src="${realPath}/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="${realPath}/ueditor/ueditor.all.js"></script>
 </head>
 <body>
 	<%@ include file="../common/head.jsp" %>
@@ -36,11 +36,13 @@
 	editor.ready(function(){
         editor.setContent("");
 	});
-	
+	$(function(){
+		//showLoading("加载中");
+	})
 	function initImg(imageUrls){
 		if(imageUrls!=null){
 			for(var i=0;i<imageUrls.length;i++){
-				alert(imageUrls[0]);
+				//alert(imageUrls[0]);
 			}
 		}
 	}

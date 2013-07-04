@@ -51,7 +51,7 @@
 					<a href="${realPath}/restpwd" class="foregetpsw">忘记密码？</a>
 					<span class="result_info"><i id="warm_icon"></i><span id="warm_info"></span></span>
 				</div>
-				<a href="https://api.weibo.com/oauth2/authorize?client_id=3552164515&redirect_uri=http://ulewo.com/open_weibo" target="_blank">微博登录</a>
+				<!-- <a href="https://api.weibo.com/oauth2/authorize?client_id=3552164515&redirect_uri=http://ulewo.com/open_weibo" target="_blank">微博登录</a> -->
 			</div>
 		</div>
 		<div class="right">

@@ -9,9 +9,14 @@
 <title>${blog.title}-有乐窝</title>
 <meta name="description" content="${blog.title} -有乐窝">
 <meta name="keywords" content="${blog.title} -有乐窝">
+<script type="text/javascript">
+<!--
+window.UEDITOR_HOME_URL = "${realPath}/ueditor/";
+//-->
+</script>
+
+<script type="text/javascript" src="${realPath}/ueditor/editor.parse.js"></script>
 <link rel="stylesheet" type="text/css" href="${realPath}/css/user.blog.css">
-<script type="text/javascript" src="${realPath}/js/scripts/shCore.js"></script>
-<link type="text/css" rel="stylesheet" href="${realPath}/js/styles/SyntaxHighlighter.css"/>
 </head>
 <body>
 	<%@ include file="../common/head.jsp" %>

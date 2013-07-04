@@ -13,7 +13,7 @@
 			<div id="footright">&copy;2011-2013&nbsp;&nbsp;ulewo.com 有乐窝&nbsp;&nbsp;All rights reserved. <br><br>
 						<span style="color:#737573">黑ICP备10007364号-1</span></div>
 			<div id="gototop"><a href="javascript:void(0)" onclick="window.scrollTo(0,0);" onfocus="this.blur()" title="回到顶部"><img border="0" src="${realPath}/images/totop.png"></a></div>
-			<!-- 
+		 
 				<script type="text/javascript" id="bdshare_js" data="type=slide&amp;img=0&amp;pos=right&amp;uid=0" ></script>
 				<script type="text/javascript" id="bdshell_js"></script>
 				<script type="text/javascript">
@@ -26,7 +26,7 @@
 					document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F1535c97f8b589c71b7a6497eda7dac5f' type='text/javascript'%3E%3C/script%3E"));
 				</script>
 			</div>
-			  -->
+			
 	</div>
 </div>
 <script>

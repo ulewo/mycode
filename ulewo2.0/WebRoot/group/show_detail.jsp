@@ -10,21 +10,18 @@
 <title>${article.title}-有乐窝</title>
 <meta name="description" content="${article.title}">
 <meta name="keywords" content="${article.title}">
-<link rel="stylesheet" type="text/css" href="${realPath}/css/group.detail.css">
-<script type="text/javascript" src="${realPath}/ueditor2/ueditor.config.js"></script>
-<script type="text/javascript" src="${realPath}/ueditor2/ueditor.all.js"></script>
-<script type="text/javascript" src="${realPath}/ueditor2/ueditor.parse.js"></script>
+
 <script type="text/javascript">
 <!--
-	window.UEDITOR_HOME_URL = "${realPath}/ueditor2/";
+	window.UEDITOR_HOME_URL = "${realPath}/ueditor/";
 //-->
 global.articleId= "${article.id}";
 </script>
 <script type="text/javascript" src="${realPath}/ueditor/editor_config.js"></script>
 <script type="text/javascript" src="${realPath}/ueditor/editor.js"></script>
+<script type="text/javascript" src="${realPath}/ueditor/editor.parse.js"></script>
 <script type="text/javascript" src="${realPath}/js/group.showarticle.js"></script>
-<script type="text/javascript" src="${realPath}/js/scripts/shCore.js"></script>
-<link type="text/css" rel="stylesheet" href="${realPath}/js/styles/SyntaxHighlighter.css"/>
+<link rel="stylesheet" type="text/css" href="${realPath}/css/group.detail.css">
 </head>
 <body>
 	<%@ include file="../common/head.jsp" %>

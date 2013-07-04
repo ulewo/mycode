@@ -36,15 +36,31 @@ function tipsInfo(msg){
 		tips.animate({top:150},1000).fadeOut(1000);
 	},1);
 }
-
-function showRemoteLoad(){
-	var height =  $(window).height();
-	var remote_shade = $("<div id='remote_load'></div>").appendTo($("body"));
-	remote_shade.css({"height":height});
+/**********遮罩加载中************/
+function showLoading(msg){
+	var body_height =  $(window).height();
+	var body_width = $(window).width();
+	var remote_shade = "";
+	var loading_con = "";
+	if($("#remote_load")[0]==null){
+		remote_shade = $("<div id='remote_load'></div>").appendTo($("body"));
+		loading_con = $("<div class='loading_con' id='loading_con'></div>").appendTo($("body"));
+	}else{
+		remote_shade = $("#remote_load");
+		loading_con = $("#loading_con");
+	}
+	
+	var loading_info = $("<div class='loading_info'></div>").appendTo(loading_con);
+	$("<span class='loading_msg'>"+msg+"</span>").appendTo(loading_info);
+	$("<span class='loading_icon'><img src='"+global.realPath+"/images/load.gif'></span>").appendTo(loading_info);
+	remote_shade.css({"height":body_height});
+	var tipswidth = loading_con.width();
+	loading_con.css({"left":(body_width-tipswidth)/2,"top":(body_height-30)/2});
 }
 
-function removeRemoteLoad(){
-	$("#remote_load").remove();
+function removeLoad(){
+	$("#remote_load").hide();
+	$("#loading_con").hide();
 }
 
 function info(msg,autohide){
