@@ -39,7 +39,7 @@
 	  				<c:forEach var="article" items="${list}">
 	  					<li>
 	  						<span class="article_tit">
-	  						<a href="${realPath}/group/${article.gid}?itemId=${article.itemId}" target="_blank" title="${article.title}">[${article.groupName}]</a>
+	  						<a href="${realPath}/group/${article.gid}" target="_blank" title="${article.title}">[${article.groupName}]</a>
 	  						<a href="${realPath}/group/${article.gid}/topic/${article.id}" class="sec_span2"  title="${article.title}" target="_blank">${article.title}</a></span>
 	  						<span class="article_user">${article.postTime} by ${article.authorName}</span>
 	  					</li>
