@@ -198,7 +198,7 @@
 	<select id="queryLatestArticle" resultClass="article" parameterClass="java.util.Map">
 		select id,title,posttime,gid,itemId,readnumber,	(select count(r.id) from rearticle r where r.articleid = a.id) reNumber,(select groupname from groups g where g.id = a.gid) groupname,
 		(select username from user u where u.userid=a.authorid) authorName
-		from article a where image="" order by posttime desc limit  #offset#,#total#
+		from article a where image="" or image is null order by posttime desc limit  #offset#,#total#
 	</select>
 	
 	<select id="queryHotArticle" resultClass="article" parameterClass="java.util.Map">
@@ -240,6 +240,7 @@
 		<iterate open="(" close=")" conjunction="," > 
               #[]# 
         </iterate> 
+        order by posttime desc
 	</select>
 	
 </sqlMap>
