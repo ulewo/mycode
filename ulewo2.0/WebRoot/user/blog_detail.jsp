@@ -15,7 +15,8 @@ window.UEDITOR_HOME_URL = "${realPath}/ueditor/";
 //-->
 </script>
 
-<script type="text/javascript" src="${realPath}/ueditor/editor.parse.js"></script>
+<script type="text/javascript" src="${realPath}/js/scripts/shCore.js"></script>
+<link type="text/css" rel="stylesheet" href="${realPath}/js/styles/SyntaxHighlighter.css"/>
 <link rel="stylesheet" type="text/css" href="${realPath}/css/user.blog.css">
 </head>
 <body>

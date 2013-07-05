@@ -49,7 +49,9 @@ function showLoading(msg){
 		remote_shade = $("#remote_load");
 		loading_con = $("#loading_con");
 	}
-	
+	remote_shade.show();
+	loading_con.show();
+	loading_con.empty();
 	var loading_info = $("<div class='loading_info'></div>").appendTo(loading_con);
 	$("<span class='loading_msg'>"+msg+"</span>").appendTo(loading_info);
 	$("<span class='loading_icon'><img src='"+global.realPath+"/images/load.gif'></span>").appendTo(loading_info);

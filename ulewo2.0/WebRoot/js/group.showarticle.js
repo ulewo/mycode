@@ -1,7 +1,7 @@
 var editor;
-var s = {"highlightJsUrl":window.UEDITOR_HOME_URL+"third-party/SyntaxHighlighter/shCore.js","highlightCssUrl":window.UEDITOR_HOME_URL+"third-party/SyntaxHighlighter/shCoreDefault.css"}
+//var s = {"highlightJsUrl":window.UEDITOR_HOME_URL+"third-party/SyntaxHighlighter/shCore.js","highlightCssUrl":window.UEDITOR_HOME_URL+"third-party/SyntaxHighlighter/shCoreDefault.css"}
 $(function() {
-/*	$(".article_detail pre").each(function () {
+	$(".article_detail pre").each(function () {
         var $this = $(this);
         if ($this.attr("class")!=null&&$this.attr("class").indexOf("brush:") != -1) {
             var lang = $this.attr("class").split(';')[0].split(':')[1];
@@ -10,8 +10,8 @@ $(function() {
         }
     });
     dp.SyntaxHighlighter.HighlightAll('code');
-    */
-	uParse("div .article_detail",s);
+    
+	//uParse("div .article_detail",s);
 	$("#new_article_p").bind("click",showAddForm);
 	$("#sub_article_btn").bind("click",submitForm);
 	loadPage(1);
@@ -89,7 +89,7 @@ function loadReComment(articleId,page) {
 				}else{
 					$("#pager").hide();
 				}
-			/*	$(".outerHeight pre").each(function () {
+				$(".outerHeight pre").each(function () {
 			        var $this = $(this);
 			        if ($this.attr("class")!=null&&$this.attr("class").indexOf("brush:") != -1) {
 			            var lang = $this.attr("class").split(';')[0].split(':')[1];
@@ -97,8 +97,8 @@ function loadReComment(articleId,page) {
 			            $this.attr('class', lang);
 			        }
 			    });
-			    dp.SyntaxHighlighter.HighlightAll('code');*/
-				uParse("div .outerHeight",s);
+			    dp.SyntaxHighlighter.HighlightAll('code');
+				//uParse("div .outerHeight",s);
 			}else{
 				$("<div class='noinfo'>没有回复,赶紧抢沙发吧！</div>").appendTo($("#recomment"));
 			}
