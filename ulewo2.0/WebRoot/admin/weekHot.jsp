@@ -23,7 +23,6 @@
 		<div class="weekhot">有乐窝一周精选</div>
 		<c:forEach var="article" items="${list}">
 			<div class="blogitem">
-				<div class="user_icon"><a href="${realPath}/user/${article.authorId}"><img src="${realPath}/upload/${article.authorIcon}"></a></div>
 				<div class="blog_con">
 					<div class="blog_title"><a href="${realPath}/group/${article.gid}/topic/${article.id}">${article.title}</a></div>
 					<div class="blog_summary">${article.summary}</div>
