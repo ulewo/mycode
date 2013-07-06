@@ -3,9 +3,49 @@ function btnLoading(obj,html){
 	$(obj).attr("disable","disable");
 }
 
+function lazyLoadImage(imageBody){
+	$("."+imageBody+" img").each(function(){
+		loadImag($(this));
+	});
+	
+}
+
+function loadImag(myImage){
+    var img = new Image();  
+    img.src = myImage.attr("src");
+    myImage.attr("src",global.realPath+"/images/imgloading.gif");
+    var browser = getBrowserType();  
+    if (browser == "IE") { 
+    	if(img.readyState == "complete"){
+    		myImage.attr("src",img.src);  
+    		return;
+    	}
+        img.onreadystatechange = function() {  
+            if (img.readyState == "complete") {  
+                myImage.attr("src",img.src);  
+            }  
+        }
+    } else if (browser == "others") {  
+    	if(img.complete){
+    		myImage.attr("src",img.src);  
+    		return;
+    	}
+        img.onload = function() {  
+            if (img.complete) {  
+            	 myImage.attr("src",img.src);  
+            }  
+        }
+    }  
+}  
+
 function btnLoaded(obj,html){
 	$(obj).html(html);
 	$(obj).attr("disable","");
+}
+
+function getBrowserType() {  
+    var browser = navigator.userAgent.indexOf("MSIE") > 0 ? 'IE' : 'others';  
+    return browser;  
 }
 
 function warm(type,msg){

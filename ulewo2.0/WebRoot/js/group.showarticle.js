@@ -1,6 +1,7 @@
 var editor;
 //var s = {"highlightJsUrl":window.UEDITOR_HOME_URL+"third-party/SyntaxHighlighter/shCore.js","highlightCssUrl":window.UEDITOR_HOME_URL+"third-party/SyntaxHighlighter/shCoreDefault.css"}
 $(function() {
+	lazyLoadImage("article_detail");
 	$(".article_detail pre").each(function () {
         var $this = $(this);
         if ($this.attr("class")!=null&&$this.attr("class").indexOf("brush:") != -1) {
@@ -17,6 +18,9 @@ $(function() {
 	loadPage(1);
 	$("#downloadFile").bind("click",downloadFile);
 })
+
+//延迟加载图片
+
 
 //下载附件
 function downloadFile(){
@@ -93,11 +97,11 @@ function loadReComment(articleId,page) {
 			        var $this = $(this);
 			        if ($this.attr("class")!=null&&$this.attr("class").indexOf("brush:") != -1) {
 			            var lang = $this.attr("class").split(';')[0].split(':')[1];
-			            $this.attr('name', 'code');
+			            $this.attr('name', 'precode');
 			            $this.attr('class', lang);
 			        }
 			    });
-			    dp.SyntaxHighlighter.HighlightAll('code');
+			   dp.SyntaxHighlighter.HighlightAll('precode');
 				//uParse("div .outerHeight",s);
 			}else{
 				$("<div class='noinfo'>没有回复,赶紧抢沙发吧！</div>").appendTo($("#recomment"));

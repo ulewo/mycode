@@ -1,4 +1,5 @@
 $(function(){
+	lazyLoadImage("blog_content");
 	$(".blog_content pre").each(function () {
         var $this = $(this);
         if ($this.attr("class")!=null&&$this.attr("class").indexOf("brush:") != -1) {
@@ -103,7 +104,6 @@ function initReply(i) {
 		}
 	});
 }
-
 
 function NotePanle(note) {
 	var reUserIcon = note.reUserIcon || "default.gif";

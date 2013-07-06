@@ -159,7 +159,7 @@ function ArticleItem(article){
 			}
 			$("<div class='article_attachedimg'><a href='"+global.realPath+"/group/"+article.gid+"/topic/"+article.id+"'><img src='"+images[i]+"' style='max-width:150px;'/></a></div>").appendTo(this.article_item);
 		}
-		
+		$("<div class='clear'></div>").appendTo(this.article_item);
 	}
 	
 	

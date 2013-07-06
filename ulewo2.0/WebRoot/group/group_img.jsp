@@ -11,6 +11,11 @@
 <meta name="description" content="${group.groupName}">
 <meta name="keywords" content="${group.groupName}">
 <link rel="stylesheet" type="text/css" href="${realPath}/css/group.img.css">
+<script type="text/javascript">
+	$(function(){
+		lazyLoadImage("part");
+	})
+</script>
 </head>
 <body>
 	<%@ include file="../common/head.jsp" %>

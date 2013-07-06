@@ -1,4 +1,5 @@
 $(function(){
+	lazyLoadImage("article_item_list");
 	loadMember();
 });
 

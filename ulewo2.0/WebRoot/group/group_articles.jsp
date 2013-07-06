@@ -19,6 +19,11 @@
 <script type="text/javascript" src="${realPath}/ueditor/editor_config.js"></script>
 <script type="text/javascript" src="${realPath}/ueditor/editor.js"></script>
 <script type="text/javascript" src="${realPath}/js/group.addarticle.js"></script>
+<script type="text/javascript">
+	$(function(){
+		lazyLoadImage("article_item_list");
+	})
+</script>
 <style type="text/css">
 .new_article_input{width:900px;}
 </style>
@@ -59,7 +64,7 @@
 			<div class="add_article" id="add_article">
 				<%@ include file="addarticle.jsp" %>
 			</div>
-			<div id="article_item_list">
+			<div id="article_item_list" class="article_item_list">
 			<c:forEach var="article" items="${articles.list}">
 				<div class="article_item">
 					<div class="article_tit">
@@ -87,6 +92,7 @@
 							<c:forTokens items="${article.allImage}" delims="|" var="tech" begin="0" end="2">
 								<div class="article_attachedimg"><a href="${realPath}/group/${gid}/topic/${article.id}"><img src="${tech}" style="max-width:150px;"/></a></div>
 							</c:forTokens>
+							<div class="clear"></div>
 					</c:if>
 				</div>
 			</c:forEach>
