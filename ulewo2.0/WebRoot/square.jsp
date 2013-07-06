@@ -91,6 +91,9 @@
 			<p:pager url="" page="${page}" pageTotal = "${pageTotal }"></p:pager>
 		</div>
   	</div>
+  	<script type="text/javascript">
+  		lazyLoadImage("main");
+  	</script>
     <%@ include file="common/foot.jsp" %>
 </body>
 </html>
