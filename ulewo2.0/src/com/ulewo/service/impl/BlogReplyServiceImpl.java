@@ -65,6 +65,7 @@ public class BlogReplyServiceImpl implements BlogReplyService {
 
 		blogReply.setPostTime(formate.format(new Date()));
 		String content = blogReply.getContent();
+		content = StringUtils.formateHtml(content);
 		List<String> referers = new ArrayList<String>();
 		String formatContent = FormatAt.getInstance().GenerateRefererLinks(userDao, content, referers);
 		String subCon = formatContent;
