@@ -38,7 +38,7 @@
 -webkit-border-radius: 4px}
 .comment_form_at span{display:inline-block;float:right;cursor:pointer;padding-top:5px;}
 .comment_form_textarea textarea{width:500px;height:80px;border:1px solid #9B9B9B}
-.comment_form_panel{height:30px;margin-top:2px;}
+.comment_form_panel{margin-top:2px;position:relative;}
 .comment_checkcode,.comment_checkcode_img,.comment_checkcode_link{float:left;width:70px;}
 .comment_form_name input{color:#9B9B9B;margin-left:0px;}
 .comment_checkcode input{width:60px;}

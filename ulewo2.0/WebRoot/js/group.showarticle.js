@@ -19,8 +19,11 @@ $(function() {
 	$("#downloadFile").bind("click",downloadFile);
 })
 
-//延迟加载图片
-
+/** *************插入表情*************** */
+function showEmotion() {
+	$("#pm_emotion_cnt").show();
+}
+	
 
 //下载附件
 function downloadFile(){
@@ -183,6 +186,11 @@ RePanel.prototype = {
 	}
 }
 function SubRePanel(data) {
+	var content = data.content;
+	for ( var emo in emotion_data) {
+		content = content.replace(emo, "&nbsp;<img src='" + global.realPath
+				+ "/images/emotions/" + emotion_data[emo] + "'>&nbsp;");
+	}
 	this.comment_sub = $("<div class='comtent_sub'></div>");
 	$("<a name=re" + data.id + ">").appendTo(this.comment_sub);
 	this.ui_avatar = $(
@@ -198,7 +206,7 @@ function SubRePanel(data) {
 					+ data.authorName
 					+ "</a>&nbsp;回复&nbsp;<a href='"+global.realPath+"/user/"
 					+ data.atUserId + "'>" + data.atUserName
-					+ "</a>:<span class='comment_content_word'>" + data.content
+					+ "</a>:<span class='comment_content_word'>" + content
 					+ "</span>").appendTo(this.comments_content_sub);
 	this.comments_op_sub = $("<div class='comments_op_sub'></div>").appendTo(
 			this.comments_content_sub);
@@ -240,31 +248,23 @@ function Recoment_form_panel(data) {
 			.appendTo(comment_form_at).bind("click", function() {
 				$("#recoment_form_panel").remove();
 			});
-	this.textarea = $("<textarea></textarea>").appendTo(
+	this.textarea = $("<textarea id='talkcontent'></textarea>").appendTo(
 			$("<div class='comment_form_textarea'></div>").appendTo(
 					this.recoment_form_panel));
 	this.checkCode_area = $("<div class='comment_form_panel'></div>").appendTo(
 			this.recoment_form_panel);
-	/*
-	 * this.checkCode = $("<input type='text'>").appendTo( $("<div
-	 * class='comment_checkcode'></div>").appendTo( this.checkCode_area)); $( "<div
-	 * class='comment_checkcode_img'><a href='JavaScript:refreshcode();'
-	 * onfocus='this.blur();'><img id='checkCodeImage'
-	 * src='../common/image.jsp' border='0' height='22'></a></div>")
-	 * .appendTo(this.checkCode_area); $( "<div class='comment_checkcode_link'><a
-	 * href='javascript:refreshcode()'>换一张</a></div>")
-	 * .appendTo(this.checkCode_area);
-	 */
+	$('<div class="talkop"><a href="javascript:showEmotion();" class="icon_sw_face" title="表情"></a></div>').appendTo(this.checkCode_area);
 	var comment_checkcode_rebtn = $(
 			"<div class='comment_checkcode_rebtn'></div>").appendTo(
 			this.checkCode_area);
-
+	$("<div class='clear'></div>").appendTo(this.checkCode_area);
 	$("<a href='javascript:void(0)'>回复</a>").bind("click", {
 		data : data,
 		reCotent : this.textarea
 	}, this.subReComent).appendTo(comment_checkcode_rebtn);
 	$("<img src='"+global.realPath+"/images/load.gif' style='display:none'>").appendTo(
 			comment_checkcode_rebtn);
+	createEmotion().appendTo(this.checkCode_area);
 	if (global.userId == "") {
 		var shade = $("<div class='shade' id='shade'></div>").appendTo(
 				this.recoment_form_panel);
@@ -282,6 +282,107 @@ function Recoment_form_panel(data) {
 		});
 	}
 }
+
+
+function createEmotion(){
+	var pm_emotion="";
+	if($("#pm_emotion_cnt")[0]!=null){
+		pm_emotion = $("#pm_emotion_cnt");
+	}else{
+		pm_emotion = $('<div class="pm_emotion" id="pm_emotion_cnt">');
+		var pm_emotion_panel = $('<div class="pm_emotion_panel"></div>').appendTo(pm_emotion);
+		var pm_emotions_bd = $('<div class="pm_emotions_bd" style="width:300px;"></div>').appendTo(pm_emotion_panel);
+		$('<a href="javascript:void(0)" title="[围观]"><img src="'+global.realPath+'/images/emotions/wg_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[威武]"><img src="'+global.realPath+'/images/emotions/vw_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[给力]"><img src="'+global.realPath+'/images/emotions/geili_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[浮云]"><img src="'+global.realPath+'/images/emotions/fuyun_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[奥特曼]"><img src="'+global.realPath+'/images/emotions/otm_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[兔子]"><img src="'+global.realPath+'/images/emotions/rabbit_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[熊猫]"><img src="'+global.realPath+'/images/emotions/panda_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[飞机]"><img src="'+global.realPath+'/images/emotions/travel_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[冰棍]"><img src="'+global.realPath+'/images/emotions/ice.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[干杯]"><img src="'+global.realPath+'/images/emotions/cheer.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[orz]"><img src="'+global.realPath+'/images/emotions/orz1_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[囧]"><img src="'+global.realPath+'/images/emotions/j_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[风扇]"><img src="'+global.realPath+'/images/emotions/fan.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[呵呵]"><img src="'+global.realPath+'/images/emotions/smile.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[嘻嘻]"><img src="'+global.realPath+'/images/emotions/tooth.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[哈哈]"><img src="'+global.realPath+'/images/emotions/laugh.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[爱你]"><img src="'+global.realPath+'/images/emotions/love.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[晕]"><img src="'+global.realPath+'/images/emotions/dizzy.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[泪]"><img src="'+global.realPath+'/images/emotions/sad.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[馋嘴]"><img src="'+global.realPath+'/images/emotions/cz_thumb.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[抓狂]"><img src="'+global.realPath+'/images/emotions/crazy.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[哼]"><img src="'+global.realPath+'/images/emotions/hate.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[抱抱]"><img src="'+global.realPath+'/images/emotions/bb_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[可爱]"><img src="'+global.realPath+'/images/emotions/tz_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[怒]"><img src="'+global.realPath+'/images/emotions/angry.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[汗]"><img src="'+global.realPath+'/images/emotions/sweat.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[困]"><img src="'+global.realPath+'/images/emotions/sleepy.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[害羞]"><img src="'+global.realPath+'/images/emotions/shame_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[睡觉]"><img src="'+global.realPath+'/images/emotions/sleep_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[钱]"><img src="'+global.realPath+'/images/emotions/money_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[偷笑]"><img src="'+global.realPath+'/images/emotions/hei_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[酷]"><img src="'+global.realPath+'/images/emotions/cool_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[衰]"><img src="'+global.realPath+'/images/emotions/cry.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[吃惊]"><img src="'+global.realPath+'/images/emotions/cj_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[闭嘴]"><img src="'+global.realPath+'/images/emotions/bz_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[鄙视]"><img src="'+global.realPath+'/images/emotions/bs2_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[挖鼻屎]"><img src="'+global.realPath+'/images/emotions/kbs_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[花心]"><img src="'+global.realPath+'/images/emotions/hs_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[鼓掌]"><img src="'+global.realPath+'/images/emotions/gz_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[失望]"><img src="'+global.realPath+'/images/emotions/sw_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[思考]"><img src="'+global.realPath+'/images/emotions/sk_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[生病]"><img src="'+global.realPath+'/images/emotions/sb_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[亲亲]"><img src="'+global.realPath+'/images/emotions/qq_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[怒骂]"><img src="'+global.realPath+'/images/emotions/nm_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[太开心]"><img src="'+global.realPath+'/images/emotions/mb_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[懒得理你]"><img src="'+global.realPath+'/images/emotions/ldln_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[右哼哼]"><img src="'+global.realPath+'/images/emotions/yhh_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[左哼哼]"><img src="'+global.realPath+'/images/emotions/zhh_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[嘘]"><img src="'+global.realPath+'/images/emotions/x_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[委屈]"><img src="'+global.realPath+'/images/emotions/wq_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[吐]"><img src="'+global.realPath+'/images/emotions/t_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[可怜]"><img src="'+global.realPath+'/images/emotions/kl_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[打哈气]"><img src="'+global.realPath+'/images/emotions/k_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[黑线]"><img src="'+global.realPath+'/images/emotions/h_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[顶]"><img src="'+global.realPath+'/images/emotions/d_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[疑问]"><img src="'+global.realPath+'/images/emotions/yw_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[握手]"><img src="'+global.realPath+'/images/emotions/ws_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[耶]"><img src="'+global.realPath+'/images/emotions/ye_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[good]"><img src="'+global.realPath+'/images/emotions/good_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[弱]"><img src="'+global.realPath+'/images/emotions/sad_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[不要]"><img src="'+global.realPath+'/images/emotions/no_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[ok]"><img src="'+global.realPath+'/images/emotions/ok_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[赞]"><img src="'+global.realPath+'/images/emotions/z2_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[来]"><img src="'+global.realPath+'/images/emotions/come_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[蛋糕]"><img src="'+global.realPath+'/images/emotions/cake.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[心]"><img src="'+global.realPath+'/images/emotions/heart.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[伤心]"><img src="'+global.realPath+'/images/emotions/unheart.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[钟]"><img src="'+global.realPath+'/images/emotions/clock_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[猪头]"><img src="'+global.realPath+'/images/emotions/pig.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[话筒]"><img src="'+global.realPath+'/images/emotions/m_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[月亮]"><img src="'+global.realPath+'/images/emotions/moon.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[下雨]"><img src="'+global.realPath+'/images/emotions/rain.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[太阳]"><img src="'+global.realPath+'/images/emotions/sun.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[蜡烛]"><img src="'+global.realPath+'/images/emotions/lazu_org.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[礼花]"><img src="'+global.realPath+'/images/emotions/bingo_thumb.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<a href="javascript:void(0)" title="[玫瑰]"><img src="'+global.realPath+'/images/emotions/rose.gif"></a>').appendTo(pm_emotions_bd).bind("click",inserEmotion);
+		$('<div style="clear:both;"></div>').appendTo(pm_emotions_bd);
+		
+		$(document).click(function() {
+			$('#pm_emotion_cnt').hide();
+		});
+	}
+	return pm_emotion;
+}
+
+function inserEmotion(){
+	var curValue = $("#talkcontent").val();
+	$("#talkcontent").val(curValue + $(this).attr("title"));
+	$("#pm_emotion_cnt").hide();
+}
+
 Recoment_form_panel.prototype = {
 	subReComent : function(event) {
 		var data = event.data.data;

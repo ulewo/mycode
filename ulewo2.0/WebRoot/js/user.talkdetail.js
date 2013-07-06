@@ -1,5 +1,5 @@
 $(function() {
-	var content = $("#item_content").text();
+	var content = $("#item_content").html();
 	for ( var emo in emotion_data) {
 		content = content.replace(emo, "&nbsp;<img src='" + global.realPath
 				+ "/images/emotions/" + emotion_data[emo] + "'>&nbsp;");

@@ -13,7 +13,27 @@ $(function(){
 	//uParse("div .blog_content",s);
 	initReply(1);
 	$("#sendBtn").bind("click",subReply);
+	
+	$(document).click(function() {
+		$('#pm_emotion_cnt').hide();
+	});
+	$("#pm_emotion_cnt").click(function(event) {
+		event.stopPropagation();
+	});
+
+	$(".pm_emotions_bd").find("a").each(function(index) {
+		$(this).bind("click", function() {
+			var curValue = $("#content").val();
+			$("#content").val(curValue + $(this).attr("title"));
+			$("#pm_emotion_cnt").hide();
+		});
+	});
+	
 });
+
+function showEmotion() {
+	$("#pm_emotion_cnt").show();
+}
 
 function subReply() {
 	if($(this).attr("disable")=="disable"){
@@ -143,8 +163,12 @@ function NotePanle(note) {
 						+ note.atUserName
 						+ "</a></span>").appendTo(reply_con_info);
 	}
-
-	$("<span class='reply_con_content'>" + note.content + "</span>").appendTo(reply_con_info);
+	var content = note.content;
+	for ( var emo in emotion_data) {
+		content = content.replace(emo, "&nbsp;<img src='" + global.realPath
+				+ "/images/emotions/" + emotion_data[emo] + "'>&nbsp;");
+	}
+	$("<span class='reply_con_content'>" + content + "</span>").appendTo(reply_con_info);
 	
 	var reply_info = $("<div class='reply_info'></div>").appendTo(reply_con_p);
 	

@@ -30,11 +30,6 @@
 				</script>
 			</div>
 			-->
-			<script>
-			//	window.onload = function(){
-					document.write(unescape("%3Cscript src='http://hm.baidu.com/h.js%3F1535c97f8b589c71b7a6497eda7dac5f' type='text/javascript'%3E%3C/script%3E"));
-			//	};
-			</script>
 </div>
 </div>
 <script>

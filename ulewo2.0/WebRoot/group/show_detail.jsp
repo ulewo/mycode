@@ -23,7 +23,9 @@ global.articleId= "${article.id}";
 <script type="text/javascript" src="${realPath}/js/scripts/shCore.js"></script>
 <link type="text/css" rel="stylesheet" href="${realPath}/js/styles/SyntaxHighlighter.css"/>
 <script type="text/javascript" src="${realPath}/js/group.showarticle.js"></script>
+<script type="text/javascript" src="${realPath}/js/emotion.data.js"></script>
 <link rel="stylesheet" type="text/css" href="${realPath}/css/group.detail.css">
+<link rel="stylesheet" type="text/css" href="${realPath}/css/talk.css">
 </head>
 <body>
 	<%@ include file="../common/head.jsp" %>
