@@ -15,6 +15,8 @@ function showAddForm(){
 	$("#content").val("");
 	$("#uploadFrame").show();
 	$(".file_con").remove();
+	//清空图片
+	$(".image_hidden").remove();
 	if(editor==null){
 		var width = $("#add_article").outerWidth(true);
 		window.UEDITOR_CONFIG.initialFrameWidth = parseInt(width-20);
@@ -168,7 +170,7 @@ function ArticleItem(article){
 function initImg(imageUrls){
 	if(imageUrls!=null){
 		for(var i=0;i<imageUrls.length;i++){
-			$("<input type='hidden' name='image' value="+imageUrls[i]+">").appendTo($("#articleform"));
+			$("<input type='hidden' name='image' value="+imageUrls[i]+" class='image_hidden'>").appendTo($("#articleform"));
 		}
 	}
 	

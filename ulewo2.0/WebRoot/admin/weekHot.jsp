@@ -27,7 +27,7 @@
 					<div class="blog_title"><a href="${realPath}/group/${article.gid}/topic/${article.id}">${article.title}</a></div>
 					<div class="blog_summary">${article.summary}</div>
 					<c:if test="${article.image!=null&&article.image!=''}">
-						<div class="article_attachedimg"><a href="${realPath}/group/${gid}/topic/${article.id}"><img src="${article.image}" style="max-width:150px;"/></a></div>
+						<div class="article_attachedimg"><a href="${realPath}/group/${article.gid}/topic/${article.id}"><img src="${article.image}" style="max-width:150px;"/></a></div>
 					</c:if>
 					<div class="user_time">
 						<span>${article.authorName}</span>
