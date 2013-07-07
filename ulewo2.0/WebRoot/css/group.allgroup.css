@@ -1,5 +1,5 @@
 @import url("public.css");
-.selected2{background:#1C91BE;}
+.selected2{text-decoration:none;background:url("../images/bgnav.png") 0px 40px;}
 .group_item{padding:10px 5px;border-bottom:1px dotted #E0E0E0}
 .group_icon{float:left;width:50px;}
 .group_icon img{width:50px;border:0px;}
