@@ -10,7 +10,7 @@
 <link rel="stylesheet" type="text/css" href="${realPath}/css/jquery.Jcrop.css">
 <link rel="stylesheet" type="text/css" href="${realPath}/css/group.manage.public.css">
 <style type="text/css">
-#selected3 a{background:#ffffff;color:#333333;font-weight:bold;}
+#selected2 a{background:#ffffff;color:#333333;font-weight:bold;}
 .saveset{margin-top:10px;}
 .form_are{margin-top:10px;}
 </style>

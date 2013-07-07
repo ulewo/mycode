@@ -1,5 +1,5 @@
 @IMPORT url("public.css");
-.selected1{background:#1C91BE;}
+.selected1{text-decoration:none;background:url("../images/bgnav.png") 0px 40px;}
 .left{width:720px;float:left;}
 .right{width:260px;margin-left:20px;float:left;margin-top:10px;}
 .titinfo{border-bottom:2px solid #38A2DB;font-size:18px;color:#38A2DB;padding:5px;margin-top:10px;}

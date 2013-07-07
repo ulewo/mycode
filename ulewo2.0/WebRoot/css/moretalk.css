@@ -1,5 +1,5 @@
 @IMPORT url("public.css");
-.main{text-align:center;margin:0px auto;width:1000px}
+.main{text-align:center;margin:0px auto;width:1000px;margin-top:45px;}
 .talktit{text-align:left;font-size:16px;color:#38A3DB;margin-top:10px;border-bottom:1px solid #38A3DB;padding:5px;}
 #talklist{text-align:left;}
 .talkitem{margin-top:10px;}

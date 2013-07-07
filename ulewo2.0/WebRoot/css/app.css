@@ -1,5 +1,5 @@
 @import url("public.css");
-.main{text-align:center;margin:0px auto;text-align: center;width:1000px;}
+.main{text-align:center;margin:0px auto;text-align: center;width:1000px;margin-top:55px;}
 .android_pic{margin-top:10px;}
 .android_pic img{width:300px;float:left;border:1px solid #C8C8C8;margin:10px;padding:2px}
 .myinfo{padding-left:10px;margin-top:10px;}
