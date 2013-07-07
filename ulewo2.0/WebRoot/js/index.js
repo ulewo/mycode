@@ -1,4 +1,5 @@
 $(function(){
+	lazyLoadImage("hot");
 	$("#talkBtn").bind("click",saveTalk);
 	loadTalk();
 	$("#talkcontent").bind("focus",function(){
