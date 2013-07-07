@@ -29,6 +29,7 @@ import com.ulewo.entity.BlogArticle;
 import com.ulewo.entity.BlogItem;
 import com.ulewo.entity.BlogReply;
 import com.ulewo.entity.Group;
+import com.ulewo.entity.Notice;
 import com.ulewo.entity.ReTalk;
 import com.ulewo.entity.SessionUser;
 import com.ulewo.entity.Talk;
@@ -40,6 +41,7 @@ import com.ulewo.service.BlogArticleService;
 import com.ulewo.service.BlogItemService;
 import com.ulewo.service.BlogReplyService;
 import com.ulewo.service.GroupService;
+import com.ulewo.service.NoticeService;
 import com.ulewo.service.ReTalkService;
 import com.ulewo.service.TalkService;
 import com.ulewo.service.UserFriendService;
@@ -77,6 +79,9 @@ public class UserAction {
 
 	@Autowired
 	private ReTalkService reTalkService;
+	
+	@Autowired
+	private NoticeService noticeService;
 
 	private final static int MAXLENGTH = 250;
 
@@ -469,6 +474,91 @@ public class UserAction {
 		return mv;
 	}
 
+	/**
+	 * 查询粉丝，关注的人
+	 * @param session
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/loadFansFocus.action", method = RequestMethod.GET)
+	public Map<String, Object> loadFansFocus(HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			String userId = ((SessionUser)session.getAttribute("user")).getUserId();
+			List<UserFriend> focusList = userFriendService.queryFocus2List(
+					userId, 0, 15);
+			List<UserFriend> fansList = userFriendService.queryFans2List(
+					userId, 0, 15);
+			modelMap.put("focusList", focusList);
+			modelMap.put("fansList", fansList);
+			return modelMap;
+		} catch (Exception e) {
+			String errorMethod = "UserAction-->loadFansFocus()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
+			modelMap.put("result", "fail");
+			return modelMap;
+		}
+	}
+	/**
+	 * 查询消息
+	 * @param session
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/loadNotice.action", method = RequestMethod.GET)
+	public Map<String, Object> loadNotice(HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			String userId = ((SessionUser)session.getAttribute("user")).getUserId();
+			List<Notice> list = noticeService.queryNoticeByUserId(userId, Constant.STATUSYN);
+			modelMap.put("list", list);
+			return modelMap;
+		} catch (Exception e) {
+			String errorMethod = "UserAction-->loadNotice()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
+			modelMap.put("result", "fail");
+			return modelMap;
+		}
+	}
+	/**
+	 * 创建的窝窝，加入的窝窝
+	 * @param session
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/loadGroup.action", method = RequestMethod.GET)
+	public Map<String, Object> loadGroup(HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			String userId = ((SessionUser)session.getAttribute("user")).getUserId();
+			List<Group> createdGroups = groupService.queryCreatedGroups(userId);
+			List<Group> joinedGroups = groupService.queryJoinedGroups(userId);
+			modelMap.put("createdGroups", createdGroups);
+			modelMap.put("joinedGroups", joinedGroups);
+			return modelMap;
+		} catch (Exception e) {
+			String errorMethod = "UserAction-->loadGroup()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
+			modelMap.put("result", "fail");
+			return modelMap;
+		}
+	}
+	
 	private UserVo checkUserInfo(String userId, HttpSession session) {
 
 		if (StringUtils.isEmpty(userId)) {
