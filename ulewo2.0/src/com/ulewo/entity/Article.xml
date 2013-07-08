@@ -136,29 +136,23 @@
 	</select>
 
 	<!--根据userId查询主题文章-->
-	<select id="queryTopicByUserId"  resultClass="article" parameterClass="java.util.Map">
-		select a.id,a.gid,a.itemid,i.itemname as itemname,a.title,a.titlestyle,a.authorid,a.posttime,a.readnumber,grade,essence,
+	<select id="queryArticleByUserId"  resultClass="article" parameterClass="java.util.Map">
+		select a.id,a.gid,a.itemid,a.title,a.titlestyle,a.authorid,u.username as authorName,u.userlittleicon as authorIcon,
+		a.posttime,a.readnumber,grade,essence,a.summary,
 		g.groupname as groupname,(select count(r.id) from rearticle r where r.articleid = a.id) as reNumber 
-		from article a inner join groups g on a.gid=g.id left join articleitem i on a.itemid = i.id where  a.authorid = #authorid#
+		from article a inner join groups g on a.gid=g.id inner join user u on a.authorid=u.userid where a.authorid in
+		<iterate open="(" close=")" conjunction="," property="userIds"> 
+              #userIds[]# 
+        </iterate> 
 		order by posttime desc limit #offset#,#total#
 	</select>
 	
 	<!--根据userId查询主题数量-->
-	<select id="queryCountByUserId"  resultClass="java.lang.Integer" parameterClass="java.lang.String">
-		select count(id) from article where authorid = #authorid#
-	</select>
-	
-	<!--根据userId查询回复的文章主题-->
-	<select id="queryTopicByReUserId"  resultClass="article" parameterClass="java.util.Map">
-		select distinct a.id,a.gid,a.itemid,i.itemname as itemname,a.title,a.titlestyle,a.authorid,a.posttime,a.readnumber,grade,essence,
-		g.groupname as groupname,(select count(r.id) from rearticle r where r.articleid = a.id) as reNumber 
-		from article a inner join rearticle r inner join groups g on a.gid=g.id left join articleitem i on a.itemid = i.id where a.id = r.articleid and r.authorid = #authorid# 
-		order by a.posttime desc limit #offset#,#total#
-	</select>
-	
-	<!--根据userId查询回复的文章主题数-->
-	<select id="queryTopicCountByReUserId"  resultClass="java.lang.Integer" parameterClass="java.lang.String">
-		select count(distinct a.id) from article a,rearticle r where a.id = r.articleid and r.authorid = #authorid# 
+	<select id="queryArticleCountByUserId"  resultClass="java.lang.Integer" parameterClass="java.util.ArrayList">
+		select count(id) from article where authorid in
+		<iterate open="(" close=")" conjunction=","> 
+              #userIds[]# 
+        </iterate> 
 	</select>
 	
 	<!-- 今日发表 -->

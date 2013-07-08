@@ -12,10 +12,15 @@ import org.springframework.stereotype.Service;
 
 import com.ulewo.dao.ArticleDao;
 import com.ulewo.dao.AttachedFileDao;
+import com.ulewo.dao.ReArticleDao;
 import com.ulewo.dao.UserDao;
+import com.ulewo.dao.UserFriendDao;
 import com.ulewo.entity.Article;
 import com.ulewo.entity.AttachedFile;
 import com.ulewo.entity.NoticeParam;
+import com.ulewo.entity.ReArticle;
+import com.ulewo.entity.ReTalk;
+import com.ulewo.entity.SessionUser;
 import com.ulewo.entity.User;
 import com.ulewo.enums.ArticleEssence;
 import com.ulewo.enums.ArticleGrade;
@@ -37,6 +42,12 @@ public class ArticleServiceImpl implements ArticleService {
 	@Autowired
 	private UserDao userDao;
 
+	@Autowired
+	private UserFriendDao userFriendDao;
+	
+	@Autowired
+	private ReArticleDao reArticleDao;
+	
 	@Autowired
 	private AttachedFileDao attachedFileDao;
 
@@ -243,38 +254,6 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public int queryPostTopicCount(String userId) {
-
-		return articleDao.queryCountByUserId(userId);
-	}
-
-	@Override
-	public List<Article> queryPostTopic(String userId, int offset, int total) {
-
-		List<Article> list = articleDao.queryTopicByUserId(userId, offset, total);
-		for (Article article : list) {
-			article.setPostTime(StringUtils.friendly_time(article.getPostTime()));
-		}
-		return list;
-	}
-
-	@Override
-	public int queryReTopicCount(String userId) {
-
-		return articleDao.queryTopicCountByReUserId(userId);
-	}
-
-	@Override
-	public List<Article> queryReTopic(String userId, int offset, int total) {
-
-		List<Article> list = articleDao.queryTopicByReUserId(userId, offset, total);
-		for (Article article : list) {
-			article.setPostTime(StringUtils.friendly_time(article.getPostTime()));
-		}
-		return list;
-	}
-
-	@Override
 	public List<Article> aboutArticle(String keyWord, String gid) {
 
 		List<Article> list = new ArrayList<Article>();
@@ -302,13 +281,6 @@ public class ArticleServiceImpl implements ArticleService {
 			}
 		}
 		return list;
-	}
-
-	public int queryTopicCountByTime(String gid) {
-
-		String endTime = formate.format(new Date());
-		String startTime = endTime.substring(0, 10) + " 00:00:00";
-		return articleDao.queryTopicCountByTime(startTime, endTime, gid);
 	}
 
 	@Override
@@ -405,6 +377,74 @@ public class ArticleServiceImpl implements ArticleService {
 		return articleDao.queryHotArticle(offset, total);
 	}
 
+	
+	public PaginationResult queryArticleByUserIdByPag(int page, int pageSize, String userId, Object sessionUser, int type){
+		PaginationResult result = null;
+		List<String> userIds = new ArrayList<String>();
+		switch (type) {
+		case 0://查询所有主题
+			userIds = getUserIds(userId, sessionUser);
+			result = queryArticleByUserIds(page, pageSize, userIds);
+			break;
+		case 1: //所有回复
+			userIds = getUserIds(userId, sessionUser);
+			result = queryReArticleByUserIds(page, pageSize, userIds);
+			break;
+		case 2: //查询我的主题
+			userIds.add(userId);
+			result = queryArticleByUserIds(page, pageSize, userIds);
+			break;
+		case 3: //查询我的回复
+			userIds.add(userId);
+			result = queryReArticleByUserIds(page, pageSize, userIds);
+			break;
+		}
+		return result;
+	}
+	
+	private PaginationResult queryArticleByUserIds(int page, int pageSize, List<String> userIds) {
+
+		int count = articleDao.queryArticleCountByUserId(userIds);
+		Pagination pagination = new Pagination(page, count, pageSize);
+		pagination.action();
+		List<Article> list = articleDao.queryArticleByUserId(pagination.getOffSet(), pageSize, userIds);
+		for(Article article:list){
+			article.setPostTime(StringUtils.friendly_time(article.getPostTime()));
+		}
+		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
+		return result;
+	}
+
+	private PaginationResult queryReArticleByUserIds(int page, int pageSize, List<String> userIds) {
+
+		int count = reArticleDao.queryReArticleCountByUserId(userIds);
+		Pagination pagination = new Pagination(page, count, pageSize);
+		pagination.action();
+		List<ReArticle> list = reArticleDao.queryReArticleByUserId(pagination.getOffSet(), pageSize, userIds);
+		for(ReArticle reArticle:list){
+			reArticle.setReTime(StringUtils.friendly_time(reArticle.getReTime()));
+		}
+		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
+		return result;
+	}
+
+	//获取要查看的人
+	private List<String> getUserIds(String userId, Object sessionUser) {
+
+		List<String> userIds = new ArrayList<String>();
+
+		if (null != sessionUser && ((SessionUser) sessionUser).getUserId().equals(userId)) {
+			//用户查看自己的
+			//关注的人 和自己的。
+			userIds = userFriendDao.queryFocusUserIds(((SessionUser) sessionUser).getUserId());
+			userIds.add(userId);
+		}
+		else {
+			userIds.add(userId);
+		}
+		return userIds;
+	}
+	
 	@Override
 	public PaginationResult queryAllArticleByAdmin(int page, int pageSize, String keyWord) {
 

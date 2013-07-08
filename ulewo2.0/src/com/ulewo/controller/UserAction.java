@@ -37,11 +37,13 @@ import com.ulewo.entity.User;
 import com.ulewo.entity.UserFriend;
 import com.ulewo.enums.BlogOrderType;
 import com.ulewo.enums.QueryUserType;
+import com.ulewo.service.ArticleService;
 import com.ulewo.service.BlogArticleService;
 import com.ulewo.service.BlogItemService;
 import com.ulewo.service.BlogReplyService;
 import com.ulewo.service.GroupService;
 import com.ulewo.service.NoticeService;
+import com.ulewo.service.ReArticleService;
 import com.ulewo.service.ReTalkService;
 import com.ulewo.service.TalkService;
 import com.ulewo.service.UserFriendService;
@@ -80,6 +82,12 @@ public class UserAction {
 	@Autowired
 	private ReTalkService reTalkService;
 
+	@Autowired
+	private ArticleService articleService;
+	
+	@Autowired
+	private ReArticleService reArticleService;
+	
 	@Autowired
 	private NoticeService noticeService;
 
@@ -1000,38 +1008,6 @@ public class UserAction {
 		}
 	}
 
-	@RequestMapping(value = "/{userId}/talk", method = RequestMethod.GET)
-	public ModelAndView talkList(@PathVariable String userId, HttpSession session, HttpServletRequest request,
-			HttpServletResponse response) {
-
-		ModelAndView mv = new ModelAndView();
-		try {
-
-			UserVo userVo = checkUserInfo(userId, session);
-			if (null == userVo) {
-				mv.setViewName("redirect:" + Constant.ERRORPAGE);
-			}
-			mv.addObject("userVo", userVo);
-			List<UserFriend> focusList = userFriendService.queryFocus2List(userId, 0, 15);
-			List<UserFriend> fansList = userFriendService.queryFans2List(userId, 0, 15);
-			List<Group> createdGroups = groupService.queryCreatedGroups(userId);
-			List<Group> joinedGroups = groupService.queryJoinedGroups(userId);
-			mv.addObject("focusList", focusList);
-			mv.addObject("fansList", fansList);
-			mv.addObject("createdGroups", createdGroups);
-			mv.addObject("joinedGroups", joinedGroups);
-			mv.addObject("userId", userId);
-			mv.setViewName("user/talk");
-		} catch (Exception e) {
-			String errorMethod = "UserAction-->talkList()<br>";
-			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
-			Thread thread = new Thread(report);
-			thread.start();
-			mv.setViewName("redirect:" + Constant.ERRORPAGE);
-			return mv;
-		}
-		return mv;
-	}
 
 	@ResponseBody
 	@RequestMapping(value = "/loadTalk", method = RequestMethod.GET)
@@ -1051,7 +1027,7 @@ public class UserAction {
 				type_int = Integer.parseInt(type);
 			}
 			Object sessionUser = session.getAttribute("user");
-			PaginationResult data = talkService.queryTalkByUserIdByPag(page_int, Constant.pageSize20, userId,
+			PaginationResult data = talkService.queryTalkByUserIdByPag(page_int, Constant.pageSize15, userId,
 					sessionUser, type_int);
 			modelMap.put("result", "success");
 			modelMap.put("data", data);
@@ -1067,6 +1043,40 @@ public class UserAction {
 		}
 	}
 
+	@ResponseBody
+	@RequestMapping(value = "/loadArticle", method = RequestMethod.GET)
+	public Map<String, Object> loadArticle(HttpSession session, HttpServletRequest request) {
+
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			String userId = request.getParameter("userId");
+			String page = request.getParameter("page");
+			int page_int = 1;
+			if (StringUtils.isNumber(page)) {
+				page_int = Integer.parseInt(page);
+			}
+			String type = request.getParameter("type");
+			int type_int = 0;
+			if (StringUtils.isNumber(type)) {
+				type_int = Integer.parseInt(type);
+			}
+			Object sessionUser = session.getAttribute("user");
+			PaginationResult data = articleService.queryArticleByUserIdByPag(page_int, Constant.pageSize15, userId,
+					sessionUser, type_int);
+			modelMap.put("result", "success");
+			modelMap.put("data", data);
+			return modelMap;
+		} catch (Exception e) {
+			e.printStackTrace();
+			String errorMethod = "UserAction-->loadTalk()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			//Thread thread = new Thread(report);
+			//thread.start();
+			modelMap.put("result", "fail");
+			return modelMap;
+		}
+	}
+	
 	@RequestMapping(value = "/{userId}/talk/{talkId}", method = RequestMethod.GET)
 	public ModelAndView talkDetal(@PathVariable String userId, @PathVariable String talkId, HttpSession session,
 			HttpServletRequest request, HttpServletResponse response) {

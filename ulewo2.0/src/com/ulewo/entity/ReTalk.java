@@ -4,7 +4,9 @@ public class ReTalk {
 	private int id;
 
 	private int talkId;
-
+	
+	private String  talkUserName;
+	
 	private String talkcontent;
 
 	private String talkUserId;
@@ -143,6 +145,14 @@ public class ReTalk {
 	public void setTalkcontent(String talkcontent) {
 
 		this.talkcontent = talkcontent;
+	}
+
+	public String getTalkUserName() {
+		return talkUserName;
+	}
+
+	public void setTalkUserName(String talkUserName) {
+		this.talkUserName = talkUserName;
 	}
 
 }

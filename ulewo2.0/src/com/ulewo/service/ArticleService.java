@@ -74,50 +74,6 @@ public interface ArticleService {
 
 	/**
 	 * 
-	 * description: 查询作者发表的主题数量
-	 * @param userId
-	 * @return
-	 * @
-	 * @author lhl
-	 */
-	public int queryPostTopicCount(String userId);
-
-	/**
-	 * 
-	 * description: 查询作者发表的主题
-	 * @param userId
-	 * @param offset TODO
-	 * @param total TODO
-	 * @return
-	 * @
-	 * @author lhl
-	 */
-	public List<Article> queryPostTopic(String userId, int offset, int total);
-
-	/**
-	 * 
-	 * description: 查询作者回复的主题数量
-	 * @param userId
-	 * @return
-	 * @
-	 * @author lhl
-	 */
-	public int queryReTopicCount(String userId);
-
-	/**
-	 * 
-	 * description: 查询作者回复的主题
-	 * @param userId
-	 * @param offset TODO
-	 * @param total TODO
-	 * @return
-	 * @
-	 * @author lhl
-	 */
-	public List<Article> queryReTopic(String userId, int offset, int total);
-
-	/**
-	 * 
 	 * description: 相关文章
 	 * @param keyWord
 	 * @param gid
@@ -126,16 +82,6 @@ public interface ArticleService {
 	 * @author lhl
 	 */
 	public List<Article> aboutArticle(String keyWord, String gid);
-
-	/**
-	 * 
-	 * description: 查询群组当日发帖数量
-	 * @param gid
-	 * @return
-	 * @
-	 * @author lhl
-	 */
-	public int queryTopicCountByTime(String gid);
 
 	/**
 	 * 
@@ -180,6 +126,17 @@ public interface ArticleService {
 	public PaginationResult queryLatestArticle2PagResult(int page, int pageSize);
 
 	public List<Article> queryHotArticle(int offset, int total);
+	
+	/**
+	 * 查询用户发表的文章回复的文章
+	 * @param page
+	 * @param pageSize
+	 * @param userId
+	 * @param sessionUser
+	 * @param type
+	 * @return
+	 */
+	public PaginationResult queryArticleByUserIdByPag(int page, int pageSize, String userId, Object sessionUser, int type); 
 
 	/***********后台管理接口*************/
 

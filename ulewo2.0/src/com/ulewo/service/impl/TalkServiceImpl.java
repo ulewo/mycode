@@ -135,6 +135,8 @@ public class TalkServiceImpl implements TalkService {
 			result = queryTalkByUserIds(page, pageSize, userIds);
 			break;
 		case 3: //查询我的回复
+			userIds.add(userId);
+			result = queryReTalkByUserIds(page, pageSize, userIds);
 			break;
 		}
 		return result;
@@ -156,6 +158,9 @@ public class TalkServiceImpl implements TalkService {
 		Pagination pagination = new Pagination(page, count, pageSize);
 		pagination.action();
 		List<ReTalk> list = reTalkDao.queryReTalkByUserId(pagination.getOffSet(), pageSize, userIds);
+		for(ReTalk reTalk:list){
+			reTalk.setCreateTime(StringUtils.friendly_time(reTalk.getCreateTime()));
+		}
 		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
 		return result;
 	}

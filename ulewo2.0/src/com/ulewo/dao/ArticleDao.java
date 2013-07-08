@@ -206,14 +206,14 @@ public class ArticleDao extends BaseDao {
 	 * @
 	 * @author luohl
 	 */
-	public int queryCountByUserId(String userId) {
+	public int queryArticleCountByUserId(List<String> userIds) {
 
-		return (Integer) this.getSqlMapClientTemplate().queryForObject("article.queryCountByUserId", userId);
+		return (Integer) this.getSqlMapClientTemplate().queryForObject("article.queryArticleCountByUserId", userIds);
 	}
 
 	/**
 	 * 
-	 * description: 根据userId查询回复的文章主题
+	 * description: 根据userId查询文章主题
 	 * @param userId
 	 * @param offset
 	 * @param total
@@ -221,35 +221,13 @@ public class ArticleDao extends BaseDao {
 	 * @
 	 * @author luohl
 	 */
-	public List<Article> queryTopicByReUserId(String userId, int offset, int total) {
+	public List<Article> queryArticleByUserId(int offset, int total,List<String> userIds) {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
-		parmMap.put("authorid", userId);
+		parmMap.put("userIds", userIds);
 		parmMap.put("offset", offset);
 		parmMap.put("total", total);
-		return this.getSqlMapClientTemplate().queryForList("article.queryTopicByReUserId", parmMap);
-	}
-
-	/**
-	 * 
-	 * description:根据userId查询回复的文章主题数
-	 * @param userId
-	 * @return
-	 * @
-	 * @author luohl
-	 */
-	public int queryTopicCountByReUserId(String userId) {
-
-		return (Integer) this.getSqlMapClientTemplate().queryForObject("article.queryTopicCountByReUserId", userId);
-	}
-
-	public int queryTopicCountByTime(String startTime, String endTime, String gid) {
-
-		Map<String, Object> parmMap = new HashMap<String, Object>();
-		parmMap.put("startTime", startTime);
-		parmMap.put("endTime", endTime);
-		parmMap.put("gid", gid);
-		return (Integer) this.getSqlMapClientTemplate().queryForObject("article.queryTopicCountByTime", parmMap);
+		return this.getSqlMapClientTemplate().queryForList("article.queryArticleByUserId", parmMap);
 	}
 
 	public List<Article> queryComendArticle(String sysCode, String subCode, int offset, int total) {

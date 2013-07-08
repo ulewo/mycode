@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
+import com.ulewo.entity.Article;
 import com.ulewo.entity.ReArticle;
 
 /**
@@ -153,5 +154,33 @@ public class ReArticleDao extends BaseDao {
 		parmMap.put("total", total);
 		return this.getSqlMapClientTemplate().queryForList(
 				"reArticle.queryAllReArticleByGid", parmMap);
+	}
+	
+	/**
+	 * 根据userId查询回复的主题数量
+	 * @param userIds
+	 * @return
+	 */
+	public int queryReArticleCountByUserId(List<String> userIds) {
+		return (Integer) this.getSqlMapClientTemplate().queryForObject("reArticle.queryReArticleCountByUserId", userIds);
+	}
+
+	/**
+	 * 
+	 * description: 根据userId查询回复的文章主题
+	 * @param userId
+	 * @param offset
+	 * @param total
+	 * @return
+	 * @
+	 * @author luohl
+	 */
+	public List<ReArticle> queryReArticleByUserId(int offset, int total,List<String> userIds) {
+
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("userIds", userIds);
+		parmMap.put("offset", offset);
+		parmMap.put("total", total);
+		return this.getSqlMapClientTemplate().queryForList("reArticle.queryReArticleByUserId", parmMap);
 	}
 }
