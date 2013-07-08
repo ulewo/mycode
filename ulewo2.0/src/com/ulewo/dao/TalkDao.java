@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 import org.springframework.stereotype.Component;
 
 import com.ulewo.entity.Talk;
+
 @Component
 public class TalkDao extends BaseDao {
 	/**
@@ -50,17 +50,17 @@ public class TalkDao extends BaseDao {
 		return (Talk) this.getSqlMapClientTemplate().queryForObject("talk.queryDetail", talkId);
 	}
 
-	public List<Talk> queryLatestTalkByUserId(int offset, int total, String userId) {
+	public List<Talk> queryTalkByUserId(int offset, int total, List<String> userId) {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("offset", offset);
 		parmMap.put("total", total);
-		parmMap.put("userId", userId);
-		return (List<Talk>) this.getSqlMapClientTemplate().queryForList("talk.queryLatestTalkByUserId", parmMap);
+		parmMap.put("userIds", userId);
+		return (List<Talk>) this.getSqlMapClientTemplate().queryForList("talk.queryTalkByUserId", parmMap);
 	}
 
-	public int queryTalkCountByUserId(String userId) {
+	public int queryTalkCountByUserId(List<String> userIds) {
 
-		return (Integer) this.getSqlMapClientTemplate().queryForObject("talk.queryCountByUserId", userId);
+		return (Integer) this.getSqlMapClientTemplate().queryForObject("talk.queryCountByUserId", userIds);
 	}
 }

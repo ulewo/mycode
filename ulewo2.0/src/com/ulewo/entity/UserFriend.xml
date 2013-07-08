@@ -44,4 +44,10 @@
 	<select id="queryFocusUser" resultClass="friend" parameterClass="java.util.Map">
 		select * from user_friend where userid = #userId# and friendid = #friendId#
 	</select>
+	
+	<!-- 查询关注的人id -->
+	<select id="queryFocusUserIds" resultClass="java.lang.String">
+		select friendid from user_friend
+		where userid = #userId#
+	</select>
 </sqlMap>

@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ulewo.dao.ArticleDao;
 import com.ulewo.dao.ArticleItemDao;
 import com.ulewo.entity.ArticleItem;
 import com.ulewo.service.ArticleItemService;
@@ -21,17 +20,16 @@ import com.ulewo.service.ArticleItemService;
 public class ArticleItemServiceImpl implements ArticleItemService {
 	@Autowired
 	private ArticleItemDao articleItemDao;
-	
-	@Autowired
-	private ArticleDao articleDao;
 
 	private final int MAX_ITEM_LENGTH = 8;
 
 	@Override
 	public boolean saveItem(ArticleItem item) {
-		if(item.getId()!=0){
+
+		if (item.getId() != 0) {
 			articleItemDao.update(item);
-		}else{
+		}
+		else {
 			int count = articleItemDao.queryItemCountByGid(item.getGid());
 			if (count >= MAX_ITEM_LENGTH) {
 				return false;
@@ -55,8 +53,9 @@ public class ArticleItemServiceImpl implements ArticleItemService {
 
 	@Override
 	public boolean delete(int id) {
+
 		ArticleItem item = articleItemDao.getArticleItemById(id);
-		if(item.getArticleCount()>0){
+		if (item.getArticleCount() > 0) {
 			return false;
 		}
 		articleItemDao.delete(id);

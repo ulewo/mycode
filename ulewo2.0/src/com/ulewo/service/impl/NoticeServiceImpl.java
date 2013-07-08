@@ -14,11 +14,6 @@ public class NoticeServiceImpl implements NoticeService {
 	@Autowired
 	private NoticeDao noticeDao;
 
-	public void setNoticeDao(NoticeDao noticeDao) {
-
-		this.noticeDao = noticeDao;
-	}
-	
 	@Override
 	public void updateNotice(Notice notice) {
 
@@ -47,7 +42,5 @@ public class NoticeServiceImpl implements NoticeService {
 
 		return noticeDao.getNotice(id);
 	}
-
-
 
 }

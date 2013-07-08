@@ -11,11 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ulewo.dao.ArticleDao;
-import com.ulewo.dao.ArticleItemDao;
 import com.ulewo.dao.AttachedFileDao;
-import com.ulewo.dao.GroupDao;
-import com.ulewo.dao.NoticeDao;
-import com.ulewo.dao.ReArticleDao;
 import com.ulewo.dao.UserDao;
 import com.ulewo.entity.Article;
 import com.ulewo.entity.AttachedFile;
@@ -39,22 +35,10 @@ public class ArticleServiceImpl implements ArticleService {
 	private ArticleDao articleDao;
 
 	@Autowired
-	private ArticleItemDao articleItemDao;
-
-	@Autowired
 	private UserDao userDao;
 
 	@Autowired
-	private ReArticleDao reArticleDao;
-
-	@Autowired
-	private NoticeDao noticeDao;
-
-	@Autowired
 	private AttachedFileDao attachedFileDao;
-
-	@Autowired
-	private GroupDao groupDao;
 
 	private final SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 

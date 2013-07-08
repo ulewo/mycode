@@ -37,12 +37,19 @@
 	</select>
 	
 	<!-- 根据userId查询 总条数-->
-	<select id="queryCountByUserId"  resultClass="java.lang.Integer" parameterClass="java.lang.String">
-	    select count(id) from talk where userid =#userId#;
+	<select id="queryCountByUserId"  resultClass="java.lang.Integer" parameterClass="java.util.ArrayList">
+	    select count(id) from talk where userid in
+	    <iterate open="(" close=")" conjunction=","> 
+              #userIds[]# 
+        </iterate> 
 	</select>
 	
 	<!-- 根据userId查询 说说-->
-	<select id="queryLatestTalkByUserId"  resultClass="talk" parameterClass="java.util.Map">
-	    select t.*,(select count(r.id) from retalk r where r.talkid=t.id) recount from talk t where userid = #userId# order by createtime desc limit #offset#,#total#
+	<select id="queryTalkByUserId"  resultClass="talk">
+	    select t.*,(select count(r.id) from retalk r where r.talkid=t.id) recount from talk t where userid in
+		<iterate open="(" close=")" conjunction="," property="userIds"> 
+              #userIds[]# 
+        </iterate> 
+	    order by createtime desc limit #offset#,#total#
 	</select>
 </sqlMap>

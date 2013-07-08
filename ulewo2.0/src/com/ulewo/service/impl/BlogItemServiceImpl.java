@@ -14,11 +14,6 @@ public class BlogItemServiceImpl implements BlogItemService {
 	@Autowired
 	private BlogItemDao blogItemDao;
 
-	public void setBlogItemDao(BlogItemDao blogItemDao) {
-
-		this.blogItemDao = blogItemDao;
-	}
-
 	@Override
 	public int saveItem(BlogItem item) {
 

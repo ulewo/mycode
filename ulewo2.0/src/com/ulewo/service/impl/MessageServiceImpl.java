@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ulewo.dao.MessageDao;
-import com.ulewo.dao.NoticeDao;
 import com.ulewo.dao.UserDao;
 import com.ulewo.entity.Message;
 import com.ulewo.entity.NoticeParam;
@@ -26,25 +25,7 @@ public class MessageServiceImpl implements MessageService {
 	@Autowired
 	private UserDao userDao;
 
-	@Autowired
-	private NoticeDao noticeDao;
-
 	private final SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-	public void setNoticeDao(NoticeDao noticeDao) {
-
-		this.noticeDao = noticeDao;
-	}
-
-	public void setMessageDao(MessageDao messageDao) {
-
-		this.messageDao = messageDao;
-	}
-
-	public void setUserDao(UserDao userDao) {
-
-		this.userDao = userDao;
-	}
 
 	@Override
 	public List<Message> queryMessage(String userId, int offset, int total) throws Exception {

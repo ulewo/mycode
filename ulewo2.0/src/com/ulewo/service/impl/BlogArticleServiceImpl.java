@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ulewo.dao.BlogArticleDao;
-import com.ulewo.dao.NoticeDao;
 import com.ulewo.dao.UserDao;
 import com.ulewo.entity.BlogArticle;
 import com.ulewo.entity.NoticeParam;
@@ -31,9 +30,6 @@ public class BlogArticleServiceImpl implements BlogArticleService {
 
 	@Autowired
 	private UserDao userDao;
-
-	@Autowired
-	private NoticeDao noticeDao;
 
 	private final static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 

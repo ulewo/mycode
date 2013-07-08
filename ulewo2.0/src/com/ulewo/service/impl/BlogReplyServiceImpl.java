@@ -8,9 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ulewo.dao.BlogArticleDao;
 import com.ulewo.dao.BlogReplyDao;
-import com.ulewo.dao.NoticeDao;
 import com.ulewo.dao.UserDao;
 import com.ulewo.entity.BlogReply;
 import com.ulewo.entity.NoticeParam;
@@ -30,35 +28,9 @@ public class BlogReplyServiceImpl implements BlogReplyService {
 	private BlogReplyDao blogReplyDao;
 
 	@Autowired
-	private BlogArticleDao blogArticleDao;
-
-	@Autowired
 	private UserDao userDao;
 
-	@Autowired
-	private NoticeDao noticeDao;
-
 	private final SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-	public void setNoticeDao(NoticeDao noticeDao) {
-
-		this.noticeDao = noticeDao;
-	}
-
-	public void setUserDao(UserDao userDao) {
-
-		this.userDao = userDao;
-	}
-
-	public void setBlogReplyDao(BlogReplyDao blogReplyDao) {
-
-		this.blogReplyDao = blogReplyDao;
-	}
-
-	public void setBlogArticleDao(BlogArticleDao blogArticleDao) {
-
-		this.blogArticleDao = blogArticleDao;
-	}
 
 	@Override
 	public BlogReply addReply(BlogReply blogReply) {

@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ulewo.dao.ArticleDao;
-import com.ulewo.dao.NoticeDao;
 import com.ulewo.dao.ReArticleDao;
 import com.ulewo.dao.UserDao;
 import com.ulewo.entity.NoticeParam;
@@ -45,25 +44,7 @@ public class ReArticleServiceImpl implements ReArticleService {
 	@Autowired
 	private UserDao userDao;
 
-	@Autowired
-	private NoticeDao noticeDao;
-
 	private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-	public void setReArticleDao(ReArticleDao reArticleDao) {
-
-		this.reArticleDao = reArticleDao;
-	}
-
-	public void setUserDao(UserDao userDao) {
-
-		this.userDao = userDao;
-	}
-
-	public void setNoticeDao(NoticeDao noticeDao) {
-
-		this.noticeDao = noticeDao;
-	}
 
 	@Override
 	public ReArticle addReArticle(ReArticle reArticle) {

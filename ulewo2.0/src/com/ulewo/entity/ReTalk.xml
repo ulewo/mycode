@@ -35,4 +35,21 @@
 		delete from retalk where retalkid =#retalkId#	    
 	</delete>
 	
+	<!-- 更具用户id查询吐槽回复 -->
+	<select id="queryReTalkByUserId"  resultClass="retalk" parameterClass="java.util.Map">
+	    select r.*,t.content from retalk r outer left join talk t on r.talkid=t.id  where r.userid in
+	    <iterate open="(" close=")" conjunction="," property="userIds"> 
+              #userIds[]# 
+        </iterate> 
+	    order by createtime desc limit #offset#,#total#
+	</select>
+	
+	<select id="queryReTalkCountByUserId"  resultClass="java.lang.Integer" parameterClass="java.util.ArrayList">
+	    select count(id) from retalk  where userid in
+	    <iterate open="(" close=")" conjunction=","> 
+              #userIds[]# 
+        </iterate> 
+	    order by createtime desc limit #offset#,#total#
+	</select>
+	
 </sqlMap>
