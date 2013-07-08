@@ -169,7 +169,6 @@ function NotePanle(note) {
 				+ "/images/emotions/" + emotion_data[emo] + "'>&nbsp;");
 	}
 	$("<span class='reply_con_content'>" + content + "</span>").appendTo(reply_con_info);
-	
 	var reply_info = $("<div class='reply_info'></div>").appendTo(reply_con_p);
 	
 	if (note.sourceFrom == "A") {

@@ -246,13 +246,31 @@
 		  			</c:if>
 		  		</div>
 		  	</div>
-		  	<div class="trends" style="display:none;">
-		  		<ul>
-		  			<li><a href="####">所有动态</a></li>
-		  			<li><a href="####">吐槽</a></li>
-		  			<li><a href="####">窝窝文章</a></li>
-		  			<li><a href="####">博客</a></li>
-		  		</ul>
+		  	<div class="trends">
+		  		<ul class="trends_tag">
+					<li class="tag_select"><a href="javascript:void(0)">吐&nbsp;&nbsp;槽</a></li>
+					<li><a href="javascript:void(0)">讨&nbsp;&nbsp;论</a></li>
+					<li><a href="javascript:void(0)">博&nbsp;&nbsp;客</a></li>
+				</ul>
+				<ul class="trends_item trends_item_talk" style="display:block;">
+					<li class="select"><a href="javascript:void(0)">所有吐槽</a></li>
+					<li><a href="javascript:void(0)">所有评论</a></li>
+					<li><a href="javascript:void(0)">我的吐槽</a></li>
+					<li><a href="javascript:void(0)">我的评论</a></li>
+				</ul>
+				<ul class="trends_item trends_item_article">
+					<li><a href="javascript:void(0)">所有发帖</a></li>
+					<li><a href="javascript:void(0)">所有回帖</a></li>
+					<li><a href="javascript:void(0)">我的发帖</a></li>
+					<li><a href="javascript:void(0)">我的回帖</a></li>
+				</ul>
+				<ul class="trends_item trends_item_blog">
+					<li><a href="javascript:void(0)">所有博客</a></li>
+					<li><a href="javascript:void(0)">所有评论</a></li>
+				</ul>
+				<div id="trends_list">
+					
+				</div>
 		  		<div class="talk_item">
 		  			<div class="talk_icon"><img src="../images/default.gif" width="40"></div>
 		  			<div class="talk_con">

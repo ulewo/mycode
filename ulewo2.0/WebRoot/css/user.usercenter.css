@@ -23,11 +23,17 @@
 .blog_link span{color:#999999;margin-left:20px;}
 
 /***************动态*****************/
-.trends{border:1px solid #EEEEEE;padding:10px;margin-top:10px;}
-.trends ul{border-bottom:2px solid #64C5E8;padding:0px;margin:0px;list-style:none;height:27px;}
-.trends ul li{float:left;margin-left:5px;display:inline-block;}
-.trends ul li a{display:inline-block;background:#5CACEE;color:#ffffff;text-decoration:none;height:21px;padding:6px 10px 0px 10px}
-.trends ul li a:hover{background:#64C5E8}
+.trends_tag{list-style:none;border-bottom:2px solid #64C5E8;height:25px;margin:0px;padding:0px;margin-top:20px;}
+.trends_tag li{float:left;width:60px;margin-left:15px;}
+.trends_tag li a{background:#64C5E8;color:#ffffff;text-decoration:none;font-size:14px;display:block;width:60px;padding-top:3px;height:20px;text-align:center;border:2px solid #64C5E8}
+.trends_tag li a:hover{background:#ffffff;height:22px;color:#494949;border-bottom:0px;}
+.trends_tag li.tag_select a{background:#ffffff;height:22px;color:#494949;border-bottom:0px;}
+
+.trends_item{list-style:none;border-bottom:2px solid #DCDCDC;height:25px;margin:0px;padding:0px;margin-top:10px;display:none;}
+.trends_item li{float:left;margin-left:15px;display:inline-block;}
+.trends_item li a{color:#494949;text-decoration:none;font-size:13px;display:inline-block;padding:3px 5px 0px 5px;;height:20px;text-align:center;}
+.trends_item li a:hover{height:22px;color:#494949;border-bottom:2px solid #64C5E8;color:#64C5E8}
+.trends_item li.select a{height:22px;color:#494949;border-bottom:2px solid #64C5E8;color:#64C5E8}
 
 /****吐槽***/
 .u_talk_tit span{display:inline-block;color:#888888;font-size:14px;}
@@ -43,6 +49,8 @@
 .u_talk_subtn .result_info span{padding-top:11px;}
 .u_talk_subtn .result_info i{margin-top:8px;}
 .moretalk a{color:#4466BB;font-weight:bolder;}
+
+.loading{text-align:center;margin-top:10px;}
 
 .talkitem{margin-top:10px;}
 .itemicon{width:37px;float:left;border:1px solid #9A9A9A;}

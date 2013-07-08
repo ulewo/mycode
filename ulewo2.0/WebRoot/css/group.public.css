@@ -36,7 +36,7 @@
 
 
 /********����*******/
-.group_item{list-style:none;border-bottom:2px solid #DCDCDC;height:25px;margin:0px;padding:0px;margin-top:10px;]}
+.group_item{list-style:none;border-bottom:2px solid #DCDCDC;height:25px;margin:0px;padding:0px;margin-top:10px;}
 .group_item li{float:left;margin-left:15px;display:inline-block;}
 .group_item li a{color:#494949;text-decoration:none;font-size:14px;display:inline-block;padding:3px 5px 0px 5px;;height:20px;text-align:center;}
 .group_item li a:hover{height:22px;color:#494949;border-bottom:2px solid #64C5E8;color:#64C5E8}
