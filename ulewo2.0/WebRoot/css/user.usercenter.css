@@ -75,5 +75,5 @@
 .talk_info{margin-top:10px;}
 .talk_info span{color:#999999;display:inline-block;float:left}
 .talk_info a{float:right;display:inline-block;margin-left:10px;}
-
+.talk_content_p{border:1px solid #CCCCCC;background:#F6F6F6;color:#999999;margin-top:10px;padding:8px;}
 .re_line{border-bottom:1px solid #9A9A9A;margin-top:10px;padding:5px;font-size:16px;}

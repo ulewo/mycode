@@ -221,16 +221,6 @@
 		  	</c:if>
 		  	<div class="topblog">
 		  		<div class="topblog_titcon">
-		  			<span class="topblog_tit">最新吐槽</span>
-		  			<span class="topblog_link"><a href="${realPath}/user/${userVo.userId}/talk">更多吐槽&gt;&gt;</a></span>
-		  			<div class="clear"></div>
-		  		</div>
-		  		<div id="talklist">
-		  		
-		  		</div>
-		  	</div>
-		  	<div class="topblog">
-		  		<div class="topblog_titcon">
 		  			<span class="topblog_tit">最新博文</span>
 		  			<span class="topblog_link"><a href="${realPath}/user/${userVo.userId}/blog">进入博客&gt;&gt;</a></span>
 		  			<div class="clear"></div>
@@ -259,58 +249,19 @@
 					<li><a href="javascript:void(0)">我的评论</a></li>
 				</ul>
 				<ul class="trends_item trends_item_article">
-					<li><a href="javascript:void(0)">所有发帖</a></li>
+					<li class="select"><a href="javascript:void(0)">所有发帖</a></li>
 					<li><a href="javascript:void(0)">所有回帖</a></li>
 					<li><a href="javascript:void(0)">我的发帖</a></li>
 					<li><a href="javascript:void(0)">我的回帖</a></li>
 				</ul>
 				<ul class="trends_item trends_item_blog">
-					<li><a href="javascript:void(0)">所有博客</a></li>
+					<li class="select"><a href="javascript:void(0)">所有博客</a></li>
 					<li><a href="javascript:void(0)">所有评论</a></li>
 				</ul>
 				<div id="trends_list">
 					
 				</div>
-		  		<div class="talk_item">
-		  			<div class="talk_icon"><img src="../images/default.gif" width="40"></div>
-		  			<div class="talk_con">
-		  				<div class="talk_tit">
-			  				<a href="####">多多洛</a>
-			  				<span>发布了吐槽</span>
-		  				</div>
-			  			<div class="talk_content">
-			  				吐槽，吐槽吐槽吐槽吐槽吐槽吐槽吐槽吐槽吐槽吐槽吐槽吐槽吐槽吐槽吐槽
-			  			</div>
-			  			<div class="talk_info">
-			  				<span>昨天 Android</span>
-			  				<a href="####">评论(10)</a>
-			  				<div class="clear"></div>
-			  			</div>
-		  			</div>
-		  			<div class="clear"></div>
-		  		</div>
-		  		<div class="talk_item">
-		  			<div class="talk_icon"><img src="../images/default.gif" width="40"></div>
-		  			<div class="talk_con">
-		  				<div class="talk_tit">
-			  				<a href="####">多多洛</a>
-			  				<span>在</span>
-			  				<a href="####">多多洛</a>
-			  				<span>发表了文章</span>
-			  				<a href="####">多多洛多多洛多多洛多多洛多多洛多多洛多多洛</a>
-		  				</div>
-			  			<div class="talk_content">
-			  				吐槽，吐槽吐槽吐槽吐槽吐槽吐槽吐槽吐槽吐槽吐槽吐槽吐槽吐槽吐槽吐槽
-			  			</div>
-			  			<div class="talk_info">
-			  				<span>昨天 Android</span>
-			  				<a href="####">评论(10)</a>
-			  				<a href="####">查看原文</a>
-			  				<div class="clear"></div>
-			  			</div>
-		  			</div>
-		  			<div class="clear"></div>
-		  		</div>
+				<div id="pager" class="pagination" style="margin-top:10px;"></div>
 		  	</div>
 		</div>
 	<div style="clear:left;"></div>
