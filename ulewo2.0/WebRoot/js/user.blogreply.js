@@ -28,7 +28,39 @@ $(function(){
 			$("#pm_emotion_cnt").hide();
 		});
 	});
-	
+	checkFavorite(blogId,"B");
+	$("#op_favorite a").live("click",function(){
+		if(global.userId==""){
+			alert("请先登录");
+			return;
+		}
+		if($(this).attr("disable")=="disable"){
+			return;
+		}
+		btnLoading($(this),"收藏中.....");
+		$.ajax({
+			async : true,
+			cache : false,
+			type : 'POST',
+			dataType : "json",
+			data : {
+				partId:userId,
+				articleId:blogId,
+				type : "B",
+				title : $("#blogtitle").text()
+			},
+			url : global.realPath+"/user/favoriteArticle.action",// 请求的action路径
+			success : function(data) {
+				if (data.result == "fail") {
+					btnLoaded($("#op_favorite a"),"我要收藏");
+					alert(data.message);
+				} else {
+					$("#favoriteCount").text(parseInt($("#favoriteCount").text())+1);
+					$("#op_favorite").html('<span>已收藏</span>');
+				}
+			}
+		});
+	});
 });
 
 function showEmotion() {

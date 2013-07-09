@@ -47,13 +47,17 @@ global.articleId= "${article.id}";
 				<div class="author_icon"><img src="${realPath}/upload/${article.author.userLittleIcon}"></div>
 				<div class="author_info_con">
 					<div class="article_tit">
-						<span class="article_tit_title">${article.title}</span>
+						<span class="article_tit_title" id="article_title">${article.title}</span>
 					</div>
 					<div class="author_info_content">
-						<a href="${realPath}/user/${article.author.userId}">${article.author.userName}</a>&nbsp;
-						发表于 ${article.postTime}&nbsp;
-						阅读  ${article.readNumber}&nbsp;
-						回复  ${article.reNumber} 
+						<div class="author_info_content_op">
+							<a href="${realPath}/user/${article.author.userId}">${article.author.userName}</a>&nbsp;
+							发表于 ${article.postTime}&nbsp;
+							阅读  ${article.readNumber}&nbsp;
+							回复  ${article.reNumber} 
+						</div>
+						<div class="op_favorite"><span id="favoriteCount">0</span>人收藏此文章 <span id="op_favorite"></span></div>
+						<div class="clear"></div>
 					</div>
 				</div>
 				<div class="clear"></div>

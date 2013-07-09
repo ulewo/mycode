@@ -5,11 +5,16 @@
 .author_info{margin-top:10px}
 .author_icon{float:left;width:60px;}
 .author_icon img{width:60px;}
-.author_info_con{margin:left;display:inline-block;margin-left:10px;}
+.author_info_con{display:inline-block;margin-left:10px;width:910px;}
 .article_tit{margin-top:5px;}
 .article_tit_title{font-weight:bolder;font-size:20px;color:#494949}
 .article_count{color:#64C5E8}
 .author_info_content{margin-top:10px;color:#666666}
+.author_info_content_op{float:left;display:inline-block;}
+.op_favorite{float:right;display:inline-block;margin-right:10px;}
+#favoriteCount{font-weight:bold;color:#AA0000;}
+#op_favorite a{color:#AA0000;}
+#op_favorite span{color:#666666}
 .article_detail{margin-top:10px;font-size:14px;line-height:25px;word-wrap:break-word;}
 .article_attached{border:1px solid #B2B3B2;padding:5px;}
 .attached_tit{font-size:16px;font-weight:bold;}

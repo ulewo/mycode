@@ -38,6 +38,27 @@ function loadImag(myImage){
     }  
 }  
 
+function checkFavorite(articleid,type){
+	$.ajax({
+		async : true,
+		cache : false,
+		type : 'GET',
+		dataType : "json",
+		url : global.realPath+"/user/checkFavorite?articleId="+articleid+"&type="+type,// 请求的action路径
+		success : function(data) {
+			if(data.result=="success"){
+				$("#favoriteCount").text(data.haveFavoriteCount);
+				if(data.haveFavorite){
+					$("#op_favorite").html('<span>已收藏</span>');
+				}else{
+					$("#op_favorite").html('<a href="javascript:void(0)">我要收藏</a>');
+				}
+				
+			}
+		}
+	});
+}
+
 function btnLoaded(obj,html){
 	$(obj).html(html);
 	$(obj).attr("disable","");
