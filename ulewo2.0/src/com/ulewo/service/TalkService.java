@@ -31,10 +31,6 @@ public interface TalkService {
 
 	public int queryTalkCount();
 
-	public List<Talk> queryLatestTalkByUserId(int offset, int total, List<String> userIds);
-
-	public int queryTalkCountByUserId(List<String> userIds);
-
 	public PaginationResult queryTalkByUserIdByPag(int page, int pageSize, String userId, Object sessionUser, int type);
 
 	public Talk queryDetail(int talkId);

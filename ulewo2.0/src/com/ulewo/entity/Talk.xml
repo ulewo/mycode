@@ -37,19 +37,19 @@
 	</select>
 	
 	<!-- 根据userId查询 总条数-->
-	<select id="queryCountByUserId"  resultClass="java.lang.Integer" parameterClass="java.util.ArrayList">
-	    select count(id) from talk where userid in
-	    <iterate open="(" close=")" conjunction=","> 
-              #userIds[]# 
-        </iterate> 
+	<select id="queryCountByUserId"  resultClass="java.lang.Integer" parameterClass="java.util.Map">
+	    select count(id) from talk where userid = #userId#
+		<isEqual prepend="or" property="includeme" compareValue="0">
+         	userid in (select friendid from user_friend where userid = #userId#)
+		</isEqual>
 	</select>
 	
 	<!-- 根据userId查询 说说-->
 	<select id="queryTalkByUserId"  resultClass="talk">
-	    select t.*,(select count(r.id) from retalk r where r.talkid=t.id) recount from talk t where userid in
-		<iterate open="(" close=")" conjunction="," property="userIds"> 
-              #userIds[]# 
-        </iterate> 
+	    select t.*,(select count(r.id) from retalk r where r.talkid=t.id) recount from talk t where userid = #userId#
+		<isEqual prepend="or" property="includeme" compareValue="0">
+         	userid in (select friendid from user_friend where userid = #userId#)
+		</isEqual>
 	    order by createtime desc limit #offset#,#total#
 	</select>
 </sqlMap>

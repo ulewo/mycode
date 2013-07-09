@@ -19,7 +19,6 @@ import com.ulewo.entity.Article;
 import com.ulewo.entity.AttachedFile;
 import com.ulewo.entity.NoticeParam;
 import com.ulewo.entity.ReArticle;
-import com.ulewo.entity.ReTalk;
 import com.ulewo.entity.SessionUser;
 import com.ulewo.entity.User;
 import com.ulewo.enums.ArticleEssence;
@@ -44,10 +43,10 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Autowired
 	private UserFriendDao userFriendDao;
-	
+
 	@Autowired
 	private ReArticleDao reArticleDao;
-	
+
 	@Autowired
 	private AttachedFileDao attachedFileDao;
 
@@ -377,74 +376,65 @@ public class ArticleServiceImpl implements ArticleService {
 		return articleDao.queryHotArticle(offset, total);
 	}
 
-	
-	public PaginationResult queryArticleByUserIdByPag(int page, int pageSize, String userId, Object sessionUser, int type){
+	public PaginationResult queryArticleByUserIdByPag(int page, int pageSize, String userId, Object sessionUser,
+			int type) {
+
+		int includeme = includeme(userId, sessionUser); //0 查询所有  1查询自己
 		PaginationResult result = null;
-		List<String> userIds = new ArrayList<String>();
 		switch (type) {
 		case 0://查询所有主题
-			userIds = getUserIds(userId, sessionUser);
-			result = queryArticleByUserIds(page, pageSize, userIds);
+			result = queryArticleByUserIds(page, pageSize, userId, includeme);
 			break;
 		case 1: //所有回复
-			userIds = getUserIds(userId, sessionUser);
-			result = queryReArticleByUserIds(page, pageSize, userIds);
+			result = queryReArticleByUserIds(page, pageSize, userId, includeme);
 			break;
 		case 2: //查询我的主题
-			userIds.add(userId);
-			result = queryArticleByUserIds(page, pageSize, userIds);
+			result = queryArticleByUserIds(page, pageSize, userId, 1);
 			break;
 		case 3: //查询我的回复
-			userIds.add(userId);
-			result = queryReArticleByUserIds(page, pageSize, userIds);
+			result = queryReArticleByUserIds(page, pageSize, userId, 1);
 			break;
 		}
 		return result;
 	}
-	
-	private PaginationResult queryArticleByUserIds(int page, int pageSize, List<String> userIds) {
 
-		int count = articleDao.queryArticleCountByUserId(userIds);
+	private PaginationResult queryArticleByUserIds(int page, int pageSize, String userId, int includeme) {
+
+		int count = articleDao.queryArticleCountByUserId(userId, includeme);
 		Pagination pagination = new Pagination(page, count, pageSize);
 		pagination.action();
-		List<Article> list = articleDao.queryArticleByUserId(pagination.getOffSet(), pageSize, userIds);
-		for(Article article:list){
+		List<Article> list = articleDao.queryArticleByUserId(pagination.getOffSet(), pageSize, userId, includeme);
+		for (Article article : list) {
 			article.setPostTime(StringUtils.friendly_time(article.getPostTime()));
 		}
 		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
 		return result;
 	}
 
-	private PaginationResult queryReArticleByUserIds(int page, int pageSize, List<String> userIds) {
+	private PaginationResult queryReArticleByUserIds(int page, int pageSize, String userId, int includeme) {
 
-		int count = reArticleDao.queryReArticleCountByUserId(userIds);
+		int count = reArticleDao.queryReArticleCountByUserId(userId, includeme);
 		Pagination pagination = new Pagination(page, count, pageSize);
 		pagination.action();
-		List<ReArticle> list = reArticleDao.queryReArticleByUserId(pagination.getOffSet(), pageSize, userIds);
-		for(ReArticle reArticle:list){
+		List<ReArticle> list = reArticleDao.queryReArticleByUserId(pagination.getOffSet(), pageSize, userId, includeme);
+		for (ReArticle reArticle : list) {
 			reArticle.setReTime(StringUtils.friendly_time(reArticle.getReTime()));
 		}
 		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
 		return result;
 	}
 
-	//获取要查看的人
-	private List<String> getUserIds(String userId, Object sessionUser) {
-
-		List<String> userIds = new ArrayList<String>();
+	//是否查询自己的文章
+	private int includeme(String userId, Object sessionUser) {
 
 		if (null != sessionUser && ((SessionUser) sessionUser).getUserId().equals(userId)) {
-			//用户查看自己的
-			//关注的人 和自己的。
-			userIds = userFriendDao.queryFocusUserIds(((SessionUser) sessionUser).getUserId());
-			userIds.add(userId);
+			return 0;
 		}
 		else {
-			userIds.add(userId);
+			return 1;
 		}
-		return userIds;
 	}
-	
+
 	@Override
 	public PaginationResult queryAllArticleByAdmin(int page, int pageSize, String keyWord) {
 

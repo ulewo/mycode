@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="favorite">
+	<cacheModel id="user-cache" type="LRU" readOnly="true"
+		serialize="false">
+		<flushInterval hours="24" />
+		<property value="500" name="size" />
+	</cacheModel>
+	
+	
+	<typeAlias alias="favorite" type="com.ulewo.entity.Favorite" />
+	
+	<!-- 添加收藏-->
+	<insert id="addFavorite" parameterClass="favorite">
+		<selectKey keyProperty="id" resultClass="java.lang.Integer" type="post">
+      		SELECT LAST_INSERT_ID()
+    	 </selectKey>
+        <![CDATA[
+           insert into favorite(userid,articleid,title,type) 
+		   values(#userId#,#articleId#,#title#,#type#)
+        ]]>
+	</insert>
+	
+	<!-- 查询收藏 -->
+	<select id="queryFavoriteByUserId"  resultClass="favorite" parameterClass="java.util.Map">
+	    select *  from favorite where userid=#userId# and type=#type# limit #offset#,#total#
+	</select>
+	
+	<!-- 查询收藏总条数 -->
+	<select id="queryFavoriteCountByUserId"  resultClass="java.lang.Integer">
+	    select count(id) from favorite where userid = #userId# and type = #type#;
+	</select>
+	
+	<select id="queryFavoriteCountByArticleId"  resultClass="java.lang.Integer">
+	    select count(id) from favorite where articleid = #articleId# and type = #type#;
+	</select>
+	
+	<delete id="deleteFavorite" parameterClass="java.util.Map">
+	    delete from favorite where articleid = #articleId# and type = #type# and userid=#userId#;
+	</delete>
+</sqlMap>

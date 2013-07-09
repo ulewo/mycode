@@ -111,9 +111,12 @@ public class BlogReplyDao extends BaseDao {
 	 * @
 	 * @author luohl
 	 */
-	public int queryReBlogCountByUserId(List<String> userIds) {
+	public int queryReBlogCountByUserId(String userId, int includeme) {
 
-		return (Integer) this.getSqlMapClientTemplate().queryForObject("blogReply.queryReBlogCountByUserId", userIds);
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("userId", userId);
+		paramMap.put("includeme", includeme);
+		return (Integer) this.getSqlMapClientTemplate().queryForObject("blogReply.queryReBlogCountByUserId", paramMap);
 	}
 
 	/**
@@ -126,10 +129,11 @@ public class BlogReplyDao extends BaseDao {
 	 * @
 	 * @author luohl
 	 */
-	public List<BlogReply> queryReBlogByUserId(int offset, int total, List<String> userIds) {
+	public List<BlogReply> queryReBlogByUserId(int offset, int total, String userId, int includeme) {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
-		parmMap.put("userIds", userIds);
+		parmMap.put("userId", userId);
+		parmMap.put("includeme", includeme);
 		parmMap.put("offset", offset);
 		parmMap.put("total", total);
 		return this.getSqlMapClientTemplate().queryForList("blogReply.queryReBlogByUserId", parmMap);

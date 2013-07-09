@@ -56,17 +56,21 @@ public class ReTalkDao extends BaseDao {
 		this.getSqlMapClientTemplate().delete("retalk.delteReTalk", reTalkId);
 	}
 
-	public List<ReTalk> queryReTalkByUserId(int offset, int total, List<String> userId) {
+	public List<ReTalk> queryReTalkByUserId(int offset, int total, String userId, int includeme) {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("offset", offset);
 		parmMap.put("total", total);
-		parmMap.put("userIds", userId);
+		parmMap.put("userId", userId);
+		parmMap.put("includeme", includeme);
 		return (List<ReTalk>) this.getSqlMapClientTemplate().queryForList("retalk.queryReTalkByUserId", parmMap);
 	}
 
-	public int queryReTalkCountByUserId(List<String> userIds) {
+	public int queryReTalkCountByUserId(String userId, int includeme) {
 
-		return (Integer) this.getSqlMapClientTemplate().queryForObject("retalk.queryReTalkCountByUserId", userIds);
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("userId", userId);
+		parmMap.put("includeme", includeme);
+		return (Integer) this.getSqlMapClientTemplate().queryForObject("retalk.queryReTalkCountByUserId", parmMap);
 	}
 }

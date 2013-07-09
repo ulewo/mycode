@@ -6,7 +6,6 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
-import com.ulewo.entity.Article;
 import com.ulewo.entity.ReArticle;
 
 /**
@@ -28,8 +27,7 @@ public class ReArticleDao extends BaseDao {
 	 */
 	public int addReArticle(ReArticle reArticle) {
 
-		int id = (Integer) this.getSqlMapClientTemplate().insert(
-				"reArticle.addReArticle", reArticle);
+		int id = (Integer) this.getSqlMapClientTemplate().insert("reArticle.addReArticle", reArticle);
 		return id;
 	}
 
@@ -56,8 +54,7 @@ public class ReArticleDao extends BaseDao {
 	 */
 	public ReArticle getReArticle(int id) {
 
-		return (ReArticle) this.getSqlMapClientTemplate().queryForObject(
-				"reArticle.getReArticle", id);
+		return (ReArticle) this.getSqlMapClientTemplate().queryForObject("reArticle.getReArticle", id);
 	}
 
 	/**
@@ -70,8 +67,7 @@ public class ReArticleDao extends BaseDao {
 	 */
 	public void updateReArticle(ReArticle reArticle) {
 
-		this.getSqlMapClientTemplate().update("reArticle.updateReArticle",
-				reArticle);
+		this.getSqlMapClientTemplate().update("reArticle.updateReArticle", reArticle);
 	}
 
 	/**
@@ -85,8 +81,7 @@ public class ReArticleDao extends BaseDao {
 	 */
 	public int queryReArticleCount(int articleid) {
 
-		return (Integer) this.getSqlMapClientTemplate().queryForObject(
-				"reArticle.queryReArticleCount", articleid);
+		return (Integer) this.getSqlMapClientTemplate().queryForObject("reArticle.queryReArticleCount", articleid);
 	}
 
 	/**
@@ -106,8 +101,7 @@ public class ReArticleDao extends BaseDao {
 		parmMap.put("articleid", articleid);
 		parmMap.put("offset", offset);
 		parmMap.put("total", total);
-		return this.getSqlMapClientTemplate().queryForList(
-				"reArticle.queryReArticles", parmMap);
+		return this.getSqlMapClientTemplate().queryForList("reArticle.queryReArticles", parmMap);
 	}
 
 	/**
@@ -120,8 +114,7 @@ public class ReArticleDao extends BaseDao {
 	 */
 	public List<ReArticle> queryReArticleByPid(int pid) {
 
-		return this.getSqlMapClientTemplate().queryForList(
-				"reArticle.queryReArticleByPid", pid);
+		return this.getSqlMapClientTemplate().queryForList("reArticle.queryReArticleByPid", pid);
 	}
 
 	/**
@@ -137,32 +130,35 @@ public class ReArticleDao extends BaseDao {
 	 */
 	public ReArticle queryLatestReArticle(int articleid) {
 
-		return (ReArticle) this.getSqlMapClientTemplate().queryForObject(
-				"reArticle.queryLatestReArticle", articleid);
+		return (ReArticle) this.getSqlMapClientTemplate().queryForObject("reArticle.queryLatestReArticle", articleid);
 	}
 
 	public int queryReArticleByGid(String gid) {
-		return (Integer) this.getSqlMapClientTemplate().queryForObject(
-				"reArticle.queryAllReArticleCountByGid", gid);
+
+		return (Integer) this.getSqlMapClientTemplate().queryForObject("reArticle.queryAllReArticleCountByGid", gid);
 	}
 
-	public List<ReArticle> queryAllReArticleByGid(String gid, int offset,
-			int total) {
+	public List<ReArticle> queryAllReArticleByGid(String gid, int offset, int total) {
+
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("gid", gid);
 		parmMap.put("offset", offset);
 		parmMap.put("total", total);
-		return this.getSqlMapClientTemplate().queryForList(
-				"reArticle.queryAllReArticleByGid", parmMap);
+		return this.getSqlMapClientTemplate().queryForList("reArticle.queryAllReArticleByGid", parmMap);
 	}
-	
+
 	/**
 	 * 根据userId查询回复的主题数量
 	 * @param userIds
 	 * @return
 	 */
-	public int queryReArticleCountByUserId(List<String> userIds) {
-		return (Integer) this.getSqlMapClientTemplate().queryForObject("reArticle.queryReArticleCountByUserId", userIds);
+	public int queryReArticleCountByUserId(String userId, int includeme) {
+
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("userId", userId);
+		parmMap.put("includeme", includeme);
+		return (Integer) this.getSqlMapClientTemplate()
+				.queryForObject("reArticle.queryReArticleCountByUserId", parmMap);
 	}
 
 	/**
@@ -175,10 +171,11 @@ public class ReArticleDao extends BaseDao {
 	 * @
 	 * @author luohl
 	 */
-	public List<ReArticle> queryReArticleByUserId(int offset, int total,List<String> userIds) {
+	public List<ReArticle> queryReArticleByUserId(int offset, int total, String userId, int includeme) {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
-		parmMap.put("userIds", userIds);
+		parmMap.put("userId", userId);
+		parmMap.put("includeme", includeme);
 		parmMap.put("offset", offset);
 		parmMap.put("total", total);
 		return this.getSqlMapClientTemplate().queryForList("reArticle.queryReArticleByUserId", parmMap);

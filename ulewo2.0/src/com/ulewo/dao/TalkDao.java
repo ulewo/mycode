@@ -50,17 +50,21 @@ public class TalkDao extends BaseDao {
 		return (Talk) this.getSqlMapClientTemplate().queryForObject("talk.queryDetail", talkId);
 	}
 
-	public List<Talk> queryTalkByUserId(int offset, int total, List<String> userId) {
+	public List<Talk> queryTalkByUserId(int offset, int total, String userId, int includeme) {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("offset", offset);
 		parmMap.put("total", total);
-		parmMap.put("userIds", userId);
+		parmMap.put("userId", userId);
+		parmMap.put("includeme", includeme);
 		return (List<Talk>) this.getSqlMapClientTemplate().queryForList("talk.queryTalkByUserId", parmMap);
 	}
 
-	public int queryTalkCountByUserId(List<String> userIds) {
+	public int queryTalkCountByUserId(String userId, int includeme) {
 
-		return (Integer) this.getSqlMapClientTemplate().queryForObject("talk.queryCountByUserId", userIds);
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("userId", userId);
+		parmMap.put("includeme", includeme);
+		return (Integer) this.getSqlMapClientTemplate().queryForObject("talk.queryCountByUserId", parmMap);
 	}
 }

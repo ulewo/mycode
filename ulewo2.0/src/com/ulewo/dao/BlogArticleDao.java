@@ -155,9 +155,12 @@ public class BlogArticleDao extends BaseDao {
 	 * @
 	 * @author luohl
 	 */
-	public int queryBlogArticleCountByUserId(List<String> userIds) {
+	public int queryBlogArticleCountByUserId(String userId, int includeme) {
 
-		return (Integer) this.getSqlMapClientTemplate().queryForObject("blogArticle.queryBlogCountByUserId", userIds);
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("userId", userId);
+		parmMap.put("includeme", includeme);
+		return (Integer) this.getSqlMapClientTemplate().queryForObject("blogArticle.queryBlogCountByUserId", parmMap);
 	}
 
 	/**
@@ -170,10 +173,11 @@ public class BlogArticleDao extends BaseDao {
 	 * @
 	 * @author luohl
 	 */
-	public List<BlogArticle> queryBlogArticleByUserId(int offset, int total, List<String> userIds) {
+	public List<BlogArticle> queryBlogArticleByUserId(int offset, int total, String userId, int includeme) {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
-		parmMap.put("userIds", userIds);
+		parmMap.put("userId", userId);
+		parmMap.put("includeme", includeme);
 		parmMap.put("offset", offset);
 		parmMap.put("total", total);
 		return this.getSqlMapClientTemplate().queryForList("blogArticle.queryBlogByUserId", parmMap);

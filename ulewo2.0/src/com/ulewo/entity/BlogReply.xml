@@ -79,18 +79,18 @@
 		from blog_reply r inner join blog_article b on r.blogid=b.id
 		inner join user u on u.userid=r.userid
 		left outer join user ru on r.atuserid = ru.userid
-		where r.userid in
-		<iterate open="(" close=")" conjunction="," property="userIds"> 
-              #userIds[]# 
-        </iterate> 
+		where r.userid = #userId#
+		<isEqual prepend="or" property="includeme" compareValue="0">
+         	r.userid in (select friendid from user_friend where userid = #userId#)
+		</isEqual>
 		order by posttime desc limit #offset#,#total#
 	</select>
 	
 	<!--根据userId查询回复数量-->
-	<select id="queryReBlogCountByUserId"  resultClass="java.lang.Integer" parameterClass="java.util.ArrayList">
-		select count(id) from blog_reply where userid in
-		<iterate open="(" close=")" conjunction=","> 
-              #userIds[]# 
-        </iterate> 
+	<select id="queryReBlogCountByUserId"  resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		select count(id) from blog_reply b where b.userid = #userId#
+		<isEqual prepend="or" property="includeme" compareValue="0">
+         	b.userid in (select friendid from user_friend where userid = #userId#)
+		</isEqual>
 	</select>
 </sqlMap>

@@ -82,22 +82,6 @@ public class TalkServiceImpl implements TalkService {
 		return talkDao.queryTalkCount();
 	}
 
-	@Override
-	public List<Talk> queryLatestTalkByUserId(int offset, int total, List<String> userIds) {
-
-		List<Talk> list = talkDao.queryTalkByUserId(offset, total, userIds);
-		for (Talk talk : list) {
-			talk.setCreateTime(StringUtils.friendly_time(talk.getCreateTime()));
-		}
-		return list;
-	}
-
-	@Override
-	public int queryTalkCountByUserId(List<String> userId) {
-
-		return talkDao.queryTalkCountByUserId(userId);
-	}
-
 	public Talk queryDetail(int talkId) {
 
 		Talk talk = talkDao.queryDetail(talkId);
@@ -119,66 +103,59 @@ public class TalkServiceImpl implements TalkService {
 	@Override
 	public PaginationResult queryTalkByUserIdByPag(int page, int pageSize, String userId, Object sessionUser, int type) {
 
+		int includeme = includeme(userId, sessionUser); //0 查询所有  1查询自己
 		PaginationResult result = null;
-		List<String> userIds = new ArrayList<String>();
 		switch (type) {
 		case 0://查询所有主题
-			userIds = getUserIds(userId, sessionUser);
-			result = queryTalkByUserIds(page, pageSize, userIds);
+			result = queryTalkByUserIds(page, pageSize, userId, includeme);
 			break;
 		case 1: //所有回复
-			userIds = getUserIds(userId, sessionUser);
-			result = queryReTalkByUserIds(page, pageSize, userIds);
+			result = queryReTalkByUserIds(page, pageSize, userId, includeme);
 			break;
 		case 2: //查询我的主题
-			userIds.add(userId);
-			result = queryTalkByUserIds(page, pageSize, userIds);
+			result = queryTalkByUserIds(page, pageSize, userId, 1);
 			break;
 		case 3: //查询我的回复
-			userIds.add(userId);
-			result = queryReTalkByUserIds(page, pageSize, userIds);
+			result = queryReTalkByUserIds(page, pageSize, userId, 1);
 			break;
 		}
 		return result;
 	}
 
-	private PaginationResult queryTalkByUserIds(int page, int pageSize, List<String> userIds) {
+	private PaginationResult queryTalkByUserIds(int page, int pageSize, String userId, int includeme) {
 
-		int count = queryTalkCountByUserId(userIds);
+		int count = talkDao.queryTalkCountByUserId(userId, includeme);
 		Pagination pagination = new Pagination(page, count, pageSize);
 		pagination.action();
-		List<Talk> list = queryLatestTalkByUserId(pagination.getOffSet(), pageSize, userIds);
+		List<Talk> list = talkDao.queryTalkByUserId(pagination.getOffSet(), pageSize, userId, includeme);
+		for (Talk talk : list) {
+			talk.setCreateTime(StringUtils.friendly_time(talk.getCreateTime()));
+		}
 		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
 		return result;
 	}
 
-	private PaginationResult queryReTalkByUserIds(int page, int pageSize, List<String> userIds) {
+	private PaginationResult queryReTalkByUserIds(int page, int pageSize, String userId, int includeme) {
 
-		int count = reTalkDao.queryReTalkCountByUserId(userIds);
+		int count = reTalkDao.queryReTalkCountByUserId(userId, includeme);
 		Pagination pagination = new Pagination(page, count, pageSize);
 		pagination.action();
-		List<ReTalk> list = reTalkDao.queryReTalkByUserId(pagination.getOffSet(), pageSize, userIds);
-		for(ReTalk reTalk:list){
+		List<ReTalk> list = reTalkDao.queryReTalkByUserId(pagination.getOffSet(), pageSize, userId, includeme);
+		for (ReTalk reTalk : list) {
 			reTalk.setCreateTime(StringUtils.friendly_time(reTalk.getCreateTime()));
 		}
 		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
 		return result;
 	}
 
-	//获取要查看的人
-	private List<String> getUserIds(String userId, Object sessionUser) {
-
-		List<String> userIds = new ArrayList<String>();
+	//是否查询自己的文章
+	private int includeme(String userId, Object sessionUser) {
 
 		if (null != sessionUser && ((SessionUser) sessionUser).getUserId().equals(userId)) {
-			//用户查看自己的
-			//关注的人 和自己的。
-			userIds = userFriendDao.queryFocusUserIds(((SessionUser) sessionUser).getUserId());
-			userIds.add(userId);
+			return 0;
 		}
 		else {
-			userIds.add(userId);
+			return 1;
 		}
-		return userIds;
 	}
 }

@@ -222,27 +222,26 @@ public class BlogArticleServiceImpl implements BlogArticleService {
 	public PaginationResult queryArticleByUserIdByPag(int page, int pageSize, String userId, Object sessionUser,
 			int type) {
 
+		int includeme = includeme(userId, sessionUser); //0 查询所有  1查询自己
 		PaginationResult result = null;
-		List<String> userIds = new ArrayList<String>();
 		switch (type) {
 		case 0://查询所有主题
-			userIds = getUserIds(userId, sessionUser);
-			result = queryBlogByUserIds(page, pageSize, userIds);
+			result = queryBlogByUserIds(page, pageSize, userId, includeme);
 			break;
 		case 1: //所有回复
-			userIds = getUserIds(userId, sessionUser);
-			result = queryReArticleByUserIds(page, pageSize, userIds);
+			result = queryReBlogByUserIds(page, pageSize, userId, includeme);
 			break;
 		}
 		return result;
 	}
 
-	private PaginationResult queryBlogByUserIds(int page, int pageSize, List<String> userIds) {
+	private PaginationResult queryBlogByUserIds(int page, int pageSize, String userid, int includeme) {
 
-		int count = blogArticleDao.queryBlogArticleCountByUserId(userIds);
+		int count = blogArticleDao.queryBlogArticleCountByUserId(userid, includeme);
 		Pagination pagination = new Pagination(page, count, pageSize);
 		pagination.action();
-		List<BlogArticle> list = blogArticleDao.queryBlogArticleByUserId(pagination.getOffSet(), pageSize, userIds);
+		List<BlogArticle> list = blogArticleDao.queryBlogArticleByUserId(pagination.getOffSet(), pageSize, userid,
+				includeme);
 		for (BlogArticle article : list) {
 			article.setPostTime(StringUtils.friendly_time(article.getPostTime()));
 		}
@@ -250,12 +249,12 @@ public class BlogArticleServiceImpl implements BlogArticleService {
 		return result;
 	}
 
-	private PaginationResult queryReArticleByUserIds(int page, int pageSize, List<String> userIds) {
+	private PaginationResult queryReBlogByUserIds(int page, int pageSize, String userid, int includeme) {
 
-		int count = blogReplyDao.queryReBlogCountByUserId(userIds);
+		int count = blogReplyDao.queryReBlogCountByUserId(userid, includeme);
 		Pagination pagination = new Pagination(page, count, pageSize);
 		pagination.action();
-		List<BlogReply> list = blogReplyDao.queryReBlogByUserId(pagination.getOffSet(), pageSize, userIds);
+		List<BlogReply> list = blogReplyDao.queryReBlogByUserId(pagination.getOffSet(), pageSize, userid, includeme);
 		for (BlogReply reArticle : list) {
 			reArticle.setPostTime(StringUtils.friendly_time(reArticle.getPostTime()));
 		}
@@ -263,20 +262,14 @@ public class BlogArticleServiceImpl implements BlogArticleService {
 		return result;
 	}
 
-	//获取要查看的人
-	private List<String> getUserIds(String userId, Object sessionUser) {
-
-		List<String> userIds = new ArrayList<String>();
+	//是否查询自己的文章
+	private int includeme(String userId, Object sessionUser) {
 
 		if (null != sessionUser && ((SessionUser) sessionUser).getUserId().equals(userId)) {
-			//用户查看自己的
-			//关注的人 和自己的。
-			userIds = userFriendDao.queryFocusUserIds(((SessionUser) sessionUser).getUserId());
-			userIds.add(userId);
+			return 0;
 		}
 		else {
-			userIds.add(userId);
+			return 1;
 		}
-		return userIds;
 	}
 }
