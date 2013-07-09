@@ -245,14 +245,20 @@
 				<ul class="trends_item trends_item_talk" style="display:block;">
 					<li class="select"><a href="javascript:void(0)">所有吐槽</a></li>
 					<li><a href="javascript:void(0)">所有评论</a></li>
-					<li><a href="javascript:void(0)">我的吐槽</a></li>
-					<li><a href="javascript:void(0)">我的评论</a></li>
+					<c:if test="${userVo.userId==user.userId}">
+						<li><a href="javascript:void(0)">我的吐槽</a></li>
+						<li><a href="javascript:void(0)">我的评论</a></li>
+					</c:if>
+					
 				</ul>
 				<ul class="trends_item trends_item_article">
 					<li class="select"><a href="javascript:void(0)">所有发帖</a></li>
 					<li><a href="javascript:void(0)">所有回帖</a></li>
-					<li><a href="javascript:void(0)">我的发帖</a></li>
-					<li><a href="javascript:void(0)">我的回帖</a></li>
+					<c:if test="${userVo.userId==user.userId}">
+						<li><a href="javascript:void(0)">我的发帖</a></li>
+						<li><a href="javascript:void(0)">我的回帖</a></li>
+					</c:if>
+					
 				</ul>
 				<ul class="trends_item trends_item_blog">
 					<li class="select"><a href="javascript:void(0)">所有博客</a></li>

@@ -14,6 +14,13 @@ $(function(){
 			$(".trends_item").eq(index).show();
 			isloading = true;
 			loadtype = index;
+			type=0;
+			$(".trends_item_talk li").removeClass("select");
+			$(".trends_item_talk li").eq(0).addClass("select");
+			$(".trends_item_article li").removeClass("select");
+			$(".trends_item_article li").eq(0).addClass("select");
+			$(".trends_item_blog li").removeClass("select");
+			$(".trends_item_blog li").eq(0).addClass("select");
 			switch(index){
 				case 0:
 					loadPage(1);
@@ -77,7 +84,7 @@ function loadPage(page){
 			loadArticle(type,page);
 		break;
 		case 2:
-			loadBlog();
+			loadBlog(type,page);
 		break;
 	}
 }
@@ -94,6 +101,7 @@ function loadTalk(type,page){
 		dataType : "json",
 		url : global.realPath+"/user/loadTalk?userId="+userId+"&type="+type+"&page="+page,// 请求的action路径
 		success : function(data) {
+			var noinfo = "没有吐槽！";
 			$(".loading").remove();
 			if(data.result=="success"){
 				var list = data.data.list;
@@ -107,6 +115,7 @@ function loadTalk(type,page){
 						for(var i=0;i<length;i++){
 							new UserReTalkItem(list[i]).talk_item.appendTo($("#trends_list"));
 						}
+						noinfo="没有回复！";
 					}
 					if(data.data.pageTotal>1){
 						new Pager(data.data.pageTotal,10,data.data.page).asHtml().appendTo($("#pager"));
@@ -114,7 +123,7 @@ function loadTalk(type,page){
 						$("#pager").hide();
 					}
 				}else{
-					$("<div class='noinfo'>没有吐槽！</div>").appendTo($("#trends_list"));
+					$("<div class='noinfo'>"+noinfo+"</div>").appendTo($("#trends_list"));
 				}
 			}
 			isloading = false;
@@ -196,6 +205,7 @@ function loadArticle(type,page){
 		dataType : "json",
 		url : global.realPath+"/user/loadArticle?userId="+userId+"&type="+type+"&page="+page,// 请求的action路径
 		success : function(data) {
+			var noinfo = "没有讨论！";
 			$(".loading").remove();
 			if(data.result=="success"){
 				var list = data.data.list;
@@ -207,8 +217,9 @@ function loadArticle(type,page){
 						}
 					}else if(type==1||type==3){
 						for(var i=0;i<length;i++){
-							new UserArticleItem(list[i]).talk_item.appendTo($("#trends_list"));
+							new UserReArticleItem(list[i]).talk_item.appendTo($("#trends_list"));
 						}
+						noinfo = "没有回帖！";
 					}
 					if(data.data.pageTotal>1){
 						new Pager(data.data.pageTotal,10,data.data.page).asHtml().appendTo($("#pager"));
@@ -216,7 +227,7 @@ function loadArticle(type,page){
 						$("#pager").hide();
 					}
 				}else{
-					$("<div class='noinfo'>没有吐槽！</div>").appendTo($("#trends_list"));
+					$("<div class='noinfo'>"+noinfo+"</div>").appendTo($("#trends_list"));
 				}
 			}
 			isloading = false;
@@ -249,27 +260,117 @@ function UserArticleItem(article){
 	$('<div class="clear"></div>').appendTo(this.talk_item);
 }
 
+function UserReArticleItem(article){
+	this.talk_item = $('<div class="talk_item"></div>');
+	$('<div class="talk_icon"><a href="'+global.realPath+'/user/'+article.authorid+'"><img src="'+global.realPath+'/upload/'+article.authorIcon+'" width="40"></a></div>').appendTo(this.talk_item);
+	var talk_con = $('<div class="talk_con"></div>').appendTo(this.talk_item);
+	$('<div class="talk_tit">'+
+			'<a href="'+global.realPath+'/user/'+article.authorid+'">'+article.authorName+'</a>'+
+			'<span>&nbsp;回复了文章&nbsp;</span>'+
+			'<a href="'+global.realPath+'/group/'+article.gid+"/topic/"+article.articleId+'">'+article.articleTitle+'</a>'+
+			'</div>').appendTo(talk_con);
+	var content = article.content;
+	if(article.atUserId!=""&&article.atUserId!=null){
+		content = "回复&nbsp;<a href='"+global.realPath+"/user/"+article.atUserId+"'>"+article.atUserName+"</a>："+content;
+	}
+	$('<div class="talk_content">'+content+'</div>').appendTo(talk_con);
+	var Android = "";
+	if(article.sourceFrom == "A"){
+		Android= "&nbsp;Android";
+	}
+	$('<div class="talk_info">'+
+			'<span>'+article.reTime+Android+'</span>'+
+			'<a href="'+global.realPath+'/group/'+article.gid+"/topic/"+article.articleId+'" target="_blank">查看原文</a>'+
+			'<div class="clear"></div>'+
+			'</div>').appendTo(talk_con);
+	$('<div class="clear"></div>').appendTo(this.talk_item);
+}
+
 /*******博客*********/
-function loadBlog(type){
-	$.ajax({
-		async : true,
-		cache : false,
-		type : 'GET',
-		dataType : "json",
-		url : global.realPath+"/user/loadTalk?userId="+userId+"&type="+type,// 请求的action路径
-		success : function(data) {
-			if(data.result=="success"){
-				var length = data.list.length;
-				if(length>0){
-					for(var i=0;i<length;i++){
-						new TalkItem(data.list[i]).item.appendTo($("#talklist"));
+function loadBlog(type,page){
+		$("#trends_list").empty();
+		$("#pager").empty();
+		$("<div class='loading'><img src='"+global.realPath+"/images/load.gif'></div>").appendTo($("#trends_list"));
+		$.ajax({
+			async : true,
+			cache : true,
+			type : 'GET',
+			dataType : "json",
+			url : global.realPath+"/user/loadBlog?userId="+userId+"&type="+type+"&page="+page,// 请求的action路径
+			success : function(data) {
+				var noinfo = "没有博客！";
+				$(".loading").remove();
+				if(data.result=="success"){
+					var list = data.data.list;
+					var length = list.length;
+					if(length>0){
+						if(type==0||type==2){
+							for(var i=0;i<length;i++){
+								new UserBlogItem(list[i]).talk_item.appendTo($("#trends_list"));
+							}
+						}else if(type==1||type==3){
+							for(var i=0;i<length;i++){
+								new UserReBlogItem(list[i]).talk_item.appendTo($("#trends_list"));
+							}
+							noinfo = "没有评论！";
+						}
+						if(data.data.pageTotal>1){
+							new Pager(data.data.pageTotal,10,data.data.page).asHtml().appendTo($("#pager"));
+						}else{
+							$("#pager").hide();
+						}
+					}else{
+						$("<div class='noinfo'>"+noinfo+"</div>").appendTo($("#trends_list"));
 					}
-				}else{
-					$("<div class='noinfo'>没有吐槽！</div>").appendTo($("#talklist"));
 				}
+				isloading = false;
 			}
+		});
+}
+
+function UserBlogItem(blog){
+	this.talk_item = $('<div class="talk_item"></div>');
+	$('<div class="talk_icon"><a href="'+global.realPath+'/user/'+blog.userId+'"><img src="'+global.realPath+'/upload/'+blog.userIcon+'" width="40"></a></div>').appendTo(this.talk_item);
+	var talk_con = $('<div class="talk_con"></div>').appendTo(this.talk_item);
+	$('<div class="talk_tit">'+
+			'<a href="'+global.realPath+'/user/'+blog.userId+'">'+blog.userName+'</a>'+
+			'<span>&nbsp;发表了博文&nbsp;</span>'+
+			'<a href="'+global.realPath+'/user/'+blog.userId+"/blog/"+blog.id+'">'+blog.title+'</a>'+
+			'</div>').appendTo(talk_con);
+	$('<div class="talk_content">'+blog.summary+'</div>').appendTo(talk_con);
+	$('<div class="talk_info">'+
+			'<span>'+blog.postTime+'</span>'+
+			'<a href="'+global.realPath+'/user/'+blog.userId+"/blog/"+blog.id+'" target="_blank">评论('+blog.reCount+')</a>'+
+			'<a href="'+global.realPath+'/user/'+blog.userId+"/blog/"+blog.id+'" target="_blank">查看原文</a>'+
+			'<div class="clear"></div>'+
+			'</div>').appendTo(talk_con);
+	$('<div class="clear"></div>').appendTo(this.talk_item);
+}
+
+function UserReBlogItem(article){
+		this.talk_item = $('<div class="talk_item"></div>');
+		$('<div class="talk_icon"><a href="'+global.realPath+'/user/'+article.userId+'"><img src="'+global.realPath+'/upload/'+article.reUserIcon+'" width="40"></a></div>').appendTo(this.talk_item);
+		var talk_con = $('<div class="talk_con"></div>').appendTo(this.talk_item);
+		$('<div class="talk_tit">'+
+				'<a href="'+global.realPath+'/user/'+article.userId+'">'+article.userName+'</a>'+
+				'<span>&nbsp;回复了博文&nbsp;</span>'+
+				'<a href="'+global.realPath+'/user/'+article.userId+"/blog/"+article.blogId+'">'+article.blogTitle+'</a>'+
+				'</div>').appendTo(talk_con);
+		var content = article.content;
+		if(article.atUserId!=""&&article.atUserId!=null){
+			content = "回复&nbsp;<a href='"+global.realPath+"/user/"+article.atUserId+"'>"+article.atUserName+"</a>："+content;
 		}
-	});
+		$('<div class="talk_content">'+content+'</div>').appendTo(talk_con);
+		var Android = "";
+		if(article.sourceFrom == "A"){
+			Android= "&nbsp;Android";
+		}
+		$('<div class="talk_info">'+
+				'<span>'+article.postTime+Android+'</span>'+
+				'<a href="'+global.realPath+'/user/'+article.userId+"/blog/"+article.blogId+'" target="_blank">查看原文</a>'+
+				'<div class="clear"></div>'+
+				'</div>').appendTo(talk_con);
+		$('<div class="clear"></div>').appendTo(this.talk_item);
 }
 
 function saveTalk(){
