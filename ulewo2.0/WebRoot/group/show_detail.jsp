@@ -56,7 +56,7 @@ global.articleId= "${article.id}";
 							阅读  ${article.readNumber}&nbsp;
 							回复  ${article.reNumber} 
 						</div>
-						<div class="op_favorite"><span id="favoriteCount">0</span>人收藏此文章 <span id="op_favorite"></span></div>
+						<div class="op_favorite"><span id="favoriteCount">0</span>人收藏了此文章 <span id="op_favorite"></span></div>
 						<div class="clear"></div>
 					</div>
 				</div>

@@ -60,7 +60,7 @@ window.UEDITOR_HOME_URL = "${realPath}/ueditor/";
 						<div class="blog_list_tit"><span id="blogtitle">${blog.title}</span></div>
 						<div class="blog_item_op">
 							<div class="blog_item_op_info"><span>发布于 ${blog.postTime}，阅读(<span class="blog_item_op_red">${blog.readCount}</span>)|评论(<span class="blog_item_op_red">${blog.reCount}</span>)</span></div>
-							<div class="blog_item_op_favorite"><span id="favoriteCount">0</span>人收藏此文章 <span id="op_favorite"></span></div>
+							<div class="blog_item_op_favorite"><span id="favoriteCount">0</span>人收藏了此文章 <span id="op_favorite"></span></div>
 							<div class="clear"></div>
 						</div>
 						<div class="blog_content">
