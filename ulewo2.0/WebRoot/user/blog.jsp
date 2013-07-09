@@ -22,7 +22,7 @@
 				<div class="left_img_p">
 					<div class="blog_item"><a href="${realPath}/user/${userId}/blog">全部文章</a><span>(${totalCount})</span></div>
 					<c:forEach var="item" items="${blogItemList}">
-						<div class="blog_item"><a href="${realPath}/user/${userId}/blog?itemId=${item.id}">${item.itemName}</a><span>(${item.articleCount})</span></div>
+						<div class="blog_item"><a href="${realPath}/user/${userId}/blog/itemId/${item.id}">${item.itemName}</a><span>(${item.articleCount})</span></div>
 					</c:forEach>
 				</div>
 			</div>
@@ -53,7 +53,7 @@
 							<c:if test="${blog.itemId==null||blog.itemId==''}">
 								<a href="${realPath}/user/${userId}/blog">全部分类</a>
 							</c:if>
-							<a href="${realPath}/user/${userId}/blog?itemId=${blog.itemId}">${blog.itemName}</a>
+							<a href="${realPath}/user/${userId}/blog/itemId/${blog.itemId}">${blog.itemName}</a>
 							<c:if test="${user.userId==userId}">(<a href="${realPath}/manage/edit_blog.action?id=${blog.id}">修改</a>|<a href="javascript:void(0)" name="${blog.id}" class="del">删除</a>)</c:if>
 						</div>
 						<div class="blog_summary">
@@ -69,11 +69,11 @@
 					<div class="left_noinfo">没有发现博文</div>
 				</c:if>
 				<div class="pagination">
-					<c:if test="${itemId==0}">
+					<c:if test="${itemId==null}">
 						<p:pager url="${realPath}/user/${userId}/blog" page="${result.page}" pageTotal = "${result.pageTotal }"></p:pager>
 					</c:if>
-					<c:if test="${itemId!=0}">
-						<p:pager url="${realPath}/user/${userId}/blog?itemId=${itemId}" page="${result.page}" pageTotal = "${result.pageTotal }"></p:pager>
+					<c:if test="${itemId!=null}">
+						<p:pager url="${realPath}/user/${userId}/blog/itemId/${itemId}" page="${result.page}" pageTotal = "${result.pageTotal }"></p:pager>
 					</c:if>
 				</div>
 			</div>

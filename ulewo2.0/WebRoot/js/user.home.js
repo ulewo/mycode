@@ -249,7 +249,7 @@ function UserArticleItem(article){
 	}
 	$('<div class="talk_info">'+
 			'<span>'+article.postTime+Android+'</span>'+
-			'<a href="'+global.realPath+'/group/'+article.gid+"/topic/"+article.id+'" target="_blank">评论('+article.readNumber+')</a>'+
+			'<a href="'+global.realPath+'/group/'+article.gid+"/topic/"+article.id+'" target="_blank">评论('+article.reNumber+')</a>'+
 			'<a href="'+global.realPath+'/group/'+article.gid+"/topic/"+article.id+'" target="_blank">查看原文</a>'+
 			'<div class="clear"></div>'+
 			'</div>').appendTo(talk_con);

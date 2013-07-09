@@ -130,7 +130,54 @@ public class GroupAction {
 			HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
-		String itemId = request.getParameter("itemId");
+		String page = request.getParameter("page");
+		int page_int = 1;
+		if (StringUtils.isNumber(page)) {
+			page_int = Integer.parseInt(page);
+		}
+		try {
+			if (StringUtils.isEmpty(gid)) {
+				mv.setViewName("redirect:" + Constant.ERRORPAGE);
+				return mv;
+			}
+			Group group = groupService.queryGorup(gid);
+			if (null == group) {
+				mv.setViewName("redirect:" + Constant.ERRORPAGE);
+				return mv;
+			}
+			// 查询文章
+			PaginationResult articleResult = articleService.queryTopicOrderByGradeAndLastReTime(gid, 0,
+					page_int, Constant.pageSize15);
+			// 查询分类
+			List<ArticleItem> itemList = articleItemService.queryItemByGid(gid);
+			// List<Article> hotArticlelist = articleService.queryHotArticle(0,
+			// 10);
+			mv.addObject("memberStatus", memberStatus(session, gid));
+			mv.addObject("group", group);
+			mv.addObject("articles", articleResult);
+			// mv.addObject("hotArticlelist", hotArticlelist);
+			mv.addObject("itemList", itemList);
+			mv.addObject("page", page_int);
+			mv.addObject("gid", gid);
+			mv.setViewName("group/group");
+
+		} catch (Exception e) {
+			String errorMethod = "GroupAction-->groupIndex()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
+			mv.setViewName("redirect:" + Constant.ERRORPAGE);
+			return mv;
+		}
+		return mv;
+	}
+
+	@RequestMapping(value = "/{gid}/itemId/{itemId}", method = RequestMethod.GET)
+	public ModelAndView groupArticleInItem(@PathVariable String gid,@PathVariable String itemId,HttpSession session, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		ModelAndView mv = new ModelAndView();
+		//String itemId = request.getParameter("itemId");
 		String page = request.getParameter("page");
 		int itemId_int = 0;
 		int page_int = 1;
@@ -182,7 +229,7 @@ public class GroupAction {
 		}
 		return mv;
 	}
-
+	
 	private String memberStatus(HttpSession session, String gid) {
 
 		Object sessionObj = session.getAttribute("user");

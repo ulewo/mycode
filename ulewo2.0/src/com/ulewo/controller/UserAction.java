@@ -606,7 +606,44 @@ public class UserAction {
 				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			}
 			mv.addObject("userVo", userVo);
-			String itemId = request.getParameter("itemId");
+			String page = request.getParameter("page");
+			int page_int = 0;
+			if (StringUtils.isNumber(page)) {
+				page_int = Integer.parseInt(page);
+			}
+			PaginationResult result = blogArticleService.queryBlogByUserId(userId, 0, page_int,
+					Constant.pageSize15, BlogOrderType.POSTTIME);
+			List<BlogItem> blogItemList = blogItemService.queryBlogItemAndCountByUserId(userId);
+			List<BlogArticle> hotlist = blogArticleService.queryBlog(userId, 0, 0, 10, BlogOrderType.READCOUNT);
+			int totalCount = blogArticleService.queryBlogCount(userId, 0);
+			mv.addObject("hotlist", hotlist);
+			mv.addObject("result", result);
+			mv.addObject("blogItemList", blogItemList);
+			mv.addObject("userId", userId);
+			mv.addObject("totalCount", totalCount);
+			mv.setViewName("/user/blog");
+			return mv;
+		} catch (Exception e) {
+			String errorMethod = "UserAction-->blogList()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
+			mv.setViewName("redirect:" + Constant.ERRORPAGE);
+			return mv;
+		}
+	}
+
+	@RequestMapping(value = "/{userId}/blog/itemId/{itemId}", method = RequestMethod.GET)
+	public ModelAndView blogList(@PathVariable String userId,@PathVariable String itemId, HttpSession session, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		ModelAndView mv = new ModelAndView();
+		try {
+			UserVo userVo = checkUserInfo(userId, session);
+			if (null == userVo) {
+				mv.setViewName("redirect:" + Constant.ERRORPAGE);
+			}
+			mv.addObject("userVo", userVo);
 			String page = request.getParameter("page");
 			int itemId_int = 0;
 			int page_int = 0;
@@ -640,7 +677,7 @@ public class UserAction {
 			return mv;
 		}
 	}
-
+	
 	/**
 	 * 博客详情
 	 * 

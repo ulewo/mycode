@@ -33,9 +33,9 @@
 					<li><a href="${realPath}/group/${gid}/member">成&nbsp;&nbsp;员</a></li>
 				</ul>
 				<ul class="group_item">
-					<li style="margin-left:2px;"><a href="${realPath}/group/${gid}" <c:if test="${itemId==0}">class="select"</c:if>>全部文章</a></li>
+					<li style="margin-left:2px;"><a href="${realPath}/group/${gid}" <c:if test="${itemId==null}">class="select"</c:if>>全部文章</a></li>
 					<c:forEach var="item" items="${itemList}">
-						<li><a href="${realPath}/group/${gid}?itemId=${item.id}" <c:if test="${itemId==item.id}">class="select"</c:if>>${item.itemName}</a></li>
+						<li><a href="${realPath}/group/${gid}/itemId/${item.id}" <c:if test="${itemId==item.id}">class="select"</c:if>>${item.itemName}</a></li>
 					</c:forEach>
 				</ul>
 				<c:if test="${user!=null}">
@@ -95,11 +95,11 @@
 					<div class="noinfo">没有文章,赶紧抢沙发吧！</div>
 				</c:if>
 				<div class="pagination">
-					<c:if test="${itemId==0}">
+					<c:if test="${itemId==null}">
 						<p:pager url="${realPath}/group/${gid}" page="${articles.page}" pageTotal = "${articles.pageTotal }"></p:pager>
 					</c:if>
-					<c:if test="${itemId!=0}">
-						<p:pager url="${realPath}/group/${gid}?itemId=${itemId}" page="${articles.page}" pageTotal = "${articles.pageTotal }"></p:pager>
+					<c:if test="${itemId!=null}">
+						<p:pager url="${realPath}/group/${gid}/itemId/${itemId}" page="${articles.page}" pageTotal = "${articles.pageTotal }"></p:pager>
 					</c:if>
 				</div>
 			</div>
