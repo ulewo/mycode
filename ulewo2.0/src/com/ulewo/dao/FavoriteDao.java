@@ -24,6 +24,15 @@ public class FavoriteDao extends BaseDao {
 		return (Integer) this.getSqlMapClientTemplate().queryForObject("favorite.queryFavoriteCountByUserId", parmMap);
 	}
 
+	public int queryFavoriteCountByUserIdAndArticleId(String userId,int articleId,String type) {
+
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("userId", userId);
+		parmMap.put("articleId", articleId);
+		parmMap.put("type", type);
+		return (Integer) this.getSqlMapClientTemplate().queryForObject("favorite.queryFavoriteCountByUserIdAndArticleId", parmMap);
+	}
+	
 	public int queryFavoriteCountByArticleId(int articleId, String type) {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
@@ -39,7 +48,7 @@ public class FavoriteDao extends BaseDao {
 		parmMap.put("articleId", articleId);
 		parmMap.put("userId", userId);
 		parmMap.put("type", type);
-		this.getSqlMapClientTemplate().queryForObject("favorite.deleteFavorite", parmMap);
+		this.getSqlMapClientTemplate().delete("favorite.deleteFavorite", parmMap);
 	}
 
 	public List<Favorite> queryFavoriteByUserId(String userId, String type, int offset, int total) {
@@ -49,7 +58,7 @@ public class FavoriteDao extends BaseDao {
 		parmMap.put("type", type);
 		parmMap.put("offset", offset);
 		parmMap.put("total", total);
-		return this.getSqlMapClientTemplate().queryForList("favorite.findAllUsers", parmMap);
+		return this.getSqlMapClientTemplate().queryForList("favorite.queryFavoriteByUserId", parmMap);
 	}
 
 }

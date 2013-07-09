@@ -51,4 +51,10 @@ public class FavoriteServiceImpl implements FavoriteService {
 		return result;
 	}
 
+	@Override
+	public int queryFavoriteCountByUserIdAndArticleId(String userId,
+			int articleId, String type) {
+		return favoriteDao.queryFavoriteCountByUserIdAndArticleId(userId, articleId, type);
+	}
+
 }

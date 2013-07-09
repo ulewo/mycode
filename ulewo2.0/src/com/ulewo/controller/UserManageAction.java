@@ -33,6 +33,7 @@ import com.ulewo.enums.QueryUserType;
 import com.ulewo.service.BlogArticleService;
 import com.ulewo.service.BlogItemService;
 import com.ulewo.service.BlogReplyService;
+import com.ulewo.service.FavoriteService;
 import com.ulewo.service.NoticeService;
 import com.ulewo.service.UserService;
 import com.ulewo.util.Constant;
@@ -59,6 +60,9 @@ public class UserManageAction {
 	@Autowired
 	private NoticeService noticeService;
 
+	@Autowired
+	private FavoriteService favoriteService;
+	
 	private final static int CHARACTER_LENGTH = 200;
 
 	private final static int ADDRESS_LENGTH = 50, WORK_LENGTH = 50, ITEM_LENGTH = 50;
@@ -793,6 +797,86 @@ public class UserManageAction {
 			Thread thread = new Thread(report);
 			thread.start();
 			modelMap.put("result", "fail");
+			return modelMap;
+		}
+	}
+	
+
+	@RequestMapping(value = "/favorite", method = RequestMethod.GET)
+	public ModelAndView favorite(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("usermanage/favorite");
+		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/queryFavoriteArticle.action", method = RequestMethod.GET)
+	public Map<String, Object> queryFavoriteArticle(HttpSession session, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			String page = request.getParameter("page");
+			if (!StringUtils.isNumber(page)) {
+				modelMap.put("result", "fail");
+				modelMap.put("message", "参数错误");
+				return modelMap;
+			}
+			int page_int = Integer.parseInt(page);
+			String type = request.getParameter("type");
+			if (StringUtils.isEmpty(type)) {
+				modelMap.put("result", "fail");
+				modelMap.put("message", "参数错误");
+				return modelMap;
+			}
+			String userId = ((SessionUser) session.getAttribute("user")).getUserId();
+			PaginationResult data = favoriteService.queryFavoriteByUserIdInPage(userId, type, page_int,
+					2);
+			modelMap.put("data", data);
+			modelMap.put("result", "success");
+			return modelMap;
+		} catch (Exception e) {
+			String errorMethod = "UserAction-->queryFavoriteArticle()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			//thread.start();
+			modelMap.put("result", "fail");
+			modelMap.put("message", "系统异常");
+			return modelMap;
+		}
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/deleteFavoriteArticle.action", method = RequestMethod.GET)
+	public Map<String, Object> deleteFavoriteArticle(HttpSession session, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			String articleId = request.getParameter("articleId");
+			if (!StringUtils.isNumber(articleId)) {
+				modelMap.put("result", "fail");
+				modelMap.put("message", "参数错误");
+				return modelMap;
+			}
+			int articleId_int = Integer.parseInt(articleId);
+			String type = request.getParameter("type");
+			if (StringUtils.isEmpty(type)) {
+				modelMap.put("result", "fail");
+				modelMap.put("message", "参数错误");
+				return modelMap;
+			}
+			String userId = ((SessionUser) session.getAttribute("user")).getUserId();
+			favoriteService.deleteFavorite(articleId_int, type, userId);
+			modelMap.put("result", "success");
+			return modelMap;
+		} catch (Exception e) {
+			String errorMethod = "UserAction-->deleteFavoriteArticle()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+		//	thread.start();
+			modelMap.put("result", "fail");
+			modelMap.put("message", "系统异常");
 			return modelMap;
 		}
 	}

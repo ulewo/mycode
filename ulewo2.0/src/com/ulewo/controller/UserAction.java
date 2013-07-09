@@ -88,9 +88,6 @@ public class UserAction {
 	private ArticleService articleService;
 
 	@Autowired
-	private ReArticleService reArticleService;
-
-	@Autowired
 	private NoticeService noticeService;
 
 	@Autowired
@@ -1256,7 +1253,7 @@ public class UserAction {
 			boolean haveFavorite = false;
 			if (null != sessionObj) {
 				SessionUser user = (SessionUser) sessionObj;
-				int count = favoriteService.queryFavoriteCountByUserId(user.getUserId(), type);
+				int count = favoriteService.queryFavoriteCountByUserIdAndArticleId(user.getUserId(), articleId_int, type);
 				if (count > 0) {
 					haveFavorite = true;
 				}
@@ -1302,8 +1299,14 @@ public class UserAction {
 				modelMap.put("message", "参数错误");
 				return modelMap;
 			}
+			String partId = request.getParameter("partId");
+			if (StringUtils.isEmpty(partId)) {
+				modelMap.put("result", "fail");
+				modelMap.put("message", "参数错误");
+				return modelMap;
+			}
 			String userId = ((SessionUser) session.getAttribute("user")).getUserId();
-			int count = favoriteService.queryFavoriteCountByUserId(userId, type);
+			int count = favoriteService.queryFavoriteCountByUserIdAndArticleId(userId, articleId_int, type);
 
 			if (count > 0) {
 				modelMap.put("result", "fail");
@@ -1315,6 +1318,7 @@ public class UserAction {
 			favorite.setTitle(title);
 			favorite.setType(type);
 			favorite.setUserId(userId);
+			favorite.setPartId(partId);
 			favoriteService.addFavorite(favorite);
 			modelMap.put("result", "success");
 			return modelMap;
@@ -1322,79 +1326,7 @@ public class UserAction {
 			String errorMethod = "UserAction-->favoriteArticle()<br>";
 			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
 			Thread thread = new Thread(report);
-			thread.start();
-			modelMap.put("result", "fail");
-			modelMap.put("message", "系统异常");
-			return modelMap;
-		}
-	}
-
-	@ResponseBody
-	@RequestMapping(value = "/queryFavoriteArticle.action", method = RequestMethod.GET)
-	public Map<String, Object> queryFavoriteArticle(HttpSession session, HttpServletRequest request,
-			HttpServletResponse response) {
-
-		Map<String, Object> modelMap = new HashMap<String, Object>();
-		try {
-			String page = request.getParameter("page");
-			if (!StringUtils.isNumber(page)) {
-				modelMap.put("result", "fail");
-				modelMap.put("message", "参数错误");
-				return modelMap;
-			}
-			int page_int = Integer.parseInt(page);
-			String type = request.getParameter("type");
-			if (StringUtils.isEmpty(type)) {
-				modelMap.put("result", "fail");
-				modelMap.put("message", "参数错误");
-				return modelMap;
-			}
-			String userId = ((SessionUser) session.getAttribute("user")).getUserId();
-			PaginationResult data = favoriteService.queryFavoriteByUserIdInPage(userId, type, page_int,
-					Constant.pageSize15);
-			modelMap.put("data", data);
-			modelMap.put("result", "success");
-			return modelMap;
-		} catch (Exception e) {
-			String errorMethod = "UserAction-->queryFavoriteArticle()<br>";
-			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
-			Thread thread = new Thread(report);
-			thread.start();
-			modelMap.put("result", "fail");
-			modelMap.put("message", "系统异常");
-			return modelMap;
-		}
-	}
-
-	@ResponseBody
-	@RequestMapping(value = "/deleteFavoriteArticle.action", method = RequestMethod.GET)
-	public Map<String, Object> deleteFavoriteArticle(HttpSession session, HttpServletRequest request,
-			HttpServletResponse response) {
-
-		Map<String, Object> modelMap = new HashMap<String, Object>();
-		try {
-			String articleId = request.getParameter("articleId");
-			if (!StringUtils.isNumber(articleId)) {
-				modelMap.put("result", "fail");
-				modelMap.put("message", "参数错误");
-				return modelMap;
-			}
-			int articleId_int = Integer.parseInt(articleId);
-			String type = request.getParameter("type");
-			if (StringUtils.isEmpty(type)) {
-				modelMap.put("result", "fail");
-				modelMap.put("message", "参数错误");
-				return modelMap;
-			}
-			String userId = ((SessionUser) session.getAttribute("user")).getUserId();
-			favoriteService.deleteFavorite(articleId_int, type, userId);
-			modelMap.put("result", "success");
-			return modelMap;
-		} catch (Exception e) {
-			String errorMethod = "UserAction-->queryFavoriteArticle()<br>";
-			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
-			Thread thread = new Thread(report);
-			thread.start();
+			//thread.start();
 			modelMap.put("result", "fail");
 			modelMap.put("message", "系统异常");
 			return modelMap;

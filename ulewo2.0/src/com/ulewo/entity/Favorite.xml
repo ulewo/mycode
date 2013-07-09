@@ -12,13 +12,8 @@
 	
 	<!-- 添加收藏-->
 	<insert id="addFavorite" parameterClass="favorite">
-		<selectKey keyProperty="id" resultClass="java.lang.Integer" type="post">
-      		SELECT LAST_INSERT_ID()
-    	 </selectKey>
-        <![CDATA[
-           insert into favorite(userid,articleid,title,type) 
-		   values(#userId#,#articleId#,#title#,#type#)
-        ]]>
+           insert into favorite(userid,articleid,partid,title,type) 
+		   values(#userId#,#articleId#,#partId#,#title#,#type#)
 	</insert>
 	
 	<!-- 查询收藏 -->
@@ -28,11 +23,16 @@
 	
 	<!-- 查询收藏总条数 -->
 	<select id="queryFavoriteCountByUserId"  resultClass="java.lang.Integer">
-	    select count(id) from favorite where userid = #userId# and type = #type#;
+	    select count(*) from favorite where userid = #userId# and type = #type#;
+	</select>
+	
+	<!-- 查询文章收藏总条数 -->
+	<select id="queryFavoriteCountByUserIdAndArticleId"  resultClass="java.lang.Integer">
+	    select count(*) from favorite where articleid = #articleId# and type = #type# and userid=#userId#;
 	</select>
 	
 	<select id="queryFavoriteCountByArticleId"  resultClass="java.lang.Integer">
-	    select count(id) from favorite where articleid = #articleId# and type = #type#;
+	    select count(*) from favorite where articleid = #articleId# and type = #type#;
 	</select>
 	
 	<delete id="deleteFavorite" parameterClass="java.util.Map">

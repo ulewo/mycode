@@ -7,6 +7,8 @@ public class Favorite {
 
 	private String title;
 
+	private String partId; //gid 或者userId
+	
 	private String type; //A 帖子文章  B 博客
 
 	public String getUserId() {
@@ -49,4 +51,11 @@ public class Favorite {
 		this.type = type;
 	}
 
+	public String getPartId() {
+		return partId;
+	}
+
+	public void setPartId(String partId) {
+		this.partId = partId;
+	}
 }

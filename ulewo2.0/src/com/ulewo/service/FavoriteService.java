@@ -13,6 +13,8 @@ public interface FavoriteService {
 	public void addFavorite(Favorite favorite);
 
 	public int queryFavoriteCountByUserId(String userId, String type);
+	
+	public int queryFavoriteCountByUserIdAndArticleId(String userId,int articleId, String type);
 
 	public int queryFavoriteCountByArticleId(int articleId, String type);
 
