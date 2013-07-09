@@ -135,4 +135,23 @@
 		</isNotEmpty>
 		</dynamic>
 	</select>
+	
+		<!--根据userId查询-->
+	<select id="queryBlogByUserId"  resultClass="blogArticle" parameterClass="java.util.Map">
+		select b.id,b.title,b.summary,b.posttime,b.userid,u.username as userName,u.userlittleicon as userIcon,(select count(r.id) from blog_reply r where r.blogid=b.id) as reCount
+		from blog_article b inner join user u on u.userid = b.userid where b.userid in
+		<iterate open="(" close=")" conjunction="," property="userIds"> 
+              #userIds[]# 
+        </iterate> 
+		order by posttime desc limit #offset#,#total#
+	</select>
+	
+	<!--根据userId查询数量-->
+	<select id="queryBlogCountByUserId"  resultClass="java.lang.Integer" parameterClass="java.util.ArrayList">
+		select count(id) from blog_article where userid in
+		<iterate open="(" close=")" conjunction=","> 
+              #userIds[]# 
+        </iterate> 
+	</select>
+	
 </sqlMap>

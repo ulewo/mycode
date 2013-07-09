@@ -9,9 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ulewo.dao.BlogArticleDao;
+import com.ulewo.dao.BlogReplyDao;
 import com.ulewo.dao.UserDao;
+import com.ulewo.dao.UserFriendDao;
 import com.ulewo.entity.BlogArticle;
+import com.ulewo.entity.BlogReply;
 import com.ulewo.entity.NoticeParam;
+import com.ulewo.entity.SessionUser;
 import com.ulewo.entity.User;
 import com.ulewo.enums.BlogOrderType;
 import com.ulewo.enums.NoticeType;
@@ -29,7 +33,13 @@ public class BlogArticleServiceImpl implements BlogArticleService {
 	private BlogArticleDao blogArticleDao;
 
 	@Autowired
+	private BlogReplyDao blogReplyDao;
+
+	@Autowired
 	private UserDao userDao;
+
+	@Autowired
+	private UserFriendDao userFriendDao;
 
 	private final static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -207,5 +217,66 @@ public class BlogArticleServiceImpl implements BlogArticleService {
 		List<BlogArticle> list = searchBlog(keyword, pagination.getOffSet(), pageSize, isHilight);
 		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
 		return result;
+	}
+
+	public PaginationResult queryArticleByUserIdByPag(int page, int pageSize, String userId, Object sessionUser,
+			int type) {
+
+		PaginationResult result = null;
+		List<String> userIds = new ArrayList<String>();
+		switch (type) {
+		case 0://查询所有主题
+			userIds = getUserIds(userId, sessionUser);
+			result = queryBlogByUserIds(page, pageSize, userIds);
+			break;
+		case 1: //所有回复
+			userIds = getUserIds(userId, sessionUser);
+			result = queryReArticleByUserIds(page, pageSize, userIds);
+			break;
+		}
+		return result;
+	}
+
+	private PaginationResult queryBlogByUserIds(int page, int pageSize, List<String> userIds) {
+
+		int count = blogArticleDao.queryBlogArticleCountByUserId(userIds);
+		Pagination pagination = new Pagination(page, count, pageSize);
+		pagination.action();
+		List<BlogArticle> list = blogArticleDao.queryBlogArticleByUserId(pagination.getOffSet(), pageSize, userIds);
+		for (BlogArticle article : list) {
+			article.setPostTime(StringUtils.friendly_time(article.getPostTime()));
+		}
+		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
+		return result;
+	}
+
+	private PaginationResult queryReArticleByUserIds(int page, int pageSize, List<String> userIds) {
+
+		int count = blogReplyDao.queryReBlogCountByUserId(userIds);
+		Pagination pagination = new Pagination(page, count, pageSize);
+		pagination.action();
+		List<BlogReply> list = blogReplyDao.queryReBlogByUserId(pagination.getOffSet(), pageSize, userIds);
+		for (BlogReply reArticle : list) {
+			reArticle.setPostTime(StringUtils.friendly_time(reArticle.getPostTime()));
+		}
+		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
+		return result;
+	}
+
+	//获取要查看的人
+	private List<String> getUserIds(String userId, Object sessionUser) {
+
+		List<String> userIds = new ArrayList<String>();
+
+		if (null != sessionUser && ((SessionUser) sessionUser).getUserId().equals(userId)) {
+			//用户查看自己的
+			//关注的人 和自己的。
+			userIds = userFriendDao.queryFocusUserIds(((SessionUser) sessionUser).getUserId());
+			userIds.add(userId);
+		}
+		else {
+			userIds.add(userId);
+		}
+		return userIds;
 	}
 }

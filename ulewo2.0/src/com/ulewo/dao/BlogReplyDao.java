@@ -102,4 +102,36 @@ public class BlogReplyDao extends BaseDao {
 		paramMap.put("blogAuthor", author);
 		return (Integer) getSqlMapClientTemplate().queryForObject("blogReply.queryAllReplyCount", paramMap);
 	}
+
+	/**
+	 * 
+	 * description: 根据userId查询主题数量
+	 * @param userId
+	 * @return
+	 * @
+	 * @author luohl
+	 */
+	public int queryReBlogCountByUserId(List<String> userIds) {
+
+		return (Integer) this.getSqlMapClientTemplate().queryForObject("blogReply.queryReBlogCountByUserId", userIds);
+	}
+
+	/**
+	 * 
+	 * description: 根据userId查询文章主题
+	 * @param userId
+	 * @param offset
+	 * @param total
+	 * @return
+	 * @
+	 * @author luohl
+	 */
+	public List<BlogReply> queryReBlogByUserId(int offset, int total, List<String> userIds) {
+
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("userIds", userIds);
+		parmMap.put("offset", offset);
+		parmMap.put("total", total);
+		return this.getSqlMapClientTemplate().queryForList("blogReply.queryReBlogByUserId", parmMap);
+	}
 }

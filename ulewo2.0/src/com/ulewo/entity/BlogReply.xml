@@ -70,4 +70,27 @@
 			</isNotEmpty>
 		</dynamic>	
 	</select>
+	
+	<!--根据userId查询回复-->
+	<select id="queryReBlogByUserId"  resultClass="blogReply" parameterClass="java.util.Map">
+		select b.title as blogTitle,r.blogid,r.userid as userId,u.username as userName,
+		r.posttime as postTime,u.userlittleicon as reUserIcon,r.content as content,
+		r.atuserid,ru.username as atUserName
+		from blog_reply r inner join blog_article b on r.blogid=b.id
+		inner join user u on u.userid=r.userid
+		left outer join user ru on r.atuserid = ru.userid
+		where r.userid in
+		<iterate open="(" close=")" conjunction="," property="userIds"> 
+              #userIds[]# 
+        </iterate> 
+		order by posttime desc limit #offset#,#total#
+	</select>
+	
+	<!--根据userId查询回复数量-->
+	<select id="queryReBlogCountByUserId"  resultClass="java.lang.Integer" parameterClass="java.util.ArrayList">
+		select count(id) from blog_reply where userid in
+		<iterate open="(" close=")" conjunction=","> 
+              #userIds[]# 
+        </iterate> 
+	</select>
 </sqlMap>

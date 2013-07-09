@@ -81,17 +81,17 @@
 	
 	<!--根据userId查询回复的数量-->
 	<select id="queryReArticleCountByUserId"  resultClass="java.lang.Integer" parameterClass="java.util.ArrayList">
-		select count(r.id) from rearticle r inner join article a on r.articleid=a.id where authorid in
+		select count(id) from rearticle where authorid in
 		<iterate open="(" close=")" conjunction=","> 
               #userIds[]# 
         </iterate>
 	</select>
 	
 	<select id="queryReArticleByUserId" resultClass="reArticle" parameterClass="java.util.Map">
-	    select r.id,r.articleid,r.content,r.authorid,r.sourcefrom,u.username as authorname,
-	    u.userLittleIcon as authorIcon,a.title as articleTitle,r.atuserid,r,atusername
+	    select r.id,r.articleid,r.content,r.authorid as authorId,r.sourcefrom,u.username as authorname,
+	    u.userLittleIcon as authorIcon,a.title as articleTitle,r.atuserid,r.atusername,a.gid as gid,r.retime
 		from rearticle r inner join user u on u.userid = r.authorid inner join article a on a.id=r.articleid 
-		where r.articleid in
+		where r.authorid in
 		<iterate open="(" close=")" conjunction="," property="userIds"> 
               #userIds[]# 
         </iterate>

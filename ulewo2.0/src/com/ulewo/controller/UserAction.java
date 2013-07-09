@@ -84,10 +84,10 @@ public class UserAction {
 
 	@Autowired
 	private ArticleService articleService;
-	
+
 	@Autowired
 	private ReArticleService reArticleService;
-	
+
 	@Autowired
 	private NoticeService noticeService;
 
@@ -1008,7 +1008,6 @@ public class UserAction {
 		}
 	}
 
-
 	@ResponseBody
 	@RequestMapping(value = "/loadTalk", method = RequestMethod.GET)
 	public Map<String, Object> loadTalk(HttpSession session, HttpServletRequest request) {
@@ -1076,7 +1075,41 @@ public class UserAction {
 			return modelMap;
 		}
 	}
-	
+
+	@ResponseBody
+	@RequestMapping(value = "/loadBlog", method = RequestMethod.GET)
+	public Map<String, Object> loadBlog(HttpSession session, HttpServletRequest request) {
+
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			String userId = request.getParameter("userId");
+			String page = request.getParameter("page");
+			int page_int = 1;
+			if (StringUtils.isNumber(page)) {
+				page_int = Integer.parseInt(page);
+			}
+			String type = request.getParameter("type");
+			int type_int = 0;
+			if (StringUtils.isNumber(type)) {
+				type_int = Integer.parseInt(type);
+			}
+			Object sessionUser = session.getAttribute("user");
+			PaginationResult data = blogArticleService.queryArticleByUserIdByPag(page_int, Constant.pageSize15, userId,
+					sessionUser, type_int);
+			modelMap.put("result", "success");
+			modelMap.put("data", data);
+			return modelMap;
+		} catch (Exception e) {
+			e.printStackTrace();
+			String errorMethod = "UserAction-->loadTalk()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			//Thread thread = new Thread(report);
+			//thread.start();
+			modelMap.put("result", "fail");
+			return modelMap;
+		}
+	}
+
 	@RequestMapping(value = "/{userId}/talk/{talkId}", method = RequestMethod.GET)
 	public ModelAndView talkDetal(@PathVariable String userId, @PathVariable String talkId, HttpSession session,
 			HttpServletRequest request, HttpServletResponse response) {

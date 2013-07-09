@@ -146,4 +146,37 @@ public class BlogArticleDao extends BaseDao {
 		parmMap.put("total", total);
 		return (List<BlogArticle>) getSqlMapClientTemplate().queryForList("blogArticle.searchBlog", parmMap);
 	}
+
+	/**
+	 * 
+	 * description: 根据userId查询主题数量
+	 * @param userId
+	 * @return
+	 * @
+	 * @author luohl
+	 */
+	public int queryBlogArticleCountByUserId(List<String> userIds) {
+
+		return (Integer) this.getSqlMapClientTemplate().queryForObject("blogArticle.queryBlogCountByUserId", userIds);
+	}
+
+	/**
+	 * 
+	 * description: 根据userId查询文章主题
+	 * @param userId
+	 * @param offset
+	 * @param total
+	 * @return
+	 * @
+	 * @author luohl
+	 */
+	public List<BlogArticle> queryBlogArticleByUserId(int offset, int total, List<String> userIds) {
+
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("userIds", userIds);
+		parmMap.put("offset", offset);
+		parmMap.put("total", total);
+		return this.getSqlMapClientTemplate().queryForList("blogArticle.queryBlogByUserId", parmMap);
+	}
+
 }

@@ -17,7 +17,7 @@ public class ReArticle {
 	private int articleId; // 主题帖Id
 
 	private String articleTitle;
-	
+
 	private String articleSummary;
 
 	private String content; // 回复内容
@@ -205,10 +205,12 @@ public class ReArticle {
 	}
 
 	public String getArticleSummary() {
+
 		return articleSummary;
 	}
 
 	public void setArticleSummary(String articleSummary) {
+
 		this.articleSummary = articleSummary;
 	}
 
