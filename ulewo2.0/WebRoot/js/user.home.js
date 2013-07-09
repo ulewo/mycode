@@ -101,7 +101,6 @@ function loadTalk(type,page){
 		dataType : "json",
 		url : global.realPath+"/user/loadTalk?userId="+userId+"&type="+type+"&page="+page,// 请求的action路径
 		success : function(data) {
-			var noinfo = "没有吐槽！";
 			$(".loading").remove();
 			if(data.result=="success"){
 				var list = data.data.list;
@@ -115,7 +114,6 @@ function loadTalk(type,page){
 						for(var i=0;i<length;i++){
 							new UserReTalkItem(list[i]).talk_item.appendTo($("#trends_list"));
 						}
-						noinfo="没有回复！";
 					}
 					if(data.data.pageTotal>1){
 						new Pager(data.data.pageTotal,10,data.data.page).asHtml().appendTo($("#pager"));
@@ -123,7 +121,7 @@ function loadTalk(type,page){
 						$("#pager").hide();
 					}
 				}else{
-					$("<div class='noinfo'>"+noinfo+"</div>").appendTo($("#trends_list"));
+					$("<div class='noinfo'>没有记录!</div>").appendTo($("#trends_list"));
 				}
 			}
 			isloading = false;
@@ -205,7 +203,6 @@ function loadArticle(type,page){
 		dataType : "json",
 		url : global.realPath+"/user/loadArticle?userId="+userId+"&type="+type+"&page="+page,// 请求的action路径
 		success : function(data) {
-			var noinfo = "没有讨论！";
 			$(".loading").remove();
 			if(data.result=="success"){
 				var list = data.data.list;
@@ -219,7 +216,6 @@ function loadArticle(type,page){
 						for(var i=0;i<length;i++){
 							new UserReArticleItem(list[i]).talk_item.appendTo($("#trends_list"));
 						}
-						noinfo = "没有回帖！";
 					}
 					if(data.data.pageTotal>1){
 						new Pager(data.data.pageTotal,10,data.data.page).asHtml().appendTo($("#pager"));
@@ -227,7 +223,7 @@ function loadArticle(type,page){
 						$("#pager").hide();
 					}
 				}else{
-					$("<div class='noinfo'>"+noinfo+"</div>").appendTo($("#trends_list"));
+					$("<div class='noinfo'>没有记录!</div>").appendTo($("#trends_list"));
 				}
 			}
 			isloading = false;
@@ -298,7 +294,6 @@ function loadBlog(type,page){
 			dataType : "json",
 			url : global.realPath+"/user/loadBlog?userId="+userId+"&type="+type+"&page="+page,// 请求的action路径
 			success : function(data) {
-				var noinfo = "没有博客！";
 				$(".loading").remove();
 				if(data.result=="success"){
 					var list = data.data.list;
@@ -312,7 +307,6 @@ function loadBlog(type,page){
 							for(var i=0;i<length;i++){
 								new UserReBlogItem(list[i]).talk_item.appendTo($("#trends_list"));
 							}
-							noinfo = "没有评论！";
 						}
 						if(data.data.pageTotal>1){
 							new Pager(data.data.pageTotal,10,data.data.page).asHtml().appendTo($("#pager"));
@@ -320,7 +314,7 @@ function loadBlog(type,page){
 							$("#pager").hide();
 						}
 					}else{
-						$("<div class='noinfo'>"+noinfo+"</div>").appendTo($("#trends_list"));
+						$("<div class='noinfo'>没有记录!</div>").appendTo($("#trends_list"));
 					}
 				}
 				isloading = false;
