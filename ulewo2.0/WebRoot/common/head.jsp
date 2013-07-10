@@ -74,7 +74,7 @@
 				<c:otherwise>
 					<li><a href="javascript:logout()" onFocus="this.blur()" class="n_m">退出</a></li>
 					<li><a href="javascript:void(0)" onFocus="this.blur()" class="h_m">窝窝</a></li>
-					<li><a href="javascript:void(0)" onFocus="this.blur()" class="h_m">消息<span id="notice"></span></a></li>
+					<li><a href="${realPath}/manage/notice" onFocus="this.blur()" class="h_m">消息<span id="notice"></span></a></li>
 					<li><a href="${realPath}/user/${user.userId}" onFocus="this.blur()" class="h_m" title="${user.userName}">${user.userName}</a></li>
 				</c:otherwise>
 			</c:choose>
