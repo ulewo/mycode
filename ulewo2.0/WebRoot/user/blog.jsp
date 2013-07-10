@@ -103,5 +103,12 @@
 		 });
 	 });
 	 </script>
+	<div class="righ_ad">
+		<script type="text/javascript">
+			/*160*600，创建于2013-7-10*/
+			var cpro_id = "u1317726";
+			</script>
+		<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+	</div>
 </body>
 </html>

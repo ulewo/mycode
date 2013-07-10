@@ -63,6 +63,16 @@ global.articleId= "${article.id}";
 				<div class="clear"></div>
 			</div>
 			<div class="article_detail">
+				<div style="display:inline-block;float:right;margin-left:10px;">
+					<div>
+						<script type="text/javascript">
+						/*小方块，创建于2013-7-10*/
+						var cpro_id = "u1317703";
+						</script>
+						<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+					</div>
+					<div class="ad_info">广告也精彩，喜欢就点点吧^_^</div>
+				</div>
 				${article.content}
 			</div>
 			<c:if test="${article.file!=''&&article.file!=null}">
@@ -105,10 +115,5 @@ global.articleId= "${article.id}";
 		</div>
 		<%@ include file="../common/foot.jsp" %>
 	</div>
-	<script type="text/javascript">
-/*160*600，创建于2013-7-10*/
-var cpro_id = "u1317726";
-</script>
-<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
 </body>
 </html>

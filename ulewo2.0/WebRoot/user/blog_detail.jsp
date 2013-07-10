@@ -64,6 +64,16 @@ window.UEDITOR_HOME_URL = "${realPath}/ueditor/";
 							<div class="clear"></div>
 						</div>
 						<div class="blog_content">
+							<div style="display:inline-block;float:right;margin-left:10px;">
+								<div>
+								<script type="text/javascript">
+									/*博客详情，创建于2013-7-10*/
+									var cpro_id = "u1317826";
+									</script>
+								<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+								</div>
+								<div class="ad_info">广告也精彩，喜欢就点点吧^_^</div>
+							</div>
 							${blog.content}
 						</div>
 				</div>

@@ -82,6 +82,14 @@
 	  	
 	  </div>
 	  <div class="right">
+	  		<div style="margin-bottom:5px;">
+	  			<script type="text/javascript">
+				/*个人中心，创建于2013-7-10*/
+				var cpro_id = "u1317830";
+				</script>
+				<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+	  			<div class="ad_info">广告也精彩，喜欢就点点吧^_^</div>
+	  		</div>
 		  	<c:if test="${userVo.userId==user.userId}">
 	  		<div class="u_talk">
 	  			<div class="u_talk_tit">

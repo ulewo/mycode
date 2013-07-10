@@ -13,16 +13,16 @@
 	</div>
 	<div class="form_title_info">发表在</div>
 	<div class="form_title_select">
-		<c:if test="${itemId==0}">
-		<select id="article_item" name="itemId">
-			<option value=""></option>
-			<option value="0">全部分类</option>
-			<c:forEach var="item" items="${itemList}">
-				<option  <c:if test="${itemId==item.id}">selected="selected"</c:if> value="${item.id}">${item.itemName}</option>
-			</c:forEach>
-		</select>
+		<c:if test="${itemId==null}">
+			<select id="article_item" name="itemId">
+				<option value=""></option>
+				<option value="0">全部分类</option>
+				<c:forEach var="item" items="${itemList}">
+					<option  <c:if test="${itemId==item.id}">selected="selected"</c:if> value="${item.id}">${item.itemName}</option>
+				</c:forEach>
+			</select>
 		</c:if>
-		<c:if test="${itemId!=0}">
+		<c:if test="${itemId!=null}">
 			<input type="hidden" id="article_item" name="itemId" value="${itemId}">
 			<select disabled="disabled">
 			<c:forEach var="item" items="${itemList}">

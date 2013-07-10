@@ -59,7 +59,7 @@ textarea{overflow:auto;padding:0px;margin:0px;resize:none;border:none;}
 .tip-arrow{width: 9px;height: 6px;background: url(../images/tip-yellowsimple_arrows.gif) no-repeat;position:absolute;left:130px;top:0px;z-index:3;}
 .tip_con{background:#FFF9C9;border:1px solid #C7BF93;height:20px;position:absolute;left:0px;top:5px;width:150px;padding-top:8px;border-radius: 4px;-moz-border-radius: 4px;-webkit-border-radius: 4px}
 .tip_con a{color:#3E62A6;}
-#gototop{position:fixed;bottom: 120px; right: 100px; cursor: pointer; display:none;}
+#gototop{position:fixed;bottom: 50px; right: 100px; cursor: pointer; display:none;z-index:1000px;}
 #gototop a{background:url("../images/gototop.png") -43px 1px no-repeat; display:block;height:45px;width:42px;}
 #gototop a:hover{background:url("../images/gototop.png") -1px 1px no-repeat; display:block;height:45px;width:42px;}
 /**************��������******************/
@@ -125,3 +125,7 @@ a.prePage,a.nextPage{width:60px;}
 .loading_msg{display:inline-block;float:left;}
 .loading_icon{display:inline-block;float:left;}
 #remote_load{position:fixed;width:100%;height:900px;z-index:999;top:0px;left:0px;background-color: #ccc;opacity: 0.3;filter: alpha(opacity = 30);}
+
+/******右侧广告******/
+.righ_ad{position:fixed;right:20px;top:80px;width:160px;height:600px;}
+.ad_info{color:#AA0000;padding-left:5px;padding-top:5px;font-size:13px}
