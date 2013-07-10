@@ -82,7 +82,7 @@
 	  	
 	  </div>
 	  <div class="right">
-	  		<div style="margin-bottom:5px;">
+	  		<div style="margin-bottom:15px;">
 	  			<script type="text/javascript">
 				/*个人中心，创建于2013-7-10*/
 				var cpro_id = "u1317830";
