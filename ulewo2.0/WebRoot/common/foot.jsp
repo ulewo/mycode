@@ -12,7 +12,7 @@
 				</ul>
 			<div id="footright">&copy;2011-2013&nbsp;&nbsp;ulewo.com 有乐窝&nbsp;&nbsp;All rights reserved. <br><br>
 						<span style="color:#737573">黑ICP备10007364号-1</span></div>
-			<div id="gototop"><a href="javascript:void(0)" onclick="window.scrollTo(0,0);" onfocus="this.blur()" title="回到顶部"><img border="0" src="${realPath}/images/totop.png"></a></div>
+			<div id="gototop"><a href="javascript:void(0)" onclick="window.scrollTo(0,0);" onfocus="this.blur()" title="回到顶部"></a></div>
 			<div id="foot_info">
 			
 			</div>

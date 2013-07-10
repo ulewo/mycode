@@ -60,7 +60,8 @@ textarea{overflow:auto;padding:0px;margin:0px;resize:none;border:none;}
 .tip_con{background:#FFF9C9;border:1px solid #C7BF93;height:20px;position:absolute;left:0px;top:5px;width:150px;padding-top:8px;border-radius: 4px;-moz-border-radius: 4px;-webkit-border-radius: 4px}
 .tip_con a{color:#3E62A6;}
 #gototop{position:fixed;bottom: 120px; right: 100px; cursor: pointer; display:none;}
-
+#gototop a{background:url("../images/gototop.png") -43px 1px no-repeat; display:block;height:45px;width:42px;}
+#gototop a:hover{background:url("../images/gototop.png") -1px 1px no-repeat; display:block;height:45px;width:42px;}
 /**************��������******************/
 .head_search{float:left;width:240px;background:url("../images/searchbg.png") -2px 0px no-repeat;margin-top:5px;}
 .head_search .head_search_input{height:20px;margin-top:5px;width:198px;border:0px;float:left;margin-left:10px;}
