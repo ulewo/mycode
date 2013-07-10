@@ -104,7 +104,15 @@
 				</div>
 			</div>
 			<div class="right">
-				<div class="right_tit">
+				<div class="right_tit">合作商家</div>
+				<div style="margin-top:5px;">
+					<script type="text/javascript">
+					/*200*200，创建于2013-7-10*/
+					var cpro_id = "u1317703";
+					</script>
+					<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+				</div>
+				<div class="right_tit" style="margin-top:10px;">
 					最活跃成员
 				</div>
 				<div id="activer_list">
