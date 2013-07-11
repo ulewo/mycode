@@ -20,14 +20,7 @@
 	<%@ include file="common/head.jsp" %>
   	<div class="main">
   		<div class="left">
-  			<div>
-	  			<script type="text/javascript">
-				/*首页横幅，创建于2013-7-10*/
-				var cpro_id = "u1317718";
-				</script>
-				<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
-			</div>
-  			<div class="titinfo" style="margin-top:5px;">每日图文</div>
+  			<div class="titinfo">每日图文</div>
   			<div class="hot">
   				<div>
   				<c:set var="num" value="0"/>
@@ -41,6 +34,13 @@
 				<div class="clear"></div>
 			  </div>
   			</div>
+  			<div style="margin-top:10px;padding-left:-10px;overflow:hidden;">
+	  			<script type="text/javascript">
+				/*首页横幅，创建于2013-7-10*/
+				var cpro_id = "u1317718";
+				</script>
+				<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+			</div>
   			<div class="titinfo">最新文章</div>
 	  			<ul class="new_article_list">
 	  				<c:forEach var="article" items="${list}">

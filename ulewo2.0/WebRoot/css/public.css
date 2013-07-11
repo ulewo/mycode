@@ -20,7 +20,7 @@ textarea{overflow:auto;padding:0px;margin:0px;resize:none;border:none;}
 .tool_panle ul a{font-size:13px;color:#3E62A6;text-decoration:none;display:block;padding:1px;}
 .tool_panle ul a:hover{background:#64C5E8;color:#FFFFFF}
 
-#head{background:url("../images/bgnav.png") 0px 0px;height:40px;width:100%;position:fixed;top:0px;left:0px;z-index:9999999}
+#head{background:url("../images/bgnav.png") 0px 0px;height:38px;border-bottom:2px solid #38A5D0;width:100%;position:fixed;top:0px;left:0px;z-index:9999999}
 .head_con {margin:0px auto;width:1000px;height:40px;text-align:center;}
 .head_con ul.left{width:330px;float:left;margin:0px;padding:0px;height:35px;border:0px;text-align:center;}
 .head_con ul.left li{float:left;width:80px;list-style:none;margin-left:1px}
@@ -38,7 +38,7 @@ textarea{overflow:auto;padding:0px;margin:0px;resize:none;border:none;}
 .head_app{float:right;width:20px;margin-top:10px;}
 
 .head_con ul.head_right li a.over{text-decoration:none;background:#ffffff;color:#000000;height:29px;border-left:1px solid #000000;border-right:1px solid #000000;}
-.head_box{position:absolute;left:30px;top:38px;min-height:30px;width:300px;border:1px solid #000000;border-top:0px;display:none;background:#ffffff;text-align:center;font-size:13px;z-index:9999;padding:5px;padding-bottom:15px;}
+.head_box{position:absolute;left:30px;top:40px;min-height:30px;width:300px;border:1px solid #000000;border-top:0px;display:none;background:#ffffff;text-align:center;font-size:13px;z-index:9999;padding:5px;padding-bottom:15px;}
 .head_box div{text-align:left;}
 .box_fans_tit,.box_focus_tit,.box_set_tit,.box_joinwowo_tit,.box_createwowo_tit{padding-left:3px;color:#333;margin-top:5px;}
 .box_item_img{width:30px;float:left;margin-left:5px;margin-top:3px;}

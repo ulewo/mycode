@@ -1,7 +1,7 @@
 @IMPORT url("public.css");
 .selected1{text-decoration:none;background:url("../images/bgnav.png") 0px 40px;}
 .left{width:720px;float:left;}
-.right{width:260px;margin-left:20px;float:left;}
+.right{width:260px;margin-left:20px;float:left;margin-top:13px;}
 .titinfo{border-bottom:2px solid #38A2DB;font-size:18px;color:#38A2DB;padding:5px;margin-top:10px;}
 ul{margin:0px;padding:0px;}
 ul li{margin:0px;padding:0px;list-style:none;}
