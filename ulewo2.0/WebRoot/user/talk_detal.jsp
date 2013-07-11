@@ -93,7 +93,7 @@
 		  					<img src="${realPath}/upload/${talk.userIcon}" width="37">
 		  				</div>
 		  				<div class="itemcon">
-		  					<span class="item_user"><a href="userInfo.jspx?userId=${talk.userId}">${talk.userName}</a></span>
+		  					<span class="item_user"><a href="${realPath}/user/${talk.userId}">${talk.userName}</a></span>
 		  					<span class="item_content" id="item_content">${talk.content}</span>
 		  					<c:if test="${talk.imgurl!=''&&talk.imgurl!=null}">
 		  						<div class="talkimg">
