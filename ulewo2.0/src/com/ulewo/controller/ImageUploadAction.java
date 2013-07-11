@@ -20,8 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ulewo.util.DrowImage;
 import com.ulewo.util.ErrorReport;
+import com.ulewo.util.ScaleFilter;
 
 @Controller
 public class ImageUploadAction {
@@ -78,18 +78,12 @@ public class ImageUploadAction {
 			File fromFile = new File(filePath);
 			BufferedImage srcImage = ImageIO.read(fromFile);
 			int width = srcImage.getWidth();
-			int height = srcImage.getHeight();
-			int w = MAXWIDTH;
-			int h = MAXWIDTH;
 			if (fromFile.length() > 200 * 1024 || width > MAXWIDTH) {
-				if (fromFile.length() > 200 * 1024 && width < MAXWIDTH) {// 图片太大，长宽不大的情况
-					w = width;
-					h = height;
-				}
-				String drowPath = fileDir + "/" + current + "x.jpg";
-				DrowImage.saveImageAsJpg(filePath, drowPath, w, h, false);
-				fromFile.delete();
-				savePath = saveDir + "/" + current + "x.jpg";
+				ScaleFilter filter = new ScaleFilter(MAXWIDTH,MAXWIDTH);
+				BufferedImage img = ImageIO.read(new File(filePath));
+				BufferedImage okImg = filter.filter(img, null);
+				ImageIO.write(okImg, suffix, new File(filePath));
+				savePath = saveDir + "/" + fileName;
 			}
 			mv.addObject("result", "success");
 			mv.addObject("savePath", savePath);
@@ -106,6 +100,72 @@ public class ImageUploadAction {
 		}
 	}
 
+	@RequestMapping(value = "/iconUpload", method = RequestMethod.POST)
+	public ModelAndView iconUpload(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView mv = new ModelAndView();
+		try {
+			Object user = session.getAttribute("user");
+			if (null == user) {
+				mv.addObject("result", "fail");
+				mv.addObject("message", "你登陆已超时，请重新登陆");
+				mv.setViewName("common/iconUpload");
+				return mv;
+			}
+			String realPath = session.getServletContext().getRealPath("/");
+			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+			MultipartFile multipartFile = multipartRequest.getFile("file");
+			long size = multipartFile.getSize();
+			if (size > MAX_FILE) {
+				mv.addObject("result", "fail");
+				mv.addObject("message", "文件超过1M");
+				mv.setViewName("common/iconUpload");
+				return mv;
+			}
+			String fileName = multipartFile.getOriginalFilename();
+			String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+			if (!"JPG".equalsIgnoreCase(suffix) && !"PNG".equalsIgnoreCase(suffix) && !"gif".equalsIgnoreCase(suffix)
+					&& !"BMP".equalsIgnoreCase(suffix)) {
+				mv.addObject("result", "fail");
+				mv.addObject("message", "文件类型只能是图片");
+				mv.setViewName("common/iconUpload");
+				return mv;
+			}
+			String current = String.valueOf(System.currentTimeMillis());
+			fileName = current + "." + suffix;
+			String savePath = "tempfile" + "/" + fileName;
+			String fileDir = realPath + "upload" + "/tempfile";
+			File dir = new File(fileDir);
+			if (!dir.exists()) {
+				dir.mkdirs();
+			}
+			String filePath = fileDir + "/" + fileName;
+			File file = new File(filePath);
+			multipartFile.transferTo(file);
+			BufferedImage srcImage = ImageIO.read(file);
+			int width = srcImage.getWidth();
+			if(width>MAXWIDTH){
+				file.delete();
+				mv.addObject("result", "fail");
+				mv.addObject("message", "文件宽度不能超过600");
+				mv.setViewName("common/iconUpload");
+				return mv;
+			}
+			mv.addObject("result", "success");
+			mv.addObject("savePath", savePath);
+			mv.setViewName("common/iconUpload");
+			return mv;
+		} catch (Exception e) {
+			String errorMethod = "ImageUploadAction-->iconUpload()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			thread.start();
+			mv.addObject("result", "fail");
+			mv.setViewName("common/iconUpload");
+			return mv;
+		}
+	}
+	
 	@ResponseBody
 	@RequestMapping(value = "/FileUpload", method = RequestMethod.POST)
 	public Map<String, Object> FileUpload(HttpSession session, HttpServletRequest request, HttpServletResponse response) {

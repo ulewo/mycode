@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.jhlabs.image.ScaleFilter;
 import com.ulewo.entity.BlogArticle;
 import com.ulewo.entity.BlogItem;
 import com.ulewo.entity.Notice;
@@ -275,29 +276,21 @@ public class UserManageAction {
 		}
 		String srcpath = session.getServletContext().getRealPath("/") + tempimg;
 		try {
-			//File tempfile = new File(srcpath);
-			//tempIn = new FileInputStream(tempfile);
 			BufferedImage img = ImageIO.read(new File(srcpath));
 			// 裁剪图片
 			BufferedImage subimg = img.getSubimage(x1_int, y1_int, width_int, height_int);
+			//ScaleFilter filter = new ScaleFilter(SMALL_WIDTH,SMALL_HEIGHT);
 			// 放大缩小图片
-			BufferedImage okimg = new BufferedImage(SMALL_WIDTH, SMALL_HEIGHT, BufferedImage.TYPE_INT_RGB);
-			Graphics2D g = okimg.createGraphics();
-			g.drawImage(subimg, 0, 0, SMALL_WIDTH, SMALL_HEIGHT, null);
-
+			ScaleFilter filter = new ScaleFilter(SMALL_WIDTH,SMALL_WIDTH);
+			BufferedImage okimg = filter.filter(subimg, null);
 			// 将图片转为字节数组
-			out = new ByteArrayOutputStream();
-			ImageIO.write(okimg, imgType, out);
-			byte[] data = out.toByteArray();
 			String okSrcPath = session.getServletContext().getRealPath("/") + "upload/avatars/";
 			File imagePathFile = new File(okSrcPath);
 			if (!imagePathFile.exists()) {
 				imagePathFile.mkdirs();
 			}
 			File okfile = new File(okSrcPath + sessionUser.getUserId() + "." + imgType);
-			imgOut = new FileOutputStream(okfile);
-			imgOut.write(data);
-			imgOut.flush();
+			ImageIO.write(okimg, imgType, okfile);
 			userIcon = "avatars/" + sessionUser.getUserId() + "." + imgType;
 			User user = new User();
 			user.setUserId(userId);

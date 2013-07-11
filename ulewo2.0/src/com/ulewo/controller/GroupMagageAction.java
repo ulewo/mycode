@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.jhlabs.image.ScaleFilter;
 import com.ulewo.entity.Article;
 import com.ulewo.entity.ArticleItem;
 import com.ulewo.entity.Group;
@@ -276,8 +277,6 @@ public class GroupMagageAction {
 		int y1_int = Integer.parseInt(y1);
 		int width_int = Integer.parseInt(width);
 		int height_int = Integer.parseInt(height);
-		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
-		String userId = sessionUser.getUserId();
 		String userIcon = "";
 		InputStream tempIn = null;
 		ByteArrayOutputStream out = null;
@@ -298,15 +297,8 @@ public class GroupMagageAction {
 			BufferedImage subimg = img.getSubimage(x1_int, y1_int, width_int,
 					height_int);
 			// 放大缩小图片
-			BufferedImage okimg = new BufferedImage(SMALL_WIDTH, SMALL_HEIGHT,
-					BufferedImage.TYPE_INT_RGB);
-			Graphics2D g = okimg.createGraphics();
-			g.drawImage(subimg, 0, 0, SMALL_WIDTH, SMALL_HEIGHT, null);
-
-			// 将图片转为字节数组
-			out = new ByteArrayOutputStream();
-			ImageIO.write(okimg, imgType, out);
-			byte[] data = out.toByteArray();
+			ScaleFilter filter = new ScaleFilter(SMALL_WIDTH,SMALL_WIDTH);
+			BufferedImage okimg = filter.filter(subimg, null);
 			String okSrcPath = session.getServletContext().getRealPath("/")
 					+ "upload/group/";
 			File imagePathFile = new File(okSrcPath);
@@ -314,9 +306,7 @@ public class GroupMagageAction {
 				imagePathFile.mkdirs();
 			}
 			File okfile = new File(okSrcPath + gid + "." + imgType);
-			imgOut = new FileOutputStream(okfile);
-			imgOut.write(data);
-			imgOut.flush();
+			ImageIO.write(okimg, imgType, okfile);
 			userIcon = "group/" + gid + "." + imgType;
 			Group group = new Group();
 			group.setId(gid);
