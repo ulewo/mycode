@@ -30,7 +30,11 @@
 			</div>
 			<div>
 				<div class="form_are">
-					<iframe src="${realPath}/common/imgupload.jsp" id="iframupload" height="30" width="310" frameborder="0"></iframe>
+					<div style="float:left;width:330px;">
+						<iframe src="${realPath}/common/iconUpload.jsp" id="iframupload" height="30" width="310" frameborder="0"></iframe>
+					</div>
+					<div style="float:left;width:250px;padding-top:10px;color:#999999">图片大小不能超过1M,尺寸不能超过600</div>
+					<div class="clear"></div>
 				</div>
 				<div id="imgarea">
 					<div class="cutarea" id="picture_original">

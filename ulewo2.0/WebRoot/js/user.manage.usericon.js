@@ -60,7 +60,9 @@ function saveImg(){
 					return;
 				}else{
 					info("保存成功");
-					$("#user_icon").attr("src",global.realPath+"/upload/"+data.userIcon);
+					setTimeout(function(){
+						document.location.reload();
+					},1000);
 				}
 			}
 		});
