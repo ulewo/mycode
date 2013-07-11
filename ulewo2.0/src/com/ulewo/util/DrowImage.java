@@ -16,8 +16,7 @@ import java.io.InputStream;
 import javax.imageio.ImageIO;
 
 public class DrowImage {
-	private static BufferedImage resize(BufferedImage source, int targetW,
-			int targetH) {
+	private static BufferedImage resize(BufferedImage source, int targetW, int targetH) {
 
 		// targetW，targetH分别表示目标长和宽
 		int type = source.getType();
@@ -30,23 +29,23 @@ public class DrowImage {
 		if (source.getWidth() > source.getHeight()) { // 如果图片的宽度大于高度，那么按照高度来截取
 			targetH = targetW * source.getHeight() / source.getWidth();
 			sy = sx;
-		} else {
+		}
+		else {
 			targetW = targetH * source.getWidth() / source.getHeight();
 			sx = sy;
 		}
 
 		if (type == BufferedImage.TYPE_CUSTOM) { // handmade
 			ColorModel cm = source.getColorModel();
-			WritableRaster raster = cm.createCompatibleWritableRaster(targetW,
-					targetH);
+			WritableRaster raster = cm.createCompatibleWritableRaster(targetW, targetH);
 			boolean alphaPremultiplied = cm.isAlphaPremultiplied();
 			target = new BufferedImage(cm, raster, alphaPremultiplied, null);
-		} else
+		}
+		else
 			target = new BufferedImage(targetW, targetH, type);
 		Graphics2D g = target.createGraphics();
 		// smoother than exlax:
-		g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-				RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+		g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
 		g.drawRenderedImage(source, AffineTransform.getScaleInstance(sx, sy));
 		g.dispose();
 		return target;
@@ -66,7 +65,8 @@ public class DrowImage {
 			sx = (double) targetW / source.getWidth();
 			targetH = targetW * source.getHeight() / source.getWidth();
 			sy = sx;
-		} else
+		}
+		else
 		// 目标文件宽度小于指定宽度
 		{
 			targetW = source.getWidth();
@@ -76,16 +76,15 @@ public class DrowImage {
 
 		if (type == BufferedImage.TYPE_CUSTOM) { // handmade
 			ColorModel cm = source.getColorModel();
-			WritableRaster raster = cm.createCompatibleWritableRaster(targetW,
-					targetH);
+			WritableRaster raster = cm.createCompatibleWritableRaster(targetW, targetH);
 			boolean alphaPremultiplied = cm.isAlphaPremultiplied();
 			target = new BufferedImage(cm, raster, alphaPremultiplied, null);
-		} else {
+		}
+		else {
 			target = new BufferedImage(targetW, targetH, type);
 		}
 		Graphics2D g = target.createGraphics();
-		g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-				RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+		g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
 		g.drawRenderedImage(source, AffineTransform.getScaleInstance(sx, sy));
 		g.dispose();
 		return target;
@@ -106,8 +105,7 @@ public class DrowImage {
 	 * @throws Exception
 	 */
 
-	public static void saveImageAsJpg(String inFilePath, String outFilePath,
-			int width, int hight, boolean isReCreate) {
+	public static void saveImageAsJpg(String inFilePath, String outFilePath, int width, int hight, boolean isReCreate) {
 
 		try {
 			boolean isCut = false;
@@ -142,22 +140,20 @@ public class DrowImage {
 					// 计算X轴坐标
 					int x = 0;
 					int y = 0;
-					saveSubImage(srcImage, new Rectangle(x, y, width, hight),
-							saveFile);
+					saveSubImage(srcImage, new Rectangle(x, y, width, hight), saveFile);
 				}
 				// 否则如果是缩放后的图像的高度和要求的图像高度一样，就对缩放后的图像的宽度进行截取
 				else if (h == hight) {
 					// 计算X轴坐标
 					int x = 0;
 					int y = 0;
-					saveSubImage(srcImage, new Rectangle(x, y, width, hight),
-							saveFile);
+					saveSubImage(srcImage, new Rectangle(x, y, width, hight), saveFile);
 				}
-			} else {
+			}
+			else {
 				if (isReCreate) {
 					// 创建一个空白的图片
-					BufferedImage blockImage = new BufferedImage(60, 60,
-							BufferedImage.TYPE_INT_RGB);
+					BufferedImage blockImage = new BufferedImage(60, 60, BufferedImage.TYPE_INT_RGB);
 					Graphics2D g = blockImage.createGraphics();
 					g.setColor(new Color(250, 250, 250));
 					g.fillRect(0, 0, 60, 60);
@@ -165,13 +161,15 @@ public class DrowImage {
 					int top = 0;
 					if (srcImage.getWidth() > srcImage.getHeight()) { // 如果宽度大于高度，那么上下空一点，图片在中间
 						top = (srcImage.getWidth() - srcImage.getHeight()) / 2;
-					} else { // 如果宽度小于高度，那么左右空一点，图片在中间
+					}
+					else { // 如果宽度小于高度，那么左右空一点，图片在中间
 						left = (srcImage.getHeight() - srcImage.getWidth()) / 2;
 					}
 					// 将图片贴到空白图片上
 					g.drawImage(srcImage, left, top, null);
 					ImageIO.write(blockImage, imgType, saveFile);
-				} else {
+				}
+				else {
 					ImageIO.write(srcImage, imgType, saveFile);
 				}
 			}
@@ -192,16 +190,15 @@ public class DrowImage {
 	 *            要保存的文件
 	 * @throws IOException
 	 */
-	private static void saveSubImage(BufferedImage image,
-			Rectangle subImageBounds, File subImageFile) throws IOException {
+	private static void saveSubImage(BufferedImage image, Rectangle subImageBounds, File subImageFile)
+			throws IOException {
 
-		if (subImageBounds.x < 0 || subImageBounds.y < 0
-				|| subImageBounds.width - subImageBounds.x > image.getWidth()
+		if (subImageBounds.x < 0 || subImageBounds.y < 0 || subImageBounds.width - subImageBounds.x > image.getWidth()
 				|| subImageBounds.height - subImageBounds.y > image.getHeight()) {
 			return;
 		}
-		BufferedImage subImage = image.getSubimage(subImageBounds.x,
-				subImageBounds.y, subImageBounds.width, subImageBounds.height);
+		BufferedImage subImage = image.getSubimage(subImageBounds.x, subImageBounds.y, subImageBounds.width,
+				subImageBounds.height);
 		String fileName = subImageFile.getName();
 		String formatName = fileName.substring(fileName.lastIndexOf('.') + 1);
 		ImageIO.write(subImage, formatName, subImageFile);
