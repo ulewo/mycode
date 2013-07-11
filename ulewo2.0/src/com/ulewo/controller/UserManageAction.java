@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -62,7 +61,7 @@ public class UserManageAction {
 
 	@Autowired
 	private FavoriteService favoriteService;
-	
+
 	private final static int CHARACTER_LENGTH = 200;
 
 	private final static int ADDRESS_LENGTH = 50, WORK_LENGTH = 50, ITEM_LENGTH = 50;
@@ -276,9 +275,9 @@ public class UserManageAction {
 		}
 		String srcpath = session.getServletContext().getRealPath("/") + tempimg;
 		try {
-			File tempfile = new File(srcpath);
-			tempIn = new FileInputStream(tempfile);
-			BufferedImage img = ImageIO.read(tempIn);
+			//File tempfile = new File(srcpath);
+			//tempIn = new FileInputStream(tempfile);
+			BufferedImage img = ImageIO.read(new File(srcpath));
 			// 裁剪图片
 			BufferedImage subimg = img.getSubimage(x1_int, y1_int, width_int, height_int);
 			// 放大缩小图片
@@ -800,15 +799,15 @@ public class UserManageAction {
 			return modelMap;
 		}
 	}
-	
 
 	@RequestMapping(value = "/favorite", method = RequestMethod.GET)
 	public ModelAndView favorite(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("usermanage/favorite");
 		return mv;
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "/queryFavoriteArticle.action", method = RequestMethod.GET)
 	public Map<String, Object> queryFavoriteArticle(HttpSession session, HttpServletRequest request,
@@ -830,8 +829,7 @@ public class UserManageAction {
 				return modelMap;
 			}
 			String userId = ((SessionUser) session.getAttribute("user")).getUserId();
-			PaginationResult data = favoriteService.queryFavoriteByUserIdInPage(userId, type, page_int,
-					2);
+			PaginationResult data = favoriteService.queryFavoriteByUserIdInPage(userId, type, page_int, 2);
 			modelMap.put("data", data);
 			modelMap.put("result", "success");
 			return modelMap;
@@ -874,7 +872,7 @@ public class UserManageAction {
 			String errorMethod = "UserAction-->deleteFavoriteArticle()<br>";
 			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
 			Thread thread = new Thread(report);
-		//	thread.start();
+			//	thread.start();
 			modelMap.put("result", "fail");
 			modelMap.put("message", "系统异常");
 			return modelMap;
