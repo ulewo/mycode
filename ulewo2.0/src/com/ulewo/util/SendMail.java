@@ -34,7 +34,7 @@ public class SendMail {
 		msg.setContent(content, "text/html;charset=gbk;");
 		Transport transport = session.getTransport();
 		// 设置服务器以及账号和密码
-		transport.connect("smtp.qq.com", 25, "ulewo@qq.com", "*************");
+		transport.connect("smtp.qq.com", 25, "ulewo@qq.com", "lhl123456");
 		// 发送到的邮箱地址
 		transport.sendMessage(msg, getAddress(emilAddress));
 		transport.close();
