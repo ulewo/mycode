@@ -1,23 +1,9 @@
 var editor;
 //var s = {"highlightJsUrl":window.UEDITOR_HOME_URL+"third-party/SyntaxHighlighter/shCore.js","highlightCssUrl":window.UEDITOR_HOME_URL+"third-party/SyntaxHighlighter/shCoreDefault.css"}
 $(function() {
-	lazyLoadImage("article_detail");
-	$(".article_detail pre").each(function () {
-        var $this = $(this);
-        if ($this.attr("class")!=null&&$this.attr("class").indexOf("brush:") != -1) {
-            var lang = $this.attr("class").split(';')[0].split(':')[1];
-            $this.attr('name', 'code');
-            $this.attr('class', lang);
-        }
-    });
-    dp.SyntaxHighlighter.HighlightAll('code');
-    
-	//uParse("div .article_detail",s);
 	$("#new_article_p").bind("click",showAddForm);
 	$("#sub_article_btn").bind("click",submitForm);
-	loadPage(1);
 	$("#downloadFile").bind("click",downloadFile);
-	checkFavorite(global.articleId,"A");
 	$("#op_favorite a").live("click",function(){
 		if(global.userId==""){
 			alert("请先登录");
@@ -50,7 +36,25 @@ $(function() {
 			}
 		});
 	});
-})
+	lazyLoadImage("article_detail");
+	$(".article_detail pre").each(function () {
+        var $this = $(this);
+        if ($this.attr("class")!=null&&$this.attr("class").indexOf("brush:") != -1) {
+            var lang = $this.attr("class").split(';')[0].split(':')[1];
+            $this.attr('name', 'code');
+            $this.attr('class', lang);
+        }
+    });
+    dp.SyntaxHighlighter.HighlightAll('code');
+	loadPage(1);
+	checkFavorite(global.articleId,"A");
+	
+	$(".share a").each(function(index){
+		$(this).bind("click",function(){
+			dispatche(index);
+		});
+	});
+});
 
 /** *************插入表情*************** */
 function showEmotion() {

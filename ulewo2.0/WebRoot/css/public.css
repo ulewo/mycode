@@ -129,3 +129,12 @@ a.prePage,a.nextPage{width:60px;}
 /******右侧广告******/
 .righ_ad{position:fixed;right:20px;top:80px;width:160px;height:600px;}
 .ad_info{color:#AA0000;padding-left:5px;padding-top:5px;font-size:13px}
+
+/********分享**********/
+.share_tit{float:left;width:37px;padding-top:3px;}
+.share{float:right;width:150px;}
+.share a{display:block;background:url("../images/share.png") no-repeat;width:18px;height:18px;float:left;margin-left:5px;}
+.share a.share_sina{background-position:0px 0px;}
+.share a.share_qzone{background-position:0px -22px;}
+.share a.share_qweibo{background-position:0px -44px;}
+.share a.share_ren{background-position:0px -66px;}

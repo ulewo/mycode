@@ -24,6 +24,7 @@ global.articleId= "${article.id}";
 <link type="text/css" rel="stylesheet" href="${realPath}/js/styles/SyntaxHighlighter.css"/>
 <script type="text/javascript" src="${realPath}/js/group.showarticle.js"></script>
 <script type="text/javascript" src="${realPath}/js/emotion.data.js"></script>
+<script type="text/javascript" src="${realPath}/js/share.js"></script>
 <link rel="stylesheet" type="text/css" href="${realPath}/css/group.detail.css">
 <link rel="stylesheet" type="text/css" href="${realPath}/css/talk.css">
 </head>
@@ -57,6 +58,13 @@ global.articleId= "${article.id}";
 							回复  ${article.reNumber} 
 						</div>
 						<div class="op_favorite"><span id="favoriteCount">0</span>人收藏了此文章 <span id="op_favorite"></span></div>
+						<div class="share">
+							<div class="share_tit">分享:</div>
+							<a href="javascript:void(0)" class="share_sina" title="分享到新浪微博"></a>
+							<a href="javascript:void(0)" class="share_qzone" title="分享到QQ空间"></a>
+							<a href="javascript:void(0)" class="share_qweibo" title="分享到腾讯微博"></a>
+							<a href="javascript:void(0)" class="share_ren" title="分享到人人网"></a>
+						</div>
 						<div class="clear"></div>
 					</div>
 				</div>

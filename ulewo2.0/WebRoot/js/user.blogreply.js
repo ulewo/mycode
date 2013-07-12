@@ -1,26 +1,11 @@
 $(function(){
-	lazyLoadImage("blog_content");
-	$(".blog_content pre").each(function () {
-        var $this = $(this);
-        if ($this.attr("class")!=null&&$this.attr("class").indexOf("brush:") != -1) {
-            var lang = $this.attr("class").split(';')[0].split(':')[1];
-            $this.attr('name', 'code');
-            $this.attr('class', lang);
-        }
-    });
-    dp.SyntaxHighlighter.HighlightAll('code');
-   // var s = {"highlightJsUrl":window.UEDITOR_HOME_URL+"third-party/SyntaxHighlighter/shCore.js","highlightCssUrl":window.UEDITOR_HOME_URL+"third-party/SyntaxHighlighter/shCoreDefault.css"}
-	//uParse("div .blog_content",s);
-	initReply(1);
-	$("#sendBtn").bind("click",subReply);
-	
+$("#sendBtn").bind("click",subReply);
 	$(document).click(function() {
 		$('#pm_emotion_cnt').hide();
 	});
 	$("#pm_emotion_cnt").click(function(event) {
 		event.stopPropagation();
 	});
-
 	$(".pm_emotions_bd").find("a").each(function(index) {
 		$(this).bind("click", function() {
 			var curValue = $("#content").val();
@@ -28,7 +13,6 @@ $(function(){
 			$("#pm_emotion_cnt").hide();
 		});
 	});
-	checkFavorite(blogId,"B");
 	$("#op_favorite a").live("click",function(){
 		if(global.userId==""){
 			alert("请先登录");
@@ -61,6 +45,23 @@ $(function(){
 			}
 		});
 	});
+	$(".share a").each(function(index){
+		$(this).bind("click",function(){
+			dispatche(index);
+		});
+	});
+	checkFavorite(blogId,"B");
+	lazyLoadImage("blog_content");
+	$(".blog_content pre").each(function () {
+        var $this = $(this);
+        if ($this.attr("class")!=null&&$this.attr("class").indexOf("brush:") != -1) {
+            var lang = $this.attr("class").split(';')[0].split(':')[1];
+            $this.attr('name', 'code');
+            $this.attr('class', lang);
+        }
+    });
+    dp.SyntaxHighlighter.HighlightAll('code');
+	initReply(1);
 });
 
 function showEmotion() {

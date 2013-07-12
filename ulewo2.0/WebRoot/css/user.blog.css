@@ -12,7 +12,7 @@
 .blog_list_tit a,.blog_list_tit span{font-weight:bold;font-size:18px;text-decoration:none;color:#333333}
 .blog_item_op{margin-top:10px;}
 .blog_item_op_info{float:left;display:inline-block;}
-.blog_item_op_favorite{display:inline-block;float:right;margin-right:5px;}
+.blog_item_op_favorite{display:inline-block;float:right;margin-right:5px;padding-top:2px;}
 #favoriteCount{font-weight:bold;color:#AA0000;}
 #op_favorite a{color:#AA0000;}
 #op_favorite span{color:#666666}
