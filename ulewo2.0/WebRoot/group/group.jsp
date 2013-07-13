@@ -111,7 +111,6 @@
 					var cpro_id = "u1317703";
 					</script>
 					<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
-					<div class="ad_info">广告也精彩，喜欢就点点吧^_^</div>
 				</div>
 				<div class="right_tit" style="margin-top:10px;">
 					最活跃成员

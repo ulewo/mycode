@@ -80,7 +80,6 @@ window.UEDITOR_HOME_URL = "${realPath}/ueditor/";
 									</script>
 								<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
 								</div>
-								<div class="ad_info">广告也精彩，喜欢就点点吧^_^</div>
 							</div>
 							${blog.content}
 						</div>
