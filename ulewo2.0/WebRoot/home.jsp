@@ -20,6 +20,7 @@
 	<%@ include file="common/head.jsp" %>
   	<div class="main">
   		<div class="left">
+  			<!-- 
   			<div class="titinfo">每日图文</div>
   			<div class="hot">
   				<div>
@@ -33,15 +34,20 @@
   				</c:forEach>
 				<div class="clear"></div>
 			  </div>
+			  
   			</div>
+  			 -->
   			<div style="margin-top:10px;padding-left:-10px;overflow:hidden;">
+  				<!-- 
 	  			<script type="text/javascript">
 				/*首页横幅，创建于2013-7-10*/
 				var cpro_id = "u1317718";
 				</script>
 				<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+				 -->
 			</div>
   			<div class="titinfo">最新文章</div>
+  				<!-- 
 	  			<ul class="new_article_list">
 	  				<c:forEach var="article" items="${list}">
 	  					<li>
@@ -52,20 +58,34 @@
 	  					</li>
 	  				</c:forEach>
 	  			</ul>
-  			<div class="titinfo">最新博文</div>
-  			  <div>
-				<ul class="new_article_list">
-					<c:forEach var="blog" items="${blogList}">
-						<li>
-							<span class="article_tit">
-								<a href="${realPath}/user/${blog.userId}/blog/${blog.id}" target="_blank" title="${blog.title}" target="_blank" class="sec_span2" style="width:460px;padding-left:0px;">${blog.title}</a>
-								<span class="sec_span">${blog.postTime} by ${blog.userName}</span>
-							</span>
-							<span class="article_read">${blog.reCount}回/${blog.readCount}阅</span>
-						</li>
-					</c:forEach>
-	  			</ul>
-	  			</div>
+	  			 -->
+	  			<c:forEach var="article" items="${list}">
+		  			 <div class="article_item">
+		  			 	<div class="group_icon"><a href="${realPath}/group/${article.gid}" target="_blank" title="${article.groupName}"><img src="${realPath}/upload/${article.groupIcon}"></a></div>
+		  			 	<div class="article_con">
+		  			 		<div class="article_title">
+		  			 			<a href="${realPath}/group/${article.gid}" class="group_name_link" target="_blank" title="${article.groupName}">${article.groupName}</a>
+		  			 			<span class="title_line">|</span>
+		  			 			<a href="${realPath}/group/${article.gid}/topic/${article.id}" class="article_title_link"  title="${article.title}" target="_blank">${article.title}</a>
+		  			 		</div>
+		  			 		<div class="article_summary">${article.summary}</div>
+		  			 		<div class="article_pic"></div>
+		  			 		<c:if test="${article.allImage!=''&&article.allImage!=null}">
+								<div class="article_pic">
+									<c:forTokens items="${article.allImage}" delims="|" var="tech" begin="0" end="2">
+										<div class="article_attachedimg"><a href="${realPath}/group/${article.gid}/topic/${article.id}"><img src="${tech}" style="max-width:150px;"/></a></div>
+									</c:forTokens>
+									<div class="clear"></div>
+								</div>
+							</c:if>
+		  			 		<div class="article_author">
+		  			 			<a href="${realPath}/user/${article.authorId}">${article.authorName}</a>
+								<span class="article_posttime">发表于 ${article.postTime}</span>
+		  			 		</div>
+		  			 	</div>
+		  			 	<div class="clear"></div>
+		  			 </div>
+	  			 </c:forEach>
   		</div>
   		<div class="right">
   			<div class="create_wo"><a href="javascript:createWoWo()">创建我的窝窝</a></div>
@@ -198,6 +218,16 @@
   					<div class="clear"></div>
   				</div>
 	  			</c:forEach>
+	  		  <div class="titinfo">最新博文</div>
+  			  <div>
+				<ul class="new_article_list">
+					<c:forEach var="blog" items="${blogList}">
+						<li>
+							<a href="${realPath}/user/${blog.userId}/blog/${blog.id}" target="_blank" title="${blog.title}" target="_blank" class="sec_span2">${blog.title}</a>
+						</li>
+					</c:forEach>
+	  			</ul>
+	  		</div>
 	  			<!-- 
   				<div class="titinfo">最活跃成员</div>
 			  	<div>
