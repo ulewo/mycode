@@ -127,7 +127,7 @@ a.prePage,a.nextPage{width:60px;}
 #remote_load{position:fixed;width:100%;height:900px;z-index:999;top:0px;left:0px;background-color: #ccc;opacity: 0.3;filter: alpha(opacity = 30);}
 
 /******右侧广告******/
-.righ_ad{position:fixed;right:20px;top:80px;width:160px;height:600px;}
+.righ_ad{position:fixed;right:30px;top:80px;width:140px;height:600px;}
 .ad_info{color:#AA0000;padding-left:5px;padding-top:5px;font-size:13px}
 
 /********分享**********/
@@ -142,3 +142,6 @@ a.prePage,a.nextPage{width:60px;}
 /**文章列表图片**/
 .article_attachedimg{display:inline-block;border:1px solid #B2B3B2;padding:2px;margin-top:10px;max-height:100px;max-width:150px;margin-right:5px;}
 .article_attachedimg a img{border:0px;max-height:100px;max-width:150px;overflow:hidden;float:left;}
+
+
+.space_host{text-align:center;}
