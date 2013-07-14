@@ -100,12 +100,10 @@ public class HomeAction {
 		ModelAndView mv = new ModelAndView();
 
 		try {
-			List<Article> list = articleService.queryLatestArticle(0, 20);
-			List<Article> imgArticle = articleService.queryImageArticle(null, 0, 5);
+			List<Article> list = articleService.queryLatestArticle(0, 10);
 			List<BlogArticle> blogList = blogArticleService.indexLatestBlog(0, 20);
-			List<Group> groupList = (List<Group>) groupService.queryGroupsOderArticleCount(0, 10).getList();
+			List<Group> groupList = (List<Group>) groupService.queryGroupsOderArticleCount(0,5).getList();
 			mv.addObject("list", list);
-			mv.addObject("imgArticle", imgArticle);
 			mv.addObject("blogList", blogList);
 			mv.addObject("groupList", groupList);
 			mv.setViewName("home");

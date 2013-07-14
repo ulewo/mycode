@@ -190,9 +190,8 @@
 	
 	<!-- 首页最新的文章 -->
 	<select id="queryLatestArticle" resultClass="article" parameterClass="java.util.Map">
-		select id,title,posttime,gid,itemId,readnumber,	(select count(r.id) from rearticle r where r.articleid = a.id) reNumber,(select groupname from groups g where g.id = a.gid) groupname,
-		(select username from user u where u.userid=a.authorid) authorName
-		from article a where image="" or image is null order by posttime desc limit  #offset#,#total#
+		select a.id,a.title,a.summary,a.authorid,a.allimage,a.posttime,a.gid,a.readnumber,g.groupname as groupName,g.groupIcon as groupIcon,u.username as authorName
+		from article a inner join groups g on a.gid=g.id inner join user u on u.userid=a.authorid order by posttime desc limit  #offset#,#total#
 	</select>
 	
 	<select id="queryHotArticle" resultClass="article" parameterClass="java.util.Map">

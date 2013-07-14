@@ -55,6 +55,8 @@ public class Article {
 
 	// 需要关联查询的信息
 	private String groupName; // 群组名称 （文章所述群）
+	
+	private String groupIcon;
 
 	private User author; // 作者 信息
 
@@ -370,6 +372,14 @@ public class Article {
 	public void setAllImage(String allImage) {
 
 		this.allImage = allImage;
+	}
+
+	public String getGroupIcon() {
+		return groupIcon;
+	}
+
+	public void setGroupIcon(String groupIcon) {
+		this.groupIcon = groupIcon;
 	}
 
 }
