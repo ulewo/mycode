@@ -89,10 +89,12 @@
 						 ${article.summary}
 					</div>
 					<c:if test="${article.allImage!=''&&article.allImage!=null}">
+						<div class="article_pic">
 							<c:forTokens items="${article.allImage}" delims="|" var="tech" begin="0" end="2">
 								<div class="article_attachedimg"><a href="${realPath}/group/${gid}/topic/${article.id}"><img src="${tech}" style="max-width:150px;"/></a></div>
 							</c:forTokens>
 							<div class="clear"></div>
+						</div>
 					</c:if>
 				</div>
 			</c:forEach>

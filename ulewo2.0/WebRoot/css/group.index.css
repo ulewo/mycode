@@ -5,7 +5,7 @@
 .article_tit a{text-decoration:none;}
 .article_title{display:inline-block;float:left;font-size:14px;}
 .article_title_icon{display:inline-block;float:left;margin-left:5px;}
-.article_title a{float:left;display:inline-block;margin-left:5px;}
+.article_title a{float:left;display:inline-block;}
 .article_title span{display:inline-block;float:left;margin-left:10px;}
 .recount{color:#B2B3B2;padding-left:10px;}
 .article_author{display:inline-block;float:right;font-size:14px;}

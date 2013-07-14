@@ -138,3 +138,7 @@ a.prePage,a.nextPage{width:60px;}
 .share a.share_qzone{background-position:0px -22px;}
 .share a.share_qweibo{background-position:0px -44px;}
 .share a.share_ren{background-position:0px -66px;}
+
+/**文章列表图片**/
+.article_attachedimg{display:inline-block;border:1px solid #B2B3B2;padding:2px;margin-top:10px;max-height:100px;max-width:150px;margin-right:5px;}
+.article_attachedimg a img{border:0px;max-height:100px;max-width:150px;overflow:hidden;float:left;}
