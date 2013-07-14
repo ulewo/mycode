@@ -104,7 +104,7 @@
 	 });
 	 </script>
 	<div class="righ_ad">
-		<div><a href="javascript:$('.righ_ad').hide()">关闭</a></div>
+		<div><a href="javascript:void(0)" onclick="$('.righ_ad').hide()">关闭</a></div>
 		<div>
 		<script type="text/javascript">
 			/*160*600，创建于2013-7-10*/

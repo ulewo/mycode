@@ -5,12 +5,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<%@ include file="../common/path.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${article.title}-有乐窝</title>
 <meta name="description" content="${article.title}">
 <meta name="keywords" content="${article.title}">
-
+<%@ include file="../common/path.jsp" %>
 <script type="text/javascript">
 <!--
 	window.UEDITOR_HOME_URL = "${realPath}/ueditor/";
