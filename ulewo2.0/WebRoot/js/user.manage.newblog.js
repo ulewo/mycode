@@ -69,7 +69,9 @@ function submitForm(){
 function initImg(imageUrls){
 	if(imageUrls!=null){
 		for(var i=0;i<imageUrls.length;i++){
-			$("<input type='hidden' name='image' value="+imageUrls[i]+">").appendTo($("#blogform"));
+			if(imageUrls[i].indexOf(".")!=-1){
+				$("<input type='hidden' name='image' value="+imageUrls[i]+">").appendTo($("#blogform"));
+			}
 		}
 	}
 }

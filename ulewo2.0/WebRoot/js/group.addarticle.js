@@ -170,7 +170,9 @@ function ArticleItem(article){
 function initImg(imageUrls){
 	if(imageUrls!=null){
 		for(var i=0;i<imageUrls.length;i++){
-			$("<input type='hidden' name='image' value="+imageUrls[i]+" class='image_hidden'>").appendTo($("#articleform"));
+			if(imageUrls[i].indexOf(".")!=-1){
+				$("<input type='hidden' name='image' value="+imageUrls[i]+" class='image_hidden'>").appendTo($("#articleform"));
+			}
 		}
 	}
 	
