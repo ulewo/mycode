@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.htmlcleaner.HtmlCleaner;
+import org.htmlcleaner.TagNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -146,8 +148,8 @@ public class GroupAction {
 				return mv;
 			}
 			// 查询文章
-			PaginationResult articleResult = articleService.queryTopicOrderByGradeAndLastReTime(gid, 0,
-					page_int, Constant.pageSize15);
+			PaginationResult articleResult = articleService.queryTopicOrderByGradeAndLastReTime(gid, 0, page_int,
+					Constant.pageSize15);
 			// 查询分类
 			List<ArticleItem> itemList = articleItemService.queryItemByGid(gid);
 			// List<Article> hotArticlelist = articleService.queryHotArticle(0,
@@ -173,8 +175,8 @@ public class GroupAction {
 	}
 
 	@RequestMapping(value = "/{gid}/itemId/{itemId}", method = RequestMethod.GET)
-	public ModelAndView groupArticleInItem(@PathVariable String gid,@PathVariable String itemId,HttpSession session, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView groupArticleInItem(@PathVariable String gid, @PathVariable String itemId, HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
 		//String itemId = request.getParameter("itemId");
@@ -229,7 +231,7 @@ public class GroupAction {
 		}
 		return mv;
 	}
-	
+
 	private String memberStatus(HttpSession session, String gid) {
 
 		Object sessionObj = session.getAttribute("user");
@@ -771,7 +773,7 @@ public class GroupAction {
 				}
 				article.setAllImage(allImage);
 			}
-
+			getImages(content);
 			// 添加附件
 			if (StringUtils.isNotEmpty(attached_file) && StringUtils.isNotEmpty(attached_file_name)) {
 				AttachedFile file = new AttachedFile();
@@ -794,6 +796,24 @@ public class GroupAction {
 			modelMap.put("message", "系统异常");
 			return modelMap;
 		}
+	}
+
+	private List<String> getImages(String content) {
+
+		List<String> imageList = new ArrayList<String>();
+		HtmlCleaner htmlCleaner = new HtmlCleaner();
+		TagNode allNode = htmlCleaner.clean(content);
+		List<TagNode> nodeList = allNode.getElementListByName("img", true);
+		String image = "";
+		if (nodeList != null) {
+			for (TagNode node : nodeList) {
+				image = String.valueOf(node.getAttributeByName("src")).trim();
+				if (!image.contains("emotion")) {
+					imageList.add(image);
+				}
+			}
+		}
+		return imageList;
 	}
 
 	@ResponseBody
