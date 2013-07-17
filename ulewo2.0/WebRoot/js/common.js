@@ -12,7 +12,7 @@ function lazyLoadImage(imageBody){
 
 function loadImag(myImage){
     var img = new Image();  
-    var imgSrc = myImage.attr("realImg");
+    var imgSrc = myImage.attr("name");
     if(imgSrc.indexOf("imgloading")!=-1){
     	imgSrc=myImage.attr("src");
     	myImage.attr("src",global.realPath+"/images/imgloading.gif");

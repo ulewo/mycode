@@ -72,7 +72,7 @@
 									<c:forTokens items="${article.allImage}" delims="|" var="tech" begin="0" end="2">
 										<div class="article_attachedimg">
 											<a href="${realPath}/group/${article.gid}/topic/${article.id}">
-												<img src="${realPath}/images/imgloading.gif" realImg="${tech}" style="max-width:150px;"/>
+												<img src="${realPath}/images/imgloading.gif" name="${tech}" style="max-width:150px;"/>
 											</a>
 										</div>
 									</c:forTokens>
