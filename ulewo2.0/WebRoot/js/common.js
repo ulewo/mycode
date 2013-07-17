@@ -12,8 +12,12 @@ function lazyLoadImage(imageBody){
 
 function loadImag(myImage){
     var img = new Image();  
-    img.src = myImage.attr("src");
-    myImage.attr("src",global.realPath+"/images/imgloading.gif");
+    var imgSrc = myImage.attr("realImg");
+    if(imgSrc.indexOf("imgloading")!=-1){
+    	imgSrc=myImage.attr("src");
+    	myImage.attr("src",global.realPath+"/images/imgloading.gif");
+    }
+    img.src = imgSrc;
     var browser = getBrowserType();  
     if (browser == "IE") { 
     	if(img.readyState == "complete"){

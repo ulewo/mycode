@@ -28,7 +28,7 @@
 			  			<div class="single_center">
 				  			<div class="single_tit"><a href="${realPath}/group/${article.gid}/topic/${article.id}" target="_blank">${article.title}</a></div>
 				  			<c:if test="${article.image!=null&&article.image!=''}">
-				  				<div class="single_img"><img src="${article.image}"/></div>
+				  				<div class="single_img"><a href="${realPath}/group/${article.gid}/topic/${article.id}" target="_blank"><img src="${realPath}/images/imgloading.gif" realimg="${article.image}" style="max-width:150px;"/></a></div>
 				  			</c:if>
 				  			<div class="single_con">${article.summary}</div>
 				  			<div class="readInfo"><span class="read_tit">回复</span><span class="read_count">(${article.reNumber})</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="read_tit">阅读</span><span class="read_count">(${article.readNumber})</span></div>
@@ -44,7 +44,7 @@
 			  			<div class="single_center">
 				  			<div class="single_tit"><a href="${realPath}/group/${article.gid}/topic/${article.id}" target="_blank">${article.title}</a></div>
 				  			<c:if test="${article.image!=null&&article.image!=''}">
-				  				<div class="single_img"><img src="${article.image}"/></div>
+				  				<div class="single_img"><a href="${realPath}/group/${article.gid}/topic/${article.id}" target="_blank"><img src="${realPath}/images/imgloading.gif" realimg="${article.image}" style="max-width:150px;"/></a></div>
 				  			</c:if>
 				  			<div class="single_con">${article.summary}</div>
 				  			<div class="readInfo"><span class="read_tit">回复</span><span class="read_count">(${article.reNumber})</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="read_tit">阅读</span><span class="read_count">(${article.readNumber})</span></div>
@@ -60,7 +60,7 @@
 			  			<div class="single_center">
 				  			<div class="single_tit"><a href="${realPath}/group/${article.gid}/topic/${article.id}" target="_blank">${article.title}</a></div>
 				  			<c:if test="${article.image!=null&&article.image!=''}">
-				  				<div class="single_img"><img src="${article.image}"/></div>
+				  				<div class="single_img"><a href="${realPath}/group/${article.gid}/topic/${article.id}" target="_blank"><img src="${realPath}/images/imgloading.gif" realimg="${article.image}" style="max-width:150px;"/></a></div>
 				  			</c:if>
 				  			<div class="single_con">${article.summary}</div>
 				  			<div class="readInfo"><span class="read_tit">回复</span><span class="read_count">(${article.reNumber})</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="read_tit">阅读</span><span class="read_count">(${article.readNumber})</span></div>
@@ -76,7 +76,7 @@
 			  			<div class="single_center">
 				  			<div class="single_tit"><a href="${realPath}/group/${article.gid}/topic/${article.id}" target="_blank">${article.title}</a></div>
 				  			<c:if test="${article.image!=null&&article.image!=''}">
-				  				<div class="single_img"><img src="${article.image}"/></div>
+				  				<div class="single_img"><a href="${realPath}/group/${article.gid}/topic/${article.id}" target="_blank"><img src="${realPath}/images/imgloading.gif" realimg="${article.image}" style="max-width:150px;"/></a></div>
 				  			</c:if>
 				  			<div class="single_con">${article.summary}</div>
 				  			<div class="readInfo"><span class="read_tit">回复</span><span class="read_count">(${article.reNumber})</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="read_tit">阅读</span><span class="read_count">(${article.readNumber})</span></div>
@@ -92,7 +92,7 @@
 		</div>
   	</div>
   	<script type="text/javascript">
-  		lazyLoadImage("main");
+  		lazyLoadImage("single_img");
   	</script>
     <%@ include file="common/foot.jsp" %>
     <div class="righ_ad">
