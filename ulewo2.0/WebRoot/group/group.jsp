@@ -108,11 +108,7 @@
 			<div class="right">
 				<div class="right_tit">赞助商</div>
 				<div style="margin-top:5px;">
-					<script type="text/javascript">
-					/*窝窝首页，创建于2013-7-10*/
-					var cpro_id = "u1317703";
-					</script>
-					<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+					
 				</div>
 				<div class="right_tit" style="margin-top:10px;">
 					最活跃成员
