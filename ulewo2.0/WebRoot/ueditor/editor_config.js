@@ -412,7 +412,7 @@
         //当输入的字符数超过该值时，保存一次现场
         //,maxInputCount:1
 
-        //autoHeightEnabled
+        ,autoHeightEnabled:false
         // 是否自动长高,默认true
         //,autoHeightEnabled:true
 
@@ -426,7 +426,7 @@
         //是否保持toolbar的位置不动,默认true
         //,autoFloatEnabled:true
         //浮动时工具栏距离浏览器顶部的高度，用于某些具有固定头部的页面
-        //,topOffset:30
+        ,topOffset:40
         //编辑器底部距离工具栏高度(如果参数大于等于编辑器高度，则设置无效)
         //,toolbarTopOffset:400
 
