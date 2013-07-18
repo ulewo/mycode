@@ -80,6 +80,7 @@ global.articleId= "${article.id}";
 					</div>
 				</div>
 				${article.content}
+				<div class="clear"></div>
 			</div>
 			<c:if test="${article.file!=''&&article.file!=null}">
 			<div class="article_attached">
