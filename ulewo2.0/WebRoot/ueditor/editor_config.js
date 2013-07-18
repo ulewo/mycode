@@ -219,7 +219,7 @@
         //,initialContent:'欢迎使用ueditor!'    //初始化编辑器的内容,也可以通过textarea/script给值，看官网例子
 
         //,initialFrameWidth:1000  //初始化编辑器宽度,默认1000
-        ,initialFrameHeight:320  //初始化编辑器高度,默认320
+        ,initialFrameHeight:400  //初始化编辑器高度,默认320
 
         //,autoClearinitialContent:true //是否自动清除编辑器初始内容，注意：如果focus属性设置为true,这个也为真，那么编辑器一上来就会触发导致初始化的内容看不到了
 
@@ -453,14 +453,14 @@
         //autotypeset
         //  //自动排版参数
         //  ,autotypeset:{
-        //      mergeEmptyline : true,         //合并空行
+        //mergeEmptyline : true,         //合并空行
         //      removeClass : true,           //去掉冗余的class
-        //      removeEmptyline : false,      //去掉空行
+        ,removeEmptyline : true      //去掉空行
         //      textAlign : "left" ,           //段落的排版方式，可以是 left,right,center,justify 去掉这个属性表示不执行排版
         //      imageBlockLine : 'center',      //图片的浮动方式，独占一行剧中,左右浮动，默认: center,left,right,none 去掉这个属性表示不执行排版
         //      pasteFilter : false,            //根据规则过滤没事粘贴进来的内容
-        //      clearFontSize : false,          //去掉所有的内嵌字号，使用编辑器默认的字号
-        //      clearFontFamily : false,        //去掉所有的内嵌字体，使用编辑器默认的字体
+        ,clearFontSize : true          //去掉所有的内嵌字号，使用编辑器默认的字号
+        ,clearFontFamily : true        //去掉所有的内嵌字体，使用编辑器默认的字体
         //      removeEmptyNode : false ,       // 去掉空节点
         //      //可以去掉的标签
         //      removeTagNames : {标签名字:1},
