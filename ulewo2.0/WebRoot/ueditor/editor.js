@@ -16734,11 +16734,12 @@ UE.plugins['catchremoteimage'] = function () {
                         }
                     }
                     removeLoad();
-                    initImg(imageUrls);
                     me.fireEvent('catchremotesuccess')
                 },
                 //回调失败，本次请求超时
                 error:function () {
+                	alert("抓去图片失败");
+                	removeLoad();
                     me.fireEvent("catchremoteerror");
                 }
             });

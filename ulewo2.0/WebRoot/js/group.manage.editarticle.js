@@ -52,10 +52,3 @@ function submitForm(){
 		}
 	});
 }
-
-/*******图片上传回调函数*******/
-function initImg(imageUrls){
-	if(imageUrls.length>0){
-		$("#faceImg").val(imageUrls[0].url);
-	}
-}

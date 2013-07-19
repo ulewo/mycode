@@ -163,18 +163,5 @@ function ArticleItem(article){
 		}
 		$("<div class='clear'></div>").appendTo(this.article_item);
 	}
-	
-	
-}
-/*******图片上传回调函数*******/
-function initImg(imageUrls){
-	if(imageUrls!=null){
-		for(var i=0;i<imageUrls.length;i++){
-			if(imageUrls[i].indexOf(".")!=-1){
-				$("<input type='hidden' name='image' value="+imageUrls[i]+" class='image_hidden'>").appendTo($("#articleform"));
-			}
-		}
-	}
-	
 }
 

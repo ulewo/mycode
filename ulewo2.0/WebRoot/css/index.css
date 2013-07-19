@@ -19,7 +19,7 @@ ul li{margin:0px;padding:0px;list-style:none;}
 .title_line{color: #ccc;margin: 0 3px;font-size: 13px}
 .article_title a.article_title_link{color:#005097;text-decoration:none;font-family: STHeiti,"Microsoft Yahei","微软雅黑",Arial,sans-serif;font-size: 13px;display:inline-block;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;width:530px}
 .article_title a.article_title_link:hover{text-decoration:underline;}
-.article_summary{color:#666;line-height:20px;margin-top:5px;}
+.article_summary{color:#666666;line-height:20px;margin-top:5px;}
 .article_author{margin-top:10px;color:#999}
 .article_author span{margin-left:5px;}
 .new_article_list{margin-top:10px;}

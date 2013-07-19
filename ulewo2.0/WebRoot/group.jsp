@@ -36,16 +36,6 @@
 	editor.ready(function(){
         editor.setContent("");
 	});
-	$(function(){
-		//showLoading("加载中");
-	})
-	function initImg(imageUrls){
-		if(imageUrls!=null){
-			for(var i=0;i<imageUrls.length;i++){
-				//alert(imageUrls[0]);
-			}
-		}
-	}
 	</script>
 </body>
 </html>
