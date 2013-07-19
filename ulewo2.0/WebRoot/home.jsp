@@ -58,12 +58,13 @@
 	  			 -->
 	  			<c:forEach var="article" items="${list}">
 		  			 <div class="article_item">
-		  			 	<div class="group_icon"><a href="${realPath}/group/${article.gid}" target="_blank" title="${article.groupName}"><img src="${realPath}/upload/${article.groupIcon}"></a></div>
+		  			 	<div class="group_icon"><a href="${realPath}/group/${article.gid}" onFocus="this.blur()" target="_blank" title="${article.groupName}"><img src="${realPath}/upload/${article.groupIcon}"></a></div>
 		  			 	<div class="article_con">
 		  			 		<div class="article_title">
-		  			 			<a href="${realPath}/group/${article.gid}" class="group_name_link" target="_blank" title="${article.groupName}">${article.groupName}</a>
+		  			 			<a href="${realPath}/group/${article.gid}" onFocus="this.blur()" class="group_name_link" target="_blank" title="${article.groupName}">${article.groupName}</a>
 		  			 			<span class="title_line">|</span>
-		  			 			<a href="${realPath}/group/${article.gid}/topic/${article.id}" class="article_title_link"  title="${article.title}" target="_blank">${article.title}</a>
+		  			 			<a href="${realPath}/group/${article.gid}/topic/${article.id}" onFocus="this.blur()" class="article_title_link"  title="${article.title}" target="_blank">${article.title}</a>
+		  			 			<div class="clear"></div>
 		  			 		</div>
 		  			 		<div class="article_summary">${article.summary}</div>
 		  			 		<div class="article_pic"></div>
@@ -71,7 +72,7 @@
 								<div class="article_pic">
 									<c:forTokens items="${article.allImage}" delims="|" var="tech" begin="0" end="2">
 										<div class="article_attachedimg">
-											<a href="${realPath}/group/${article.gid}/topic/${article.id}">
+											<a href="${realPath}/group/${article.gid}/topic/${article.id}" onFocus="this.blur()">
 												<img src="${realPath}/images/imgloading.gif" name="${tech}" style="max-width:150px;"/>
 											</a>
 										</div>

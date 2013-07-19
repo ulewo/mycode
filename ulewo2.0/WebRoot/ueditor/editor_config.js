@@ -453,7 +453,7 @@
         //autotypeset
         //  //自动排版参数
         //  ,autotypeset:{
-        //mergeEmptyline : true,         //合并空行
+        ,mergeEmptyline : true         //合并空行
         //      removeClass : true,           //去掉冗余的class
        // ,removeEmptyline : true      //去掉空行
         //      textAlign : "left" ,           //段落的排版方式，可以是 left,right,center,justify 去掉这个属性表示不执行排版
