@@ -33,5 +33,4 @@ public class SpringUtil implements ApplicationContextAware {
 		object = applicationContext.getBean(id);
 		return object;
 	}
-
 }

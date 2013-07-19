@@ -1,10 +1,8 @@
 package com.ulewo.controller;
 
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
@@ -281,7 +279,7 @@ public class UserManageAction {
 			BufferedImage subimg = img.getSubimage(x1_int, y1_int, width_int, height_int);
 			//ScaleFilter filter = new ScaleFilter(SMALL_WIDTH,SMALL_HEIGHT);
 			// 放大缩小图片
-			ScaleFilter filter = new ScaleFilter(SMALL_WIDTH,SMALL_WIDTH);
+			ScaleFilter filter = new ScaleFilter(SMALL_WIDTH, SMALL_WIDTH);
 			BufferedImage okimg = filter.filter(subimg, null);
 			// 将图片转为字节数组
 			String okSrcPath = session.getServletContext().getRealPath("/") + "upload/avatars/";
@@ -372,7 +370,6 @@ public class UserManageAction {
 			String itemId = request.getParameter("itemId");
 			String keyword = request.getParameter("keyword");
 			String content = request.getParameter("content");
-			String[] images = request.getParameterValues("image");
 			String id = request.getParameter("id");
 			int id_int = 0;
 			if (StringUtils.isNotEmpty(id)) {
@@ -396,20 +393,15 @@ public class UserManageAction {
 			article.setKeyWord(keyword);
 			article.setContent(content);
 			article.setUserId(userId);
-
-			if (images != null) {
-				article.setImage(images[0]);
-				String allImage = "";
-				for (int i = 0, length = images.length; i < length; i++) {
-					if (i == (length - 1)) {
-						allImage += images[i];
-					}
-					else {
-						allImage += images[i] + "|";
-					}
+			//获取文章中的图片
+			if (id_int != 0) {
+				String images = StringUtils.getImages(content);
+				if (StringUtils.isNotEmpty(images)) {
+					article.setAllImage(images);
+					article.setImage(images.split("\\|")[0]);
 				}
-				article.setAllImage(allImage);
 			}
+
 			blogArticleService.saveBlog(article);
 			return modelMap;
 		} catch (Exception e) {

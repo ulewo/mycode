@@ -16,8 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.htmlcleaner.HtmlCleaner;
-import org.htmlcleaner.TagNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -723,7 +721,7 @@ public class GroupAction {
 			String mark = request.getParameter("mark");
 
 			String content = request.getParameter("content");
-			String[] images = request.getParameterValues("image");
+			//String[] images = request.getParameterValues("image");
 			if (StringUtils.isEmpty(gid)) {
 				modelMap.put("result", "fail");
 				modelMap.put("message", "请求参数错误");
@@ -760,20 +758,11 @@ public class GroupAction {
 			article.setKeyWord(keyWord);
 			article.setContent(content);
 			article.setAuthorId(userId);
-			if (images != null) {
-				article.setImage(images[0]);
-				String allImage = "";
-				for (int i = 0, length = images.length; i < length; i++) {
-					if (i == (length - 1)) {
-						allImage += images[i];
-					}
-					else {
-						allImage += images[i] + "|";
-					}
-				}
-				article.setAllImage(allImage);
+			String images = StringUtils.getImages(content);
+			if (StringUtils.isNotEmpty(images)) {
+				article.setAllImage(images);
+				article.setImage(images.split("\\|")[0]);
 			}
-			getImages(content);
 			// 添加附件
 			if (StringUtils.isNotEmpty(attached_file) && StringUtils.isNotEmpty(attached_file_name)) {
 				AttachedFile file = new AttachedFile();
@@ -796,24 +785,6 @@ public class GroupAction {
 			modelMap.put("message", "系统异常");
 			return modelMap;
 		}
-	}
-
-	private List<String> getImages(String content) {
-
-		List<String> imageList = new ArrayList<String>();
-		HtmlCleaner htmlCleaner = new HtmlCleaner();
-		TagNode allNode = htmlCleaner.clean(content);
-		List<TagNode> nodeList = allNode.getElementListByName("img", true);
-		String image = "";
-		if (nodeList != null) {
-			for (TagNode node : nodeList) {
-				image = String.valueOf(node.getAttributeByName("src")).trim();
-				if (!image.contains("emotion")) {
-					imageList.add(image);
-				}
-			}
-		}
-		return imageList;
 	}
 
 	@ResponseBody

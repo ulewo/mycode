@@ -8,12 +8,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import com.ulewo.entity.Group;
-import com.ulewo.service.GroupService;
+import org.apache.commons.lang.ArrayUtils;
+import org.htmlcleaner.HtmlCleaner;
+import org.htmlcleaner.TagNode;
 
 public class StringUtils {
-	private final static String[] hexDigits = { "0", "1", "2", "3", "4", "5",
-			"6", "7", "8", "9", "a", "b", "c", "d", "e", "f" };
+	private final static String[] hexDigits = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d",
+			"e", "f" };
+
+	private final static String[] static_ext = { "jpg", "png", "gif", "bmp", "JPG", "PNG", "GIF", "BMP" };
 
 	public final static ThreadLocal<SimpleDateFormat> dateFormater = new ThreadLocal<SimpleDateFormat>() {
 		@Override
@@ -67,8 +70,7 @@ public class StringUtils {
 	}
 
 	// 时间对比
-	public static boolean BalanceDate(String day1, String day2)
-			throws Exception {
+	public static boolean BalanceDate(String day1, String day2) throws Exception {
 
 		boolean flag = true;
 		DateFormat df = DateFormat.getDateInstance();
@@ -83,14 +85,15 @@ public class StringUtils {
 	public static String clearHtml(String str) {
 
 		if (isNotEmpty(str)) {
-			return str.replaceAll("<[.[^<]]*>", "").replaceAll("[\\n|\\r]", "")
-					.replaceAll("&nbsp;", "");
-		} else {
+			return str.replaceAll("<[.[^<]]*>", "").replaceAll("[\\n|\\r]", "").replaceAll("&nbsp;", "");
+		}
+		else {
 			return str;
 		}
 	}
 
 	public static String formateHtml(String html) {
+
 		if (isNotEmpty(html)) {
 			html = html.replaceAll(" ", "&nbsp;");
 			html = html.replaceAll("<", "&lt;");
@@ -101,6 +104,7 @@ public class StringUtils {
 	}
 
 	public static String reFormateHtml(String html) {
+
 		if (isNotEmpty(html)) {
 			html = html.replaceAll("&nbsp;", " ");
 			html = html.replaceAll("&lt;", "<");
@@ -148,7 +152,8 @@ public class StringUtils {
 
 		if (null == str || "".equals(str)) {
 			return true;
-		} else if ("".equals(str.trim())) {
+		}
+		else if ("".equals(str.trim())) {
 			return true;
 		}
 		return false;
@@ -178,9 +183,7 @@ public class StringUtils {
 		if (curDate.equals(paramDate)) {
 			int hour = (int) ((cal.getTimeInMillis() - time.getTime()) / 3600000);
 			if (hour == 0)
-				ftime = Math.max(
-						(cal.getTimeInMillis() - time.getTime()) / 60000, 1)
-						+ "分钟前";
+				ftime = Math.max((cal.getTimeInMillis() - time.getTime()) / 60000, 1) + "分钟前";
 			else
 				ftime = hour + "小时前";
 			return ftime;
@@ -192,18 +195,20 @@ public class StringUtils {
 		if (days == 0) {
 			int hour = (int) ((cal.getTimeInMillis() - time.getTime()) / 3600000);
 			if (hour == 0)
-				ftime = Math.max(
-						(cal.getTimeInMillis() - time.getTime()) / 60000, 1)
-						+ "分钟前";
+				ftime = Math.max((cal.getTimeInMillis() - time.getTime()) / 60000, 1) + "分钟前";
 			else
 				ftime = hour + "小时前";
-		} else if (days == 1) {
+		}
+		else if (days == 1) {
 			ftime = "昨天";
-		} else if (days == 2) {
+		}
+		else if (days == 2) {
 			ftime = "前天";
-		} else if (days > 2 && days <= 10) {
+		}
+		else if (days > 2 && days <= 10) {
 			ftime = days + "天前";
-		} else if (days > 10) {
+		}
+		else if (days > 10) {
 			ftime = dateFormater2.get().format(time);
 		}
 		return ftime;
@@ -250,7 +255,8 @@ public class StringUtils {
 		if (null != con) {
 			// con = con.replace("../", Constant.WEBSTIE);
 			return con;
-		} else {
+		}
+		else {
 			return "";
 		}
 
@@ -269,18 +275,32 @@ public class StringUtils {
 		return true;
 	}
 
+	@SuppressWarnings("unchecked")
+	public static String getImages(String content) {
+
+		StringBuffer sbf = new StringBuffer();
+		HtmlCleaner htmlCleaner = new HtmlCleaner();
+		TagNode allNode = htmlCleaner.clean(content);
+		List<TagNode> nodeList = allNode.getElementListByName("img", true);
+		String image = "";
+		if (nodeList != null) {
+			for (TagNode node : nodeList) {
+				image = String.valueOf(node.getAttributeByName("src")).trim();
+				if (!image.contains("emotion")
+						&& ArrayUtils.contains(static_ext, image.substring(image.lastIndexOf(".") + 1))) {
+					sbf.append(image + "|");
+				}
+			}
+		}
+		if (sbf.length() > 0) {
+			sbf.substring(sbf.lastIndexOf("|"));
+		}
+		return sbf.toString();
+	}
+
 	public static void main(String[] args) {
 
-		GroupService groupService = (GroupService) SpringContextUtil
-				.getBean("");
-		PaginationResult result = groupService.queryGroupsOderArticleCount(0,
-				10000);
-		List<?> list = result.getList();
-		for (int i = 0; i < list.size(); i++) {
-			Group group = (Group) list.get(i);
-			group.setGroupDesc(clearHtml(group.getGroupDesc()));
-			groupService.updateGroup(group);
-		}
+		System.out.println(ArrayUtils.contains(static_ext, "jpg"));
 
 	}
 }
