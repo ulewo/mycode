@@ -1,5 +1,5 @@
 var GlobalVar = {};
-GlobalVar.url = "http://pic.ulewo.com/";
+GlobalVar.url = "";
 GlobalVar.timeRange = "";
 GlobalVar.type = "";
 GlobalVar.shadow = "";

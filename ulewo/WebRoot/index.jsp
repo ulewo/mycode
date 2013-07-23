@@ -18,7 +18,7 @@
 %>
 <body>
 <jsp:include page="menue.jsp"></jsp:include>
-<c:set var="path" value="http://pic.ulewo.com/"></c:set>
+<c:set var="path" value=""></c:set>
 <div class="body_con">
 	<div class="left">
 		<div class="pageArea">
@@ -29,7 +29,7 @@
 				<div class="articlePanel">
 					  <div class="top">
 					  	<c:if test="${article.uid!=null}">
-					 	 	<div class="top_user_avator"><img src="${path}upload/avatar/${article.avatar}"></div>
+					 	 	<div class="top_user_avator"><img src="${article.avatar}"></div>
 					  		<div class="top_user_name"><a href="user?uid=${article.uid}">${article.userName}</a></div>
 				  		</c:if>
 					    <div class="top_user_time">${fn:substring(article.postTime,0,19)}</div>

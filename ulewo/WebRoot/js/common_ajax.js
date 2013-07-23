@@ -1,5 +1,5 @@
 var GlobalVar = {};
-GlobalVar.url = "http://pic.ulewo.com/";
+GlobalVar.url = "";
 GlobalVar.timeRange = "";
 GlobalVar.type = "";
 GlobalVar.shadow = "";
@@ -46,8 +46,8 @@ function ArticlePanel(article) {
 	this.topPanel = $("<div class='top'>").appendTo(this.articlePanel);
 	if (article.uid != "") {// 如果用户信息不为空就展示用户信息
 		$("<div class='top_user_avator'>").html(
-				"<img src='" + GlobalVar.url + "upload/avatar/"
-						+ article.avatar + "'/>").appendTo(this.topPanel);
+				"<img src='" + GlobalVar.url + article.avatar + "'/>")
+				.appendTo(this.topPanel);
 		$("<div class='top_user_name'>").html(
 				"<a href='user?uid=" + article.uid + "'>" + article.userName
 						+ "</a>").appendTo(this.topPanel);

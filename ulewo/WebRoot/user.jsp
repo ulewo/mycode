@@ -14,11 +14,11 @@
 </head>
 <body>
 <jsp:include page="menue.jsp"></jsp:include>
-<c:set var="path" value="http://pic.ulewo.com/"></c:set>
+<c:set var="path" value=""></c:set>
 <div class="body_con">
 	<div class="left">
 		<div class="avator_con">
-			<div class="avator"><img src="${path}upload/avatar/${userVo.avatar}" width="70" id="avatarIcon"></div>
+			<div class="avator"><img src="${userVo.avatar}" width="70" id="avatarIcon"></div>
 			<div class="name">${userVo.userName}</div>
 			<div class="clear"></div>
 		</div>

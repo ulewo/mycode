@@ -53,8 +53,7 @@ function saveCutImg() {
 			},
 			success : function(data) {
 				if (data.result == "success") {
-					$("#avatarIcon").attr("src",
-							GlobalVar.url + "upload/avatar/" + data.imgUrl);
+					$("#avatarIcon").attr("src", GlobalVar.url + data.imgUrl);
 				} else {
 					alert("系统异常稍后再试");
 				}
