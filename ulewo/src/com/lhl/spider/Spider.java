@@ -19,8 +19,6 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import net.sf.json.JSONObject;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
@@ -44,8 +42,7 @@ import com.lhl.util.UpYun;
  * @since 2012-10-06
  * @version 1.0
  */
-public class Spider
-{
+public class Spider {
 	public static final int width = 700;
 
 	public static final int height = 700;
@@ -72,16 +69,19 @@ public class Spider
 	 * @return 返回的html内容
 	 * 
 	 */
-	public static String getQiushibaikeHTML(String url) throws ClientProtocolException, IOException
-	{
+	public static String getQiushibaikeHTML(String url)
+			throws ClientProtocolException, IOException {
 
 		HttpGet httpGet = new HttpGet(url);
-		httpGet.addHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
-		httpGet.addHeader("Accept-Language", "zh-cn,zh;q=0.8,en-us;q=0.5,en;q=0.3");
+		httpGet.addHeader("Accept",
+				"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
+		httpGet.addHeader("Accept-Language",
+				"zh-cn,zh;q=0.8,en-us;q=0.5,en;q=0.3");
 		httpGet.addHeader("Connection", "Keep-Alive");
 		httpGet.addHeader("Host", "www.qiushibaike.com");
 		httpGet.addHeader("Referer", "http://www.qiushibaike.com");
-		httpGet.addHeader("User-Agent", "Mozilla/5.0 (Windows NT 5.1; rv:15.0) Gecko/20100101 Firefox/15.0.1");
+		httpGet.addHeader("User-Agent",
+				"Mozilla/5.0 (Windows NT 5.1; rv:15.0) Gecko/20100101 Firefox/15.0.1");
 		HttpResponse response = httpclient.execute(httpGet);
 		InputStream in = response.getEntity().getContent();
 		String html = convertStreamToString(in, "utf-8");
@@ -96,16 +96,18 @@ public class Spider
 	 * @return 返回的html内容
 	 * 
 	 */
-	public static String getHahamxHTML(String url) throws ClientProtocolException, IOException
-	{
+	public static String getHahamxHTML(String url)
+			throws ClientProtocolException, IOException {
 
 		HttpGet httpGet = new HttpGet(url);
-		httpGet.addHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
+		httpGet.addHeader("Accept",
+				"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
 		httpGet.addHeader("Accept-Language", "zh-cn,zh;q=0.5");
 		httpGet.addHeader("Connection", "Keep-Alive");
 		httpGet.addHeader("Host", "www.haha.mx");
 		httpGet.addHeader("cookie", "MAXAUTH=NO");
-		httpGet.addHeader("User-Agent", "Mozilla/5.0 (Windows NT 5.1; rv:15.0) Gecko/20100101 Firefox/15.0.1");
+		httpGet.addHeader("User-Agent",
+				"Mozilla/5.0 (Windows NT 5.1; rv:15.0) Gecko/20100101 Firefox/15.0.1");
 		HttpResponse response = httpclient.execute(httpGet);
 		InputStream in = response.getEntity().getContent();
 		String html = convertStreamToString(in, "utf-8");
@@ -120,15 +122,17 @@ public class Spider
 	 * @return 返回的html内容
 	 * 
 	 */
-	public static String getPengfuHTML(String url) throws ClientProtocolException, IOException
-	{
+	public static String getPengfuHTML(String url)
+			throws ClientProtocolException, IOException {
 
 		HttpGet httpGet = new HttpGet(url);
-		httpGet.addHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
+		httpGet.addHeader("Accept",
+				"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
 		httpGet.addHeader("Accept-Language", "zh-cn,zh;q=0.5");
 		httpGet.addHeader("Connection", "Keep-Alive");
 		httpGet.addHeader("Host", "www.pengfu.com");
-		httpGet.addHeader("User-Agent", "Mozilla/5.0 (Windows NT 5.1; rv:15.0) Gecko/20100101 Firefox/15.0.1");
+		httpGet.addHeader("User-Agent",
+				"Mozilla/5.0 (Windows NT 5.1; rv:15.0) Gecko/20100101 Firefox/15.0.1");
 		HttpResponse response = httpclient.execute(httpGet);
 		InputStream in = response.getEntity().getContent();
 		String html = convertStreamToString(in, "gbk");
@@ -144,31 +148,23 @@ public class Spider
 	 * @param 字符编码
 	 * @return 编码后的字符串
 	 */
-	public static String convertStreamToString(InputStream is, String charset) throws UnsupportedEncodingException
-	{
+	public static String convertStreamToString(InputStream is, String charset)
+			throws UnsupportedEncodingException {
 
-		BufferedReader reader = new BufferedReader(new InputStreamReader(is, charset));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(is,
+				charset));
 		StringBuilder sb = new StringBuilder();
 		String line = null;
-		try
-		{
-			while ((line = reader.readLine()) != null)
-			{
+		try {
+			while ((line = reader.readLine()) != null) {
 				sb.append(line + "\n");
 			}
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 			e.printStackTrace();
-		}
-		finally
-		{
-			try
-			{
+		} finally {
+			try {
 				is.close();
-			}
-			catch (IOException e)
-			{
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
@@ -182,13 +178,13 @@ public class Spider
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public static List<Article> getQiushibaikeContent(String html)
-	{
+	public static List<Article> getQiushibaikeContent(String html) {
 
 		List<Article> list = new ArrayList<Article>();
 		HtmlCleaner htmlCleaner = new HtmlCleaner();
 		TagNode allNode = htmlCleaner.clean(html);
-		List<TagNode> objList = allNode.getElementListByAttValue("class", "block untagged", true, true);
+		List<TagNode> objList = allNode.getElementListByAttValue("class",
+				"block untagged", true, true);
 		/*
 		 * 不用获取总页数，抓取的页数从前端传过来 // 总页数 TagNode pageNode =
 		 * allNode.findElementByAttValue("class", "pagebar", true, true);
@@ -198,13 +194,10 @@ public class Spider
 		 * pageNumber.matches("[0-9]+")) { totalPage = Math.max(totalPage,
 		 * Integer.parseInt(pageNumber)); } }
 		 */
-		for (TagNode obj : objList)
-		{
-			try
-			{
+		for (TagNode obj : objList) {
+			try {
 				String id = obj.getAttributeByName("id");
-				if (id == null)
-				{
+				if (id == null) {
 					continue;
 				}
 				// 构造Article对象
@@ -216,19 +209,22 @@ public class Spider
 				// 设置来源ID(来源+articleId)
 				article.setSourceId("Q" + articleId);
 				// 好评
-				TagNode up = allNode.findElementByAttValue("id", "up-" + articleId, true, true);
+				TagNode up = allNode.findElementByAttValue("id", "up-"
+						+ articleId, true, true);
 				int upCount = Integer.parseInt(String.valueOf(up.getText()));
 				article.setUp(upCount);
 				// 差评
-				TagNode dn = allNode.findElementByAttValue("id", "dn-" + articleId, true, true);
+				TagNode dn = allNode.findElementByAttValue("id", "dn-"
+						+ articleId, true, true);
 				// 取绝对值
-				article.setDown(Math.abs(Integer.parseInt(String.valueOf(dn.getText()))));
+				article.setDown(Math.abs(Integer.parseInt(String.valueOf(dn
+						.getText()))));
 				// content 内容节点
-				TagNode ct = obj.findElementByAttValue("class", "content", true, true);
+				TagNode ct = obj.findElementByAttValue("class", "content",
+						true, true);
 				// 发布时间
 				String time = String.valueOf(ct.getAttributeByName("title"));
-				if (upCount <= Constant.MIN_UP_COUNT)
-				{
+				if (upCount <= Constant.MIN_UP_COUNT) {
 					return list;
 				}
 				// 内容
@@ -240,41 +236,37 @@ public class Spider
 				// 内容
 				article.setContent(content);
 				// imgURL 图片
-				TagNode thumbNode = obj.findElementByAttValue("class", "thumb", true, true);
-				if (thumbNode != null)
-				{
+				TagNode thumbNode = obj.findElementByAttValue("class", "thumb",
+						true, true);
+				if (thumbNode != null) {
 					TagNode imgNode = thumbNode.findElementByName("img", true);
-					if (imgNode != null)
-					{
-						String imgUrl = String.valueOf(imgNode.getAttributeByName("src")).trim();
+					if (imgNode != null) {
+						String imgUrl = String.valueOf(
+								imgNode.getAttributeByName("src")).trim();
 						article.setImgUrl(imgUrl);
 					}
 				}
 				// tags 标签
-				TagNode tagsNode = obj.findElementByAttValue("class", "tags", true, true);
+				TagNode tagsNode = obj.findElementByAttValue("class", "tags",
+						true, true);
 				String tagStr = "";
-				if (tagsNode != null)
-				{
-					List<TagNode> tags = tagsNode.getElementListByName("a", true);
-					for (int i = 0; i < tags.size(); i++)
-					{
+				if (tagsNode != null) {
+					List<TagNode> tags = tagsNode.getElementListByName("a",
+							true);
+					for (int i = 0; i < tags.size(); i++) {
 						TagNode tagNode = tags.get(i);
-						if (i == 0)
-						{
+						if (i == 0) {
 							tagStr = String.valueOf(tagNode.getText()).trim();
-						}
-						else
-						{
-							tagStr = tagStr + "," + String.valueOf(tagNode.getText()).trim();
+						} else {
+							tagStr = tagStr + ","
+									+ String.valueOf(tagNode.getText()).trim();
 						}
 					}
 				}
 				// 设置tag
 				article.setTag(tagStr);
 				list.add(article);
-			}
-			catch (Exception e)
-			{
+			} catch (Exception e) {
 				e.printStackTrace();
 				continue;
 			}
@@ -289,13 +281,13 @@ public class Spider
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public static List<Article> getHahamxContent(String html)
-	{
+	public static List<Article> getHahamxContent(String html) {
 
 		List<Article> list = new ArrayList<Article>();
 		HtmlCleaner htmlCleaner = new HtmlCleaner();
 		TagNode allNode = htmlCleaner.clean(html);
-		List<TagNode> objList = allNode.getElementListByAttValue("class", "item", true, true);
+		List<TagNode> objList = allNode.getElementListByAttValue("class",
+				"block joke-item", true, true);
 		/*
 		 * // 总页数 TagNode pageNode = allNode.findElementByAttValue("class",
 		 * "paging", true, true); List<TagNode> linkList =
@@ -305,13 +297,10 @@ public class Spider
 		 * pageNumber.matches("[0-9]+")) { totalPage = Math.max(totalPage,
 		 * Integer.parseInt(pageNumber)); } }
 		 */
-		for (TagNode tag : objList)
-		{
-			try
-			{
+		for (TagNode tag : objList) {
+			try {
 				String id = tag.getAttributeByName("id");
-				if (id == null)
-				{
+				if (id == null) {
 					continue;
 				}
 				// 构造Article对象
@@ -321,58 +310,63 @@ public class Spider
 				String articleId = id.substring(id.lastIndexOf("-") + 1);
 				// 设置来源ID(来源+articleId)
 				article.setSourceId("H" + articleId);
-				TagNode up = allNode.findElementByAttValue("id", "good-number-" + articleId, true, true);
-				int upCount = Integer.parseInt(String.valueOf(up.getText()).trim());
+				TagNode up = allNode.findElementByAttValue("id", "good-"
+						+ articleId, true, true);
+				int upCount = Integer.parseInt(String.valueOf(up.getText())
+						.trim());
 				// 根据顶的数量判断
-				if (upCount <= Constant.MIN_UP_COUNT)
-				{
+				if (upCount <= Constant.MIN_UP_COUNT) {
 					return list;
 				}
 				article.setUp(upCount);
-				TagNode dn = allNode.findElementByAttValue("id", "bad-number-" + articleId, true, true);
-				article.setDown(Integer.parseInt(String.valueOf(dn.getText()).trim()));
-				TagNode context = allNode.findElementByAttValue("id", "listText-" + articleId, true, true);
+				TagNode dn = allNode.findElementByAttValue("id", "bad-"
+						+ articleId, true, true);
+				article.setDown(Integer.parseInt(String.valueOf(dn.getText())
+						.trim()));
+				TagNode context = tag.findElementByAttValue("class",
+						"text word-wrap", true, true);
 				// 内容
 				String content = String.valueOf(context.getText()).trim();
 				// 内容
 				article.setContent(content);
-				TagNode pic = allNode.findElementByAttValue("id", "list-pic-" + articleId, true, true);
-				if (pic != null)
-				{
-					String imgURL = "http://image.haha.mx/" + pic.getAttributeByName("path") + "middle/"
+				TagNode pic = allNode.findElementByAttValue("id", "thumbnail-"
+						+ articleId, true, true);
+				if (pic != null) {
+					String imgURL = "http://image.haha.mx/"
+							+ pic.getAttributeByName("path") + "middle/"
 							+ pic.getAttributeByName("pic_name");
 					article.setImgUrl(imgURL);
 				}
-				TagNode tn = tag.findElementByAttValue("class", "infor-text", true, true);
-				List<TagNode> tns = tn.getElementListByName("span", true);
-				for (TagNode time : tns)
-				{
-					if (time.getText().toString().indexOf("发布") != -1)
-					{
-						String pubTime = time.getText().toString();
-						String postTime = pubTime.substring(0, 19);
-						// 发布时间
-						article.setPostTime(postTime);
-						// 来源时间
-						article.setSourceTime(postTime);
-						break;
-					}
-				}
-				TagNode tagList = tag.findElementByAttValue("class", "tag", true, true);
+				/*
+				 * TagNode tn = tag.findElementByAttValue("class", "infor-text",
+				 * true, true); List<TagNode> tns =
+				 * tn.getElementListByName("span", true); for (TagNode time :
+				 * tns) { if (time.getText().toString().indexOf("发布") != -1) {
+				 * String pubTime = time.getText().toString(); String postTime =
+				 * pubTime.substring(0, 19); // 发布时间
+				 * article.setPostTime(postTime); // 来源时间
+				 * article.setSourceTime(postTime); break; } }
+				 */
+				TagNode timeTag = tag.findElementByAttValue("class",
+						"joke-time", true, true);
+				String postTime = timeTag.getText().toString()
+						.replace("发布", "").trim();
+				article.setPostTime(postTime);
+				article.setSourceTime(postTime);
+
+				TagNode tagList = tag.findElementByAttValue("class",
+						"label fl", true, true);
 				String tagStr = "";
-				if (tagList != null)
-				{
-					List<TagNode> tags = tagList.getElementListByName("a", true);
-					for (int i = 0; i < tags.size(); i++)
-					{
+				if (tagList != null) {
+					List<TagNode> tags = tagList
+							.getElementListByName("a", true);
+					for (int i = 0; i < tags.size(); i++) {
 						TagNode tagNode = tags.get(i);
-						if (i == 0)
-						{
+						if (i == 0) {
 							tagStr = String.valueOf(tagNode.getText()).trim();
-						}
-						else
-						{
-							tagStr = tagStr + "," + String.valueOf(tagNode.getText()).trim();
+						} else {
+							tagStr = tagStr + ","
+									+ String.valueOf(tagNode.getText()).trim();
 						}
 					}
 				}
@@ -380,9 +374,7 @@ public class Spider
 				article.setTag(tagStr);
 				// 设置页数
 				list.add(article);
-			}
-			catch (Exception e)
-			{
+			} catch (Exception e) {
 				log.error("从哈哈MX构造article出错..." + e.getMessage());
 				continue;
 			}
@@ -397,13 +389,13 @@ public class Spider
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public static List<Article> getPengfuContent(String html)
-	{
+	public static List<Article> getPengfuContent(String html) {
 
 		List<Article> list = new ArrayList<Article>();
 		HtmlCleaner htmlCleaner = new HtmlCleaner();
 		TagNode allNode = htmlCleaner.clean(html);
-		List<TagNode> objList = allNode.getElementListByAttValue("class", "post", true, true);
+		List<TagNode> objList = allNode.getElementListByAttValue("class",
+				"post float_L", true, true);
 		/*
 		 * // 总页数 TagNode pageNode = allNode.findElementByAttValue("class",
 		 * "page", true, true); List<TagNode> linkList =
@@ -414,80 +406,72 @@ public class Spider
 		 * (pageNumber != null && pageNumber.matches("[0-9]+")) { totalPage =
 		 * Math.max(totalPage, Integer.parseInt(pageNumber)); } }
 		 */
-		for (TagNode tag : objList)
-		{
-			try
-			{
-				TagNode obj = tag.findElementByAttValue("class", "bdshare_t bds_tools get-codes-bdshare", true, true);
-				if (obj == null)
-				{
-					continue;
-				}
-				String data = obj.getAttributeByName("data");
-				JSONObject json = JSONObject.fromObject(data);
-				String url = json.getString("url").trim();
+		for (TagNode tag : objList) {
+			try {
+				// String h4Tag =
+				List<TagNode> aList = tag.getElementListByName("a", true);
+				String articleId = aList.get(0).getAttributeByName("name")
+						.replace("humor", "");
 				// 构造Article对象
 				Article article = new Article();
 				// 设置来源为捧腹
 				article.setSourceFrom("P");
-				String articleId = url.substring(url.indexOf("indexid_") + 8, url.indexOf(".html"));
 				// 设置来源ID
 				article.setSourceId("P" + articleId);
-				TagNode picText = tag.findElementByAttValue("class", "pic_text", true, true);
-				TagNode picNode = picText.findElementByName("img", true);
-				if (picNode != null)
-				{
-					String pic = picNode.getAttributeByName("src");
-					if (pic == null || "".equals(pic.trim()))
-					{
-						continue;
-					}
-					article.setImgUrl(pic);
-				}
-				else
-				{
+				TagNode contentNode = tag.findElementByAttValue("class",
+						"mixed float_L", true, true);
+
+				List<TagNode> imagesNode = contentNode
+						.getElementListByAttValue("class", "smallPic", true,
+								true);
+				if (null == imagesNode || imagesNode.size() == 0) {
 					continue;
 				}
-				TagNode timeTn = tag.findElementByAttValue("class", "time", true, true);
+				String imgUrl = imagesNode.get(0)
+						.getAttributeByName("bigimagesrc").toString();
+				article.setImgUrl(imgUrl);
+
+				TagNode timeTn = contentNode.findElementByAttValue("class",
+						"time float_R", true, true);
 				String time = String.valueOf(timeTn.getText()).trim();
-				TagNode h4 = tag.findElementByName("h4", true);
+
+				TagNode h4 = contentNode.findElementByName("h4", true);
 				TagNode contentTag = h4.findElementByName("a", true);
 				// 内容
 				String content = String.valueOf(contentTag.getText()).trim();
 				// 内容
 				article.setContent(content);
-				TagNode up = allNode.findElementByAttValue("id", "span_SupportNum" + articleId, true, true);
-				int upCount = Integer.parseInt(String.valueOf(up.getText()).trim());
+				TagNode up = allNode.findElementByAttValue("id",
+						"span_SupportNum" + articleId, true, true);
+				int upCount = Integer.parseInt(String.valueOf(up.getText())
+						.trim());
 				article.setUp(upCount);
-				if (upCount <= Constant.MIN_UP_COUNT)
-				{
+				if (upCount <= Constant.MIN_UP_COUNT) {
 					return list;
 				}
-				if (time != null && !"".equals(time))
-				{
+				if (time != null && !"".equals(time)) {
 					time += ":00";
 					// 长整型的来源时间
 					article.setPostTime(time);
 					article.setSourceTime(time);
 				}
-				TagNode dn = allNode.findElementByAttValue("id", "span_OpposeNum" + articleId, true, true);
-				article.setDown(Integer.parseInt(String.valueOf(dn.getText()).trim()));
+				TagNode dn = allNode.findElementByAttValue("id",
+						"span_OpposeNum" + articleId, true, true);
+				article.setDown(Integer.parseInt(String.valueOf(dn.getText())
+						.trim()));
 				// tag
-				TagNode tagList = allNode.findElementByAttValue("id", "divTagHtml_" + articleId, true, true);
+				TagNode tagList = allNode.findElementByAttValue("id",
+						"divTagHtml_" + articleId, true, true);
 				String tagStr = "";
-				if (tagList != null)
-				{
-					List<TagNode> tags = tagList.getElementListByName("a", true);
-					for (int i = 0; i < tags.size(); i++)
-					{
+				if (tagList != null) {
+					List<TagNode> tags = tagList
+							.getElementListByName("a", true);
+					for (int i = 0; i < tags.size(); i++) {
 						TagNode tagNode = tags.get(i);
 						String tmp = String.valueOf(tagNode.getText()).trim();
-						if (i == 0)
-						{
+						if (i == 0) {
 							tagStr = tmp;
-						}
-						else
-						{
+						} else {
 							tagStr = tagStr + "," + tmp;
 						}
 					}
@@ -496,9 +480,7 @@ public class Spider
 				article.setTag(tagStr);
 				// 设置页数
 				list.add(article);
-			}
-			catch (Exception e)
-			{
+			} catch (Exception e) {
 				log.error("从捧腹页构造article出错..." + e.getMessage());
 				continue;
 			}
@@ -512,28 +494,24 @@ public class Spider
 	 * @param bigPath
 	 * @param smallPath
 	 */
-	public static int addToBataBase(List<Article> list, String bigPath, String smallPath)
-	{
+	public static int addToBataBase(List<Article> list, String bigPath,
+			String smallPath) {
 
 		int count = 0;
-		for (Article article : list)
-		{
-			if (StringUtil.isNotEmpty(article.getImgUrl()))
-			{
+		for (Article article : list) {
+			if (StringUtil.isNotEmpty(article.getImgUrl())) {
 				String sourceArticleId = article.getSourceId();
 				String imgURL = article.getImgUrl();
 				// 如果图片抓取失败，就取下一条
-				try
-				{
-					String realImgUrl = uploadPicture2UpYun(sourceArticleId, imgURL, bigPath, smallPath);
+				try {
+					String realImgUrl = uploadPicture2Local(sourceArticleId,
+							imgURL, bigPath, smallPath);
 					if (StringUtil.isEmpty(realImgUrl))// 路径为null 说明图片太大
 					{
 						continue;
 					}
 					article.setImgUrl(realImgUrl);
-				}
-				catch (Exception e)
-				{
+				} catch (Exception e) {
 					e.printStackTrace();
 					continue;
 				}
@@ -541,27 +519,22 @@ public class Spider
 			article.setStatus(Constant.STATUS_Y);
 			String sourceTime = article.getSourceTime();
 			article.setSourceTime(sourceTime);
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			SimpleDateFormat dateFormat = new SimpleDateFormat(
+					"yyyy-MM-dd HH:mm:ss");
 			// 如果时间转换失败 发布时间就取来源时间
-			try
-			{
+			try {
 				long time = dateFormat.parse(sourceTime).getTime();
 				int random = (int) (Math.random() * 1000000);
 				time = time - random;
 				String postTime = dateFormat.format(new Date(time));
 				article.setPostTime(postTime);
-			}
-			catch (Exception e)
-			{
+			} catch (Exception e) {
 				article.setPostTime(sourceTime);
 			}
 			// 添加到数据库，如果有异常就继续下一条。
-			try
-			{
+			try {
 				ArticleDao.getInstance().addArticle(article);
-			}
-			catch (Exception e)
-			{
+			} catch (Exception e) {
 				continue;
 			}
 			count++;
@@ -569,10 +542,10 @@ public class Spider
 		return count;
 	}
 
-	public static String getMaxSourceTime(String sourceFrom)
-	{
+	public static String getMaxSourceTime(String sourceFrom) {
 
-		String sourceTime = ArticleDao.getInstance().queryMaxSourceTime(sourceFrom);
+		String sourceTime = ArticleDao.getInstance().queryMaxSourceTime(
+				sourceFrom);
 		return sourceTime;
 	}
 
@@ -584,9 +557,8 @@ public class Spider
 	 * @return
 	 * @throws Exception
 	 */
-	private static String uploadPicture2UpYun(String sourceArticleId, String httpUrl, String bigPath, String smallPath)
-			throws Exception
-	{
+	private static String uploadPicture2UpYun(String sourceArticleId,
+			String httpUrl, String bigPath, String smallPath) throws Exception {
 
 		URL url;
 		InputStream in = null;
@@ -597,24 +569,25 @@ public class Spider
 		int month = calendar.get(Calendar.MONTH) + 1;
 		int day = calendar.get(Calendar.DAY_OF_MONTH);
 		sourceArticleId = StringUtil.encodeByMD5(sourceArticleId);
-		try
-		{
+		try {
 			String type = httpUrl.substring(httpUrl.lastIndexOf("."));
-			String bigDirPath = "/upload/big" + "/" + year + "/" + month + "/" + day;
+			String bigDirPath = "/upload/big" + "/" + year + "/" + month + "/"
+					+ day;
 			String bigFilePath = bigDirPath + "/" + sourceArticleId + type;// 图片存储的位置
 
-			String smallDirPath = "/upload/small" + "/" + year + "/" + month + "/" + day;
+			String smallDirPath = "/upload/small" + "/" + year + "/" + month
+					+ "/" + day;
 			String samllFilePath = smallDirPath + "/" + sourceArticleId + type;
 
-			imgName = year + "/" + month + "/" + day + "/" + sourceArticleId + type;
+			imgName = year + "/" + month + "/" + day + "/" + sourceArticleId
+					+ type;
 
 			url = new URL(httpUrl);
 			in = url.openStream();
 			out = new ByteArrayOutputStream();
 			int len = 0;
 			byte[] b = new byte[1024 * 500];
-			while ((len = in.read(b)) != -1)
-			{
+			while ((len = in.read(b)) != -1) {
 				out.write(b, 0, len);
 			}
 			out.flush();
@@ -624,7 +597,8 @@ public class Spider
 				return null;
 			}
 			// 将大图写入到upyun服务器
-			UpYun upYun = UpYun.getInstance(Constant.UPYUN_HOST, Constant.UPYUN_HOST, Constant.UPYUN_PWD);
+			UpYun upYun = UpYun.getInstance(Constant.UPYUN_HOST,
+					Constant.UPYUN_HOST, Constant.UPYUN_PWD);
 			upYun.writeFile(bigFilePath, data, true);
 
 			// 画小图
@@ -632,30 +606,25 @@ public class Spider
 			int sw = srcImage.getWidth();
 			int sh = srcImage.getHeight();
 			// 如果图片大于150
-			if (sw > small_width || sh > small_height || data.length > 1024 * 500)
-			{
-				srcImage = DrowImage.resize(srcImage, small_width, small_height);
+			if (sw > small_width || sh > small_height
+					|| data.length > 1024 * 500) {
+				srcImage = DrowImage
+						.resize(srcImage, small_width, small_height);
 			}
 			out = new ByteArrayOutputStream();
 			ImageIO.write(srcImage, type.replace(".", ""), out);
 			byte[] datasmall = out.toByteArray();
 			upYun.writeFile(samllFilePath, datasmall, true);
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			System.out.println(httpUrl + ".............");
 			e.printStackTrace();
 			throw e;
-		}
-		finally
-		{
-			if (in != null)
-			{
+		} finally {
+			if (in != null) {
 				in.close();
 				in = null;
 			}
-			if (out != null)
-			{
+			if (out != null) {
 				out.close();
 				out = null;
 			}
@@ -671,9 +640,8 @@ public class Spider
 	 * @return
 	 * @throws Exception
 	 */
-	private static String uploadPicture2Local(String sourceArticleId, String httpUrl, String bigPath, String smallPath)
-			throws Exception
-	{
+	private static String uploadPicture2Local(String sourceArticleId,
+			String httpUrl, String bigPath, String smallPath) throws Exception {
 
 		URL url;
 		InputStream in = null;
@@ -684,26 +652,25 @@ public class Spider
 		int month = calendar.get(Calendar.MONTH) + 1;
 		int day = calendar.get(Calendar.DAY_OF_MONTH);
 		sourceArticleId = StringUtil.encodeByMD5(sourceArticleId);
-		try
-		{
+		try {
 			String type = httpUrl.substring(httpUrl.lastIndexOf("."));
 			String bigDirPath = bigPath + "/" + year + "/" + month + "/" + day;
 			File bigDir = new File(bigDirPath);
-			if (!bigDir.exists())
-			{
+			if (!bigDir.exists()) {
 				bigDir.mkdirs();
 			}
 			String bigFilePath = bigDirPath + "/" + sourceArticleId + type;//
 
-			String smallDirPath = smallPath + "/" + year + "/" + month + "/" + day;
+			String smallDirPath = smallPath + "/" + year + "/" + month + "/"
+					+ day;
 			File smallDir = new File(smallDirPath);
-			if (!smallDir.exists())
-			{
+			if (!smallDir.exists()) {
 				smallDir.mkdirs();
 			}
 			String samllFilePath = smallDirPath + "/" + sourceArticleId + type;
 
-			imgName = year + "/" + month + "/" + day + "/" + sourceArticleId + type;
+			imgName = year + "/" + month + "/" + day + "/" + sourceArticleId
+					+ type;
 
 			url = new URL(httpUrl);
 			in = url.openStream();
@@ -711,34 +678,27 @@ public class Spider
 			out = new FileOutputStream(file);
 			int len = 0;
 			byte[] b = new byte[1024 * 5];
-			while ((len = in.read(b)) != -1)
-			{
+			while ((len = in.read(b)) != -1) {
 				out.write(b, 0, len);
 			}
 			out.flush();
-			if (file.length() > 1024 * 1024)
-			{// 图片太大就不要文章了
+			if (file.length() > 1024 * 1024) {// 图片太大就不要文章了
 				file.delete();
 				return null;
 			}
-			DrowImage.saveImageAsJpg(bigFilePath, samllFilePath, small_width, small_height, true);
-		}
-		catch (Exception e)
-		{
+			DrowImage.saveImageAsJpg(bigFilePath, samllFilePath, small_width,
+					small_height, true);
+		} catch (Exception e) {
 			System.out.println(httpUrl + ".............");
 			e.printStackTrace();
 			imgName = "";
 			throw e;
-		}
-		finally
-		{
-			if (in != null)
-			{
+		} finally {
+			if (in != null) {
 				in.close();
 				in = null;
 			}
-			if (out != null)
-			{
+			if (out != null) {
 				out.close();
 				out = null;
 			}
@@ -746,16 +706,15 @@ public class Spider
 		return imgName;
 	}
 
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
 
-		try
-		{
-			uploadPicture2Local("9204877", "http://img.qiushibaike.com/system/pictures/920/9204877/medium/9204877.jpg",
-					"E:/workplace/myhaha/WebRoot/upload/big", "E:/workplace/myhaha/WebRoot/upload/small");
-		}
-		catch (Exception e)
-		{
+		try {
+			uploadPicture2Local(
+					"9204877",
+					"http://img.qiushibaike.com/system/pictures/920/9204877/medium/9204877.jpg",
+					"E:/workplace/myhaha/WebRoot/upload/big",
+					"E:/workplace/myhaha/WebRoot/upload/small");
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
