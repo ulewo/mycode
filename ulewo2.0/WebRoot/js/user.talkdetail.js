@@ -76,6 +76,7 @@ function addTalk() {
 		success : function(data) {
 			btnLoaded($("#talkBtn"),"评论");
 			if (data.result == "success") {
+				$(".noinfo").remove();
 				$("#talkcontent").val("");
 				if ($("#talklist").children().length > 0) {
 					$("#talklist").children().eq(0).before(
