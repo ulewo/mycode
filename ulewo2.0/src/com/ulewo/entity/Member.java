@@ -18,7 +18,7 @@ public class Member {
 
 	private String isMember;
 
-	/* O 普通成员  1 管理员 */
+	/* O 普通成员 2 管理员 */
 	private Integer grade;
 
 	/*加入时间*/

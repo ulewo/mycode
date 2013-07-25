@@ -159,6 +159,7 @@ public class MemberServiceImp implements MemberService {
 			hashMap.put("memberStatus", isMember);
 			member.setIsMember(isMember);
 			member.setJoinTime(formate.format(new Date()));
+			member.setGrade(0);
 			memberDao.addMember(member);
 		}
 

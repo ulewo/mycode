@@ -11,8 +11,8 @@
 	
 	<!-- 增加成员-->
 	<insert id="addMember" parameterClass="member">
-		insert into member (gid,userid,ismember,jointime)
-		values(#gid#,#userId#,#isMember#,#joinTime#);
+		insert into member (gid,userid,ismember,jointime,grade)
+		values(#gid#,#userId#,#isMember#,#joinTime#,#grade#);
 	</insert>
 	
 	<!-- 删除成员 -->

@@ -55,6 +55,7 @@ public class GroupServiceImpl implements GroupService {
 		member.setIsMember(Constant.ISMEMBER);
 		member.setUserId(group.getGroupAuthor());
 		member.setJoinTime(time);
+		member.setGrade(2);
 		memberDao.addMember(member);
 		/*
 		 * CacheManager manager = GroupAdminManager.getInstants(); Member member
