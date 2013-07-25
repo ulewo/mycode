@@ -188,7 +188,7 @@ public class StringUtils {
 				ftime = hour + "小时前";
 			return ftime;
 		}
-		String stime = sdate.substring(10);
+		String stime = sdate.substring(10,19)+" ";
 		double lt = (double)time.getTime() / 86400000;
 		double ct = (double)cal.getTimeInMillis() / 86400000;
 		int days = (int) (ct - lt);
