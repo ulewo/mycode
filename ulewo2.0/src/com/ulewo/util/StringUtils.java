@@ -188,9 +188,9 @@ public class StringUtils {
 				ftime = hour + "小时前";
 			return ftime;
 		}
-
-		long lt = time.getTime() / 86400000;
-		long ct = cal.getTimeInMillis() / 86400000;
+		String stime = sdate.substring(10);
+		double lt = (double)time.getTime() / 86400000;
+		double ct = (double)cal.getTimeInMillis() / 86400000;
 		int days = (int) (ct - lt);
 		if (days == 0) {
 			int hour = (int) ((cal.getTimeInMillis() - time.getTime()) / 3600000);
@@ -200,13 +200,13 @@ public class StringUtils {
 				ftime = hour + "小时前";
 		}
 		else if (days == 1) {
-			ftime = "昨天";
+			ftime = "昨天 "+stime;
 		}
 		else if (days == 2) {
-			ftime = "前天";
+			ftime = "前天 "+stime;
 		}
 		else if (days > 2 && days <= 10) {
-			ftime = days + "天前";
+			ftime = days + "天前 "+stime;
 		}
 		else if (days > 10) {
 			ftime = dateFormater2.get().format(time);
@@ -299,8 +299,6 @@ public class StringUtils {
 	}
 
 	public static void main(String[] args) {
-
-		System.out.println(ArrayUtils.contains(static_ext, "jpg"));
-
+	System.out.println(friendly_time("2013-07-24 05:58:40"));
 	}
 }
