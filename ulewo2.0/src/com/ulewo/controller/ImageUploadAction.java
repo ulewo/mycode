@@ -78,7 +78,7 @@ public class ImageUploadAction {
 			File fromFile = new File(filePath);
 			BufferedImage srcImage = ImageIO.read(fromFile);
 			int width = srcImage.getWidth();
-			if (fromFile.length() > 200 * 1024 || width > MAXWIDTH) {
+			if (fromFile.length() > MAX_FILE || width > MAXWIDTH) {
 				ScaleFilter filter = new ScaleFilter(MAXWIDTH,MAXWIDTH);
 				BufferedImage img = ImageIO.read(new File(filePath));
 				BufferedImage okImg = filter.filter(img, null);
