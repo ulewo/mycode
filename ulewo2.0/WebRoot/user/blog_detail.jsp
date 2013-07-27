@@ -72,7 +72,7 @@ window.UEDITOR_HOME_URL = "${realPath}/ueditor/";
 							<div class="clear"></div>
 						</div>
 						<div class="blog_content">
-							<div style="display:inline-block;float:right;margin-left:10px;">
+							<div style="display:inline-block;float:right;margin:10px;">
 								<div>
 								<script type="text/javascript">
 									/*博客详情，创建于2013-7-10*/
