@@ -155,7 +155,7 @@ function getWoWoInfo(myIndex){
 					}
 					$('<div class="clear"></div>').appendTo(box_joinwowo_list);
 				}else{
-					$("<div class='noinfo'>你没有加入窝窝</div>").appendTo(box_focus_list);
+					$("<div class='noinfo'>你没有加入窝窝</div>").appendTo(box_joinwowo_list);
 				}
 				$('<div class="box_createwowo_tit">创建的窝窝</div>').appendTo("#head_box");
 				var box_createwowo_list = $('<div id="box_createwowo_list"></div>').appendTo("#head_box");
