@@ -181,12 +181,12 @@ function RePanel(data) {
 	
 	if (data.authorid != ""&&data.authorid !=null) {
 		$(
-				"<a href='"+global.realPath+"/user/" + data.authorid + "'>"
+				"<div><a href='"+global.realPath+"/user/" + data.authorid + "'>"
 						+ data.authorName
-						+ "</a>:<span class='comment_content_word'>" + data.content
-						+ "</span>").appendTo(this.comments_content);
+						+ "</a></div><div class='comment_content_word'>" + data.content
+						+ "</div>").appendTo(this.comments_content);
 	}else{
-		$("<span style='color:#9B9B9B'>"+data.authorName+"</span>:<span class='comment_content_word'>" + data.content+"</span>").appendTo(this.comments_content);
+		$("<span style='color:#9B9B9B'>"+data.authorName+"</span><span class='comment_content_word'>" + data.content+"</span>").appendTo(this.comments_content);
 	}
 	
 	this.comments_op = $("<div class='comments_op'></div>").appendTo(
@@ -203,7 +203,7 @@ function RePanel(data) {
 			this.comments_op).bind("click", {
 		data : data
 	}, this.showReForm);
-	$("<div class='coment_sub_panel'></div>").appendTo(this.comments_content);
+	$("<div class='clear'></div>").appendTo(this.comments_op);
 }
 RePanel.prototype = {
 	asHtml : function() {
@@ -249,18 +249,18 @@ function SubRePanel(data) {
 			this.comments_content_sub);
 
 	if (data.sourceFrom == "A") {
-		$("<span class='com_op_time'>" + data.reTime + "(来自:android客户端)</span>")
+		$("<span class='com_sub_op_time'>" + data.reTime + "(来自:android客户端)</span>")
 				.appendTo(this.comments_op_sub);
 	} else {
-		$("<span class='com_op_time'>" + data.reTime + "</span>").appendTo(
+		$("<span class='com_sub_op_time'>" + data.reTime + "</span>").appendTo(
 				this.comments_op_sub);
 	}
 
-	$("<a href='javascript:void(0)' class='com_op_link'>回复</a>").appendTo(
+	$("<a href='javascript:void(0)' class='com_sub_op_link'>回复</a>").appendTo(
 			this.comments_op_sub).bind("click", {
 		data : data
 	}, this.showReForm);
-	;
+	$("<div class='clear'></div>").appendTo(this.comments_op_sub);
 }
 SubRePanel.prototype = {
 	asHtml : function() {
