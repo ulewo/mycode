@@ -214,10 +214,13 @@ function NotePanle(note) {
 	}
 	
 	var reply_op = $("<div class='reply_op'></div>").appendTo(reply_info);
-	$("<a href='javascript:void(0)'>回复</a>").bind("click", {
-		atUserId : note.userId,
-		atUserName : note.userName,
-	}, this.quote).appendTo(reply_op);
+	if(sessionUserId!=""){
+		$("<a href='javascript:void(0)'>回复</a>").bind("click", {
+			atUserId : note.userId,
+			atUserName : note.userName,
+		}, this.quote).appendTo(reply_op);
+	}
+	
 	if (userId == sessionUserId) {
 		$("<a href='javascript:void(0)'>删除</a>").bind("click", {
 			id : note.id,
