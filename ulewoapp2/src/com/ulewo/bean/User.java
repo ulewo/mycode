@@ -177,7 +177,9 @@ public class User implements Serializable {
 			user.setUserId(obj.getString("userId"));
 			user.setUserName(obj.getString("userName"));
 			user.setUserLittleIcon(obj.getString("userLittleIcon"));
-			if (!"".equals(obj.getString("age"))) {
+			if (!"".equals(obj.getString("age"))
+					&& !"null".equals(obj.getString("age"))
+					&& null != obj.getString("age")) {
 				user.setAge(obj.getInt("age"));
 			}
 			user.setRegisterTime(obj.getString("registerTime"));
