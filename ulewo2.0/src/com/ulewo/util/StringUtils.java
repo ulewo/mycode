@@ -170,6 +170,11 @@ public class StringUtils {
 		if (isEmpty(sdate)) {
 			return "";
 		}
+		//获取时间分钟
+		String stime = sdate.substring(10,19)+" ";
+		Date curDateTime = toDate(sdate);
+		//从需要格式化的时间的0点开始算
+		sdate = sdate.substring(0,10)+" 00:00:00";
 		Date time = toDate(sdate);
 		if (time == null) {
 			return "Unknown";
@@ -181,32 +186,31 @@ public class StringUtils {
 		String curDate = dateFormater2.get().format(cal.getTime());
 		String paramDate = dateFormater2.get().format(time);
 		if (curDate.equals(paramDate)) {
-			int hour = (int) ((cal.getTimeInMillis() - time.getTime()) / 3600000);
+			int hour = (int) ((cal.getTimeInMillis() - curDateTime.getTime()) / 3600000);
 			if (hour == 0)
-				ftime = Math.max((cal.getTimeInMillis() - time.getTime()) / 60000, 1) + "分钟前";
+				ftime = Math.max((cal.getTimeInMillis() - curDateTime.getTime()) / 60000, 1) + "分钟前";
 			else
 				ftime = hour + "小时前";
 			return ftime;
 		}
-		String stime = sdate.substring(10,19)+" ";
 		double lt = (double)time.getTime() / 86400000;
 		double ct = (double)cal.getTimeInMillis() / 86400000;
-		int days = (int) (ct - lt);
-		if (days == 0) {
+		double days = ct - lt;
+		if (days<=1) {
 			int hour = (int) ((cal.getTimeInMillis() - time.getTime()) / 3600000);
 			if (hour == 0)
 				ftime = Math.max((cal.getTimeInMillis() - time.getTime()) / 60000, 1) + "分钟前";
 			else
 				ftime = hour + "小时前";
 		}
-		else if (days == 1) {
+		else if (days>1&&days<=2) {
 			ftime = "昨天 "+stime;
 		}
-		else if (days == 2) {
+		else if (days>2&&days<=3) {
 			ftime = "前天 "+stime;
 		}
-		else if (days > 2 && days <= 10) {
-			ftime = days + "天前 "+stime;
+		else if (days > 3 && days <= 10) {
+			ftime = (int)days + "天前 "+stime;
 		}
 		else if (days > 10) {
 			ftime = dateFormater2.get().format(time);
@@ -299,6 +303,6 @@ public class StringUtils {
 	}
 
 	public static void main(String[] args) {
-	System.out.println(friendly_time("2013-07-24 05:58:40"));
+		System.out.println(friendly_time("2013-08-04 08:17:34"));
 	}
 }
