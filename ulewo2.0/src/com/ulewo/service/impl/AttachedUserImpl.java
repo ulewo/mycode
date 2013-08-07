@@ -1,5 +1,7 @@
 package com.ulewo.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,4 +26,7 @@ public class AttachedUserImpl implements AttachedUserService {
 		return attachedUserDao.queryAttachedUser(attachedId, userId);
 	}
 
+	public List<AttachedUser> queryAttachedUserByAttachedId(int attachedId) {
+		return attachedUserDao.queryAttachedUserByAttachedId(attachedId);
+	}
 }

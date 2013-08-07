@@ -92,7 +92,8 @@ public class GroupAction {
 	 * @return
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public ModelAndView allGroups(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView allGroups(HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
 
 		String page = request.getParameter("page");
 		ModelAndView mv = new ModelAndView();
@@ -102,7 +103,8 @@ public class GroupAction {
 		}
 		try {
 			// 所有群组
-			PaginationResult articleResult = groupService.queryGroupsOderArticleCount(page_int, Constant.pageSize10);
+			PaginationResult articleResult = groupService
+					.queryGroupsOderArticleCount(page_int, Constant.pageSize10);
 			mv.addObject("result", articleResult);
 			mv.setViewName("group/allgroups");
 		} catch (Exception e) {
@@ -126,7 +128,8 @@ public class GroupAction {
 	 * @return
 	 */
 	@RequestMapping(value = "/{gid}", method = RequestMethod.GET)
-	public ModelAndView groupIndex(@PathVariable String gid, HttpSession session, HttpServletRequest request,
+	public ModelAndView groupIndex(@PathVariable String gid,
+			HttpSession session, HttpServletRequest request,
 			HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
@@ -146,8 +149,9 @@ public class GroupAction {
 				return mv;
 			}
 			// 查询文章
-			PaginationResult articleResult = articleService.queryTopicOrderByGradeAndLastReTime(gid, 0, page_int,
-					Constant.pageSize15);
+			PaginationResult articleResult = articleService
+					.queryTopicOrderByGradeAndLastReTime(gid, 0, page_int,
+							Constant.pageSize15);
 			// 查询分类
 			List<ArticleItem> itemList = articleItemService.queryItemByGid(gid);
 			// List<Article> hotArticlelist = articleService.queryHotArticle(0,
@@ -173,11 +177,12 @@ public class GroupAction {
 	}
 
 	@RequestMapping(value = "/{gid}/itemId/{itemId}", method = RequestMethod.GET)
-	public ModelAndView groupArticleInItem(@PathVariable String gid, @PathVariable String itemId, HttpSession session,
+	public ModelAndView groupArticleInItem(@PathVariable String gid,
+			@PathVariable String itemId, HttpSession session,
 			HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
-		//String itemId = request.getParameter("itemId");
+		// String itemId = request.getParameter("itemId");
 		String page = request.getParameter("page");
 		int itemId_int = 0;
 		int page_int = 1;
@@ -198,8 +203,9 @@ public class GroupAction {
 				return mv;
 			}
 			// 查询文章
-			PaginationResult articleResult = articleService.queryTopicOrderByGradeAndLastReTime(gid, itemId_int,
-					page_int, Constant.pageSize15);
+			PaginationResult articleResult = articleService
+					.queryTopicOrderByGradeAndLastReTime(gid, itemId_int,
+							page_int, Constant.pageSize15);
 			// 查询分类
 			List<ArticleItem> itemList = articleItemService.queryItemByGid(gid);
 			// List<Article> hotArticlelist = articleService.queryHotArticle(0,
@@ -214,8 +220,7 @@ public class GroupAction {
 			mv.addObject("gid", gid);
 			if (itemId_int == 0) {
 				mv.setViewName("group/group");
-			}
-			else {
+			} else {
 				mv.setViewName("group/group_articles");
 			}
 
@@ -235,14 +240,13 @@ public class GroupAction {
 		Object sessionObj = session.getAttribute("user");
 		if (null == sessionObj) {
 			return "";
-		}
-		else {
+		} else {
 			String userId = ((SessionUser) sessionObj).getUserId();
-			Member member = memberService.queryMemberByGidAndUserId(gid, userId);
+			Member member = memberService
+					.queryMemberByGidAndUserId(gid, userId);
 			if (null == member) {
 				return "";
-			}
-			else {
+			} else {
 				return member.getIsMember();
 			}
 		}
@@ -250,15 +254,17 @@ public class GroupAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/{gid}/loadMembers", method = RequestMethod.GET)
-	public Map<String, Object> loadMembers(@PathVariable String gid, HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> loadMembers(@PathVariable String gid,
+			HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			int total = 12;
 			int total2 = 20;
-			List<Member> activerList = memberService.queryMembersActiveIndex(gid, MemberStatus.ISMEMBER, 0, total);
-			List<Member> memberList = memberService.queryMembersIndex(gid, MemberStatus.ISMEMBER, QueryOrder.ASC, 0,
-					total2);
+			List<Member> activerList = memberService.queryMembersActiveIndex(
+					gid, MemberStatus.ISMEMBER, 0, total);
+			List<Member> memberList = memberService.queryMembersIndex(gid,
+					MemberStatus.ISMEMBER, QueryOrder.ASC, 0, total2);
 			modelMap.put("memberList", memberList);
 			modelMap.put("activerList", activerList);
 			return modelMap;
@@ -274,7 +280,8 @@ public class GroupAction {
 	}
 
 	@RequestMapping(value = "/{gid}/img", method = RequestMethod.GET)
-	public ModelAndView queryImage(@PathVariable String gid, HttpSession session, HttpServletRequest request,
+	public ModelAndView queryImage(@PathVariable String gid,
+			HttpSession session, HttpServletRequest request,
 			HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
@@ -294,8 +301,9 @@ public class GroupAction {
 				page_int = Integer.parseInt(page);
 			}
 
-			PaginationResult result = articleService.queryImageArticle2PagResult(group.getId(), page_int,
-					Constant.pageSize30);
+			PaginationResult result = articleService
+					.queryImageArticle2PagResult(group.getId(), page_int,
+							Constant.pageSize30);
 			List<Article> list = (List<Article>) result.getList();
 			List<Article> square1 = new ArrayList<Article>();
 			List<Article> square2 = new ArrayList<Article>();
@@ -324,7 +332,8 @@ public class GroupAction {
 		return mv;
 	}
 
-	private void set2Square(List<Article> square1, List<Article> square2, List<Article> square3, List<Article> square4,
+	private void set2Square(List<Article> square1, List<Article> square2,
+			List<Article> square3, List<Article> square4,
 			List<Article> squareList) {
 
 		int num = 0;
@@ -360,12 +369,14 @@ public class GroupAction {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/joinGroup.action", method = RequestMethod.GET)
-	public Map<String, String> joinGroup(HttpSession session, HttpServletRequest request) {
+	public Map<String, String> joinGroup(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, String> modelMap = new HashMap<String, String>();
 		try {
 			String gid = request.getParameter("gid");
-			String userId = ((SessionUser) session.getAttribute("user")).getUserId();
+			String userId = ((SessionUser) session.getAttribute("user"))
+					.getUserId();
 			Member member = new Member();
 			member.setGid(gid);
 			member.setUserId(userId);
@@ -383,12 +394,14 @@ public class GroupAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/existGroup.action", method = RequestMethod.GET)
-	public Map<String, String> existGroup(HttpSession session, HttpServletRequest request) {
+	public Map<String, String> existGroup(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, String> modelMap = new HashMap<String, String>();
 		try {
 			String gid = request.getParameter("gid");
-			String userId = ((SessionUser) session.getAttribute("user")).getUserId();
+			String userId = ((SessionUser) session.getAttribute("user"))
+					.getUserId();
 			Member member = new Member();
 			member.setGid(gid);
 			member.setUserId(userId);
@@ -405,7 +418,8 @@ public class GroupAction {
 	}
 
 	@RequestMapping(value = "/{gid}/member", method = RequestMethod.GET)
-	public ModelAndView queryMember(@PathVariable String gid, HttpSession session, HttpServletRequest request,
+	public ModelAndView queryMember(@PathVariable String gid,
+			HttpSession session, HttpServletRequest request,
 			HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
@@ -424,8 +438,8 @@ public class GroupAction {
 				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 				return mv;
 			}
-			PaginationResult result = memberService.queryMembers(gid, MemberStatus.ISMEMBER, QueryOrder.ASC, page_int,
-					28);
+			PaginationResult result = memberService.queryMembers(gid,
+					MemberStatus.ISMEMBER, QueryOrder.ASC, page_int, 28);
 			mv.addObject("gid", gid);
 			mv.addObject("memberStatus", memberStatus(session, gid));
 			mv.addObject("group", group);
@@ -443,7 +457,8 @@ public class GroupAction {
 	}
 
 	@RequestMapping(value = "/{gid}/topic/{id}", method = RequestMethod.GET)
-	public ModelAndView showDetail(@PathVariable String gid, @PathVariable String id, HttpSession session,
+	public ModelAndView showDetail(@PathVariable String gid,
+			@PathVariable String id, HttpSession session,
 			HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
@@ -486,7 +501,8 @@ public class GroupAction {
 	}
 
 	@RequestMapping(value = "/fileupload", method = RequestMethod.POST)
-	public ModelAndView fileupload(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView fileupload(HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
@@ -509,7 +525,8 @@ public class GroupAction {
 			}
 			String fileName = multipartFile.getOriginalFilename();
 			String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
-			if (!"rar".equalsIgnoreCase(suffix) && !"zip".equalsIgnoreCase(suffix)) {
+			if (!"rar".equalsIgnoreCase(suffix)
+					&& !"zip".equalsIgnoreCase(suffix)) {
 				mv.addObject("result", "fail");
 				mv.addObject("message", "文件类型只能是.rar 压缩文件");
 				mv.setViewName("group/fileupload");
@@ -517,7 +534,8 @@ public class GroupAction {
 			}
 			SimpleDateFormat formater = new SimpleDateFormat("yyyyMM");
 			String saveDir = formater.format(new Date());
-			String realName = String.valueOf(System.currentTimeMillis()) + "." + suffix;
+			String realName = String.valueOf(System.currentTimeMillis()) + "."
+					+ suffix;
 			String savePath = saveDir + "/" + realName;
 			String fileDir = realPath + "upload" + "/" + saveDir;
 			File dir = new File(fileDir);
@@ -544,14 +562,16 @@ public class GroupAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/deleteFile.action", method = RequestMethod.POST)
-	public Map<String, Object> deleteFile(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> deleteFile(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			String fileName = request.getParameter("fileName");
 			String userId = request.getParameter("userId");
 			Object user = session.getAttribute("user");
-			if (user == null || !((SessionUser) user).getUserId().equals(userId)) {
+			if (user == null
+					|| !((SessionUser) user).getUserId().equals(userId)) {
 				modelMap.put("result", "fail");
 				return modelMap;
 			}
@@ -559,7 +579,8 @@ public class GroupAction {
 				modelMap.put("result", "fail");
 				return modelMap;
 			}
-			String realPath = session.getServletContext().getRealPath("/") + "upload/";
+			String realPath = session.getServletContext().getRealPath("/")
+					+ "upload/";
 			File file = new File(realPath + fileName);
 			if (file.exists()) {
 				file.delete();
@@ -578,8 +599,8 @@ public class GroupAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/downloadFile.action", method = RequestMethod.GET)
-	public Map<String, Object> downloadFile(HttpSession session, HttpServletRequest request,
-			HttpServletResponse response) {
+	public Map<String, Object> downloadFile(HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -590,27 +611,33 @@ public class GroupAction {
 				return modelMap;
 			}
 			int fileId_int = Integer.parseInt(fileId);
-			AttachedFile attachedFile = attachedFileService.queryFileById(fileId_int);
+			AttachedFile attachedFile = attachedFileService
+					.queryFileById(fileId_int);
 			if (null == attachedFile) {
 				modelMap.put("result", "fail");
 				modelMap.put("message", "附件不存在");
 				return modelMap;
 			}
-			String userId = ((SessionUser) session.getAttribute("user")).getUserId();
+			String userId = ((SessionUser) session.getAttribute("user"))
+					.getUserId();
 			// 判断当前用户是否是发布资源的人
-			Article article = articleService.queryTopicById(attachedFile.getArticleId());
-			User articleAuthor = userService.findUser(article.getAuthorId(), QueryUserType.USERID);
+			Article article = articleService.queryTopicById(attachedFile
+					.getArticleId());
+			User articleAuthor = userService.findUser(article.getAuthorId(),
+					QueryUserType.USERID);
 			if (userId.equals(articleAuthor.getUserId())) {
 				modelMap.put("result", "success");
 				return modelMap;
 			}
 			// 判断用户是否下载过
-			AttachedUser attachedUser = attachedUserService.queryAttachedUser(fileId_int, userId);
+			AttachedUser attachedUser = attachedUserService.queryAttachedUser(
+					fileId_int, userId);
 			if (attachedUser == null) {
 				User user = userService.findUser(userId, QueryUserType.USERID);
 				if (user.getMark() < attachedFile.getMark()) {
 					modelMap.put("result", "fail");
-					modelMap.put("message", "你当前的积分是" + user.getMark() + ",积分不够");
+					modelMap.put("message", "你当前的积分是" + user.getMark()
+							+ ",积分不够");
 					return modelMap;
 				}
 			}
@@ -628,7 +655,8 @@ public class GroupAction {
 	}
 
 	@RequestMapping(value = "/downloadFileDo.action", method = RequestMethod.GET)
-	public ModelAndView downloadFileDo(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView downloadFileDo(HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
 		InputStream in = null;
@@ -641,32 +669,39 @@ public class GroupAction {
 				return mv;
 			}
 			int fileId_int = Integer.parseInt(fileId);
-			AttachedFile attachedFile = attachedFileService.queryFileById(fileId_int);
+			AttachedFile attachedFile = attachedFileService
+					.queryFileById(fileId_int);
 			if (null == attachedFile) {
 				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 				return mv;
 			}
-			String userId = ((SessionUser) session.getAttribute("user")).getUserId();
+			String userId = ((SessionUser) session.getAttribute("user"))
+					.getUserId();
 			// 判断当前用户是否是发布资源的人
-			Article article = articleService.queryTopicById(attachedFile.getArticleId());
-			User articleAuthor = userService.findUser(article.getAuthorId(), QueryUserType.USERID);
+			Article article = articleService.queryTopicById(attachedFile
+					.getArticleId());
+			User articleAuthor = userService.findUser(article.getAuthorId(),
+					QueryUserType.USERID);
 			if (!userId.equals(articleAuthor.getUserId())) {
 				// 非当前用户判断用户是否下载过
-				AttachedUser attachedUser = attachedUserService.queryAttachedUser(fileId_int, userId);
+				AttachedUser attachedUser = attachedUserService
+						.queryAttachedUser(fileId_int, userId);
 				if (attachedUser == null) {
-					User user = userService.findUser(userId, QueryUserType.USERID);
+					User user = userService.findUser(userId,
+							QueryUserType.USERID);
 					if (user.getMark() < attachedFile.getMark()) {
 						mv.setViewName("redirect:" + Constant.ERRORPAGE);
 						return mv;
-					}
-					else {
+					} else {
 						// 非当前用户，没有下载过，积分也够
 						// 扣除积分
 						user.setMark(user.getMark() - attachedFile.getMark());
 						userService.updateUser(user);
 						// 给发布信息的人加积分
-						User author = userService.findUser(article.getAuthorId(), QueryUserType.USERID);
-						author.setMark(author.getMark() + attachedFile.getMark());
+						User author = userService.findUser(
+								article.getAuthorId(), QueryUserType.USERID);
+						author.setMark(author.getMark()
+								+ attachedFile.getMark());
 						userService.updateUser(author);
 						// 记录已经下载过
 						AttachedUser attachedUser2 = new AttachedUser();
@@ -675,19 +710,30 @@ public class GroupAction {
 						attachedUserService.createAttachedUser(attachedUser2);
 					}
 				}
+			} else {
+				AttachedUser attachedUser = attachedUserService
+						.queryAttachedUser(fileId_int, userId);
+				if (attachedUser == null) {
+					AttachedUser attachedUser2 = new AttachedUser();
+					attachedUser2.setAttachedId(fileId_int);
+					attachedUser2.setUserId(userId);
+					attachedUserService.createAttachedUser(attachedUser2);
+				}
+
 			}
 			// 更新附件下载数量
 			attachedFile.setDcount(attachedFile.getDcount() + 1);
 			attachedFileService.updateAttachedFile(attachedFile);
 			// 开始下载
-			String realPath = session.getServletContext().getRealPath("/") + "upload/";
+			String realPath = session.getServletContext().getRealPath("/")
+					+ "upload/";
 			String filePath = realPath + attachedFile.getFileUrl();
 			file = new File(filePath);
 			in = new FileInputStream(file);
 			out = response.getOutputStream();
 			response.setContentType("application/octet-stream; charset=UTF-8");
-			response.setHeader("Content-Disposition",
-					"attachment; filename=" + URLEncoder.encode(attachedFile.getFileName(), "UTF-8"));
+			response.setHeader("Content-Disposition", "attachment; filename="
+					+ URLEncoder.encode(attachedFile.getFileName(), "UTF-8"));
 			byte[] byteData = new byte[1024 * 5];
 			int len = 0;
 			while ((len = in.read(byteData)) != -1) {
@@ -706,8 +752,39 @@ public class GroupAction {
 	}
 
 	@ResponseBody
+	@RequestMapping(value = "/fetchAttachedUsers.do", method = RequestMethod.GET)
+	public Map<String, Object> fetchAttachedUsers(HttpSession session,
+			HttpServletRequest request) {
+
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			String attachedId = request.getParameter("attachedId");
+			if (!StringUtils.isNumber(attachedId)) {
+				modelMap.put("result", "fail");
+				modelMap.put("message", "参数错误");
+			}
+			int attachedId_int = Integer.parseInt(attachedId);
+			List<AttachedUser> list = attachedUserService
+					.queryAttachedUserByAttachedId(attachedId_int);
+			modelMap.put("result", "success");
+			modelMap.put("list", list);
+			return modelMap;
+		} catch (Exception e) {
+			String errorMethod = "GroupAction-->fetchAttachedUsers()<br>";
+			e.printStackTrace();
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			// Thread thread = new Thread(report);
+			// thread.start();
+			modelMap.put("result", "fail");
+			modelMap.put("message", "系统异常");
+			return modelMap;
+		}
+	}
+
+	@ResponseBody
 	@RequestMapping(value = "/addArticle.action", method = RequestMethod.POST)
-	public Map<String, Object> addArticle(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> addArticle(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -717,11 +794,12 @@ public class GroupAction {
 			int itemId_int = 0;
 			String keyWord = request.getParameter("keyWord");
 			String attached_file = request.getParameter("attached_file");
-			String attached_file_name = request.getParameter("attached_file_name");
+			String attached_file_name = request
+					.getParameter("attached_file_name");
 			String mark = request.getParameter("mark");
 
 			String content = request.getParameter("content");
-			//String[] images = request.getParameterValues("image");
+			// String[] images = request.getParameterValues("image");
 			if (StringUtils.isEmpty(gid)) {
 				modelMap.put("result", "fail");
 				modelMap.put("message", "请求参数错误");
@@ -744,7 +822,8 @@ public class GroupAction {
 				modelMap.put("message", "标题为空，或者超过长度");
 				return modelMap;
 			}
-			if (StringUtils.isNotEmpty(keyWord) && keyWord.length() > TITLE_LENGTH) {
+			if (StringUtils.isNotEmpty(keyWord)
+					&& keyWord.length() > TITLE_LENGTH) {
 				modelMap.put("result", "fail");
 				modelMap.put("message", "关键字太长");
 				return modelMap;
@@ -764,7 +843,8 @@ public class GroupAction {
 				article.setImage(images.split("\\|")[0]);
 			}
 			// 添加附件
-			if (StringUtils.isNotEmpty(attached_file) && StringUtils.isNotEmpty(attached_file_name)) {
+			if (StringUtils.isNotEmpty(attached_file)
+					&& StringUtils.isNotEmpty(attached_file_name)) {
 				AttachedFile file = new AttachedFile();
 				file.setFileUrl(attached_file);
 				file.setFileName(attached_file_name);
@@ -789,7 +869,8 @@ public class GroupAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/loadReComment", method = RequestMethod.GET)
-	public Map<String, Object> loadReComment(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> loadReComment(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -806,7 +887,8 @@ public class GroupAction {
 				return modelMap;
 			}
 			id_int = Integer.parseInt(id);
-			PaginationResult result = reArticleService.queryReArticles(id_int, page_int, Constant.pageSize20);
+			PaginationResult result = reArticleService.queryReArticles(id_int,
+					page_int, Constant.pageSize20);
 			modelMap.put("result", result);
 			return modelMap;
 		} catch (Exception e) {
@@ -821,7 +903,8 @@ public class GroupAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/addReComment.action", method = RequestMethod.POST)
-	public Map<String, Object> addReComment(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> addReComment(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -840,7 +923,8 @@ public class GroupAction {
 			String gid = request.getParameter("gid");
 			int articleId_int = Integer.parseInt(articleId);
 
-			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+			SessionUser sessionUser = (SessionUser) session
+					.getAttribute("user");
 			ReArticle reArticle = new ReArticle();
 			reArticle.setArticleId(articleId_int);
 			reArticle.setContent(content);
@@ -863,7 +947,8 @@ public class GroupAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/addSubReComment.action", method = RequestMethod.POST)
-	public Map<String, Object> addSubReComment(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> addSubReComment(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -893,7 +978,8 @@ public class GroupAction {
 
 			String atUserName = request.getParameter("atUserName");
 
-			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+			SessionUser sessionUser = (SessionUser) session
+					.getAttribute("user");
 			ReArticle reArticle = new ReArticle();
 			reArticle.setArticleId(articleId_int);
 			reArticle.setContent(StringUtils.formateHtml(content));

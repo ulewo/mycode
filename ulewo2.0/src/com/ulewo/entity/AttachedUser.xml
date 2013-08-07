@@ -16,8 +16,17 @@
 		values(#attachedId#,#userId#)
 	</insert>
 	
-	<!-- 通过userId查询通知 -->
+	<!-- 通过userId attachedId查询附件下载的用户 -->
 	<select id="queryAttachedUser" resultClass="attachedUser" parameterClass="java.util.Map">
 		select * from attached_user where userid = #userId# and attachedid = #attachedId#
+	</select>
+	
+	<select id="queryAttachedUserByAttachedId" resultClass="attachedUser" parameterClass="java.util.Map">
+	    select 
+	    	a.*,
+	    	u.username as userName,
+	    	u.userlittleicon as userIcon 
+	    from attached_user a inner join user u on u.userid = a.userid 
+	    where attachedid = #attachedId#
 	</select>
 </sqlMap>
