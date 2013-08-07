@@ -54,3 +54,9 @@
 .comment_checkcode_rebtn{float:right;margin-right:8px;}
 .comment_checkcode_rebtn a{display:inline-block;background:#4682B4;color:#FFFFFF;padding:2px 8px;text-decoration:none;}
 .pagination{margin-top:10px;}
+
+#attachedUser{position:absolute;width:200px;border:1px solid #B2B3B2;display:none;padding:5px;background:white;z-index:99999}
+.loading{margin-top:10px;text-align:center;}
+.attarchedUserCon{float:left;width:30px;margin-left:3px;margin-top:4px;}
+.attarchedUserCon a{border:0px;}
+.attarchedUserCon a img{width:30px;}

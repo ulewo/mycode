@@ -54,6 +54,14 @@ $(function() {
 			dispatche(index);
 		});
 	});
+	
+	$("#dcount").bind("click",fetchAttachedUser);
+	$(document).click(function(){
+		$("#attachedUser").hide();
+	});
+	$("#attachedUser").click(function(event){
+		event.stopPropagation();
+	});
 });
 
 /** *************插入表情*************** */
@@ -86,6 +94,36 @@ function downloadFile(){
 			}else{
 				$("#dcount").text(parseInt($("#dcount").text())+1);
 				document.location.href=global.realPath+"/group/downloadFileDo.action?fileId="+fileId;
+			}
+		}
+	});
+}
+
+//获取附件下载的人数
+function fetchAttachedUser(event){
+	event.stopPropagation();
+	$("#attachedUser").empty();
+	var attachedId = $(this).attr("name");
+	var left = $(this).offset().left;
+	var top = $(this).offset().top;
+	$("#attachedUser").css({"left":(left-100),"top":(top+15),"display":"block"});
+	$("<div class='loading'><img src='"+global.realPath+"/images/load.gif'/></div>").appendTo($("#attachedUser"));
+	$.ajax({
+		async : true,
+		cache : true,
+		type : 'GET',
+		dataType : "json",
+		url : global.realPath + "/group/fetchAttachedUsers.do?attachedId="+attachedId,// 请求的action路径
+		success : function(data) {
+			$(".loading").remove();
+			if(data.result=="fail"){
+				alert(data.message);
+				$("#attachedUser").hide();
+			}else{
+				var list = data.list;
+				for(var i=0,length = list.length;i<length;i++){
+					$("<div class='attarchedUserCon'><a href='"+global.realPath+"/user/"+list[i].userId+"' title='"+list[i].userName+"' target='_blank'><img src='"+global.realPath+"/upload/"+list[i].userIcon+"'/></a></div>").appendTo($("#attachedUser"));
+				}
 			}
 		}
 	});
