@@ -208,6 +208,21 @@
 	  			<div id="talklist"></div>
 	  			<div class='moretalk'><a href='${realPath}/talk'>看看大家都在吐槽什么&gt;&gt;</a></div>
   			</div>
+  			 <div class="app_info">
+			  	 	<div><a href="${realPath}/app"><img src="${realPath}/images/androidappicon.png"></a></div>
+			  	 	<div style="color:#666666">扫一扫下载有乐窝安卓客户端</div>
+			  	 	<div class="qq_qun">有乐窝交流群:<span style="color:#3E62A6">321576517</span></div>
+			 </div>
+			 	  <div class="titinfo">最新博文</div>
+  			  <div>
+				<ul class="new_article_list">
+					<c:forEach var="blog" items="${blogList}">
+						<li>
+							<a href="${realPath}/user/${blog.userId}/blog/${blog.id}" target="_blank" title="${blog.title}" target="_blank" class="sec_span2">${blog.title}</a>
+						</li>
+					</c:forEach>
+	  			</ul>
+	  			</div>
 	  			<div class="titinfo">推荐窝窝</div>
 	  			<c:forEach var="group" items="${groupList}">
 	  				<div class="recommend_wo">
@@ -220,16 +235,7 @@
   					<div class="clear"></div>
   				</div>
 	  			</c:forEach>
-	  		  <div class="titinfo">最新博文</div>
-  			  <div>
-				<ul class="new_article_list">
-					<c:forEach var="blog" items="${blogList}">
-						<li>
-							<a href="${realPath}/user/${blog.userId}/blog/${blog.id}" target="_blank" title="${blog.title}" target="_blank" class="sec_span2">${blog.title}</a>
-						</li>
-					</c:forEach>
-	  			</ul>
-	  			</div>
+	  			<!-- 
 	  			<div style="margin-top:10px;text-align:center;">
 	  				<script type="text/javascript">
 					     document.write('<a style="display:none!important" id="tanx-a-mm_30349160_4142152_13430904"></a>');
@@ -243,6 +249,7 @@
 					     if(tanx_h)tanx_h.insertBefore(tanx_s,tanx_h.firstChild);
 					</script>
 	  			</div>
+	  			 -->
 	  			<!-- 
   				<div class="titinfo">最活跃成员</div>
 			  	<div>
@@ -255,11 +262,6 @@
 			  		<div class="clear"></div>
 			  	</div>
 			  	 -->
-			  	 <div class="app_info">
-			  	 	<div><a href="${realPath}/app"><img src="${realPath}/images/appIcon.png"></a></div>
-			  	 	<div><img src="${realPath}/images/qrcodebig.png"></div>
-			  	 	<div>扫一扫下载有乐窝安卓客户端</div>
-			  	 </div>
   			</div>
   			<div class="clear"></div>
   		</div>
