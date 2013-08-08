@@ -121,9 +121,14 @@ function fetchAttachedUser(event){
 				$("#attachedUser").hide();
 			}else{
 				var list = data.list;
-				for(var i=0,length = list.length;i<length;i++){
-					$("<div class='attarchedUserCon'><a href='"+global.realPath+"/user/"+list[i].userId+"' title='"+list[i].userName+"' target='_blank'><img src='"+global.realPath+"/upload/"+list[i].userIcon+"'/></a></div>").appendTo($("#attachedUser"));
+				if(list.length>0){
+					for(var i=0,length = list.length;i<length;i++){
+						$("<div class='attarchedUserCon'><a href='"+global.realPath+"/user/"+list[i].userId+"' title='"+list[i].userName+"' target='_blank'><img src='"+global.realPath+"/upload/"+list[i].userIcon+"'/></a></div>").appendTo($("#attachedUser"));
+					}
+				}else{
+					$("<div class='noinfo' style='padding-bottom:5px;'>目前没人下载</div>").appendTo($("#attachedUser"));
 				}
+				
 			}
 		}
 	});
