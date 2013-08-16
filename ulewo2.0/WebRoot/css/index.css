@@ -17,7 +17,7 @@ ul li{margin:0px;padding:0px;list-style:none;}
 .article_title a.group_name_link{color:#444;text-decoration:none;font-family: STHeiti,"Microsoft Yahei","微软雅黑",Arial,sans-serif;font-size: 13px;float:left;}
 .article_title a.group_name_link:hover{text-decoration:underline;}
 .title_line{color: #ccc;margin: 0px 3px;font-size: 13px;float:left;display:block;padding:0px 3px;margin-top:2px}
-.article_title a.article_title_link{color:#005097;text-decoration:none;font-family: STHeiti,"Microsoft Yahei","微软雅黑",Arial,sans-serif;font-size: 13px;display:block;float:left;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;width:530px}
+.article_title a.article_title_link{color:#005097;text-decoration:none;font-family: STHeiti,"Microsoft Yahei","微软雅黑",Arial,sans-serif;font-size: 13px;display:block;float:left;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;width:480px}
 .article_title a.article_title_link:hover{text-decoration:underline;}
 .article_summary{color:#666666;line-height:20px;margin-top:5px;word-wrap:break-word;}
 .article_author{margin-top:10px;color:#999}
