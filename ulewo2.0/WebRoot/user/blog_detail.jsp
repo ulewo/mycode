@@ -114,7 +114,7 @@ window.UEDITOR_HOME_URL = "${realPath}/ueditor/";
 						  				<span class="result_info"><i id="warm_icon"></i><span id="warm_info"></span></span>
 						  				<div class="clear"></div>
 						  			</div>
-				  					<div class="warm_info">最多输入500字符</div>
+				  					<div class="warm_info"></div>
 				  					<div class="clear"></div>
 				  					<div class="pm_emotion" id="pm_emotion_cnt">
 					  				<div class="pm_emotion_panel">

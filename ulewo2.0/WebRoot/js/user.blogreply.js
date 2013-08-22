@@ -77,10 +77,6 @@ function subReply() {
 		warm("show","回复内容不能为空");
 		return;
 	}
-	if (content.trim().length > 500) {
-		warm("show","回复内容不能超过500字符");
-		return;
-	}
 	warm("hide","");
 	btnLoading($(this),"发表留言中<img src='"+global.realPath+"/images/load.gif' width='14'>");
 	$.ajax({
