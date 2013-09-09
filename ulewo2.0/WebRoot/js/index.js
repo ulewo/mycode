@@ -84,3 +84,25 @@ function loadTalk(){
 		}
 	});
 }
+
+
+function loadReMark(){
+	$.ajax({
+		async : true,
+		cache : false,
+		type : 'GET',
+		dataType : "json",
+		url : global.realPath+"/reMarkInfo",// 请求的action路径
+		success : function(data) {
+			if(data.result=="success"){
+				var length = data.list.length;
+				if(length>0){
+					for(var i=0;i<length;i++){
+						new TalkItem(data.list[i]).item.appendTo($("#talklist"));
+					}
+				}
+			}
+		}
+	});
+}
+
