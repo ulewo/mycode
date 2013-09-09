@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="remark">
+	<cacheModel id="user-cache" type="LRU" readOnly="true"
+		serialize="false">
+		<flushInterval hours="24" />
+		<property value="500" name="size" />
+	</cacheModel>
+	
+	
+	<typeAlias alias="remark" type="com.ulewo.entity.Talk" />
+	
+	<!-- 签到 -->
+	<insert id="addReMark" parameterClass="talk">
+        insert into remark(userid,username,usericon,marktime) 
+		values(#userId#,#userName#,#userIcon#,#markTime#)
+	</insert>
+	
+	<!-- 查询用户当日签到情况 -->
+	<select id="queryReMarkByUser" parameterClass="java.util.Map">
+		select count(userid) from remark where userid = #userId# and marktime = #markTime#
+	</select>
+	
+	<!-- 根据时间查询当日签到情况-->
+	<select id="queryReMarkByTime"  resultClass="remark">
+	    select * from remark where marktime = #markTime#
+	    order by marktime desc 
+	</select>
+</sqlMap>

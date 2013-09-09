@@ -8,7 +8,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLDecoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,10 +39,13 @@ import weibo4j.org.json.JSONObject;
 import com.ulewo.entity.Article;
 import com.ulewo.entity.BlogArticle;
 import com.ulewo.entity.Group;
+import com.ulewo.entity.ReMark;
+import com.ulewo.entity.SessionUser;
 import com.ulewo.entity.Talk;
 import com.ulewo.service.ArticleService;
 import com.ulewo.service.BlogArticleService;
 import com.ulewo.service.GroupService;
+import com.ulewo.service.ReMarkService;
 import com.ulewo.service.TalkService;
 import com.ulewo.service.UserService;
 import com.ulewo.util.Constant;
@@ -65,9 +70,14 @@ public class HomeAction {
 	@Autowired
 	TalkService talkService;
 
+	@Autowired
+	ReMarkService reMarkService;
+	
 	private static final String TYPE_BLOG = "blog";
 
 	private static final String TYPE_GROUP = "group";
+	
+	private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView login() {
@@ -447,4 +457,61 @@ public class HomeAction {
 		mv.setViewName("ulewoapp");
 		return mv;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/reMarkInfo", method = RequestMethod.GET)
+	public Map<String, Object> isReMark(HttpSession session, HttpServletRequest request) {
+
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			Object obj = session.getAttribute("user");
+			if(null==obj){
+				modelMap.put("isReMark","false");
+				return modelMap;
+			}
+			String userId = ((SessionUser) session.getAttribute("user")).getUserId();
+			String time = format.format(new Date());
+			boolean isReMark = reMarkService.isMark(userId,time);
+			modelMap.put("isReMark",isReMark);
+			return modelMap;
+		} catch (Exception e) {
+			String errorMethod = "isReMark-->loadMoreTalk()<br>";
+			//ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			//Thread thread = new Thread(report);
+			//thread.start();
+			modelMap.put("result", "fail");
+			return modelMap;
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/reMark.action", method = RequestMethod.GET)
+	public Map<String, Object> reMark(HttpSession session, HttpServletRequest request) {
+
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			SessionUser user = (SessionUser) session.getAttribute("user");
+			String userId = user.getUserId();
+			String userName = user.getUserName();
+			String userIcon = user.getUserLittleIcon();
+			String time = format.format(new Date());
+			ReMark remark = new ReMark();
+			remark.setUserId(userId);
+			remark.setUserName(userName);
+			remark.setUserIcon(userIcon);
+			remark.setMarkTime(time);
+			reMarkService.addReMark(remark);
+			modelMap.put("result", "success");
+			return modelMap;
+		} catch (Exception e) {
+			String errorMethod = "isReMark-->loadMoreTalk()<br>";
+			//ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			//Thread thread = new Thread(report);
+			//thread.start();
+			modelMap.put("result", "fail");
+			return modelMap;
+		}
+	} 
+	
+	
 }
