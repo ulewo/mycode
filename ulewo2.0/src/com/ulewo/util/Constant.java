@@ -40,6 +40,8 @@ public class Constant {
 
 	public static int ARTICLE_MARK5 = 5;
 
+	public static int ARTICLE_MARK20 = 20;
+
 	public static int ARTICLE_MARK2 = 2;
 
 	public static int ARTICLE_MARK1 = 1;
@@ -61,5 +63,7 @@ public class Constant {
 	public final static String STATUSY = "Y";
 
 	public final static String STATUSYN = "N";
+
+	public final static int DAYNUM = 7;
 
 }

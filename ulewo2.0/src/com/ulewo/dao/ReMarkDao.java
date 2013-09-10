@@ -21,10 +21,10 @@ public class ReMarkDao extends BaseDao {
 		this.getSqlMapClientTemplate().insert("remark.addReMark", reMark);
 	}
 
-	public boolean isMark(String userId, String time) {
+	public boolean isMark(String userId, String markDate) {
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("userId", userId);
-		parmMap.put("markTime", time);
+		parmMap.put("markDate", markDate);
 		int remarkCount = (Integer) this.getSqlMapClientTemplate()
 				.queryForObject("remark.queryReMarkByUser", parmMap);
 		if (remarkCount > 0) {
@@ -40,9 +40,9 @@ public class ReMarkDao extends BaseDao {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public List<ReMark> queryReMarkByTime(String time) {
+	public List<ReMark> queryReMarkByTime(String markDate) {
 		Map<String, Object> parmMap = new HashMap<String, Object>();
-		parmMap.put("markTime", time);
+		parmMap.put("markDate", markDate);
 		return (List<ReMark>) this.getSqlMapClientTemplate().queryForList(
 				"remark.queryReMarkByTime", parmMap);
 	}
@@ -71,11 +71,20 @@ public class ReMarkDao extends BaseDao {
 				"remark.userMarkInfo", parmMap);
 	}
 
-	public int allMarkCount(String markTime) {
+	public int allMarkCount(String markDate) {
 		Map<String, Object> parmMap = new HashMap<String, Object>();
-		parmMap.put("markTime", markTime);
+		parmMap.put("markDate", markDate);
 		return (Integer) this.getSqlMapClientTemplate().queryForObject(
 				"remark.allMarkCount", parmMap);
 	}
 
+	public int getCountBetweenTime(String userId, String startDate,
+			String endDate) {
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("userId", userId);
+		parmMap.put("startDate", startDate);
+		parmMap.put("endDate", endDate);
+		return (Integer) this.getSqlMapClientTemplate().queryForObject(
+				"remark.getCountBetweenTime", parmMap);
+	}
 }

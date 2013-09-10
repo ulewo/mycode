@@ -13,10 +13,11 @@ import org.htmlcleaner.HtmlCleaner;
 import org.htmlcleaner.TagNode;
 
 public class StringUtils {
-	private final static String[] hexDigits = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d",
-			"e", "f" };
+	private final static String[] hexDigits = { "0", "1", "2", "3", "4", "5",
+			"6", "7", "8", "9", "a", "b", "c", "d", "e", "f" };
 
-	private final static String[] static_ext = { "jpg", "png", "gif", "bmp", "JPG", "PNG", "GIF", "BMP" };
+	private final static String[] static_ext = { "jpg", "png", "gif", "bmp",
+			"JPG", "PNG", "GIF", "BMP" };
 
 	public final static ThreadLocal<SimpleDateFormat> dateFormater = new ThreadLocal<SimpleDateFormat>() {
 		@Override
@@ -70,7 +71,8 @@ public class StringUtils {
 	}
 
 	// 时间对比
-	public static boolean BalanceDate(String day1, String day2) throws Exception {
+	public static boolean BalanceDate(String day1, String day2)
+			throws Exception {
 
 		boolean flag = true;
 		DateFormat df = DateFormat.getDateInstance();
@@ -85,9 +87,9 @@ public class StringUtils {
 	public static String clearHtml(String str) {
 
 		if (isNotEmpty(str)) {
-			return str.replaceAll("<[.[^<]]*>", "").replaceAll("[\\n|\\r]", "").replaceAll("&nbsp;", "");
-		}
-		else {
+			return str.replaceAll("<[.[^<]]*>", "").replaceAll("[\\n|\\r]", "")
+					.replaceAll("&nbsp;", "");
+		} else {
 			return str;
 		}
 	}
@@ -152,8 +154,7 @@ public class StringUtils {
 
 		if (null == str || "".equals(str)) {
 			return true;
-		}
-		else if ("".equals(str.trim())) {
+		} else if ("".equals(str.trim())) {
 			return true;
 		}
 		return false;
@@ -170,11 +171,11 @@ public class StringUtils {
 		if (isEmpty(sdate)) {
 			return "";
 		}
-		//获取时间分钟
-		String stime = sdate.substring(10,19)+" ";
+		// 获取时间分钟
+		String stime = sdate.substring(10, 19) + " ";
 		Date curDateTime = toDate(sdate);
-		//从需要格式化的时间的0点开始算
-		sdate = sdate.substring(0,10)+" 00:00:00";
+		// 从需要格式化的时间的0点开始算
+		sdate = sdate.substring(0, 10) + " 00:00:00";
 		Date time = toDate(sdate);
 		if (time == null) {
 			return "Unknown";
@@ -188,31 +189,32 @@ public class StringUtils {
 		if (curDate.equals(paramDate)) {
 			int hour = (int) ((cal.getTimeInMillis() - curDateTime.getTime()) / 3600000);
 			if (hour == 0)
-				ftime = Math.max((cal.getTimeInMillis() - curDateTime.getTime()) / 60000, 1) + "分钟前";
+				ftime = Math
+						.max((cal.getTimeInMillis() - curDateTime.getTime()) / 60000,
+								1)
+						+ "分钟前";
 			else
 				ftime = hour + "小时前";
 			return ftime;
 		}
-		double lt = (double)time.getTime() / 86400000;
-		double ct = (double)cal.getTimeInMillis() / 86400000;
+		double lt = (double) time.getTime() / 86400000;
+		double ct = (double) cal.getTimeInMillis() / 86400000;
 		double days = ct - lt;
-		if (days<=1) {
+		if (days <= 1) {
 			int hour = (int) ((cal.getTimeInMillis() - time.getTime()) / 3600000);
 			if (hour == 0)
-				ftime = Math.max((cal.getTimeInMillis() - time.getTime()) / 60000, 1) + "分钟前";
+				ftime = Math.max(
+						(cal.getTimeInMillis() - time.getTime()) / 60000, 1)
+						+ "分钟前";
 			else
 				ftime = hour + "小时前";
-		}
-		else if (days>1&&days<=2) {
-			ftime = "昨天 "+stime;
-		}
-		else if (days>2&&days<=3) {
-			ftime = "前天 "+stime;
-		}
-		else if (days > 3 && days <= 10) {
-			ftime = (int)days + "天前 "+stime;
-		}
-		else if (days > 10) {
+		} else if (days > 1 && days <= 2) {
+			ftime = "昨天 " + stime;
+		} else if (days > 2 && days <= 3) {
+			ftime = "前天 " + stime;
+		} else if (days > 3 && days <= 10) {
+			ftime = (int) days + "天前 " + stime;
+		} else if (days > 10) {
 			ftime = dateFormater2.get().format(time);
 		}
 		return ftime;
@@ -259,8 +261,7 @@ public class StringUtils {
 		if (null != con) {
 			// con = con.replace("../", Constant.WEBSTIE);
 			return con;
-		}
-		else {
+		} else {
 			return "";
 		}
 
@@ -291,7 +292,8 @@ public class StringUtils {
 			for (TagNode node : nodeList) {
 				image = String.valueOf(node.getAttributeByName("src")).trim();
 				if (!image.contains("emotion")
-						&& ArrayUtils.contains(static_ext, image.substring(image.lastIndexOf(".") + 1))) {
+						&& ArrayUtils.contains(static_ext,
+								image.substring(image.lastIndexOf(".") + 1))) {
 					sbf.append(image + "|");
 				}
 			}
@@ -303,6 +305,10 @@ public class StringUtils {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(friendly_time("2013-08-04 08:17:34"));
+		Calendar c = Calendar.getInstance();
+		c.add(Calendar.DAY_OF_MONTH, -7);
+		Date date = c.getTime();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		System.out.println(format.format(date));
 	}
 }

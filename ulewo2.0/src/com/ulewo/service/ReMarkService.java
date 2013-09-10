@@ -16,4 +16,6 @@ public interface ReMarkService {
 	public List<ReMark> queryReMarkByTime(String time);
 
 	public int allMarkCount(String markTime);
+
+	public boolean isContinuationMark(String userId);
 }

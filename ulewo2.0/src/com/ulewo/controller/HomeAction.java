@@ -78,6 +78,8 @@ public class HomeAction {
 	private static final String TYPE_GROUP = "group";
 
 	private static final SimpleDateFormat format = new SimpleDateFormat(
+			"yyyy-MM-dd HH:mm:ss");
+	private static final SimpleDateFormat format2 = new SimpleDateFormat(
 			"yyyy-MM-dd");
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -482,7 +484,7 @@ public class HomeAction {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		int myMarkCount = 0;
-		String time = format.format(new Date());
+		String time = format2.format(new Date());
 		try {
 			Object obj = session.getAttribute("user");
 			if (null == obj) {
@@ -520,7 +522,8 @@ public class HomeAction {
 		try {
 			SessionUser user = (SessionUser) session.getAttribute("user");
 			String userId = user.getUserId();
-			String time = format.format(new Date());
+			Date curDate = new Date();
+			String time = format.format(curDate);
 			boolean isReMark = reMarkService.isMark(userId, time);
 			if (isReMark) {
 				modelMap.put("result", "fail");
@@ -534,7 +537,12 @@ public class HomeAction {
 			remark.setUserName(userName);
 			remark.setUserIcon(userIcon);
 			remark.setMarkTime(time);
+			remark.setMarkDate(format.format(curDate));
 			reMarkService.addReMark(remark);
+			// 判断是否是连续7天签到，然后送积分
+			if (reMarkService.isContinuationMark(userId)) {
+				modelMap.put("reward", "reward");
+			}
 			modelMap.put("result", "success");
 			return modelMap;
 		} catch (Exception e) {
@@ -572,7 +580,7 @@ public class HomeAction {
 		try {
 			SessionUser user = (SessionUser) session.getAttribute("user");
 			String userId = user.getUserId();
-			String time = format.format(new Date());
+			String time = format2.format(new Date());
 			boolean isReMark = reMarkService.isMark(userId, time);
 			if (!isReMark) {
 				modelMap.put("result", "fail");
@@ -602,7 +610,7 @@ public class HomeAction {
 		try {
 			SessionUser user = (SessionUser) session.getAttribute("user");
 			String userId = user.getUserId();
-			String time = format.format(new Date());
+			String time = format2.format(new Date());
 			boolean isReMark = reMarkService.isMark(userId, time);
 			if (!isReMark) {
 				modelMap.put("result", "fail");
