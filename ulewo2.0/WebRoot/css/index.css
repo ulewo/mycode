@@ -116,6 +116,6 @@ a.day_pic_link:hover{border:1px solid red;}
 .remark_siged{width:110px;height:50px;float:left;background:url("../images/sign_box_bright_3b4c6ec0.png") 0px -100px no-repeat;height:50px;}
 
 .remaktit{text-align:left;font-size:16px;color:#38A3DB;margin-top:10px;border-bottom:1px solid #38A3DB;padding:5px;}
-.mark_con{border:1px solid #B2B3B2;width:150px;float:left;height:64px;margin-left:10px;margin-top:10px;}
+.mark_con{border:1px solid #B2B3B2;width:180px;float:left;height:64px;margin-left:10px;margin-top:10px;}
 .mark_icon{float:left;width:60px;height:60px;padding:2px;}
-.mark_time{float:left;width:80px;padding-top:20px;}
+.mark_time{float:left;width:100px;padding-top:10px;margin-left:10px;}

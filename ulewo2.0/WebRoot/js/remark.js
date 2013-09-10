@@ -1,8 +1,9 @@
-function reMarkP(usericon,tname){
+function reMarkP(userId,usericon,name,time){
 	this.mark = $("<div class='mark_con'></div>");
-	$("<div class='mark_icon'><img src='"+ global.realPath + "/upload/"
-			+usericon+"' width='60'/></div>").appendTo(this.mark);
-	$("<div class='mark_time'>"+tname+"</div>").appendTo(this.mark);
+	$("<div class='mark_icon'><a href='"+global.realPath+"/user/"+userId+"' target='_blank'><img src='"+ global.realPath + "/upload/"
+			+usericon+"' width='60'/></a></div>").appendTo(this.mark);
+	$("<div class='mark_time'><a href='"+global.realPath+"/user/"+userId+"' target='_blank'>"+name+"</a></div>").appendTo(this.mark);
+	$("<div class='mark_time'>"+time+"</div>").appendTo(this.mark);
 }
 
 function loadMySin(){
@@ -18,7 +19,7 @@ function loadMySin(){
 				var size = data.list.length;
 				if(size>0){
 					for(var i=0;i<size;i++){
-						new reMarkP(data.list[i].userIcon,data.list[i].markTime).mark.appendTo($("#remarkist"));
+						new reMarkP(data.list[i].userId,data.list[i].userIcon,data.list[i].userName,data.list[i].markTime).mark.appendTo($("#remarkist"));
 					}
 					$("<div class='clear'></div>").appendTo($("#remarkist"));
 				}else{
@@ -44,7 +45,7 @@ function loadAllSin(){
 				var size = data.list.length;
 				if(size>0){
 					for(var i=0;i<size;i++){
-						new reMarkP(data.list[i].userIcon,data.list[i].userName).mark.appendTo($("#remarkist"));
+						new reMarkP(data.list[i].userId,data.list[i].userIcon,data.list[i].userName,data.list[i].markTime).mark.appendTo($("#remarkist"));
 					}
 					$("<div class='clear'></div>").appendTo($("#remarkist"));
 				}else{

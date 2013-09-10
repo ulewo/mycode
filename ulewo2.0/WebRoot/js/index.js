@@ -138,6 +138,11 @@ function haveReMark(isremark,mycount,allcount){
 						var count_my  = parseInt($("#count_my").html());
 						$("#count_all").html("<a href='allsgin.action' target='_blank'>"+(count_all+1)+"</a>");
 						$("#count_my").html("<a href='mysgin.action' target='_blank'>"+(count_my+1)+"</a>");
+						if(data.reward=="reward"){
+							tipsInfo("连续7天签到送20积分");
+						}else{
+							tipsInfo("2分已到碗里");
+						}
 						haveReMarked = true;
 					}else{
 						alert(data.msg);
