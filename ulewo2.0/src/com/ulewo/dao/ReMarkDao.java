@@ -7,7 +7,6 @@ import java.util.Map;
 import org.springframework.stereotype.Component;
 
 import com.ulewo.entity.ReMark;
-import com.ulewo.entity.Talk;
 
 @Component
 public class ReMarkDao extends BaseDao {
@@ -22,26 +21,61 @@ public class ReMarkDao extends BaseDao {
 		this.getSqlMapClientTemplate().insert("remark.addReMark", reMark);
 	}
 
-	public boolean isMark(String userId,String time){
+	public boolean isMark(String userId, String time) {
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("userId", userId);
-		parmMap.put("time", time);
-		int remarkCount = (Integer)this.getSqlMapClientTemplate().queryForObject("remark.queryReMarkByUser",parmMap);
-		if(remarkCount>0){
+		parmMap.put("markTime", time);
+		int remarkCount = (Integer) this.getSqlMapClientTemplate()
+				.queryForObject("remark.queryReMarkByUser", parmMap);
+		if (remarkCount > 0) {
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}
-	
+
 	/**
-	 *查询签到
+	 * 查询签到
 	 * 
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
 	public List<ReMark> queryReMarkByTime(String time) {
-		return (List<ReMark>) this.getSqlMapClientTemplate().queryForList("remark.queryReMarkByTime", time);
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("markTime", time);
+		return (List<ReMark>) this.getSqlMapClientTemplate().queryForList(
+				"remark.queryReMarkByTime", parmMap);
+	}
+
+	/**
+	 * 查询签到数量
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public int userMarkCount(String userId) {
+		return (Integer) this.getSqlMapClientTemplate().queryForObject(
+				"remark.userMarkCount", userId);
+	}
+
+	/**
+	 * 查询用户签到情况
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public List<ReMark> userMarkInfo(String userId) {
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("userId", userId);
+		return (List<ReMark>) this.getSqlMapClientTemplate().queryForList(
+				"remark.userMarkInfo", parmMap);
+	}
+
+	public int allMarkCount(String markTime) {
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("markTime", markTime);
+		return (Integer) this.getSqlMapClientTemplate().queryForObject(
+				"remark.allMarkCount", parmMap);
 	}
 
 }
