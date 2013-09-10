@@ -35,7 +35,7 @@
 	<!-- 根据时间查询当日签到情况-->
 	<select id="queryReMarkByTime" parameterClass="java.util.Map" resultClass="remark"> 
 	    select * from remark where markdate = #markDate#
-	    order by marktime desc 
+	    order by marktime 
 	</select>
 	
 	<select id="allMarkCount" parameterClass="java.util.Map" resultClass="java.lang.Integer">
