@@ -12,6 +12,7 @@
 <script type="text/javascript" src="${realPath}/js/index.js"></script>
 <script type="text/javascript" src="${realPath}/js/talk.js"></script>
 <script type="text/javascript" src="${realPath}/js/emotion.data.js"></script>
+<script type="text/javascript" src="${realPath}/js/date.js"></script>
 <link rel="stylesheet" type="text/css" href="${realPath}/css/index.css">
 <link rel="stylesheet" type="text/css" href="${realPath}/css/talk.css">
 </head>
@@ -91,9 +92,17 @@
   		</div>
   		<div class="right">
   			<div class="create_wo"><a href="javascript:createWoWo()">创建我的窝窝</a></div>
-  			<div class="remark">
-  				<a href="">没有签到</a>
+  			<div class="todayinfo">
+  				<div class="tody_tit">今天是</div>
+  				<div class="tody_con">
+  					<div id="tody_time"></div>
+  					<div id="tody_festival"></div>
+  				</div>
+  				<div class="clear"></div>
   			</div>
+  			<div class="remarkcon" id="remarkcon">
+				
+			</div>
   			<div class="talk">
 	  			<div>
 	  				<div class="talkarea"><textarea id="talkcontent">今天你吐槽了吗？</textarea></div>

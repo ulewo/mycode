@@ -14,7 +14,16 @@ $(function(){
 			$(this).css({"color":"#A9A9A9"});
 		}
 	});
+	loadReMark();
+	
+	//设置今天的日期
+	setTodayInfo();
 })
+
+function setTodayInfo(){
+	$("#tody_time").html(YYMMDD()+"("+solarDay2()+")");
+	$("#tody_festival").html(weekday()+"&nbsp;&nbsp;"+solarDay3());
+}
 
 function saveTalk(){
 	if(global.userId==""){
@@ -95,14 +104,56 @@ function loadReMark(){
 		url : global.realPath+"/reMarkInfo",// 请求的action路径
 		success : function(data) {
 			if(data.result=="success"){
-				var length = data.list.length;
-				if(length>0){
-					for(var i=0;i<length;i++){
-						new TalkItem(data.list[i]).item.appendTo($("#talklist"));
-					}
-				}
+				haveReMark(data.isReMark,data.myReMark,data.todayCount);
 			}
 		}
 	});
+}
+
+var haveReMarked = false;
+function haveReMark(isremark,mycount,allcount){
+	this.remark = $("<div class='remark'></div>").appendTo($("#remarkcon"));
+	if(isremark){
+		$("<div class='remark_siged'></div>").appendTo(this.remark);
+	}else{
+		$("<div class='remark_sig'></div>").appendTo(this.remark).click(function(){
+			var curobj = $(this);
+			if(global.userId==""){
+				alert("请先登录");
+				return;
+			}
+			if(haveReMarked){
+				return;
+			}
+			$.ajax({
+				async : true,
+				cache : false,
+				type : 'GET',
+				dataType : "json",
+				url : global.realPath+"/reMark.action",// 请求的action路径
+				success : function(data) {
+					if(data.result=="success"){
+						curobj.attr("class","remark_siged");
+						var count_all = parseInt($("#count_all").html());
+						var count_my  = parseInt($("#count_my").html());
+						$("#count_all").html("<a href='allsgin.action' target='_blank'>"+(count_all+1)+"</a>");
+						$("#count_my").html("<a href='mysgin.action' target='_blank'>"+(count_my+1)+"</a>");
+						haveReMarked = true;
+					}else{
+						alert(data.msg);
+					}
+				}
+			});
+		});
+	}
+	var remark_right_info = $("<div class='remark_right_info'>").appendTo(this.remark);
+	var remark_info = $("<div class='remark_info'></div>").appendTo(remark_right_info);
+	if(isremark){
+		$("<div class='count_all'><a href='allsgin.action' target='_blank' title='今日签到'>"+allcount+"</a></div>").appendTo(remark_info);
+		$("<div class='count_my'><a href='mysgin.action' target='_blank' title='我的签到'>"+mycount+"</a></div>").appendTo(remark_info);
+	}else{
+		$("<div class='count_all' title='今日签到' id='count_all'>"+allcount+"</div>").appendTo(remark_info);
+		$("<div class='count_my' title='我的签到' id='count_my'>"+mycount+"</div>").appendTo(remark_info);
+	}
 }
 
