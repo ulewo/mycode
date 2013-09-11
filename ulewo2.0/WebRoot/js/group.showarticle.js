@@ -620,6 +620,16 @@ function submitForm(){
 				cancelAdd();
 				$(".noinfo").remove();
 				new RePanel(data.reArticle).asHtml().appendTo($("#recomment"));
+				$(".outerHeight pre").each(function () {
+			        var $this = $(this);
+			        if ($this.attr("class")!=null&&$this.attr("class").indexOf("brush:") != -1) {
+			            var lang = $this.attr("class").split(';')[0].split(':')[1];
+			            $this.attr('name', 'precode');
+			            $this.attr('class', lang);
+			        }
+			    });
+			   dp.SyntaxHighlighter.HighlightAll('precode');
+				
 				tipsInfo("2分已到碗里");
 			}
 		}
