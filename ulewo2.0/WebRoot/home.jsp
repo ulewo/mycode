@@ -63,9 +63,9 @@
 		  			 	<div class="article_con">
 		  			 		<div class="article_title">
 		  			 			<a href="${realPath}/group/${article.gid}" onFocus="this.blur()" class="group_name_link" target="_blank" title="${article.groupName}">${article.groupName}</a>
-		  			 			<span class="title_line">|</span>
+		  			 		</div>
+		  			 		<div class="article_title">
 		  			 			<a href="${realPath}/group/${article.gid}/topic/${article.id}" onFocus="this.blur()" class="article_title_link"  title="${article.title}" target="_blank">${article.title}</a>
-		  			 			<div class="clear"></div>
 		  			 		</div>
 		  			 		<div class="article_summary">${article.summary}</div>
 		  			 		<div class="article_pic"></div>
