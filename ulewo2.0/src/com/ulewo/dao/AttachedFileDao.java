@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
+import com.ulewo.entity.Article;
 import com.ulewo.entity.AttachedFile;
 import com.ulewo.enums.FileType;
 
@@ -65,4 +66,17 @@ public class AttachedFileDao extends BaseDao {
 				file);
 	}
 
+	public List<Article> attachedArticle(String gid, int offset, int total) {
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("gid", gid);
+		parmMap.put("offset", offset);
+		parmMap.put("total", total);
+		return (List<Article>) this.getSqlMapClientTemplate().queryForList(
+				"attachedFile.attachedArticle", parmMap);
+	}
+
+	public int attachedArticleCount(String gid) {
+		return (Integer) this.getSqlMapClientTemplate().queryForObject(
+				"attachedFile.attachedArticleCount", gid);
+	}
 }

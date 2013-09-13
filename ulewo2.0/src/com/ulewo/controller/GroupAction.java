@@ -332,6 +332,46 @@ public class GroupAction {
 		return mv;
 	}
 
+	@RequestMapping(value = "/{gid}/attachedFile", method = RequestMethod.GET)
+	public ModelAndView queryAttachFile(@PathVariable String gid,
+			HttpSession session, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		ModelAndView mv = new ModelAndView();
+		try {
+			if (StringUtils.isEmpty(gid)) {
+				mv.setViewName("redirect:" + Constant.ERRORPAGE);
+				return mv;
+			}
+			Group group = groupService.queryGorup(gid);
+			if (null == group) {
+				mv.setViewName("redirect:" + Constant.ERRORPAGE);
+				return mv;
+			}
+			int page_int = 0;
+			String page = request.getParameter("page");
+			if (StringUtils.isNumber(page)) {
+				page_int = Integer.parseInt(page);
+			}
+
+			PaginationResult list = attachedFileService.attachedArticle(
+					page_int, Constant.pageSize25, gid);
+			mv.addObject("group", group);
+			mv.addObject("gid", gid);
+			mv.addObject("articles", list);
+			mv.setViewName("group/group_attache");
+		} catch (Exception e) {
+			e.printStackTrace();
+			String errorMethod = "queryAttachFile-->img()<br>";
+			ErrorReport report = new ErrorReport(errorMethod + e.getMessage());
+			Thread thread = new Thread(report);
+			// thread.start();
+			mv.setViewName("redirect:" + Constant.ERRORPAGE);
+			return mv;
+		}
+		return mv;
+	}
+
 	private void set2Square(List<Article> square1, List<Article> square2,
 			List<Article> square3, List<Article> square4,
 			List<Article> squareList) {

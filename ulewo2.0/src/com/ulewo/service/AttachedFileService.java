@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ulewo.entity.AttachedFile;
 import com.ulewo.enums.FileType;
+import com.ulewo.util.PaginationResult;
 
 /**
  * @Title:
@@ -17,11 +18,15 @@ public interface AttachedFileService {
 
 	public void deleteAttached(int articleId, FileType fileType);
 
-	public List<AttachedFile> queryAttachedbyArticleId(int articleId, FileType fileType);
+	public List<AttachedFile> queryAttachedbyArticleId(int articleId,
+			FileType fileType);
 
 	public void addAttachedPatch(List<AttachedFile> list);
 
 	public AttachedFile queryFileById(int id);
 
 	public void updateAttachedFile(AttachedFile file);
+
+	public PaginationResult attachedArticle(int page, int pageSize, String gid);
+
 }

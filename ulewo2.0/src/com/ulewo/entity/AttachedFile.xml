@@ -9,7 +9,7 @@
 	
 	
 	<typeAlias alias="attached" type="com.ulewo.entity.AttachedFile" />
-	
+	<typeAlias alias="article" type="com.ulewo.entity.Article" />
 	<!-- 创建附件 -->
 	<insert id="addAttached" parameterClass="attached">
 		insert into attached_file(articleid,gid,filename,fileurl,filetype,mark)
@@ -48,4 +48,14 @@
     	</isNotEmpty>
 		where id=#id#
 	</update>
+	
+	<!-- 查询附件 -->
+	<select id="attachedArticle" parameterClass="java.util.Map" resultClass="article">
+		select a.title,a.id,a.posttime from attached_file f inner join article a on a.id=f.articleid where f.gid = #gid#
+		order by a.posttime desc limit #offset#,#total#
+	</select>
+	
+	<select id="attachedArticleCount" parameterClass="java.lang.String" resultClass="java.lang.Integer">
+		select count(a.title) from attached_file f inner join article a on a.id=f.articleid where f.gid = #gid#
+	</select>
 </sqlMap>
