@@ -13,7 +13,7 @@ import com.ulewo.enums.FileType;
 public class AttachedFileDao extends BaseDao {
 
 	/**
-	 * 创建消息
+	 * 新增附件
 	 * 
 	 * @param member
 	 * @throws Exception
@@ -24,7 +24,7 @@ public class AttachedFileDao extends BaseDao {
 	}
 
 	/**
-	 * 删除消息
+	 * 删除附件
 	 * 
 	 * @param id
 	 */
@@ -33,7 +33,8 @@ public class AttachedFileDao extends BaseDao {
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("articleId", articleId);
 		parmMap.put("fileType", fileType.getValue());
-		this.getSqlMapClientTemplate().delete("attachedFile.deleteAttached", parmMap);
+		this.getSqlMapClientTemplate().delete("attachedFile.deleteAttached",
+				parmMap);
 	}
 
 	/***
@@ -42,21 +43,26 @@ public class AttachedFileDao extends BaseDao {
 	 * @param fileType
 	 * @return
 	 */
-	public List<AttachedFile> queryAttachedbyArticleId(int articleId, FileType fileType) {
+	public List<AttachedFile> queryAttachedbyArticleId(int articleId,
+			FileType fileType) {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
 		parmMap.put("articleId", articleId);
 		parmMap.put("fileType", fileType.getValue());
-		return this.getSqlMapClientTemplate().queryForList("attachedFile.queryAttachedbyArticleId", parmMap);
+		return this.getSqlMapClientTemplate().queryForList(
+				"attachedFile.queryAttachedbyArticleId", parmMap);
 	}
 
 	public AttachedFile queryFileById(int id) {
 
-		return (AttachedFile) this.getSqlMapClientTemplate().queryForObject("attachedFile.queryAttachedbyId", id);
+		return (AttachedFile) this.getSqlMapClientTemplate().queryForObject(
+				"attachedFile.queryAttachedbyId", id);
 	}
 
 	public void updateAttachedFile(AttachedFile file) {
 
-		this.getSqlMapClientTemplate().update("attachedFile.updateAttached", file);
+		this.getSqlMapClientTemplate().update("attachedFile.updateAttached",
+				file);
 	}
+
 }
