@@ -30,6 +30,7 @@
 				<ul class="group_tag">
 					<li><a href="${realPath}/group/${gid}" class="tag_select">讨&nbsp;&nbsp;论</a></li>
 					<li><a href="${realPath}/group/${gid}/img">图&nbsp;&nbsp;片</a></li>
+					<li><a href="${realPath}/group/${gid}/attachedFile">资&nbsp;&nbsp;源</a></li>
 					<li><a href="${realPath}/group/${gid}/member">成&nbsp;&nbsp;员</a></li>
 				</ul>
 				<ul class="group_item">

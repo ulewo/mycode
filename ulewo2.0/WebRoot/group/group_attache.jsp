@@ -7,10 +7,10 @@
 <head>
 <%@ include file="../common/path.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>${group.groupName} 成员-有乐窝</title>
+<title>${group.groupName} 资源-有乐窝</title>
 <meta name="description" content="${group.groupName}">
 <meta name="keywords" content="${group.groupName}">
-<link rel="stylesheet" type="text/css" href="${realPath}/css/group.member.css">
+<link rel="stylesheet" type="text/css" href="${realPath}/css/group.index.css">
 </head>
 <body>
 	<%@ include file="../common/head.jsp" %>
@@ -20,24 +20,31 @@
 			<ul class="group_tag">
 				<li><a href="${realPath}/group/${gid}">讨&nbsp;&nbsp;论</a></li>
 				<li><a href="${realPath}/group/${gid}/img">图&nbsp;&nbsp;片</a></li>
-				<li><a href="${realPath}/group/${gid}/attachedFile">资&nbsp;&nbsp;源</a></li>
-				<li><a href="${realPath}/group/${gid}/member" class="tag_select">成&nbsp;&nbsp;员</a></li>
+				<li><a href="${realPath}/group/${gid}/attachedFile" class="tag_select">资&nbsp;&nbsp;源</a></li>
+				<li><a href="${realPath}/group/${gid}/member">成&nbsp;&nbsp;员</a></li>
 			</ul>
-			<div class="member_con">
-				<c:forEach var="member" items="${result.list}">
-					<div class="member_item">
-						<div class="member_icon"><a href="${realPath}/user/${member.userId}"><img src="${realPath}/upload/${member.userIcon}"></a></div>
-						<div class="member_info">
-							<div class="member_name"><a href="${realPath}/user/${member.userId}">${member.userName}</a></div>
-							<div class="article_count">主题:<span>${member.topicCount}</span></div>
-							<div class="jointime">加入时间:<span>${member.joinTime}</span></div>
+			<div id="article_item_list" class="article_item_list" style="margin-top:20px;">
+			<c:forEach var="article" items="${articles.list}">
+				<div class="article_item">
+					<div class="article_tit">
+						<div class="article_title">
+							<a href="${realPath}/group/${gid}/topic/${article.id}">${article.title}</a>
+							<a href="${realPath}/group/${gid}/topic/${article.id}#attached" style="font-size:12px;color:red;margin-left:10px;">下载</a>
+							<div class="clear"></div>
 						</div>
+						<div class="article_author">
+							<span class="article_posttime">发表于 ${article.postTime}</span>
+						</div>
+						<div class="clear"></div>
 					</div>
-				</c:forEach>
-				<div class="clear"></div>
+				</div>
+			</c:forEach>
 			</div>
+			<c:if test="${empty articles.list}">
+					<div class="noinfo">没有任何附件！</div>
+			</c:if>
 			<div class="pagination">
-				<p:pager url="${realPath}/group/${gid}/member" page="${result.page}" pageTotal = "${result.pageTotal }"></p:pager>
+				<p:pager url="${realPath}/group/${gid}/attachedFile" page="${articles.page}" pageTotal = "${articles.pageTotal }"></p:pager>
 			</div>
 		</div>
 		<%@ include file="../common/foot.jsp" %>
@@ -46,11 +53,11 @@
 		<div><a href="javascript:void(0)" onclick="$('.righ_ad').hide()">关闭</a></div>
 		<div>
 		<script type="text/javascript">
-			/*右侧对联，创建于2013-7-10*/
+			/*160*600，创建于2013-7-10*/
 			var cpro_id = "u1317726";
 			</script>
 		<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
   		</div>
-  	</div>
+	</div>
 </body>
 </html>

@@ -7,7 +7,7 @@
 <head>
 <%@ include file="../common/path.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>${group.groupName}-有乐窝</title>
+<title>${group.groupName} 文章-有乐窝</title>
 <meta name="description" content="${group.groupName}">
 <meta name="keywords" content="${group.groupName}">
 <link rel="stylesheet" type="text/css" href="${realPath}/css/group.index.css">
@@ -36,6 +36,7 @@
 			<ul class="group_tag">
 				<li><a href="${realPath}/group/${gid}" class="tag_select">讨&nbsp;&nbsp;论</a></li>
 				<li><a href="${realPath}/group/${gid}/img">图&nbsp;&nbsp;片</a></li>
+				<li><a href="${realPath}/group/${gid}/attachedFile">资&nbsp;&nbsp;源</a></li>
 				<li><a href="${realPath}/group/${gid}/member">成&nbsp;&nbsp;员</a></li>
 			</ul>
 			<ul class="group_item">

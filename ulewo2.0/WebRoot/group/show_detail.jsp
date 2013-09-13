@@ -35,6 +35,7 @@ global.articleId= "${article.id}";
 			<ul class="group_tag">
 				<li><a href="${realPath}/group/${gid}" class="tag_select">讨&nbsp;&nbsp;论</a></li>
 				<li><a href="${realPath}/group/${gid}/img">图&nbsp;&nbsp;片</a></li>
+				<li><a href="${realPath}/group/${gid}/attachedFile">资&nbsp;&nbsp;源</a></li>
 				<li><a href="${realPath}/group/${gid}/member">成&nbsp;&nbsp;员</a></li>
 			</ul>
 			<ul class="group_item">
@@ -81,7 +82,9 @@ global.articleId= "${article.id}";
 				</div>
 				${article.content}
 				<div class="clear"></div>
+				<a name="attached"></a>
 			</div>
+			
 			<c:if test="${article.file!=''&&article.file!=null}">
 			<div class="article_attached">
 				<div class="attached_tit">附件</div>
