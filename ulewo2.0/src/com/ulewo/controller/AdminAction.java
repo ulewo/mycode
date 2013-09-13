@@ -75,7 +75,8 @@ public class AdminAction {
 	private static final int MAXWIDTH = 600;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public ModelAndView adminIndex(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView adminIndex(HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("admin/index");
@@ -83,7 +84,8 @@ public class AdminAction {
 	}
 
 	/**
-	 *分页加载文章
+	 * 分页加载文章
+	 * 
 	 * @param userName
 	 * @param session
 	 * @param request
@@ -91,7 +93,8 @@ public class AdminAction {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/loadArticle.action", method = RequestMethod.GET)
-	public Map<String, Object> loadArticle(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> loadArticle(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -104,8 +107,9 @@ public class AdminAction {
 			if (null != keyWord) {
 				keyWord = URLDecoder.decode(keyWord, "utf-8");
 			}
-			PaginationResult result = articleService.queryAllArticleByAdmin(page_int, Constant.pageSize25, keyWord);
-			//modelMap.put("result", "success");
+			PaginationResult result = articleService.queryAllArticleByAdmin(
+					page_int, Constant.pageSize25, keyWord);
+			// modelMap.put("result", "success");
 			modelMap.put("result", result);
 			return modelMap;
 		} catch (Exception e) {
@@ -116,7 +120,8 @@ public class AdminAction {
 	}
 
 	@RequestMapping(value = "/weekHot.action", method = RequestMethod.POST)
-	public ModelAndView weekHot(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView weekHot(HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
 
 		String[] ids = request.getParameterValues("ids");
 		List<Article> list = articleService.getArticleInIds(ids);
@@ -127,7 +132,8 @@ public class AdminAction {
 	}
 
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
-	public ModelAndView adminUser(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView adminUser(HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("admin/user");
@@ -136,13 +142,15 @@ public class AdminAction {
 
 	/**
 	 * 查询用户
+	 * 
 	 * @param session
 	 * @param request
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/loadUser.action", method = RequestMethod.GET)
-	public Map<String, Object> loadUser(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> loadUser(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -155,7 +163,8 @@ public class AdminAction {
 			if (null != userName) {
 				userName = URLDecoder.decode(userName, "utf-8");
 			}
-			PaginationResult result = userService.findAllUsers(userName, page_int, Constant.pageSize25);
+			PaginationResult result = userService.findAllUsers(userName,
+					page_int, Constant.pageSize25);
 			modelMap.put("result", result);
 			return modelMap;
 		} catch (Exception e) {
@@ -165,4 +174,71 @@ public class AdminAction {
 		}
 	}
 
+	/**
+	 * 吐槽
+	 * 
+	 * @param session
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/loadTalk.action", method = RequestMethod.GET)
+	public Map<String, Object> loadTalk(HttpSession session,
+			HttpServletRequest request) {
+
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			String page = request.getParameter("page");
+			int page_int = 1;
+			if (StringUtils.isNumber(page)) {
+				page_int = Integer.parseInt(page);
+			}
+			String keyWord = request.getParameter("q");
+			if (null != keyWord) {
+				keyWord = URLDecoder.decode(keyWord, "utf-8");
+			}
+			PaginationResult result = talkService.queryLatestTalkByPag(
+					page_int, Constant.pageSize25);
+			modelMap.put("result", result);
+			return modelMap;
+		} catch (Exception e) {
+			modelMap.put("result", "fail");
+			modelMap.put("message", "系统异常");
+			return modelMap;
+		}
+	}
+
+	/**
+	 * 博客
+	 * 
+	 * @param session
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/loadBlog.action", method = RequestMethod.GET)
+	public Map<String, Object> loadBlog(HttpSession session,
+			HttpServletRequest request) {
+
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			String page = request.getParameter("page");
+			int page_int = 1;
+			if (StringUtils.isNumber(page)) {
+				page_int = Integer.parseInt(page);
+			}
+			String keyWord = request.getParameter("q");
+			if (null != keyWord) {
+				keyWord = URLDecoder.decode(keyWord, "utf-8");
+			}
+			PaginationResult result = blogArticleService.queryLatestBlog(
+					page_int, Constant.pageSize25);
+			modelMap.put("result", result);
+			return modelMap;
+		} catch (Exception e) {
+			modelMap.put("result", "fail");
+			modelMap.put("message", "系统异常");
+			return modelMap;
+		}
+	}
 }
