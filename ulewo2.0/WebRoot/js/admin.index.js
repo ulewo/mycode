@@ -50,7 +50,7 @@ function ArticleItem(data){
 	var title = $("<div class='item_title'>" +
 			"<a href='"+global.realPath+"/group/"+data.gid+"/topic/"+data.id+"' target='_blank'>"+data.title+"</a>" +
 			"</div>").appendTo(this.item);
-	if(data.image!=""){
+	if(data.image!=""&&data.image!=null){
 		$("<img src='"+global.realPath+"/images/img.gif'>").appendTo(title);
 	}
 	$("<div class='item_time'>"+data.postTime+"</div>").appendTo(this.item);
