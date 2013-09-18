@@ -82,6 +82,7 @@ window.UEDITOR_HOME_URL = "${realPath}/ueditor/";
 								</div>
 							</div>
 							${blog.content}
+							<div class="clear"></div>
 						</div>
 				</div>
 			</div>
