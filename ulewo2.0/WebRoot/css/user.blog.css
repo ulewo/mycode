@@ -39,7 +39,7 @@
 .blogshade{left:5px;top:5px;height:125px;width:700px;}
 
 .reply_item{border-bottom:1px dashed #E5E5E5;padding:15px 0px}
-.reply_usericon{float:left;width:37px;border:1px solid #E5E5E5;padding:1px}
+.reply_usericon{float:left;width:35px;border:1px solid #E5E5E5;padding:1px}
 .reply_con_p{float:left;width:675px;margin-left:10px;}
 .reply_info{margin-top:5px;}
 .reply_time{display:inline-block;float:left;color:#909090}
