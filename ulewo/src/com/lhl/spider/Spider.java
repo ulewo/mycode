@@ -184,7 +184,7 @@ public class Spider {
 		HtmlCleaner htmlCleaner = new HtmlCleaner();
 		TagNode allNode = htmlCleaner.clean(html);
 		List<TagNode> objList = allNode.getElementListByAttValue("class",
-				"block untagged", true, true);
+				"block untagged mb15 bs2", true, true);
 		/*
 		 * 不用获取总页数，抓取的页数从前端传过来 // 总页数 TagNode pageNode =
 		 * allNode.findElementByAttValue("class", "pagebar", true, true);

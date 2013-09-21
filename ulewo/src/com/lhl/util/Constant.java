@@ -1,7 +1,6 @@
 package com.lhl.util;
 
-public class Constant
-{
+public class Constant {
 
 	public static String TYPE_DOWN = "D";
 
@@ -15,7 +14,7 @@ public class Constant
 
 	public static String DEFALT_NAME = "游客";
 
-	public static String DEFALT_AVATAR = "default.gif";
+	public static String DEFALT_AVATAR = "images/default.gif";
 
 	/** 后台管理操作方法 **/
 
