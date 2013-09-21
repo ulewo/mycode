@@ -8,6 +8,5 @@
 	<li class="blank" id="sel_left2"><a href="admin_rearticle.jsp">评论管理</a></li>
 	<li class="blank" id="sel_left3"><a href="admin_user.jsp">成员管理</a></li>
 	<li class="blank" id="sel_left3"><a href="admin_spider.jsp">爬虫管理</a></li>
-	<li class="blank" id="sel_left4"><a href="admin_mailspread.jsp">邮件推广</a></li>
 </ul>
 </div>

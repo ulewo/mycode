@@ -201,7 +201,7 @@ function addReArticle(id, obj) {
 }
 
 function ReArticle(reArticle, num) {
-	var avatar = GlobalVar.url + "upload/avatar/" + reArticle.avatar;
+	var avatar = GlobalVar.url + reArticle.avatar;
 	var uid = reArticle.uid;
 	var userName = reArticle.userName;
 	var content = reArticle.content;

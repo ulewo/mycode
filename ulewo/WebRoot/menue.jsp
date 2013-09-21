@@ -34,7 +34,7 @@ var realPath ="http://pic.ulewo.com/";
 			<li><a href="hot" class="sel3">热评</a></li>
 			<li><a href="pic" class="sel4">有图有真相</a></li>
 			<li><a href="addarticle.jsp" class="sel5">投稿</a></li>
-			<li><a href="http://blog.ulewo.com" class="sel6">站长博客</a></li>
+			<li><a href="http://ulewo.com" class="sel6">有乐窝</a></li>
 		</ul>
 		<div class="search">
 			<input type="text" name="searchKey" id="searchKey" onkeypress="subFormEnter()" value="${searchKey}">
