@@ -139,6 +139,8 @@ function loadPage(page){
 	loadReComment(global.articleId,page);
 }
 
+
+
 function loadReComment(articleId,page) {
 	var rePanel;
 	$.ajax({
@@ -176,6 +178,8 @@ function loadReComment(articleId,page) {
 				}else{
 					$("#pager").hide();
 				}
+				//根据回复定位回复位置
+				setPostion();
 				$(".outerHeight pre").each(function () {
 			        var $this = $(this);
 			        if ($this.attr("class")!=null&&$this.attr("class").indexOf("brush:") != -1) {
@@ -193,7 +197,16 @@ function loadReComment(articleId,page) {
 		}
 	});
 }
-
+//获取回复的位置
+function setPostion(){
+	var url = window.location.href;
+	var index_ = url.lastIndexOf("#");
+	if(index_!=-1){
+		var reId = url.substring(url.lastIndexOf("#")+1);
+		var top = $("a[name='re"+reId+"']").offset().top-50;
+		window.scrollTo(0,top);
+	}
+}
 function getPostion() {
 	var curUrl = window.location.href;
 	if (curUrl.lastIndexOf("#") != -1) {
