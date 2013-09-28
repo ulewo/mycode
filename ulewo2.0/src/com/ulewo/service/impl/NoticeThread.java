@@ -97,7 +97,7 @@ public class NoticeThread implements Runnable {
 		try {
 			Article article = articleDao.queryTopicById(articleId);
 			if (article != null) {
-			String url = Constant.WEBSTIE+"group/"+article.getGid()+"/topic/" + articleId ;
+			String url = Constant.WEBSTIE+"group/"+article.getGid()+"/topic/" + articleId+"#"+reId ;
 				String title = article.getTitle();
 				String noticeCon = "";
 				Notice notice = null;
