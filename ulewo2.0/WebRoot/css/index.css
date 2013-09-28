@@ -104,16 +104,16 @@ a.day_pic_link:hover{border:1px solid red;}
 #tody_festival{margin-top:5px}
 
 
-.remarkcon{width:200px;font-size:13px;margin-top:10px}
+.remarkcon{width:260px;font-size:13px;margin-top:10px}
 .remark{height:50px;}
-.remark_sig{width:110px;height:50px;float:left;background:url("../images/sign_box_bright_3b4c6ec0.png") 0px -50px no-repeat;height:50px;cursor:pointer}
+.remark_sig{width:144px;height:50px;float:left;background:url("../images/sign_box_bright_3b4c6ec0.png") 0px -50px no-repeat;height:50px;cursor:pointer}
 .remark_sig:hover{background:url("../images/sign_box_bright_3b4c6ec0.png") no-repeat;height:50px;}
-.remark_right_info{float:left;height:50px;width:90px;background:url("../images/sign_box_bright_3b4c6ec0.png") -112px 0px no-repeat;}
-.remark_info{float:right;width:80px;}
-.count_all{padding-top:7px;padding-left:20px;}
-.count_my{padding-top:7px;padding-left:20px;}
+.remark_right_info{float:left;height:50px;width:115px;background:url("../images/sign_box_bright_3b4c6ec0.png") -144px 0px no-repeat;}
+.remark_info{float:right;width:114px;}
+.count_all{padding-top:7px;padding-left:45px;}
+.count_my{padding-top:7px;padding-left:45px;}
 .remark_info a{text-decoration:underline;color:#005097}
-.remark_siged{width:110px;height:50px;float:left;background:url("../images/sign_box_bright_3b4c6ec0.png") 0px -100px no-repeat;height:50px;}
+.remark_siged{width:144px;height:50px;float:left;background:url("../images/sign_box_bright_3b4c6ec0.png") 0px -100px no-repeat;height:50px;}
 
 .remaktit{text-align:left;font-size:16px;color:#38A3DB;margin-top:10px;border-bottom:1px solid #38A3DB;padding:5px;}
 .mark_con{border:1px solid #B2B3B2;width:180px;float:left;height:64px;margin-left:10px;margin-top:10px;}

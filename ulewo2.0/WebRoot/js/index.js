@@ -22,7 +22,7 @@ $(function(){
 
 function setTodayInfo(){
 	$("#tody_time").html(YYMMDD()+"("+solarDay2()+")");
-	$("#tody_festival").html(weekday()+"&nbsp;&nbsp;"+solarDay3());
+	$("#tody_festival").html(weekday()+"&nbsp;&nbsp;<span style='color:#C00;font-weight:bold'>"+solarDay3()+"</span>");
 }
 
 function saveTalk(){
@@ -139,7 +139,7 @@ function haveReMark(isremark,mycount,allcount){
 						$("#count_all").html("<a href='allsgin.action' target='_blank'>"+(count_all+1)+"</a>");
 						$("#count_my").html("<a href='mysgin.action' target='_blank'>"+(count_my+1)+"</a>");
 						if(data.reward=="reward"){
-							tipsInfo("连续7天签到送20积分");
+							tipsInfo("连续7天签到送10积分");
 						}else{
 							tipsInfo("2分已到碗里");
 						}
