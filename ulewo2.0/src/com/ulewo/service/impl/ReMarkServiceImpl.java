@@ -86,7 +86,7 @@ public class ReMarkServiceImpl implements ReMarkService {
 
 	private void rewardMark(String userId) {
 		User user = userDao.findUser(userId, QueryUserType.USERID);
-		user.setMark(user.getMark() + Constant.ARTICLE_MARK20);
+		user.setMark(user.getMark() + Constant.ARTICLE_MARK8);
 		userDao.update(user);
 	}
 }

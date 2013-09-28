@@ -40,7 +40,7 @@ public class Constant {
 
 	public static int ARTICLE_MARK5 = 5;
 
-	public static int ARTICLE_MARK20 = 20;
+	public static int ARTICLE_MARK8 = 8;
 
 	public static int ARTICLE_MARK2 = 2;
 
