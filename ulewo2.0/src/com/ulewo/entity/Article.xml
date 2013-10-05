@@ -190,7 +190,9 @@
 	
 	<!-- 首页最新的文章 -->
 	<select id="queryLatestArticle" resultClass="article" parameterClass="java.util.Map">
-		select a.id,a.title,a.summary,a.authorid,a.allimage,a.posttime,a.gid,a.readnumber,g.groupname as groupName,g.groupIcon as groupIcon,u.username as authorName
+		select a.id,a.title,a.summary,a.authorid,a.allimage,a.posttime,a.gid,a.readnumber,
+		(select count(r.id) from rearticle r where r.articleid = a.id) as renumber,
+		g.groupname as groupName,g.groupIcon as groupIcon,u.username as authorName
 		from article a inner join groups g on a.gid=g.id inner join user u on u.userid=a.authorid order by posttime desc limit  #offset#,#total#
 	</select>
 	
