@@ -11,9 +11,6 @@
 <meta name="keywords" content="小窝窝 大世界 小智慧 大财富 — 有乐窝">
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="${realPath}/css/app.css">
-<script type="text/javascript">
-	
-</script>
 </head>
 <body>
 	 <%@ include file="common/head.jsp" %>
@@ -36,6 +33,8 @@
   			<img src="${realPath}/images/android_04.png">
   			<img src="${realPath}/images/android_05.png">
   			<img src="${realPath}/images/android_06.png">
+  			<img src="${realPath}/images/android_07.png">
+  			<img src="${realPath}/images/android_08.png">
   			<div class="clear"></div>
   		</div>
   	</div>

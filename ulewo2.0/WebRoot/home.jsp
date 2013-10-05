@@ -37,6 +37,7 @@
 			  
   			</div>
   			 -->
+  			
   			<div style="margin-top:10px;padding-left:-10px;overflow:hidden;">
 	  			<script type="text/javascript">
 				/*首页横幅，创建于2013-7-10*/
@@ -44,6 +45,7 @@
 				</script>
 				<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
 			</div>
+			
   			<div class="titinfo">最新文章</div>
   				<!-- 
 	  			<ul class="new_article_list">
@@ -61,12 +63,11 @@
 		  			 <div class="article_item">
 		  			 	<div class="group_icon"><a href="${realPath}/group/${article.gid}" onFocus="this.blur()" target="_blank" title="${article.groupName}"><img src="${realPath}/upload/${article.groupIcon}"></a></div>
 		  			 	<div class="article_con">
-		  			 		<div class="article_title">
-		  			 			<a href="${realPath}/group/${article.gid}" onFocus="this.blur()" class="group_name_link" target="_blank" title="${article.groupName}">${article.groupName}</a>
-		  			 		</div>
-		  			 		<div class="article_title">
-		  			 			<a href="${realPath}/group/${article.gid}/topic/${article.id}" onFocus="this.blur()" class="article_title_link"  title="${article.title}" target="_blank">${article.title}</a>
-		  			 		</div>
+	  			 			<div class="article_title_group"><a href="${realPath}/group/${article.gid}" onFocus="this.blur()" class="group_name_link" target="_blank" title="${article.groupName}">${article.groupName}</a></div>
+	  			 			<div class="article_title_tit">
+  			 					<a href="${realPath}/group/${article.gid}/topic/${article.id}" onFocus="this.blur()" class="article_title_link"  title="${article.title}" target="_blank">${article.title}</a>
+  			 					<span class="recount">${article.reNumber}/${article.readNumber}</span>
+  			 				</div>
 		  			 		<div class="article_summary">${article.summary}</div>
 		  			 		<div class="article_pic"></div>
 		  			 		<c:if test="${article.allImage!=''&&article.allImage!=null}">
