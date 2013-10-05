@@ -225,7 +225,7 @@ function RePanel(data) {
 	if (data.authorid != ""&&data.authorid !=null) {
 		this.ui_avatar = $("<div class='ui_avatar'><a href='"+global.realPath+"/user/"
 				+ data.authorid
-				+ "'><img src='"+ authorIcon+ "' width='30' border='0'></a></div>");
+				+ "'><img src='"+ authorIcon+ "' width='40' border='0'></a></div>");
 	}
 	this.ui_avatar.appendTo(this.outerHeight);
 	// 内容
@@ -290,7 +290,7 @@ function SubRePanel(data) {
 	$("<a name=re" + data.id + ">").appendTo(this.comment_sub);
 	this.ui_avatar = $(
 			"<div class='ui_avatar'><img src='"+global.realPath +"/upload/"+data.authorIcon
-					+ "' width='30'></div>").appendTo(this.comment_sub);
+					+ "' width='40'></div>").appendTo(this.comment_sub);
 	this.comments_content_sub = $("<div class='comments_content_sub'></div>")
 			.appendTo(this.comment_sub);
 	$("<div class='clear'></div>").appendTo(this.comment_sub);

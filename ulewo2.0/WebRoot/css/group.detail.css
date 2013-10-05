@@ -4,7 +4,7 @@
 /**��������***/
 .author_info{margin-top:10px}
 .author_icon{float:left;width:60px;}
-.author_icon img{width:60px;}
+.author_icon img{width:60px;border-radius:5px}
 .author_info_con{display:inline-block;margin-left:10px;width:910px;}
 .article_tit{margin-top:5px;}
 .article_tit_title{font-weight:bolder;font-size:20px;color:#494949}
@@ -26,7 +26,8 @@
 /********�ظ����б�**********/
 #recomment{text-align:left;}
 .outerHeight{margin-top:10px;border-bottom:1px dashed #E0E0E0;padding-top:5px;padding-bottom:5px;}
-.ui_avatar{float:left;width:30px;border:1px solid #9B9B9B}
+.ui_avatar{float:left;width:40px;}
+.ui_avatar img{border-radius:5px;}
 .reComent_Con{float:left;width:950px;margin-left:10px;}
 .comments_content a{color:#26709A;text-decoration:none;}
 .comment_content_word{line-height:20px;word-wrap:break-word;margin-top:5px;font-size:14px;}
@@ -41,7 +42,7 @@ a.com_op_link:hover{background:url("../images/plbg.png") 0px -93px no-repeat;}
 .com_sub_op_link{margin-left:5px;}
 .comtent_sub{margin-top:15px;}
 .comtent_sub a{text-decoration:none;}
-.comments_content_sub{float:left;width:908px;margin-left:10px;}
+.comments_content_sub{float:left;width:900px;margin-left:10px;}
 .recoment_form_panel{margin-top:5px;width:510px;position:relative;}
 .comment_form_at{height:20px;}
 .comment_form_at a{float:left;text-decoration:none;color:#3E79A2;background:#DDECF7;display:inline-block;padding:3px;border-radius: 4px;
