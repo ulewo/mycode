@@ -15,7 +15,7 @@
 		window.UEDITOR_HOME_URL = "${realPath}/ueditor/";
 	//-->
 </script>
-<script type="text/javascript" src="${realPath}/ueditor/editor_config_blog.js"></script>
+<script type="text/javascript" src="${realPath}/ueditor/editor_config.js"></script>
 <script type="text/javascript" src="${realPath}/ueditor/editor.js"></script>
 <script type="text/javascript" src="${realPath}/js/user.manage.newblog.js"></script>
 </head>
