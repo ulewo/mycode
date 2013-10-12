@@ -53,7 +53,7 @@
 		<div style="float:left;width:120px;"><a href="${realPath}"><img src="${realPath}/images/logo.png"></a></div>
 		<ul class="left">
 			<li><a href="${realPath}" class="selected1" onFocus="this.blur()">首&nbsp;页</a></li>
-			<li><a  href="${realPath}/group"  class="selected2" onFocus="this.blur()">窝&nbsp;窝</a></li>
+			<li><a  href="${realPath}/group/all"  class="selected2" onFocus="this.blur()">窝&nbsp;窝</a></li>
 			<li><a  href="${realPath}/blog"  class="selected3" onFocus="this.blur()">博&nbsp;客</a></li>
 			<li><a href="${realPath}/square" class="selected4" onFocus="this.blur()">广&nbsp;场</a></li>
 		</ul>

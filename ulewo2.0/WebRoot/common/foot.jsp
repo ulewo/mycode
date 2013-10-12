@@ -4,7 +4,7 @@
 <link rel="stylesheet"  href="${realPath}/css/foot.css" type="text/css"  />
 <div class="footArea">
 <div id="footlink">
-				<div class="space_host"><a href="http://www.86linux.com/?upid=2259">网站主机提供商</a></div>
+				<div class="space_host"><a href="http://www.fjjsp.com" target="_blank">网站主机提供商</a></div>
 				<ul>
 					<li style="margin-left:10px;"><a href="${realPath}">首页</a></li>
 					<li style="margin-left:10px;"><a href="${realPath}/group">窝窝</a></li>
