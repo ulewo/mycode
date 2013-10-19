@@ -15,8 +15,9 @@ window.UEDITOR_HOME_URL = "${realPath}/ueditor/";
 //-->
 </script>
 
-<script type="text/javascript" src="${realPath}/js/scripts/shCore.js"></script>
-<link type="text/css" rel="stylesheet" href="${realPath}/js/styles/SyntaxHighlighter.css"/>
+<script type="text/javascript" src="${realPath}/css/codehighlight/brush.js"></script>
+<link type="text/css" rel="stylesheet" href="${realPath}/css/codehighlight/shCore.css"/>
+<link type="text/css" rel="stylesheet" href="${realPath}/css/codehighlight/shThemeDefault.css"/>
 <link rel="stylesheet" type="text/css" href="${realPath}/css/user.blog.css">
 <link rel="stylesheet" type="text/css" href="${realPath}/css/talk.css">
 <script type="text/javascript" src="${realPath}/js/share.js"></script>
