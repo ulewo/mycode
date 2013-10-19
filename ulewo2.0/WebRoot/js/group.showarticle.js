@@ -37,15 +37,10 @@ $(function() {
 		});
 	});
 	lazyLoadImage("article_detail");
-	$(".article_detail pre").each(function () {
-        var $this = $(this);
-        if ($this.attr("class")!=null&&$this.attr("class").indexOf("brush:") != -1) {
-            var lang = $this.attr("class").split(';')[0].split(':')[1];
-            $this.attr('name', 'code');
-            $this.attr('class', lang);
-        }
-    });
-    dp.SyntaxHighlighter.HighlightAll('code');
+	//代码高亮
+	SyntaxHighlighter.config.clipboardSwf = global.realPath+"/css/codehighlight/clipboard.swf";
+	SyntaxHighlighter.all();
+    
 	loadPage(1);
 	checkFavorite(global.articleId,"A");
 	
@@ -180,20 +175,11 @@ function loadReComment(articleId,page) {
 				}
 				//根据回复定位回复位置
 				setPostion();
-				$(".outerHeight pre").each(function () {
-			        var $this = $(this);
-			        if ($this.attr("class")!=null&&$this.attr("class").indexOf("brush:") != -1) {
-			            var lang = $this.attr("class").split(';')[0].split(':')[1];
-			            $this.attr('name', 'precode');
-			            $this.attr('class', lang);
-			        }
-			    });
-			   dp.SyntaxHighlighter.HighlightAll('precode');
 				//uParse("div .outerHeight",s);
 			}else{
 				$("<div class='noinfo'>没有回复,赶紧抢沙发吧！</div>").appendTo($("#recomment"));
 			}
-			
+			SyntaxHighlighter.all();
 		}
 	});
 }
@@ -636,16 +622,6 @@ function submitForm(){
 				cancelAdd();
 				$(".noinfo").remove();
 				new RePanel(data.reArticle).asHtml().appendTo($("#recomment"));
-				$(".outerHeight pre").each(function () {
-			        var $this = $(this);
-			        if ($this.attr("class")!=null&&$this.attr("class").indexOf("brush:") != -1) {
-			            var lang = $this.attr("class").split(';')[0].split(':')[1];
-			            $this.attr('name', 'precode');
-			            $this.attr('class', lang);
-			        }
-			    });
-			   dp.SyntaxHighlighter.HighlightAll('precode');
-				
 				tipsInfo("2分已到碗里");
 			}
 		}
