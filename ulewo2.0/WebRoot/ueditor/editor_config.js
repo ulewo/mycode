@@ -387,8 +387,8 @@
 
         //highlightcode
         // 代码高亮时需要加载的第三方插件的路径
-        // ,highlightJsUrl:URL + "third-party/SyntaxHighlighter/shCore.js"
-        // ,highlightCssUrl:URL + "third-party/SyntaxHighlighter/shCoreDefault.css"
+         //,highlightJsUrl:global.realPath + "ueditor/third-party/SyntaxHighlighter/shCore.js"
+        // ,highlightCssUrl:global.realPath + "ueditor/third-party/SyntaxHighlighter/shCoreDefault.css"
 
         //tab
         //点击tab键时移动的距离,tabSize倍数，tabNode什么字符做为单位
