@@ -77,10 +77,8 @@ public class HomeAction {
 
 	private static final String TYPE_GROUP = "group";
 
-	private static final SimpleDateFormat format = new SimpleDateFormat(
-			"yyyy-MM-dd HH:mm:ss");
-	private static final SimpleDateFormat format2 = new SimpleDateFormat(
-			"yyyy-MM-dd");
+	private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private static final SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd");
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView login() {
@@ -114,10 +112,8 @@ public class HomeAction {
 
 		try {
 			List<Article> list = articleService.queryLatestArticle(0, 15);
-			List<BlogArticle> blogList = blogArticleService.indexLatestBlog(0,
-					20);
-			List<Group> groupList = (List<Group>) groupService
-					.queryGroupsOderArticleCount(0, 5).getList();
+			List<BlogArticle> blogList = blogArticleService.indexLatestBlog(0, 20);
+			List<Group> groupList = (List<Group>) groupService.queryGroupsOderArticleCount(0, 5).getList();
 			mv.addObject("list", list);
 			mv.addObject("blogList", blogList);
 			mv.addObject("groupList", groupList);
@@ -144,9 +140,7 @@ public class HomeAction {
 			if (StringUtils.isNumber(page)) {
 				page_int = Integer.parseInt(page);
 			}
-			PaginationResult result = articleService
-					.queryImageArticle2PagResult(null, page_int,
-							Constant.pageSize30);
+			PaginationResult result = articleService.queryImageArticle2PagResult(null, page_int, Constant.pageSize30);
 			List<Article> list = (List<Article>) result.getList();
 			List<Article> square1 = new ArrayList<Article>();
 			List<Article> square2 = new ArrayList<Article>();
@@ -171,8 +165,7 @@ public class HomeAction {
 		}
 	}
 
-	private void set2Square(List<Article> square1, List<Article> square2,
-			List<Article> square3, List<Article> square4,
+	private void set2Square(List<Article> square1, List<Article> square2, List<Article> square3, List<Article> square4,
 			List<Article> squareList) {
 
 		int num = 0;
@@ -209,8 +202,7 @@ public class HomeAction {
 			if (StringUtils.isNumber(page)) {
 				page_int = Integer.parseInt(page);
 			}
-			PaginationResult list = blogArticleService.queryLatestBlog(
-					page_int, Constant.pageSize25);
+			PaginationResult list = blogArticleService.queryLatestBlog(page_int, Constant.pageSize25);
 			mv.addObject("result", list);
 			mv.setViewName("blog");
 			return mv;
@@ -226,8 +218,7 @@ public class HomeAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/loadLatestTalk", method = RequestMethod.GET)
-	public Map<String, Object> loadTalk(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> loadTalk(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -247,13 +238,11 @@ public class HomeAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/loadGroupAndMember", method = RequestMethod.GET)
-	public Map<String, Object> loadGroupAndMember(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> loadGroupAndMember(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
-			PaginationResult groupResult = groupService
-					.queryGroupsOderArticleCount(1, Constant.pageSize15);
+			PaginationResult groupResult = groupService.queryGroupsOderArticleCount(1, Constant.pageSize15);
 			return modelMap;
 		} catch (Exception e) {
 			String errorMethod = "HomeAction-->loadGroupAndMember()<br>";
@@ -285,8 +274,7 @@ public class HomeAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/loadMoreTalk", method = RequestMethod.GET)
-	public Map<String, Object> loadMoreTalk(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> loadMoreTalk(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -295,8 +283,7 @@ public class HomeAction {
 			if (StringUtils.isNumber(page)) {
 				page_int = Integer.parseInt(page);
 			}
-			PaginationResult data = talkService.queryLatestTalkByPag(page_int,
-					Constant.pageSize30);
+			PaginationResult data = talkService.queryLatestTalkByPag(page_int, Constant.pageSize30);
 			modelMap.put("result", "success");
 			modelMap.put("list", data);
 			return modelMap;
@@ -331,8 +318,7 @@ public class HomeAction {
 	}
 
 	@RequestMapping(value = "/downloadApp", method = RequestMethod.GET)
-	public void downApp(HttpSession session, HttpServletRequest request,
-			HttpServletResponse response) {
+	public void downApp(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
 		InputStream in = null;
 		BufferedInputStream bf = null;
@@ -384,9 +370,8 @@ public class HomeAction {
 		}
 	}
 
-	@RequestMapping(value = "/app", method = RequestMethod.GET)
-	public ModelAndView fileupload(HttpSession session,
-			HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "/ulewoapp", method = RequestMethod.GET)
+	public ModelAndView fileupload(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("ulewoapp");
@@ -394,8 +379,7 @@ public class HomeAction {
 	}
 
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
-	public ModelAndView search(HttpSession session, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView search(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
@@ -411,11 +395,9 @@ public class HomeAction {
 			}
 			PaginationResult result = null;
 			if (TYPE_BLOG.equals(type)) {
-				result = blogArticleService.searchBlog2PageResult(keyword,
-						page_int, Constant.pageSize25, true);
+				result = blogArticleService.searchBlog2PageResult(keyword, page_int, Constant.pageSize25, true);
 			} else {
-				result = articleService.searchTopic2PageResult(keyword, null,
-						page_int, Constant.pageSize25, true);
+				result = articleService.searchTopic2PageResult(keyword, null, page_int, Constant.pageSize25, true);
 			}
 			mv.addObject("result", result);
 			mv.addObject("keyword", keyword);
@@ -433,8 +415,7 @@ public class HomeAction {
 	}
 
 	@RequestMapping(value = "/open_weibo", method = RequestMethod.GET)
-	public ModelAndView open_weibo(HttpSession session,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView open_weibo(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
 		String code = request.getParameter("code");
 		// 获取token
@@ -479,8 +460,7 @@ public class HomeAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/reMarkInfo", method = RequestMethod.GET)
-	public Map<String, Object> isReMark(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> isReMark(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		int myMarkCount = 0;
@@ -490,8 +470,7 @@ public class HomeAction {
 			if (null == obj) {
 				modelMap.put("isReMark", false);
 			} else {
-				String userId = ((SessionUser) session.getAttribute("user"))
-						.getUserId();
+				String userId = ((SessionUser) session.getAttribute("user")).getUserId();
 				boolean isReMark = reMarkService.isMark(userId, time);
 				myMarkCount = reMarkService.userMarkCount(userId);
 				modelMap.put("isReMark", isReMark);
@@ -515,8 +494,7 @@ public class HomeAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/reMark.action", method = RequestMethod.GET)
-	public Map<String, Object> reMark(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> reMark(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -573,8 +551,7 @@ public class HomeAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/myReMark.action", method = RequestMethod.GET)
-	public Map<String, Object> myReMark(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> myReMark(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -603,8 +580,7 @@ public class HomeAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/todayReMark.action", method = RequestMethod.GET)
-	public Map<String, Object> todayReMark(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> todayReMark(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
