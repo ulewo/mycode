@@ -57,7 +57,7 @@
 			<li><a  href="${realPath}/blog"  class="selected3" onFocus="this.blur()">博&nbsp;客</a></li>
 			<li><a href="${realPath}/square" class="selected4" onFocus="this.blur()">广&nbsp;场</a></li>
 		</ul>
-		<div class="head_app"><a href="${realPath}/app" target="_blank" title="android客户端"><img src="${realPath}/images/android.gif"></a></div>
+		<div class="head_app"><a href="${realPath}/ulewoapp" target="_blank" title="android客户端"><img src="${realPath}/images/android.gif"></a></div>
 		<ul class="head_right">
 			<c:choose>
 				<c:when test="${user==null}">

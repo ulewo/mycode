@@ -41,7 +41,7 @@ global.articleId= "${article.id}";
 			<ul class="group_item">
 				<li style="margin-left:2px;"><a href="${realPath}/group/${gid}" <c:if test="${article.itemId==0}">class="select"</c:if>>全部文章</a></li>
 				<c:forEach var="item" items="${itemList}">
-					<li><a href="${realPath}/group/${gid}?itemId=${item.id}" <c:if test="${article.itemId==item.id}">class="select"</c:if>>${item.itemName}</a></li>
+					<li><a href="${realPath}/group/${gid}/itemId/${item.id}" <c:if test="${article.itemId==item.id}">class="select"</c:if>>${item.itemName}</a></li>
 				</c:forEach>
 			</ul>
 			<div class="author_info">

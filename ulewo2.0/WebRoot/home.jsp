@@ -222,7 +222,7 @@
 	  			<div class='moretalk'><a href='${realPath}/talk'>看看大家都在吐槽什么&gt;&gt;</a></div>
   			</div>
   			 <div class="app_info">
-			  	 	<div><a href="${realPath}/app"><img src="${realPath}/images/androidappicon.png"></a></div>
+			  	 	<div><a href="${realPath}/ulewoapp"><img src="${realPath}/images/androidappicon.png"></a></div>
 			  	 	<div style="color:#666666">扫一扫下载有乐窝安卓客户端</div>
 			  	 	<div class="qq_qun">有乐窝交流群:<span style="color:#3E62A6">321576517</span></div>
 			 </div>

@@ -65,7 +65,7 @@
 			<a href="javascript:search()" class="head_search_btn">&nbsp;</a>
 			<div class="clear"></div>
 		</div>
-		<div class="head_app"><a href="${realPath}/app" target="_blank" title="android客户端"><img src="${realPath}/images/android.gif"></a></div>
+		<div class="head_app"><a href="${realPath}/ulewoapp" target="_blank" title="android客户端"><img src="${realPath}/images/android.gif"></a></div>
 		<ul class="head_right">
 			<c:choose>
 				<c:when test="${user==null}">
