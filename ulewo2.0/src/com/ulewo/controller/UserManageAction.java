@@ -266,12 +266,12 @@ public class UserManageAction {
 		ByteArrayOutputStream out = null;
 		OutputStream imgOut = null;
 		String imgType = "jpg";
-		if (tempimg != null && !"".equals(tempimg)) {
+		/*if (tempimg != null && !"".equals(tempimg)) {
 			int idx = tempimg.lastIndexOf(".");
 			if (idx >= 0) {
 				imgType = tempimg.substring(idx + 1);
 			}
-		}
+		}*/
 		String srcpath = session.getServletContext().getRealPath("/") + tempimg;
 		try {
 			BufferedImage img = ImageIO.read(new File(srcpath));
@@ -376,8 +376,7 @@ public class UserManageAction {
 				if (!StringUtils.isNumber(id)) {
 					modelMap.put("result", "fail");
 					modelMap.put("message", "参数错误");
-				}
-				else {
+				} else {
 					id_int = Integer.parseInt(id);
 				}
 
@@ -679,8 +678,7 @@ public class UserManageAction {
 			String userId = sessionUser.getUserId();
 			if (blogReplyService.delete(userId, id_int)) {
 				mv.setViewName("redirect:blog_reply");
-			}
-			else {
+			} else {
 				mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			}
 			return mv;
