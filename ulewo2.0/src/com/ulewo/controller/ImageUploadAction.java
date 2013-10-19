@@ -78,8 +78,8 @@ public class ImageUploadAction {
 			File fromFile = new File(filePath);
 			BufferedImage srcImage = ImageIO.read(fromFile);
 			int width = srcImage.getWidth();
-			if (fromFile.length() > MAX_FILE || width > MAXWIDTH) {
-				ScaleFilter filter = new ScaleFilter(MAXWIDTH,MAXWIDTH);
+			if ((fromFile.length() > MAX_FILE || width > MAXWIDTH) && !"gif".equalsIgnoreCase(suffix)) {
+				ScaleFilter filter = new ScaleFilter(MAXWIDTH, MAXWIDTH);
 				BufferedImage img = ImageIO.read(new File(filePath));
 				BufferedImage okImg = filter.filter(img, null);
 				ImageIO.write(okImg, suffix, new File(filePath));
@@ -144,7 +144,7 @@ public class ImageUploadAction {
 			multipartFile.transferTo(file);
 			BufferedImage srcImage = ImageIO.read(file);
 			int width = srcImage.getWidth();
-			if(width>MAXWIDTH){
+			if (width > MAXWIDTH) {
 				file.delete();
 				mv.addObject("result", "fail");
 				mv.addObject("message", "文件宽度不能超过600");
@@ -165,7 +165,7 @@ public class ImageUploadAction {
 			return mv;
 		}
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "/FileUpload", method = RequestMethod.POST)
 	public Map<String, Object> FileUpload(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
