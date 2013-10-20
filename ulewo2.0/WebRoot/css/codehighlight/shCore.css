@@ -28,7 +28,6 @@
  * along with SyntaxHighlighter.  If not, see <http://www.gnu.org/copyleft/lesser.html>.
  */
 .syntaxhighlighter,
-.syntaxhighlighter div,
 .syntaxhighlighter code,
 .syntaxhighlighter table,
 .syntaxhighlighter table td,
@@ -43,7 +42,7 @@
 	text-align: left !important;
 	float: none !important;
 	vertical-align: baseline !important;
-	position: static !important;
+	position: relative !important;
 	left: auto !important;
 	top: auto !important;
 	right: auto !important;
@@ -124,14 +123,23 @@
 	border-left: none !important;
 }
 
-.syntaxhighlighter .bar
+.syntaxhighlighter div.bar
 {
 	display: none !important;
+	height:35px;
+	width:120px;
+	position:absolute;
+	top:0px;
+	right:0px;
 }
 
-.syntaxhighlighter .bar.show 
+.syntaxhighlighter div.bar.show 
 {
 	display: block !important;
+	height:35px;
+	width:120px;
+	top:0px;
+	right:0px;
 }
 
 .syntaxhighlighter.collapsed .bar
@@ -155,12 +163,14 @@
 /* Styles for the toolbar */
 
 .syntaxhighlighter .toolbar
-{
+{/*
 	position: absolute !important;
 	right: 0px !important;
 	top: 0px !important;
 	font-size: 1px !important;
-	padding: 8px 8px 8px 0 !important; /* in px because images don't scale with ems */
+	padding: 8px 8px 8px 0 !important;  in px because images don't scale with ems */
+	padding:8px;
+	height:15px;
 }
 
 .syntaxhighlighter.collapsed .toolbar
