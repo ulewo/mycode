@@ -19,7 +19,7 @@
 <body>
 	<%@ include file="../common/head.jsp" %>
 	<div class="main">
-		<div class="goto_ulewo"><a href="">去有乐窝</a></div>
+		<div class="goto_ulewo"><a href="http://www.ulewo.com">去有乐窝</a></div>
 		<div class="weekhot">有乐窝一周精选</div>
 		<c:forEach var="article" items="${list}">
 			<div class="blogitem">
