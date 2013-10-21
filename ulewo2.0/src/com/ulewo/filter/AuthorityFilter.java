@@ -57,15 +57,12 @@ public class AuthorityFilter implements Filter {
 			return;
 		}
 
-		/*if (null == userObj && ("action".equals(type) || req_uri.contains("manage") || req_uri.contains("groupManage"))
-				|| req_uri.contains("admin")) {
+		if (null == userObj && ("action".equals(type) || req_uri.contains("manage") || req_uri.contains("groupManage"))
+				|| null == userObj && req_uri.contains("admin") || req_uri.contains("admin")
+				&& !((SessionUser) userObj).getUserId().equals("10000")) {
 			response.sendRedirect(Constant.ERRORPAGE);
 			return;
-		}//后台管理
-		else if (null != userObj && req_uri.contains("admin") && !((SessionUser) userObj).getUserId().equals("10000")) {
-			response.sendRedirect(Constant.ERRORPAGE);
-			return;
-		}*/
+		}
 		chain.doFilter(request, response);
 	}
 
@@ -103,8 +100,7 @@ public class AuthorityFilter implements Filter {
 		if (cookieMap.containsKey(name)) {
 			Cookie cookie = (Cookie) cookieMap.get(name);
 			return cookie;
-		}
-		else {
+		} else {
 			return null;
 		}
 	}
