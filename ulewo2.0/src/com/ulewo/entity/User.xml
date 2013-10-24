@@ -144,6 +144,11 @@
 		previsittime=#previsitTime#,isvalid=#isValid#,activationcode=#activationCode# where userid=#userId#
 	</update>
 	
+	<select id="selectUsersByMark" resultClass="user" parameterClass="java.util.Map">
+	    select userid,username,userlittleicon,mark,registertime,previsittime from user order by mark desc
+	    limit #offset#,#total#  
+	</select>
+	
 	<!--查询活跃成员  
 	<select id="queryActiveUser"  resultMap="result-user" parameterClass="java.util.Map">
 		select u.*,(select count(a.id) from article a where a.authorid = u.userid) as topcount from user u

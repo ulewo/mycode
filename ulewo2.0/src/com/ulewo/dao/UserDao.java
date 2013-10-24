@@ -81,7 +81,6 @@ public class UserDao extends BaseDao {
 	public List<User> findAllUsers(String userName, int offset, int total) {
 
 		Map<String, Object> parmMap = new HashMap<String, Object>();
-		parmMap.put("userName", userName);
 		parmMap.put("offset", offset);
 		parmMap.put("total", total);
 		return this.getSqlMapClientTemplate().queryForList("user.findAllUsers", parmMap);
@@ -92,4 +91,10 @@ public class UserDao extends BaseDao {
 		this.getSqlMapClientTemplate().update("user.updateUser", user);
 	}
 
+	public List<User> selectUsersByMark(int offset, int total){
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("offset", offset);
+		parmMap.put("total", total);
+		return this.getSqlMapClientTemplate().queryForList("user.selectUsersByMark", parmMap);
+	}
 }

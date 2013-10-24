@@ -191,4 +191,12 @@ public class UserServiceImpl implements UserService {
 		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
 		return result;
 	}
+	
+	public List<User> selectUsersByMark(int page, int pageSize) {
+		List<User> list = userDao.selectUsersByMark(page,pageSize);
+		for (User user : list) {
+			user.setRegisterTime(StringUtils.friendly_time(user.getRegisterTime()));
+		}
+		return list;
+	}
 }

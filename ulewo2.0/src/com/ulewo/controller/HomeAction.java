@@ -501,8 +501,9 @@ public class HomeAction {
 			SessionUser user = (SessionUser) session.getAttribute("user");
 			String userId = user.getUserId();
 			Date curDate = new Date();
-			String time = format.format(curDate);
-			boolean isReMark = reMarkService.isMark(userId, time);
+			String markTime = format.format(curDate);
+			String markDate = format2.format(curDate);
+			boolean isReMark = reMarkService.isMark(userId, markDate);
 			if (isReMark) {
 				modelMap.put("result", "fail");
 				modelMap.put("msg", "今天已经签到");
@@ -514,8 +515,8 @@ public class HomeAction {
 			remark.setUserId(userId);
 			remark.setUserName(userName);
 			remark.setUserIcon(userIcon);
-			remark.setMarkTime(time);
-			remark.setMarkDate(format.format(curDate));
+			remark.setMarkTime(markTime);
+			remark.setMarkDate(markDate);
 			reMarkService.addReMark(remark);
 			// 判断是否是连续7天签到，然后送积分
 			if (reMarkService.isContinuationMark(userId)) {
@@ -598,6 +599,32 @@ public class HomeAction {
 			return modelMap;
 		} catch (Exception e) {
 			String errorMethod = "isReMark-->loadMoreTalk()<br>";
+			// ErrorReport report = new ErrorReport(errorMethod +
+			// e.getMessage());
+			// Thread thread = new Thread(report);
+			// thread.start();
+			modelMap.put("result", "fail");
+			return modelMap;
+		}
+	}
+	
+	@RequestMapping(value = "/userMarks", method = RequestMethod.GET)
+	public ModelAndView userMarks() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("usermarks");
+		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/selectUsersByMark", method = RequestMethod.GET)
+	public Map<String, Object> selectUsersByMark(HttpSession session, HttpServletRequest request) {
+
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			modelMap.put("result", "success");
+			modelMap.put("list",userService.selectUsersByMark(0, Constant.pageSize50));
+			return modelMap;
+		} catch (Exception e) {
 			// ErrorReport report = new ErrorReport(errorMethod +
 			// e.getMessage());
 			// Thread thread = new Thread(report);

@@ -33,6 +33,7 @@ import com.ulewo.util.StringUtils;
 @Controller
 @RequestMapping("/admin")
 public class AdminAction {
+	//这里采用注解的方式，获取servicebean
 	@Autowired
 	private UserService userService;
 

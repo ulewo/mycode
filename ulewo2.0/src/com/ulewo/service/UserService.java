@@ -1,5 +1,6 @@
 package com.ulewo.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.ulewo.entity.User;
@@ -72,4 +73,6 @@ public interface UserService {
 	public User WeiBoRegister(weibo4j.model.User user);
 
 	public PaginationResult findAllUsers(String userName, int page, int pageSize);
+	
+	public List<User> selectUsersByMark(int page, int pageSize);
 }
