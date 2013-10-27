@@ -1,8 +1,6 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<link rel="shortcut icon" type="image/x-icon" href="${realPath}/images/favicon.ico">
-<script type="text/javascript" src="${realPath}/js/common.head.js"></script>
 <!-- 
 <div class="head_top" style="display:none;"> 
 	<div class="head_logo">
