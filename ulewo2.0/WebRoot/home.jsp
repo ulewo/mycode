@@ -101,6 +101,9 @@
   				</div>
   				<div class="clear"></div>
   			</div>
+  			<div class="tuhao">
+  				<a href="userMarks" target="_blank">有乐窝土豪排行榜TOP50</a>
+  			</div>
   			<div class="remarkcon" id="remarkcon">
 				
 			</div>
