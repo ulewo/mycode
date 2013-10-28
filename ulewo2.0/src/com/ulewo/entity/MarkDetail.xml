@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="remark">
+	<cacheModel id="user-cache" type="LRU" readOnly="true"
+		serialize="false">
+		<flushInterval hours="24" />
+		<property value="500" name="size" />
+	</cacheModel>
+	
+	
+	<typeAlias alias="markInfo" type="com.ulewo.entity.MarkInfo" />
+	
+	<insert id="add" parameterClass="markInfo">
+        insert into mark_info(userid,leftmark,opmark,optype,opcontent,optime) 
+		values(#userId#,#leftMark#,#opMark#,#opType#,#opContent#,#opTime#)
+	</insert>
+	
+	<select id="select" parameterClass="">
+		select userid,leftmark,opmark,optype,opcontent,optime from 
+		mark_info m inner join user u on u.userid = m.userid
+		where userid=#{userId}
+	</select>
+</sqlMap>
+
+
+<!--
+DROP TABLE IF EXISTS `mark_detail`;
+CREATE TABLE `mark_detail` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `userid` varchar(50) DEFAULT NULL,
+  `leftmark` int(11) DEFAULT NULL,
+  `opmark` int(11) DEFAULT NULL,
+  `optype` varchar(1) DEFAULT NULL COMMENT '0:入账 1:出账',
+  `opcontent` varchar(500) DEFAULT NULL,
+  `optime` datetime DEFAULT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-->
