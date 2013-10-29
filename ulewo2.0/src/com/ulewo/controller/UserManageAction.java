@@ -812,7 +812,8 @@ public class UserManageAction {
 				return modelMap;
 			}
 			String userId = ((SessionUser) session.getAttribute("user")).getUserId();
-			PaginationResult data = favoriteService.queryFavoriteByUserIdInPage(userId, type, page_int, 2);
+			PaginationResult data = favoriteService.queryFavoriteByUserIdInPage(userId, type, page_int,
+					Constant.pageSize20);
 			modelMap.put("data", data);
 			modelMap.put("result", "success");
 			return modelMap;
