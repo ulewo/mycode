@@ -16,6 +16,7 @@
 #op_favorite a{color:#AA0000;}
 #op_favorite span{color:#666666}
 .article_detail{margin-top:10px;font-size:14px;line-height:25px;word-wrap:break-word;}
+.article_detail img,.comment_content_word img{max-width:1000px;cursor: url(../images/magplus.gif), pointer;}  
 .article_attached{border:1px solid #B2B3B2;padding:5px;margin-top:30px;}
 .attached_tit{font-size:16px;font-weight:bold;}
 .attached_con{margin-top:10px;}

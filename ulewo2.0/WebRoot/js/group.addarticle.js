@@ -20,7 +20,7 @@ function showAddForm(){
 	if(editor==null){
 		var width = $("#add_article").outerWidth(true);
 		window.UEDITOR_CONFIG.initialFrameWidth = parseInt(width-20);
-		window.UEDITOR_CONFIG.maxImageSideLength = 900;//图片最大宽度
+		window.UEDITOR_CONFIG.maxImageSideLength = 5000;//图片最大宽度
 		editor = new UE.ui.Editor();
 		editor.render("editor");
 	}

@@ -57,6 +57,11 @@ $(function() {
 	$("#attachedUser").click(function(event){
 		event.stopPropagation();
 	});
+
+	$(".article_detail img,.comment_content_word img").live("click",function(){
+		var imgsrc = $(this).attr("src");
+		window.open(imgsrc);
+	});
 });
 
 /** *************插入表情*************** */
@@ -579,6 +584,7 @@ function showAddForm(){
 	if(editor==null){
 		var width = $("#add_article").outerWidth(true);
 		window.UEDITOR_CONFIG.initialFrameWidth = parseInt(width-20);
+		window.UEDITOR_CONFIG.maxImageSideLength = 5000;//图片最大宽度
 		editor = new UE.ui.Editor();
 		editor.render("editor");
 	}

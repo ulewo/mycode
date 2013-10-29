@@ -55,6 +55,10 @@ $("#sendBtn").bind("click",subReply);
 	SyntaxHighlighter.config.clipboardSwf = global.realPath+"/css/codehighlight/clipboard.swf";
 	SyntaxHighlighter.all();
 	initReply(1);
+	$(".blog_content img").live("click",function(){
+		var imgsrc = $(this).attr("src");
+		window.open(imgsrc);
+	});
 });
 
 function showEmotion() {
