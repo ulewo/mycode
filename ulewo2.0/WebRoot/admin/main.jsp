@@ -4,17 +4,17 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>有乐窝后台管理系统</title>
 <%@ include file="common.jsp" %>
 <link rel="stylesheet" type="text/css" href="../css/admin.main.css">
 <script type="text/javascript" src="../js/admin.main.js"></script>
 </head>
 <body class="easyui-layout">
-	<div data-options="region:'north',border:false" style="height:60px;padding:10px">
+	<div data-options="region:'north',border:false" style="height:45px;padding:10px;font-size:18px;">
 		有乐窝后台管理系统欢迎你！
 	</div>
 	<div data-options="region:'west',split:true,title:'主菜单',split:false" style="width:200px;">
-		<div id="menue" class="easyui-accordion"  style="width:198px;height:auto;">  
+		<div id="menue" class="easyui-accordion"  style="width:198px;height:auto;border:0px;">  
 		   <!-- 
 		    <div title="吐槽管理" style="padding-bottom:5px;">  
 		       <ul id="tt0" class="easyui-tree">  
@@ -106,9 +106,9 @@
 		     -->
 	    </div> 
 	</div>
-	<div data-options="region:'center'" style="width:600px;">
+	<div data-options="region:'center'" style="border:0px;">
 		<div class="easyui-tabs" id="centerTab" fit="true" border="false">  
-            <div title="欢迎页" style="padding:20px;overflow:hidden;">   
+            <div title="欢迎页" >   
                 <div style="margin-top:20px;">  
                     <h3>你好，欢迎来到有乐窝管理系统</h3>  
                 </div>  

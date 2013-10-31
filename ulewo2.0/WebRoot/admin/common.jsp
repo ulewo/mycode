@@ -6,11 +6,16 @@ String port = request.getServerPort() == 80 ? "" : ":"+request.getServerPort();
 String realPath = "http://" + request.getServerName() + port + request.getContextPath(); 
 %>
 <c:set var="realPath" value="<%=realPath %>"/>
-<link rel="stylesheet" type="text/css" href="../css/easyuithemes/bootstrap/easyui.css">
+<link rel="stylesheet" type="text/css" href="../css/easyuithemes/gray/easyui.css">
 <link rel="stylesheet" type="text/css" href="../css/easyuithemes/icon.css">
 <script type="text/javascript" src="../js/jquery.min.js"></script>
 <script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="../js/easyui-lang-zh_CN.js"></script>
+<style>
+<!--
+body{margin:0px;padding:0px;}
+-->
+</style>
 <script type="text/javascript">
 var global={};
 global.realPath="${realPath}";

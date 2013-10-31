@@ -52,7 +52,7 @@ article.deleteArticle = function(){
 				success : function(data) {
 					if(data.result=='success'){
 	        			 $.messager.alert('提示','删除成功!','info');
-						 article.loadData();
+						 $('#dataGrid').datagrid('reload');
 	        		 }else{
 	        			 $.messager.alert('提示','删除失败,请联系管理员!','error');
 	        		 }

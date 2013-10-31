@@ -116,7 +116,7 @@ $(function(){
 					//如果不存在，那么就添加一个标签
 					centerTab.tabs('add',{   
 					    title:node.text,   
-					    content:'<iframe scrolling="no" frameborder="0" class="myframe" src='+node.attributes.url+'></iframe>',   
+					    content:'<iframe frameborder="0" class="myframe" src='+node.attributes.url+'></iframe>',   
 					    closable:true 
 					});
 				}

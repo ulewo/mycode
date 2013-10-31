@@ -13,17 +13,27 @@ user.loadData = function(){
     	loadMsg:'请稍等,正在加载...', 
     	toolbar:"#searchForm",
 	    columns:[[ 
-	    	{field:' ',checkbox:true},  
-	    	{field:'userId',title:'用户ID'},  
+	    	{field:' ',checkbox:true},
+	    	{field:'userId',title:'用户ID'}, 
+	    	{field:'userLittleIcon',title:'头像',formatter:function(value,row,index){
+	    		return "<img width=20 src='"+global.realPath+"/upload/"+value+"'/>";
+	    	}},
 	        {field:'userName',title:'用户名',width:200},   
 	        {field:'registerTime',title:'注册时间',width:100},  
 	        {field:'previsitTime',title:'最后登录时间',width:100}
 	       ]],
 	    onClickRow:function(rowIndex, rowData){
-			window.open('../user/'+rowData.userid);
+			window.open('../user/'+rowData.userId);
 	    }
 	});
 };
+
+$(window).resize(function(){
+	$('#dataGrid').datagrid('resize', {
+		width:function(){return document.body.clientWidth;},
+		height:function(){return document.body.clientHeight;},
+	});
+});
 
 user.deleteUser = function(){
 	var checkedRows = $("#dataGrid").datagrid("getChecked");// 获取所有勾选checkbox的行
@@ -50,7 +60,7 @@ user.deleteUser = function(){
 				success : function(data) {
 					if(data.result=='success'){
 	        			 $.messager.alert('提示','删除成功!','info');
-						 user.loadData();
+	        			 $('#dataGrid').datagrid('reload');
 	        		 }else{
 	        			 $.messager.alert('提示','删除失败,请联系管理员!','error');
 	        		 }

@@ -14,7 +14,7 @@
 		<tr>
 			<td>标题:</td>
 			<td><input class="easyui-validatebox" style="width:100px" name="title"/></td>
-			<td>发帖人:</td>
+			<td>作者:</td>
 			<td><input class="easyui-validatebox" style="width:100px" name="userId"/></td>
 			<td>发帖时间:</td>
 			<td><input class="easyui-datebox" style="width:100px" name="userId"/></td>
@@ -24,8 +24,8 @@
 			<td><a id="clearBtn"  href="javascript:billiminstock.searchLocClear();" class="easyui-linkbutton" data-options="iconCls:'icon-remove'">清除</a></td>
 		</tr>
 		<tr>
-			<td><a href="javascript:void(0)" id="${item.id}" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="${item.action}" >删除</a></td>
-			<td colspan="9"><a href="javascript:void(0)" id="${item.id}" class="easyui-linkbutton" iconCls="icon-ok" plain="true" onclick="${item.action}" >推荐</a></td>
+			<td><a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="blog.deleteBlog()" >删除</a></td>
+			<td colspan="9"><a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" plain="true" onclick="${item.action}" >推荐</a></td>
 		</tr>
 	</table>
 </form>
