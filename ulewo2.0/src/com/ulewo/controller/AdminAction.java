@@ -26,7 +26,6 @@ import com.ulewo.service.ReTalkService;
 import com.ulewo.service.TalkService;
 import com.ulewo.service.UserFriendService;
 import com.ulewo.service.UserService;
-import com.ulewo.util.Constant;
 import com.ulewo.util.PaginationResult;
 import com.ulewo.util.StringUtils;
 
@@ -76,8 +75,7 @@ public class AdminAction {
 	private static final int MAXWIDTH = 600;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public ModelAndView adminIndex(HttpSession session,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView adminIndex(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("admin/index");
@@ -93,25 +91,37 @@ public class AdminAction {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/loadArticle.action", method = RequestMethod.GET)
-	public Map<String, Object> loadArticle(HttpSession session,
-			HttpServletRequest request) {
+	@RequestMapping(value = "/loadArticle.action", method = RequestMethod.POST)
+	public Map<String, Object> loadArticle(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
-			String page = request.getParameter("page");
-			int page_int = 1;
-			if (StringUtils.isNumber(page)) {
-				page_int = Integer.parseInt(page);
-			}
+			int page = StringUtils.isEmpty(request.getParameter("page")) ? 1 : Integer.parseInt(request
+					.getParameter("page"));
+			int pageSize = StringUtils.isEmpty(request.getParameter("rows")) ? 20 : Integer.parseInt(request
+					.getParameter("rows"));
 			String keyWord = request.getParameter("q");
 			if (null != keyWord) {
 				keyWord = URLDecoder.decode(keyWord, "utf-8");
 			}
-			PaginationResult result = articleService.queryAllArticleByAdmin(
-					page_int, Constant.pageSize25, keyWord);
-			// modelMap.put("result", "success");
-			modelMap.put("result", result);
+
+			PaginationResult result = articleService.queryAllArticleByAdmin(page, pageSize, keyWord);
+			modelMap.put("total", result.getCountTotal());
+			modelMap.put("rows", result.getList());
+			return modelMap;
+		} catch (Exception e) {
+			modelMap.put("result", "fail");
+			modelMap.put("message", "系统异常");
+			return modelMap;
+		}
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/deleteArticle.action", method = RequestMethod.POST)
+	public Map<String, Object> deleteArticle(String keyStr, HttpSession session, HttpServletRequest request) {
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			userService.deleteUserBatch(keyStr);
 			return modelMap;
 		} catch (Exception e) {
 			modelMap.put("result", "fail");
@@ -121,8 +131,7 @@ public class AdminAction {
 	}
 
 	@RequestMapping(value = "/weekHot.action", method = RequestMethod.POST)
-	public ModelAndView weekHot(HttpSession session,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView weekHot(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
 		String[] ids = request.getParameterValues("ids");
 		List<Article> list = articleService.getArticleInIds(ids);
@@ -133,8 +142,7 @@ public class AdminAction {
 	}
 
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
-	public ModelAndView adminUser(HttpSession session,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView adminUser(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("admin/user");
@@ -149,24 +157,37 @@ public class AdminAction {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/loadUser.action", method = RequestMethod.GET)
-	public Map<String, Object> loadUser(HttpSession session,
-			HttpServletRequest request) {
+	@RequestMapping(value = "/loadUser.action", method = RequestMethod.POST)
+	public Map<String, Object> loadUser(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
-			String page = request.getParameter("page");
-			int page_int = 1;
-			if (StringUtils.isNumber(page)) {
-				page_int = Integer.parseInt(page);
-			}
+			int page = StringUtils.isEmpty(request.getParameter("page")) ? 1 : Integer.parseInt(request
+					.getParameter("page"));
+			int pageSize = StringUtils.isEmpty(request.getParameter("rows")) ? 20 : Integer.parseInt(request
+					.getParameter("rows"));
 			String userName = request.getParameter("userName");
 			if (null != userName) {
 				userName = URLDecoder.decode(userName, "utf-8");
 			}
-			PaginationResult result = userService.findAllUsers(userName,
-					page_int, Constant.pageSize25);
-			modelMap.put("result", result);
+			PaginationResult result = userService.findAllUsers(userName, page, pageSize);
+			modelMap.put("total", result.getCountTotal());
+			modelMap.put("rows", result.getList());
+			return modelMap;
+		} catch (Exception e) {
+			modelMap.put("result", "fail");
+			modelMap.put("message", "系统异常");
+			return modelMap;
+		}
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/deleteUser.action", method = RequestMethod.POST)
+	public Map<String, Object> deleteUser(String keyStr, HttpSession session, HttpServletRequest request) {
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			userService.deleteUserBatch(keyStr);
+			modelMap.put("result", "success");
 			return modelMap;
 		} catch (Exception e) {
 			modelMap.put("result", "fail");
@@ -183,24 +204,36 @@ public class AdminAction {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/loadTalk.action", method = RequestMethod.GET)
-	public Map<String, Object> loadTalk(HttpSession session,
-			HttpServletRequest request) {
+	@RequestMapping(value = "/loadTalk.action", method = RequestMethod.POST)
+	public Map<String, Object> loadTalk(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
-			String page = request.getParameter("page");
-			int page_int = 1;
-			if (StringUtils.isNumber(page)) {
-				page_int = Integer.parseInt(page);
-			}
+			int page = StringUtils.isEmpty(request.getParameter("page")) ? 1 : Integer.parseInt(request
+					.getParameter("page"));
+			int pageSize = StringUtils.isEmpty(request.getParameter("rows")) ? 20 : Integer.parseInt(request
+					.getParameter("rows"));
 			String keyWord = request.getParameter("q");
 			if (null != keyWord) {
 				keyWord = URLDecoder.decode(keyWord, "utf-8");
 			}
-			PaginationResult result = talkService.queryLatestTalkByPag(
-					page_int, Constant.pageSize25);
-			modelMap.put("result", result);
+			PaginationResult result = talkService.queryLatestTalkByPag(page, pageSize);
+			modelMap.put("total", result.getCountTotal());
+			modelMap.put("rows", result.getList());
+			return modelMap;
+		} catch (Exception e) {
+			modelMap.put("result", "fail");
+			modelMap.put("message", "系统异常");
+			return modelMap;
+		}
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/deleteTalk.action", method = RequestMethod.POST)
+	public Map<String, Object> deleteTalk(String keyStr, HttpSession session, HttpServletRequest request) {
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			userService.deleteUserBatch(keyStr);
 			return modelMap;
 		} catch (Exception e) {
 			modelMap.put("result", "fail");
@@ -217,24 +250,22 @@ public class AdminAction {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/loadBlog.action", method = RequestMethod.GET)
-	public Map<String, Object> loadBlog(HttpSession session,
-			HttpServletRequest request) {
+	@RequestMapping(value = "/loadBlog.action", method = RequestMethod.POST)
+	public Map<String, Object> loadBlog(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
-			String page = request.getParameter("page");
-			int page_int = 1;
-			if (StringUtils.isNumber(page)) {
-				page_int = Integer.parseInt(page);
-			}
+			int page = StringUtils.isEmpty(request.getParameter("page")) ? 1 : Integer.parseInt(request
+					.getParameter("page"));
+			int pageSize = StringUtils.isEmpty(request.getParameter("rows")) ? 20 : Integer.parseInt(request
+					.getParameter("rows"));
 			String keyWord = request.getParameter("q");
 			if (null != keyWord) {
 				keyWord = URLDecoder.decode(keyWord, "utf-8");
 			}
-			PaginationResult result = blogArticleService.queryLatestBlog(
-					page_int, Constant.pageSize25);
-			modelMap.put("result", result);
+			PaginationResult result = blogArticleService.queryLatestBlog(page, pageSize);
+			modelMap.put("total", result.getCountTotal());
+			modelMap.put("rows", result.getList());
 			return modelMap;
 		} catch (Exception e) {
 			modelMap.put("result", "fail");

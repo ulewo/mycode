@@ -153,9 +153,19 @@ public class TalkServiceImpl implements TalkService {
 
 		if (null != sessionUser && ((SessionUser) sessionUser).getUserId().equals(userId)) {
 			return 0;
-		}
-		else {
+		} else {
 			return 1;
+		}
+	}
+
+	@Override
+	public void deleteTalkBatch(String keyStr) {
+		if (StringUtils.isEmpty(keyStr)) {
+			return;
+		}
+		String userIds[] = keyStr.split(",");
+		for (String userId : userIds) {
+			//TODO
 		}
 	}
 }

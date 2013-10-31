@@ -34,4 +34,6 @@ public interface TalkService {
 	public PaginationResult queryTalkByUserIdByPag(int page, int pageSize, String userId, Object sessionUser, int type);
 
 	public Talk queryDetail(int talkId);
+
+	public void deleteTalkBatch(String keyStr);
 }

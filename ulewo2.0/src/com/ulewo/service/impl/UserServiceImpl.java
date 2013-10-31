@@ -54,8 +54,17 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void deleteUser(String userId) {
 
-		// TODO Auto-generated method stub
+	}
 
+	@Override
+	public void deleteUserBatch(String keyStr) {
+		if (StringUtils.isEmpty(keyStr)) {
+			return;
+		}
+		String userIds[] = keyStr.split(",");
+		for (String userId : userIds) {
+			deleteUser(userId);
+		}
 	}
 
 	@Override
@@ -70,14 +79,12 @@ public class UserServiceImpl implements UserService {
 		User user = null;
 		if (value.contains("@")) {
 			user = userDao.findUser(value, QueryUserType.EMAIL);
-		}
-		else {
+		} else {
 			user = userDao.findUser(value, QueryUserType.USERNAME);
 		}
 		if (user != null && user.getPassword().equals(password)) {
 			return user;
-		}
-		else {
+		} else {
 			return null;
 		}
 	}
@@ -105,8 +112,7 @@ public class UserServiceImpl implements UserService {
 		String web = email.substring(start + 1, end);
 		if ("gmail".equalsIgnoreCase(web)) {
 			maillAdress = "http://www.gmail.com";
-		}
-		else {
+		} else {
 			maillAdress = "http://mail." + web + ".com";
 		}
 		return maillAdress;
@@ -148,21 +154,18 @@ public class UserServiceImpl implements UserService {
 		User user = null;
 		if (account.contains("@")) {
 			user = userDao.findUser(account, QueryUserType.EMAIL);
-		}
-		else {
+		} else {
 			user = userDao.findUser(account, QueryUserType.USERNAME);
 		}
 		if (null == user) {
 			modelMap.put("result", "fail");
 			modelMap.put("message", "用户不存在");
 			return modelMap;
-		}
-		else if (!user.getActivationCode().equals(activationCode)) {
+		} else if (!user.getActivationCode().equals(activationCode)) {
 			modelMap.put("result", "fail");
 			modelMap.put("message", "激活码不匹配");
 			return modelMap;
-		}
-		else {
+		} else {
 			user.setPassword(StringUtils.encodeByMD5(pwd));
 			userDao.update(user);
 			modelMap.put("result", "success");
@@ -191,9 +194,9 @@ public class UserServiceImpl implements UserService {
 		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
 		return result;
 	}
-	
+
 	public List<User> selectUsersByMark(int page, int pageSize) {
-		List<User> list = userDao.selectUsersByMark(page,pageSize);
+		List<User> list = userDao.selectUsersByMark(page, pageSize);
 		for (User user : list) {
 			user.setRegisterTime(StringUtils.friendly_time(user.getRegisterTime()));
 		}

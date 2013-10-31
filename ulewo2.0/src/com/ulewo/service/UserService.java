@@ -35,6 +35,12 @@ public interface UserService {
 	public void deleteUser(String userId);
 
 	/**
+	 * 批量删除用户
+	 * @param keyStr
+	 */
+	public void deleteUserBatch(String keyStr);
+
+	/**
 	 * 分页查询用户
 	 * @param value
 	 * @param type
@@ -73,6 +79,6 @@ public interface UserService {
 	public User WeiBoRegister(weibo4j.model.User user);
 
 	public PaginationResult findAllUsers(String userName, int page, int pageSize);
-	
+
 	public List<User> selectUsersByMark(int page, int pageSize);
 }
