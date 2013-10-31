@@ -52,4 +52,8 @@
 		</isEqual>
 	    order by createtime desc limit #offset#,#total#
 	</select>
+	
+	<delete id="deleteTalk" parameterClass="java.lang.Integer">
+		delete from talk where id=#id#
+	</delete>
 </sqlMap>

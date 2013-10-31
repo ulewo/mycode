@@ -454,4 +454,15 @@ public class ArticleServiceImpl implements ArticleService {
 		}
 		return list;
 	}
+	
+	@Override
+	public void deleteArticleBatch(String keyStr) {
+		if (StringUtils.isEmpty(keyStr)) {
+			return;
+		}
+		String ids[] = keyStr.split(",");
+		for (String id : ids) {
+			articleDao.deleteArticle(Integer.parseInt(id));
+		}
+	}
 }

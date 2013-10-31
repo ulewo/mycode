@@ -155,4 +155,7 @@
 		order by topcount desc limit #offset#,#total#  
 	</select>
 	-->
+	<delete id="deleteUser" parameterClass="java.lang.String">
+		delete from user where userid=#userId#
+	</delete>
 </sqlMap>

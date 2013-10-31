@@ -121,9 +121,11 @@ public class AdminAction {
 	public Map<String, Object> deleteArticle(String keyStr, HttpSession session, HttpServletRequest request) {
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
-			userService.deleteUserBatch(keyStr);
+			articleService.deleteArticleBatch(keyStr);
+			modelMap.put("result", "success");
 			return modelMap;
 		} catch (Exception e) {
+			e.printStackTrace();
 			modelMap.put("result", "fail");
 			modelMap.put("message", "系统异常");
 			return modelMap;
@@ -233,9 +235,11 @@ public class AdminAction {
 	public Map<String, Object> deleteTalk(String keyStr, HttpSession session, HttpServletRequest request) {
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
-			userService.deleteUserBatch(keyStr);
+			talkService.deleteTalkBatch(keyStr);
+			modelMap.put("result", "success");
 			return modelMap;
 		} catch (Exception e) {
+			e.printStackTrace();
 			modelMap.put("result", "fail");
 			modelMap.put("message", "系统异常");
 			return modelMap;
@@ -268,6 +272,22 @@ public class AdminAction {
 			modelMap.put("rows", result.getList());
 			return modelMap;
 		} catch (Exception e) {
+			modelMap.put("result", "fail");
+			modelMap.put("message", "系统异常");
+			return modelMap;
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/deleteBlog.action", method = RequestMethod.POST)
+	public Map<String, Object> deleteBlog(String keyStr, HttpSession session, HttpServletRequest request) {
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			blogArticleService.deleteBlogBatch(keyStr);
+			modelMap.put("result", "success");
+			return modelMap;
+		} catch (Exception e) {
+			e.printStackTrace();
 			modelMap.put("result", "fail");
 			modelMap.put("message", "系统异常");
 			return modelMap;

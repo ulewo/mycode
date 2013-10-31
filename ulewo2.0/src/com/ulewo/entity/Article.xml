@@ -23,6 +23,10 @@
         <iterate  conjunction=",">#[]#</iterate>) 
 	</delete> 
 	
+	<delete id="deleteArticle"> 
+       delete from article where id=#id#
+	</delete>
+	
 	<!-- 单笔查询文章-->
 	<select id="queryTopicById"  resultClass="article" parameterClass="java.lang.Integer">
 		select *,u.username authorName,(select count(r.id) from rearticle r where r.articleid=a.id) as reNumber from article a inner join user u on a.authorid = u.userid where id = #id#
@@ -80,10 +84,6 @@
 	<update id="updateLastReTime" parameterClass="java.util.Map">
 		update article set lastretime=#lastReTime# where id=#id#
 	</update>
-	
-	<delete id="deleteArticle" parameterClass="java.lang.Integer">
-		delete from article where id = #id#;	    
-	</delete>
 	
 	<!-- 根据gid,itemid查询主题总数 -->
 	<select id="queryTopicCountByGid"  resultClass="java.lang.Integer" parameterClass="java.util.Map">

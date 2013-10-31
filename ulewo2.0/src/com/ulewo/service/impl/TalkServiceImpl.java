@@ -163,9 +163,9 @@ public class TalkServiceImpl implements TalkService {
 		if (StringUtils.isEmpty(keyStr)) {
 			return;
 		}
-		String userIds[] = keyStr.split(",");
-		for (String userId : userIds) {
-			//TODO
+		String ids[] = keyStr.split(",");
+		for (String id : ids) {
+			talkDao.deleteTalk(Integer.parseInt(id));
 		}
 	}
 }

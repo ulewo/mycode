@@ -280,5 +280,4 @@ public class ArticleDao extends BaseDao {
 
 		return this.getSqlMapClientTemplate().queryForList("article.getArticleInIds", ids);
 	}
-
 }

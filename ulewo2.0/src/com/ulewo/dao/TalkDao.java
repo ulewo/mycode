@@ -67,4 +67,8 @@ public class TalkDao extends BaseDao {
 		parmMap.put("includeme", includeme);
 		return (Integer) this.getSqlMapClientTemplate().queryForObject("talk.queryCountByUserId", parmMap);
 	}
+	
+	public void deleteTalk(int id){
+		this.getSqlMapClientTemplate().delete("talk.deleteTalk",id);
+	}
 }

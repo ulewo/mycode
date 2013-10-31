@@ -126,6 +126,18 @@ public class BlogArticleServiceImpl implements BlogArticleService {
 		blogArticleDao.delete(id);
 
 	}
+	
+	@Override
+	public void deleteBlogBatch(String keyStr) {
+		if (StringUtils.isEmpty(keyStr)) {
+			return;
+		}
+		String ids[] = keyStr.split(",");
+		for (String id : ids) {
+			deleteArticle(Integer.parseInt(id));
+		}
+	}
+	
 
 	@Override
 	public List<BlogArticle> queryBlog(String userId, int itemId, int offset, int total, BlogOrderType blogOrderType) {

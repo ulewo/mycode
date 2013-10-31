@@ -156,4 +156,6 @@ public interface ArticleService {
 	 * @return
 	 */
 	public List<Article> getArticleInIds(String[] ids);
+	
+	public void deleteArticleBatch(String keyStr);
 }

@@ -97,4 +97,8 @@ public class UserDao extends BaseDao {
 		parmMap.put("total", total);
 		return this.getSqlMapClientTemplate().queryForList("user.selectUsersByMark", parmMap);
 	}
+	
+	public void deleteUser(String userId){
+		 this.getSqlMapClientTemplate().delete("user.deleteUser",userId);
+	}
 }

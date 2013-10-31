@@ -51,6 +51,8 @@ public interface BlogArticleService {
 	 * @author luohl
 	 */
 	public void deleteArticle(int id);
+	
+	public void deleteBlogBatch(String keyStr);
 
 	/**
 	 * 
