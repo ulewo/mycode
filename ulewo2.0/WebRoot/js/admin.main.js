@@ -8,10 +8,10 @@ admin.menue=[
 	    	   "text":"所有吐槽",
 	    	   "children": [{
 	    		   "text":"所有吐槽",
-	    		   "attributes":{"url":"http://www.ulewo.com"}  
+	    		   "attributes":{"url":"article.jsp"}  
 	   			},{
 	   				"text":"吐槽评论",
-	   				"attributes":{"url":"http://www.ulewo.com"} 
+	   				"attributes":{"url":"article.jsp"} 
 	   			}]
 	       }
 	   ]
@@ -23,7 +23,7 @@ admin.menue=[
 	    	   "text":"文章管理",
 	    	   "children": [{
 	    		   "text":"主题文章",
-	   				"attributes":{"url":"http://www.ulewo.com"} 
+	   				"attributes":{"url":"article.jsp"} 
 	   			},{
 	   				"text":"回复",
 	   				"attributes":{"url":"http://www.ulewo.com"} 
