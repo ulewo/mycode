@@ -1,11 +1,11 @@
-var user = {};
+var talk = {};
 $(function(){
-	user.loadData();
+	talk.loadData();
 });
 //初始化数据
-user.loadData = function(){
+talk.loadData = function(){
 	$('#dataGrid').datagrid({   
-    	url:global.realPath+'/admin/loadUser.action',
+    	url:global.realPath+'/admin/loadTalk.action',
     	method:'POST',
     	pagination:true, 
     	rownumbers:true,
@@ -13,19 +13,19 @@ user.loadData = function(){
     	loadMsg:'请稍等,正在加载...', 
     	toolbar:"#searchForm",
 	    columns:[[ 
-	    	{field:' ',checkbox:true},  
-	    	{field:'userId',title:'用户ID'},  
-	        {field:'userName',title:'用户名',width:200},   
-	        {field:'registerTime',title:'注册时间',width:100},  
-	        {field:'previsitTime',title:'最后登录时间',width:100}
-	       ]],
+	    	{field:'id',checkbox:true},  
+	        {field:'content',title:'标题',width:500}, 
+	        {field:'userId',title:'作者ID',width:100},  
+	        {field:'userName',title:'作者',width:100},  
+	        {field:'createTime',title:'发布时间',width:100}
+	    ]],
 	    onClickRow:function(rowIndex, rowData){
-			window.open('../user/'+rowData.userid);
+			window.open('../group/'+rowData.gid+'/topic/'+rowData.id);
 	    }
 	});
 };
 
-user.deleteUser = function(){
+talk.deleteTalk = function(){
 	var checkedRows = $("#dataGrid").datagrid("getChecked");// 获取所有勾选checkbox的行
 	if(checkedRows.length < 1){
 		$.messager.alert('提示','请选择要删除的记录!','info');
@@ -35,7 +35,7 @@ user.deleteUser = function(){
         if (r) {
         	var keyStr = [];
         	$.each(checkedRows, function(index, item){
-        		keyStr.push(item.userId);
+        		keyStr.push(item.id);
         	});               
         	var data={
         	    "keyStr":keyStr.join(",")
@@ -46,11 +46,11 @@ user.deleteUser = function(){
 				type : 'POST',
 				dataType : "json",
 				data : data,
-				url : global.realPath+"/admin/deleteUser.action",// 请求的action路径
+				url : global.realPath+"/admin/deleteTalk.action",// 请求的action路径
 				success : function(data) {
 					if(data.result=='success'){
 	        			 $.messager.alert('提示','删除成功!','info');
-						 user.loadData();
+						 article.loadData();
 	        		 }else{
 	        			 $.messager.alert('提示','删除失败,请联系管理员!','error');
 	        		 }
