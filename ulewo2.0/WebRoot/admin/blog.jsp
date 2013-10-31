@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>文章管理</title>
 <%@ include file="common.jsp" %>
-<script type="text/javascript" src="../js/admin.article.js"></script>
+<script type="text/javascript" src="../js/admin.blog.js"></script>
 </head>
 <body>
 <form id="searchForm" action="">
@@ -24,7 +24,7 @@
 			<td><a id="clearBtn"  href="javascript:billiminstock.searchLocClear();" class="easyui-linkbutton" data-options="iconCls:'icon-remove'">清除</a></td>
 		</tr>
 		<tr>
-			<td><a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="article.deleteArticle()" >删除</a></td>
+			<td><a href="javascript:void(0)" id="${item.id}" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="${item.action}" >删除</a></td>
 			<td colspan="9"><a href="javascript:void(0)" id="${item.id}" class="easyui-linkbutton" iconCls="icon-ok" plain="true" onclick="${item.action}" >推荐</a></td>
 		</tr>
 	</table>
