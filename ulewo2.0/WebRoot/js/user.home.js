@@ -178,7 +178,7 @@ function UserReTalkItem(talk){
 				+ "/images/emotions/" + emotion_data[emo] + "'>&nbsp;");
 	}
 	$('<div class="talk_content_p"><a href="'+global.realPath+'/user/'+talk.talkUserId+'">'+talk.talkUserName+'</a>:&nbsp;'+
-			talkcontent+'<a href="'+global.realPath+'/user/talk.talkUserId/talk/'+talk.talkId+'" target="_blank">详情</a></div>').appendTo(talk_con);
+			talkcontent+'<a href="'+global.realPath+'/user/'+talk.talkUserId+'"/talk/'+talk.talkId+'" target="_blank">详情</a></div>').appendTo(talk_con);
 	var Android = "";
 	if(talk.sourceFrom == "A"){
 		Android= "&nbsp;Android";
