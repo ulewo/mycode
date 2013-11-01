@@ -15,22 +15,13 @@
 						<span style="color:#737573">黑ICP备10007364号-1</span></div>
 			<div id="gototop"><a href="javascript:void(0)" onclick="window.scrollTo(0,0);" onfocus="this.blur()" title="回到顶部"></a></div>
 			<div id="foot_info">
-			
-			</div>
-		 <!--  
-				<script type="text/javascript" id="bdshare_js" data="type=slide&amp;img=0&amp;pos=right&amp;uid=0" ></script>
-				<script type="text/javascript" id="bdshell_js"></script>
 				<script type="text/javascript">
-				document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
-				</script>
-			
-			<div style="margin-top:15px;text-align:center;">
-				<script type="text/javascript">
-					var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-					document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F1535c97f8b589c71b7a6497eda7dac5f' type='text/javascript'%3E%3C/script%3E"));
-				</script>
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fe12cbd65c81a8a4ef386c05f7777f8f6' type='text/javascript'%3E%3C/script%3E"));
+</script>
+				
 			</div>
-			-->
+		 
 		
 </div>
 </div>
