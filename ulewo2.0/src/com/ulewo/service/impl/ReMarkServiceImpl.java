@@ -19,8 +19,7 @@ import com.ulewo.util.StringUtils;
 
 @Service("reMarkService")
 public class ReMarkServiceImpl implements ReMarkService {
-	private static final SimpleDateFormat format = new SimpleDateFormat(
-			"yyyy-MM-dd");
+	private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 	@Autowired
 	private ReMarkDao reMarkDao;
 
@@ -30,8 +29,7 @@ public class ReMarkServiceImpl implements ReMarkService {
 	@Override
 	public void addReMark(ReMark reMark) {
 		reMarkDao.addReMark(reMark);
-		User curUser = userDao.findUser(reMark.getUserId(),
-				QueryUserType.USERID);
+		User curUser = userDao.findUser(reMark.getUserId(), QueryUserType.USERID);
 		curUser.setMark(curUser.getMark() + Constant.ARTICLE_MARK2);
 		userDao.update(curUser);
 	}
@@ -73,7 +71,7 @@ public class ReMarkServiceImpl implements ReMarkService {
 	public boolean isContinuationMark(String userId) {
 		String endDate = format.format(new Date());
 		Calendar c = Calendar.getInstance();
-		c.add(Calendar.DAY_OF_MONTH, -7);
+		c.add(Calendar.DAY_OF_MONTH, -6);
 		Date date = c.getTime();
 		String startDate = format.format(date);
 		int count = reMarkDao.getCountBetweenTime(userId, startDate, endDate);
