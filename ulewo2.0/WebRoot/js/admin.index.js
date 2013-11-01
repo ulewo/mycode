@@ -19,7 +19,7 @@ function loadArticle(page,keyWord) {
 	$.ajax({
 		async : true,
 		cache : false,
-		type : 'GET',
+		type : 'POST',
 		dataType : "json",
 		url : global.realPath + "/admin/loadArticle2.action?page=" + page+"&q="+keyWord,// 请求的action路径
 		success : function(data) {
