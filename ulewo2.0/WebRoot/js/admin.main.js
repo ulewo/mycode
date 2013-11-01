@@ -11,7 +11,7 @@ admin.menue=[
 	    		   "attributes":{"url":"talk.jsp"}  
 	   			},{
 	   				"text":"吐槽评论",
-	   				"attributes":{"url":"article.jsp"} 
+	   				"attributes":{"url":"retalk.jsp"} 
 	   			}]
 	       }
 	   ]
@@ -26,7 +26,7 @@ admin.menue=[
 	   				"attributes":{"url":"article.jsp"} 
 	   			},{
 	   				"text":"回复",
-	   				"attributes":{"url":"http://www.ulewo.com"} 
+	   				"attributes":{"url":"rearticle.jsp"} 
 	   			}]
 	       }
 	   ]
@@ -41,7 +41,7 @@ admin.menue=[
 	   				"attributes":{"url":"blog.jsp"} 
 	   			},{
 	   				"text":"所有评论",
-	   				"attributes":{"url":"http://www.ulewo.com"} 
+	   				"attributes":{"url":"blogreply.jsp"} 
 	   			}]
 	       }
 	   ]
