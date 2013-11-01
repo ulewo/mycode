@@ -10,7 +10,6 @@ String realPath = "http://" + request.getServerName() + port + request.getContex
 <script src="${realPath}/js/util.js"></script>
 <script src="${realPath}/js/common.js"></script>
 <script src="${realPath}/js/emotion.data.js"></script>
-<script type="text/javascript" src="http://cbjs.baidu.com/js/m.js"></script>
 <link rel="shortcut icon" type="image/x-icon" href="${realPath}/images/favicon.ico">
 <script type="text/javascript" src="${realPath}/js/common.head.js"></script>
 <script type="text/javascript">
