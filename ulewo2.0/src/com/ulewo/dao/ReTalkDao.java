@@ -73,4 +73,24 @@ public class ReTalkDao extends BaseDao {
 		parmMap.put("includeme", includeme);
 		return (Integer) this.getSqlMapClientTemplate().queryForObject("retalk.queryReTalkCountByUserId", parmMap);
 	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public List<ReTalk> queryAllReTalk(int offset, int total) {
+
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("offset", offset);
+		parmMap.put("total", total);
+		return (List<ReTalk>) this.getSqlMapClientTemplate().queryForList("retalk.queryAllReTalk", parmMap);
+	}
+
+	/**
+	 * 查询数量
+	 * 
+	 * @return
+	 */
+	public int queryAllCount() {
+
+		return (Integer) this.getSqlMapClientTemplate().queryForObject("retalk.queryAllCount");
+	}
 }

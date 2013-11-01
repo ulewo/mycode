@@ -87,4 +87,24 @@ public class ReTalkServiceImpl implements ReTalkService {
 		reTalkDao.deleteReTalk(reTalkId);
 	}
 
+	
+	public PaginationResult queryAllReTalkByPag(int page, int pageSize) {
+		int count = reTalkDao.queryAllCount();
+		Pagination pagination = new Pagination(page, count, pageSize);
+		pagination.action();
+		List<ReTalk> list = reTalkDao.queryAllReTalk(pagination.getOffSet(), pageSize);
+		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
+		return result;
+	}
+	
+	@Override
+	public void deleteReTalkBatch(String keyStr) {
+		if (StringUtils.isEmpty(keyStr)) {
+			return;
+		}
+		String ids[] = keyStr.split(",");
+		for (String id : ids) {
+			deleteReTalk(Integer.parseInt(id));
+		}
+	}
 }

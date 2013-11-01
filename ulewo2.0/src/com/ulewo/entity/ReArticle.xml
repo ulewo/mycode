@@ -51,7 +51,7 @@
 		r.retime,atuserid,
 		(case when r.atuserid is not null then (select username from user us where us.userid=r.atuserid) else r.atusername end)as atUserName,
 		(case when r.atuserid is not null then  (select us.userLittleIcon from user us where us.userid=r.atuserid)  else '' end)as atUserIcon
-		from rearticle r left join user u on u.userid = r.authorid where articleid = #articleid# limit #offset#,#total#
+		from rearticle r left join user u on u.userid = r.authorid where articleid = #articleid#
 	</select>	
 	
 	<!-- 根据PID查询回复 -->
@@ -78,6 +78,17 @@
 		select count(*) from rearticle where gid = #gid#
 	</select>	
 	
+	<!-- 查询所有回复 -->
+	<select id="queryAllReArticle" resultClass="reArticle" parameterClass="java.util.Map">
+	    select r.id,r.pid,r.articleid,r.gid,r.content,r.authorid,r.sourcefrom,u.username as authorname,retime,
+	    u.userLittleIcon as authorIcon
+		from rearticle r inner join user u on u.userid = r.authorid
+		order by retime desc limit #offset#,#total#
+	</select>
+	
+	<select id="queryAllReArticleCount" resultClass="java.lang.Integer" parameterClass="java.lang.String">
+		select count(*) from rearticle
+	</select>	
 	
 	<!--根据userId查询回复的数量-->
 	<select id="queryReArticleCountByUserId"  resultClass="java.lang.Integer" parameterClass="java.util.Map">

@@ -32,7 +32,7 @@
 	
 	<!-- 删除回复 -->
 	<delete  id="delteReTalk" >
-		delete from retalk where retalkid =#retalkId#	    
+		delete from retalk where id =#retalkId#	    
 	</delete>
 	
 	<!-- 更具用户id查询吐槽回复 -->
@@ -50,6 +50,17 @@
 	   <isEqual prepend="or" property="includeme" compareValue="0">
          	userid in (select friendid from user_friend where userid = #userId#)
 		</isEqual>
+	</select>
+	
+	
+	<!-- 查询所有留言 -->
+	<select id="queryAllReTalk"  resultClass="retalk" parameterClass="java.util.Map">
+	    select r.*,u.username userName from retalk r inner join user u on u.userid=r.userid  order by createtime desc limit #offset#,#total#
+	</select>
+	
+	<!-- 查询留言总条数 -->
+	<select id="queryAllCount"  resultClass="java.lang.Integer">
+	    select count(1) from retalk r inner join user u on u.userid=r.userid
 	</select>
 	
 </sqlMap>

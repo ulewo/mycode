@@ -462,7 +462,12 @@ public class ArticleServiceImpl implements ArticleService {
 		}
 		String ids[] = keyStr.split(",");
 		for (String id : ids) {
+			Article article = articleDao.queryTopicById(Integer.parseInt(id));
+			User user = userDao.findUser(article.getAuthorId(),QueryUserType.USERID);
+			user.setMark(user.getMark()-Constant.ARTICLE_MARK5);
+			userDao.update(user);
 			articleDao.deleteArticle(Integer.parseInt(id));
 		}
+		
 	}
 }

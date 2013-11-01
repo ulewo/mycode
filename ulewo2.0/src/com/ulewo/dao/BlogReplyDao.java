@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.stereotype.Component;
 
 import com.ulewo.entity.BlogReply;
+import com.ulewo.entity.ReTalk;
 
 /**
  * @Title:
@@ -137,5 +138,34 @@ public class BlogReplyDao extends BaseDao {
 		parmMap.put("offset", offset);
 		parmMap.put("total", total);
 		return this.getSqlMapClientTemplate().queryForList("blogReply.queryReBlogByUserId", parmMap);
+	}
+	
+	public List<BlogReply> queryAllReBlog(int offset, int total) {
+
+		Map<String, Object> parmMap = new HashMap<String, Object>();
+		parmMap.put("offset", offset);
+		parmMap.put("total", total);
+		return (List<BlogReply>) this.getSqlMapClientTemplate().queryForList("blogReply.queryAllReBlog", parmMap);
+	}
+
+	/**
+	 * 查询数量
+	 * 
+	 * @return
+	 */
+	public int queryAllCount() {
+
+		return (Integer) this.getSqlMapClientTemplate().queryForObject("blogReply.queryAllCount");
+	}
+	
+	public boolean deleteById(int id) {
+
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("id", id);
+		int count = this.getSqlMapClientTemplate().delete("blogReply.deleteReplyById", paramMap);
+		if (count > 0) {
+			return true;
+		}
+		return false;
 	}
 }

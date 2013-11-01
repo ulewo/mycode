@@ -32,4 +32,8 @@ public interface ReTalkService {
 	public int queryReTalkCount(int talkId);
 
 	public void deleteReTalk(int reTalkId);
+	
+	public PaginationResult queryAllReTalkByPag(int page, int pageSize);
+	
+	public void deleteReTalkBatch(String keyStr);
 }

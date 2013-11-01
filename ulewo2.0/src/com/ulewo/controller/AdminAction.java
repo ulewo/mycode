@@ -22,6 +22,7 @@ import com.ulewo.service.BlogArticleService;
 import com.ulewo.service.BlogItemService;
 import com.ulewo.service.BlogReplyService;
 import com.ulewo.service.GroupService;
+import com.ulewo.service.ReArticleService;
 import com.ulewo.service.ReTalkService;
 import com.ulewo.service.TalkService;
 import com.ulewo.service.UserFriendService;
@@ -60,6 +61,9 @@ public class AdminAction {
 
 	@Autowired
 	private ArticleService articleService;
+	
+	@Autowired
+	private ReArticleService reArticleService;
 
 	private final static int MAXLENGTH = 250;
 
@@ -158,6 +162,48 @@ public class AdminAction {
 		}
 	}
 
+	@ResponseBody
+	@RequestMapping(value = "/loadReArticle.action", method = RequestMethod.POST)
+	public Map<String, Object> loadReArticle(HttpSession session, HttpServletRequest request) {
+
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			int page = StringUtils.isEmpty(request.getParameter("page")) ? 1 : Integer.parseInt(request
+					.getParameter("page"));
+			int pageSize = StringUtils.isEmpty(request.getParameter("rows")) ? 20 : Integer.parseInt(request
+					.getParameter("rows"));
+			String keyWord = request.getParameter("q");
+			if (null != keyWord) {
+				keyWord = URLDecoder.decode(keyWord, "utf-8");
+			}
+			PaginationResult result = reArticleService.queryAllReArticle(page, pageSize);
+			modelMap.put("total", result.getCountTotal());
+			modelMap.put("rows", result.getList());
+			return modelMap;
+		} catch (Exception e) {
+			e.printStackTrace();
+			modelMap.put("result", "fail");
+			modelMap.put("message", "系统异常");
+			return modelMap;
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/deleteReArticle.action", method = RequestMethod.POST)
+	public Map<String, Object> deleteReArticle(String keyStr, HttpSession session, HttpServletRequest request) {
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			reArticleService.deleteReArticleBatch(keyStr);
+			modelMap.put("result", "success");
+			return modelMap;
+		} catch (Exception e) {
+			e.printStackTrace();
+			modelMap.put("result", "fail");
+			modelMap.put("message", "系统异常");
+			return modelMap;
+		}
+	}
+	
 	@RequestMapping(value = "/weekHot.action", method = RequestMethod.POST)
 	public ModelAndView weekHot(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
@@ -271,6 +317,48 @@ public class AdminAction {
 			return modelMap;
 		}
 	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value = "/loadReTalk.action", method = RequestMethod.POST)
+	public Map<String, Object> loadReTalk(HttpSession session, HttpServletRequest request) {
+
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			int page = StringUtils.isEmpty(request.getParameter("page")) ? 1 : Integer.parseInt(request
+					.getParameter("page"));
+			int pageSize = StringUtils.isEmpty(request.getParameter("rows")) ? 20 : Integer.parseInt(request
+					.getParameter("rows"));
+			String keyWord = request.getParameter("q");
+			if (null != keyWord) {
+				keyWord = URLDecoder.decode(keyWord, "utf-8");
+			}
+			PaginationResult result = reTalkService.queryAllReTalkByPag(page, pageSize);
+			modelMap.put("total", result.getCountTotal());
+			modelMap.put("rows", result.getList());
+			return modelMap;
+		} catch (Exception e) {
+			modelMap.put("result", "fail");
+			modelMap.put("message", "系统异常");
+			return modelMap;
+		}
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/deleteReTalk.action", method = RequestMethod.POST)
+	public Map<String, Object> deleteReTalk(String keyStr, HttpSession session, HttpServletRequest request) {
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			reTalkService.deleteReTalkBatch(keyStr);
+			modelMap.put("result", "success");
+			return modelMap;
+		} catch (Exception e) {
+			e.printStackTrace();
+			modelMap.put("result", "fail");
+			modelMap.put("message", "系统异常");
+			return modelMap;
+		}
+	}
 
 	/**
 	 * 博客
@@ -310,6 +398,48 @@ public class AdminAction {
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			blogArticleService.deleteBlogBatch(keyStr);
+			modelMap.put("result", "success");
+			return modelMap;
+		} catch (Exception e) {
+			e.printStackTrace();
+			modelMap.put("result", "fail");
+			modelMap.put("message", "系统异常");
+			return modelMap;
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/loadReply.action", method = RequestMethod.POST)
+	public Map<String, Object> loadReply(HttpSession session, HttpServletRequest request) {
+
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			int page = StringUtils.isEmpty(request.getParameter("page")) ? 1 : Integer.parseInt(request
+					.getParameter("page"));
+			int pageSize = StringUtils.isEmpty(request.getParameter("rows")) ? 20 : Integer.parseInt(request
+					.getParameter("rows"));
+			String keyWord = request.getParameter("q");
+			if (null != keyWord) {
+				keyWord = URLDecoder.decode(keyWord, "utf-8");
+			}
+			PaginationResult result = blogReplyService.queryAllReplyByPag(page, pageSize);
+			modelMap.put("total", result.getCountTotal());
+			modelMap.put("rows", result.getList());
+			return modelMap;
+		} catch (Exception e) {
+			e.printStackTrace();
+			modelMap.put("result", "fail");
+			modelMap.put("message", "系统异常");
+			return modelMap;
+		}
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/deleteReply.action", method = RequestMethod.POST)
+	public Map<String, Object> deleteReply(String keyStr, HttpSession session, HttpServletRequest request) {
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			blogReplyService.deleteReplyBatch(keyStr);
 			modelMap.put("result", "success");
 			return modelMap;
 		} catch (Exception e) {

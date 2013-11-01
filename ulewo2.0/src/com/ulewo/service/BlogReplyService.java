@@ -60,5 +60,9 @@ public interface BlogReplyService {
 	 * @return
 	 */
 	public PaginationResult queryAllReply(String author, int page, int pageSize);
+	
+	public PaginationResult queryAllReplyByPag(int page, int pageSize);
+	
+	public void deleteReplyBatch(String keyStr);
 
 }

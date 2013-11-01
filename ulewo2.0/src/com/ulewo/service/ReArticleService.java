@@ -63,15 +63,6 @@ public interface ReArticleService {
 	 */
 	public void updateReArticle(ReArticle reArticle);
 
-	/**
-	 * 
-	 * description: 查询回复总条数
-	 * 
-	 * @param articleid
-	 * @return @
-	 * @author luohl
-	 */
-	public int queryReArticleCount(int articleid);
 
 	/**
 	 * 
@@ -96,5 +87,15 @@ public interface ReArticleService {
 	 */
 	public PaginationResult queryReArticleByGid(String gid, int page,
 			int pageSize);
+	
+	/**
+	 * 后台管理
+	 * @param page
+	 * @param pageSize
+	 * @return
+	 */
+	public PaginationResult queryAllReArticle(int page, int pageSize);
+	
+	public void deleteReArticleBatch(String keyStr);
 
 }

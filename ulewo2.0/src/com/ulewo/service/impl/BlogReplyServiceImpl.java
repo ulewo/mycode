@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 
 import com.ulewo.dao.BlogReplyDao;
 import com.ulewo.dao.UserDao;
+import com.ulewo.entity.BlogArticle;
 import com.ulewo.entity.BlogReply;
 import com.ulewo.entity.NoticeParam;
+import com.ulewo.entity.ReTalk;
 import com.ulewo.entity.User;
 import com.ulewo.enums.NoticeType;
 import com.ulewo.enums.QueryUserType;
@@ -92,7 +94,9 @@ public class BlogReplyServiceImpl implements BlogReplyService {
 
 	@Override
 	public boolean delete(String curUserId, int id) {
-
+		User user = userDao.findUser(curUserId,QueryUserType.USERID);
+		user.setMark(user.getMark()-Constant.ARTICLE_MARK2);
+		userDao.update(user);
 		return blogReplyDao.delete(id, curUserId);
 	}
 
@@ -115,5 +119,28 @@ public class BlogReplyServiceImpl implements BlogReplyService {
 		}
 		PaginationResult result = new PaginationResult(pagein.getPage(), pagein.getPageTotal(), count, list);
 		return result;
+	}
+	
+	public PaginationResult queryAllReplyByPag(int page, int pageSize) {
+		int count = blogReplyDao.queryAllCount();
+		Pagination pagination = new Pagination(page, count, pageSize);
+		pagination.action();
+		List<BlogReply> list = blogReplyDao.queryAllReBlog(pagination.getOffSet(), pageSize);
+		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
+		return result;
+	}
+	
+	public void deleteReplyBatch(String keyStr){
+		if (StringUtils.isEmpty(keyStr)) {
+			return;
+		}
+		String ids[] = keyStr.split(",");
+		for (String id : ids) {
+			BlogReply blog = blogReplyDao.queryBlogReplyById(Integer.parseInt(id));
+			User user = userDao.findUser(blog.getUserId(),QueryUserType.USERID);
+			user.setMark(user.getMark()-Constant.ARTICLE_MARK2);
+			userDao.update(user);
+			blogReplyDao.deleteById(Integer.parseInt(id));
+		}
 	}
 }

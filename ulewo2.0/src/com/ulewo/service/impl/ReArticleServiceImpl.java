@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.ulewo.dao.ArticleDao;
 import com.ulewo.dao.ReArticleDao;
 import com.ulewo.dao.UserDao;
+import com.ulewo.entity.Article;
 import com.ulewo.entity.NoticeParam;
 import com.ulewo.entity.ReArticle;
 import com.ulewo.entity.User;
@@ -119,20 +120,13 @@ public class ReArticleServiceImpl implements ReArticleService {
 
 	}
 
-	@Override
-	public int queryReArticleCount(int articleid) {
-
-		return reArticleDao.queryReArticleCount(articleid);
-	}
-
 	/**
 	 * 回复的文章
 	 */
 	@Override
 	public PaginationResult queryReArticles(int articleid, int page, int pageSize) {
 
-		int count = reArticleDao.queryReArticleCount(articleid);
-		List<ReArticle> list = reArticleDao.queryReArticles(articleid, 0, count);
+		List<ReArticle> list = reArticleDao.queryReArticles(articleid);
 		List<ReArticle> allReArticle = formateList(list);
 		int reCount = allReArticle == null ? 0 : allReArticle.size();
 		Pagination pagination = new Pagination(page, reCount, pageSize);
@@ -218,5 +212,33 @@ public class ReArticleServiceImpl implements ReArticleService {
 		}
 		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
 		return result;
+	}
+	
+
+
+	public PaginationResult queryAllReArticle(int page, int pageSize) {
+		int count = reArticleDao.queryReArticleCount();
+		Pagination pagination = new Pagination(page, count, pageSize);
+		pagination.action();
+		List<ReArticle> list = reArticleDao.queryAllReArticle(pagination.getOffSet(), pageSize);
+		for (ReArticle rearticle : list) {
+			rearticle.setContent(StringUtils.clearHtml(rearticle.getContent()));
+		}
+		PaginationResult result = new PaginationResult(pagination.getPage(), pagination.getPageTotal(), count, list);
+		return result;
+	}
+	
+	public void deleteReArticleBatch(String keyStr) {
+		if (StringUtils.isEmpty(keyStr)) {
+			return;
+		}
+		String ids[] = keyStr.split(",");
+		for (String id : ids) {
+			ReArticle article = reArticleDao.getReArticle(Integer.parseInt(id));
+			User user = userDao.findUser(article.getAuthorid(),QueryUserType.USERID);
+			user.setMark(user.getMark()-Constant.ARTICLE_MARK2);
+			userDao.update(user);
+			reArticleDao.deleteReArticle(Integer.parseInt(id));
+		}
 	}
 }

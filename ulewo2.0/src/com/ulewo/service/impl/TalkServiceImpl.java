@@ -7,12 +7,15 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ulewo.dao.ReTalkDao;
 import com.ulewo.dao.TalkDao;
 import com.ulewo.dao.UserDao;
 import com.ulewo.dao.UserFriendDao;
 import com.ulewo.entity.NoticeParam;
+import com.ulewo.entity.ReArticle;
 import com.ulewo.entity.ReTalk;
 import com.ulewo.entity.SessionUser;
 import com.ulewo.entity.Talk;
@@ -159,12 +162,17 @@ public class TalkServiceImpl implements TalkService {
 	}
 
 	@Override
+	@Transactional(propagation=Propagation.REQUIRED,rollbackFor=Exception.class)
 	public void deleteTalkBatch(String keyStr) {
 		if (StringUtils.isEmpty(keyStr)) {
 			return;
 		}
 		String ids[] = keyStr.split(",");
 		for (String id : ids) {
+			Talk talk = talkDao.queryDetail(Integer.parseInt(id));
+			User user = userDao.findUser(talk.getUserId(),QueryUserType.USERID);
+			user.setMark(user.getMark()-Constant.ARTICLE_MARK1);
+			userDao.update(user);
 			talkDao.deleteTalk(Integer.parseInt(id));
 		}
 	}

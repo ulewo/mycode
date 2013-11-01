@@ -16,6 +16,7 @@ import com.ulewo.entity.BlogArticle;
 import com.ulewo.entity.BlogReply;
 import com.ulewo.entity.NoticeParam;
 import com.ulewo.entity.SessionUser;
+import com.ulewo.entity.Talk;
 import com.ulewo.entity.User;
 import com.ulewo.enums.BlogOrderType;
 import com.ulewo.enums.NoticeType;
@@ -122,9 +123,11 @@ public class BlogArticleServiceImpl implements BlogArticleService {
 
 	@Override
 	public void deleteArticle(int id) {
-
+		BlogArticle blog = blogArticleDao.queryBlogById(id);
+		User user = userDao.findUser(blog.getUserId(),QueryUserType.USERID);
+		user.setMark(user.getMark()-Constant.ARTICLE_MARK5);
+		userDao.update(user);
 		blogArticleDao.delete(id);
-
 	}
 	
 	@Override
