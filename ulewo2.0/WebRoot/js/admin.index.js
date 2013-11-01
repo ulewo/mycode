@@ -21,7 +21,7 @@ function loadArticle(page,keyWord) {
 		cache : false,
 		type : 'GET',
 		dataType : "json",
-		url : global.realPath + "/admin/loadArticle.action?page=" + page+"&q="+keyWord,// 请求的action路径
+		url : global.realPath + "/admin/loadArticle2.action?page=" + page+"&q="+keyWord,// 请求的action路径
 		success : function(data) {
 			
 			var list = data.result.list;

@@ -20,7 +20,7 @@ talk.loadData = function(){
 	        {field:'createTime',title:'发布时间',width:100}
 	    ]],
 	    onClickRow:function(rowIndex, rowData){
-			window.open('../group/'+rowData.gid+'/topic/'+rowData.id);
+			window.open('../user/'+rowData.userId+'/talk/'+rowData.id);
 	    }
 	});
 };
