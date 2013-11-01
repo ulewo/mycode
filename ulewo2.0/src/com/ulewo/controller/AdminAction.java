@@ -26,6 +26,7 @@ import com.ulewo.service.ReTalkService;
 import com.ulewo.service.TalkService;
 import com.ulewo.service.UserFriendService;
 import com.ulewo.service.UserService;
+import com.ulewo.util.Constant;
 import com.ulewo.util.PaginationResult;
 import com.ulewo.util.StringUtils;
 
@@ -108,6 +109,31 @@ public class AdminAction {
 			PaginationResult result = articleService.queryAllArticleByAdmin(page, pageSize, keyWord);
 			modelMap.put("total", result.getCountTotal());
 			modelMap.put("rows", result.getList());
+			return modelMap;
+		} catch (Exception e) {
+			modelMap.put("result", "fail");
+			modelMap.put("message", "系统异常");
+			return modelMap;
+		}
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/loadArticle2.action", method = RequestMethod.POST)
+	public Map<String, Object> loadArticle2(HttpSession session, HttpServletRequest request) {
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			String page = request.getParameter("page");
+			int page_int = 1;
+			if (StringUtils.isNumber(page)) {
+				page_int = Integer.parseInt(page);
+			}
+			String keyWord = request.getParameter("q");
+			if (null != keyWord) {
+				keyWord = URLDecoder.decode(keyWord, "utf-8");
+			}
+			PaginationResult result = articleService.queryAllArticleByAdmin(page_int, Constant.pageSize25, keyWord);
+			// modelMap.put("result", "success");
+			modelMap.put("result", result);
 			return modelMap;
 		} catch (Exception e) {
 			modelMap.put("result", "fail");
@@ -277,7 +303,7 @@ public class AdminAction {
 			return modelMap;
 		}
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "/deleteBlog.action", method = RequestMethod.POST)
 	public Map<String, Object> deleteBlog(String keyStr, HttpSession session, HttpServletRequest request) {
