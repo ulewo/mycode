@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,9 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ulewo.dao.ReTalkDao;
 import com.ulewo.dao.TalkDao;
 import com.ulewo.dao.UserDao;
-import com.ulewo.dao.UserFriendDao;
 import com.ulewo.entity.NoticeParam;
-import com.ulewo.entity.ReArticle;
 import com.ulewo.entity.ReTalk;
 import com.ulewo.entity.SessionUser;
 import com.ulewo.entity.Talk;
@@ -38,9 +38,6 @@ public class TalkServiceImpl implements TalkService {
 	private UserDao userDao;
 
 	@Autowired
-	private UserFriendDao userFriendDao;
-
-	@Autowired
 	private ReTalkDao reTalkDao;
 
 	private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -49,6 +46,7 @@ public class TalkServiceImpl implements TalkService {
 	public void addTalk(Talk talk) {
 
 		String cotent = StringUtils.clearHtml(talk.getContent());
+		cotent = addLink(cotent);
 		List<String> referers = new ArrayList<String>();
 		String formatContent = FormatAt.getInstance(Constant.TYPE_TALK).GenerateRefererLinks(userDao, cotent, referers);
 		talk.setContent(formatContent);
@@ -69,6 +67,21 @@ public class TalkServiceImpl implements TalkService {
 		thread.start();
 	}
 
+	private String addLink(String str) {
+		String regex = "((http:|https:)//|www.)[^[A-Za-z0-9\\._\\?%&+\\-=/#]]*";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(str);
+		StringBuffer result = new StringBuffer();
+		while (matcher.find()) {
+			StringBuffer replace = new StringBuffer();
+			replace.append("<a href=\"").append(matcher.group());
+			replace.append("\" target=\"_blank\">" + matcher.group() + "</a>");
+			matcher.appendReplacement(result, replace.toString());
+		}
+		matcher.appendTail(result);
+		return result.toString();
+	}
+	
 	@Override
 	public List<Talk> queryLatestTalk(int offset, int total) {
 
