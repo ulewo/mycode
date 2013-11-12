@@ -97,6 +97,7 @@ function tipsInfo(msg){
 			tips.show();
 			tips.css({"top":"400px"});
 		}
+		tips.empty();
 		$("<div class='tipscon'><span>"+msg+"</span><img src='"+global.realPath+"/images/good.png' width='15'></div>").appendTo(tips);
 		tips.animate({top:150},1000).fadeOut(1000);
 	},1);
