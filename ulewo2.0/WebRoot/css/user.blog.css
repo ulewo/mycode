@@ -21,7 +21,7 @@
 .blog_item_op_red{color:#AA0000;font-weight:bold;}
 .blog_detail{margin-top:20px;}
 .blog_content{margin-top:10px;font-size:14px;color:#000000;line-height:25px;word-wrap:break-word;}
-.blog_content img{max-width:720px;cursor: url(../images/magplus.gif), pointer;}
+.blog_content img{max-width:720px;cursor: url(../images/zoom-in.cur), pointer;}
 /*****博客回复*******/
 .blog_reply{border:1px solid #EEEEEE;padding:10px;margin-top:10px;}
 .blog_reply_tit{font-weight:bold;color:#666666;font-size:16px;}
