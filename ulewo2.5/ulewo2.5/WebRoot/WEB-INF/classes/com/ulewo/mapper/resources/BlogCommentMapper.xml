@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ulewo.mapper.BlogCommentMapper" >
+  <resultMap id="BaseResultMap" type="com.ulewo.model.BlogComment" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="blog_id" property="blogId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="userid" property="userId" jdbcType="INTEGER" />
+    <result column="at_userid" property="atUserId" jdbcType="INTEGER" />
+    <result column="source_from" property="sourceFrom" jdbcType="VARCHAR" />
+    <result column="blog_userid" property="blogUserId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="base_condition" >
+ 	 <if test="param!=null">
+	      <if test="null!=param.blogId and ''!=param.blogId" >
+	        	and c.blog_id = #{param.blogId,jdbcType=VARCHAR}
+	      </if>
+      </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    c.id, c.blog_id, c.create_time,content,c.userid, c.at_userid, c.source_from, c.blog_userid
+  </sql>
+  <select id="selectBaseInfo" resultMap="BaseResultMap" parameterType="com.ulewo.model.BlogComment" >
+    select 
+    <include refid="Base_Column_List" />
+    from ulewo_blog_comment c
+    where 1=1
+     <include refid="base_condition" />
+  </select>
+  <select id="selectBaseInfoList" resultMap="BaseResultMap" parameterType="com.ulewo.model.BlogComment">
+    select 
+    <include refid="Base_Column_List" />,
+    u1.username userName,
+    u1.user_icon userIcon,
+    u2.username atUserName,
+    u2.user_icon atUserIcon
+    from ulewo_blog_comment c 
+    left join ulewo_user u1 on u1.userid=c.userid 
+    left join ulewo_user u2 on u2.userid=c.at_userid
+    where 1=1
+    <include refid="base_condition" />
+    order by create_time desc limit #{page.start},#{page.end}
+  </select>
+  <select id="selectBaseInfoCount" resultType="java.lang.Integer" parameterType="com.ulewo.model.BlogComment">
+ 	 select count(1)
+    from ulewo_blog_comment c
+    where 1=1
+    <include refid="base_condition" />
+  </select>
+  <delete id="delete" parameterType="java.lang.Integer" >
+    delete from ulewo_blog_comment
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <delete id="deleteBatch" >
+  	delete from ulewo_blog_comment where blog_id = #{blogId,jdbcType=INTEGER}
+  	and id in
+  	<foreach item="id" collection="list" open="(" separator="," close=")">
+		#{id}
+	</foreach>
+  </delete>
+  <insert id="insert" parameterType="com.ulewo.model.BlogComment" >
+  	<selectKey keyProperty="id" resultType="int" order="AFTER">
+      	SELECT LAST_INSERT_ID()
+    </selectKey>
+    <![CDATA[
+    insert into ulewo_blog_comment (blog_id, create_time, 
+      userid, at_userid, source_from, 
+      blog_userid, content)
+    values (#{blogId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{userId,jdbcType=INTEGER}, #{atUserId,jdbcType=INTEGER}, #{sourceFrom,jdbcType=VARCHAR}, 
+      #{blogUserId,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR})
+     ]]>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ulewo.model.BlogComment" >
+    update ulewo_blog_comment
+    <set >
+      <if test="blogId != null" >
+        blog_id = #{blogId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="atUserid != null" >
+        at_userid = #{atUserid,jdbcType=INTEGER},
+      </if>
+      <if test="sourceFrom != null" >
+        source_from = #{sourceFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="blogUserid != null" >
+        blog_userid = #{blogUserid,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ulewo.mapper.TopicSurveyMapper" >
+  <resultMap id="BaseResultMap" type="com.ulewo.model.TopicSurvey" >
+    <id column="gid" property="gid" jdbcType="INTEGER" />
+    <id column="topic_id" property="topicId" jdbcType="INTEGER" />
+    <result column="survey_type" property="surveyType" jdbcType="CHAR" />
+    <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    topic_id, survey_type,end_date
+  </sql>
+  <sql id="base_condition" >
+ 	 <if test="param!=null">
+	      <if test="null!=param.topicId and ''!=param.topicId" >
+	        	and topic_id = #{param.topicId,jdbcType=DECIMAL}
+	      </if>
+      </if>
+  </sql>
+  <select id="selectBaseInfo" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />,
+    (select sum(count) from ulewo_topic_survey_dtl d where d.topic_id = s.topic_id) sumCount
+    from ulewo_topic_survey s
+    where 1=1
+    <include refid="base_condition" />
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ulewo_topic_survey
+    where topic_id = #{topicId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ulewo.model.TopicSurvey" >
+  	<selectKey keyProperty="topicId" resultType="int" order="AFTER">
+      	SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ulewo_topic_survey (gid,topic_id, survey_type,end_date
+      )
+    values (#{gid,jdbcType=INTEGER}, #{topicId,jdbcType=INTEGER}, #{surveyType,jdbcType=CHAR}, #{endDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <select id="countByExample" parameterType="com.ulewo.model.TopicSurvey" resultType="java.lang.Integer" >
+    select count(*) from ulewo_topic_survey
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ulewo.model.TopicSurvey" >
+    update ulewo_topic_survey
+    <set >
+      <if test="topicId != null" >
+        topic_id = #{topicId,jdbcType=INTEGER},
+      </if>
+      <if test="surveyType != null" >
+        survey_type = #{surveyType,jdbcType=CHAR},
+      </if>
+    </set>
+    where topic_id = #{topicId,jdbcType=INTEGER}
+  </update>
+</mapper>

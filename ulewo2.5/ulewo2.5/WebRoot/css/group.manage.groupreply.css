@@ -1,0 +1,8 @@
+@import url("group.manage.public.css");
+.item_reply{margin-top:10px;border-bottom:1px dashed #666666;padding-bottom:20px;padding-top:10px;}
+.user_icon{float:left;width:36px;}
+.user_icon img{width:35px;}
+.reply_con{float:left;width:730px;margin-left:20px;}
+.blog_title{float:left;display:inline-block;}
+.reply_op{display:inline-block;float:right;padding-left:10px;}
+.reply_content{margin-top:10px;color:#666666}

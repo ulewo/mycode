@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ulewo.mapper.CollectionMapper" >
+  <resultMap id="BaseResultMap" type="com.ulewo.model.Collection" >
+    <id column="article_id" property="articleId" jdbcType="INTEGER" />
+    <id column="article_type" property="articleType" jdbcType="VARCHAR" />
+    <id column="userid" property="userId" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    c.article_id, c.article_type, c.userid 
+  </sql>
+  <sql id="base_condition" >
+ 	 <if test="param!=null">
+	      <if test="null!=param.userId and ''!=param.userId" >
+	        	and c.userid = #{param.userId,jdbcType=INTEGER}
+	      </if>
+	      <if test="null!=param.type and ''!=param.type" >
+	        	and c.article_type = #{param.type,jdbcType=VARCHAR}
+	      </if>
+	      <if test="null!=param.title and ''!=param.title" >
+	        	and b.title like '%${param.title}%'
+	      </if>
+	      <if test="null!=param.articleId and ''!=param.articleId" >
+	        	and c.article_id = #{param.articleId,jdbcType=INTEGER}
+	      </if>
+      </if>
+  </sql>
+  <select id="selectBaseInfo" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select 
+    <include refid="Base_Column_List" />
+    from ulewo_collection c
+    where article_id = #{param.articleId,jdbcType=INTEGER}
+      and userid = #{param.userId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectTopicInfoList" resultMap="BaseResultMap" parameterType="com.ulewo.model.Collection">
+    select <include refid="Base_Column_List" />,
+    b.gid,b.title
+    from ulewo_collection c inner join  ulewo_topic b on b.topic_id = c.article_id
+	  where 1=1
+	  <include refid="base_condition" />
+  </select>
+  
+  <select id="selectBlogInfoList" resultMap="BaseResultMap" parameterType="com.ulewo.model.Collection">
+    select <include refid="Base_Column_List" />,
+    b.title
+    from ulewo_collection c inner join ulewo_blog b on b.blog_id = c.article_id
+	  where 1=1
+	  <include refid="base_condition" />
+  </select>
+  
+  <select id ="selectTopicInfoCount" resultType="java.lang.Integer" parameterType="com.ulewo.model.Topic">
+    select count(1)
+	  from ulewo_collection c inner join  ulewo_topic b on b.topic_id = c.article_id
+	  where 1=1
+	  <include refid="base_condition" />
+  </select>
+  
+  <select id ="selectBlogInfoCount" resultType="java.lang.Integer" parameterType="com.ulewo.model.Topic">
+    select count(1)
+	  from ulewo_collection c inner join ulewo_blog b on b.blog_id = c.article_id
+	  where 1=1
+	  <include refid="base_condition" />
+  </select>
+  
+  <delete id="delete" parameterType="java.util.Map" >
+    delete from ulewo_collection  where article_id = #{param.articleId,jdbcType=INTEGER} and userid = #{param.userId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ulewo.model.Collection" >
+    insert into ulewo_collection (article_id, article_type, userid)
+    values (#{articleId,jdbcType=INTEGER}, #{articleType,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER})
+  </insert>
+
+</mapper>

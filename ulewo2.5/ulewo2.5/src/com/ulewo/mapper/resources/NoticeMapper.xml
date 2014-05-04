@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ulewo.mapper.NoticeMapper" >
+  <resultMap id="BaseResultMap" type="com.ulewo.model.Notice" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <id column="received_userid" property="receivedUserId" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    n.id, n.received_userid,n.title,n.create_time,n.status,n.url
+  </sql>
+  
+  <sql id="base_condition" >
+ 	 <if test="param!=null">
+ 	 	  <if test="null!=param.id and ''!=param.id" >
+	        	and n.id = #{param.id,jdbcType=DECIMAL}
+	      </if>
+	      <if test="null!=param.userId and ''!=param.userId" >
+	        	and n.received_userid = #{param.userId,jdbcType=DECIMAL}
+	      </if>
+	      <if test="null!=param.signDate and ''!=param.signDate" >
+	        	and n.sign_date = #{param.signDate,jdbcType=DECIMAL}
+	      </if>
+	       <if test="null!=param.status and ''!=param.status" >
+	        	and n.status = #{param.status,jdbcType=DECIMAL}
+	      </if>
+	      <if test="null!=param.startTm and ''!=param.startTm">
+	      	 <![CDATA[
+	        	and n.create_time >='${param.startTm} 00:00:00'
+	         ]]>
+	      </if>
+	      <if test="null!=param.endTm and ''!=param.endTm">
+	      	  <![CDATA[
+	        	and n.create_time <= '${param.endTm} 23:59:59'
+	          ]]>
+	      </if>
+      </if>
+  </sql>
+  
+  <select id="selectBaseInfo" resultMap="BaseResultMap" parameterType="com.ulewo.model.Notice" >
+    select 
+    <include refid="Base_Column_List" />
+    from ulewo_notice n where 1=1
+   <include refid="base_condition" />
+  </select>
+  
+  <select id ="selectBaseInfoCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+    select count(1)
+	  from ulewo_notice n  where 1=1 
+	  <include refid="base_condition" />
+  </select>
+  
+  <select id ="selectBaseInfoList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select 
+    <include refid="Base_Column_List" />
+     from ulewo_notice n where 1=1
+	  <include refid="base_condition" />
+	  order by status,create_time desc
+  </select>
+  
+  <insert id="insert" parameterType="com.ulewo.model.Notice" >
+    insert into ulewo_notice (received_userid,title,create_time,url)
+    values (#{receivedUserId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR},#{createTime,jdbcType=VARCHAR},#{url,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateSelective" parameterType="com.ulewo.model.Notice" >
+    update ulewo_notice
+    <set >
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER} and received_userid = #{receivedUserId,jdbcType=INTEGER}
+  </update>
+  
+  <delete id="delete" parameterType="java.util.Map" >
+    delete from ulewo_notice
+    where id = #{param.id,jdbcType=INTEGER} and received_userid = #{param.userId,jdbcType=INTEGER}
+  </delete>
+  
+</mapper>
