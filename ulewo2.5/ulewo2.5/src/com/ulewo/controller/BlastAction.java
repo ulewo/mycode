@@ -63,7 +63,7 @@ public class BlastAction extends BaseUserAction {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
-			Map<String, String> parms = builderParams(request, true);
+			Map<String, String> parms = builderParams(request, false);
 			Blast blast = this.blastService.addBlast(parms, this.getSessionUser(session));
 			modelMap.put("result", ResultCode.SUCCESS.getCode());
 			modelMap.put("blast", blast);
@@ -167,7 +167,7 @@ public class BlastAction extends BaseUserAction {
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			UlewoPaginationResult<BlastComment> paginResult = blastCommentService.queryBlastCommentByPag(this
-					.builderParams(request, true));
+					.builderParams(request, false));
 			modelMap.put("result", ResultCode.SUCCESS.getCode());
 			modelMap.put("data", paginResult);
 			return modelMap;

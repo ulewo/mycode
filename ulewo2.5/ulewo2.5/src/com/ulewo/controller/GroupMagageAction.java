@@ -93,8 +93,7 @@ public class GroupMagageAction extends BaseGroupAction {
 	}
 
 	@RequestMapping(value = "/dispatcher/{url}", method = RequestMethod.GET)
-	public ModelAndView dispatcher(HttpSession session,
-			HttpServletRequest request, @PathVariable String url) {
+	public ModelAndView dispatcher(HttpSession session, HttpServletRequest request, @PathVariable String url) {
 		ModelAndView mv = new ModelAndView();
 		try {
 			String gid = request.getParameter("gid");
@@ -122,14 +121,12 @@ public class GroupMagageAction extends BaseGroupAction {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/creteGroup.action", method = RequestMethod.POST)
-	public Map<String, Object> creteGroup(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> creteGroup(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
-			Group group = this.groupService.createGroup(
-					this.builderParams(request, true),
-					this.getSessionUser(session));
+			Group group = this.groupService
+					.createGroup(this.builderParams(request, true), this.getSessionUser(session));
 			modelMap.put("result", ResultCode.SUCCESS.getCode());
 			modelMap.put("group", group);
 			return modelMap;
@@ -154,8 +151,7 @@ public class GroupMagageAction extends BaseGroupAction {
 	 * @return
 	 */
 	@RequestMapping(value = "/editGroup.action")
-	public ModelAndView editGroup(HttpSession session,
-			HttpServletRequest request) {
+	public ModelAndView editGroup(HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
@@ -178,8 +174,7 @@ public class GroupMagageAction extends BaseGroupAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/saveGroupIcon.action")
-	public Map<String, Object> saveUserIcon(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> saveUserIcon(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		String tempimg = request.getParameter("groupIcon");
@@ -188,8 +183,7 @@ public class GroupMagageAction extends BaseGroupAction {
 		String width = request.getParameter("width");
 		String height = request.getParameter("height");
 		String gid = request.getParameter("gid");
-		if (!StringUtils.isNumber(x1) || !StringUtils.isNumber(y1)
-				|| !StringUtils.isNumber(width)
+		if (!StringUtils.isNumber(x1) || !StringUtils.isNumber(y1) || !StringUtils.isNumber(width)
 				|| !StringUtils.isNumber(height)) {
 			modelMap.put("result", "fail");
 			modelMap.put("message", "请求参数错误");
@@ -216,15 +210,13 @@ public class GroupMagageAction extends BaseGroupAction {
 		try {
 			BufferedImage img = ImageIO.read(new File(srcpath));
 			// 裁剪图片
-			BufferedImage subimg = img.getSubimage(x1_int, y1_int, width_int,
-					height_int);
+			BufferedImage subimg = img.getSubimage(x1_int, y1_int, width_int, height_int);
 			// ScaleFilter filter = new ScaleFilter(SMALL_WIDTH,SMALL_HEIGHT);
 			// 放大缩小图片
 			ScaleFilter filter = new ScaleFilter(SMALL_WIDTH);
 			BufferedImage okimg = filter.filter(subimg, null);
 			// 将图片转为字节数组
-			String okSrcPath = session.getServletContext().getRealPath("/")
-					+ "upload/group/";
+			String okSrcPath = session.getServletContext().getRealPath("/") + "upload/group/";
 			File imagePathFile = new File(okSrcPath);
 			if (!imagePathFile.exists()) {
 				imagePathFile.mkdirs();
@@ -277,8 +269,7 @@ public class GroupMagageAction extends BaseGroupAction {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/saveGroup.action")
-	public Map<String, Object> saveGroup(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> saveGroup(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -307,8 +298,7 @@ public class GroupMagageAction extends BaseGroupAction {
 	 * @return
 	 */
 	@RequestMapping(value = "/editGroupNotice")
-	public ModelAndView editGroupNotice(HttpSession session,
-			HttpServletRequest request) {
+	public ModelAndView editGroupNotice(HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
@@ -330,8 +320,7 @@ public class GroupMagageAction extends BaseGroupAction {
 	}
 
 	@RequestMapping(value = "/editGroupIcon")
-	public ModelAndView editGroupIcon(HttpSession session,
-			HttpServletRequest request) {
+	public ModelAndView editGroupIcon(HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
@@ -354,14 +343,12 @@ public class GroupMagageAction extends BaseGroupAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/saveGroupNotice.action")
-	public Map<String, Object> saveGroupNotice(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> saveGroupNotice(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = this.builderParams(request, true);
-			this.groupService.updateGroupNotice(map,
-					this.getSessionUserId(session));
+			this.groupService.updateGroupNotice(map, this.getSessionUserId(session));
 			modelMap.put("result", ResultCode.SUCCESS.getCode());
 			return modelMap;
 		} catch (BusinessException e) {
@@ -387,8 +374,7 @@ public class GroupMagageAction extends BaseGroupAction {
 
 	@RequestMapping(value = "/eidtIcon", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> eidtIcon(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> eidtIcon(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		String gid = request.getParameter("gid");
@@ -397,8 +383,7 @@ public class GroupMagageAction extends BaseGroupAction {
 		String y1 = request.getParameter("y1");
 		String width = request.getParameter("width");
 		String height = request.getParameter("height");
-		if (!StringUtils.isNumber(x1) || !StringUtils.isNumber(y1)
-				|| !StringUtils.isNumber(width)
+		if (!StringUtils.isNumber(x1) || !StringUtils.isNumber(y1) || !StringUtils.isNumber(width)
 				|| !StringUtils.isNumber(height)) {
 			modelMap.put("result", "fail");
 			modelMap.put("message", "请求参数错误");
@@ -425,13 +410,11 @@ public class GroupMagageAction extends BaseGroupAction {
 			tempIn = new FileInputStream(tempfile);
 			BufferedImage img = ImageIO.read(tempIn);
 			// 裁剪图片
-			BufferedImage subimg = img.getSubimage(x1_int, y1_int, width_int,
-					height_int);
+			BufferedImage subimg = img.getSubimage(x1_int, y1_int, width_int, height_int);
 			// 放大缩小图片
 			ScaleFilter filter = new ScaleFilter(SMALL_WIDTH);
 			BufferedImage okimg = filter.filter(subimg, null);
-			String okSrcPath = session.getServletContext().getRealPath("/")
-					+ "upload/group/";
+			String okSrcPath = session.getServletContext().getRealPath("/") + "upload/group/";
 			File imagePathFile = new File(okSrcPath);
 			if (!imagePathFile.exists()) {
 				imagePathFile.mkdirs();
@@ -482,12 +465,10 @@ public class GroupMagageAction extends BaseGroupAction {
 	 */
 	@RequestMapping(value = "/category", method = RequestMethod.GET)
 	@ResponseBody
-	public UlewoPaginationResult4Json<TopicCategory> category(
-			HttpSession session, HttpServletRequest request) {
+	public UlewoPaginationResult4Json<TopicCategory> category(HttpSession session, HttpServletRequest request) {
 		try {
 			Map<String, String> map = this.builderParams(request, true);
-			UlewoPaginationResult4Json<TopicCategory> result = this.topicCategoryService
-					.queryCategory4Json(map);
+			UlewoPaginationResult4Json<TopicCategory> result = this.topicCategoryService.queryCategory4Json(map);
 			return result;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
@@ -504,14 +485,12 @@ public class GroupMagageAction extends BaseGroupAction {
 	 */
 	@RequestMapping(value = "/saveCategory.action")
 	@ResponseBody
-	public Map<String, Object> saveCategory(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> saveCategory(HttpSession session, HttpServletRequest request) {
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 
 			Map<String, String> map = this.builderParams(request, true);
-			this.topicCategoryService.saveCategroy(map,
-					this.getSessionUserId(session));
+			this.topicCategoryService.saveCategroy(map, this.getSessionUserId(session));
 			modelMap.put("result", ResultCode.SUCCESS.getCode());
 			return modelMap;
 		} catch (BusinessException e) {
@@ -535,13 +514,11 @@ public class GroupMagageAction extends BaseGroupAction {
 	 */
 	@RequestMapping(value = "/deleteCategory", method = RequestMethod.POST)
 	@ResponseBody
-	public ModelAndView deleteCategory(HttpSession session,
-			HttpServletRequest request) {
+	public ModelAndView deleteCategory(HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
-			SessionUser sessionUser = (SessionUser) session
-					.getAttribute("user");
+			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 			String userId = sessionUser.getUserId().toString();
 			/*
 			 * Group mygroup = groupService.queryGorup(gid); if
@@ -578,13 +555,11 @@ public class GroupMagageAction extends BaseGroupAction {
 	 */
 	@RequestMapping(value = "/topics")
 	@ResponseBody
-	public UlewoPaginationResult4Json<Topic> topics(HttpSession session,
-			HttpServletRequest request) {
+	public UlewoPaginationResult4Json<Topic> topics(HttpSession session, HttpServletRequest request) {
 
 		try {
 			Map<String, String> map = this.builderParams(request, true);
-			UlewoPaginationResult4Json<Topic> result = this.topicService
-					.findTopics4Json(map);
+			UlewoPaginationResult4Json<Topic> result = this.topicService.findTopics4Json(map);
 			return result;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
@@ -601,15 +576,13 @@ public class GroupMagageAction extends BaseGroupAction {
 	 * @return
 	 */
 	@RequestMapping(value = "/editTopic", method = RequestMethod.GET)
-	public ModelAndView editTopic(HttpSession session,
-			HttpServletRequest request) {
+	public ModelAndView editTopic(HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
 			Map<String, String> map = this.builderParams(request, true);
 			Topic topic = this.topicService.showTopic(map);
-			List<TopicCategory> categorys = this.topicCategoryService
-					.queryCategoryAndTopicCount(map);
+			List<TopicCategory> categorys = this.topicCategoryService.queryCategoryAndTopicCount(map);
 			mv.addObject("topic", topic);
 			mv.addObject("categorys", categorys);
 			mv.setViewName("groupmanage/edit_topic");
@@ -629,14 +602,12 @@ public class GroupMagageAction extends BaseGroupAction {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/saveTopic.action")
-	public Map<String, Object> saveTopic(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> saveTopic(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = this.builderParams(request, false);
-			this.topicService.updateTopic(map, this.getSessionUser(session),
-					request);
+			this.topicService.updateTopic(map, this.getSessionUser(session), request);
 			modelMap.put("result", ResultCode.SUCCESS.getCode());
 			return modelMap;
 		} catch (BusinessException e) {
@@ -663,8 +634,7 @@ public class GroupMagageAction extends BaseGroupAction {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/deleteTopic")
-	public Map<String, Object> deleteTopic(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> deleteTopic(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -695,13 +665,11 @@ public class GroupMagageAction extends BaseGroupAction {
 	 */
 	@RequestMapping(value = "/topicComment.action")
 	@ResponseBody
-	public UlewoPaginationResult4Json<TopicComment> articleReply(
-			HttpSession session, HttpServletRequest request) {
+	public UlewoPaginationResult4Json<TopicComment> articleReply(HttpSession session, HttpServletRequest request) {
 
 		try {
 			Map<String, String> map = this.builderParams(request, true);
-			UlewoPaginationResult4Json<TopicComment> result = this.topicCmmentService
-					.queryComment4JsonByTopicId(map);
+			UlewoPaginationResult4Json<TopicComment> result = this.topicCmmentService.queryComment4JsonByTopicId(map);
 			return result;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
@@ -718,13 +686,11 @@ public class GroupMagageAction extends BaseGroupAction {
 	 */
 	@RequestMapping(value = "/deleteComment.action")
 	@ResponseBody
-	public Map<String, Object> deleteComment(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> deleteComment(HttpSession session, HttpServletRequest request) {
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = this.builderParams(request, true);
-			this.topicCmmentService.deleteComment(map,
-					this.getSessionUser(session));
+			this.topicCmmentService.deleteComment(map, this.getSessionUser(session));
 			modelMap.put("result", ResultCode.SUCCESS.getCode());
 			return modelMap;
 		} catch (BusinessException e) {
@@ -751,13 +717,11 @@ public class GroupMagageAction extends BaseGroupAction {
 	 */
 	@RequestMapping(value = "/member")
 	@ResponseBody
-	public UlewoPaginationResult4Json<GroupMember> member4Json(
-			HttpSession session, HttpServletRequest request) {
+	public UlewoPaginationResult4Json<GroupMember> member4Json(HttpSession session, HttpServletRequest request) {
 		try {
 			Map<String, String> map = this.builderParams(request, true);
 			map.put("memberType", MemberType.ISMEMBER.getValue());
-			UlewoPaginationResult4Json<GroupMember> result = this.groupMemberService
-					.findMembers4Json(map);
+			UlewoPaginationResult4Json<GroupMember> result = this.groupMemberService.findMembers4Json(map);
 			return result;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
@@ -774,13 +738,11 @@ public class GroupMagageAction extends BaseGroupAction {
 	 */
 	@RequestMapping(value = "/deleteMember.action")
 	@ResponseBody
-	public Map<String, Object> deleteMember(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> deleteMember(HttpSession session, HttpServletRequest request) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = this.builderParams(request, true);
-			this.groupMemberService.deleteMember(map,
-					this.getSessionUserId(session));
+			this.groupMemberService.deleteMember(map, this.getSessionUserId(session));
 			result.put("result", ResultCode.SUCCESS.getCode());
 			return result;
 		} catch (BusinessException e) {
@@ -805,13 +767,11 @@ public class GroupMagageAction extends BaseGroupAction {
 	 */
 	@RequestMapping(value = "/memberApply")
 	@ResponseBody
-	public UlewoPaginationResult4Json<GroupMember> memberApply(
-			HttpSession session, HttpServletRequest request) {
+	public UlewoPaginationResult4Json<GroupMember> memberApply(HttpSession session, HttpServletRequest request) {
 		try {
 			Map<String, String> map = this.builderParams(request, true);
 			map.put("memberType", MemberType.NOTMEMBER.getValue());
-			UlewoPaginationResult4Json<GroupMember> result = this.groupMemberService
-					.findMembers4Json(map);
+			UlewoPaginationResult4Json<GroupMember> result = this.groupMemberService.findMembers4Json(map);
 			return result;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
@@ -829,14 +789,12 @@ public class GroupMagageAction extends BaseGroupAction {
 	 */
 	@RequestMapping(value = "/applyMmeber.action")
 	@ResponseBody
-	public Map<String, Object> applyMmeber(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> applyMmeber(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> result = new HashMap<String, Object>();
 		try {
-			Map<String, String> map = this.builderParams(request, true);
-			this.groupMemberService.accetpMember(map,
-					this.getSessionUserId(session));
+			Map<String, String> map = this.builderParams(request, false);
+			this.groupMemberService.accetpMember(map, this.getSessionUserId(session));
 			result.put("result", ResultCode.SUCCESS.getCode());
 			return result;
 		} catch (BusinessException e) {
@@ -854,8 +812,7 @@ public class GroupMagageAction extends BaseGroupAction {
 
 	@RequestMapping(value = "/topTopic.action")
 	@ResponseBody
-	public Map<String, Object> topTopic(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> topTopic(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> result = new HashMap<String, Object>();
 		try {
@@ -879,8 +836,7 @@ public class GroupMagageAction extends BaseGroupAction {
 
 	@RequestMapping(value = "/topTopicCancel.action")
 	@ResponseBody
-	public Map<String, Object> topTopicNo(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> topTopicNo(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> result = new HashMap<String, Object>();
 		try {
@@ -904,8 +860,7 @@ public class GroupMagageAction extends BaseGroupAction {
 
 	@RequestMapping(value = "/essenceTopic.action")
 	@ResponseBody
-	public Map<String, Object> essenceTopic(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> essenceTopic(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> result = new HashMap<String, Object>();
 		try {
@@ -929,8 +884,7 @@ public class GroupMagageAction extends BaseGroupAction {
 
 	@RequestMapping(value = "/essenceTopicCancel.action")
 	@ResponseBody
-	public Map<String, Object> essenceTopicCancel(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> essenceTopicCancel(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> result = new HashMap<String, Object>();
 		try {

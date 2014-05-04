@@ -94,8 +94,7 @@ public class TopicAction extends BaseGroupAction {
 	 * @return
 	 */
 	@RequestMapping(value = "/{gid}/cateId/{cateId}", method = RequestMethod.GET)
-	public ModelAndView groupArticleInItem(@PathVariable String gid,
-			@PathVariable String cateId, HttpSession session,
+	public ModelAndView groupArticleInItem(@PathVariable String gid, @PathVariable String cateId, HttpSession session,
 			HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
 		try {
@@ -104,16 +103,12 @@ public class TopicAction extends BaseGroupAction {
 			map.put("categoryId", cateId);
 			Group group = this.checkGroup(map, session);
 			// 查询文章
-			UlewoPaginationResult<Topic> topicResult = topicService
-					.findTopics(map);
+			UlewoPaginationResult<Topic> topicResult = topicService.findTopics(map);
 			// 查询分类
-			List<TopicCategory> categoryList = topicCategoryService
-					.queryCategoryAndTopicCount(map);
+			List<TopicCategory> categoryList = topicCategoryService.queryCategoryAndTopicCount(map);
 			SessionUser sessionUser = this.getSessionUser(session);
 			TopicCategory category = topicCategoryService.getCategroy(map);
-			if (sessionUser != null
-					&& sessionUser.getUserId().intValue() == group
-							.getGroupUserId().intValue()) {
+			if (sessionUser != null && sessionUser.getUserId().intValue() == group.getGroupUserId().intValue()) {
 				category.setAllowPost(AllowPostEnums.ALLOW.getValue());
 			}
 			mv.addObject("group", group);
@@ -150,8 +145,7 @@ public class TopicAction extends BaseGroupAction {
 	 * @return
 	 */
 	@RequestMapping(value = "/{gid}/topic/{topicId}", method = RequestMethod.GET)
-	public ModelAndView showTopic(@PathVariable String gid,
-			@PathVariable String topicId, HttpSession session,
+	public ModelAndView showTopic(@PathVariable String gid, @PathVariable String topicId, HttpSession session,
 			HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
@@ -162,8 +156,7 @@ public class TopicAction extends BaseGroupAction {
 			Group group = this.checkGroup(map, session);
 			Topic topic = this.topicService.showTopic(map);
 			// 查询分类
-			List<TopicCategory> categoryList = topicCategoryService
-					.queryCategoryAndTopicCount(map);
+			List<TopicCategory> categoryList = topicCategoryService.queryCategoryAndTopicCount(map);
 			mv.addObject("group", group);
 			mv.addObject("topic", topic);
 			mv.addObject("categoryList", categoryList);
@@ -178,14 +171,12 @@ public class TopicAction extends BaseGroupAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/loadSurvey", method = RequestMethod.GET)
-	public Map<String, Object> loadSurvey(HttpSession session,
-			HttpServletRequest request, HttpServletResponse response) {
+	public Map<String, Object> loadSurvey(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
 		Map<String, Object> result = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = this.builderParams(request, true);
-			TopicSurvey survey = this.topicSurveyService.findTopicSurveyById(
-					map, this.getSessionUser(session));
+			TopicSurvey survey = this.topicSurveyService.findTopicSurveyById(map, this.getSessionUser(session));
 			result.put("survey", survey);
 			result.put("result", ResultCode.SUCCESS.getCode());
 		} catch (Exception e) {
@@ -199,16 +190,14 @@ public class TopicAction extends BaseGroupAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/saveSurvey.action", method = RequestMethod.POST)
-	public Map<String, Object> saveSurvey(HttpSession session,
-			HttpServletRequest request, HttpServletResponse response) {
+	public Map<String, Object> saveSurvey(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
 		Map<String, Object> result = new HashMap<String, Object>();
 		try {
 			String[] ids = request.getParameterValues("surveyId");
 			Map<String, String> map = this.builderParams(request, true);
 			topicSurveyService.SurveyDo(map, ids, this.getSessionUser(session));
-			TopicSurvey survey = this.topicSurveyService.findTopicSurveyById(
-					map, this.getSessionUser(session));
+			TopicSurvey survey = this.topicSurveyService.findTopicSurveyById(map, this.getSessionUser(session));
 			result.put("survey", survey);
 			result.put("result", ResultCode.SUCCESS.getCode());
 		} catch (BusinessException e) {
@@ -234,8 +223,7 @@ public class TopicAction extends BaseGroupAction {
 	 * @return
 	 */
 	@RequestMapping(value = "/fileupload", method = RequestMethod.POST)
-	public ModelAndView fileupload(HttpSession session,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView fileupload(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
@@ -258,8 +246,7 @@ public class TopicAction extends BaseGroupAction {
 			}
 			String fileName = multipartFile.getOriginalFilename();
 			String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
-			if (!"rar".equalsIgnoreCase(suffix)
-					&& !"zip".equalsIgnoreCase(suffix)) {
+			if (!"rar".equalsIgnoreCase(suffix) && !"zip".equalsIgnoreCase(suffix)) {
 				mv.addObject("result", "fail");
 				mv.addObject("message", "文件类型只能是.rar 压缩文件");
 				mv.setViewName("group/fileupload");
@@ -267,8 +254,7 @@ public class TopicAction extends BaseGroupAction {
 			}
 			SimpleDateFormat formater = new SimpleDateFormat("yyyyMM");
 			String saveDir = formater.format(new Date());
-			String realName = String.valueOf(System.currentTimeMillis()) + "."
-					+ suffix;
+			String realName = String.valueOf(System.currentTimeMillis()) + "." + suffix;
 			String savePath = saveDir + "/" + realName;
 			String fileDir = realPath + "upload" + "/" + saveDir;
 			File dir = new File(fileDir);
@@ -302,8 +288,7 @@ public class TopicAction extends BaseGroupAction {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/deleteFile.action", method = RequestMethod.POST)
-	public Map<String, Object> deleteFile(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> deleteFile(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -314,8 +299,7 @@ public class TopicAction extends BaseGroupAction {
 				modelMap.put("msg", "参数异常");
 				return modelMap;
 			}
-			if (this.getSessionUserId(session).intValue() != Integer
-					.parseInt(userId)) {
+			if (this.getSessionUserId(session).intValue() != Integer.parseInt(userId)) {
 				modelMap.put("result", ResultCode.ERROR.getCode());
 				modelMap.put("msg", "参数异常");
 				return modelMap;
@@ -325,8 +309,7 @@ public class TopicAction extends BaseGroupAction {
 				modelMap.put("msg", "参数异常");
 				return modelMap;
 			}
-			String realPath = session.getServletContext().getRealPath("/")
-					+ "upload/";
+			String realPath = session.getServletContext().getRealPath("/") + "upload/";
 			File file = new File(realPath + fileName);
 			if (file.exists()) {
 				file.delete();
@@ -353,14 +336,13 @@ public class TopicAction extends BaseGroupAction {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/checkDownLoad.action", method = RequestMethod.GET)
-	public Map<String, Object> downloadFile(HttpSession session,
-			HttpServletRequest request, HttpServletResponse response) {
+	public Map<String, Object> downloadFile(HttpSession session, HttpServletRequest request,
+			HttpServletResponse response) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = this.builderParams(request, true);
-			attachedDownloadService.checkDownLoad(map,
-					this.getSessionUser(session));
+			attachedDownloadService.checkDownLoad(map, this.getSessionUser(session));
 			modelMap.put("result", ResultCode.SUCCESS.getCode());
 			return modelMap;
 		} catch (BusinessException e) {
@@ -385,15 +367,13 @@ public class TopicAction extends BaseGroupAction {
 	 * @return
 	 */
 	@RequestMapping(value = "/downloadFile.action", method = RequestMethod.GET)
-	public ModelAndView downloadFileDo(HttpSession session,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView downloadFileDo(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
 
-			this.attachedDownloadService.downloadFile(
-					this.builderParams(request, true),
-					this.getSessionUser(session), response, session);
+			this.attachedDownloadService.downloadFile(this.builderParams(request, true), this.getSessionUser(session),
+					response, session);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			mv.setViewName("redirect:" + Constant.ERRORPAGE);
@@ -411,14 +391,12 @@ public class TopicAction extends BaseGroupAction {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/fetchAttachedUsers.do", method = RequestMethod.GET)
-	public Map<String, Object> fetchAttachedUsers(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> fetchAttachedUsers(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = this.builderParams(request, true);
-			List<AttachmentDownload> list = attachedDownloadService
-					.queryAttachedUserByAttachedId(map);
+			List<AttachmentDownload> list = attachedDownloadService.queryAttachedUserByAttachedId(map);
 			modelMap.put("result", ResultCode.SUCCESS.getCode());
 			modelMap.put("list", list);
 			return modelMap;
@@ -444,16 +422,14 @@ public class TopicAction extends BaseGroupAction {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/addTopic.action", method = RequestMethod.POST)
-	public Map<String, Object> addTopic(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> addTopic(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
-			Map<String, String> param = this.builderParams(request, true);
+			Map<String, String> param = this.builderParams(request, false);
 			String[] surveyTitles = request.getParameterValues("surveyTitle");
 			String realPath = session.getServletContext().getRealPath("/");
-			Topic topic = this.topicService.addTopic(param,
-					this.getSessionUser(session), surveyTitles, request);
+			Topic topic = this.topicService.addTopic(param, this.getSessionUser(session), surveyTitles, request);
 			modelMap.put("result", ResultCode.SUCCESS.getCode());
 			modelMap.put("topic", topic);
 			return modelMap;
@@ -480,17 +456,15 @@ public class TopicAction extends BaseGroupAction {
 	 */
 	@RequestMapping(value = "/loadComment", method = RequestMethod.GET)
 	@ResponseBody
-	public UlewoPaginationResult<TopicComment> loadComment(HttpSession session,
-			HttpServletRequest request, HttpServletResponse response) {
+	public UlewoPaginationResult<TopicComment> loadComment(HttpSession session, HttpServletRequest request,
+			HttpServletResponse response) {
 		try {
 			Map<String, String> map = this.builderParams(request, true);
-			UlewoPaginationResult<TopicComment> result = this.topicCmmentService
-					.queryCommentByTopicId(map);
+			UlewoPaginationResult<TopicComment> result = this.topicCmmentService.queryCommentByTopicId(map);
 			return result;
 		} catch (Exception e) {
 			log.error(e.getMessage());
-			return new UlewoPaginationResult<TopicComment>(
-					new ArrayList<TopicComment>(), ResultCode.ERROR,
+			return new UlewoPaginationResult<TopicComment>(new ArrayList<TopicComment>(), ResultCode.ERROR,
 					new StringBuilder(e.getMessage()));
 		}
 	}
@@ -504,15 +478,13 @@ public class TopicAction extends BaseGroupAction {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/addComment.action", method = RequestMethod.POST)
-	public Map<String, Object> addComment(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> addComment(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = this.builderParams(request, false);
 
-			TopicComment comment = topicCmmentService.addComment(map,
-					this.getSessionUser(session));
+			TopicComment comment = topicCmmentService.addComment(map, this.getSessionUser(session));
 			modelMap.put("comment", comment);
 			modelMap.put("result", ResultCode.SUCCESS.getCode());
 			return modelMap;
@@ -538,15 +510,13 @@ public class TopicAction extends BaseGroupAction {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/addSubComment.action", method = RequestMethod.POST)
-	public Map<String, Object> addSubReComment(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> addSubReComment(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
-			Map<String, String> map = this.builderParams(request, true);
+			Map<String, String> map = this.builderParams(request, false);
 			map.put("commentType", TopicCommentTypeEnums.SUBCOMMENT.getValue());
-			TopicComment comment = topicCmmentService.addComment(map,
-					this.getSessionUser(session));
+			TopicComment comment = topicCmmentService.addComment(map, this.getSessionUser(session));
 			modelMap.put("comment", comment);
 			modelMap.put("result", ResultCode.SUCCESS.getCode());
 			return modelMap;

@@ -81,7 +81,7 @@ public class GroupAction extends BaseGroupAction {
 		ModelAndView mv = new ModelAndView();
 		try {
 			// 所有群组
-			Map<String, String> map = this.builderParams(request, true);
+			Map<String, String> map = this.builderParams(request, false);
 			UlewoPaginationResult<Group> groupResult = groupService.findAllGroup(map);
 			mv.addObject("result", groupResult);
 			mv.setViewName("group/allgroups");
