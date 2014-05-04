@@ -26,8 +26,7 @@ public class CollectionServiceImpl implements CollectionService {
 	@Resource
 	private CollectionMapper<Collection> collectionMapper;
 
-	public void addCollection(Map<String, String> map, SessionUser sessionUser)
-			throws BusinessException {
+	public void addCollection(Map<String, String> map, SessionUser sessionUser) throws BusinessException {
 		String articleId = map.get("articleId");
 		String type = map.get("type");
 		Integer userId = sessionUser.getUserId();
@@ -35,11 +34,11 @@ public class CollectionServiceImpl implements CollectionService {
 			throw new BusinessException("参数错误");
 		}
 		int articleId_int = Integer.parseInt(articleId);
-		if (!CollectionTypeEnums.TOPIC.getValue().equals(type)
-				&& !CollectionTypeEnums.BLOG.getValue().equals(type)) {
+		if (!CollectionTypeEnums.TOPIC.getValue().equals(type) && !CollectionTypeEnums.BLOG.getValue().equals(type)) {
 			throw new BusinessException("参数错误");
 		}
 
+		map.put("userId", userId.toString());
 		int count = 0;
 		if (CollectionTypeEnums.TOPIC.getValue().equals(type)) {
 			count = collectionMapper.selectTopicInfoCount(map);
@@ -59,8 +58,7 @@ public class CollectionServiceImpl implements CollectionService {
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BusinessException.class)
-	public void deleteCollection(Map<String, String> map,
-			SessionUser sessionUser) throws BusinessException {
+	public void deleteCollection(Map<String, String> map, SessionUser sessionUser) throws BusinessException {
 		String keystr = map.get("key");
 		if (keystr == null) {
 			throw new BusinessException("参数错误");
@@ -86,8 +84,7 @@ public class CollectionServiceImpl implements CollectionService {
 
 	}
 
-	public UlewoPaginationResult<Collection> queryCollectionByUserId(
-			Map<String, String> map, SessionUser sessionUser) {
+	public UlewoPaginationResult<Collection> queryCollectionByUserId(Map<String, String> map, SessionUser sessionUser) {
 		String pageStr = map.get("page");
 		Integer pageNo = 0;
 		if (StringUtils.isNumber(pageStr)) {
@@ -100,22 +97,19 @@ public class CollectionServiceImpl implements CollectionService {
 		} else if (CollectionTypeEnums.BLOG.getValue().equals(map.get("type"))) {
 			count = collectionMapper.selectBlogInfoCount(map);
 		}
-		SimplePage page = new SimplePage(pageNo, count,
-				PageSize.SIZE20.getSize());
+		SimplePage page = new SimplePage(pageNo, count, PageSize.SIZE20.getSize());
 		List<Collection> list = new ArrayList<Collection>();
 		if (CollectionTypeEnums.TOPIC.getValue().equals(map.get("type"))) {
 			list = collectionMapper.selectTopicInfoList(map, page);
 		} else if (CollectionTypeEnums.BLOG.getValue().equals(map.get("type"))) {
 			list = collectionMapper.selectBlogInfoList(map, page);
 		}
-		UlewoPaginationResult<Collection> result = new UlewoPaginationResult<Collection>(
-				page, list);
+		UlewoPaginationResult<Collection> result = new UlewoPaginationResult<Collection>(page, list);
 		return result;
 	}
 
 	@Override
-	public Collection articleCollectionInfo(Map<String, String> map,
-			SessionUser sessionUser) {
+	public Collection articleCollectionInfo(Map<String, String> map, SessionUser sessionUser) {
 		String articleId = map.get("articleId");
 		String type = map.get("type");
 		Collection collection = new Collection();
