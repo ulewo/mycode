@@ -7,10 +7,6 @@
 <title>有乐窝后台管理系统</title>
 <%@ include file="../common/easyui_common.jsp" %>
 <link rel="stylesheet" type="text/css" href="../css/admin.main.css?version=2.5">
-<script>
-var groupManage = {}
-groupManage.gid = "${gid}";
-</script>
 <script type="text/javascript" src="../js/admin.main.js?version=2.5"></script>
 </head>
 <body class="easyui-layout">

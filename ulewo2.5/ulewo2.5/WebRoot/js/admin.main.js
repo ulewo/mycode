@@ -1,87 +1,75 @@
 //树菜单，这里由于菜单比较少，没必要写到数据库中，实际项目中，可以写到数据库中，然后读取的时候返回这样一个json对象就可以了。
+var groupManage = {}
 groupManage.menue = [{
 	"id": 1,
 	"text": "C",
 	"children": [{
 		"text": "吐槽管理",
-		"iconCls": 'icon-settings',
 		"children": [{
 			"id": 10,
-			"iconCls": 'icon-basesettings',
 			"text": "所有吐槽",
 			"attributes": {
-				"url": global.realPath+"/groupmanage/editGroup.action?gid="+groupManage.gid
+				"url": global.realPath+"/admin/admin_blast.jsp"
 			}
 		},
 		{
 			"id": 11,
-			"iconCls": 'icon-avatar',
 			"text": "吐槽评论",
 			"attributes": {
-				"url": global.realPath+"/groupmanage/editGroupIcon?gid="+groupManage.gid
+				"url": global.realPath+"/admin/admin_blast_comment.jsp"
 			}
 		}]
 	},
 	{
 		"text": "文章管理",
-		"iconCls": 'icon-blog-set',
 		"children": [{
 			"id": 20,
-			"iconCls": 'icon-topic',
 			"text": "主题管理",
 			"attributes": {
-				"url": global.realPath+"/groupmanage/dispatcher/topic.action?gid="+groupManage.gid
+				"url": global.realPath+"/admin/admin_topic.jsp"
 			}
 		},
 		{
 			"id": 21,
-			"iconCls": 'icon-comment',
 			"text": "评论管理",
 			"attributes": {
-				"url": global.realPath+"/groupmanage/dispatcher/topic_comment.action?gid="+groupManage.gid
+				"url": global.realPath+"/admin/admin_topic_comment.jsp"
 			}
 		}]
 	},
 	{
 		"text": "博客管理",
-		"iconCls": 'icon-member_manage',
 		"children": [{
 			"id": 30,
-			"iconCls": 'icon-member',
 			"text": "博文管理",
 			"attributes": {
-				"url": global.realPath+"/groupmanage/dispatcher/group_member.action?gid="+groupManage.gid
+				"url": global.realPath+"/admin/admin_blog.jsp"
 			}
 		},{
 			"id": 30,
-			"iconCls": 'icon-accept_member',
 			"text": "评论管理",
 			"attributes": {
-				"url": global.realPath+"/groupmanage/dispatcher/group_memberapply.action?gid="+groupManage.gid
+				"url": global.realPath+"/admin/admin_blog_comment.jsp"
 			}
 		}]
 	},
 	{
 		"text": "窝窝管理",
-		"iconCls": 'icon-member_manage',
 		"children": [{
 			"id": 30,
-			"iconCls": 'icon-member',
 			"text": "窝窝管理",
 			"attributes": {
-				"url": global.realPath+"/groupmanage/dispatcher/group_member.action?gid="+groupManage.gid
+				"url": global.realPath+"/admin/admin_group.jsp"
 			}
 		}]
 	},
 	{
 		"text": "会员管理",
-		"iconCls": 'icon-member_manage',
 		"children": [{
 			"id": 30,
-			"iconCls": 'icon-member',
 			"text": "会员管理",
 			"attributes": {
-				"url": global.realPath+"/groupmanage/dispatcher/group_member.action?gid="+groupManage.gid
+				"url": global.realPath+"/admin/admin_member.jsp"
 			}
 		}]
 	}
