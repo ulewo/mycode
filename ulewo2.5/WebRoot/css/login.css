@@ -1,0 +1,27 @@
+@IMPORT url("public.css");
+.left{width:650px;float:left;margin-top:15px;}
+.login_p{margin-top:15px;font-size:14px;}
+.login_tit{text-align:right;width:100px;float:left;padding-top:5px;color:#23699B}
+.login_input{float:left;text-align:left;width:250px;}
+.login_input input{height:20px;width:250px;}
+.login_info{color:#9D9D9D;display:inline-block;float:left;font-size:13px;padding-top:5px;margin-left:10px;}
+.login_input input.code{width:50px}
+.login_submit{float:left;display:inline-block;}
+.login_submit a{float:left;margin-top:3px;}
+.login_submit a.foregetpsw{padding-top:8px;margin-left:5px;}
+.login_submit .result_info{float:left;font-size:13px;}
+.login_code{width:65px;}
+.login_code_img{float:left;display:inline-block;}
+.login_code_img img{border:1px solid #3FA7CB}
+.login_code_refresh{float:left;margin-left:10px;display:inline-block;padding-top:5px;}
+.foregetpsw,.login_code_refresh_link{color:#3E62A6;font-size:13px;}
+.login_check{float:left;display:inline-block;margin-top:1px;}
+.login_remember{float:left;margin-left:5px;display:inline-block;}
+.login_remember_info{color:#B52222}
+.right{width:300px;float:left;margin-top:15px;}
+.login_right_tit{font-size:16px;font-weight:bold;margin-top:20px;color:#666666}
+.right ul{list-style:none;padding:0px;margin:0px;margin-top:10px;}
+.right ul li{line-height:25px;}
+
+#login_loading{display:none;}
+#remember_login{cursor:pointer;}

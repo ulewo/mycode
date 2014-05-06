@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ulewo.mapper.AttachmentDownloadMapper" >
+  <resultMap id="BaseResultMap" type="com.ulewo.model.AttachmentDownload" >
+    <id column="attachment_id" property="attachmentId" jdbcType="INTEGER" />
+    <id column="userid" property="userId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    a.attachment_id, a.userid
+  </sql>
+  <sql id="base_condition" >
+ 	 <if test="param!=null">
+	      <if test="null!=param.attachmentId and ''!=param.attachmentId" >
+	        	and  a.attachment_id = #{param.attachmentId,jdbcType=DECIMAL}
+	      </if>
+	      <if test="null!=param.userId and ''!=param.userId" >
+	        	and  a.userid = #{param.userId,jdbcType=DECIMAL}
+	      </if>
+     </if>
+  </sql>
+  <insert id="insert" parameterType="com.ulewo.model.AttachmentDownload" >
+    insert into ulewo_attachment_download (attachment_id,userid)
+    values (#{attachmentId,jdbcType=INTEGER},#{userId,jdbcType=INTEGER})
+  </insert>
+  
+  <select id="selectBaseInfo" parameterType="com.ulewo.model.AttachmentDownload" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+     from ulewo_attachment_download a where 1 =1
+    <include refid="base_condition" />
+  </select>
+  
+  <select id="selectBaseInfoCount" parameterType="com.ulewo.model.AttachmentDownload" resultType="java.lang.Integer">
+    select count(*) from ulewo_attachment_download a
+    where 1=1
+    <include refid="base_condition" />
+    and  EXISTS(select 1 from ulewo_user u where u.userid=a.userid)
+  </select>
+  
+  <select id="selectBaseInfoList" parameterType="com.ulewo.model.AttachmentDownload" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" /> 
+    ,u.username userName,u.user_icon userIcon
+    from ulewo_attachment_download a inner join ulewo_user u on u.userid = a.userid
+    where 1 =1
+    <include refid="base_condition" />
+  </select>
+</mapper>

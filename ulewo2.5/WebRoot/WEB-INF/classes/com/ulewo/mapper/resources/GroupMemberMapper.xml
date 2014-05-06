@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ulewo.mapper.GroupMemberMapper" >
+  <resultMap id="BaseResultMap" type="com.ulewo.model.GroupMember" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="gid" property="gid" jdbcType="INTEGER" />
+    <result column="userid" property="userId" jdbcType="INTEGER" />
+    <result column="grade" property="grade" jdbcType="INTEGER" />
+    <result column="member_type" property="memberType" jdbcType="VARCHAR" />
+    <result column="join_time" property="joinTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    m.id, m.gid, m.userid, m.grade, m.member_type, m.join_time
+  </sql>
+  <sql id="base_condition" >
+ 	 <if test="param!=null">
+	      <if test="null!=param.userId and ''!=param.userId" >
+	        	and m.userid = #{param.userId,jdbcType=VARCHAR}
+	      </if>
+	      <if test="null!=param.gid and ''!=param.gid" >
+	        	and m.gid = #{param.gid,jdbcType=VARCHAR}
+	      </if>
+	      <if test="null!=param.id and ''!=param.id" >
+	        	and m.id = #{param.id,jdbcType=VARCHAR}
+	      </if>
+	      <if test="null!=param.memberType and ''!=param.memberType" >
+	        	and m.member_type = #{param.memberType,jdbcType=VARCHAR}
+	      </if>
+	       <if test="null!=param.userName and ''!=param.userName" >
+	        	and u.username  like '%${param.userName}%'
+	      </if>
+	      <if test="null!=param.startTm and ''!=param.startTm">
+	      	 <![CDATA[
+	        	and m.join_time >='${param.startTm} 00:00:00'
+	         ]]>
+	      </if>
+	      <if test="null!=param.startEnd and ''!=param.startEnd">
+	      	  <![CDATA[
+	        	and m.join_time <= '${param.startEnd} 23:59:59'
+	          ]]>
+	      </if>
+      </if>
+  </sql>
+  <select id="selectBaseInfo" parameterType="com.ulewo.model.GroupMember" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from ulewo_group_member m
+    where 1=1
+     <include refid="base_condition" />
+  </select>
+  
+    <select id="selectBaseInfoCount" parameterType="java.util.Map" resultType="java.lang.Integer" >
+    select count(1)
+ from ulewo_group_member m inner join ulewo_user u on u.userid = m.userid
+    where 1=1
+     <include refid="base_condition" />
+  </select>
+  
+  <select id="selectBaseInfoList" parameterType="java.util.Map" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    ,(select count(1) from ulewo_topic t where t.gid=m.gid and t.userid = u.userid) topicCount
+     ,u.username userName,u.user_icon userIcon
+    from ulewo_group_member m inner join ulewo_user u on u.userid = m.userid
+    where 1=1
+     <include refid="base_condition" />
+      <if test="null!=param.orderBy and ''!=param.orderBy" >
+	      order by ${param.orderBy}
+	  </if>
+	  <if test="null==param.orderBy or ''==param.orderBy" >
+	      order by join_time desc 
+	  </if>
+	  limit #{page.start},#{page.end} 
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.Integer" >
+    delete from ulewo_group_member
+    where userid = #{param.userId,jdbcType=INTEGER} and gid = #{param.gid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ulewo.model.GroupMember" >
+    insert into ulewo_group_member (gid, userid, 
+      grade, member_type, join_time
+      )
+    values (#{gid,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
+      #{grade,jdbcType=INTEGER}, #{memberType,jdbcType=VARCHAR}, #{joinTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <update id="updateSelective" parameterType="com.ulewo.model.GroupMember" >
+    update ulewo_group_member
+    <set >
+      <if test="gid != null" >
+        gid = #{gid,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        userid = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="grade != null" >
+        grade = #{grade,jdbcType=INTEGER},
+      </if>
+      <if test="memberType != null" >
+        member_type = #{memberType,jdbcType=VARCHAR},
+      </if>
+      <if test="joinTime != null" >
+        join_time = #{joinTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where gid = #{gid,jdbcType=INTEGER} and userid = #{userId,jdbcType=INTEGER}
+  </update>
+</mapper>

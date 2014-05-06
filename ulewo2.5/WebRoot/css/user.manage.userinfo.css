@@ -1,0 +1,11 @@
+@import url("user.manage.public.css");
+.info_item{margin-top:15px;font-size:14px;}
+.info_item_tit{width:100px;text-align:right;float:left;color:#666666;font-family:Î¢ÈíÑÅºÚ,Verdana,sans-serif,ËÎÌå;padding-top:5px;}
+.info_item_text_t{padding-top:5px;}
+.info_item_text{display:inline-block;float:left;margin-left:10px;}
+.info_item_text .editinput{height:25px;width:250px;padding-left:5px;}
+.info_item_text textarea {width:250px;height:100px;border:1px solid #666666;padding-left:5px;padding-top:5px;}
+.info_item_info{float:left;display:inline-block;color:#9D9D9D;padding-top:5px;font-size:13px;margin-left:10px;}
+.info_item_text a{margin-top:5px;}
+.subbtn a{float:left;}
+.result_info{font-size:13px;}

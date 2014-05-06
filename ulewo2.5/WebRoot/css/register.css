@@ -1,0 +1,24 @@
+@IMPORT url("public.css");
+.left{width:750px;float:left;margin-top:15px;}
+.register_p{margin-top:20px;font-size:14px;}
+.register_tit{text-align:right;width:100px;float:left;padding-top:5px;}
+.register_input{float:left;text-align:left;width:230px;}
+.register_input input{height:20px;width:220px;}
+.register_info{color:#9D9D9D;display:inline-block;float:left;font-size:13px;padding-top:5px;}
+.register_input input.code{width:50px}
+.register_code{width:65px;}
+.register_code_img{float:left;display:inline-block;}
+.register_code_img img{border: 1px solid #3FA7CB}
+.register_code_refresh{float:left;margin-left:10px;display:inline-block;padding-top:5px;width:93px;}
+.foregetpsw,.register_code_refresh_link{color:#3E62A6;font-size:13px;}
+.register_check{float:left;display:inline-block;margin-top:1px;}
+.register_remember{float:left;margin-left:5px;display:inline-block;}
+.register_remember_info{color:#B52222}
+.right{width:250px;float:left;margin-top:30px;}
+.register_right_tit{font-size:16px;font-weight:bold;margin-top:20px;color:#666666}
+.right ul{list-style:none;padding:0px;margin:0px;margin-top:10px;}
+.right ul li{line-height:25px;}
+
+.register_submit{float:left;display:inline-block;}
+.register_submit a{float:left;margin-top:3px;}
+.register_submit .result_info{float:left;font-size:13px;}

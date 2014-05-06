@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ulewo.mapper.TopicMapper" >
+  <resultMap id="BaseResultMap" type="com.ulewo.model.Topic" >
+    <id column="topic_id" property="topicId" jdbcType="INTEGER" />
+    <result column="gid" property="gid" jdbcType="INTEGER" />
+    <result column="topic_type" property="topicType" jdbcType="INTEGER" />
+    <result column="category_id" property="categoryId" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="keyword" property="keyWord" jdbcType="VARCHAR" />
+    <result column="summary" property="summary" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="topic_image" property="topicImage" jdbcType="VARCHAR" />
+     <result column="topic_image_small" property="topicImageSmall" jdbcType="VARCHAR" />
+    <result column="title_style_id" property="titleStyleId" jdbcType="INTEGER" />
+    <result column="userid" property="userId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="last_comment_time" property="lastCommentTime" jdbcType="TIMESTAMP" />
+    <result column="read_count" property="readCount" jdbcType="INTEGER" />
+    <result column="grade" property="grade" jdbcType="INTEGER" />
+    <result column="essence" property="essence" jdbcType="VARCHAR" />
+    <result column="valid" property="valid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.topic_id, t.gid, t.topic_type, t.category_id, t.title,t.topic_image,t.topic_image_small, t.keyword,t.summary, t.title_style_id, t.userid, t.create_time, 
+    t.last_comment_time, t.read_count, t.grade, t.essence, t.valid
+  </sql>
+  <sql id="base_condition" >
+ 	 <if test="param!=null">
+	      <if test="null!=param.topicId and ''!=param.topicId" >
+	        	and t.topic_id = #{param.topicId,jdbcType=DECIMAL}
+	      </if>
+	      <if test="null!=param.gid and ''!=param.gid" >
+	        	and t.gid = #{param.gid,jdbcType=DECIMAL}
+	      </if>
+	      <if test="null!=param.categoryId and param.categoryId!=0" >
+	        	and t.category_id = #{param.categoryId,jdbcType=DECIMAL}
+	      </if>
+	      <if test="null!=param.title and ''!=param.title and '0'.toString()!=param.title" >
+	        	and t.title like '%${param.title}%'
+	      </if>
+	      <if test="null!=param.keyWord and ''!=param.keyWord" >
+	        	and t.title like '%${param.keyWord}%' or t.content like '%${param.keyWord}%'
+	      </if>
+	      <if test="null!=param.haveimg and ''!=param.haveimg" >
+	        	and t.topic_image !=''
+	      </if>
+	      
+	      <if test="null!=param.startTm and ''!=param.startTm">
+	      	 <![CDATA[
+	        	and t.create_time >='${param.startTm} 00:00:00'
+	         ]]>
+	      </if>
+	      <if test="null!=param.startEnd and ''!=param.startEnd">
+	      	  <![CDATA[
+	        	and t.create_time <= '${param.startEnd} 23:59:59'
+	          ]]>
+	      </if>
+      </if>
+  </sql>
+  
+  <select id="selectTopicByTopicId" resultMap="BaseResultMap">
+  	 select 
+	  <include refid="Base_Column_List" />
+	  from ulewo_topic t where t.topic_id  = #{topicId}
+  </select> 
+  
+  <select id="selectBaseInfo" resultMap="BaseResultMap" parameterType="java.util.Map">
+  	 select 
+	  <include refid="Base_Column_List" />
+	  from ulewo_topic t where 1=1
+	 <include refid="base_condition" />
+  </select>
+  
+  <select id ="selectTopicCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+    select count(1)
+	  from ulewo_topic t inner join ulewo_user u on u.userid = t.userid
+	  where 1=1
+	  <include refid="base_condition" />
+  </select>
+  <select id ="selectTopicList" resultMap="BaseResultMap" parameterType="java.util.Map">
+	  select 
+	  <include refid="Base_Column_List" />
+	  ,(select count(1) from ulewo_topic_comment tc where tc.topic_id = t.topic_id and  EXISTS(select 1 from ulewo_user u where u.userid=tc.userid)) commentCount
+	  ,u.username userName,u.user_icon userIcon
+	  ,c.name categoryName
+	  from ulewo_topic t inner join ulewo_user u on u.userid = t.userid
+	  left join ulewo_topic_category c on c.category_id = t.category_id
+	  where 1=1
+	  <include refid="base_condition" />
+	  
+      <if test="null!=param.orderBy and ''!=param.orderBy" >
+        	order by ${param.orderBy}
+      </if>
+	  <if test="null==param.orderBy or ''==param.orderBy" >
+        	order by grade desc,last_comment_time desc ,create_time desc
+      </if>
+       limit #{page.start},#{page.end} 
+  </select>
+  
+  <select id="showTopic" resultMap="BaseResultMap" parameterType="java.util.Map">
+  	 select 
+	  <include refid="Base_Column_List" />
+	  ,content
+	  ,(select count(1) from ulewo_topic_comment tc where tc.topic_id = t.topic_id) commentCount
+	  ,u.username userName,u.user_icon userIcon
+	  from ulewo_topic t inner join ulewo_user u on u.userid = t.userid
+	 <include refid="base_condition" />
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ulewo_topic t
+    where topic_id = #{topicId,jdbcType=INTEGER}
+  </select>
+  <delete id="delete" parameterType="java.util.Map" >
+    delete from ulewo_topic
+    where topic_id = #{param.topicId,jdbcType=INTEGER} and gid = #{param.gid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ulewo.model.Topic">
+  	<selectKey keyProperty="topicId" resultType="int" order="AFTER">
+      	SELECT LAST_INSERT_ID()
+    </selectKey>
+    <![CDATA[
+    insert into ulewo_topic (gid, topic_type, 
+      category_id, title, keyword,userid, create_time, 
+      last_comment_time, 
+      content, 
+      summary, topic_image,topic_image_small)
+    values (#{gid,jdbcType=INTEGER}, #{topicType,jdbcType=INTEGER}, 
+      #{categoryId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{keyWord,jdbcType=VARCHAR},
+      #{userId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{lastCommentTime,jdbcType=TIMESTAMP},
+      #{content,jdbcType=LONGVARCHAR}, 
+      #{summary,jdbcType=LONGVARCHAR}, #{topicImage,jdbcType=LONGVARCHAR}, #{topicImageSmall,jdbcType=LONGVARCHAR})
+     ]]>
+  </insert>
+  <update id="updateSelective" parameterType="com.ulewo.model.Topic" >
+    update ulewo_topic
+    <set >
+      <if test="gid != null" >
+        gid = #{gid,jdbcType=INTEGER},
+      </if>
+      <if test="topicType != null" >
+        topic_type = #{topicType,jdbcType=INTEGER},
+      </if>
+      <if test="categoryId != null" >
+        category_id = #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="keyWord != null" >
+        keyword = #{keyWord,jdbcType=VARCHAR},
+      </if>
+      <if test="titleStyleId != null" >
+        title_style_id = #{titleStyleId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        userid = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastCommentTime != null" >
+        last_comment_time = #{lastCommentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="readCount != null" >
+        read_count = #{readCount,jdbcType=INTEGER},
+      </if>
+      <if test="grade != null" >
+        grade = #{grade,jdbcType=INTEGER},
+      </if>
+      <if test="essence != null" >
+        essence = #{essence,jdbcType=VARCHAR},
+      </if>
+      <if test="valid != null" >
+        valid = #{valid,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="summary != null" >
+        summary = #{summary,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="topicImage != null" >
+        topic_image = #{topicImage,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where topic_id = #{topicId,jdbcType=INTEGER} and gid = #{gid,jdbcType=INTEGER}
+  </update>
+</mapper>
