@@ -8,8 +8,8 @@
 <%@ include file="../common/path.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${group.groupName} 成员-有乐窝</title>
-<meta name="description" content="${group.groupName}">
-<meta name="keywords" content="${group.groupName}">
+<meta name="description" content="${group.groupName} 成员">
+<meta name="keywords" content="${group.groupName} 成员">
 <link rel="stylesheet" type="text/css" href="${realPath}/css/group.member.css?version=2.5">
 </head>
 <body>

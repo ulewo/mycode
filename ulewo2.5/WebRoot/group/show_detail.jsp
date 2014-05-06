@@ -8,8 +8,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${topic.title}-有乐窝</title>
-<meta name="description" content="${article.title}">
-<meta name="keywords" content="${article.title}">
+<meta name="description" content="${topic.title}">
+<meta name="keywords" content="${topic.title}">
 <%@ include file="../common/path.jsp" %>
 <script type="text/javascript">
 <!--
