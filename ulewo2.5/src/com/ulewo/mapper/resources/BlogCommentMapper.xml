@@ -35,7 +35,7 @@
     u2.username atUserName,
     u2.user_icon atUserIcon
     from ulewo_blog_comment c 
-    left join ulewo_user u1 on u1.userid=c.userid 
+    inner join ulewo_user u1 on u1.userid=c.userid 
     left join ulewo_user u2 on u2.userid=c.at_userid
     where 1=1
     <include refid="base_condition" />
@@ -44,6 +44,7 @@
   <select id="selectBaseInfoCount" resultType="java.lang.Integer" parameterType="com.ulewo.model.BlogComment">
  	 select count(1)
     from ulewo_blog_comment c
+    inner join ulewo_user u1 on u1.userid=c.userid 
     where 1=1
     <include refid="base_condition" />
   </select>
