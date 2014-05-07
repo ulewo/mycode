@@ -1,22 +1,22 @@
-var adminBlog = {};
+var adminTopic = {};
 $(function(){
 	var dg = $('#datagrid');
 	dg.datagrid('getPager').pagination({
 		layout:['list','sep','first','prev','sep','links','sep','next','last','sep','refresh'],
 		pageList: [20,30,40,50]
 	});
-	adminBlog.initCategory();
+	adminTopic.initCategory();
 });
 //搜索
-adminBlog.search = function(){
+adminTopic.search = function(){
 	  var fromObjStr=$('#searchform').serialize();
 	  var params = ulewo_common.str2Obj(fromObjStr);
 	  $( "#datagrid").datagrid( 'options' ).queryParams= params;
-	  $( "#datagrid").datagrid( 'options' ).url="blogs";
+	  $( "#datagrid").datagrid( 'options' ).url="topics";
 	  $( "#datagrid").datagrid( 'load' );
 }
 
-adminBlog.formatTitle = function(val,row){
+adminTopic.formatTitle = function(val,row){
 	var grade = row.grade;
 	var essence = row.essence;
 	var title = "";
@@ -32,7 +32,7 @@ adminBlog.formatTitle = function(val,row){
 
 
 //删除
-adminBlog.deleteBlog = function(){
+adminTopic.deleteTopic = function(){
 	var rows = $("#datagrid").datagrid("getChecked");
 	if(rows.length==0){
 		ulewo_common.alert("请选择需要删除的数据",1);
@@ -42,7 +42,7 @@ adminBlog.deleteBlog = function(){
 		    if (r){  
 		    	var key = [];
 		    	$.each(rows,function(inex,item){
-		    		key.push(item.blogId);
+		    		key.push(item.topicId);
 		    	});
 		    	$.ajax({
 		    		async : true,
@@ -52,7 +52,7 @@ adminBlog.deleteBlog = function(){
 		    		data:{
 		    			"key":key.join(",")
 		    		},
-		    		url : "deleteBlogs",// 请求的action路径
+		    		url : "deleteTopics",// 请求的action路径
 		    		success : function(data) {
 		    			if(data.result=="200"){
 		    				ulewo_common.tipsInfo("删除成功",1);

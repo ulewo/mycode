@@ -9,17 +9,17 @@
 <title>管理文章-有乐窝</title>
 <%@ include file="../common/easyui_common.jsp" %>
 <script type="text/javascript">
-var topicCommentManage={};
-topicCommentManage.gid = "${gid}";
+var adminBlogComment={};
+adminBlogComment.gid = "${gid}";
 </script>
-<script type="text/javascript" src="${realPath}/js/group.manage.topic_comment.js?version=2.5"></script>
+<script type="text/javascript" src="${realPath}/js/admin.blog_comment.js?version=2.5"></script>
 </head>
 <body class="easyui-layout">
 	<div data-options="region:'north',border:false">
 		<div class="toolbar datagrid-toolbar">
 			<table cellpadding="0" cellspacing="0">
 				<tr>
-					<td><a href="javascript:topicCommentManage.search()" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">查询</a></td>
+					<td><a href="javascript:adminBlogComment.search()" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">查询</a></td>
 					<td><div class="toolbar-line"></div></td>
 					<td><a href="javascript:ulewo_common.clearForm('searchform')" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">清除</a></td>
 					<td><div class="toolbar-line"></div></td>
@@ -42,7 +42,7 @@ topicCommentManage.gid = "${gid}";
 			</div>
 	</div>
 	<div data-options="region:'center',border:false">
-		 <table id="datagrid" data-options="fit:true,pageSize:20,url:'../topics?gid=${gid}',method:'get'" class="easyui-datagrid"
+		 <table id="datagrid" data-options="fit:true,pageSize:20,url:'blogs',method:'get'" class="easyui-datagrid"
 			title="博客列表" rownumbers="true" pagination="true">
 			<thead>
 			<tr>
@@ -69,7 +69,7 @@ topicCommentManage.gid = "${gid}";
 		</table>
 	</div>
 	<div id="comment_toolbar" class="toolbar datagrid-toolbar">
-		<a href="javascript:topicCommentManage.deleteComment()" class="easyui-linkbutton" data-options="iconCls:'icon-del',plain:true">删除评论</a>
+		<a href="javascript:adminBlogComment.deleteComment()" class="easyui-linkbutton" data-options="iconCls:'icon-del',plain:true">删除评论</a>
 	</div>
 </body>
 </html>

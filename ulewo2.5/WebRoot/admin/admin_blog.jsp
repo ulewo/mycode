@@ -9,19 +9,22 @@
 <title>管理文章-有乐窝</title>
 <%@ include file="../common/easyui_common.jsp" %>
 <script type="text/javascript">
-var topicmanage={};
-topicmanage.gid ="${gid}";
+var adminBlog={};
+adminBlog.gid ="${gid}";
 </script>
-<script type="text/javascript" src="${realPath}/js/group.manage.topic.js?version=2.5"></script>
+<script type="text/javascript" src="${realPath}/js/admin.blog.js?version=2.5"></script>
 </head>
 <body class="easyui-layout">
 	<div data-options="region:'north',border:false">
 		<div class="toolbar datagrid-toolbar">
 			<table cellpadding="0" cellspacing="0">
 				<tr>
-					<td><a href="javascript:topicmanage.search()" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">查询</a></td>
+					<td><a href="javascript:adminBlog.search()" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">查询</a></td>
 					<td><div class="toolbar-line"></div></td>
 					<td><a href="javascript:ulewo_common.clearForm('searchform')" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">清除</a></td>
+					<td><div class="toolbar-line"></div></td>
+					<td><a href="javascript:adminBlog.deleteBlog()" class="easyui-linkbutton" data-options="iconCls:'icon-del',plain:true">删除</a></td>
+				
 				</tr>
 			</table>
 		</div>
@@ -41,12 +44,12 @@ topicmanage.gid ="${gid}";
 			</div>
 	</div>
 	<div data-options="region:'center',border:false">
-		 <table id="datagrid" data-options="fit:true,pageSize:20,url:'../topics?gid=${param.gid}',method:'get'" class="easyui-datagrid"
+		 <table id="datagrid" data-options="fit:true,pageSize:20,url:'blogs',method:'get'" class="easyui-datagrid"
 			title="博客列表" rownumbers="true" pagination="true">
 			<thead>
 			<tr>
 				<th data-options="field:'ck',checkbox:true"></th>
-				<th field="title" data-options="formatter:topicmanage.formatTitle">标题</th>
+				<th field="title" data-options="formatter:adminBlog.formatTitle">标题</th>
 				<th field="commentCount">回复</th>
 				<th field="readCount">阅读</th>
 				<th field="userName" align="left">发布人</th>
