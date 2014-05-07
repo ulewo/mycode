@@ -116,7 +116,11 @@
   </select>
   <delete id="delete" parameterType="java.util.Map" >
     delete from ulewo_topic
-    where topic_id = #{param.topicId,jdbcType=INTEGER} and gid = #{param.gid,jdbcType=INTEGER}
+    where topic_id = #{param.topicId,jdbcType=INTEGER} 
+    <if test="null!=param.gid and ''!=param.gid" >
+	      and gid = #{param.gid,jdbcType=INTEGER}
+	</if>
+   
   </delete>
   <insert id="insert" parameterType="com.ulewo.model.Topic">
   	<selectKey keyProperty="topicId" resultType="int" order="AFTER">

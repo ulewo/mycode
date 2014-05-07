@@ -65,4 +65,6 @@ public interface BlogService {
 	public List<Blog> queryLatestBlog4Index() throws BusinessException;
 
 	public UlewoPaginationResult<Blog> queryLatestBlog(Map<String, String> map) throws BusinessException;
+
+	public void deleteBlogByAdmin(Map<String, String> map) throws BusinessException;
 }

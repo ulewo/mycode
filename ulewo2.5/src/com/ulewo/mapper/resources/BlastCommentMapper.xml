@@ -50,7 +50,7 @@
   
   <delete id="delete" parameterType="java.lang.Integer" >
     delete from ulewo_blast_comment
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{param.id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.ulewo.model.BlastComment" >
   	<selectKey keyProperty="id" resultType="int" order="AFTER">

@@ -40,8 +40,7 @@ public class BlogServiceImpl implements BlogService {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BusinessException.class)
-	public Blog saveBlog(Map<String, String> map, SessionUser sessionUser)
-			throws BusinessException {
+	public Blog saveBlog(Map<String, String> map, SessionUser sessionUser) throws BusinessException {
 		Integer userId = sessionUser.getUserId();
 		String title = map.get("title");
 		String categoryId = map.get("categoryId");
@@ -55,8 +54,7 @@ public class BlogServiceImpl implements BlogService {
 			id_int = Integer.parseInt(id);
 		}
 
-		if (StringUtils.isEmpty(title)
-				|| title.length() > MaxLengthEnums.MAXLENGTH150.getLength()) {
+		if (StringUtils.isEmpty(title) || title.length() > MaxLengthEnums.MAXLENGTH150.getLength()) {
 			throw new BusinessException("标题不符合规范");
 		}
 
@@ -71,13 +69,12 @@ public class BlogServiceImpl implements BlogService {
 		blog.setCategoryId(categoryId_int);
 		blog.setKeyWord(StringUtils.formateHtml(keyword));
 		List<Integer> userIds = new ArrayList<Integer>();
-		String formatContent = FormatAt.getInstance(Constant.TYPE_TALK)
-				.GenerateRefererLinks(userMapper, content, userIds);
+		String formatContent = FormatAt.getInstance(Constant.TYPE_TALK).GenerateRefererLinks(userMapper, content,
+				userIds);
 		blog.setContent(formatContent);
 		content = StringUtils.clearHtml(content);
 		if (content.length() > LengthEnums.Length100.getLength()) {
-			content = content.substring(0, LengthEnums.Length100.getLength())
-					+ "......";
+			content = content.substring(0, LengthEnums.Length100.getLength()) + "......";
 		}
 		blog.setSummary(content);
 		blog.setUserId(userId);
@@ -89,11 +86,9 @@ public class BlogServiceImpl implements BlogService {
 			}
 		}
 		if (blog.getBlogId().intValue() == 0) {
-			blog.setCreateTime(StringUtils.dateFormater.get()
-					.format(new Date()));
+			blog.setCreateTime(StringUtils.dateFormater.get().format(new Date()));
 			blogMapper.insert(blog);
-			User user = this.userMapper.selectUserByUserId(sessionUser
-					.getUserId());
+			User user = this.userMapper.selectUserByUserId(sessionUser.getUserId());
 			user.setMark(user.getMark() + MarkEnums.MARK5.getMark());
 			this.userMapper.updateSelective(user);
 			blog.setNewBlog(true);
@@ -116,8 +111,7 @@ public class BlogServiceImpl implements BlogService {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BusinessException.class)
-	public void deleteBlogBatch(Map<String, String> map, SessionUser user)
-			throws BusinessException {
+	public void deleteBlogBatch(Map<String, String> map, SessionUser user) throws BusinessException {
 		String keystr = map.get("key");
 		if (StringUtils.isEmpty(keystr)) {
 			throw new BusinessException("参数错误");
@@ -141,8 +135,25 @@ public class BlogServiceImpl implements BlogService {
 	}
 
 	@Override
-	public UlewoPaginationResult<Blog> queryBlogByUserId(Map<String, String> map)
-			throws BusinessException {
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BusinessException.class)
+	public void deleteBlogByAdmin(Map<String, String> map) throws BusinessException {
+		String keystr = map.get("key");
+		if (StringUtils.isEmpty(keystr)) {
+			throw new BusinessException("参数错误");
+
+		}
+		String[] kyes = keystr.split(",");
+		for (String key : kyes) {
+			if (!StringUtils.isNumber(key)) {
+				throw new BusinessException("参数错误");
+			}
+			map.put("blogId", key);
+			blogMapper.delete(map);
+		}
+	}
+
+	@Override
+	public UlewoPaginationResult<Blog> queryBlogByUserId(Map<String, String> map) throws BusinessException {
 		if (!StringUtils.isNumber(map.get("userId"))) {
 			throw new BusinessException("参数错误");
 		}
@@ -150,16 +161,13 @@ public class BlogServiceImpl implements BlogService {
 		if (StringUtils.isNumber(map.get("page"))) {
 			page_no = Integer.parseInt(map.get("page"));
 		}
-		if (!StringUtils.isEmpty(map.get("categoryId"))
-				&& !StringUtils.isNumber(map.get("categoryId"))) {
+		if (!StringUtils.isEmpty(map.get("categoryId")) && !StringUtils.isNumber(map.get("categoryId"))) {
 			throw new BusinessException("参数错误");
 		}
 		int countTotal = blogMapper.selectBaseInfoCount(map);
-		SimplePage page = new SimplePage(page_no, countTotal,
-				PageSize.SIZE20.getSize());
+		SimplePage page = new SimplePage(page_no, countTotal, PageSize.SIZE20.getSize());
 		List<Blog> list = blogMapper.selectBaseInfoList(map, page);
-		UlewoPaginationResult<Blog> result = new UlewoPaginationResult<Blog>(
-				page, list);
+		UlewoPaginationResult<Blog> result = new UlewoPaginationResult<Blog>(page, list);
 		return result;
 	}
 
@@ -171,8 +179,7 @@ public class BlogServiceImpl implements BlogService {
 
 	@Override
 	public Blog showBlogById(Map<String, String> map) throws BusinessException {
-		if (!StringUtils.isNumber(map.get("blogId"))
-				&& !StringUtils.isNumber(map.get("userId"))) {
+		if (!StringUtils.isNumber(map.get("blogId")) && !StringUtils.isNumber(map.get("userId"))) {
 			throw new BusinessException("参数错误");
 		}
 		Blog result = blogMapper.selectDetail(map);
@@ -195,22 +202,18 @@ public class BlogServiceImpl implements BlogService {
 	}
 
 	@Override
-	public UlewoPaginationResult<Blog> queryLatestBlog(Map<String, String> map)
-			throws BusinessException {
+	public UlewoPaginationResult<Blog> queryLatestBlog(Map<String, String> map) throws BusinessException {
 		int page_no = 0;
 		if (StringUtils.isNumber(map.get("page"))) {
 			page_no = Integer.parseInt(map.get("page"));
 		}
-		if (!StringUtils.isEmpty(map.get("categoryId"))
-				&& !StringUtils.isNumber(map.get("categoryId"))) {
+		if (!StringUtils.isEmpty(map.get("categoryId")) && !StringUtils.isNumber(map.get("categoryId"))) {
 			throw new BusinessException("参数错误");
 		}
 		int countTotal = blogMapper.selectBaseInfoCount(map);
-		SimplePage page = new SimplePage(page_no, countTotal,
-				PageSize.SIZE20.getSize());
+		SimplePage page = new SimplePage(page_no, countTotal, PageSize.SIZE20.getSize());
 		List<Blog> list = blogMapper.selectBaseInfoList(map, page);
-		UlewoPaginationResult<Blog> result = new UlewoPaginationResult<Blog>(
-				page, list);
+		UlewoPaginationResult<Blog> result = new UlewoPaginationResult<Blog>(page, list);
 		return result;
 	}
 }

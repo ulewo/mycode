@@ -136,7 +136,7 @@ public class BlogCommentServiceImpl implements BlogCommentService {
 		String blogIdStr = map.get("blogId");
 		String pageStr = map.get("page");
 		UlewoPaginationResult<BlogComment> result = new UlewoPaginationResult<BlogComment>();
-		if (!StringUtils.isNumber(blogIdStr) || !StringUtils.isNumber(map.get("userId"))) {
+		if (!StringUtils.isNumber(blogIdStr)) {
 			throw new BusinessException("参数错误");
 		}
 		Integer pageNo = 0;
@@ -155,4 +155,17 @@ public class BlogCommentServiceImpl implements BlogCommentService {
 		return result;
 	}
 
+	public void deleteByAdmin(Map<String, String> param) throws BusinessException {
+		String keyStr = param.get("key");
+		if (StringUtils.isEmpty(keyStr)) {
+			throw new BusinessException("参数错误!");
+		}
+		String blogIdStr = param.get("blogId");
+		if (StringUtils.isEmpty(blogIdStr) || !StringUtils.isNumber(blogIdStr)) {
+			throw new BusinessException("参数错误!");
+		}
+		String[] keys = keyStr.split(",");
+		List<String> list = Arrays.asList(keys);
+		blogCommentMapper.deleteBatch(Integer.parseInt(blogIdStr), list);
+	}
 }

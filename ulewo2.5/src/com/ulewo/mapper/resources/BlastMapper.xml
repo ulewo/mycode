@@ -23,7 +23,17 @@
 	        	and b.blast_id = #{param.blastId,jdbcType=DECIMAL}
 	      </if>
 	      <if test="null!=param.userId and ''!=param.userId" >
-	        	and B.userid = #{param.userId,jdbcType=DECIMAL}
+	        	and b.userid = #{param.userId,jdbcType=DECIMAL}
+	      </if>
+	      <if test="null!=param.startTm and ''!=param.startTm">
+	      	 <![CDATA[
+	        	and b.create_time >='${param.startTm} 00:00:00'
+	         ]]>
+	      </if>
+	      <if test="null!=param.startEnd and ''!=param.startEnd">
+	      	  <![CDATA[
+	        	and b.create_time <= '${param.startEnd} 23:59:59'
+	          ]]>
 	      </if>
       </if>
   </sql>
@@ -65,7 +75,7 @@
   
   <delete id="delete" parameterType="java.lang.Integer" >
     delete from ulewo_blast
-    where blast_id = #{blastId,jdbcType=INTEGER} and userid #{userId,jdbcType=INTEGER}
+    where blast_id = #{param.blastId,jdbcType=INTEGER}
   </delete>
   
   <insert id="insert" parameterType="com.ulewo.model.Blast" >

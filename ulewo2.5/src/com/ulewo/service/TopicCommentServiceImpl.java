@@ -163,8 +163,11 @@ public class TopicCommentServiceImpl extends GroupAuthorityService implements To
 			page_no = Integer.parseInt(map.get("page"));
 		}
 		int count = this.topicCommentMapper.pComentCount(map);
-
-		SimplePage page = new SimplePage(page_no, count, PageSize.SIZE20.getSize());
+		int pageSize = PageSize.SIZE20.getSize();
+		if (StringUtils.isNumber(map.get("rows"))) {
+			pageSize = Integer.parseInt(map.get("rows"));
+		}
+		SimplePage page = new SimplePage(page_no, count, pageSize);
 		List<TopicComment> list = this.topicCommentMapper.selectPComentList(map, page);
 		if (null != list) {
 			map.put("pidStart", String.valueOf(list.get(0).getId()));
@@ -185,21 +188,21 @@ public class TopicCommentServiceImpl extends GroupAuthorityService implements To
 
 	public UlewoPaginationResult4Json<TopicComment> queryComment4JsonByTopicId(Map<String, String> map)
 			throws BusinessException {
-		String gid = map.get("gid");
 		String topicId = map.get("topicId");
 		map.put("order", QueryOrder.DESC.getValue());
 		int page_no = 0;
 		if (StringUtils.isNumber(map.get("page"))) {
 			page_no = Integer.parseInt(map.get("page"));
 		}
-		if (!StringUtils.isNumber(gid)) {
-			throw new BusinessException("参数错误!");
-		}
 		if (!StringUtils.isNumber(topicId)) {
 			throw new BusinessException("参数错误!");
 		}
+		int pageSize = PageSize.SIZE20.getSize();
+		if (StringUtils.isNumber(map.get("rows"))) {
+			pageSize = Integer.parseInt(map.get("rows"));
+		}
 		int count = this.topicCommentMapper.selectBaseInfoCount(map);
-		SimplePage page = new SimplePage(page_no, count, PageSize.SIZE20.getSize());
+		SimplePage page = new SimplePage(page_no, count, pageSize);
 		List<TopicComment> list = this.topicCommentMapper.selectBaseInfoList(map, page);
 		UlewoPaginationResult4Json<TopicComment> result = new UlewoPaginationResult4Json<TopicComment>();
 		result.setRows(list);
@@ -207,4 +210,19 @@ public class TopicCommentServiceImpl extends GroupAuthorityService implements To
 		return result;
 	}
 
+	public void deleteCommentByAdmin(Map<String, String> map) throws BusinessException {
+		String topicId = map.get("topicId");
+		String idstr = map.get("key");
+		if (StringUtils.isEmpty(topicId) || !StringUtils.isNumber(topicId) || StringUtils.isEmpty(idstr)) {
+			throw new BusinessException("参数错误");
+		}
+		String[] ids = idstr.split(",");
+		for (String id : ids) {
+			map.put("id", id);
+			int count = this.topicCommentMapper.delete(map);
+			if (count == 0) {
+				throw new BusinessException("评论不存在");
+			}
+		}
+	}
 }

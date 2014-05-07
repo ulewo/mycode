@@ -28,45 +28,43 @@ import com.ulewo.util.UlewoPaginationResult4Json;
  * @version V1.0
  */
 public interface TopicCommentService {
-    /**
-     * 新增回复
-     * 
-     * @param map
-     * @param sessionUser
-     * @return
-     * @throws BusinessException
-     */
-    public TopicComment addComment(Map<String, String> map,
-	    SessionUser sessionUser) throws BusinessException;
+	/**
+	 * 新增回复
+	 * 
+	 * @param map
+	 * @param sessionUser
+	 * @return
+	 * @throws BusinessException
+	 */
+	public TopicComment addComment(Map<String, String> map, SessionUser sessionUser) throws BusinessException;
 
-    /**
-     * 
-     * description: 删除回复
-     * 
-     * @param map
-     * @param sessionUser
-     *            TODO @
-     * @author luohl
-     * @throws BusinessException
-     *             TODO
-     */
-    public void deleteComment(Map<String, String> map, SessionUser sessionUser)
-	    throws BusinessException;
+	/**
+	 * 
+	 * description: 删除回复
+	 * 
+	 * @param map
+	 * @param sessionUser
+	 *            TODO @
+	 * @author luohl
+	 * @throws BusinessException
+	 *             TODO
+	 */
+	public void deleteComment(Map<String, String> map, SessionUser sessionUser) throws BusinessException;
 
-    /**
-     * 
-     * description: 分页查询回复
-     * 
-     * @param map
-     * @param offset
-     * @param total
-     * @return @
-     * @author luohl
-     */
-    public UlewoPaginationResult<TopicComment> queryCommentByTopicId(
-	    Map<String, String> map);
+	/**
+	 * 
+	 * description: 分页查询回复
+	 * 
+	 * @param map
+	 * @param offset
+	 * @param total
+	 * @return @
+	 * @author luohl
+	 */
+	public UlewoPaginationResult<TopicComment> queryCommentByTopicId(Map<String, String> map);
 
-    public UlewoPaginationResult4Json<TopicComment> queryComment4JsonByTopicId(
-	    Map<String, String> map) throws BusinessException;
+	public UlewoPaginationResult4Json<TopicComment> queryComment4JsonByTopicId(Map<String, String> map)
+			throws BusinessException;
 
+	public void deleteCommentByAdmin(Map<String, String> map) throws BusinessException;
 }

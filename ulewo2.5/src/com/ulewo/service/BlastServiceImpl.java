@@ -41,8 +41,7 @@ public class BlastServiceImpl implements BlastService {
 	private BlastMapper<Blast> blastMapper;
 
 	@Override
-	public Blast addBlast(Map<String, String> map, SessionUser sessionUser)
-			throws BusinessException {
+	public Blast addBlast(Map<String, String> map, SessionUser sessionUser) throws BusinessException {
 		String content = map.get("content");
 		String imgurl = map.get("imgUrl");
 		if (StringUtils.isEmpty(content)) {
@@ -56,8 +55,8 @@ public class BlastServiceImpl implements BlastService {
 		cotent = addLink(cotent);
 		List<Integer> userIds = new ArrayList<Integer>();
 		content = addLink(content);
-		String formatContent = FormatAt.getInstance(Constant.TYPE_TALK)
-				.GenerateRefererLinks(userMapper, cotent, userIds);
+		String formatContent = FormatAt.getInstance(Constant.TYPE_TALK).GenerateRefererLinks(userMapper, cotent,
+				userIds);
 		Blast blast = new Blast();
 		blast.setContent(formatContent);
 		blast.setCreateTime(StringUtils.dateFormater.get().format(new Date()));
@@ -71,8 +70,7 @@ public class BlastServiceImpl implements BlastService {
 
 		User paramUser = new User();
 		paramUser.setUserId(sessionUser.getUserId());
-		User curUser = userService.findUser(sessionUser.getUserId().toString(),
-				QueryUserType.USERID);
+		User curUser = userService.findUser(sessionUser.getUserId().toString(), QueryUserType.USERID);
 		curUser.setMark(curUser.getMark() + MarkEnums.MARK2.getMark());
 		userMapper.updateSelective(curUser);
 
@@ -121,17 +119,14 @@ public class BlastServiceImpl implements BlastService {
 			page_no = Integer.parseInt(map.get("page"));
 		}
 		int count = this.blastMapper.selectBaseInfoCount(map);
-		SimplePage page = new SimplePage(page_no, count,
-				PageSize.SIZE20.getSize());
+		SimplePage page = new SimplePage(page_no, count, PageSize.SIZE20.getSize());
 		List<Blast> list = this.blastMapper.selectBaseInfoList(map, page);
-		UlewoPaginationResult<Blast> result = new UlewoPaginationResult<Blast>(
-				page, list);
+		UlewoPaginationResult<Blast> result = new UlewoPaginationResult<Blast>(page, list);
 		return result;
 	}
 
 	@Override
-	public UlewoPaginationResult<Blast> queryBlastByUserId(
-			Map<String, String> map) throws BusinessException {
+	public UlewoPaginationResult<Blast> queryBlastByUserId(Map<String, String> map) throws BusinessException {
 		String userIdStr = map.get("userId");
 		if (!StringUtils.isNumber(userIdStr)) {
 			throw new BusinessException("参数错误");
@@ -142,24 +137,31 @@ public class BlastServiceImpl implements BlastService {
 			page_int = Integer.parseInt(pageStr);
 		}
 		int count = blastMapper.selectBaseInfoCount(map);
-		SimplePage page = new SimplePage(page_int, count,
-				PageSize.SIZE20.getSize());
+		SimplePage page = new SimplePage(page_int, count, PageSize.SIZE20.getSize());
 		List<Blast> list = this.blastMapper.selectBaseInfoList(map, page);
-		UlewoPaginationResult<Blast> result = new UlewoPaginationResult<Blast>(
-				page, list);
+		UlewoPaginationResult<Blast> result = new UlewoPaginationResult<Blast>(page, list);
 		return result;
 	}
 
 	@Override
 	public void deleteBlast(Map<String, String> map, SessionUser sessionUser) {
-		// TODO Auto-generated method stub
+		//this.blastMapper.delete(map);
+	}
+
+	@Override
+	public void deleteBlastByAdmin(Map<String, String> map) {
+		String keyStr = map.get("key");
+		String[] keys = keyStr.split(",");
+		for (String key : keys) {
+			map.put("blastId", key);
+			this.blastMapper.delete(map);
+		}
 	}
 
 	@Override
 	public Blast selectBlast(Map<String, String> map) throws BusinessException {
 		String blastIdstr = map.get("blastId");
-		if (StringUtils.isEmpty(blastIdstr)
-				|| !StringUtils.isNumber(blastIdstr)) {
+		if (StringUtils.isEmpty(blastIdstr) || !StringUtils.isNumber(blastIdstr)) {
 			throw new BusinessException("参数错误!");
 		}
 		Blast blast = this.blastMapper.selectBaseInfo(map);

@@ -90,4 +90,5 @@ public interface TopicService {
 	 */
 	public void essenceTopic(Map<String, String> map, SessionUser sessionUser) throws BusinessException;
 
+	public void deleteTopicByAdmin(Map<String, String> map) throws BusinessException;
 }

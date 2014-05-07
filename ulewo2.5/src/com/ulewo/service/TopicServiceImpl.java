@@ -51,8 +51,7 @@ import com.ulewo.util.UlewoPaginationResult4Json;
 
 @Service("topicService")
 @Transactional
-public class TopicServiceImpl extends GroupAuthorityService implements
-		TopicService {
+public class TopicServiceImpl extends GroupAuthorityService implements TopicService {
 	@Resource
 	private TopicMapper<Topic> topicMapper;
 	@Resource
@@ -68,25 +67,20 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 	@Resource
 	private TopicSurveyDtlMapper<TopicSurveyDtl> topicSurveyDtlMapper;
 
-	private static final int MAX_FILE = 60;
-
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BusinessException.class)
-	public Topic addTopic(Map<String, String> map, SessionUser sessionUser,
-			String[] surveyTitles, HttpServletRequest request)
-			throws BusinessException {
+	public Topic addTopic(Map<String, String> map, SessionUser sessionUser, String[] surveyTitles,
+			HttpServletRequest request) throws BusinessException {
 		String title = map.get("title");
 		String content = map.get("content");
 		String gid = map.get("gid");
 		String categoryId = map.get("categoryId");
 		String keyWord = map.get("keyWord");
 		String topicType = map.get("topicType");
-		if (StringUtils.isEmpty(title)
-				|| title.length() > LengthEnums.Length200.getLength()) {
+		if (StringUtils.isEmpty(title) || title.length() > LengthEnums.Length200.getLength()) {
 			throw new BusinessException("标题不能为空,且不能长度超过200!");
 		}
-		if (StringUtils.isEmpty(content)
-				&& TopicTypeEnums.COMMON.getValue().equals(topicType)) {
+		if (StringUtils.isEmpty(content) && TopicTypeEnums.COMMON.getValue().equals(topicType)) {
 			throw new BusinessException("内容不能为空");
 		}
 		if (StringUtils.isEmpty(gid)) {
@@ -101,15 +95,13 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 		}
 		if (Integer.parseInt(categoryId) != 0) {
 			TopicCategory category = topicCategoryMapper.selectBaseInfo(map);
-			if (!AllowPostEnums.ALLOW.getValue()
-					.equals(category.getAllowPost())
-					&& group.getGroupUserId().intValue() != sessionUser
-							.getUserId().intValue()) {
+			if (!AllowPostEnums.ALLOW.getValue().equals(category.getAllowPost())
+					&& group.getGroupUserId().intValue() != sessionUser.getUserId().intValue()) {
 				throw new BusinessException("此模块不允许发帖");
 			}
 		}
-		topicType = TopicTypeEnums.COMMON.getValue().equals(topicType) ? TopicTypeEnums.COMMON
-				.getValue() : TopicTypeEnums.SURVEY.getValue();
+		topicType = TopicTypeEnums.COMMON.getValue().equals(topicType) ? TopicTypeEnums.COMMON.getValue()
+				: TopicTypeEnums.SURVEY.getValue();
 
 		int gid_int = Integer.parseInt(gid);
 		Topic topic = new Topic();
@@ -120,13 +112,12 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 		topic.setKeyWord(StringUtils.clearHtml(keyWord));
 		String summary = StringUtils.clearHtml(content);
 		if (summary.length() > LengthEnums.Length200.getLength()) {
-			summary = summary.substring(0, LengthEnums.Length100.getLength())
-					+ "......";
+			summary = summary.substring(0, LengthEnums.Length100.getLength()) + "......";
 		}
 		topic.setSummary(summary);
 		List<Integer> userIds = new ArrayList<Integer>();
-		String formatContent = FormatAt.getInstance(Constant.TYPE_TALK)
-				.GenerateRefererLinks(userMapper, content, userIds);
+		String formatContent = FormatAt.getInstance(Constant.TYPE_TALK).GenerateRefererLinks(userMapper, content,
+				userIds);
 		topic.setContent(formatContent);
 		topic.setUserId(sessionUser.getUserId());
 		String curDate = StringUtils.dateFormater.get().format(new Date());
@@ -157,8 +148,7 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 		if (!StringUtils.isNumber(markStr)) {
 			throw new BusinessException("积分必须是数字!");
 		}
-		if (StringUtils.isNotEmpty(attached_file)
-				&& StringUtils.isNotEmpty(attached_file_name)) {
+		if (StringUtils.isNotEmpty(attached_file) && StringUtils.isNotEmpty(attached_file_name)) {
 			Attachment attachment = new Attachment();
 			attachment.setGid(gid_int);
 			attachment.setTopicId(topic.getTopicId());
@@ -181,16 +171,12 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 		return topic;
 	}
 
-	private String getTopicImageSmall(String topicImage,
-			HttpServletRequest request) {
+	private String getTopicImageSmall(String topicImage, HttpServletRequest request) {
 		StringBuilder topicImageSmall = new StringBuilder();
 		if (topicImage != null) {
-			String port = request.getServerPort() == 80 ? "" : ":"
-					+ request.getServerPort();
-			String hostPath = "http://" + request.getServerName() + port
-					+ request.getContextPath();
-			String realPath = request.getSession().getServletContext()
-					.getRealPath("");
+			String port = request.getServerPort() == 80 ? "" : ":" + request.getServerPort();
+			String hostPath = "http://" + request.getServerName() + port + request.getContextPath();
+			String realPath = request.getSession().getServletContext().getRealPath("");
 			String[] topoicImages = topicImage.split("\\|");
 			for (String img : topoicImages) {
 				if (StringUtils.isEmpty(img)) {
@@ -223,15 +209,14 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 	 * @param map
 	 * @throws BusinessException
 	 */
-	private void saveSurvey(Topic topic, String[] surveyTitles,
-			Map<String, String> map) throws BusinessException {
+	private void saveSurvey(Topic topic, String[] surveyTitles, Map<String, String> map) throws BusinessException {
 		// 保存投票主档
 		int gid_int = Integer.parseInt(map.get("gid"));
 		TopicSurvey survey = new TopicSurvey();
 		survey.setTopicId(topic.getTopicId());
 		String surveyType = map.get("surveyType");
-		surveyType = SurveyTypeEnums.MULTI.getValue().equals(surveyType) ? SurveyTypeEnums.MULTI
-				.getValue() : SurveyTypeEnums.SINGLE.getValue();
+		surveyType = SurveyTypeEnums.MULTI.getValue().equals(surveyType) ? SurveyTypeEnums.MULTI.getValue()
+				: SurveyTypeEnums.SINGLE.getValue();
 		survey.setSurveyType(surveyType);
 		String endDate = map.get("endDate");
 		if (StringUtils.isEmpty(endDate)) {
@@ -249,8 +234,7 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 		int notEmptyCount = 0;
 		for (int i = 0, length = surveyTitles.length; i < length; i++) {
 			if (StringUtils.isNotEmpty(surveyTitles[i])) {
-				if (StringUtils.getRealLength(surveyTitles[i]) > LengthEnums.Length30
-						.getLength()) {
+				if (StringUtils.getRealLength(surveyTitles[i]) > LengthEnums.Length30.getLength()) {
 					throw new BusinessException("第" + (i + 1) + "行超过30个字");
 				}
 				TopicSurveyDtl dtl = new TopicSurveyDtl();
@@ -267,19 +251,17 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BusinessException.class)
-	public void updateTopic(Map<String, String> map, SessionUser sessionUser,
-			HttpServletRequest request) throws BusinessException {
+	public void updateTopic(Map<String, String> map, SessionUser sessionUser, HttpServletRequest request)
+			throws BusinessException {
 		String topicIdStr = map.get("topicId");
 		String title = map.get("title");
 		String content = map.get("content");
 		String categoryId = map.get("categoryId");
 		String keyWord = map.get("keyWord");
-		if (StringUtils.isEmpty(topicIdStr)
-				|| !StringUtils.isNumber(topicIdStr)) {
+		if (StringUtils.isEmpty(topicIdStr) || !StringUtils.isNumber(topicIdStr)) {
 			throw new BusinessException("参数错误!");
 		}
-		if (StringUtils.isEmpty(title)
-				|| title.length() > LengthEnums.Length200.getLength()) {
+		if (StringUtils.isEmpty(title) || title.length() > LengthEnums.Length200.getLength()) {
 			throw new BusinessException("标题不能为空,且不能长度超过200!");
 		}
 		if (StringUtils.isEmpty(content)) {
@@ -302,13 +284,12 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 		topic.setContent(content);
 		String summary = StringUtils.clearHtml(content);
 		if (summary.length() > LengthEnums.Length100.getLength()) {
-			summary = summary.substring(0, LengthEnums.Length100.getLength())
-					+ "......";
+			summary = summary.substring(0, LengthEnums.Length100.getLength()) + "......";
 		}
 		topic.setSummary(summary);
 		List<Integer> userIds = new ArrayList<Integer>();
-		String formatContent = FormatAt.getInstance(Constant.TYPE_TALK)
-				.GenerateRefererLinks(userMapper, content, userIds);
+		String formatContent = FormatAt.getInstance(Constant.TYPE_TALK).GenerateRefererLinks(userMapper, content,
+				userIds);
 		topic.setContent(formatContent);
 
 		String topicImage = StringUtils.getImages(content);
@@ -331,8 +312,7 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BusinessException.class)
-	public void topTopic(Map<String, String> map, SessionUser sessionUser)
-			throws BusinessException {
+	public void topTopic(Map<String, String> map, SessionUser sessionUser) throws BusinessException {
 		String gid = map.get("gid");
 		if (StringUtils.isEmpty(gid) || StringUtils.isEmpty(map.get("key"))) {
 			throw new BusinessException("参数错误!");
@@ -353,8 +333,7 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 			if (null == tempTopic) {
 				throw new BusinessException("主题不存在!");
 			}
-			this.checkGroupOpAuthority(tempTopic.getGid(),
-					sessionUser.getUserId());
+			this.checkGroupOpAuthority(tempTopic.getGid(), sessionUser.getUserId());
 			tempTopic.setGrade(grade_int);
 			topicMapper.updateSelective(tempTopic);
 		}
@@ -362,8 +341,7 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BusinessException.class)
-	public void essenceTopic(Map<String, String> map, SessionUser sessionUser)
-			throws BusinessException {
+	public void essenceTopic(Map<String, String> map, SessionUser sessionUser) throws BusinessException {
 		String gid = map.get("gid");
 		if (StringUtils.isEmpty(gid) || StringUtils.isEmpty(map.get("key"))) {
 			throw new BusinessException("参数错误!");
@@ -383,8 +361,7 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 			if (null == tempTopic) {
 				throw new BusinessException("主题不存在!");
 			}
-			this.checkGroupOpAuthority(tempTopic.getGid(),
-					sessionUser.getUserId());
+			this.checkGroupOpAuthority(tempTopic.getGid(), sessionUser.getUserId());
 			tempTopic.setEssence(essence);
 			topicMapper.updateSelective(tempTopic);
 		}
@@ -393,8 +370,7 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BusinessException.class)
-	public void deleteTopic(Map<String, String> map, SessionUser sessionUser)
-			throws BusinessException {
+	public void deleteTopic(Map<String, String> map, SessionUser sessionUser) throws BusinessException {
 		String gid = map.get("gid");
 		if (StringUtils.isEmpty(gid) || StringUtils.isEmpty(map.get("key"))) {
 			throw new BusinessException("参数错误!");
@@ -413,8 +389,7 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 	}
 
 	@Override
-	public UlewoPaginationResult<Topic> findTopics(Map<String, String> map)
-			throws BusinessException {
+	public UlewoPaginationResult<Topic> findTopics(Map<String, String> map) throws BusinessException {
 		String gid = map.get("gid");
 		int page_no = 0;
 		if (StringUtils.isNumber(map.get("page"))) {
@@ -424,17 +399,14 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 			throw new BusinessException("参数错误!");
 		}
 		int count = this.topicMapper.selectTopicCount(map);
-		SimplePage page = new SimplePage(page_no, count,
-				PageSize.SIZE20.getSize());
+		SimplePage page = new SimplePage(page_no, count, PageSize.SIZE20.getSize());
 		List<Topic> list = this.topicMapper.selectTopicList(map, page);
-		UlewoPaginationResult<Topic> result = new UlewoPaginationResult<Topic>(
-				page, list);
+		UlewoPaginationResult<Topic> result = new UlewoPaginationResult<Topic>(page, list);
 		return result;
 	}
 
 	@Override
-	public UlewoPaginationResult4Json<Topic> findTopics4Json(
-			Map<String, String> map) throws BusinessException {
+	public UlewoPaginationResult4Json<Topic> findTopics4Json(Map<String, String> map) throws BusinessException {
 		String gid = map.get("gid");
 		int page_no = 0;
 		if (StringUtils.isNumber(map.get("page"))) {
@@ -443,8 +415,7 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 		if (!StringUtils.isNumber(gid)) {
 			throw new BusinessException("参数错误!");
 		}
-		int pageSize = StringUtils.isEmpty(map.get("rows")) ? 15 : Integer
-				.parseInt(map.get("rows"));
+		int pageSize = StringUtils.isEmpty(map.get("rows")) ? 15 : Integer.parseInt(map.get("rows"));
 		int count = this.topicMapper.selectTopicCount(map);
 		SimplePage page = new SimplePage(page_no, count, pageSize);
 		List<Topic> list = this.topicMapper.selectTopicList(map, page);
@@ -472,5 +443,22 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 			topic.setFile(attachment);
 		}
 		return topic;
+	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BusinessException.class)
+	public void deleteTopicByAdmin(Map<String, String> map) throws BusinessException {
+		if (StringUtils.isEmpty(map.get("key"))) {
+			throw new BusinessException("参数错误!");
+		}
+		String keyStr = map.get("key");
+		String[] keys = keyStr.split(",");
+		for (String key : keys) {
+			map.put("topicId", key);
+			int count = this.topicMapper.delete(map);
+			if (count == 0) {
+				throw new BusinessException("没有找到相应的记录!");
+			}
+		}
 	}
 }

@@ -23,5 +23,5 @@ public interface BlastCommentService {
     public UlewoPaginationResult<BlastComment> queryBlastCommentByPag(
 	    Map<String, String> map) throws BusinessException;
 
-    public void deleteReTalkBatch(String keyStr, Integer userId);
+    public void deleteComments(Map<String, String> map) throws BusinessException;
 }
