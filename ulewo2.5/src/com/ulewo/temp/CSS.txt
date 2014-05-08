@@ -1,0 +1,169 @@
+第2章　css的基本语法　　
+2.1　css选择器　
+	CSS 元素选择器
+	
+		p {color:gray;}
+		h2 {color:silver;}
+	
+		<p>有乐窝</p>	
+		<h2>www.ulewo.com</h2>
+	
+	
+	CSS 选择器分组
+		p,h2{color:red}
+		<p>www.ulewo.com</p>	
+		<h2>有乐窝</h2>
+		
+	CSS 类选择器
+	
+		.mystyle{color:red}
+		
+		<div class="mystyle">www.ulewo.com</div>
+		<span class="mystyle">有乐窝</span>
+	CSS ID 选择器
+		#mystyle{color:red}
+		<div id="mystyle">www.ulewo.com</div>
+
+	CSS 属性选择器
+		<html>
+			<head>
+				<style type="text/css">
+				a[href][title]
+				{
+				color:red;
+				}
+				</style>
+			</head>
+			<body>
+				<h1>可以应用样式：</h1>
+				<a title="W3School Home" href="http://w3school.com.cn">W3School</a>
+				
+				<hr />
+				
+				<h1>无法应用样式：</h1>
+				<a href="http://w3school.com.cn">W3School</a>
+			</body>
+		</html>
+
+2.2　css的继承
+		span {
+			font-size:15px;
+	    }
+	
+		h2 {
+			color: red;
+		}
+	
+		h2 span {
+			color: blue;
+		}
+		
+		div{
+			font-size:20px;
+		}
+		div.mystyle{
+			color:pink;
+		}
+		<span>有乐窝（span）</span>
+		<h2>有乐窝（h2）</h2>
+		<h2><span>有乐窝（h2 span）</span></h2>
+		<div>有乐窝（div）</div>
+		<div class="mystyle">有乐窝</div>
+
+第3章　用css设置丰富的文字效果　
+　　3.1　css文字样式
+		color	设置文本颜色
+		direction	设置文本方向。
+		line-height	设置行高。
+		letter-spacing	设置字符间距。
+		text-align	对齐元素中的文本。
+		text-decoration	向文本添加修饰。
+		text-indent	缩进元素中文本的首行。
+		text-shadow	设置文本阴影。CSS2 包含该属性，但是 CSS2.1 没有保留该属性。
+		text-transform	控制元素中的字母。
+			none	默认。定义带有小写字母和大写字母的标准的文本。
+			capitalize	文本中的每个单词以大写字母开头。
+			uppercase	定义仅有大写字母。
+			lowercase	定义无大写字母，仅有小写字母。
+			inherit	规定应该从父元素继承 text-transform 属性的值。部分浏览器不支持
+			
+		white-space	设置元素中空白的处理方式。
+			值			空白符	换行符	自动换行
+			pre-line	合并		保留		允许
+			normal		合并		忽略		允许
+			nowrap		合并		忽略		不允许
+			pre			保留		保留		不允许
+			pre-wrap	保留		保留		允许
+		word-spacing	设置字间距。
+　　3.2　文字实例一：模拟google公司logo　
+			
+　　3.3　文字实例二：制作页面的五彩标题　
+
+　　3.4　css段落文字
+
+第4章　用css设置图片效果　
+　　4.1　图片样式　
+		<html>
+			<head>
+				<style>
+				div.img{
+					  margin:3px;
+					  border:1px solid #bebebe;
+					  height:auto;
+					  width:auto;
+					  float:left;
+					  text-align:center;
+				}
+				div.img img{
+				  display:inline;
+				  margin:3px;
+				  border:1px solid #bebebe;
+				}
+				div.img a:hover img{
+				  border:1px solid #333333;
+				}
+				div.desc{
+				  text-align:center;
+				  font-weight:normal;
+				  width:150px;
+				  font-size:12px;
+				  margin:10px 5px 10px 5px;
+				}
+				</style>
+			</head>
+			<body>
+				<div class="img">
+				  <a target="_blank" href="/i/tulip_ballade.jpg">
+				  <img src="/i/tulip_ballade_s.jpg" alt="Ballade" width="160" height="160">
+				  </a>
+				  <div class="desc">在此处添加对图像的描述</div>
+				</div>
+				
+				<div class="img">
+				  <a target="_blank" href="/i/tulip_flaming_club.jpg">
+				  <img src="/i/tulip_flaming_club_s.jpg" alt="Ballade" width="160" height="160">
+				  </a>
+				  <div class="desc">在此处添加对图像的描述</div>
+				</div>
+				
+				<div class="img">
+				  <a target="_blank" href="/i/tulip_fringed_family.jpg">
+				  <img src="/i/tulip_fringed_family_s.jpg" alt="Ballade" width="160" height="160">
+				  </a>
+				  <div class="desc">在此处添加对图像的描述</div>
+				</div>
+				
+				<div class="img">
+				  <a target="_blank" href="/i/tulip_peach_blossom.jpg">
+				  <img src="/i/tulip_peach_blossom_s.jpg" alt="Ballade" width="160" height="160">
+				  </a>
+				  <div class="desc">在此处添加对图像的描述</div>
+				</div>
+			</body>
+		</html>
+　　4.2　图片的对齐
+　　4.3　图文混排　
+
+第5章　用css设置网页中的背景　
+　　5.1　背景颜色　
+　　5.2　背景图片　
