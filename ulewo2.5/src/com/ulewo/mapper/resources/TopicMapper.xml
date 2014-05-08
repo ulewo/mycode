@@ -114,6 +114,22 @@
     from ulewo_topic t
     where topic_id = #{topicId,jdbcType=INTEGER}
   </select>
+  
+  <select id="selectTopicByTopicids" resultMap="BaseResultMap">   
+        select 
+	  <include refid="Base_Column_List" />
+	  ,(select count(1) from ulewo_topic_comment tc where tc.topic_id = t.topic_id and  EXISTS(select 1 from ulewo_user u where u.userid=tc.userid)) commentCount
+	  ,u.username userName,u.user_icon userIcon
+	  ,c.name categoryName
+	  from ulewo_topic t inner join ulewo_user u on u.userid = t.userid
+	  left join ulewo_topic_category c on c.category_id = t.category_id
+	  where t.topic_id in
+   			<foreach collection="list" item="item"  open="(" separator="," close=")">  
+    			#{item}  
+			</foreach> 
+	order by t.create_time desc
+   </select>
+  
   <delete id="delete" parameterType="java.util.Map" >
     delete from ulewo_topic
     where topic_id = #{param.topicId,jdbcType=INTEGER} 

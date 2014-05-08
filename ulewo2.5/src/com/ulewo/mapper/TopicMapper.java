@@ -17,13 +17,13 @@ import com.ulewo.util.SimplePage;
  */
 public interface TopicMapper<T> extends BaseMapper<T> {
 
-    public int selectTopicCount(@Param("param") Map<String, String> param);
+	public int selectTopicCount(@Param("param") Map<String, String> param);
 
-    public List<T> selectTopicList(@Param("param") Map<String, String> param,
-	    @Param("page") SimplePage page);
+	public List<T> selectTopicList(@Param("param") Map<String, String> param, @Param("page") SimplePage page);
 
-    public T showTopic(@Param("param") Map<String, String> map);
+	public T showTopic(@Param("param") Map<String, String> map);
 
-    public T selectTopicByTopicId(@Param("topicId") Integer topicId);
+	public T selectTopicByTopicId(@Param("topicId") Integer topicId);
 
+	public List<T> selectTopicByTopicids(@Param("list") String list[]);
 }

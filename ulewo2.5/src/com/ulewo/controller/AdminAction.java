@@ -1,6 +1,7 @@
 package com.ulewo.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -239,6 +240,24 @@ public class AdminAction extends BaseAction {
 			Map<String, String> map = this.builderParams(request, true);
 			this.topicService.deleteTopicByAdmin(map);
 			resultObj.put("result", ResultCode.SUCCESS.getCode());
+			return resultObj;
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			resultObj.put("result", ResultCode.ERROR.getCode());
+			resultObj.put("msg", e.getMessage());
+			return resultObj;
+		}
+	}
+
+	@RequestMapping(value = "/createHot")
+	@ResponseBody
+	public Map<String, Object> createHot(HttpSession session, HttpServletRequest request) {
+		Map<String, Object> resultObj = new HashMap<String, Object>();
+		try {
+			Map<String, String> map = this.builderParams(request, true);
+			List<Topic> list = this.topicService.hotTopics(map);
+			resultObj.put("result", ResultCode.SUCCESS.getCode());
+			resultObj.put("list", list);
 			return resultObj;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);

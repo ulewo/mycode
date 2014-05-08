@@ -108,7 +108,11 @@ public class BlastCommentServiceImpl implements BlastCommentService {
 			page_int = Integer.parseInt(pageStr);
 		}
 		int count = blastCommentMapper.selectBaseInfoCount(map);
-		SimplePage page = new SimplePage(page_int, count, PageSize.SIZE15.getSize());
+		int pageSize = PageSize.SIZE20.getSize();
+		if (StringUtils.isNumber(map.get("rows"))) {
+			pageSize = Integer.parseInt(map.get("rows"));
+		}
+		SimplePage page = new SimplePage(page_int, count, pageSize);
 		List<BlastComment> list = this.blastCommentMapper.selectBaseInfoList(map, page);
 		UlewoPaginationResult<BlastComment> result = new UlewoPaginationResult<BlastComment>(page, list);
 		return result;

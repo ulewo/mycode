@@ -398,8 +398,12 @@ public class TopicServiceImpl extends GroupAuthorityService implements TopicServ
 		if (StringUtils.isNotEmpty(gid) && !StringUtils.isNumber(gid)) {
 			throw new BusinessException("参数错误!");
 		}
+		int pageSize = PageSize.SIZE20.getSize();
+		if (StringUtils.isNumber(map.get("rows"))) {
+			pageSize = Integer.parseInt(map.get("rows"));
+		}
 		int count = this.topicMapper.selectTopicCount(map);
-		SimplePage page = new SimplePage(page_no, count, PageSize.SIZE20.getSize());
+		SimplePage page = new SimplePage(page_no, count, pageSize);
 		List<Topic> list = this.topicMapper.selectTopicList(map, page);
 		UlewoPaginationResult<Topic> result = new UlewoPaginationResult<Topic>(page, list);
 		return result;
@@ -460,5 +464,16 @@ public class TopicServiceImpl extends GroupAuthorityService implements TopicServ
 				throw new BusinessException("没有找到相应的记录!");
 			}
 		}
+	}
+
+	@Override
+	public List<Topic> hotTopics(Map<String, String> map) throws BusinessException {
+		if (StringUtils.isEmpty(map.get("key"))) {
+			throw new BusinessException("参数错误!");
+		}
+		String keyStr = map.get("key");
+		String[] keys = keyStr.split(",");
+		List<Topic> list = this.topicMapper.selectTopicByTopicids(keys);
+		return list;
 	}
 }

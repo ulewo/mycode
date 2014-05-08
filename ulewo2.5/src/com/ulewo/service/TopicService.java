@@ -1,5 +1,6 @@
 package com.ulewo.service;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -91,4 +92,12 @@ public interface TopicService {
 	public void essenceTopic(Map<String, String> map, SessionUser sessionUser) throws BusinessException;
 
 	public void deleteTopicByAdmin(Map<String, String> map) throws BusinessException;
+
+	/**
+	 * 热点文章
+	 * @param map
+	 * @return
+	 * @throws BusinessException
+	 */
+	public List<Topic> hotTopics(Map<String, String> map) throws BusinessException;
 }

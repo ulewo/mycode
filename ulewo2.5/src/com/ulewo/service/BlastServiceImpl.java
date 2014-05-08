@@ -119,7 +119,11 @@ public class BlastServiceImpl implements BlastService {
 			page_no = Integer.parseInt(map.get("page"));
 		}
 		int count = this.blastMapper.selectBaseInfoCount(map);
-		SimplePage page = new SimplePage(page_no, count, PageSize.SIZE20.getSize());
+		int pageSize = PageSize.SIZE20.getSize();
+		if (StringUtils.isNumber(map.get("rows"))) {
+			pageSize = Integer.parseInt(map.get("rows"));
+		}
+		SimplePage page = new SimplePage(page_no, count, pageSize);
 		List<Blast> list = this.blastMapper.selectBaseInfoList(map, page);
 		UlewoPaginationResult<Blast> result = new UlewoPaginationResult<Blast>(page, list);
 		return result;

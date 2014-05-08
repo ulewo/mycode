@@ -211,7 +211,11 @@ public class BlogServiceImpl implements BlogService {
 			throw new BusinessException("参数错误");
 		}
 		int countTotal = blogMapper.selectBaseInfoCount(map);
-		SimplePage page = new SimplePage(page_no, countTotal, PageSize.SIZE20.getSize());
+		int pageSize = PageSize.SIZE20.getSize();
+		if (StringUtils.isNumber(map.get("rows"))) {
+			pageSize = Integer.parseInt(map.get("rows"));
+		}
+		SimplePage page = new SimplePage(page_no, countTotal, pageSize);
 		List<Blog> list = blogMapper.selectBaseInfoList(map, page);
 		UlewoPaginationResult<Blog> result = new UlewoPaginationResult<Blog>(page, list);
 		return result;
