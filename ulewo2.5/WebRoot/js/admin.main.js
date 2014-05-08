@@ -35,6 +35,13 @@ groupManage.menue = [{
 			"attributes": {
 				"url": global.realPath+"/admin/admin_topic_comment.jsp"
 			}
+		},
+		{
+			"id": 21,
+			"text": "每周热点",
+			"attributes": {
+				"url": global.realPath+"/admin/admin_topic_hot.jsp"
+			}
 		}]
 	},
 	{
