@@ -59,6 +59,7 @@
      from ulewo_notice n where 1=1
 	  <include refid="base_condition" />
 	  order by status,create_time desc
+	  limit #{page.start},#{page.end} 
   </select>
   
   <insert id="insert" parameterType="com.ulewo.model.Notice" >
