@@ -116,7 +116,7 @@ function TopicLine(data){
 	if(data.images!=null){
 		var imageDiv = $('<div></div>').appendTo(item);
 		for(var i=0,length=data.images.length;i<length;i++){
-			$('<div style="display:inline-block;border:1px solid #B2B3B2;padding:2px;margin-top:10px;max-height:100px;max-width:150px;margin-right:5px;"><a href="http://ulewo.com/group/'+data.gid+'/topic/'+data.topicId+'"><img src="'+data.images[i]+'" style="max-width:150px;"></a></div>').appendTo(imageDiv);
+			$('<div style="display:inline-block;border:1px solid #B2B3B2;padding:2px;margin-top:10px;max-height:100px;max-width:150px;margin-right:5px;"><a href="http://ulewo.com/group/'+data.gid+'/topic/'+data.topicId+'"><img src="'+data.images[i]+'" style="max-width:150px;max-height:100px;"></a></div>').appendTo(imageDiv);
 		}
 		$('<div style="clear:both"></div>').appendTo(imageDiv);
 	}
