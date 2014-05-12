@@ -45,14 +45,9 @@ public class AttachmentServiceImpl implements AttachmentService {
 	}
 
 	public UlewoPaginationResult<Attachment> attachedTopic(Map<String, String> map) throws BusinessException {
-
-		String gid = map.get("gid");
 		int page_no = 0;
 		if (StringUtils.isNumber(map.get("page"))) {
 			page_no = Integer.parseInt(map.get("page"));
-		}
-		if (!StringUtils.isNumber(gid)) {
-			throw new BusinessException("参数错误!");
 		}
 		int count = this.attachmentMapper.selectAttachment4TopicCount(map);
 		SimplePage page = new SimplePage(page_no, count, PageSize.SIZE20.getSize());

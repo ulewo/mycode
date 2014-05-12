@@ -51,8 +51,9 @@
   <select id="selectAttachment4Topic" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    ,u.title topicTitle,u.create_time createTime
+    ,u.title topicTitle,u.create_time createTime,g.group_name groupName
     from ulewo_attachment a inner join ulewo_topic u on u.topic_id = a.topic_id and u.gid=a.gid
+    inner join ulewo_group g on a.gid = g.gid
     where 1=1
     <include refid="base_condition" />
     order by u.create_time desc

@@ -29,11 +29,13 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ulewo.enums.ResultCode;
 import com.ulewo.enums.SearchTypeEnums;
 import com.ulewo.exception.BusinessException;
+import com.ulewo.model.Attachment;
 import com.ulewo.model.Blast;
 import com.ulewo.model.Blog;
 import com.ulewo.model.Group;
 import com.ulewo.model.Topic;
 import com.ulewo.model.User;
+import com.ulewo.service.AttachmentService;
 import com.ulewo.service.BlastService;
 import com.ulewo.service.BlogService;
 import com.ulewo.service.GroupService;
@@ -64,6 +66,9 @@ public class HomeAction extends BaseAction {
 
 	@Autowired
 	SignInService signinService;
+
+	@Autowired
+	AttachmentService attachmentService;
 
 	@Log
 	Logger log;
@@ -172,6 +177,22 @@ public class HomeAction extends BaseAction {
 			UlewoPaginationResult<Blog> result = this.blogService.queryLatestBlog(this.builderParams(request, true));
 			mv.addObject("result", result);
 			mv.setViewName("blog");
+			return mv;
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			mv.setViewName("redirect:" + Constant.ERRORPAGE);
+			return mv;
+		}
+	}
+
+	@RequestMapping(value = "/resource", method = RequestMethod.GET)
+	public ModelAndView resource(HttpSession session, HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView();
+		try {
+			UlewoPaginationResult<Attachment> result = this.attachmentService.attachedTopic(this.builderParams(request,
+					false));
+			mv.addObject("result", result);
+			mv.setViewName("resource");
 			return mv;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);

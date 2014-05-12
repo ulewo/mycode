@@ -9,6 +9,8 @@ public class Attachment {
 
 	private String topicTitle;
 
+	private String groupName;
+
 	private Integer gid;
 
 	private String fileName;
@@ -101,6 +103,14 @@ public class Attachment {
 
 	public void setCreateTime(String createTime) {
 		this.createTime = StringUtils.friendly_time(createTime);
+	}
+
+	public String getGroupName() {
+		return groupName;
+	}
+
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
 	}
 
 }

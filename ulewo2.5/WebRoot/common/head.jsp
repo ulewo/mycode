@@ -74,6 +74,7 @@ global.type = "${type}";
 			<li><a  href="${realPath}/group/all"  class="selected2" onFocus="this.blur()">窝&nbsp;窝</a></li>
 			<li><a  href="${realPath}/blog"  class="selected3" onFocus="this.blur()">博&nbsp;客</a></li>
 			<li><a href="${realPath}/square" class="selected4" onFocus="this.blur()">广&nbsp;场</a></li>
+			<li class="newli"><a href="${realPath}/resource" class="selected5" onFocus="this.blur()">资&nbsp;源</a><div class="newmenue"><img src="${realPath}/images/new.png"></div></li>
 		</ul>
 	</div>
 </div>
