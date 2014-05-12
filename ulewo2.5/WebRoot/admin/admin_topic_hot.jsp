@@ -61,14 +61,7 @@ adminTopicHot.gid ="${gid}";
 	<div div id="hotDialog"  class="easyui-dialog" title="热点文章"  
 		    data-options="modal:true,resizable:false,draggable:false,collapsible:false,closed:true,
 		    maximized:true,minimizable:false,maximizable:false">
-		    <div class="toolbar datagrid-toolbar">
-		      <table cellpadding="0" cellspacing="0" >
-				<tr>
-					<td><a href="javascript:adminTopicHot.copy()" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true">复制到剪切板</a></td>
-				</tr>
-				</table>
-		    </div>
-		    <div id="hotTopic" style="padding:10px;"></div>
+		    <div id="hotTopic" style="margin:40px 20px;"></div>
 	</div>
 </body>
 </html>

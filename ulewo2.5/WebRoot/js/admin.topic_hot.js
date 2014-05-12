@@ -102,7 +102,7 @@ adminTopicHot.createHot = function(){
 };
 
 function TopicLine(data){
-	var item = $('<div style="margin-top:10px;border-bottom:1px dashed #B2B3B2;padding-bottom:10px;"></div>');
+	var item = $('<div style="margin-top:10px;border-bottom:1px dashed #B2B3B2;padding-bottom:10px;width:1000px;"></div>');
 	var titlecon = $("<div></div>").appendTo(item);
 	var title =$("<div style='display:inline-block;float:left;font-size:14px;'></div>").appendTo(titlecon);
 		$('<a style="text-decoration:none;float:left;display:inline-block;color:#3E62A6;" href="http://ulewo.com/group/'+data.gid+'/topic/'+data.topicId+'">'+data.title+'</a>').appendTo(title)	;
