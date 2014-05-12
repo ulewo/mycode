@@ -22,10 +22,10 @@
 			<c:forEach var="article" items="${result.list}">
 				<div class="article_item">
 					<div class="article_tit">
-						<div class="group_name">【<a href="${realPath}/group/${group.gid}">${article.groupName}</a>】</div>
+						<div class="group_name">【<a href="${realPath}/group/${article.gid}">${article.groupName}</a>】</div>
 						<div class="article_title">
-							<a href="${realPath}/group/${group.gid}/topic/${article.topicId}">${article.topicTitle}</a>
-							<a href="${realPath}/group/${group.gid}/topic/${article.topicId}#attached" style="font-size:12px;color:red;margin-left:10px;">下载</a>
+							<a href="${realPath}/group/${article.gid}/topic/${article.topicId}">${article.topicTitle}</a>
+							<a href="${realPath}/group/${article.gid}/topic/${article.topicId}#attached" style="font-size:12px;color:red;margin-left:10px;">下载</a>
 							<div class="clear"></div>
 						</div>
 						<div class="article_author">
