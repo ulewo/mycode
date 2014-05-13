@@ -11,8 +11,8 @@
 					<li style="margin-left:10px;"><a href="${realPath}/blog">博客</a></li>
 					<li style="margin-left:10px;"><a href="${realPath}/square">广场</a></li>
 				</ul>
-			<div id="footright">&copy;2011-2013&nbsp;&nbsp;ulewo.com 有乐窝&nbsp;&nbsp;All rights reserved. <br><br>
-						<span style="color:#737573">黑ICP备10007364号-1</span></div>
+			<div id="footright">&copy;2011-2014&nbsp;&nbsp;ulewo.com 有乐窝&nbsp;&nbsp;All rights reserved. <br><br>
+						<span style="color:#737573">鄂ICP备13017512号-1</span></div>
 			<div id="gototop"><a href="javascript:void(0)" onclick="window.scrollTo(0,0);" onfocus="this.blur()" title="回到顶部"></a></div>
 			<div id="foot_info">
 				<script type="text/javascript">
