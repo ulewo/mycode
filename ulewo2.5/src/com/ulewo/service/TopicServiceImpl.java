@@ -234,8 +234,8 @@ public class TopicServiceImpl extends GroupAuthorityService implements TopicServ
 		int notEmptyCount = 0;
 		for (int i = 0, length = surveyTitles.length; i < length; i++) {
 			if (StringUtils.isNotEmpty(surveyTitles[i])) {
-				if (StringUtils.getRealLength(surveyTitles[i]) > LengthEnums.Length30.getLength()) {
-					throw new BusinessException("第" + (i + 1) + "行超过30个字");
+				if (StringUtils.getRealLength(surveyTitles[i]) > LengthEnums.Length100.getLength()) {
+					throw new BusinessException("第" + (i + 1) + "行超过100个字");
 				}
 				TopicSurveyDtl dtl = new TopicSurveyDtl();
 				dtl.setTopicId(topic.getTopicId());
