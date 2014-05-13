@@ -20,7 +20,7 @@ function addSurveyLine(){
 		alert("最多只能添加20个选项!");
 		return ;
 	}
-	$('<div class="survey_input add"><input type="text" name="surveyTitle"><a href="javascript:void(0)" class="deleteIcon"><img src="../images/icon-del.png"></a></div>').appendTo($("#surveyLine"));
+	$('<div class="survey_input add"><input type="text" name="surveyTitle"><a href="javascript:void(0)" class="deleteIcon"><img src="'+global.realPath+'/images/icon-del.png"></a></div>').appendTo($("#surveyLine"));
 }
 function deleteLine(){
 	$(this).parent().remove();

@@ -27,7 +27,7 @@
 	<div class="main">
 		<%@ include file="group_info.jsp" %>
 		<div class="group_body">
-			<div class="left">
+			<div>
 				<ul class="group_tag">
 					<li><a href="${realPath}/group/${group.gid}" class="tag_select">讨&nbsp;&nbsp;论</a></li>
 					<li><a href="${realPath}/group/${group.gid}/img">图&nbsp;&nbsp;片</a></li>
@@ -40,6 +40,8 @@
 						<li><a href="${realPath}/group/${gid}/cateId/${item.categoryId}">${item.name}</a></li>
 					</c:forEach>
 				</ul>
+			</div>
+			<div class="left">
 				<c:if test="${user!=null}">
 					<div class="new_article_p" id="new_article_p">
 						<div class="new_article_input"></div>
@@ -111,7 +113,7 @@
 				</div>
 			</div>
 			<div class="right">
-				<div class="right_tit">赞助商</div>
+				<div class="right_tit" style="margin-top:8px;">赞助商</div>
 				<div style="margin-top:5px;">
 					<script type="text/javascript">
 					/*窝窝首页，创建于2013-7-10*/
