@@ -90,7 +90,7 @@ function loadPage(page){
 }
 
 /*********吐槽**************/
-function loadTalk(type,page){
+/*function loadTalk(type,page){
 	$("#trends_list").empty();
 	$("#pager").empty();
 	$("<div class='loading'><img src='"+global.realPath+"/images/load.gif'></div>").appendTo($("#trends_list"));
@@ -128,7 +128,7 @@ function loadTalk(type,page){
 		}
 	});
 }
-/*********回复吐槽**********/
+*//*********回复吐槽**********//*
 function UserTalkItem(talk){
 	this.talk_item = $('<div class="talk_item"></div>');
 	$('<div class="talk_icon"><a href="'+global.realPath+'/user/'+talk.userId+'"><img src="'+global.realPath+'/upload/'+talk.userIcon+'" width="40"></a></div>').appendTo(this.talk_item);
@@ -191,7 +191,7 @@ function UserReTalkItem(talk){
 	$('<div class="clear"></div>').appendTo(this.talk_item);
 }
 
-/*********讨论*************/
+*//*********讨论*************//*
 function loadArticle(type,page){
 	$("#trends_list").empty();
 	$("#pager").empty();
@@ -282,7 +282,7 @@ function UserReArticleItem(article){
 	$('<div class="clear"></div>').appendTo(this.talk_item);
 }
 
-/*******博客*********/
+*//*******博客*********//*
 function loadBlog(type,page){
 		$("#trends_list").empty();
 		$("#pager").empty();
@@ -365,7 +365,7 @@ function UserReBlogItem(article){
 				'<div class="clear"></div>'+
 				'</div>').appendTo(talk_con);
 		$('<div class="clear"></div>').appendTo(this.talk_item);
-}
+}*/
 
 function saveBlast(){
 	if(global.userId==""){
@@ -417,6 +417,4 @@ function saveBlast(){
 }
 
 function loadInitTalk(){
-	
-	
 }

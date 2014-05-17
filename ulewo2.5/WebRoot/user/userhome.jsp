@@ -231,12 +231,43 @@ dynamic.userId = "${userVo.userId}";
 				  		</span><br>
 			  	</div>
 		  	</c:if>
-		  	<div id="dynamic">
-		  		<div>动态</div>
-		  		<div id="dynamicList"></div>
+		  	<div class="trends">
+		  		<ul class="trends_tag">
+		  			<li class="tag_select"><a href="javascript:void(0)">所有动态</a></li>
+					<li><a href="javascript:void(0)">吐&nbsp;&nbsp;槽</a></li>
+					<li><a href="javascript:void(0)">帖&nbsp;&nbsp;子</a></li>
+					<li><a href="javascript:void(0)">博&nbsp;&nbsp;客</a></li>
+				</ul>
+				<ul class="trends_item trends_item_talk">
+					<li class="select"><a href="javascript:void(0)">所有吐槽</a></li>
+					<li><a href="javascript:void(0)">所有评论</a></li>
+					<c:if test="${userVo.userId==user.userId}">
+						<li><a href="javascript:void(0)">我的吐槽</a></li>
+						<li><a href="javascript:void(0)">我的评论</a></li>
+					</c:if>
+				</ul>
+				<ul class="trends_item trends_item_article">
+					<li class="select"><a href="javascript:void(0)">所有发帖</a></li>
+					<li><a href="javascript:void(0)">所有回帖</a></li>
+					<c:if test="${userVo.userId==user.userId}">
+						<li><a href="javascript:void(0)">我的发帖</a></li>
+						<li><a href="javascript:void(0)">我的回帖</a></li>
+					</c:if>
+					
+				</ul>
+				<ul class="trends_item trends_item_blog">
+					<li class="select"><a href="javascript:void(0)">所有博客</a></li>
+					<li><a href="javascript:void(0)">所有评论</a></li>
+				</ul>
+				<div id="dynamicList"></div>
 		  		<a href="javascript:void(0)" id="loadmorebtn" style="display:none;">加载更多</a>
 				<div id="loading" ><img src="${realPath}/images/load.gif" ></div>
+				<div id="trends_list">
+					
+				</div>
+				<div id="pager" class="pagination" style="margin-top:10px;"></div>
 		  	</div>
+		  	
 		  	<!--
 		  	<div class="topblog">
 		  		<div class="topblog_titcon" style="height:30px;">
@@ -274,43 +305,9 @@ dynamic.userId = "${userVo.userId}";
 					<div class="left_noinfo">没有发现博文</div>
 				</c:if>
 		  	</div>
-		  	
-		  	<div class="trends">
-		  		<ul class="trends_tag">
-					<li class="tag_select"><a href="javascript:void(0)">吐&nbsp;&nbsp;槽</a></li>
-					<li><a href="javascript:void(0)">讨&nbsp;&nbsp;论</a></li>
-					<li><a href="javascript:void(0)">博&nbsp;&nbsp;客</a></li>
-				</ul>
-				<ul class="trends_item trends_item_talk" style="display:block;">
-					<li class="select"><a href="javascript:void(0)">所有吐槽</a></li>
-					<li><a href="javascript:void(0)">所有评论</a></li>
-					<c:if test="${userVo.userId==user.userId}">
-						<li><a href="javascript:void(0)">我的吐槽</a></li>
-						<li><a href="javascript:void(0)">我的评论</a></li>
-					</c:if>
-					
-				</ul>
-				<ul class="trends_item trends_item_article">
-					<li class="select"><a href="javascript:void(0)">所有发帖</a></li>
-					<li><a href="javascript:void(0)">所有回帖</a></li>
-					<c:if test="${userVo.userId==user.userId}">
-						<li><a href="javascript:void(0)">我的发帖</a></li>
-						<li><a href="javascript:void(0)">我的回帖</a></li>
-					</c:if>
-					
-				</ul>
-				<ul class="trends_item trends_item_blog">
-					<li class="select"><a href="javascript:void(0)">所有博客</a></li>
-					<li><a href="javascript:void(0)">所有评论</a></li>
-				</ul>
-				<div id="trends_list">
-					
-				</div>
-				<div id="pager" class="pagination" style="margin-top:10px;"></div>
-		  	</div>
-		  	
 		</div>
   </div>
+  -->
   <script type="text/javascript" src="${realPath}/js/talk.js?version=2.5"></script>
   <script type="text/javascript" src="${realPath}/js/user.home.js?version=2.5"></script>
  <!-- <%@ include file="../common/foot.jsp" %>-->
