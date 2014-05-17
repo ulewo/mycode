@@ -134,4 +134,47 @@
 		) t  
 		ORDER BY t.create_time desc limit #{page.start},#{page.end} 
 	</select>
+	
+	<!-- 用户发表的帖子 -->
+	<select id="selectUserTopicCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(1) allCount from ulewo_topic c  
+		inner join ulewo_user u on u.userid = c.userid
+		where u.userid=#{param.userId,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectUserTopic" parameterType="java.util.Map" resultMap="BaseResultMap">
+  		select <include refid="column4topic" /> from ulewo_topic c  
+		inner join ulewo_user u on u.userid = c.userid
+		where u.userid=#{param.userId,jdbcType=VARCHAR}
+		ORDER BY c.create_time desc limit #{page.start},#{page.end} 
+	</select>
+	
+	<!-- 用户发表的博文 -->
+	<select id="selectUserBlogCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(1) allCount from ulewo_blog c  
+		inner join ulewo_user u on u.userid = c.userid
+		where u.userid=#{param.userId,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectUserBlog" parameterType="java.util.Map" resultMap="BaseResultMap">
+  		select <include refid="column4blog" /> from ulewo_blog c 
+		inner join ulewo_user u on u.userid = c.userid
+		where u.userid=#{param.userId,jdbcType=VARCHAR}
+		ORDER BY c.create_time desc limit #{page.start},#{page.end} 
+	</select>
+	
+	<!-- 用户发表的吐槽 -->
+		<select id="selectUserBlastCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(1) allCount from ulewo_blast c  
+		inner join ulewo_user u on u.userid = c.userid
+		where u.userid=#{param.userId,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectUserBlast" parameterType="java.util.Map" resultMap="BaseResultMap">
+  		select <include refid="column4blast" /> from ulewo_blast c 
+		inner join ulewo_user u on u.userid = c.userid
+		where u.userid=#{param.userId,jdbcType=VARCHAR}
+		ORDER BY c.create_time desc limit #{page.start},#{page.end} 
+	</select>
+	
 </mapper>

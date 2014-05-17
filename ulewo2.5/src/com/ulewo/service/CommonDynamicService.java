@@ -50,4 +50,27 @@ public interface CommonDynamicService {
 	public UlewoPaginationResult<CommonDynamic> selectUserAllDynamic(Map<String, String> param)
 			throws BusinessException;
 
+	/**
+	 * 查询用户发表的文章
+	 * @param param
+	 * @return
+	 * @throws BusinessException
+	 */
+	public UlewoPaginationResult<CommonDynamic> selectUserTopic(Map<String, String> param) throws BusinessException;
+
+	/**
+	 * 查询用户发表的博文
+	 * @param param
+	 * @return
+	 * @throws BusinessException
+	 */
+	public UlewoPaginationResult<CommonDynamic> selectUserBlog(Map<String, String> param) throws BusinessException;
+
+	/**
+	 * 查询用户发表的吐槽
+	 * @param param
+	 * @return
+	 * @throws BusinessException
+	 */
+	public UlewoPaginationResult<CommonDynamic> selectUserBlast(Map<String, String> param) throws BusinessException;
 }

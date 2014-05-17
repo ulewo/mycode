@@ -103,4 +103,67 @@ public class CommonDynamicServiceImpl implements CommonDynamicService {
 		UlewoPaginationResult<CommonDynamic> result = new UlewoPaginationResult<CommonDynamic>(page, list);
 		return result;
 	}
+
+	@Override
+	public UlewoPaginationResult<CommonDynamic> selectUserTopic(Map<String, String> map) throws BusinessException {
+		String userId = map.get("userId");
+		if (!StringUtils.isNumber(userId)) {
+			throw new BusinessException("参数错误");
+		}
+		int page_no = 0;
+		if (StringUtils.isNumber(map.get("page"))) {
+			page_no = Integer.parseInt(map.get("page"));
+		}
+		int pageSize = PageSize.SIZE20.getSize();
+		if (StringUtils.isNumber(map.get("rows"))) {
+			pageSize = Integer.parseInt(map.get("rows"));
+		}
+		int count = this.commonDynamicMapper.selectUserTopicCount(map);
+		SimplePage page = new SimplePage(page_no, count, pageSize);
+		List<CommonDynamic> list = this.commonDynamicMapper.selectUserTopic(map, page);
+		UlewoPaginationResult<CommonDynamic> result = new UlewoPaginationResult<CommonDynamic>(page, list);
+		return result;
+	}
+
+	@Override
+	public UlewoPaginationResult<CommonDynamic> selectUserBlog(Map<String, String> map) throws BusinessException {
+		String userId = map.get("userId");
+		if (!StringUtils.isNumber(userId)) {
+			throw new BusinessException("参数错误");
+		}
+		int page_no = 0;
+		if (StringUtils.isNumber(map.get("page"))) {
+			page_no = Integer.parseInt(map.get("page"));
+		}
+		int pageSize = PageSize.SIZE20.getSize();
+		if (StringUtils.isNumber(map.get("rows"))) {
+			pageSize = Integer.parseInt(map.get("rows"));
+		}
+		int count = this.commonDynamicMapper.selectUserBlogCount(map);
+		SimplePage page = new SimplePage(page_no, count, pageSize);
+		List<CommonDynamic> list = this.commonDynamicMapper.selectUserBlog(map, page);
+		UlewoPaginationResult<CommonDynamic> result = new UlewoPaginationResult<CommonDynamic>(page, list);
+		return result;
+	}
+
+	@Override
+	public UlewoPaginationResult<CommonDynamic> selectUserBlast(Map<String, String> map) throws BusinessException {
+		String userId = map.get("userId");
+		if (!StringUtils.isNumber(userId)) {
+			throw new BusinessException("参数错误");
+		}
+		int page_no = 0;
+		if (StringUtils.isNumber(map.get("page"))) {
+			page_no = Integer.parseInt(map.get("page"));
+		}
+		int pageSize = PageSize.SIZE20.getSize();
+		if (StringUtils.isNumber(map.get("rows"))) {
+			pageSize = Integer.parseInt(map.get("rows"));
+		}
+		int count = this.commonDynamicMapper.selectUserBlastCount(map);
+		SimplePage page = new SimplePage(page_no, count, pageSize);
+		List<CommonDynamic> list = this.commonDynamicMapper.selectUserBlast(map, page);
+		UlewoPaginationResult<CommonDynamic> result = new UlewoPaginationResult<CommonDynamic>(page, list);
+		return result;
+	}
 }

@@ -48,4 +48,53 @@ public interface CommonDynamicMapper<T> extends BaseMapper<T> {
 	 * @return
 	 */
 	public List<T> selectUserAllDynamic(@Param("param") Map<String, String> param, @Param("page") SimplePage page);
+
+	/**
+	 * 查询用户所有文章的数量
+	 * @param param
+	 * @param page
+	 * @return
+	 */
+	public int selectUserTopicCount(@Param("param") Map<String, String> param);
+
+	/**
+	 * 查询用户所有文章
+	 * @param param
+	 * @param page
+	 * @return
+	 */
+	public List<T> selectUserTopic(@Param("param") Map<String, String> param, @Param("page") SimplePage page);
+
+	/**
+	 * 查询用户所有博客的数量
+	 * @param param
+	 * @param page
+	 * @return
+	 */
+	public int selectUserBlogCount(@Param("param") Map<String, String> param);
+
+	/**
+	 * 查询用户所有博客
+	 * @param param
+	 * @param page
+	 * @return
+	 */
+	public List<T> selectUserBlog(@Param("param") Map<String, String> param, @Param("page") SimplePage page);
+
+	/**
+	 * 查询用户所有吐槽的数量
+	 * @param param
+	 * @param page
+	 * @return
+	 */
+	public int selectUserBlastCount(@Param("param") Map<String, String> param);
+
+	/**
+	 * 查询用户所有博客
+	 * @param param
+	 * @param page
+	 * @return
+	 */
+	public List<T> selectUserBlast(@Param("param") Map<String, String> param, @Param("page") SimplePage page);
+
 }
