@@ -96,11 +96,11 @@
       	SELECT LAST_INSERT_ID()
     </selectKey>
     <![CDATA[
-	    insert into ulewo_blog (userid, category_id,title,create_time,key_word,summary,content)
+	    insert into ulewo_blog (userid, category_id,title,create_time,key_word,summary,content,blog_image,blog_image_small)
 	    values (#{userId,jdbcType=INTEGER}, #{categoryId,jdbcType=INTEGER}, 
 	      #{title,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
 	      #{keyWord,jdbcType=VARCHAR}, #{summary,jdbcType=LONGVARCHAR}, 
-	      #{content,jdbcType=LONGVARCHAR})
+	      #{content,jdbcType=LONGVARCHAR}, #{blogImage,jdbcType=LONGVARCHAR}, #{blogImageSmall,jdbcType=LONGVARCHAR})
     ]]>
   </insert>
   
@@ -133,6 +133,12 @@
       </if>
       <if test="content != null" >
         content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+       <if test="blogImage != null" >
+        blog_image = #{blogImage,jdbcType=LONGVARCHAR},
+      </if>
+       <if test="blogImageSmall != null" >
+        blog_image_small = #{blogImageSmall,jdbcType=LONGVARCHAR},
       </if>
     </set>
     where blog_id = #{blogId,jdbcType=INTEGER} and userid = #{userId,jdbcType=INTEGER}

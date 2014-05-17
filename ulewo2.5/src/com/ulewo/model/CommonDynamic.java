@@ -1,5 +1,7 @@
 package com.ulewo.model;
 
+import com.ulewo.util.StringUtils;
+
 /**
  * TODO: 增加描述
  * 
@@ -13,11 +15,15 @@ public class CommonDynamic {
 	private String userName;
 	private String userIcon;
 	private String title;
+	private String gid;
+	private String summary;
 	private int id;
 	private String createTime;
 	private String showCreateTime;
 	private String type;
 	private int commments;
+	private String images;
+	private String[] imagesArray;
 
 	public Integer getUserId() {
 		return userId;
@@ -57,6 +63,7 @@ public class CommonDynamic {
 
 	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
+		this.showCreateTime = StringUtils.friendly_time(this.createTime);
 	}
 
 	public String getShowCreateTime() {
@@ -91,4 +98,38 @@ public class CommonDynamic {
 		this.userIcon = userIcon;
 	}
 
+	public String getSummary() {
+		return summary;
+	}
+
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
+
+	public String getGid() {
+		return gid;
+	}
+
+	public void setGid(String gid) {
+		this.gid = gid;
+	}
+
+	public String getImages() {
+		return images;
+	}
+
+	public void setImages(String images) {
+		this.images = images;
+		if (StringUtils.isNotEmpty(images)) {
+			this.imagesArray = this.images.split("\\|");
+		}
+	}
+
+	public String[] getImagesArray() {
+		return imagesArray;
+	}
+
+	public void setImagesArray(String[] imagesArray) {
+		this.imagesArray = imagesArray;
+	}
 }

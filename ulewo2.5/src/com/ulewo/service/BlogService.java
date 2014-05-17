@@ -3,6 +3,8 @@ package com.ulewo.service;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.ulewo.exception.BusinessException;
 import com.ulewo.model.Blog;
 import com.ulewo.model.SessionUser;
@@ -15,9 +17,10 @@ public interface BlogService {
 	 * 
 	 * @param map
 	 * @param sessionUser
+	 * @param request TODO
 	 * @return
 	 */
-	public Blog saveBlog(Map<String, String> map, SessionUser sessionUser) throws BusinessException;
+	public Blog saveBlog(Map<String, String> map, SessionUser sessionUser, HttpServletRequest request) throws BusinessException;
 
 	/**
 	 * 

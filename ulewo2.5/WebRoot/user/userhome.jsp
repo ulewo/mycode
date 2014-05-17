@@ -9,17 +9,14 @@
 <title>${userVo.userName}的空间-有乐窝</title>
 <meta name="description" content="${userVo.userName}的空间-有乐窝">
 <meta name="keywords" content="${userVo.userName}的空间-有乐窝">
+<script type="text/javascript">
+var dynamic = {};
+dynamic.userId = "${userVo.userId}";
+</script>
 <link rel="stylesheet" type="text/css" href="${realPath}/css/user.usercenter.css?version=2.5">
 <link rel="stylesheet" type="text/css" href="${realPath}/css/talk.css?version=2.5">
-<script type="text/javascript">
-window.onload = function(){
-	var leftH = parseInt($('#left').height());
-	var rightH = parseInt($('#right').height());
-	if(leftH > rightH){
-		$('#right').height(leftH)
-	}
-}
-</script>
+<link rel="stylesheet" type="text/css" href="${realPath}/css/user.dynamic.css?version=2.5">
+<script type="text/javascript" src="${realPath}/js/user.dynamic.js?version=2.5"></script>
 </head>
 <body>
 	<%@ include file="../common/head.jsp" %>
@@ -234,6 +231,13 @@ window.onload = function(){
 				  		</span><br>
 			  	</div>
 		  	</c:if>
+		  	<div id="dynamic">
+		  		<div>动态</div>
+		  		<div id="dynamicList"></div>
+		  		<a href="javascript:void(0)" id="loadmorebtn" style="display:none;">加载更多</a>
+				<div id="loading" ><img src="${realPath}/images/load.gif" ></div>
+		  	</div>
+		  	<!--
 		  	<div class="topblog">
 		  		<div class="topblog_titcon" style="height:30px;">
 		  			<span class="topblog_tit">最新博文</span>
@@ -250,7 +254,6 @@ window.onload = function(){
 		  				<div class="left_noinfo">没有发现博文</div>
 		  			</c:if>
 		  		</div>
-		  		 -->
 		  		 <c:forEach var="blog" items="${bloglist}">
 					<div class="blog_list_item">
 						<div class="blog_list_tit"><a href="${realPath}/user/${blog.userId}/blog/${blog.blogId}">${blog.title}</a></div>
@@ -271,7 +274,7 @@ window.onload = function(){
 					<div class="left_noinfo">没有发现博文</div>
 				</c:if>
 		  	</div>
-		  	<!-- 
+		  	
 		  	<div class="trends">
 		  		<ul class="trends_tag">
 					<li class="tag_select"><a href="javascript:void(0)">吐&nbsp;&nbsp;槽</a></li>
@@ -305,11 +308,11 @@ window.onload = function(){
 				</div>
 				<div id="pager" class="pagination" style="margin-top:10px;"></div>
 		  	</div>
-		  	 -->
+		  	
 		</div>
   </div>
   <script type="text/javascript" src="${realPath}/js/talk.js?version=2.5"></script>
   <script type="text/javascript" src="${realPath}/js/user.home.js?version=2.5"></script>
-  <%@ include file="../common/foot.jsp" %>
+ <!-- <%@ include file="../common/foot.jsp" %>-->
 </body>
 </html>

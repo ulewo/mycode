@@ -1,8 +1,8 @@
 @import url("public.css");
 .main{margin:0px auto;width:1000px;text-align:left;font-size:13px;margin-top:10px;}
-.main2{width: 98%;margin: 10px auto 50px;text-align: left;padding: 0px 4px}
-.left{width:220px;float:left;}
-.right{margin-left:240px;width:auto;text-align:left;background:#ffffff;min-height:600px;}
+.main2{width: 98%;margin: 10px auto 50px;text-align: left;padding: 0px 4px;}
+.left{width:220px;float:left;padding-bottom:20px;}
+.right{margin-left:240px;width:auto;text-align:left;background:#ffffff;min-height:600px;padding-bottom:20px;}
 .avatar_con{background:#4682B4;padding-bottom:10px;}
 .avatar_con img{border:0px;}
 .user_avatar{float:left;width:60px;margin:10px;background:#FFFFFF;padding:3px;}

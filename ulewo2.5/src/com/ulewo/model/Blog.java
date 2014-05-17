@@ -11,190 +11,200 @@ import com.ulewo.util.StringUtils;
  * @version V1.0
  */
 public class Blog {
-    private Integer blogId;
+	private Integer blogId;
 
-    private Integer userId;
+	private Integer userId;
 
-    private String userIcon;
+	private String userIcon;
 
-    private String userName;
+	private String userName;
 
-    private Integer categoryId;
+	private Integer categoryId;
 
-    private String categoryName;
+	private String categoryName;
 
-    private String title;
+	private String title;
 
-    private String summary;
+	private String summary;
 
-    private String content;
+	private String content;
 
-    private Integer readCount;
+	private Integer readCount;
 
-    private Integer commentCount;
+	private Integer commentCount;
 
-    private String createTime;
+	private String createTime;
 
-    private String showCreateTime;
+	private String showCreateTime;
 
-    private String keyWord;
+	private String keyWord;
 
-    private String allowComment;
+	private String allowComment;
 
-    private String blogImage;
+	private String blogImage;
 
-    private String allImage;
+	private String blogImageSmall; //缩略图
 
-    private boolean isNewBlog;
+	private String[] images;
 
-    public Integer getBlogId() {
-	return blogId;
-    }
+	private boolean isNewBlog;
 
-    public void setBlogId(Integer blogId) {
-	this.blogId = blogId;
-    }
-
-    public Integer getUserId() {
-	return userId;
-    }
-
-    public void setUserId(Integer userId) {
-	this.userId = userId;
-    }
-
-    public String getUserIcon() {
-	return userIcon;
-    }
-
-    public void setUserIcon(String userIcon) {
-	this.userIcon = userIcon;
-    }
-
-    public String getUserName() {
-	return userName;
-    }
-
-    public void setUserName(String userName) {
-	this.userName = userName;
-    }
-
-    public Integer getCategoryId() {
-	return categoryId;
-    }
-
-    public void setCategoryId(Integer categoryId) {
-	this.categoryId = categoryId;
-    }
-
-    public String getCategoryName() {
-	if (StringUtils.isEmpty(categoryName)) {
-	    return "全部文章";
+	public Integer getBlogId() {
+		return blogId;
 	}
-	return categoryName;
-    }
 
-    public void setCategoryName(String categoryName) {
+	public void setBlogId(Integer blogId) {
+		this.blogId = blogId;
+	}
 
-	this.categoryName = categoryName;
-    }
+	public Integer getUserId() {
+		return userId;
+	}
 
-    public String getTitle() {
-	return title;
-    }
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
 
-    public void setTitle(String title) {
-	this.title = title;
-    }
+	public String getUserIcon() {
+		return userIcon;
+	}
 
-    public String getSummary() {
-	return summary;
-    }
+	public void setUserIcon(String userIcon) {
+		this.userIcon = userIcon;
+	}
 
-    public void setSummary(String summary) {
-	this.summary = summary;
-    }
+	public String getUserName() {
+		return userName;
+	}
 
-    public String getContent() {
-	return content;
-    }
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
-    public void setContent(String content) {
-	this.content = content;
-    }
+	public Integer getCategoryId() {
+		return categoryId;
+	}
 
-    public Integer getReadCount() {
-	return readCount;
-    }
+	public void setCategoryId(Integer categoryId) {
+		this.categoryId = categoryId;
+	}
 
-    public void setReadCount(Integer readCount) {
-	this.readCount = readCount;
-    }
+	public String getCategoryName() {
+		if (StringUtils.isEmpty(categoryName)) {
+			return "全部文章";
+		}
+		return categoryName;
+	}
 
-    public Integer getCommentCount() {
-	return commentCount;
-    }
+	public void setCategoryName(String categoryName) {
 
-    public void setCommentCount(Integer commentCount) {
-	this.commentCount = commentCount;
-    }
+		this.categoryName = categoryName;
+	}
 
-    public String getCreateTime() {
-	return createTime;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public void setCreateTime(String createTime) {
-	this.showCreateTime = StringUtils.friendly_time(createTime);
-	this.createTime = createTime;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public String getKeyWord() {
-	return keyWord;
-    }
+	public String getSummary() {
+		return summary;
+	}
 
-    public void setKeyWord(String keyWord) {
-	this.keyWord = keyWord;
-    }
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
 
-    public String getAllowComment() {
-	return allowComment;
-    }
+	public String getContent() {
+		return content;
+	}
 
-    public void setAllowComment(String allowComment) {
-	this.allowComment = allowComment;
-    }
+	public void setContent(String content) {
+		this.content = content;
+	}
 
-    public String getBlogImage() {
-	return blogImage;
-    }
+	public Integer getReadCount() {
+		return readCount;
+	}
 
-    public void setBlogImage(String blogImage) {
-	this.blogImage = blogImage;
-    }
+	public void setReadCount(Integer readCount) {
+		this.readCount = readCount;
+	}
 
-    public String getAllImage() {
-	return allImage;
-    }
+	public Integer getCommentCount() {
+		return commentCount;
+	}
 
-    public void setAllImage(String allImage) {
-	this.allImage = allImage;
-    }
+	public void setCommentCount(Integer commentCount) {
+		this.commentCount = commentCount;
+	}
 
-    public String getShowCreateTime() {
-	this.showCreateTime = StringUtils.friendly_time(this.createTime);
-	return showCreateTime;
-    }
+	public String getCreateTime() {
+		return createTime;
+	}
 
-    public void setShowCreateTime(String showCreateTime) {
-	this.showCreateTime = showCreateTime;
-    }
+	public void setCreateTime(String createTime) {
+		this.showCreateTime = StringUtils.friendly_time(createTime);
+		this.createTime = createTime;
+	}
 
-    public boolean isNewBlog() {
-	return isNewBlog;
-    }
+	public String getKeyWord() {
+		return keyWord;
+	}
 
-    public void setNewBlog(boolean isNewBlog) {
-	this.isNewBlog = isNewBlog;
-    }
+	public void setKeyWord(String keyWord) {
+		this.keyWord = keyWord;
+	}
+
+	public String getAllowComment() {
+		return allowComment;
+	}
+
+	public void setAllowComment(String allowComment) {
+		this.allowComment = allowComment;
+	}
+
+	public String getBlogImage() {
+		return blogImage;
+	}
+
+	public void setBlogImage(String blogImage) {
+		this.blogImage = blogImage;
+	}
+
+	public String getShowCreateTime() {
+		this.showCreateTime = StringUtils.friendly_time(this.createTime);
+		return showCreateTime;
+	}
+
+	public void setShowCreateTime(String showCreateTime) {
+		this.showCreateTime = showCreateTime;
+	}
+
+	public boolean isNewBlog() {
+		return isNewBlog;
+	}
+
+	public void setNewBlog(boolean isNewBlog) {
+		this.isNewBlog = isNewBlog;
+	}
+
+	public String getBlogImageSmall() {
+		return blogImageSmall;
+	}
+
+	public void setBlogImageSmall(String blogImageSmall) {
+		this.blogImageSmall = blogImageSmall;
+	}
+
+	public String[] getImages() {
+		return images;
+	}
+
+	public void setImages(String[] images) {
+		this.images = images;
+	}
 
 }

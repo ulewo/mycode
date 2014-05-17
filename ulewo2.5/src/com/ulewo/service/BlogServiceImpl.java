@@ -1,5 +1,8 @@
 package com.ulewo.service;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -7,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -25,6 +30,7 @@ import com.ulewo.model.NoticeParam;
 import com.ulewo.model.SessionUser;
 import com.ulewo.model.User;
 import com.ulewo.util.Constant;
+import com.ulewo.util.ScaleFilter2;
 import com.ulewo.util.SimplePage;
 import com.ulewo.util.StringUtils;
 import com.ulewo.util.UlewoPaginationResult;
@@ -40,7 +46,8 @@ public class BlogServiceImpl implements BlogService {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BusinessException.class)
-	public Blog saveBlog(Map<String, String> map, SessionUser sessionUser) throws BusinessException {
+	public Blog saveBlog(Map<String, String> map, SessionUser sessionUser, HttpServletRequest request)
+			throws BusinessException {
 		Integer userId = sessionUser.getUserId();
 		String title = map.get("title");
 		String categoryId = map.get("categoryId");
@@ -68,6 +75,11 @@ public class BlogServiceImpl implements BlogService {
 		blog.setTitle(StringUtils.clearHtml(title));
 		blog.setCategoryId(categoryId_int);
 		blog.setKeyWord(StringUtils.formateHtml(keyword));
+		// 获取文章中的图片
+		String blogImage = StringUtils.getImages(content);
+		blog.setBlogImage(blogImage);
+		String blogImageSmall = getBlogImageSmall(blogImage, request);
+		blog.setBlogImageSmall(blogImageSmall);
 		List<Integer> userIds = new ArrayList<Integer>();
 		String formatContent = FormatAt.getInstance(Constant.TYPE_TALK).GenerateRefererLinks(userMapper, content,
 				userIds);
@@ -78,13 +90,6 @@ public class BlogServiceImpl implements BlogService {
 		}
 		blog.setSummary(content);
 		blog.setUserId(userId);
-		// 获取文章中的图片
-		if (id_int != 0) {
-			String images = StringUtils.getImages(content);
-			if (StringUtils.isNotEmpty(images)) {
-				blog.setAllImage(images);
-			}
-		}
 		if (blog.getBlogId().intValue() == 0) {
 			blog.setCreateTime(StringUtils.dateFormater.get().format(new Date()));
 			blogMapper.insert(blog);
@@ -107,6 +112,36 @@ public class BlogServiceImpl implements BlogService {
 		thread.start();
 
 		return blog;
+	}
+
+	private String getBlogImageSmall(String topicImage, HttpServletRequest request) {
+		StringBuilder topicImageSmall = new StringBuilder();
+		if (topicImage != null) {
+			String port = request.getServerPort() == 80 ? "" : ":" + request.getServerPort();
+			String hostPath = "http://" + request.getServerName() + port + request.getContextPath();
+			String realPath = request.getSession().getServletContext().getRealPath("");
+			String[] topoicImages = topicImage.split("\\|");
+			for (String img : topoicImages) {
+				if (StringUtils.isEmpty(img)) {
+					continue;
+				}
+				String imagePath = img.replaceAll(hostPath, "");
+				String sourcePath = realPath + imagePath;
+				String smallPath = sourcePath + ".small.jpg";
+				String smallSavePath = hostPath + imagePath + ".small.jpg";
+				BufferedImage src = null;
+				try {
+					src = ImageIO.read(new File(sourcePath));
+					BufferedImage dst = new ScaleFilter2(120).filter(src, null);
+					ImageIO.write(dst, "JPEG", new File(smallPath));
+				} catch (IOException e) {
+					e.printStackTrace();
+					break;
+				}
+				topicImageSmall.append(smallSavePath).append("|");
+			}
+		}
+		return topicImageSmall.toString();
 	}
 
 	@Override

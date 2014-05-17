@@ -1,0 +1,11 @@
+@import url("public.css");
+.dy-item{border:1px solid #D9D9D9;padding:8px;margin-top:10px;}
+.icon-con{height:60px;}
+.icon-left{float:left;width:50px;}
+.icon-left img{width:50px;}
+.icon-right{margin-left:60px;}
+.right-name{padding-top:5px;}
+.right-tiem{margin-top:10px;color:#8C8C8C;font-size:12px;}
+.right-name span{color:#8C8C8C;}
+.imageCon{margin-top:10px;}
+.imageCon img{max-width:100px;max-height:100px;}

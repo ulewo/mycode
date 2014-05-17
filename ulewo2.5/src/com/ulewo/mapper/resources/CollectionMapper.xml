@@ -40,6 +40,7 @@
     from ulewo_collection c inner join  ulewo_topic b on b.topic_id = c.article_id
 	  where 1=1
 	  <include refid="base_condition" />
+	  limit #{page.start},#{page.end} 
   </select>
   
   <select id="selectBlogInfoList" resultMap="BaseResultMap" parameterType="com.ulewo.model.Collection">
@@ -48,6 +49,7 @@
     from ulewo_collection c inner join ulewo_blog b on b.blog_id = c.article_id
 	  where 1=1
 	  <include refid="base_condition" />
+	  limit #{page.start},#{page.end} 
   </select>
   
   <select id ="selectTopicInfoCount" resultType="java.lang.Integer" parameterType="com.ulewo.model.Topic">

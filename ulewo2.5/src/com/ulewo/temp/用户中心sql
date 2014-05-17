@@ -16,3 +16,23 @@ inner join ulewo_user u on u.userid = f.friend_userid
 where f.userid='10001'
 ) t  
 ORDER BY t.create_time desc;
+
+
+select * from
+(select c.userid,u.username,u.user_icon,c.title title,c.topic_id id,c.create_time,'T' type,(select count(1) from ulewo_topic_comment t where t.topic_id=c.topic_id) comments from ulewo_topic c  
+inner join ulewo_user u on u.userid = c.userid
+where u.userid='10001' 
+UNION 
+select c.userid,u.username,u.user_icon,c.title title,c.blog_id id,c.create_time,'B' type,(select count(1) from ulewo_blog_comment t where t.blog_id=c.blog_id) comments from ulewo_blog c 
+inner join ulewo_user u on u.userid = c.userid
+where u.userid='10001' 
+UNION 
+select c.userid,u.username,u.user_icon,c.content title,c.blast_id id,c.create_time,'L' type,(select count(1) from ulewo_blast_comment t where t.blast_id=c.blast_id) comments from ulewo_blast c 
+inner join ulewo_user u on u.userid = c.userid
+where u.userid='10001' 
+UNION 
+select c.group_userid userid,u.user_icon,u.username,c.group_name title,c.gid id,c.create_time,'W' type,0 from ulewo_group c 
+inner join ulewo_user u on u.userid = c.group_userid
+where u.userid='10001' 
+) t  
+ORDER BY t.create_time desc;

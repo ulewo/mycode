@@ -114,8 +114,7 @@ public class UserManageAction extends BaseAction {
 		SessionUser user = (SessionUser) session.getAttribute("user");
 		Integer userId = user.getUserId();
 		try {
-			User resultUser = userService.findUser(userId.toString(),
-					QueryUserType.USERID);
+			User resultUser = userService.findUser(userId.toString(), QueryUserType.USERID);
 			if (null != resultUser) {
 				UserVo userVo = new UserVo();
 				userVo.setUserId(resultUser.getUserId());
@@ -141,14 +140,11 @@ public class UserManageAction extends BaseAction {
 	}
 
 	@RequestMapping(value = "/queryTheme.action", method = RequestMethod.GET)
-	public ModelAndView queryTheme(HttpSession session,
-			HttpServletRequest request) {
+	public ModelAndView queryTheme(HttpSession session, HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
-			User user = userService.findUser(
-					String.valueOf(this.getSessionUserId(session)),
-					QueryUserType.USERID);
+			User user = userService.findUser(String.valueOf(this.getSessionUserId(session)), QueryUserType.USERID);
 			mv.addObject("theme", user.getCenterTheme());
 			mv.setViewName("/usermanage/center_setting_real");
 			return mv;
@@ -165,14 +161,12 @@ public class UserManageAction extends BaseAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/setTheme.action", method = RequestMethod.POST)
-	public Map<String, Object> setTheme(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> setTheme(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = builderParams(request, true);
-			SessionUser sessionUser = (SessionUser) session
-					.getAttribute("user");
+			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 			userService.setTheme(map, sessionUser);
 			modelMap.put("result", ResultCode.SUCCESS.getCode());
 			return modelMap;
@@ -198,14 +192,12 @@ public class UserManageAction extends BaseAction {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/saveUserInfo.action", method = RequestMethod.POST)
-	public Map<String, Object> saveUserInfo(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> saveUserInfo(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = builderParams(request, true);
-			SessionUser sessionUser = (SessionUser) session
-					.getAttribute("user");
+			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 			User user = userService.updateUserInfo(map, sessionUser);
 			modelMap.put("user", user);
 			modelMap.put("result", ResultCode.SUCCESS.getCode());
@@ -238,14 +230,12 @@ public class UserManageAction extends BaseAction {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/save_pwd.action", method = RequestMethod.POST)
-	public Map<String, Object> editPwd(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> editPwd(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = builderParams(request, true);
-			SessionUser sessionUser = (SessionUser) session
-					.getAttribute("user");
+			SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 			userService.updatePassword(map, sessionUser);
 			modelMap.put("result", ResultCode.SUCCESS.getCode());
 			return modelMap;
@@ -271,8 +261,7 @@ public class UserManageAction extends BaseAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/saveUserIcon.action")
-	public Map<String, Object> saveUserIcon(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> saveUserIcon(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		String tempimg = request.getParameter("img");
@@ -280,8 +269,7 @@ public class UserManageAction extends BaseAction {
 		String y1 = request.getParameter("y1");
 		String width = request.getParameter("width");
 		String height = request.getParameter("height");
-		if (!StringUtils.isNumber(x1) || !StringUtils.isNumber(y1)
-				|| !StringUtils.isNumber(width)
+		if (!StringUtils.isNumber(x1) || !StringUtils.isNumber(y1) || !StringUtils.isNumber(width)
 				|| !StringUtils.isNumber(height)) {
 			modelMap.put("result", "fail");
 			modelMap.put("message", "请求参数错误");
@@ -308,20 +296,17 @@ public class UserManageAction extends BaseAction {
 		try {
 			BufferedImage img = ImageIO.read(new File(srcpath));
 			// 裁剪图片
-			BufferedImage subimg = img.getSubimage(x1_int, y1_int, width_int,
-					height_int);
+			BufferedImage subimg = img.getSubimage(x1_int, y1_int, width_int, height_int);
 			// 放大缩小图片
 			ScaleFilter filter = new ScaleFilter(SMALL_WIDTH);
 			BufferedImage okimg = filter.filter(subimg, null);
 			// 将图片转为字节数组
-			String okSrcPath = session.getServletContext().getRealPath("/")
-					+ "upload/avatars/";
+			String okSrcPath = session.getServletContext().getRealPath("/") + "upload/avatars/";
 			File imagePathFile = new File(okSrcPath);
 			if (!imagePathFile.exists()) {
 				imagePathFile.mkdirs();
 			}
-			File okfile = new File(okSrcPath + sessionUser.getUserId() + "."
-					+ imgType);
+			File okfile = new File(okSrcPath + sessionUser.getUserId() + "." + imgType);
 			ImageIO.write(okimg, imgType, okfile);
 			userIcon = "avatars/" + sessionUser.getUserId() + "." + imgType;
 			User user = new User();
@@ -359,10 +344,8 @@ public class UserManageAction extends BaseAction {
 	public ModelAndView newblog(HttpSession session) {
 
 		ModelAndView mv = new ModelAndView();
-		Integer userId = ((SessionUser) session.getAttribute("user"))
-				.getUserId();
-		List<BlogCategory> itemList = blogItemService
-				.selectCategoryWithBlogCount(userId);
+		Integer userId = ((SessionUser) session.getAttribute("user")).getUserId();
+		List<BlogCategory> itemList = blogItemService.selectCategoryWithBlogCount(userId);
 		mv.addObject("categorys", itemList);
 		mv.setViewName("usermanage/new_blog_real");
 		return mv;
@@ -378,15 +361,13 @@ public class UserManageAction extends BaseAction {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/loadBlog.action")
-	public Map<String, Object> loadBlog(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> loadBlog(HttpSession session, HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			SessionUser sessionUser = this.getSessionUser(session);
 			Map<String, String> param = this.builderParams(request, true);
 			param.put("userId", String.valueOf(sessionUser.getUserId()));
-			UlewoPaginationResult<Blog> result = this.blogService
-					.queryBlogByUserId(param);
+			UlewoPaginationResult<Blog> result = this.blogService.queryBlogByUserId(param);
 			map.put("rows", result.getList());
 			map.put("total", result.getPage().getCountTotal());
 			return map;
@@ -413,8 +394,7 @@ public class UserManageAction extends BaseAction {
 			int userId = this.getSessionUserId(session);
 			map.put("userId", String.valueOf(userId));
 			Blog blog = blogService.showBlogById(map);
-			List<BlogCategory> categoryList = blogCategoryService
-					.selectCategoryWithBlogCount(userId);
+			List<BlogCategory> categoryList = blogCategoryService.selectCategoryWithBlogCount(userId);
 			mv.addObject("blog", blog);
 			mv.addObject("categorys", categoryList);
 			mv.setViewName("usermanage/edit_blog_real");
@@ -440,14 +420,12 @@ public class UserManageAction extends BaseAction {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/saveBlog.action")
-	public Map<String, Object> saveBlog(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> saveBlog(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = builderParams(request, false);
-			Blog blog = this.blogService.saveBlog(map,
-					this.getSessionUser(session));
+			Blog blog = this.blogService.saveBlog(map, this.getSessionUser(session), request);
 			modelMap.put("result", ResultCode.SUCCESS.getCode());
 			modelMap.put("blog", blog);
 			return modelMap;
@@ -473,14 +451,12 @@ public class UserManageAction extends BaseAction {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/updateBlog.action")
-	public Map<String, Object> updateBlog(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> updateBlog(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = builderParams(request, false);
-			Blog blog = this.blogService.saveBlog(map,
-					this.getSessionUser(session));
+			Blog blog = this.blogService.saveBlog(map, this.getSessionUser(session), request);
 			modelMap.put("result", ResultCode.SUCCESS.getCode());
 			modelMap.put("blog", blog);
 			return modelMap;
@@ -507,13 +483,11 @@ public class UserManageAction extends BaseAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/deleteBlog.action")
-	public Map<String, Object> deleteBlog(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> deleteBlog(HttpSession session, HttpServletRequest request) {
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			Map<String, String> parms = builderParams(request, true);
-			this.blogService.deleteBlogBatch(parms,
-					this.getSessionUser(session));
+			this.blogService.deleteBlogBatch(parms, this.getSessionUser(session));
 			modelMap.put("result", ResultCode.SUCCESS.getCode());
 			return modelMap;
 		} catch (BusinessException e) {
@@ -538,15 +512,13 @@ public class UserManageAction extends BaseAction {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/loadComment.action")
-	public Map<String, Object> replyList(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> replyList(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> result = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = this.builderParams(request, true);
 			map.put("userId", String.valueOf(this.getSessionUserId(session)));
-			UlewoPaginationResult<BlogComment> listResult = this.blogCommentService
-					.queryBlogCommentByBlogId(map);
+			UlewoPaginationResult<BlogComment> listResult = this.blogCommentService.queryBlogCommentByBlogId(map);
 			result.put("rows", listResult.getList());
 			result.put("total", listResult.getPage().getCountTotal());
 		} catch (BusinessException e) {
@@ -567,13 +539,11 @@ public class UserManageAction extends BaseAction {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/deleteComent.action")
-	public Map<String, Object> deleteComent(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> deleteComent(HttpSession session, HttpServletRequest request) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		try {
 			Map<String, String> param = this.builderParams(request, true);
-			this.blogCommentService.deleteBatch(param,
-					this.getSessionUserId(session));
+			this.blogCommentService.deleteBatch(param, this.getSessionUserId(session));
 			result.put("result", ResultCode.SUCCESS.getCode());
 		} catch (BusinessException e) {
 			log.error(e.getMessage(), e);
@@ -592,13 +562,11 @@ public class UserManageAction extends BaseAction {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/loadCategory.action")
-	public Map<String, Object> loadCategory(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> loadCategory(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		SessionUser sessionUser = (SessionUser) session.getAttribute("user");
-		List<BlogCategory> categoryList = blogCategoryService
-				.selectCategoryWithBlogCount(sessionUser.getUserId());
+		List<BlogCategory> categoryList = blogCategoryService.selectCategoryWithBlogCount(sessionUser.getUserId());
 		modelMap.put("rows", categoryList);
 		modelMap.put("total", categoryList.size());
 		return modelMap;
@@ -606,14 +574,11 @@ public class UserManageAction extends BaseAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/saveCategory.action")
-	public Map<String, Object> editItem(HttpSession session,
-			HttpServletRequest request) {
+	public Map<String, Object> editItem(HttpSession session, HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
-			this.blogCategoryService.saveCategory(
-					this.builderParams(request, true),
-					this.getSessionUserId(session));
+			this.blogCategoryService.saveCategory(this.builderParams(request, true), this.getSessionUserId(session));
 			modelMap.put("result", ResultCode.SUCCESS.getCode());
 		} catch (BusinessException e) {
 			log.error(e.getMessage(), e);
@@ -627,14 +592,14 @@ public class UserManageAction extends BaseAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/queryFavoriteArticle.action")
-	public Map<String, Object> queryFavoriteArticle(HttpSession session,
-			HttpServletRequest request, HttpServletResponse response) {
+	public Map<String, Object> queryFavoriteArticle(HttpSession session, HttpServletRequest request,
+			HttpServletResponse response) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = this.builderParams(request, true);
-			UlewoPaginationResult<Collection> result = this.collectionService
-					.queryCollectionByUserId(map, this.getSessionUser(session));
+			UlewoPaginationResult<Collection> result = this.collectionService.queryCollectionByUserId(map,
+					this.getSessionUser(session));
 			modelMap.put("rows", result.getList());
 			modelMap.put("total", result.getPage().getCountTotal());
 		} catch (Exception e) {
@@ -645,14 +610,13 @@ public class UserManageAction extends BaseAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/deleteFavoriteArticle.action")
-	public Map<String, Object> deleteFavoriteArticle(HttpSession session,
-			HttpServletRequest request, HttpServletResponse response) {
+	public Map<String, Object> deleteFavoriteArticle(HttpSession session, HttpServletRequest request,
+			HttpServletResponse response) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = this.builderParams(request, true);
-			this.collectionService.deleteCollection(map,
-					this.getSessionUser(session));
+			this.collectionService.deleteCollection(map, this.getSessionUser(session));
 			modelMap.put("result", ResultCode.SUCCESS.getCode());
 		} catch (BusinessException e) {
 			log.error(e.getMessage(), e);
