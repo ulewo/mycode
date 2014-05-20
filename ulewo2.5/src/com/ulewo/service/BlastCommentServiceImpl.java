@@ -26,7 +26,7 @@ import com.ulewo.util.SimplePage;
 import com.ulewo.util.StringUtils;
 import com.ulewo.util.UlewoPaginationResult;
 
-@Service("reTalkService")
+@Service("blastCommentService")
 public class BlastCommentServiceImpl implements BlastCommentService {
 	@Resource
 	private UserMapper<User> userMapper;

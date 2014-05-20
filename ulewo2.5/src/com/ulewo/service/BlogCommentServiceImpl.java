@@ -29,7 +29,7 @@ import com.ulewo.util.SimplePage;
 import com.ulewo.util.StringUtils;
 import com.ulewo.util.UlewoPaginationResult;
 
-@Service("blogReplyService")
+@Service("blogCommentService")
 public class BlogCommentServiceImpl implements BlogCommentService {
 	@Resource
 	private BlogCommentMapper<BlogComment> blogCommentMapper;

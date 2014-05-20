@@ -53,7 +53,7 @@ groupManage.menue = [{
 				"url": global.realPath+"/admin/admin_blog.jsp"
 			}
 		},{
-			"id": 30,
+			"id": 31,
 			"text": "评论管理",
 			"attributes": {
 				"url": global.realPath+"/admin/admin_blog_comment.jsp"
@@ -63,7 +63,7 @@ groupManage.menue = [{
 	{
 		"text": "窝窝管理",
 		"children": [{
-			"id": 30,
+			"id": 40,
 			"text": "窝窝管理",
 			"attributes": {
 				"url": global.realPath+"/admin/admin_group.jsp"
@@ -71,9 +71,19 @@ groupManage.menue = [{
 		}]
 	},
 	{
+		"text": "窝窝分类管理",
+		"children": [{
+			"id": 50,
+			"text": "窝窝分类管理",
+			"attributes": {
+				"url": global.realPath+"/admin/admin_group_category.jsp"
+			}
+		}]
+	},
+	{
 		"text": "会员管理",
 		"children": [{
-			"id": 30,
+			"id": 60,
 			"text": "会员管理",
 			"attributes": {
 				"url": global.realPath+"/admin/admin_member.jsp"

@@ -20,6 +20,7 @@ import com.ulewo.model.BlastComment;
 import com.ulewo.model.Blog;
 import com.ulewo.model.BlogComment;
 import com.ulewo.model.Group;
+import com.ulewo.model.GroupCategory;
 import com.ulewo.model.Topic;
 import com.ulewo.model.TopicComment;
 import com.ulewo.model.User;
@@ -27,6 +28,7 @@ import com.ulewo.service.BlastCommentService;
 import com.ulewo.service.BlastService;
 import com.ulewo.service.BlogCommentService;
 import com.ulewo.service.BlogService;
+import com.ulewo.service.GroupCategoryService;
 import com.ulewo.service.GroupService;
 import com.ulewo.service.Log;
 import com.ulewo.service.TopicCommentService;
@@ -61,6 +63,9 @@ public class AdminAction extends BaseAction {
 
 	@Autowired
 	private BlogCommentService blogCommentService;
+
+	@Autowired
+	private GroupCategoryService groupCategoryService;
 
 	@Log
 	Logger log;
@@ -366,5 +371,48 @@ public class AdminAction extends BaseAction {
 			resultObj.put("msg", e.getMessage());
 			return resultObj;
 		}
+	}
+
+	/**
+	 * 加载窝窝分类
+	 * 
+	 * @param session
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/loadGroupCategory.action")
+	public Map<String, Object> loadCategory(HttpSession session, HttpServletRequest request) {
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			Map<String, String> param = this.builderParams(request, false);
+			List<GroupCategory> categoryList = groupCategoryService.selectGroupCategoryList(param);
+			modelMap.put("rows", categoryList);
+			modelMap.put("total", categoryList.size());
+			return modelMap;
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			modelMap.put("result", ResultCode.ERROR.getCode());
+			modelMap.put("msg", e.getMessage());
+			return modelMap;
+		}
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/saveCategory.action")
+	public Map<String, Object> editItem(HttpSession session, HttpServletRequest request) {
+
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			this.groupCategoryService.saveCategory(this.builderParams(request, true));
+			modelMap.put("result", ResultCode.SUCCESS.getCode());
+		} catch (BusinessException e) {
+			log.error(e.getMessage(), e);
+			modelMap.put("msg", e.getMessage());
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			modelMap.put("msg", "系统异常!");
+		}
+		return modelMap;
 	}
 }

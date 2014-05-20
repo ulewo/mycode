@@ -28,7 +28,7 @@ import com.ulewo.util.SimplePage;
 import com.ulewo.util.StringUtils;
 import com.ulewo.util.UlewoPaginationResult;
 
-@Service("talkService")
+@Service("blastService")
 public class BlastServiceImpl implements BlastService {
 
 	@Resource

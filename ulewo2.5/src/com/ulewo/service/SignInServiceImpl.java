@@ -28,7 +28,7 @@ import com.ulewo.util.SimplePage;
 import com.ulewo.util.StringUtils;
 import com.ulewo.util.UlewoPaginationResult;
 
-@Service("reMarkService")
+@Service("signInService")
 public class SignInServiceImpl implements SignInService {
 	@Resource
 	private SignInMapper<SignIn> signInMapper;

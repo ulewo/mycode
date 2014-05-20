@@ -39,7 +39,7 @@ import com.ulewo.util.UlewoPaginationResult4Json;
  * @date 2012-3-30
  * @version V1.0
  */
-@Service("TopicCommentService")
+@Service("topicCommentService")
 public class TopicCommentServiceImpl extends GroupAuthorityService implements TopicCommentService {
 
 	@Resource

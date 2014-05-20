@@ -35,7 +35,7 @@ import com.ulewo.util.SimplePage;
 import com.ulewo.util.StringUtils;
 import com.ulewo.util.UlewoPaginationResult;
 
-@Service("blogArticleService")
+@Service("blogService")
 public class BlogServiceImpl implements BlogService {
 
 	@Resource
