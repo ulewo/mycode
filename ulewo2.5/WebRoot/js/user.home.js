@@ -172,9 +172,9 @@ function DynamicItem(data){
 		$("<span>&nbsp;&nbsp;发表博文&nbsp;&nbsp;</span><a href='"+global.realPath+"/user/"+data.userId+"/blog/"+data.id+"' target='_blank'>"+data.title+"</a>").appendTo(rightName);
 	}else if(data.type=="L"){
 		realPath = global.realPath+"/upload/";
-		$("<span>&nbsp;&nbsp;发表吐槽&nbsp;&nbsp;</span>").appendTo(rightName);
+		$("<span>&nbsp;&nbsp;发表吐槽&nbsp;&nbsp;</span><a href='"+global.realPath+"/user/"+data.userId+"/blast/"+data.id+"' target='_blank'>查看</a>").appendTo(rightName);
 	}
-	var rightTime = $("<div class='right-tiem'><span>"+data.showCreateTime+"</span><span>&nbsp;&nbsp;评论("+data.commments+")</span></div>").appendTo(iconRight);
+	var rightTime = $("<div class='right-tiem'><span>"+data.showCreateTime+"</span><span>&nbsp;&nbsp;评论("+data.comments+")</span></div>").appendTo(iconRight);
 	var summary = data.summary;
 	if(data.type=='L'){
 		for ( var emo in emotion_data) {
@@ -245,7 +245,7 @@ function saveBlast(){
 				$(".noinfo").remove();
 				var myblast = data.blast;
 				myblast.summary = myblast.content;
-				myblast.commments = myblast.commentCount;
+				myblast.comments = myblast.commentCount;
 				myblast.imagesArray  = new Array(myblast.imageUrl);
 				myblast.type='L';
 				if($("#dynamicList").children().length>0){

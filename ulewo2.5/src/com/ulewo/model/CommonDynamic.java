@@ -21,7 +21,7 @@ public class CommonDynamic {
 	private String createTime;
 	private String showCreateTime;
 	private String type;
-	private int commments;
+	private int comments;
 	private String images;
 	private String[] imagesArray;
 
@@ -82,12 +82,12 @@ public class CommonDynamic {
 		this.type = type;
 	}
 
-	public int getCommments() {
-		return commments;
+	public int getComments() {
+		return comments;
 	}
 
-	public void setCommments(int commments) {
-		this.commments = commments;
+	public void setComments(int comments) {
+		this.comments = comments;
 	}
 
 	public String getUserIcon() {

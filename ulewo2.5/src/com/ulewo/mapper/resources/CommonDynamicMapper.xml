@@ -11,7 +11,7 @@
 	    <result column="id" property="id" jdbcType="INTEGER" />
 	    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
 	    <result column="type" property="type" jdbcType="VARCHAR" />
-	    <result column="commments" property="commments" jdbcType="INTEGER" />
+	    <result column="comments" property="comments" jdbcType="INTEGER" />
 	    <result column="images" property="images" jdbcType="INTEGER" />
   	 </resultMap>
   	 <sql id="base_condition" >
