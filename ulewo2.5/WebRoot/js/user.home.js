@@ -38,6 +38,7 @@ function loadPage(page){
 	$("#loadmorebtn").hide();
 	$("#dynamicList").empty();
 	$("#pager").empty();
+	$("#pager").show();
 	if(dynamic.type==1){
 		loadBlast(page);
 	}else if(dynamic.type==2){
@@ -61,14 +62,18 @@ function loadBlast(page){
 			if(data.resultCode = "200"){
 				var list = data.result.list;
 				var length = list.length;
-				for ( var i = 0; i < length; i++) {
-					new DynamicItem(list[i]).appendTo($("#dynamicList"));
-				}
-				var page = data.result.page;
-				if(page.pageTotal>1){
-					new Pager(page.pageTotal,10,page.page).asHtml().appendTo($("#pager"));
+				if(length==0){
+					$("<div class='noinfo'>囧,没有发现吐槽</div>").appendTo($("#dynamicList"));
 				}else{
-					$("#pager").hide();
+					for ( var i = 0; i < length; i++) {
+						new DynamicItem(list[i]).appendTo($("#dynamicList"));
+					}
+					var page = data.result.page;
+					if(page.pageTotal>1){
+						new Pager(page.pageTotal,10,page.page).asHtml().appendTo($("#pager"));
+					}else{
+						$("#pager").hide();
+					}
 				}
 			}else{
 				alert(data.msg);
@@ -90,14 +95,18 @@ function loadTopic(page){
 			if(data.resultCode = "200"){
 				var list = data.result.list;
 				var length = list.length;
-				for ( var i = 0; i < length; i++) {
-					new DynamicItem(list[i]).appendTo($("#dynamicList"));
-				}
-				var page = data.result.page;
-				if(page.pageTotal>1){
-					new Pager(page.pageTotal,10,page.page).asHtml().appendTo($("#pager"));
+				if(length==0){
+					$("<div class='noinfo'>囧,没有发现帖子</div>").appendTo($("#dynamicList"));
 				}else{
-					$("#pager").hide();
+					for ( var i = 0; i < length; i++) {
+						new DynamicItem(list[i]).appendTo($("#dynamicList"));
+					}
+					var page = data.result.page;
+					if(page.pageTotal>1){
+						new Pager(page.pageTotal,10,page.page).asHtml().appendTo($("#pager"));
+					}else{
+						$("#pager").hide();
+					}
 				}
 			}else{
 				alert(data.msg);
@@ -125,15 +134,20 @@ dynamic.loadDynamic = function(page){
 			if(data.resultCode = "200"){
 				var list = data.result.list;
 				var length = list.length;
-				for ( var i = 0; i < length; i++) {
-					new DynamicItem(list[i]).appendTo($("#dynamicList"));
-				}
-				if (data.result.page.pageTotal > dynamic.page) {
-					$("#loadmorebtn").css({
-						"display" : "block"
-					});
-				} else {
-					$("#loadmorebtn").hide();
+				if(length==0){
+					$("<div class='noinfo'>囧,没有发现动态</div>").appendTo($("#dynamicList"));
+					
+				}else{
+					for ( var i = 0; i < length; i++) {
+						new DynamicItem(list[i]).appendTo($("#dynamicList"));
+					}
+					if (data.result.page.pageTotal > dynamic.page) {
+						$("#loadmorebtn").css({
+							"display" : "block"
+						});
+					} else {
+						$("#loadmorebtn").hide();
+					}
 				}
 				dynamic.page = data.result.page.page;
 			}else{
@@ -225,15 +239,21 @@ function saveBlast(){
 			btnLoaded($("#talkBtn"),"发布");
 			if(data.result=="200"){
 				info("发布成功");
-				$(".noinfo").remove();
-				if($(".talkitem").length>0){
-					$(".talkitem").eq(0).before(new TalkItem(data.blast).item);
-				}else{
-					new TalkItem(data.blast).item.appendTo($("#talklist"));
-				}
-				$("#talkcontent").val("");
 				deleteImg();
 				tipsInfo("1分已到碗里");
+				$("#talkcontent").val("");
+				$(".noinfo").remove();
+				var myblast = data.blast;
+				myblast.summary = myblast.content;
+				myblast.commments = myblast.commentCount;
+				myblast.imagesArray  = new Array(myblast.imageUrl);
+				myblast.type='L';
+				if($("#dynamicList").children().length>0){
+					$("#dynamicList").children().eq(0).before(new DynamicItem(myblast)); 
+				}else{
+					new DynamicItem(myblast).appendTo($("#dynamicList")); 
+				}
+				
 			}else{
 				warm("show",data.msg);
 			}

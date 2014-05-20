@@ -54,17 +54,33 @@
 		inner join ulewo_user u on u.userid = f.friend_userid
 		where f.userid = #{param.userId,jdbcType=VARCHAR}
 		UNION 
+		select count(c.topic_id) allCount from ulewo_topic c 
+		inner join ulewo_user u on u.userid = c.userid
+		where c.userid = #{param.userId,jdbcType=VARCHAR}
+		UNION 
 		select count(c.blog_id) allCount from ulewo_blog c inner join ulewo_user_friend f on c.userid = f.friend_userid 
 		inner join ulewo_user u on u.userid = f.friend_userid
 		where f.userid = #{param.userId,jdbcType=VARCHAR}
+		UNION 
+		select count(c.blog_id) allCount from ulewo_blog c 
+		inner join ulewo_user u on u.userid = c.userid
+		where c.userid = #{param.userId,jdbcType=VARCHAR}
 		UNION 
 		select count(c.blast_id) allCount from ulewo_blast c inner join ulewo_user_friend f on c.userid = f.friend_userid 
 		inner join ulewo_user u on u.userid = f.friend_userid
 		where f.userid = #{param.userId,jdbcType=VARCHAR}
 		UNION 
+		select count(c.blast_id) allCount from ulewo_blast c 
+		inner join ulewo_user u on u.userid = c.userid
+		where c.userid = #{param.userId,jdbcType=VARCHAR}
+		UNION 
 		select count(c.gid) allCount  from ulewo_group c inner join ulewo_user_friend f on c.group_userid = f.friend_userid 
 		inner join ulewo_user u on u.userid = f.friend_userid
 		where f.userid = #{param.userId,jdbcType=VARCHAR}
+		UNION 
+		select count(c.gid) allCount  from ulewo_group c  
+		inner join ulewo_user u on u.userid = c.group_userid
+		where c.group_userid = #{param.userId,jdbcType=VARCHAR}
 		) t  
 	</select>
 	
@@ -76,17 +92,33 @@
 		inner join ulewo_user u on u.userid = f.friend_userid
 		where f.userid = #{param.userId,jdbcType=VARCHAR}
 		UNION 
+		select <include refid="column4topic" /> from ulewo_topic c 
+		inner join ulewo_user u on u.userid = c.userid
+		where c.userid = #{param.userId,jdbcType=VARCHAR}
+		UNION
 		select <include refid="column4blog" />  from ulewo_blog c inner join ulewo_user_friend f on c.userid = f.friend_userid 
 		inner join ulewo_user u on u.userid = f.friend_userid
 		where f.userid= #{param.userId,jdbcType=VARCHAR}
+		UNION
+		select <include refid="column4blog" />  from ulewo_blog c 
+		inner join ulewo_user u on u.userid = c.userid
+		where c.userid= #{param.userId,jdbcType=VARCHAR}
 		UNION 
 		select <include refid="column4blast" /> from ulewo_blast c inner join ulewo_user_friend f on c.userid = f.friend_userid 
 		inner join ulewo_user u on u.userid = f.friend_userid
 		where f.userid= #{param.userId,jdbcType=VARCHAR}
 		UNION 
+		select <include refid="column4blast" /> from ulewo_blast c
+		inner join ulewo_user u on u.userid = c.userid
+		where c.userid= #{param.userId,jdbcType=VARCHAR}
+		UNION 
 		select <include refid="column4group" /> from ulewo_group c inner join ulewo_user_friend f on c.group_userid = f.friend_userid 
 		inner join ulewo_user u on u.userid = f.friend_userid
 		where f.userid= #{param.userId,jdbcType=VARCHAR}
+		UNION 
+		select <include refid="column4group" /> from ulewo_group c 
+		inner join ulewo_user u on u.userid = c.group_userid
+		where c.group_userid= #{param.userId,jdbcType=VARCHAR}
 		) t  
 		ORDER BY t.create_time desc limit #{page.start},#{page.end} 
 	</select>

@@ -100,7 +100,7 @@ dynamic.userId = "${userVo.userId}";
 	  				<span class='u_talk_titname' style="float:none;">今天你吐槽了吗？</span>
 	  				<span class='u_talk_wordcount' style="float:none;font-size:12px;">（最多可以输入250字符）</span>
 	  			</div>
-	  			<div class="u_talk_textarea" style="padding-right:1px;border:2px solid #64C5E8;"><textarea id="talkcontent" style="width:100%;border:0px;color:#A9A9A9"></textarea></div>
+	  			<div class="u_talk_textarea" style="padding-right:1px;border:2px solid #64C5E8;"><textarea id="talkcontent" style="width:100%;border:0px;"></textarea></div>
 	  			<input type="hidden" id="imgUrl">
 	  			<div class="u_talk_sub" >
 	  				<div style="height:30px">
