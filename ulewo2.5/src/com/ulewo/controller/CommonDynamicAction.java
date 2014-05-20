@@ -62,4 +62,50 @@ public class CommonDynamicAction extends BaseUserAction {
 			return modelMap;
 		}
 	}
+
+	@ResponseBody
+	@RequestMapping(value = "/dynamic4Blast", method = RequestMethod.GET)
+	public Map<String, Object> dynamic4Blast(HttpSession session, HttpServletRequest request) {
+
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			Map<String, String> param = this.builderParams(request, false);
+			UlewoPaginationResult<CommonDynamic> result = commonDynamicService.selectUserBlast(param);
+			modelMap.put("result", result);
+			modelMap.put("resultCode", ResultCode.SUCCESS.getCode());
+			return modelMap;
+		} catch (BusinessException e) {
+			log.error(e.getMessage(), e);
+			modelMap.put("resultCode", ResultCode.ERROR.getCode());
+			modelMap.put("msg", e.getMessage());
+			return modelMap;
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			modelMap.put("msg", "系统异常");
+			return modelMap;
+		}
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/dynamic4Topic", method = RequestMethod.GET)
+	public Map<String, Object> dynamic4Topic(HttpSession session, HttpServletRequest request) {
+
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			Map<String, String> param = this.builderParams(request, false);
+			UlewoPaginationResult<CommonDynamic> result = commonDynamicService.selectUserTopic(param);
+			modelMap.put("result", result);
+			modelMap.put("resultCode", ResultCode.SUCCESS.getCode());
+			return modelMap;
+		} catch (BusinessException e) {
+			log.error(e.getMessage(), e);
+			modelMap.put("resultCode", ResultCode.ERROR.getCode());
+			modelMap.put("msg", e.getMessage());
+			return modelMap;
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			modelMap.put("msg", "系统异常");
+			return modelMap;
+		}
+	}
 }

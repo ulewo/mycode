@@ -55,7 +55,7 @@ alter table ulewo_blog change readcount read_count int(11) comment '阅读次数
 alter table ulewo_blog change posttime create_time datetime comment '创建时间';
 alter table ulewo_blog change keyword key_word varchar(200) comment '关键字';
 alter table ulewo_blog change allowreplay allow_comment varchar(1) default 'Y' comment '允许评论';
-alter table ulewo_blog change allimage blog_image mediumtext comment '图片';
+alter table ulewo_blog change allimage blog_image text comment '图片';
 
 
 alter table blog_item rename to ulewo_blog_category;

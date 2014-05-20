@@ -16,7 +16,6 @@ dynamic.userId = "${userVo.userId}";
 <link rel="stylesheet" type="text/css" href="${realPath}/css/user.usercenter.css?version=2.5">
 <link rel="stylesheet" type="text/css" href="${realPath}/css/talk.css?version=2.5">
 <link rel="stylesheet" type="text/css" href="${realPath}/css/user.dynamic.css?version=2.5">
-<script type="text/javascript" src="${realPath}/js/user.dynamic.js?version=2.5"></script>
 </head>
 <body>
 	<%@ include file="../common/head.jsp" %>
@@ -231,50 +230,11 @@ dynamic.userId = "${userVo.userId}";
 				  		</span><br>
 			  	</div>
 		  	</c:if>
-		  	<div class="trends">
-		  		<ul class="trends_tag">
-		  			<li class="tag_select"><a href="javascript:void(0)">所有动态</a></li>
-					<li><a href="javascript:void(0)">吐&nbsp;&nbsp;槽</a></li>
-					<li><a href="javascript:void(0)">帖&nbsp;&nbsp;子</a></li>
-					<li><a href="javascript:void(0)">博&nbsp;&nbsp;客</a></li>
-				</ul>
-				<ul class="trends_item trends_item_talk">
-					<li class="select"><a href="javascript:void(0)">所有吐槽</a></li>
-					<li><a href="javascript:void(0)">所有评论</a></li>
-					<c:if test="${userVo.userId==user.userId}">
-						<li><a href="javascript:void(0)">我的吐槽</a></li>
-						<li><a href="javascript:void(0)">我的评论</a></li>
-					</c:if>
-				</ul>
-				<ul class="trends_item trends_item_article">
-					<li class="select"><a href="javascript:void(0)">所有发帖</a></li>
-					<li><a href="javascript:void(0)">所有回帖</a></li>
-					<c:if test="${userVo.userId==user.userId}">
-						<li><a href="javascript:void(0)">我的发帖</a></li>
-						<li><a href="javascript:void(0)">我的回帖</a></li>
-					</c:if>
-					
-				</ul>
-				<ul class="trends_item trends_item_blog">
-					<li class="select"><a href="javascript:void(0)">所有博客</a></li>
-					<li><a href="javascript:void(0)">所有评论</a></li>
-				</ul>
-				<div id="dynamicList"></div>
-		  		<a href="javascript:void(0)" id="loadmorebtn" style="display:none;">加载更多</a>
-				<div id="loading" ><img src="${realPath}/images/load.gif" ></div>
-				<div id="trends_list">
-					
-				</div>
-				<div id="pager" class="pagination" style="margin-top:10px;"></div>
-		  	</div>
-		  	
-		  	<!--
 		  	<div class="topblog">
 		  		<div class="topblog_titcon" style="height:30px;">
 		  			<span class="topblog_tit">最新博文</span>
 		  			<span class="topblog_link"><a href="${realPath}/user/${userVo.userId}/blog">进入博客&gt;&gt;</a></span>
 		  		</div>
-		  		<!-- 
 		  		<div>
 		  			<c:forEach var="blog" items="${bloglist}">
 			  			<div class="blog_link">
@@ -285,26 +245,21 @@ dynamic.userId = "${userVo.userId}";
 		  				<div class="left_noinfo">没有发现博文</div>
 		  			</c:if>
 		  		</div>
-		  		 <c:forEach var="blog" items="${bloglist}">
-					<div class="blog_list_item">
-						<div class="blog_list_tit"><a href="${realPath}/user/${blog.userId}/blog/${blog.blogId}">${blog.title}</a></div>
-						<div class="blog_item_op">
-							<span>分类:</span>
-							<a href="${realPath}/user/${blog.userId}/blog/cateId/${blog.categoryId}">${blog.categoryName}</a>
-						</div>
-						<div class="blog_summary">
-							${blog.summary}
-						</div>
-						<div class="blog_item_info">
-							<span>发布于 ${blog.showCreateTime} 阅读(${blog.readCount})|评论(${blog.commentCount})</span>
-							<a href="${realPath}/user/${blog.userId}/blog/${blog.blogId}">阅读全文</a>
-						</div>
-					</div>
-				</c:forEach>
-				<c:if test="${empty bloglist}">
-					<div class="left_noinfo">没有发现博文</div>
-				</c:if>
 		  	</div>
+		  	<div class="trends">
+		  		<ul class="trends_tag">
+		  			<li class="tag_select"><a href="javascript:void(0)">所有动态</a></li>
+					<li><a href="javascript:void(0)">吐&nbsp;&nbsp;槽</a></li>
+					<li><a href="javascript:void(0)">帖&nbsp;&nbsp;子</a></li>
+				</ul>
+				<div id="dynamicList"></div>
+		  		<a href="javascript:void(0)" id="loadmorebtn" style="display:none;">加载更多</a>
+				<div id="loading" ><img src="${realPath}/images/load.gif" ></div>
+				<div id="pager" class="pagination" style="margin-top:10px;"></div>
+		  	</div>
+		  	
+		  	<!--
+		  	
 		</div>
   </div>
   -->

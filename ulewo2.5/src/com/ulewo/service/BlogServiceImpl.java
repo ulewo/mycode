@@ -208,7 +208,7 @@ public class BlogServiceImpl implements BlogService {
 
 	@Override
 	public List<Blog> queryBlogByUserId4List(Map<String, String> map) {
-		SimplePage page = new SimplePage(0, PageSize.SIZE20.getSize());
+		SimplePage page = new SimplePage(0, PageSize.SIZE5.getSize());
 		return blogMapper.selectBaseInfoList(map, page);
 	}
 

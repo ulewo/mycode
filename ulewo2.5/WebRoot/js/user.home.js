@@ -1,95 +1,248 @@
-var isloading = false;
-var loadtype = 0;
-var type=0;
+dynamic.isloading = false;
+dynamic.type=0;
+dynamic.page = 1;
 $(function(){
+	dynamic.loadDynamic(dynamic.page);
+	$("#loadmorebtn").click(function() {
+		dynamic.page =dynamic.page+1;
+		dynamic.loadDynamic(dynamic.page);
+	});
 	$("#talkBtn").bind("click",saveBlast);
 	$(".trends_tag li").each(function(index){
 		$(this).bind("click",function(){
-			if(isloading){
+			if(dynamic.isloading){
 				return;
 			}
 			$(".trends_tag li").removeClass("tag_select");
 			$(".trends_tag li").eq(index).addClass("tag_select");
-			$(".trends_item").hide();
-			$(".trends_item").eq(index).show();
-			isloading = true;
-			loadtype = index;
-			type=0;
-			$(".trends_item_talk li").removeClass("select");
-			$(".trends_item_talk li").eq(0).addClass("select");
-			$(".trends_item_article li").removeClass("select");
-			$(".trends_item_article li").eq(0).addClass("select");
-			$(".trends_item_blog li").removeClass("select");
-			$(".trends_item_blog li").eq(0).addClass("select");
+			dynamic.isloading = true;
 			switch(index){
 				case 0:
-					loadPage(1);
+					dynamic.loadDynamic(1);
 				break;
 				case 1:
+					dynamic.type = 1;
 					loadPage(1);
 				break;
 				case 2:
+					dynamic.type = 2;
 					loadPage(1);
 				break;
 			}
 		});
 	});
-	$(".trends_item_talk li").each(function(index){
-		$(this).bind("click",function(){
-			if(isloading){
-				return;
-			}
-			isloading  = true;
-			$(".trends_item_talk li").removeClass("select");
-			$(".trends_item_talk li").eq(index).addClass("select");
-			type = index;
-			loadPage(1);
-		});
-	});
-	
-	$(".trends_item_article li").each(function(index){
-		$(this).bind("click",function(){
-			if(isloading){
-				return;
-			}
-			isloading  = true;
-			$(".trends_item_article li").removeClass("select");
-			$(".trends_item_article li").eq(index).addClass("select");
-			type = index;
-			loadPage(1);
-		});
-	});
-	
-	$(".trends_item_blog li").each(function(index){
-		$(this).bind("click",function(){
-			if(isloading){
-				return;
-			}
-			isloading  = true;
-			$(".trends_item_blog li").removeClass("select");
-			$(".trends_item_blog li").eq(index).addClass("select");
-			type = index;
-			loadPage(1);
-		});
-	});
-	loadTalk(type,1);
 });
 
 function loadPage(page){
-	switch(loadtype){
-		case 0:
-			loadTalk(type,page);
-		break;
-		case 1:
-			loadArticle(type,page);
-		break;
-		case 2:
-			loadBlog(type,page);
-		break;
+	$("#loading").show();
+	$("#loadmorebtn").hide();
+	$("#dynamicList").empty();
+	$("#pager").empty();
+	if(dynamic.type==1){
+		loadBlast(page);
+	}else if(dynamic.type==2){
+		loadTopic(page);
 	}
+}
+/**
+ * 加载吐槽
+ * @param page
+ */
+function loadBlast(page){
+	$.ajax({
+		async : true,
+		cache : true,
+		type : 'GET',
+		dataType : "json",
+		url : global.realPath + '/user/dynamic4Blast?page='+page+'&userId=' + dynamic.userId,// 请求的action路径
+		success : function(data) {
+			dynamic.isloading = false;
+			$("#loading").hide();
+			if(data.resultCode = "200"){
+				var list = data.result.list;
+				var length = list.length;
+				for ( var i = 0; i < length; i++) {
+					new DynamicItem(list[i]).appendTo($("#dynamicList"));
+				}
+				var page = data.result.page;
+				if(page.pageTotal>1){
+					new Pager(page.pageTotal,10,page.page).asHtml().appendTo($("#pager"));
+				}else{
+					$("#pager").hide();
+				}
+			}else{
+				alert(data.msg);
+			}
+		}
+	});
+}
+
+function loadTopic(page){
+	$.ajax({
+		async : true,
+		cache : true,
+		type : 'GET',
+		dataType : "json",
+		url : global.realPath + '/user/dynamic4Topic?page='+page+'&userId=' + dynamic.userId,// 请求的action路径
+		success : function(data) {
+			dynamic.isloading = false;
+			$("#loading").hide();
+			if(data.resultCode = "200"){
+				var list = data.result.list;
+				var length = list.length;
+				for ( var i = 0; i < length; i++) {
+					new DynamicItem(list[i]).appendTo($("#dynamicList"));
+				}
+				var page = data.result.page;
+				if(page.pageTotal>1){
+					new Pager(page.pageTotal,10,page.page).asHtml().appendTo($("#pager"));
+				}else{
+					$("#pager").hide();
+				}
+			}else{
+				alert(data.msg);
+			}
+		}
+	});
+}
+
+dynamic.loadDynamic = function(page){
+	if(page==1){
+		$("#dynamicList").empty();
+	}
+	$("#pager").empty();
+	$("#loading").show();
+	$("#loadmorebtn").hide();
+	$.ajax({
+		async : true,
+		cache : true,
+		type : 'GET',
+		dataType : "json",
+		url : global.realPath + '/user/dynamic?page='+page+'&userId=' + dynamic.userId,// 请求的action路径
+		success : function(data) {
+			$("#loading").hide();
+			dynamic.isloading = false;
+			if(data.resultCode = "200"){
+				var list = data.result.list;
+				var length = list.length;
+				for ( var i = 0; i < length; i++) {
+					new DynamicItem(list[i]).appendTo($("#dynamicList"));
+				}
+				if (data.result.page.pageTotal > dynamic.page) {
+					$("#loadmorebtn").css({
+						"display" : "block"
+					});
+				} else {
+					$("#loadmorebtn").hide();
+				}
+				dynamic.page = data.result.page.page;
+			}else{
+				alert(data.msg);
+			}
+		}
+	});
+}
+
+
+function DynamicItem(data){
+	this.item = $("<div class='dy-item'></div>");
+	var iconCon = $("<div class='icon-con'></div>").appendTo(this.item);
+	var iconLeft = $("<div class='icon-left'><img src='"+global.realPath+"/upload/"+data.userIcon+"'/></div>").appendTo(iconCon);
+	var iconRight = $("<div class='icon-right'></div>").appendTo(iconCon);
+	var rightName = $("<div class='right-name'></div>").appendTo(iconRight);
+	var nameLink = $("<a href='"+global.realPath+"/user/"+data.userId+"' target='_blank'>"+data.userName+"</a>").appendTo(rightName);
+	var realPath = "";
+	if(data.type=="T"){
+		$("<span>&nbsp;&nbsp;发表文章&nbsp;&nbsp;</span><a href='"+global.realPath+"/group/"+data.gid+"/topic/"+data.id+"' target='_blank'>"+data.title+"</a>").appendTo(rightName);
+	}else if(data.type=="B"){
+		$("<span>&nbsp;&nbsp;发表博文&nbsp;&nbsp;</span><a href='"+global.realPath+"/user/"+data.userId+"/blog/"+data.id+"' target='_blank'>"+data.title+"</a>").appendTo(rightName);
+	}else if(data.type=="L"){
+		realPath = global.realPath+"/upload/";
+		$("<span>&nbsp;&nbsp;发表吐槽&nbsp;&nbsp;</span>").appendTo(rightName);
+	}
+	var rightTime = $("<div class='right-tiem'><span>"+data.showCreateTime+"</span><span>&nbsp;&nbsp;评论("+data.commments+")</span></div>").appendTo(iconRight);
+	var summary = data.summary;
+	if(data.type=='L'){
+		for ( var emo in emotion_data) {
+			summary = summary.replace(emo, "&nbsp;<img src='" + global.realPath
+					+ "/images/emotions/" + emotion_data[emo] + "'>&nbsp;");
+		}
+	}
+	var summary = $("<div class='summary'>"+summary+"</div>").appendTo(this.item);
+	var imagesArray = data.imagesArray;
+	if(imagesArray!=null){
+		var imagUrl = "";
+		var imageCon = $("<div class='imageCon'></div>").appendTo(this.item);
+		var image;
+		var length = imagesArray.length;
+		if(length >=5){
+			length = 5
+		}
+		for(var i=0;i<length;i++){
+			image = imagesArray[i];
+			if(data.type=="T"||data.type=="B"){
+				imagUrl = realPath+image.substring(0,image.lastIndexOf("small")-1);
+			}else if(data.type=="L"){
+				imagUrl = realPath+image;
+			}
+			$("<a href='"+imagUrl+"' target='_blank'><img src='"+realPath+image+"'></a><span>&nbsp;&nbsp;</span>").appendTo(imageCon);
+		}
+	}
+	return this.item;
 }
 
 /*********吐槽**************/
+function saveBlast(){
+	if(global.userId==""){
+		alert("请先登录");
+		return;
+	}
+	if($(this).attr("disable")=="disable"){
+		return;
+	}
+	var content = $("#talkcontent").val().trim();
+	if(content==""||content=="今天你吐槽了吗？"){
+		warm("show","吐槽内容不能为空");
+		return;
+	}
+	if(content.length>250){
+		warm("show","吐槽内容不能超过250字符");
+		return;
+	}
+	warm("hide","");
+	btnLoading($(this),"发布中<img src='"+global.realPath+"/images/load.gif' width='14'>");
+	$.ajax({
+		async : true,
+		cache : false,
+		type : 'POST',
+		dataType : "json",
+		data : {
+			content:content,
+			imgUrl:$("#imgUrl").val()
+		},
+		url : global.realPath+"/user/saveBlast.action",// 请求的action路径
+		success : function(data) {
+			btnLoaded($("#talkBtn"),"发布");
+			if(data.result=="200"){
+				info("发布成功");
+				$(".noinfo").remove();
+				if($(".talkitem").length>0){
+					$(".talkitem").eq(0).before(new TalkItem(data.blast).item);
+				}else{
+					new TalkItem(data.blast).item.appendTo($("#talklist"));
+				}
+				$("#talkcontent").val("");
+				deleteImg();
+				tipsInfo("1分已到碗里");
+			}else{
+				warm("show",data.msg);
+			}
+		}
+	});
+}
+
+
+
 /*function loadTalk(type,page){
 	$("#trends_list").empty();
 	$("#pager").empty();
@@ -367,54 +520,4 @@ function UserReBlogItem(article){
 		$('<div class="clear"></div>').appendTo(this.talk_item);
 }*/
 
-function saveBlast(){
-	if(global.userId==""){
-		alert("请先登录");
-		return;
-	}
-	if($(this).attr("disable")=="disable"){
-		return;
-	}
-	var content = $("#talkcontent").val().trim();
-	if(content==""||content=="今天你吐槽了吗？"){
-		warm("show","吐槽内容不能为空");
-		return;
-	}
-	if(content.length>250){
-		warm("show","吐槽内容不能超过250字符");
-		return;
-	}
-	warm("hide","");
-	btnLoading($(this),"发布中<img src='"+global.realPath+"/images/load.gif' width='14'>");
-	$.ajax({
-		async : true,
-		cache : false,
-		type : 'POST',
-		dataType : "json",
-		data : {
-			content:content,
-			imgUrl:$("#imgUrl").val()
-		},
-		url : global.realPath+"/user/saveBlast.action",// 请求的action路径
-		success : function(data) {
-			btnLoaded($("#talkBtn"),"发布");
-			if(data.result=="200"){
-				info("发布成功");
-				$(".noinfo").remove();
-				if($(".talkitem").length>0){
-					$(".talkitem").eq(0).before(new TalkItem(data.blast).item);
-				}else{
-					new TalkItem(data.blast).item.appendTo($("#talklist"));
-				}
-				$("#talkcontent").val("");
-				deleteImg();
-				tipsInfo("1分已到碗里");
-			}else{
-				warm("show",data.msg);
-			}
-		}
-	});
-}
 
-function loadInitTalk(){
-}

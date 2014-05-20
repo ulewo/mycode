@@ -69,7 +69,11 @@ function DynamicItem(data){
 		var imagUrl = "";
 		var imageCon = $("<div class='imageCon'></div>").appendTo(this.item);
 		var image;
-		for(var i=0,length=imagesArray.length;i<length;i++){
+		var length = imagesArray.length;
+		if(length >=5){
+			length = 5
+		}
+		for(var i=0;i<length;i++){
 			image = imagesArray[i];
 			if(data.type=="T"||data.type=="B"){
 				imagUrl = realPath+image.substring(0,image.lastIndexOf("small")-1);

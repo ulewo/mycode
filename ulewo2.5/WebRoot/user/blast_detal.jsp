@@ -105,7 +105,7 @@ window.onload = function(){
 		  					<span class="item_user"><a href="${realPath}/user/${blast.userId}">${blast.userName}</a></span>
 		  					<span class="item_content" id="item_content">${blast.content}</span>
 		  					<c:if test="${blast.imageUrl!=''&&blast.imageUrl!=null}">
-		  						<div class="talkimg">
+		  						<div class="talkimg" style="margin-top:10px">
 		  							<a href="${realPath}/upload/${blast.imageUrl}" target="_blank"><img src="${realPath}/upload/${blast.imageUrl}" style="max-width:700px;"></a>
 		  						</div>
 		  					</c:if>
