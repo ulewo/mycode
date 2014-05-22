@@ -40,4 +40,6 @@ public interface GroupCategoryService {
 	 * 查询分类
 	 */
 	public List<GroupCategory> selectGroupCategoryList(Map<String, String> map) throws BusinessException;
+
+	public List<GroupCategory> selectGroupCategoryList4Index() throws BusinessException;
 }

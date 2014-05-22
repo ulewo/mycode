@@ -1,5 +1,8 @@
 package com.ulewo.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * TODO: 增加描述
  * 
@@ -13,6 +16,7 @@ public class GroupCategory {
 	private Integer pid;
 	private String name;
 	private Integer rang;
+	private List<GroupCategory> children = new ArrayList<GroupCategory>();
 
 	public Integer getGroupCategoryId() {
 		return groupCategoryId;
@@ -44,6 +48,14 @@ public class GroupCategory {
 
 	public void setRang(Integer rang) {
 		this.rang = rang;
+	}
+
+	public List<GroupCategory> getChildren() {
+		return children;
+	}
+
+	public void setChildren(List<GroupCategory> children) {
+		this.children = children;
 	}
 
 }

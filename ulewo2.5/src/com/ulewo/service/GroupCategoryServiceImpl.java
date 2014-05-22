@@ -93,4 +93,22 @@ public class GroupCategoryServiceImpl implements GroupCategoryService {
 			groupCategoryMapper.delete(param);
 		}
 	}
+
+	public List<GroupCategory> selectGroupCategoryList4Index() throws BusinessException {
+		Map<String, String> map = new HashMap<String, String>();
+		List<GroupCategory> allList = this.groupCategoryMapper.selectBaseInfoList(map, null);
+		map.put("pid", "0");
+		List<GroupCategory> pList = this.groupCategoryMapper.selectBaseInfoList(map, null);
+		for (GroupCategory p : pList) {
+			if (p.getChildren().size() > 8) {
+				continue;
+			}
+			for (GroupCategory s : allList) {
+				if (p.getGroupCategoryId().intValue() == s.getPid().intValue()) {
+					p.getChildren().add(s);
+				}
+			}
+		}
+		return pList;
+	}
 }
