@@ -72,7 +72,7 @@ groupCategory.endEdit = function(){
 
 groupCategory.newRow = function(){
 	 var length = $('#datagrid').datagrid('getRows').length;
-	 $('#datagrid').datagrid('appendRow');
+	 $('#datagrid').datagrid('appendRow',{rang:(length+1)});
 	 $('#datagrid').datagrid('beginEdit', length);
 };
 
@@ -148,7 +148,7 @@ groupCategory.endSubEdit = function(){
 
 groupCategory.newSubRow = function(){
 	 var length = $('#subdatagrid').datagrid('getRows').length;
-	 $('#subdatagrid').datagrid('appendRow',{pid:groupCategory.pid});
+	 $('#subdatagrid').datagrid('appendRow',{pid:groupCategory.pid,rang:length+1});
 	 $('#subdatagrid').datagrid('beginEdit', length);
 };
 
