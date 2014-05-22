@@ -34,9 +34,7 @@
 				<th data-options="field:'rang',editor:{
 					type:'numberbox',
 						options:{
-							required:true,
-							min:1,
-							max:9
+							required:true
 						}
 					},align:'center'">排序</th>
 				<th data-options="field:'link',align:'center',formatter:groupCategory.formatOp">操作</th>
@@ -67,9 +65,7 @@
 				<th data-options="field:'rang',editor:{
 					type:'numberbox',
 						options:{
-							required:true,
-							min:1,
-							max:9
+							required:true
 						}
 					},align:'center'">排序</th>
 			</tr>
