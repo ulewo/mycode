@@ -373,7 +373,7 @@ public class TopicAction extends BaseGroupAction {
 		try {
 
 			this.attachedDownloadService.downloadFile(this.builderParams(request, true), this.getSessionUser(session),
-					response, session);
+					response, session, request);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			mv.setViewName("redirect:" + Constant.ERRORPAGE);

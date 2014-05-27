@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -48,8 +49,7 @@ public class AttachmentDownloadServiceImpl implements AttachmentDownloadService 
 	private UserService userService;
 
 	@Override
-	public void createAttachedUser(Map<String, String> map,
-			SessionUser sessionUser) {
+	public void createAttachedUser(Map<String, String> map, SessionUser sessionUser) {
 		AttachmentDownload download = new AttachmentDownload();
 		download.setAttachmentId(Integer.parseInt(map.get("attachmentId")));
 		download.setUserId(sessionUser.getUserId());
@@ -61,8 +61,7 @@ public class AttachmentDownloadServiceImpl implements AttachmentDownloadService 
 		return attachmentDownloadMapper.selectBaseInfo(param);
 	}
 
-	public List<AttachmentDownload> queryAttachedUserByAttachedId(
-			Map<String, String> param) throws BusinessException {
+	public List<AttachmentDownload> queryAttachedUserByAttachedId(Map<String, String> param) throws BusinessException {
 		String attachmentId = param.get("attachmentId");
 		if (!StringUtils.isNumber(attachmentId)) {
 			throw new BusinessException("参数错误");
@@ -73,8 +72,7 @@ public class AttachmentDownloadServiceImpl implements AttachmentDownloadService 
 	}
 
 	@Override
-	public void checkDownLoad(Map<String, String> map, SessionUser sessionUser)
-			throws BusinessException {
+	public void checkDownLoad(Map<String, String> map, SessionUser sessionUser) throws BusinessException {
 		String fileId = map.get("attachmentId");
 		if (!StringUtils.isNumber(fileId)) {
 			throw new BusinessException("请求参数错误");
@@ -88,27 +86,22 @@ public class AttachmentDownloadServiceImpl implements AttachmentDownloadService 
 		// 判断当前用户是否是发布资源的人
 
 		Topic article = topicMapper.selectBaseInfo(map);
-		User articleAuthor = userService.findUser(article.getUserId()
-				.toString(), QueryUserType.USERID);
+		User articleAuthor = userService.findUser(article.getUserId().toString(), QueryUserType.USERID);
 		if (articleAuthor.getUserId() != sessionUser.getUserId()) {
 			// 判断用户是否下载过
 			map.put("userId", sessionUser.getUserId().toString());
-			AttachmentDownload download = attachmentDownloadMapper
-					.selectBaseInfo(map);
+			AttachmentDownload download = attachmentDownloadMapper.selectBaseInfo(map);
 			if (download == null) {
-				User user = userService.findUser(sessionUser.getUserId()
-						.toString(), QueryUserType.USERID);
+				User user = userService.findUser(sessionUser.getUserId().toString(), QueryUserType.USERID);
 				if (user.getMark() < attachedFile.getDownloadMark()) {
-					throw new BusinessException("你当前的积分是" + user.getMark()
-							+ ",积分不够");
+					throw new BusinessException("你当前的积分是" + user.getMark() + ",积分不够");
 				}
 			}
 		}
 	}
 
-	public void downloadFile(Map<String, String> map, SessionUser sessionUser,
-			HttpServletResponse response, HttpSession session)
-			throws BusinessException, IOException {
+	public void downloadFile(Map<String, String> map, SessionUser sessionUser, HttpServletResponse response,
+			HttpSession session, HttpServletRequest request) throws BusinessException, IOException {
 		InputStream in = null;
 		OutputStream out = null;
 		File file = null;
@@ -125,30 +118,24 @@ public class AttachmentDownloadServiceImpl implements AttachmentDownloadService 
 		map.put("topicId", String.valueOf(attachedFile.getTopicId()));
 
 		Topic article = topicMapper.selectBaseInfo(map);
-		User articleAuthor = userService.findUser(article.getUserId()
-				.toString(), QueryUserType.USERID);
+		User articleAuthor = userService.findUser(article.getUserId().toString(), QueryUserType.USERID);
 		// 判断当前用户是否是发布资源的人
 		if (articleAuthor.getUserId() != sessionUser.getUserId()) {
 			map.put("userId", sessionUser.getUserId().toString());
-			AttachmentDownload download = attachmentDownloadMapper
-					.selectBaseInfo(map);
+			AttachmentDownload download = attachmentDownloadMapper.selectBaseInfo(map);
 			// 判断用户是否下载过
 			if (download == null) {
-				User user = userMapper.selectUserByUserId(sessionUser
-						.getUserId());
+				User user = userMapper.selectUserByUserId(sessionUser.getUserId());
 				if (user.getMark() < attachedFile.getDownloadMark()) {
-					throw new BusinessException("你当前的积分是" + user.getMark()
-							+ ",积分不够");
+					throw new BusinessException("你当前的积分是" + user.getMark() + ",积分不够");
 				}
 				// 非当前用户，没有下载过，积分也够
 				// 扣除积分
 				user.setMark(user.getMark() - attachedFile.getDownloadMark());
 				userService.updateSelective(user);
 				// 给发布信息的人加积分
-				User author = userMapper
-						.selectUserByUserId(article.getUserId());
-				author.setMark(author.getMark()
-						+ attachedFile.getDownloadMark());
+				User author = userMapper.selectUserByUserId(article.getUserId());
+				author.setMark(author.getMark() + attachedFile.getDownloadMark());
 				userService.updateSelective(author);
 				// 记录已经下载过
 				AttachmentDownload attachedUser2 = new AttachmentDownload();
@@ -157,8 +144,7 @@ public class AttachmentDownloadServiceImpl implements AttachmentDownloadService 
 				attachmentDownloadMapper.insert(attachedUser2);
 			}
 		} else {// 如果是发布资源者，记录下载情况
-			AttachmentDownload download = attachmentDownloadMapper
-					.selectBaseInfo(map);
+			AttachmentDownload download = attachmentDownloadMapper.selectBaseInfo(map);
 			if (download == null) {
 				AttachmentDownload attachedUser2 = new AttachmentDownload();
 				attachedUser2.setAttachmentId(attachmentId_int);
@@ -170,15 +156,20 @@ public class AttachmentDownloadServiceImpl implements AttachmentDownloadService 
 		attachedFile.setDownloadCount(attachedFile.getDownloadCount() + 1);
 		attachmentMapper.updateSelective(attachedFile);
 		// 开始下载
-		String realPath = session.getServletContext().getRealPath("/")
-				+ "upload/";
+		String realPath = session.getServletContext().getRealPath("/") + "upload/";
 		String filePath = realPath + attachedFile.getFileUrl();
 		file = new File(filePath);
 		in = new FileInputStream(file);
 		out = response.getOutputStream();
-		response.setContentType("application/octet-stream; charset=UTF-8");
-		response.setHeader("Content-Disposition", "attachment; filename="
-				+ URLEncoder.encode(attachedFile.getFileName(), "UTF-8"));
+		response.setContentType("application/x-msdownload; charset=UTF-8");
+		String fileName = attachedFile.getFileName();
+		// 解决中文文件名乱码问题
+		if (request.getHeader("User-Agent").toLowerCase().indexOf("firefox") > 0) {
+			fileName = new String(fileName.getBytes("UTF-8"), "ISO8859-1"); // firefox浏览器
+		} else {
+			fileName = URLEncoder.encode(fileName, "UTF-8");// IE浏览器
+		}
+		response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
 		byte[] byteData = new byte[1024 * 5];
 		int len = 0;
 		while ((len = in.read(byteData)) != -1) {

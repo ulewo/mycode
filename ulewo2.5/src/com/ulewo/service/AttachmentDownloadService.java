@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -51,6 +52,6 @@ public interface AttachmentDownloadService {
 			throws BusinessException;
 
 	public void downloadFile(Map<String, String> map, SessionUser sessionUser,
-			HttpServletResponse response, HttpSession session)
+			HttpServletResponse response, HttpSession session, HttpServletRequest request)
 			throws BusinessException, IOException;
 }
