@@ -1,5 +1,6 @@
 $(function(){
 	$("#editBtn").bind("click",editGroup);
+	loadCategory();
 });
 
 function editGroup(){
@@ -40,6 +41,28 @@ function editGroup(){
 				setTimeout(function(){
 					document.location.href=global.realPath+"/group/"+data.group.gid;
 				},1500);
+			}else{
+				warm("show",data.msg);	
+			}
+		}
+	});
+}
+function loadCategory(){
+	$.ajax({
+		async : true,
+		cache : false,
+		type : 'POST',
+		dataType : "json",
+		data : $("#group_info").serialize(),
+		url : global.realPath+"/loadGroupCategory",// 请求的action路径
+		success : function(data) {
+			if(data.result=="200"){
+				var select = $("<select></select>").appendTo($("#categroy")).bind("change",function(){
+					alert($(this).children('option:selected').val());
+				});
+				for(var i=0,length=data.groupCateGroy.length;i<length;i++){
+					$("<option value='"+data.groupCateGroy[i].groupCategroyId+"'>"+data.groupCateGroy[i].name+"</option>").appendTo(select);
+				}
 			}else{
 				warm("show",data.msg);	
 			}

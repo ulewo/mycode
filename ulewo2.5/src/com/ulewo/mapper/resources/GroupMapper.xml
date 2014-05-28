@@ -25,6 +25,12 @@
 	      <if test="null!=param.groupUserId and ''!=param.groupUserId" >
 	        	and group_userid = #{param.groupUserId,jdbcType=VARCHAR}
 	      </if>
+	      <if test="null!=param.categroyId and ''!=param.categroyId" >
+	        	and categroy_id = #{param.categroyId,jdbcType=VARCHAR}
+	      </if>
+	      <if test="null!=param.pCategroyId and ''!=param.pCategroyId" >
+	        	and p_categroy_id = #{param.pCategroyId,jdbcType=VARCHAR}
+	      </if>
 	      <if test="null!=param.startTm and ''!=param.startTm">
 	      	 <![CDATA[
 	        	and create_time >='${param.startTm} 00:00:00'

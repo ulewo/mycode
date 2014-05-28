@@ -159,7 +159,7 @@ public class GroupServiceImpl implements GroupService {
 		if (StringUtils.isNumber(map.get("page"))) {
 			page_no = Integer.parseInt(map.get("page"));
 		}
-		int count = groupMapper.selectBaseInfoCount(null);
+		int count = groupMapper.selectBaseInfoCount(map);
 		int pageSize = PageSize.SIZE20.getSize();
 		if (StringUtils.isNumber(map.get("rows"))) {
 			pageSize = Integer.parseInt(map.get("rows"));

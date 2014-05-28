@@ -45,6 +45,10 @@ public class Group {
 
 	public List<Topic> topicList;
 
+	public Integer categroyId;
+
+	public Integer pCategroyId;
+
 	public Integer getGid() {
 		return gid;
 	}
@@ -180,6 +184,22 @@ public class Group {
 
 	public void setTopicList(List<Topic> topicList) {
 		this.topicList = topicList;
+	}
+
+	public Integer getCategroyId() {
+		return categroyId;
+	}
+
+	public void setCategroyId(Integer categroyId) {
+		this.categroyId = categroyId;
+	}
+
+	public Integer getpCategroyId() {
+		return pCategroyId;
+	}
+
+	public void setpCategroyId(Integer pCategroyId) {
+		this.pCategroyId = pCategroyId;
 	}
 
 }

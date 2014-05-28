@@ -20,7 +20,7 @@ ul li{margin:0px;padding:0px;list-style:none;}
 .article_title_tit{margin-top:3px;}
 .article_title_tit a{color:#005097;text-decoration:none;font-family: STHeiti,"Microsoft Yahei","微软雅黑",Arial,sans-serif;font-size: 13px;}
 .article_title_tit a:hover{text-decoration:underline;}
-.recount{color:#B2B3B2;padding:10px;}
+.recount{color:#B2B3B2;display:inline-block;width:50px;float:right;text-align:right;margin-right:5px;}
 .article_summary{color:#666666;line-height:20px;margin-top:5px;word-wrap:break-word;}
 .article_author{margin-top:10px;color:#999}
 .article_author span{margin-left:5px;}
@@ -72,6 +72,7 @@ a.day_pic_link:hover{border:1px solid red;}
 .talkitem{margin-top:10px;}
 .itemicon{width:37px;float:left;border:1px solid #9A9A9A;}
 #talkcontent{color:#A9A9A9;height:44px;}
+.main{margin-top:0px;}
 .main .itemcon{float:left;margin-left:10px;width:210px;font-size:13px;}
 .item_user{color:#6CABE1}
 .item_user a{color:#6CABE1;text-decoration:underline;font-size:12px;}
@@ -139,7 +140,7 @@ a.day_pic_link:hover{border:1px solid red;}
 .n_group_info_con{color:#888;margin-top:15px;}
 .n_title{display:inline-block;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;width:260px}
 .n_article_title{height:15px;padding-top:10px;}
-.n_article_title a{color: #005097;text-decoration: none;font-size: 13px;display: inline-block;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;width: 290px;}
+.n_article_title a{color: #005097;text-decoration: none;font-size: 13px;display: inline-block;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;width: 265px;}
 .n_article_title a:hover{color:#CC0000}
 .n_blog{margin-top:13px;}
 .n_blog_title{float:left;width:480px;}
@@ -161,3 +162,12 @@ td.month{font-size:16px;font-weight:bold}
 #remarkist td.tdsignin{background:#40B3E9;color:#FFFFFF}
 #remarkist td.tdnosignin{background:#AAAAAA;color:#FFFFFF}
 #remarkist td.curDay{background:red;color:#FFFFFF}
+
+.group_category{width:1000px;margin:0px auto;}
+.category{float:left;width:320px;margin-left:10px;height:20px;overflow:hidden;text-align:left;margin-top:10px;}
+.group_category a{color:#333;text-decoration:none}
+.group_category a.p_cate{font-size:14px;font-weight:bold}
+.group_category a:hover{color:red;text-decoration:underline}
+.cate_name{float:left;display:inline-block}
+.sub_cate{float:left;display:inline-block}
+

@@ -33,11 +33,13 @@ import com.ulewo.model.Attachment;
 import com.ulewo.model.Blast;
 import com.ulewo.model.Blog;
 import com.ulewo.model.Group;
+import com.ulewo.model.GroupCategory;
 import com.ulewo.model.Topic;
 import com.ulewo.model.User;
 import com.ulewo.service.AttachmentService;
 import com.ulewo.service.BlastService;
 import com.ulewo.service.BlogService;
+import com.ulewo.service.GroupCategoryService;
 import com.ulewo.service.GroupService;
 import com.ulewo.service.Log;
 import com.ulewo.service.SignInService;
@@ -70,6 +72,9 @@ public class HomeAction extends BaseAction {
 	@Autowired
 	AttachmentService attachmentService;
 
+	@Autowired
+	GroupCategoryService groupCategoryService;
+
 	@Log
 	Logger log;
 
@@ -97,13 +102,16 @@ public class HomeAction extends BaseAction {
 	}
 
 	@RequestMapping(value = "/index")
-	public ModelAndView index(HttpSession session) {
+	public ModelAndView index(HttpSession session, HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		try {
+			System.out.println("sessionId:" + session.getId());
 			List<Group> groups = groupService.findCommendGroupAndTopic();
 			List<Blog> blogList = blogService.queryLatestBlog4Index();
+			List<GroupCategory> groupCateGroy = groupCategoryService.selectGroupCategoryList4Index();
 			mv.addObject("groups", groups);
 			mv.addObject("blogList", blogList);
+			mv.addObject("groupCateGroy", groupCateGroy);
 			mv.setViewName("home");
 			return mv;
 		} catch (Exception e) {
@@ -275,6 +283,23 @@ public class HomeAction extends BaseAction {
 		}
 		mv.setViewName("create_group");
 		return mv;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/loadGroupCategory")
+	public Map<String, Object> loadGroupCategory(HttpSession session, HttpServletRequest request) {
+
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			List<GroupCategory> groupCateGroy = groupCategoryService.selectGroupCategoryList4Index();
+			modelMap.put("groupCateGroy", groupCateGroy);
+			modelMap.put("result", ResultCode.SUCCESS.getCode());
+			return modelMap;
+		} catch (Exception e) {
+			modelMap.put("result", ResultCode.ERROR.getCode());
+			modelMap.put("msg", e.getMessage());
+			return modelMap;
+		}
 	}
 
 	@RequestMapping(value = "/downloadApp", method = RequestMethod.GET)

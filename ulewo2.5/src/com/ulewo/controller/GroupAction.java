@@ -24,11 +24,13 @@ import com.ulewo.enums.ResultCode;
 import com.ulewo.exception.BusinessException;
 import com.ulewo.model.Attachment;
 import com.ulewo.model.Group;
+import com.ulewo.model.GroupCategory;
 import com.ulewo.model.GroupMember;
 import com.ulewo.model.Topic;
 import com.ulewo.model.TopicCategory;
 import com.ulewo.service.AttachmentDownloadService;
 import com.ulewo.service.AttachmentService;
+import com.ulewo.service.GroupCategoryService;
 import com.ulewo.service.GroupMemberService;
 import com.ulewo.service.GroupService;
 import com.ulewo.service.TopicCategoryService;
@@ -65,6 +67,9 @@ public class GroupAction extends BaseGroupAction {
 	@Autowired
 	AttachmentDownloadService attachedDownloadService;
 
+	@Autowired
+	GroupCategoryService groupCategoryService;
+
 	private Logger log = LoggerFactory.getLogger(GroupAction.class);
 
 	/**
@@ -84,7 +89,11 @@ public class GroupAction extends BaseGroupAction {
 			Map<String, String> map = this.builderParams(request, false);
 			map.put("orderBy", "topicCount desc");
 			UlewoPaginationResult<Group> groupResult = groupService.findAllGroup(map);
+			List<GroupCategory> groupCateGroy = groupCategoryService.selectGroupCategoryList4Index();
 			mv.addObject("result", groupResult);
+			mv.addObject("categroyId", map.get("categroyId"));
+			mv.addObject("pCategroyId", map.get("pCategroyId"));
+			mv.addObject("groupCateGroy", groupCateGroy);
 			mv.setViewName("group/allgroups");
 		} catch (Exception e) {
 			log.error(e.getMessage());

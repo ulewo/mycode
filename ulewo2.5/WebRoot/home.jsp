@@ -18,6 +18,17 @@
 </head>
 <body>
 	<%@ include file="common/head.jsp" %>
+	<div class="group_category">
+		<c:forEach var="category" items="${groupCateGroy}" begin="0" end="5">
+			<div class="category">
+				<a href="${realPath}/group/all?pCategroyId=${category.groupCategoryId}" target="_blank" class="p_cate">${category.name}</a>
+				<c:forEach var="sub" items="${category.children}" begin="0" end="3">
+					<a href="${realPath}/group/all?categroyId=${sub.groupCategoryId}" target="_blank">${sub.name}</a>
+				</c:forEach>
+			</div>
+		</c:forEach>
+		<div class="clear"></div>
+	</div>
   	<div class="main">
   		<div class="left">
   			<div style="margin-top:10px;padding-left:-10px;overflow:hidden;">

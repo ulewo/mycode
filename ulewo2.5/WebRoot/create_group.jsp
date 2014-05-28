@@ -43,13 +43,20 @@
 					<div class="clear"></div>
 				</div>
 				<div class="form_tit">
-				<div class="form_tit_radio">发帖权限？</div>
-				<div class="form_con_radio">
-					<input type="radio" name="postPerm" value="A" checked="checked" />任何人可以发帖
-					<input type="radio" name="postPerm" value="y" />窝窝成员才能发帖
+					<div class="form_tit_radio">发帖权限？</div>
+					<div class="form_con_radio">
+						<input type="radio" name="postPerm" value="A" checked="checked" />任何人可以发帖
+						<input type="radio" name="postPerm" value="y" />窝窝成员才能发帖
+					</div>
+					<div class="clear"></div>
 				</div>
-				<div class="clear"></div>
-			</div>
+				<div class="form_tit">
+					<div class="form_tit_radio">窝窝分类</div>
+					<div  id="categroy">
+					
+					</div>
+					<div class="clear"></div>
+				</div>
 			<div class="form_sub_btn">
 				<a href="javascript:void(0)" class="btn" id="editBtn">创建窝窝</a>
 				<span class="result_info"><i id="warm_icon"></i><span id="warm_info"></span></span>
