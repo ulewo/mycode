@@ -47,6 +47,7 @@ function editGroup(){
 		}
 	});
 }
+var groupCategory;
 function loadCategory(){
 	$.ajax({
 		async : true,
@@ -57,11 +58,25 @@ function loadCategory(){
 		url : global.realPath+"/loadGroupCategory",// 请求的action路径
 		success : function(data) {
 			if(data.result=="200"){
-				var select = $("<select></select>").appendTo($("#categroy")).bind("change",function(){
-					alert($(this).children('option:selected').val());
-				});
+					var select = $("#cate").bind("change",function(){
+						var sub = $("#sub").empty();
+						var children;
+						for(var i=0,length=data.groupCateGroy.length;i<length;i++){
+							if(data.groupCateGroy[i].groupCategoryId==$(this).children('option:selected').val()){
+								children = data.groupCateGroy[i].children;
+								break;
+							}
+						}
+						for(var i=0,length=children.length;i<length;i++){
+							$("<option value='"+children[i].groupCategoryId+"'>"+children[i].name+"</option>").appendTo(sub);
+						}
+					});
 				for(var i=0,length=data.groupCateGroy.length;i<length;i++){
-					$("<option value='"+data.groupCateGroy[i].groupCategroyId+"'>"+data.groupCateGroy[i].name+"</option>").appendTo(select);
+					$("<option value='"+data.groupCateGroy[i].groupCategoryId+"'>"+data.groupCateGroy[i].name+"</option>").appendTo(select);
+				}
+				var children = data.groupCateGroy[0].children;
+				for(var i=0,length=children.length;i<length;i++){
+					$("<option value='"+children[i].groupCategoryId+"'>"+children[i].name+"</option>").appendTo(sub);
 				}
 			}else{
 				warm("show",data.msg);	

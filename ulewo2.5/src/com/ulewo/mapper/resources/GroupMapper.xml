@@ -118,9 +118,9 @@
     </selectKey>
      <![CDATA[
     insert into ulewo_group (group_name, group_desc, 
-    join_perm, post_perm, group_userid, create_time,group_icon)
+    join_perm, post_perm, group_userid, create_time,group_icon,p_categroy_id,categroy_id)
     values (#{groupName,jdbcType=VARCHAR}, #{groupDesc,jdbcType=VARCHAR}, 
-     #{joinPerm,jdbcType=VARCHAR},#{postPerm,jdbcType=VARCHAR}, #{groupUserId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{groupIcon,jdbcType=VARCHAR})
+     #{joinPerm,jdbcType=VARCHAR},#{postPerm,jdbcType=VARCHAR}, #{groupUserId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{groupIcon,jdbcType=VARCHAR},#{pCategroyId,jdbcType=INTEGER},#{categroyId,jdbcType=INTEGER})
  	   ]]>
   </insert>
   <update id="updateSelective" parameterType="com.ulewo.model.Group" >

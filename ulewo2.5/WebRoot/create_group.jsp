@@ -53,7 +53,8 @@
 				<div class="form_tit">
 					<div class="form_tit_radio">窝窝分类</div>
 					<div  id="categroy">
-					
+						<select id="cate" name="pCategroyId"></select>
+						<select id="sub" name="categroyId"></select>
 					</div>
 					<div class="clear"></div>
 				</div>

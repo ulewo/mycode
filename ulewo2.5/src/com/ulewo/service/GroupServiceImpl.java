@@ -53,6 +53,12 @@ public class GroupServiceImpl implements GroupService {
 		if (!PostPerm.ALL.getValue().equals(postPerm) && !PostPerm.YES.getValue().equals(postPerm)) {
 			throw new BusinessException("参数错误!");
 		}
+		if (!StringUtils.isNumber(map.get("pCategroyId"))) {
+			throw new BusinessException("一级分类不能为空");
+		}
+		if (!StringUtils.isNumber(map.get("categroyId"))) {
+			throw new BusinessException("二级分类不能为空");
+		}
 		Group group = new Group();
 		group.setGroupName(groupName);
 		group.setGroupDesc(groupDesc);
@@ -61,6 +67,8 @@ public class GroupServiceImpl implements GroupService {
 		group.setGroupIcon(Constant.DEFALUTICON);
 		group.setGroupUserId(sessionUser.getUserId());
 		group.setCreateTime(StringUtils.dateFormater.get().format(new Date()));
+		group.setpCategroyId(Integer.parseInt(map.get("pCategroyId")));
+		group.setCategroyId(Integer.parseInt(map.get("categroyId")));
 		this.groupMapper.insert(group);
 		return group;
 	}
