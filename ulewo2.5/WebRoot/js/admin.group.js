@@ -190,6 +190,7 @@ adminGroup.updateGroupCategory = function(){
 			if(data.result=="200"){
 				ulewo_common.tipsInfo("设置成功",1);
 				$("#datagrid").datagrid("load");
+				$("#categoryDialog").window('close'); 
 			}else{
 				ulewo_common.alert(data.msg,2);
 			}

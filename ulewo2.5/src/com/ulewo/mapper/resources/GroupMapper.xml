@@ -48,7 +48,7 @@
   </sql>
   <sql id="Base_Column_List" >
     gid, group_name, group_desc, group_icon, group_banner, join_perm, post_perm, group_userid, 
-    create_time, commend_type, group_notice
+    create_time, commend_type, group_notice,categroy_id,p_categroy_id
   </sql>
   
  
@@ -106,6 +106,8 @@
     <include refid="Base_Column_List" />
     ,(select count(1) from ulewo_group_member u where u.gid = g.gid and u.member_type = 'Y') members
     ,(select count(1) from ulewo_topic t where t.gid = g.gid) topicCount
+    ,(select name from ulewo_group_category c where c.group_Category_Id = g.p_categroy_id) pCategoryName
+    ,(select name from ulewo_group_category c where c.group_Category_Id = g.categroy_id) categoryName
     ,u.username authorName
     from ulewo_group g inner join ulewo_user u on u.userid=g.group_userid
     where 1=1

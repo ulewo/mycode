@@ -49,6 +49,10 @@ public class Group {
 
 	public Integer pCategroyId;
 
+	public String categoryName;
+
+	public String pCategoryName;
+
 	public Integer getGid() {
 		return gid;
 	}
@@ -200,6 +204,22 @@ public class Group {
 
 	public void setpCategroyId(Integer pCategroyId) {
 		this.pCategroyId = pCategroyId;
+	}
+
+	public String getpCategoryName() {
+		return pCategoryName;
+	}
+
+	public void setpCategoryName(String pCategoryName) {
+		this.pCategoryName = pCategoryName;
+	}
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
 	}
 
 }

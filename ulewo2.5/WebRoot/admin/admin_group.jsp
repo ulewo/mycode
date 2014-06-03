@@ -61,6 +61,8 @@
 					<th  data-options="field:'groupName'">窝窝名称</th>
 					<th  data-options="field:'createTime'">加入时间</th>
 					<th  data-options="field:'topicCount'">帖子数</th>
+					<th  data-options="field:'pCategoryName'">一级分类</th>
+					<th  data-options="field:'categoryName'">二分类</th>
 				</tr>
 			</thead>
 		</table>
