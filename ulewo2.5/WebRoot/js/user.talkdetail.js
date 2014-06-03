@@ -94,6 +94,7 @@ function addTalk() {
 		success : function(data) {
 			btnLoaded($("#talkBtn"),"评论");
 			if (data.result == "200") {
+				tipsInfo("1分已到碗里");
 				$(".noinfo").remove();
 				$("#talkcontent").val("");
 				if ($("#talklist").children().length > 0) {

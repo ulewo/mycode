@@ -82,6 +82,7 @@ public class BlastCommentServiceImpl implements BlastCommentService {
 		comment.setUserName(user.getUserName());
 		comment.setUserIcon(user.getUserIcon());
 		user.setMark(user.getMark() + MarkEnums.MARK1.getMark());
+		userMapper.updateSelective(user);
 
 		NoticeParam noticeParm = new NoticeParam();
 		noticeParm.setArticleId(blastId);

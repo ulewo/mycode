@@ -97,6 +97,7 @@ function subReply() {
 		success : function(data) {
 			btnLoaded($("#sendBtn"),"发表留言");
 			if (data.result == "200") {
+				tipsInfo("2分已到碗里");
 				$(".noinfo").remove();
 				if($(".reply_item").length>0){
 					$(".reply_item").eq(0).before(new NotePanle(data.comment).asHtml());

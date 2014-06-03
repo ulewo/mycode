@@ -66,7 +66,7 @@ function saveBlast(){
 				}
 				$("#talkcontent").val("");
 				deleteImg();
-				tipsInfo("1分已到碗里");
+				tipsInfo("2分已到碗里");
 			}else{
 				warm("show",data.msg);
 			}

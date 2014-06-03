@@ -240,7 +240,7 @@ function saveBlast(){
 			if(data.result=="200"){
 				info("发布成功");
 				deleteImg();
-				tipsInfo("1分已到碗里");
+				tipsInfo("2分已到碗里");
 				$("#talkcontent").val("");
 				$(".noinfo").remove();
 				var myblast = data.blast;
@@ -253,7 +253,6 @@ function saveBlast(){
 				}else{
 					new DynamicItem(myblast).appendTo($("#dynamicList")); 
 				}
-				
 			}else{
 				warm("show",data.msg);
 			}
