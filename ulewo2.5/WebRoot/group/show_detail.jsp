@@ -107,6 +107,7 @@ topic.topicType="${topic.topicType}";
 					<span class="mark">所需积分：${topic.file.downloadMark}</span>&nbsp;&nbsp;
 					<span class="dccount">下载：<a href="javascript:void(0)" name="${topic.file.attachmentId}" id="dcount">${topic.file.downloadCount}</a></span>&nbsp;&nbsp;
 					<a href="javascript:void(0)" name="${topic.file.attachmentId}" id="downloadFile">点击下载</a>
+					&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.ulewo.com/group/10024/topic/4538" target="_blank">没有积分？</a>
 					<div id="attachedUser"></div>
 				</div>
 			</div>
