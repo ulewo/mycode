@@ -119,4 +119,11 @@ public interface GroupService {
 	public List<Group> findCommendGroup();
 
 	public List<Group> findCommendGroupAndTopic();
+
+	/**
+	 * 更新窝窝状态，所属分类
+	 * @param map
+	 * @throws BusinessException
+	 */
+	public void updateGroup(Map<String, String> map) throws BusinessException;
 }

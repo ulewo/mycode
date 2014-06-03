@@ -117,3 +117,14 @@ ulewo_common.setPostion = function(){
 		window.scrollTo(0,top);
 	}
 }
+
+ulewo_common.convertArray= function(o) { 
+	var v = {};
+	for ( var i in o) {
+		if (typeof (v[o[i].name]) == 'undefined')
+			v[o[i].name] = o[i].value;
+		else
+			v[o[i].name] += "," + o[i].value;
+	}
+	return eval("(" +JSON.stringify(v)+ ")");
+}

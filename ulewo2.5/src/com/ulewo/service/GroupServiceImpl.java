@@ -262,4 +262,36 @@ public class GroupServiceImpl implements GroupService {
 		}
 		return list;
 	}
+
+	public void updateGroup(Map<String, String> map) throws BusinessException {
+		String keyStr = map.get("key");
+		String[] keys = keyStr.split(",");
+		String commendType = map.get("commendType");
+		String pCategoryStr = map.get("pCategroyId");
+		String categoryStr = map.get("categroyId");
+		int pCategoryStr_int = 0;
+		int categoryStr_int = 0;
+		if (StringUtils.isNotEmpty(pCategoryStr) && !StringUtils.isNumber(pCategoryStr)) {
+			throw new BusinessException("参数错误");
+		} else if (StringUtils.isNotEmpty(pCategoryStr) && StringUtils.isNumber(pCategoryStr)) {
+			pCategoryStr_int = Integer.parseInt(pCategoryStr);
+		}
+		if (StringUtils.isNotEmpty(categoryStr) && !StringUtils.isNumber(categoryStr)) {
+			throw new BusinessException("参数错误");
+		} else if (StringUtils.isNotEmpty(categoryStr) && StringUtils.isNumber(categoryStr)) {
+			categoryStr_int = Integer.parseInt(categoryStr);
+		}
+		for (String key : keys) {
+			String gid = key;
+			if (!StringUtils.isNumber(gid)) {
+				throw new BusinessException("参数错误");
+			}
+			Group group = new Group();
+			group.setGid(Integer.parseInt(gid));
+			group.setCommendType(commendType);
+			group.setpCategroyId(pCategoryStr_int);
+			group.setCategroyId(categoryStr_int);
+			groupMapper.updateSelective(group);
+		}
+	}
 }

@@ -25,6 +25,9 @@
 	      <if test="null!=param.groupUserId and ''!=param.groupUserId" >
 	        	and group_userid = #{param.groupUserId,jdbcType=VARCHAR}
 	      </if>
+	      <if test="null!=param.commendType and ''!=param.commendType" >
+	        	and commend_type = #{param.commendType,jdbcType=VARCHAR}
+	      </if>
 	      <if test="null!=param.categroyId and ''!=param.categroyId" >
 	        	and categroy_id = #{param.categroyId,jdbcType=VARCHAR}
 	      </if>
@@ -156,8 +159,18 @@
       <if test="groupNotice != null" >
         group_notice = #{groupNotice,jdbcType=VARCHAR},
       </if>
+      <if test="categroyId != null" >
+        categroy_id = #{categroyId,jdbcType=VARCHAR},
+      </if>
+      <if test="pCategroyId != null" >
+        p_categroy_id = #{pCategroyId,jdbcType=VARCHAR},
+      </if>
     </set>
-    where gid = #{gid,jdbcType=INTEGER} and group_userid = #{groupUserId,jdbcType=INTEGER}
+    where gid = #{gid,jdbcType=INTEGER}
+     <if test="null!=groupUserId and ''!=groupUserId" >
+	      and group_userid = #{groupUserId,jdbcType=INTEGER}
+	 </if>
+    
   </update>
   
   <delete id="delete" parameterType="java.util.Map" >

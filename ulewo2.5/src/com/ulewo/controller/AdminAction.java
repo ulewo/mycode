@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ulewo.enums.GroupCommendTypeEnums;
 import com.ulewo.enums.ResultCode;
 import com.ulewo.exception.BusinessException;
 import com.ulewo.model.Blast;
@@ -136,6 +137,77 @@ public class AdminAction extends BaseAction {
 		try {
 			Map<String, String> map = this.builderParams(request, true);
 			this.groupService.deleteGroup(map);
+			modelMap.put("result", ResultCode.SUCCESS.getCode());
+			return modelMap;
+		} catch (BusinessException e) {
+			log.error(e.getMessage(), e);
+			modelMap.put("result", ResultCode.ERROR.getCode());
+			modelMap.put("msg", e.getMessage());
+			return modelMap;
+
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			modelMap.put("result", ResultCode.ERROR.getCode());
+			modelMap.put("msg", "系统异常");
+			return modelMap;
+		}
+	}
+
+	@RequestMapping(value = "/essenceGroup.action")
+	@ResponseBody
+	public Map<String, Object> essenceGroup(HttpSession session, HttpServletRequest request) {
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			Map<String, String> map = this.builderParams(request, true);
+			map.put("commendType", GroupCommendTypeEnums.COMMENT.getValue());
+			this.groupService.updateGroup(map);
+			modelMap.put("result", ResultCode.SUCCESS.getCode());
+			return modelMap;
+		} catch (BusinessException e) {
+			log.error(e.getMessage(), e);
+			modelMap.put("result", ResultCode.ERROR.getCode());
+			modelMap.put("msg", e.getMessage());
+			return modelMap;
+
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			modelMap.put("result", ResultCode.ERROR.getCode());
+			modelMap.put("msg", "系统异常");
+			return modelMap;
+		}
+	}
+
+	@RequestMapping(value = "/essenceGroupCancel.action")
+	@ResponseBody
+	public Map<String, Object> essenceGroupCancel(HttpSession session, HttpServletRequest request) {
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			Map<String, String> map = this.builderParams(request, true);
+			map.put("commendType", GroupCommendTypeEnums.NOCOMMENT.getValue());
+			this.groupService.updateGroup(map);
+			modelMap.put("result", ResultCode.SUCCESS.getCode());
+			return modelMap;
+		} catch (BusinessException e) {
+			log.error(e.getMessage(), e);
+			modelMap.put("result", ResultCode.ERROR.getCode());
+			modelMap.put("msg", e.getMessage());
+			return modelMap;
+
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			modelMap.put("result", ResultCode.ERROR.getCode());
+			modelMap.put("msg", "系统异常");
+			return modelMap;
+		}
+	}
+
+	@RequestMapping(value = "/updateGroupCategroy.action")
+	@ResponseBody
+	public Map<String, Object> updateGroupCategroy(HttpSession session, HttpServletRequest request) {
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			Map<String, String> map = this.builderParams(request, true);
+			this.groupService.updateGroup(map);
 			modelMap.put("result", ResultCode.SUCCESS.getCode());
 			return modelMap;
 		} catch (BusinessException e) {
