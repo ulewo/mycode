@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ulewo.mapper.SpiderMapper" >
+  <resultMap id="BaseResultMap" type="com.ulewo.model.Spider" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <id column="type" property="type" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="images" property="images" jdbcType="VARCHAR" />
+    <result column="images_small" property="imagesSmall" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+     <result column="status" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+ <sql id="base_condition" >
+ 	 <if test="param!=null">
+	      <if test="null!=param.createTime and ''!=param.createTime" >
+	        	and create_time = #{param.createTime,jdbcType=VARCHAR}
+	      </if>
+	      <if test="null!=param.type and ''!=param.type" >
+	        	and type = #{param.type,jdbcType=VARCHAR}
+	      </if>
+	      <if test="null!=param.status and ''!=param.status" >
+	        	and status = #{param.status,jdbcType=VARCHAR}
+	      </if>
+	      <if test="null!=param.startTm and ''!=param.startTm">
+	      	 <![CDATA[
+	        	and create_time >='${param.startTm} 00:00:00'
+	         ]]>
+	      </if>
+	      <if test="null!=param.startEnd and ''!=param.startEnd">
+	      	  <![CDATA[
+	        	and create_time <= '${param.startEnd} 23:59:59'
+	          ]]>
+	      </if>
+      </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    *
+  </sql>
+  <select id="selectBaseInfo" resultMap="BaseResultMap" parameterType="com.ulewo.model.BlogCategory">
+    select 
+    <include refid="Base_Column_List" />
+    from ulewo_spider c
+    where 1=1
+    <include refid="base_condition" />
+  </select>
+  
+  
+ <select id="selectBaseInfoCount" resultType="java.lang.Integer" parameterType="com.ulewo.model.BlogCategory" >
+    select count(1)
+    from ulewo_spider b
+    where 1 = 1
+    <include refid="base_condition" />
+  </select>
+  
+  <select id="selectBaseInfoList" resultMap="BaseResultMap" parameterType="com.ulewo.model.BlogCategory">
+    select <include refid="Base_Column_List" /> from ulewo_spider c
+    where 1=1
+    <include refid="base_condition" />
+    order by create_time desc
+  </select>
+  
+  <delete id="delete" parameterType="map" >
+    delete from ulewo_spider
+    where id = #{param.id,jdbcType=VARCHAR} and type = #{param.type,jdbcType=VARCHAR} 
+  </delete>
+  
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into ulewo_spider (id,type,title,content,images,images_small,create_time,status)
+    values 
+    <foreach collection="list" item="item" index="index"  separator=",">  
+        (#{item.id}, #{item.type}, #{item.title},  
+        #{item.content}, #{item.images},  
+        #{item.imagesSmall}, #{item.createTime},  
+        #{item.status})  
+    </foreach>  
+  </insert>
+  
+  <select id="selectSpiderByIds" resultMap="BaseResultMap" parameterType="java.util.List">
+    select <include refid="Base_Column_List" /> from ulewo_spider c
+    where id in
+     <foreach collection="list" item="item" index="index"  separator=",">  
+        (#{item})  
+    </foreach>  
+  </select>
+</mapper>

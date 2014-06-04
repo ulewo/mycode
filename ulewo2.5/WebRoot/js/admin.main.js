@@ -89,6 +89,16 @@ groupManage.menue = [{
 				"url": global.realPath+"/admin/admin_member.jsp"
 			}
 		}]
+	},
+	{
+		"text": "爬虫管理",
+		"children": [{
+			"id": 70,
+			"text": "爬虫管理",
+			"attributes": {
+				"url": global.realPath+"/admin/admin_spider.jsp"
+			}
+		}]
 	}
 	]
 }];

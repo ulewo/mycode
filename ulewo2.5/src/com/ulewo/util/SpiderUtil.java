@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
@@ -24,26 +23,30 @@ import org.htmlcleaner.TagNode;
  * @version 0.1.0 
  * @copyright yougou.com 
  */
-public class Spider {
+public class SpiderUtil {
 
 	private static DefaultHttpClient httpclient = new DefaultHttpClient();
 
 	/**
 	 * @param args
+	 * @throws IOException 
+	 * @throws ClientProtocolException 
 	 */
-	public static void main(String[] args) {
-		List<String> images = new ArrayList<String>();
-		StringBuilder content = new StringBuilder();
-		getHtml2(1, images, content);
-		//System.out.println(images.size());
-		String resultContent = content.toString();
-		resultContent = resultContent.replaceAll("<a href[^>]*>", "");
-		resultContent = resultContent.replaceAll("</a>", "");
-		resultContent = resultContent.replaceAll("<img[^>]*/>", " ");
-		System.out.println(resultContent);
+	public static void main(String[] args) throws ClientProtocolException, IOException {
+		String html = SpiderUtil.getHtml("http://www.oschina.net/news/list?show=industry");
+		HtmlCleaner htmlCleaner = new HtmlCleaner();
+		TagNode allNode = htmlCleaner.clean(html);
+		TagNode newsList = allNode.getElementsByAttValue("id", "RecentNewsList", true, true)[0];
+		TagNode ul = newsList.getElementsByName("ul", true)[0];
+		TagNode[] lis = ul.getElementsByName("li", true);
+		for (TagNode li : lis) {
+			TagNode h2 = li.getElementsByName("h2", true)[0];
+			TagNode a = h2.getElementsByName("a", true)[0];
+			System.out.println(a.getAttributeByName("href"));
+		}
 	}
 
-	public static String getQiushibaikeHTML(String url) throws ClientProtocolException, IOException {
+	public static String getHtml(String url) throws ClientProtocolException, IOException {
 
 		HttpGet httpGet = new HttpGet(url);
 		httpGet.addHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");

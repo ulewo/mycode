@@ -53,7 +53,7 @@
 	</div>
 	<div data-options="region:'center',border:false">
 		 <table id="datagrid" data-options="fit:true,pageSize:20,url:'groups',method:'get'" class="easyui-datagrid"
-			title="成员列表" rownumbers="true" pagination="true">
+			title="窝窝列表" rownumbers="true" pagination="true">
 			<thead>
 				<tr>
 					<th data-options="field:'ck',checkbox:true"></th>

@@ -5,7 +5,6 @@ $(function(){
 		layout:['list','sep','first','prev','sep','links','sep','next','last','sep','refresh'],
 		pageList: [20,30,40,50]
 	});
-	adminTopic.initCategory();
 });
 //搜索
 adminTopic.search = function(){

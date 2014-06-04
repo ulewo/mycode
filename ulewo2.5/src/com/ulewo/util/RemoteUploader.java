@@ -82,11 +82,11 @@ public class RemoteUploader {
 		for (int i = 0; i < arr.length; i++) {
 
 			//格式验证
-			String type = getFileType(arr[i]);
+			/*String type = getFileType(arr[i]);
 			if (type.equals("")) {
 				state = "图片类型不正确！";
 				continue;
-			}
+			}*/
 			String saveName = Long.toString(new Date().getTime()) + type;
 			//大小验证
 			HttpURLConnection.setFollowRedirects(false);

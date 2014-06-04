@@ -22,6 +22,7 @@ import com.ulewo.model.Blog;
 import com.ulewo.model.BlogComment;
 import com.ulewo.model.Group;
 import com.ulewo.model.GroupCategory;
+import com.ulewo.model.Spider;
 import com.ulewo.model.Topic;
 import com.ulewo.model.TopicComment;
 import com.ulewo.model.User;
@@ -32,6 +33,7 @@ import com.ulewo.service.BlogService;
 import com.ulewo.service.GroupCategoryService;
 import com.ulewo.service.GroupService;
 import com.ulewo.service.Log;
+import com.ulewo.service.SpidrService;
 import com.ulewo.service.TopicCommentService;
 import com.ulewo.service.TopicService;
 import com.ulewo.service.UserService;
@@ -67,6 +69,9 @@ public class AdminAction extends BaseAction {
 
 	@Autowired
 	private GroupCategoryService groupCategoryService;
+
+	@Autowired
+	private SpidrService spiderService;
 
 	@Log
 	Logger log;
@@ -477,6 +482,80 @@ public class AdminAction extends BaseAction {
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			this.groupCategoryService.saveCategory(this.builderParams(request, true));
+			modelMap.put("result", ResultCode.SUCCESS.getCode());
+		} catch (BusinessException e) {
+			log.error(e.getMessage(), e);
+			modelMap.put("msg", e.getMessage());
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			modelMap.put("msg", "系统异常!");
+		}
+		return modelMap;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/spider.action")
+	public Map<String, Object> spider(HttpSession session, HttpServletRequest request) {
+
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			String type = request.getParameter("type");
+			this.spiderService.spiderArticle(type);
+			modelMap.put("result", ResultCode.SUCCESS.getCode());
+		} catch (BusinessException e) {
+			log.error(e.getMessage(), e);
+			modelMap.put("msg", e.getMessage());
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			modelMap.put("msg", "系统异常!");
+		}
+		return modelMap;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/getSpiderList.action")
+	public Map<String, Object> getSpiderList(HttpSession session, HttpServletRequest request) {
+
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			UlewoPaginationResult<Spider> spiderList = spiderService
+					.querySpiderList(this.builderParams(request, false));
+			modelMap.put("rows", spiderList.getList());
+			modelMap.put("total", spiderList.getPage().getCountTotal());
+			return modelMap;
+		} catch (BusinessException e) {
+			log.error(e.getMessage(), e);
+			modelMap.put("msg", e.getMessage());
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			modelMap.put("msg", "系统异常!");
+		}
+		return modelMap;
+	}
+
+	@RequestMapping(value = "/allGroups.action")
+	@ResponseBody
+	public Map<String, Object> allGroups(HttpSession session, HttpServletRequest request) {
+		Map<String, Object> resultObj = new HashMap<String, Object>();
+		try {
+			Map<String, String> map = this.builderParams(request, true);
+			map.put("rows", 150 + "");
+			UlewoPaginationResult<Group> result = this.groupService.findAllGroup(map);
+			resultObj.put("list", result.getList());
+			return resultObj;
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return resultObj;
+		}
+	}
+
+	@RequestMapping(value = "/sendTopic.action")
+	@ResponseBody
+	public Map<String, Object> sendTopic(HttpSession session, HttpServletRequest request) {
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			Map<String, String> map = this.builderParams(request, true);
+			this.spiderService.sendTopic(map, request);
 			modelMap.put("result", ResultCode.SUCCESS.getCode());
 		} catch (BusinessException e) {
 			log.error(e.getMessage(), e);
