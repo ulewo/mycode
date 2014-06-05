@@ -15,7 +15,5 @@ import com.ulewo.model.Spider;
  * @copyright www.ulewo.com
  */
 public interface SpiderMapper<T> extends BaseMapper<T> {
-	public void insertBatch(@Param("list") List<T> list);
-
 	public List<Spider> selectSpiderByIds(@Param("list") List<String> list);
 }

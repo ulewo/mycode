@@ -37,7 +37,7 @@
   <sql id="Base_Column_List" >
     *
   </sql>
-  <select id="selectBaseInfo" resultMap="BaseResultMap" parameterType="com.ulewo.model.BlogCategory">
+  <select id="selectBaseInfo" resultMap="BaseResultMap" parameterType="com.ulewo.model.Spider">
     select 
     <include refid="Base_Column_List" />
     from ulewo_spider c
@@ -46,14 +46,14 @@
   </select>
   
   
- <select id="selectBaseInfoCount" resultType="java.lang.Integer" parameterType="com.ulewo.model.BlogCategory" >
+ <select id="selectBaseInfoCount" resultType="java.lang.Integer" parameterType="com.ulewo.model.Spider" >
     select count(1)
     from ulewo_spider b
     where 1 = 1
     <include refid="base_condition" />
   </select>
   
-  <select id="selectBaseInfoList" resultMap="BaseResultMap" parameterType="com.ulewo.model.BlogCategory">
+  <select id="selectBaseInfoList" resultMap="BaseResultMap" parameterType="com.ulewo.model.Spider">
     select <include refid="Base_Column_List" /> from ulewo_spider c
     where 1=1
     <include refid="base_condition" />
@@ -81,6 +81,13 @@
         #{item.content}, #{item.images},  
         #{item.imagesSmall}, #{item.createTime})
     </foreach>  
+  </insert>
+  
+ <insert id="insert" parameterType="com.ulewo.model.Spider" >
+    insert into ulewo_spider (id,type,title,content,images,images_small,create_time)
+    values (#{id}, #{type}, #{title},  
+        #{content}, #{images},  
+        #{imagesSmall}, #{createTime})
   </insert>
   
   <select id="selectSpiderByIds" resultMap="BaseResultMap" parameterType="java.util.List">

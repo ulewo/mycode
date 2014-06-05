@@ -101,6 +101,14 @@ public class SpiderServiceImpl implements SpidrService {
 				map.put("createTime", date);
 				map.put("type", type);
 				List<Spider> resultSpider = spiderMapper.selectBaseInfoList(map, page);
+				if (SpiderType.QILU.getType().equals(type)) {
+					map.put("type", "qilu_new");
+					resultSpider.addAll(spiderMapper.selectBaseInfoList(map, page));
+					map.put("type", "qilu_life");
+					resultSpider.addAll(spiderMapper.selectBaseInfoList(map, page));
+					map.put("type", "qilu_star");
+					resultSpider.addAll(spiderMapper.selectBaseInfoList(map, page));
+				}
 
 				Map<String, String> tempMap = new HashMap<String, String>();
 				for (Spider temp : resultSpider) {
@@ -116,7 +124,14 @@ public class SpiderServiceImpl implements SpidrService {
 					}
 				}
 				if (list.size() > 0) {
-					spiderMapper.insertBatch(list);
+					for (Spider spider : list) {
+						try {
+							spiderMapper.insert(spider);
+						} catch (Exception e) {
+							e.printStackTrace();
+							continue;
+						}
+					}
 				}
 			}
 		} catch (Exception e) {
@@ -414,6 +429,7 @@ public class SpiderServiceImpl implements SpidrService {
 					allNode.removeChild(tag);
 				} else {
 					tag.setAttribute("src", newSrc);
+					//tag.getParent().setAttribute("style", "text-align:left");
 				}
 			}
 		}
