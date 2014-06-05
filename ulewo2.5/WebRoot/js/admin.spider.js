@@ -3,13 +3,23 @@ $(function(){
 	var dg = $('#datagrid');
 	dg.datagrid('getPager').pagination({
 		layout:['list','sep','first','prev','sep','links','sep','next','last','sep','refresh'],
-		pageList: [20,30,40,50]
+		pageList: [20,30,40,50,100]
 	});
 	adminSpider.loadGroup();
 });
 adminSpider.typeFormate = function(value,rowData,index){
 	if(value=="osc"){
 		return "开源中国资讯";
+	}else if(value=="xwg"){
+		return "新闻哥";
+	}else if(value=="cnblog"){
+		return "博客园资讯";
+	}else if(value=="qilu_new"){
+		return "齐鲁资-讯快报";
+	}else if(value=="qilu_life"){
+		return "齐鲁网-生活百态";
+	}else if(value=="qilu_star"){
+		return "齐鲁网-八卦明星";
 	}
 };
 

@@ -9,7 +9,6 @@
 <title>管理文章-有乐窝</title>
 <%@ include file="../common/easyui_common.jsp" %>
 <script type="text/javascript" src="${realPath}/js/admin.spider.js?version=2.5"></script>
-<script type="text/javascript" src="${realPath}/js/admin.spider.js?version=2.5"></script>
 </head>
 <body class="easyui-layout">
 	<div data-options="region:'north',border:false">
@@ -18,9 +17,12 @@
 					<table>
 						<tr>
 							<td><label for="osc"><input id="osc" name="type" type="radio" value="osc">开源中国资讯</label></td>
+							<td><label for="xwg"><input id="xwg" name="type" type="radio" value="xwg">新闻哥</label></td>
+							<td><label for="cnblog"><input id="cnblog" name="type" type="radio" value="cnblog">博客园</label></td>
+							<td><label for="qilu"><input id="qilu" name="type" type="radio" value="qilu">齐鲁网</label></td>
 						</tr>
 						<tr>
-							<td><a href="javascript:adminSpider.spider()" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">开始抓取</a></td>
+							<td colspan="10"><a href="javascript:adminSpider.spider()" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">开始抓取</a></td>
 						</tr>
 					</table>
 				</form>
@@ -57,6 +59,11 @@
 								<td>
 									<select name="type" class="easyui-combobox">
 										<option value="osc">开源中国</option>
+										<option value="xwg">新闻哥</option>
+										<option value="cnblog">博客园</option>
+										<option value="qilu_new">齐鲁网-资讯快报</option>
+										<option value="qilu_life">齐鲁网-生活百态</option>
+										<option value="qilu_star">齐鲁网-八卦明星</option>
 									</select>
 								</td>
 								<td>创建日期</td>

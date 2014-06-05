@@ -82,8 +82,8 @@ public class RemoteUploader {
 		for (int i = 0; i < arr.length; i++) {
 
 			//格式验证
-			/*String type = getFileType(arr[i]);
-			if (type.equals("")) {
+			String type = getFileType(arr[i]);
+			/*if (type.equals("")) {
 				state = "图片类型不正确！";
 				continue;
 			}*/
@@ -102,18 +102,22 @@ public class RemoteUploader {
 			String filePath = this.getFolder(this.savePath) + "/" + saveName;
 			File savetoFile = new File(getPhysicalPath(filePath));
 			outSrc[i] = filePath;
+			InputStream is = null;
+			OutputStream os = null;
 			try {
-				InputStream is = conn.getInputStream();
-				OutputStream os = new FileOutputStream(savetoFile);
+				is = conn.getInputStream();
+				os = new FileOutputStream(savetoFile);
 				int b;
 				while ((b = is.read()) != -1) {
 					os.write(b);
 				}
-				os.close();
-				is.close();
+				os.flush();
 				// 这里处理 inputStream
 			} catch (Exception e) {
 				e.printStackTrace();
+			} finally {
+				os.close();
+				is.close();
 			}
 		}
 		String port = request.getServerPort() == 80 ? "" : ":" + request.getServerPort();
