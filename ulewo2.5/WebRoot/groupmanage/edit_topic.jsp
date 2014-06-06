@@ -42,12 +42,12 @@ window.onload = function(){
 		<table width="98%">
 			<tr>
 				<td style="width:50px;">标题：</td> 
-				<td><input type="text" class="easyui-validatebox" name="title" id="title" value="${topic.title}" style="width:200px;" ></td>
+				<td><input type="text" class="easyui-validatebox" name="title" id="title" value="${topic.title}" style="width:300px;" ></td>
 			</tr>
 			<tr>
 				<td>分类：</td>
 				<td>
-					<select  class="easyui-combobox" name="categoryId" id="categoryId" style="width:200px;" data-options="editable:false">   
+					<select  class="easyui-combobox" name="categoryId" id="categoryId" style="width:300px;" data-options="editable:false">   
 						<c:forEach var="item" items="${categorys}" >
 						 	<option  value="${item.categoryId}" <c:if test="${item.categoryId==topic.categoryId}">selected="selected"</c:if>>${item.name}</option> 
 						</c:forEach>
@@ -56,14 +56,14 @@ window.onload = function(){
 			</tr>
 			<tr>
 				<td>关键字：</td>
-				<td><input type="text" class="easyui-validatebox" id="keyWord" name="keyWord" value="${topic.keyWord}" style="width:200px;"></td>
+				<td><input type="text" class="easyui-validatebox" id="keyWord" name="keyWord" value="${topic.keyWord}" style="width:300px;"></td>
 			</tr>
 			<tr>
 				<td colspan="2">
 					<textarea name="content" id="editor">${topic.content}</textarea>
 					<script type="text/javascript">
 							var editor;
-							editor = new UE.ui.Editor();
+							editor = new UE.ui.Editor({initialFrameHeight:600});
 							editor.render("editor");
 					</script>
 				</td>
