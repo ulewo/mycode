@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ulewo.enums.GroupCommendTypeEnums;
 import com.ulewo.enums.ResultCode;
 import com.ulewo.exception.BusinessException;
 import com.ulewo.model.Blast;
@@ -124,7 +123,7 @@ public class AdminAction extends BaseAction {
 		Map<String, Object> resultObj = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = this.builderParams(request, true);
-			map.put("orderBy", "create_time desc");
+			map.put("sort", "commend_grade");
 			UlewoPaginationResult<Group> result = this.groupService.findAllGroup(map);
 			resultObj.put("rows", result.getList());
 			resultObj.put("total", result.getPage().getCountTotal());
@@ -158,38 +157,13 @@ public class AdminAction extends BaseAction {
 		}
 	}
 
-	@RequestMapping(value = "/essenceGroup.action")
+	@RequestMapping(value = "/saveGroupGrade.action")
 	@ResponseBody
-	public Map<String, Object> essenceGroup(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> saveGroupGrade(HttpSession session, HttpServletRequest request) {
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = this.builderParams(request, true);
-			map.put("commendType", GroupCommendTypeEnums.COMMENT.getValue());
-			this.groupService.updateGroup(map);
-			modelMap.put("result", ResultCode.SUCCESS.getCode());
-			return modelMap;
-		} catch (BusinessException e) {
-			log.error(e.getMessage(), e);
-			modelMap.put("result", ResultCode.ERROR.getCode());
-			modelMap.put("msg", e.getMessage());
-			return modelMap;
-
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-			modelMap.put("result", ResultCode.ERROR.getCode());
-			modelMap.put("msg", "系统异常");
-			return modelMap;
-		}
-	}
-
-	@RequestMapping(value = "/essenceGroupCancel.action")
-	@ResponseBody
-	public Map<String, Object> essenceGroupCancel(HttpSession session, HttpServletRequest request) {
-		Map<String, Object> modelMap = new HashMap<String, Object>();
-		try {
-			Map<String, String> map = this.builderParams(request, true);
-			map.put("commendType", GroupCommendTypeEnums.NOCOMMENT.getValue());
-			this.groupService.updateGroup(map);
+			this.groupService.saveGroupGrade(map);
 			modelMap.put("result", ResultCode.SUCCESS.getCode());
 			return modelMap;
 		} catch (BusinessException e) {
@@ -566,4 +540,5 @@ public class AdminAction extends BaseAction {
 		}
 		return modelMap;
 	}
+
 }

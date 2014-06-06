@@ -1,11 +1,16 @@
 package com.ulewo.service;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JsonConfig;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -266,11 +271,12 @@ public class GroupServiceImpl implements GroupService {
 	public void updateGroup(Map<String, String> map) throws BusinessException {
 		String keyStr = map.get("key");
 		String[] keys = keyStr.split(",");
-		String commendType = map.get("commendType");
+		String commendGrade = map.get("commendGrade");
 		String pCategoryStr = map.get("pCategroyId");
 		String categoryStr = map.get("categroyId");
 		int pCategoryStr_int = 0;
 		int categoryStr_int = 0;
+		int commendGrade_int = 0;
 		if (StringUtils.isNotEmpty(pCategoryStr) && !StringUtils.isNumber(pCategoryStr)) {
 			throw new BusinessException("参数错误");
 		} else if (StringUtils.isNotEmpty(pCategoryStr) && StringUtils.isNumber(pCategoryStr)) {
@@ -281,6 +287,9 @@ public class GroupServiceImpl implements GroupService {
 		} else if (StringUtils.isNotEmpty(categoryStr) && StringUtils.isNumber(categoryStr)) {
 			categoryStr_int = Integer.parseInt(categoryStr);
 		}
+		if (StringUtils.isNumber(commendGrade)) {
+			commendGrade_int = Integer.parseInt(commendGrade);
+		}
 		for (String key : keys) {
 			String gid = key;
 			if (!StringUtils.isNumber(gid)) {
@@ -288,10 +297,26 @@ public class GroupServiceImpl implements GroupService {
 			}
 			Group group = new Group();
 			group.setGid(Integer.parseInt(gid));
-			group.setCommendType(commendType);
+			group.setCommendGrade(commendGrade_int);
 			group.setpCategroyId(pCategoryStr_int);
 			group.setCategroyId(categoryStr_int);
 			groupMapper.updateSelective(group);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BusinessException.class)
+	@Override
+	public void saveGroupGrade(Map<String, String> map) throws BusinessException {
+		try {
+			String updateRows = map.get("updated");
+			JSONArray updateArray = JSONArray.fromObject(URLDecoder.decode(updateRows, "UTF-8"));
+			List<Group> updateList = JSONArray.toList(updateArray, new Group(), new JsonConfig());
+			for (Group category : updateList) {
+				this.groupMapper.updateSelective(category);
+			}
+		} catch (UnsupportedEncodingException e) {
+			throw new BusinessException("参数错误!");
 		}
 	}
 }

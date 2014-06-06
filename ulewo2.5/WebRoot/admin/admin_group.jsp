@@ -23,8 +23,6 @@
 					<td><div class="toolbar-line"></div></td>
 					<td><a href="javascript:adminGroup.essenceGroup()" class="easyui-linkbutton" data-options="iconCls:'icon-good',plain:true">推荐</a></td>
 					<td><div class="toolbar-line"></div></td>
-					<td><a href="javascript:adminGroup.essenceGroupCancel()" class="easyui-linkbutton" data-options="iconCls:'icon-good-no',plain:true">取消推荐</a></td>
-					<td><div class="toolbar-line"></div></td>
 					<td><a href="javascript:adminGroup.changeCategroy()" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改分类</a></td>
 				</tr>
 			</table>
@@ -40,19 +38,13 @@
 							<td>至</td>
 							<td><input class="easyui-datebox" data-options="editable:false" name="startEnd" style="width:120px"></td>
 							<td>是否推荐</td>
-							<td>
-								<select name="commendType" class="easyui-combobox" style="height:20px;">
-									<option value="Y">已推荐</option>
-									<option value="N">未推荐</option>
-								</select>
-							</td>
 						</tr>
 					</table>
 				</form>
 			</div>
 	</div>
 	<div data-options="region:'center',border:false">
-		 <table id="datagrid" data-options="fit:true,pageSize:20,url:'groups',method:'get'" class="easyui-datagrid"
+		 <table id="datagrid" data-options="fit:true,pageSize:20,url:'groups',method:'get',onDblClickRow:adminGroup.onClickRow," class="easyui-datagrid"
 			title="窝窝列表" rownumbers="true" pagination="true">
 			<thead>
 				<tr>
@@ -61,6 +53,10 @@
 					<th  data-options="field:'groupName'">窝窝名称</th>
 					<th  data-options="field:'createTime'">加入时间</th>
 					<th  data-options="field:'topicCount'">帖子数</th>
+					<th  data-options="field:'commendGrade',sortable:true,width:80,
+					 editor:{
+							type:'validatebox'
+						}">推荐等级</th>
 					<th  data-options="field:'pCategoryName'">一级分类</th>
 					<th  data-options="field:'categoryName'">二分类</th>
 				</tr>

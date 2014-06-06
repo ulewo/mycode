@@ -126,4 +126,6 @@ public interface GroupService {
 	 * @throws BusinessException
 	 */
 	public void updateGroup(Map<String, String> map) throws BusinessException;
+
+	public void saveGroupGrade(Map<String, String> map) throws BusinessException;
 }

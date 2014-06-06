@@ -7,6 +7,11 @@ $(function(){
 	});
 	loadCategory();
 });
+
+adminGroup.onClickRow = function(index){
+	$('#datagrid').datagrid('selectRow', index).datagrid('beginEdit', index);
+};
+
 adminGroup.userIconFormate = function(value,rowData,index){
 	return "<div style='width:50px;height:50px;text-align:center'><img src=../upload/"+rowData.groupIcon+" width='50'></div>";
 };
@@ -57,73 +62,39 @@ adminGroup.deleteGroup = function(){
 
 //精华
 adminGroup.essenceGroup = function(){
-	var rows = $("#datagrid").datagrid("getChecked");
-	if(rows.length==0){
-		ulewo_common.alert("请选择需要加推荐的窝窝",1);
-		return;
-	}
-	 $.messager.confirm('确认','您确认要将这几个窝窝推荐吗？',function(r){    
-		    if (r){  
-		    	var key = [];
-		    	$.each(rows,function(inex,item){
-		    		key.push(item.gid);
-		    	});
-		    	$.ajax({
-		    		async : true,
-		    		cache : false,
-		    		type : 'POST',
-		    		dataType : "json",
-		    		data:{
-		    			"key":key.join(",")
-		    		},
-		    		url : "essenceGroup.action",// 请求的action路径
-		    		success : function(data) {
-		    			if(data.result=="200"){
-		    				ulewo_common.tipsInfo("设置成功",1);
-		    				$("#datagrid").datagrid("load");
-		    			}else{
-		    				ulewo_common.alert(data.msg,2);
-		    			}
-		    		}
-		    	});
-		    }
-	 });
+	adminGroup.endEdit();	
+	var updated = $('#datagrid').datagrid('getChanges',"updated");
+	ulewo_common.loading("show","正在保存......");
+	$.ajax({
+		async : true,
+		cache : false,
+		type : 'POST',
+		dataType : "json",
+		data:{
+			"updated":encodeURIComponent(JSON.stringify(updated)),
+		},
+		url : "saveGroupGrade.action",// 请求的action路径
+		success : function(data) {
+			ulewo_common.loading();
+			if(data.result=="200"){
+				$('#datagrid').datagrid("load");
+				$('#datagrid').datagrid("acceptChanges");
+				ulewo_common.tipsInfo("保存成功",1);
+			}else{
+				ulewo_common.alert(data.msg,2);
+			}
+			
+		}
+	});
 };
 
-adminGroup.essenceGroupCancel = function(){
-	var rows = $("#datagrid").datagrid("getChecked");
-	if(rows.length==0){
-		ulewo_common.alert("请选择需要取消推荐的窝窝",1);
-		return;
+adminGroup.endEdit = function(){
+	var allRows = $('#datagrid').datagrid('getRows');
+	for(var i=0,length=allRows.length;i<length;i++){
+		var ed = $('#datagrid').datagrid('getEditor',{index:i,field:'name'});
+		$('#datagrid').datagrid('endEdit', i);
 	}
-	 $.messager.confirm('确认','您确认要将这几个窝窝取消推荐吗？',function(r){    
-		    if (r){  
-		    	var key = [];
-		    	$.each(rows,function(inex,item){
-		    		key.push(item.gid);
-		    	});
-		    	$.ajax({
-		    		async : true,
-		    		cache : false,
-		    		type : 'POST',
-		    		dataType : "json",
-		    		data:{
-		    			"key":key.join(",")
-		    		},
-		    		url : "essenceGroupCancel.action",// 请求的action路径
-		    		success : function(data) {
-		    			if(data.result=="200"){
-		    				ulewo_common.tipsInfo("设置成功",1);
-		    				$("#datagrid").datagrid("load");
-		    			}else{
-		    				ulewo_common.alert(data.msg,2);
-		    			}
-		    		}
-		    	});
-		    }
-	 });
 };
-
 
 adminGroup.changeCategroy = function(){
 	var rows = $("#datagrid").datagrid("getChecked");

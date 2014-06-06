@@ -48,7 +48,7 @@ topicmanage.gid ="${gid}";
 							<td>至</td>
 							<td><input class="easyui-datebox" data-options="editable:false" name="startEnd" style="width:120px"></td>
 							<td>所属板块</td>
-							<td><input id="category" name="cateId"  class="easyui-combobox" data-options="editable:false"></td>
+							<td><input id="category" name="categoryId"  class="easyui-combobox" data-options="editable:false"></td>
 						</tr>
 					</table>
 				</form>

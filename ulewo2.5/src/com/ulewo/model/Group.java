@@ -29,7 +29,7 @@ public class Group {
 
 	private String postPerm; // 发帖权限
 
-	private String commendType; // 是否推荐
+	private Integer commendGrade; // 是否推荐
 
 	private Integer members; // 组成员
 
@@ -126,12 +126,12 @@ public class Group {
 		this.postPerm = postPerm;
 	}
 
-	public String getCommendType() {
-		return commendType;
+	public Integer getCommendGrade() {
+		return commendGrade;
 	}
 
-	public void setCommendType(String commendType) {
-		this.commendType = commendType;
+	public void setCommendGrade(Integer commendGrade) {
+		this.commendGrade = commendGrade;
 	}
 
 	public Integer getMembers() {
