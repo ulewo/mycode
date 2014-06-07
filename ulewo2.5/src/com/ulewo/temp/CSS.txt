@@ -72,21 +72,18 @@
 
 第3章　用css设置丰富的文字效果　
 　　3.1　css文字样式
-		color	设置文本颜色
-		direction	设置文本方向。
-		line-height	设置行高。
-		letter-spacing	设置字符间距。
-		text-align	对齐元素中的文本。
-		text-decoration	向文本添加修饰。
-		text-indent	缩进元素中文本的首行。
-		text-shadow	设置文本阴影。CSS2 包含该属性，但是 CSS2.1 没有保留该属性。
+			color	设置文本颜色
+			direction	设置文本方向。
+			line-height	设置行高。
+			letter-spacing	设置字符间距。
+			text-align	对齐元素中的文本。
+			text-indent	缩进元素中文本的首行。
 		text-transform	控制元素中的字母。
 			none	默认。定义带有小写字母和大写字母的标准的文本。
 			capitalize	文本中的每个单词以大写字母开头。
 			uppercase	定义仅有大写字母。
 			lowercase	定义无大写字母，仅有小写字母。
 			inherit	规定应该从父元素继承 text-transform 属性的值。部分浏览器不支持
-			
 		white-space	设置元素中空白的处理方式。
 			值			空白符	换行符	自动换行
 			pre-line	合并		保留		允许
@@ -95,11 +92,6 @@
 			pre			保留		保留		不允许
 			pre-wrap	保留		保留		允许
 		word-spacing	设置字间距。
-　　3.2　文字实例一：模拟google公司logo　
-			
-　　3.3　文字实例二：制作页面的五彩标题　
-
-　　3.4　css段落文字
 
 第4章　用css设置图片效果　
 　　4.1　图片样式　
@@ -161,8 +153,7 @@
 				</div>
 			</body>
 		</html>
-　　4.2　图片的对齐
-　　4.3　图文混排　
+
 
 第5章　用css设置网页中的背景　
 	background	简写属性，作用是将背景属性设置在一个声明中。
@@ -180,7 +171,16 @@
 		list-style	简写属性。用于把所有用于列表的属性设置于一个声明中。
 		list-style-image	将图象设置为列表项标志。
 		list-style-position	设置列表中列表项标志的位置。
+<<<<<<< .mine
+		list-style-type	设置列表项标志的类型。
+　　6.1　控制表格　
+		border-collapse	设置是否把表格边框合并为单一的边框。
+		border-spacing	设置分隔单元格边框的距离。
+		
+=======
 		list-style-type	设置列表项标志的类型。	
+>>>>>>> .r825
+		
 		实例：
 		<html>
 		<head>
