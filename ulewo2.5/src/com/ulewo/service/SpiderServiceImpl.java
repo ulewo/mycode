@@ -49,8 +49,8 @@ import com.ulewo.util.UlewoPaginationResult;
  * 
  * @author luo.hl
  * @date 2014-6-4 上午10:46:01
- * @version 0.1.0 
- * @copyright yougou.com 
+ * @version 0.1.0
+ * @copyright yougou.com
  */
 @Service("spiderService")
 public class SpiderServiceImpl implements SpidrService {
@@ -64,16 +64,19 @@ public class SpiderServiceImpl implements SpidrService {
 	private TopicMapper<Topic> topicMapper;
 
 	@Override
-	public UlewoPaginationResult<Spider> querySpiderList(Map<String, String> map) throws BusinessException {
+	public UlewoPaginationResult<Spider> querySpiderList(Map<String, String> map)
+			throws BusinessException {
 		int page_no = 0;
 		if (StringUtils.isNumber(map.get("page"))) {
 			page_no = Integer.parseInt(map.get("page"));
 		}
-		int pageSize = StringUtils.isEmpty(map.get("rows")) ? 20 : Integer.parseInt(map.get("rows"));
+		int pageSize = StringUtils.isEmpty(map.get("rows")) ? 20 : Integer
+				.parseInt(map.get("rows"));
 		int countTotal = spiderMapper.selectBaseInfoCount(map);
 		SimplePage page = new SimplePage(page_no, countTotal, pageSize);
 		List<Spider> list = spiderMapper.selectBaseInfoList(map, page);
-		UlewoPaginationResult<Spider> result = new UlewoPaginationResult<Spider>(page, list);
+		UlewoPaginationResult<Spider> result = new UlewoPaginationResult<Spider>(
+				page, list);
 		return result;
 	}
 
@@ -81,39 +84,49 @@ public class SpiderServiceImpl implements SpidrService {
 	public void spiderArticle(String type) throws BusinessException {
 		try {
 			List<Spider> list = new ArrayList<Spider>();
-			if (SpiderType.OSCHINA.getType().equals(type)) { //开源中国
+			if (SpiderType.OSCHINA.getType().equals(type)) { // 开源中国
 				list = getSpiderList4Osc("http://www.oschina.net/news/list");
-			} else if (SpiderType.XINWENGE.getType().equals(type)) { //新闻哥
+			} else if (SpiderType.XINWENGE.getType().equals(type)) { // 新闻哥
 				list = getSpiderList4Xwg(SpiderType.XINWENGE.getUrl());
-			} else if (SpiderType.CNBLOG.getType().equals(type)) { //博客园
+			} else if (SpiderType.CNBLOG.getType().equals(type)) { // 博客园
 				list = getSpiderList4Cnblog(SpiderType.CNBLOG.getUrl());
 			} else if (SpiderType.QILU.getType().equals(type)) {
-				list = getSpiderList4Qilu("http://ent.iqilu.com/film/news", "qilu_new");
-				list.addAll(getSpiderList4Qilu("http://news.iqilu.com/shehui/huahuashijie", "qilu_life"));
-				list.addAll(getSpiderList4Qilu("http://ent.iqilu.com/star/dongtai", "qilu_star"));
+				list = getSpiderList4Qilu("http://ent.iqilu.com/film/news",
+						"qilu_new");
+				list.addAll(getSpiderList4Qilu(
+						"http://news.iqilu.com/shehui/huahuashijie",
+						"qilu_life"));
+				list.addAll(getSpiderList4Qilu(
+						"http://ent.iqilu.com/star/dongtai", "qilu_star"));
 			}
 			if (list.size() > 0) {
 				SimplePage page = new SimplePage();
 				page.setStart(0);
 				page.setEnd(50);
 				Map<String, String> map = new HashMap<String, String>();
-				String date = StringUtils.dateFormater2.get().format(new Date());
+				String date = StringUtils.dateFormater2.get()
+						.format(new Date());
 				map.put("createTime", date);
 				map.put("type", type);
-				List<Spider> resultSpider = spiderMapper.selectBaseInfoList(map, page);
+				List<Spider> resultSpider = spiderMapper.selectBaseInfoList(
+						map, page);
 				if (SpiderType.QILU.getType().equals(type)) {
 					map.put("type", "qilu_new");
-					resultSpider.addAll(spiderMapper.selectBaseInfoList(map, page));
+					resultSpider.addAll(spiderMapper.selectBaseInfoList(map,
+							page));
 					map.put("type", "qilu_life");
-					resultSpider.addAll(spiderMapper.selectBaseInfoList(map, page));
+					resultSpider.addAll(spiderMapper.selectBaseInfoList(map,
+							page));
 					map.put("type", "qilu_star");
-					resultSpider.addAll(spiderMapper.selectBaseInfoList(map, page));
+					resultSpider.addAll(spiderMapper.selectBaseInfoList(map,
+							page));
 				}
 
 				Map<String, String> tempMap = new HashMap<String, String>();
 				for (Spider temp : resultSpider) {
 					if (tempMap.get(temp.getId() + temp.getType()) == null) {
-						tempMap.put(temp.getId() + temp.getType(), temp.getId() + temp.getType());
+						tempMap.put(temp.getId() + temp.getType(), temp.getId()
+								+ temp.getType());
 					}
 				}
 				Iterator<Spider> iterator = list.iterator();
@@ -142,17 +155,20 @@ public class SpiderServiceImpl implements SpidrService {
 
 	/**
 	 * 获取爬取的文章列表
+	 * 
 	 * @param url
 	 * @return
 	 * @throws ClientProtocolException
 	 * @throws IOException
 	 */
-	private List<Spider> getSpiderList4Osc(String url) throws ClientProtocolException, IOException {
+	private List<Spider> getSpiderList4Osc(String url)
+			throws ClientProtocolException, IOException {
 		String html = SpiderUtil.getHtml(url);
 		HtmlCleaner htmlCleaner = new HtmlCleaner();
 		TagNode allNode = htmlCleaner.clean(html);
 
-		TagNode newsList = allNode.getElementsByAttValue("id", "RecentNewsList", true, true)[0];
+		TagNode newsList = allNode.getElementsByAttValue("id",
+				"RecentNewsList", true, true)[0];
 		TagNode ul = newsList.getChildTags()[1];
 		TagNode[] lis = ul.getElementsByName("li", true);
 		List<Spider> spiderList = new ArrayList<Spider>();
@@ -161,11 +177,19 @@ public class SpiderServiceImpl implements SpidrService {
 			TagNode h2 = li.getElementsByName("h2", true)[0];
 			TagNode a = h2.getElementsByName("a", true)[0];
 			String link = a.getAttributeByName("href");
+			System.out.println(link);
 			if (!link.contains("http://")) {
-				Spider spider = getSpiderContent4Osc(SpiderType.OSCHINA.getUrl() + link);
-				spider.setType(SpiderType.OSCHINA.getType());
-				spider.setCreateTime(date);
-				spiderList.add(spider);
+				try {
+					Spider spider = getSpiderContent4Osc(SpiderType.OSCHINA
+							.getUrl() + link);
+					spider.setType(SpiderType.OSCHINA.getType());
+					spider.setCreateTime(date);
+					spiderList.add(spider);
+				} catch (Exception e) {
+					e.printStackTrace();
+					continue;
+				}
+
 			}
 		}
 		return spiderList;
@@ -173,19 +197,24 @@ public class SpiderServiceImpl implements SpidrService {
 
 	/**
 	 * 获取内容
+	 * 
 	 * @param url
 	 * @return
 	 * @throws ClientProtocolException
 	 * @throws IOException
 	 */
-	private Spider getSpiderContent4Osc(String url) throws ClientProtocolException, IOException {
+	private Spider getSpiderContent4Osc(String url)
+			throws ClientProtocolException, IOException {
 		String html = SpiderUtil.getHtml(url);
 		HtmlCleaner htmlCleaner = new HtmlCleaner();
 		TagNode allNode = htmlCleaner.clean(html);
-		TagNode newsEntity = allNode.getElementsByAttValue("class", "NewsEntity", true, true)[0];
-		TagNode titleNode = newsEntity.getElementsByAttValue("class", "OSCTitle", true, true)[0];
+		TagNode newsEntity = allNode.getElementsByAttValue("class",
+				"NewsEntity", true, true)[0];
+		TagNode titleNode = newsEntity.getElementsByAttValue("class",
+				"OSCTitle", true, true)[0];
 		String title = String.valueOf(titleNode.getText());
-		TagNode contentTag = newsEntity.getElementsByAttValue("class", "Body NewsContent TextContent", true, true)[0];
+		TagNode contentTag = newsEntity.getElementsByAttValue("class",
+				"Body NewsContent TextContent", true, true)[0];
 		TagNode p = contentTag.getElementsByName("p", true)[0];
 		if (p.getText().toString().contains("开源中国")) {
 			contentTag.removeChild(p);
@@ -199,12 +228,14 @@ public class SpiderServiceImpl implements SpidrService {
 		return spider;
 	}
 
-	private List<Spider> getSpiderList4Xwg(String url) throws ClientProtocolException, IOException {
+	private List<Spider> getSpiderList4Xwg(String url)
+			throws ClientProtocolException, IOException {
 		String html = SpiderUtil.getHtml(url);
 		HtmlCleaner htmlCleaner = new HtmlCleaner();
 		TagNode allNode = htmlCleaner.clean(html);
 
-		TagNode newsList = allNode.getElementsByAttValue("class", "historyList", true, true)[0];
+		TagNode newsList = allNode.getElementsByAttValue("class",
+				"historyList", true, true)[0];
 		TagNode ul = newsList.getChildTags()[0];
 		TagNode[] lis = ul.getElementsByName("li", true);
 		List<Spider> spiderList = new ArrayList<Spider>();
@@ -220,14 +251,18 @@ public class SpiderServiceImpl implements SpidrService {
 		return spiderList;
 	}
 
-	private Spider getSpiderContent4Xwg(String url) throws ClientProtocolException, IOException {
+	private Spider getSpiderContent4Xwg(String url)
+			throws ClientProtocolException, IOException {
 		String html = SpiderUtil.getHtml(url);
 		HtmlCleaner htmlCleaner = new HtmlCleaner();
 		TagNode allNode = htmlCleaner.clean(html);
-		TagNode newsEntity = allNode.getElementsByAttValue("class", "article small", true, true)[0];
-		TagNode titleNode = newsEntity.getElementsByAttValue("class", "title", true, true)[0];
+		TagNode newsEntity = allNode.getElementsByAttValue("class",
+				"article small", true, true)[0];
+		TagNode titleNode = newsEntity.getElementsByAttValue("class", "title",
+				true, true)[0];
 		String title = String.valueOf(titleNode.getText());
-		TagNode contentTag = newsEntity.getElementsByAttValue("class", "cont", true, true)[0];
+		TagNode contentTag = newsEntity.getElementsByAttValue("class", "cont",
+				true, true)[0];
 		String content = htmlCleaner.getInnerHtml(contentTag);
 		Spider spider = new Spider();
 		String id = url.substring(url.lastIndexOf("/") + 1);
@@ -241,18 +276,22 @@ public class SpiderServiceImpl implements SpidrService {
 	 * 博客园
 	 */
 
-	private List<Spider> getSpiderList4Cnblog(String url) throws ClientProtocolException, IOException {
+	private List<Spider> getSpiderList4Cnblog(String url)
+			throws ClientProtocolException, IOException {
 		String html = SpiderUtil.getHtml(url);
 		HtmlCleaner htmlCleaner = new HtmlCleaner();
 		TagNode allNode = htmlCleaner.clean(html);
 
-		TagNode newsList = allNode.getElementsByAttValue("id", "news_list", true, true)[0];
-		TagNode[] divs = newsList.getElementsByAttValue("class", "news_block", true, true);
+		TagNode newsList = allNode.getElementsByAttValue("id", "news_list",
+				true, true)[0];
+		TagNode[] divs = newsList.getElementsByAttValue("class", "news_block",
+				true, true);
 		List<Spider> spiderList = new ArrayList<Spider>();
 		String date = StringUtils.dateFormater2.get().format(new Date());
 		for (TagNode li : divs) {
 			TagNode a = li.getElementsByName("a", true)[0];
-			String link = "http://news.cnblogs.com" + a.getAttributeByName("href");
+			String link = "http://news.cnblogs.com"
+					+ a.getAttributeByName("href");
 			Spider spider = getSpiderContent4Cnblog(link);
 			spider.setType(SpiderType.CNBLOG.getType());
 			spider.setCreateTime(date);
@@ -261,18 +300,22 @@ public class SpiderServiceImpl implements SpidrService {
 		return spiderList;
 	}
 
-	private Spider getSpiderContent4Cnblog(String url) throws ClientProtocolException, IOException {
+	private Spider getSpiderContent4Cnblog(String url)
+			throws ClientProtocolException, IOException {
 		String html = SpiderUtil.getHtml(url);
 		HtmlCleaner htmlCleaner = new HtmlCleaner();
 		TagNode allNode = htmlCleaner.clean(html);
-		TagNode titleNode = allNode.getElementsByAttValue("id", "news_title", true, true)[0];
+		TagNode titleNode = allNode.getElementsByAttValue("id", "news_title",
+				true, true)[0];
 		TagNode alink = titleNode.getElementsByName("a", true)[0];
 		String title = String.valueOf(alink.getText());
 
-		TagNode contentTag = allNode.getElementsByAttValue("id", "news_body", true, true)[0];
+		TagNode contentTag = allNode.getElementsByAttValue("id", "news_body",
+				true, true)[0];
 		String content = htmlCleaner.getInnerHtml(contentTag);
 		Spider spider = new Spider();
-		String id = url.substring(url.lastIndexOf("n/") + 2, url.lastIndexOf("/"));
+		String id = url.substring(url.lastIndexOf("n/") + 2,
+				url.lastIndexOf("/"));
 		spider.setId(id);
 		spider.setContent(content);
 		spider.setTitle(title);
@@ -281,18 +324,22 @@ public class SpiderServiceImpl implements SpidrService {
 
 	/**
 	 * 齐鲁网
+	 * 
 	 * @param url
 	 * @return
 	 * @throws ClientProtocolException
 	 * @throws IOException
 	 */
-	private List<Spider> getSpiderList4Qilu(String url, String type) throws ClientProtocolException, IOException {
+	private List<Spider> getSpiderList4Qilu(String url, String type)
+			throws ClientProtocolException, IOException {
 		String html = SpiderUtil.getHtml(url);
 		HtmlCleaner htmlCleaner = new HtmlCleaner();
 		TagNode allNode = htmlCleaner.clean(html);
 
-		TagNode newsList = allNode.getElementsByAttValue("id", "nr_left", true, true)[0];
-		TagNode[] divs = newsList.getElementsByAttValue("class", "list_box", true, true);
+		TagNode newsList = allNode.getElementsByAttValue("id", "nr_left", true,
+				true)[0];
+		TagNode[] divs = newsList.getElementsByAttValue("class", "list_box",
+				true, true);
 		List<Spider> spiderList = new ArrayList<Spider>();
 		String date = StringUtils.dateFormater2.get().format(new Date());
 		for (int i = 1, length = divs.length; i < length; i++) {
@@ -311,16 +358,19 @@ public class SpiderServiceImpl implements SpidrService {
 		return spiderList;
 	}
 
-	private Spider getSpiderContent4Qilu(String url) throws ClientProtocolException, IOException {
+	private Spider getSpiderContent4Qilu(String url)
+			throws ClientProtocolException, IOException {
 		try {
 			String html = SpiderUtil.getHtml(url);
 			HtmlCleaner htmlCleaner = new HtmlCleaner();
 			TagNode allNode = htmlCleaner.clean(html);
-			TagNode titleNode = allNode.getElementsByAttValue("id", "nr_left", true, true)[0];
+			TagNode titleNode = allNode.getElementsByAttValue("id", "nr_left",
+					true, true)[0];
 			TagNode alink = titleNode.getElementsByName("h1", true)[0];
 			String title = String.valueOf(alink.getText());
 
-			TagNode contentTag = allNode.getElementsByAttValue("id", "context", true, true)[0];
+			TagNode contentTag = allNode.getElementsByAttValue("id", "context",
+					true, true)[0];
 			TagNode[] pTag = contentTag.getElementsByName("p", true);
 			TagNode divTag = new TagNode("div");
 			for (TagNode p : pTag) {
@@ -328,21 +378,26 @@ public class SpiderServiceImpl implements SpidrService {
 			}
 			String content = htmlCleaner.getInnerHtml(divTag);
 			Spider spider = new Spider();
-			String id = url.substring(url.lastIndexOf("/") + 1, url.lastIndexOf("."));
+			String id = url.substring(url.lastIndexOf("/") + 1,
+					url.lastIndexOf("."));
 			spider.setId(id);
 			spider.setContent(content);
 			spider.setTitle(title);
 
-			TagNode[] pageUpDown1 = contentTag.getElementsByAttValue("id", "pageUpDown1", true, true);
+			TagNode[] pageUpDown1 = contentTag.getElementsByAttValue("id",
+					"pageUpDown1", true, true);
 			if (pageUpDown1.length > 0) {
-				TagNode pageNode = pageUpDown1[0].getElementsByAttValue("id", "page", true, true)[0];
+				TagNode pageNode = pageUpDown1[0].getElementsByAttValue("id",
+						"page", true, true)[0];
 				TagNode liNode = pageNode.getElementsByName("li", true)[0];
 				TagNode liNodea = liNode.getElementsByName("a", true)[0];
 				String pageStr = liNodea.getText().toString();
-				int pageCount = Integer.parseInt(pageStr.substring(1, pageStr.length() - 3));
+				int pageCount = Integer.parseInt(pageStr.substring(1,
+						pageStr.length() - 3));
 				String newUrl = url.substring(0, url.lastIndexOf("."));
 				for (int i = 2; i <= pageCount; i++) {
-					getSpiderContent4QiluSub(spider, newUrl + "_" + i + ".shtml");
+					getSpiderContent4QiluSub(spider, newUrl + "_" + i
+							+ ".shtml");
 				}
 			}
 			return spider;
@@ -352,11 +407,13 @@ public class SpiderServiceImpl implements SpidrService {
 		}
 	}
 
-	private void getSpiderContent4QiluSub(Spider spider, String url) throws ClientProtocolException, IOException {
+	private void getSpiderContent4QiluSub(Spider spider, String url)
+			throws ClientProtocolException, IOException {
 		String html = SpiderUtil.getHtml(url);
 		HtmlCleaner htmlCleaner = new HtmlCleaner();
 		TagNode allNode = htmlCleaner.clean(html);
-		TagNode contentTag = allNode.getElementsByAttValue("id", "context", true, true)[0];
+		TagNode contentTag = allNode.getElementsByAttValue("id", "context",
+				true, true)[0];
 		TagNode[] pTag = contentTag.getElementsByName("p", true);
 		TagNode divTag = new TagNode("div");
 		for (TagNode p : pTag) {
@@ -370,7 +427,8 @@ public class SpiderServiceImpl implements SpidrService {
 	 * 发布文章
 	 */
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BusinessException.class)
-	public void sendTopic(Map<String, String> map, HttpServletRequest request) throws BusinessException {
+	public void sendTopic(Map<String, String> map, HttpServletRequest request)
+			throws BusinessException {
 		this.request = request;
 		String keyStr = map.get("key");
 		String[] keys = keyStr.split(",");
@@ -391,7 +449,9 @@ public class SpiderServiceImpl implements SpidrService {
 			String content = topic.getContent();
 			String summary = StringUtils.clearHtml(content);
 			if (summary.length() > LengthEnums.Length200.getLength()) {
-				summary = summary.substring(0, LengthEnums.Length100.getLength()) + "......";
+				summary = summary.substring(0,
+						LengthEnums.Length100.getLength())
+						+ "......";
 			}
 			topic.setSummary(summary);
 
@@ -405,7 +465,7 @@ public class SpiderServiceImpl implements SpidrService {
 			String topicImageSmall = getTopicImageSmall(topicImage, request);
 			topic.setTopicImageSmall(topicImageSmall);
 			topicMapper.insert(topic);
-			//更新spider状态
+			// 更新spider状态
 			spider.setStatus(SpiderStatus.STATUS1.getStatus());
 			spiderMapper.updateSelective(spider);
 		}
@@ -413,6 +473,7 @@ public class SpiderServiceImpl implements SpidrService {
 
 	/**
 	 * 替换网络图片为本地图片
+	 * 
 	 * @param spider
 	 * @return
 	 */
@@ -429,7 +490,7 @@ public class SpiderServiceImpl implements SpidrService {
 					allNode.removeChild(tag);
 				} else {
 					tag.setAttribute("src", newSrc);
-					//tag.getParent().setAttribute("style", "text-align:left");
+					// tag.getParent().setAttribute("style", "text-align:left");
 				}
 			}
 		}
@@ -441,6 +502,7 @@ public class SpiderServiceImpl implements SpidrService {
 
 	/**
 	 * 上传图片
+	 * 
 	 * @param oldsrc
 	 * @return
 	 */
@@ -450,7 +512,8 @@ public class SpiderServiceImpl implements SpidrService {
 		OutputStream os = null;
 		String filePath = null;
 		try {
-			HttpURLConnection conn = (HttpURLConnection) new URL(oldsrc).openConnection();
+			HttpURLConnection conn = (HttpURLConnection) new URL(oldsrc)
+					.openConnection();
 			String type = this.getFileType(oldsrc);
 			String saveName = Long.toString(new Date().getTime()) + type;
 			filePath = this.getFolder("upload") + "/" + saveName;
@@ -488,6 +551,7 @@ public class SpiderServiceImpl implements SpidrService {
 
 	/**
 	 * 获取文件目录
+	 * 
 	 * @param path
 	 * @return
 	 */
@@ -508,22 +572,26 @@ public class SpiderServiceImpl implements SpidrService {
 
 	/**
 	 * 获取绝对路径
+	 * 
 	 * @param path
 	 * @return
 	 */
 	private String getPhysicalPath(String path) {
-		String realPath = this.request.getSession().getServletContext().getRealPath("/");
+		String realPath = this.request.getSession().getServletContext()
+				.getRealPath("/");
 		return realPath + path;
 	}
 
 	/**
 	 * 图片类型
+	 * 
 	 * @param fileName
 	 * @return
 	 */
 	public String getFileType(String fileName) {
 
-		String[] fileType = { ".gif", ".png", ".jpg", ".jpeg", ".bmp", ".GIF", ".PNG", ".JPG", ".JPEG", ".BMP" };
+		String[] fileType = { ".gif", ".png", ".jpg", ".jpeg", ".bmp", ".GIF",
+				".PNG", ".JPG", ".JPEG", ".BMP" };
 		Iterator<String> type = Arrays.asList(fileType).iterator();
 		while (type.hasNext()) {
 			String t = type.next();
@@ -535,23 +603,30 @@ public class SpiderServiceImpl implements SpidrService {
 	}
 
 	private String getRealPath() {
-		String port = request.getServerPort() == 80 ? "" : ":" + request.getServerPort();
-		String realPath = "http://" + request.getServerName() + port + request.getContextPath();
+		String port = request.getServerPort() == 80 ? "" : ":"
+				+ request.getServerPort();
+		String realPath = "http://" + request.getServerName() + port
+				+ request.getContextPath();
 		return realPath;
 	}
 
 	/**
 	 * 生成文章中的缩略图
+	 * 
 	 * @param topicImage
 	 * @param request
 	 * @return
 	 */
-	private String getTopicImageSmall(String topicImage, HttpServletRequest request) {
+	private String getTopicImageSmall(String topicImage,
+			HttpServletRequest request) {
 		StringBuilder topicImageSmall = new StringBuilder();
 		if (topicImage != null) {
-			String port = request.getServerPort() == 80 ? "" : ":" + request.getServerPort();
-			String hostPath = "http://" + request.getServerName() + port + request.getContextPath();
-			String realPath = request.getSession().getServletContext().getRealPath("");
+			String port = request.getServerPort() == 80 ? "" : ":"
+					+ request.getServerPort();
+			String hostPath = "http://" + request.getServerName() + port
+					+ request.getContextPath();
+			String realPath = request.getSession().getServletContext()
+					.getRealPath("");
 			String[] topoicImages = topicImage.split("\\|");
 			for (String img : topoicImages) {
 				if (StringUtils.isEmpty(img)) {

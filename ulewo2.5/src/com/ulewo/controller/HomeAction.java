@@ -108,13 +108,15 @@ public class HomeAction extends BaseAction {
 			System.out.println("sessionId:" + session.getId());
 			List<Group> groups = groupService.findCommendGroupAndTopic();
 			List<Blog> blogList = blogService.queryLatestBlog4Index();
-			List<GroupCategory> groupCateGroy = groupCategoryService.selectGroupCategoryList4Index();
+			List<GroupCategory> groupCateGroy = groupCategoryService
+					.selectGroupCategoryList4Index();
 			mv.addObject("groups", groups);
 			mv.addObject("blogList", blogList);
 			mv.addObject("groupCateGroy", groupCateGroy);
 			mv.setViewName("home");
 			return mv;
 		} catch (Exception e) {
+			log.error(e.getMessage(), e);
 			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;
 		}
@@ -150,8 +152,8 @@ public class HomeAction extends BaseAction {
 		}
 	}
 
-	private void set2Square(List<Topic> square1, List<Topic> square2, List<Topic> square3, List<Topic> square4,
-			List<Topic> squareList) {
+	private void set2Square(List<Topic> square1, List<Topic> square2,
+			List<Topic> square3, List<Topic> square4, List<Topic> squareList) {
 
 		int num = 0;
 		int j = 0;
@@ -182,7 +184,8 @@ public class HomeAction extends BaseAction {
 
 		ModelAndView mv = new ModelAndView();
 		try {
-			UlewoPaginationResult<Blog> result = this.blogService.queryLatestBlog(this.builderParams(request, true));
+			UlewoPaginationResult<Blog> result = this.blogService
+					.queryLatestBlog(this.builderParams(request, true));
 			mv.addObject("result", result);
 			mv.setViewName("blog");
 			return mv;
@@ -197,8 +200,8 @@ public class HomeAction extends BaseAction {
 	public ModelAndView resource(HttpSession session, HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		try {
-			UlewoPaginationResult<Attachment> result = this.attachmentService.attachedTopic(this.builderParams(request,
-					false));
+			UlewoPaginationResult<Attachment> result = this.attachmentService
+					.attachedTopic(this.builderParams(request, false));
 			mv.addObject("result", result);
 			mv.setViewName("resource");
 			return mv;
@@ -218,7 +221,8 @@ public class HomeAction extends BaseAction {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/loadLatestBlast")
-	public Map<String, Object> loadTalk(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> loadTalk(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -235,7 +239,8 @@ public class HomeAction extends BaseAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/loadGroupAndMember", method = RequestMethod.GET)
-	public Map<String, Object> loadGroupAndMember(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> loadGroupAndMember(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -287,11 +292,13 @@ public class HomeAction extends BaseAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/loadGroupCategory")
-	public Map<String, Object> loadGroupCategory(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> loadGroupCategory(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
-			List<GroupCategory> groupCateGroy = groupCategoryService.selectGroupCategoryList4Index();
+			List<GroupCategory> groupCateGroy = groupCategoryService
+					.selectGroupCategoryList4Index();
 			modelMap.put("groupCateGroy", groupCateGroy);
 			modelMap.put("result", ResultCode.SUCCESS.getCode());
 			return modelMap;
@@ -303,7 +310,8 @@ public class HomeAction extends BaseAction {
 	}
 
 	@RequestMapping(value = "/downloadApp", method = RequestMethod.GET)
-	public void downApp(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public void downApp(HttpSession session, HttpServletRequest request,
+			HttpServletResponse response) {
 
 		InputStream in = null;
 		BufferedInputStream bf = null;
@@ -356,7 +364,8 @@ public class HomeAction extends BaseAction {
 	}
 
 	@RequestMapping(value = "/ulewoapp", method = RequestMethod.GET)
-	public ModelAndView fileupload(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView fileupload(HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("ulewoapp");
@@ -364,7 +373,8 @@ public class HomeAction extends BaseAction {
 	}
 
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
-	public ModelAndView search(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView search(HttpSession session, HttpServletRequest request,
+			HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView();
 		try {
@@ -383,7 +393,8 @@ public class HomeAction extends BaseAction {
 				List<?> list = result.getList();
 				for (Object t : list) {
 					Blog blog = (Blog) t;
-					blog.setTitle(blog.getTitle().replaceAll(keyWord, "<span class='hilight'>" + keyWord + "</span>"));
+					blog.setTitle(blog.getTitle().replaceAll(keyWord,
+							"<span class='hilight'>" + keyWord + "</span>"));
 					blog.setSummary(blog.getSummary().replaceAll(keyWord,
 							"<span class='hilight'>" + keyWord + "</span>"));
 				}
@@ -392,7 +403,8 @@ public class HomeAction extends BaseAction {
 				List<?> list = result.getList();
 				for (Object t : list) {
 					Topic topic = (Topic) t;
-					topic.setTitle(topic.getTitle().replaceAll(keyWord, "<span class='hilight'>" + keyWord + "</span>"));
+					topic.setTitle(topic.getTitle().replaceAll(keyWord,
+							"<span class='hilight'>" + keyWord + "</span>"));
 					topic.setSummary(topic.getSummary().replaceAll(keyWord,
 							"<span class='hilight'>" + keyWord + "</span>"));
 				}
@@ -414,7 +426,8 @@ public class HomeAction extends BaseAction {
 	}
 
 	@RequestMapping(value = "/userMarks", method = RequestMethod.GET)
-	public ModelAndView userMarks(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView userMarks(HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("usermarks");
 		return mv;
@@ -422,8 +435,8 @@ public class HomeAction extends BaseAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/loadUsersByMarks", method = RequestMethod.GET)
-	public Map<String, Object> loadUsersByMarks(HttpSession session, HttpServletRequest request,
-			HttpServletResponse response) {
+	public Map<String, Object> loadUsersByMarks(HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			List<User> list = userService.selectUsersByMark();
