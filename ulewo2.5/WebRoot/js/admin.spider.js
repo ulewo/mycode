@@ -87,7 +87,7 @@ adminSpider.spider = function(){
 		success : function(data) {
 			ulewo_common.loading();
 			if(data.result=="200"){
-				ulewo_common.tipsInfo("删除成功",1);
+				ulewo_common.tipsInfo("爬取成功",1);
 				$("#datagrid").datagrid("load");
 			}else{
 				ulewo_common.alert(data.msg,2);
