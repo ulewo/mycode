@@ -105,7 +105,6 @@ public class HomeAction extends BaseAction {
 	public ModelAndView index(HttpSession session, HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		try {
-			System.out.println("sessionId:" + session.getId());
 			List<Group> groups = groupService.findCommendGroupAndTopic();
 			List<Blog> blogList = blogService.queryLatestBlog4Index();
 			List<GroupCategory> groupCateGroy = groupCategoryService

@@ -141,14 +141,12 @@ public class SpiderServiceImpl implements SpidrService {
 						try {
 							spiderMapper.insert(spider);
 						} catch (Exception e) {
-							e.printStackTrace();
 							continue;
 						}
 					}
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw new BusinessException(e.getMessage());
 		}
 	}
@@ -590,8 +588,8 @@ public class SpiderServiceImpl implements SpidrService {
 	 */
 	public String getFileType(String fileName) {
 
-		String[] fileType = { ".gif", ".png", ".jpg", ".jpeg", ".bmp", ".GIF",
-				".PNG", ".JPG", ".JPEG", ".BMP" };
+		String[] fileType = {".gif", ".png", ".jpg", ".jpeg", ".bmp", ".GIF",
+				".PNG", ".JPG", ".JPEG", ".BMP"};
 		Iterator<String> type = Arrays.asList(fileType).iterator();
 		while (type.hasNext()) {
 			String t = type.next();

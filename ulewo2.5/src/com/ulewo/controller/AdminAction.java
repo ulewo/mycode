@@ -75,14 +75,16 @@ public class AdminAction extends BaseAction {
 	@Log
 	Logger log;
 
-	/***********  成员 **************/
+	/*********** 成员 **************/
 	@RequestMapping(value = "/users")
 	@ResponseBody
-	public Map<String, Object> users(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> users(HttpSession session,
+			HttpServletRequest request) {
 		Map<String, Object> resultObj = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = this.builderParams(request, true);
-			UlewoPaginationResult<User> result = this.userService.findAllUsers(map);
+			UlewoPaginationResult<User> result = this.userService
+					.findAllUsers(map);
 			resultObj.put("rows", result.getList());
 			resultObj.put("total", result.getPage().getCountTotal());
 			return resultObj;
@@ -94,7 +96,8 @@ public class AdminAction extends BaseAction {
 
 	@RequestMapping(value = "/deleteUsers")
 	@ResponseBody
-	public Map<String, Object> deleteUsers(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> deleteUsers(HttpSession session,
+			HttpServletRequest request) {
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = this.builderParams(request, true);
@@ -115,16 +118,18 @@ public class AdminAction extends BaseAction {
 		}
 	}
 
-	/***************窝窝********************/
+	/*************** 窝窝 ********************/
 
 	@RequestMapping(value = "/groups")
 	@ResponseBody
-	public Map<String, Object> groups(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> groups(HttpSession session,
+			HttpServletRequest request) {
 		Map<String, Object> resultObj = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = this.builderParams(request, true);
 			map.put("sort", "commend_grade");
-			UlewoPaginationResult<Group> result = this.groupService.findAllGroup(map);
+			UlewoPaginationResult<Group> result = this.groupService
+					.findAllGroup(map);
 			resultObj.put("rows", result.getList());
 			resultObj.put("total", result.getPage().getCountTotal());
 			return resultObj;
@@ -136,7 +141,8 @@ public class AdminAction extends BaseAction {
 
 	@RequestMapping(value = "/deleteGroups")
 	@ResponseBody
-	public Map<String, Object> deleteGroups(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> deleteGroups(HttpSession session,
+			HttpServletRequest request) {
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = this.builderParams(request, true);
@@ -159,7 +165,8 @@ public class AdminAction extends BaseAction {
 
 	@RequestMapping(value = "/saveGroupGrade.action")
 	@ResponseBody
-	public Map<String, Object> saveGroupGrade(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> saveGroupGrade(HttpSession session,
+			HttpServletRequest request) {
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = this.builderParams(request, true);
@@ -182,7 +189,8 @@ public class AdminAction extends BaseAction {
 
 	@RequestMapping(value = "/updateGroupCategroy.action")
 	@ResponseBody
-	public Map<String, Object> updateGroupCategroy(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> updateGroupCategroy(HttpSession session,
+			HttpServletRequest request) {
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = this.builderParams(request, true);
@@ -203,15 +211,17 @@ public class AdminAction extends BaseAction {
 		}
 	}
 
-	/***************吐槽********************/
+	/*************** 吐槽 ********************/
 
 	@RequestMapping(value = "/blasts")
 	@ResponseBody
-	public Map<String, Object> blasts(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> blasts(HttpSession session,
+			HttpServletRequest request) {
 		Map<String, Object> resultObj = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = this.builderParams(request, true);
-			UlewoPaginationResult<Blast> result = this.blastService.queryAllBlast(map);
+			UlewoPaginationResult<Blast> result = this.blastService
+					.queryAllBlast(map);
 			resultObj.put("rows", result.getList());
 			resultObj.put("total", result.getPage().getCountTotal());
 			return resultObj;
@@ -223,7 +233,8 @@ public class AdminAction extends BaseAction {
 
 	@RequestMapping(value = "/deleteBlasts")
 	@ResponseBody
-	public Map<String, Object> deleteBlasts(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> deleteBlasts(HttpSession session,
+			HttpServletRequest request) {
 		Map<String, Object> resultObj = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = this.builderParams(request, true);
@@ -239,11 +250,13 @@ public class AdminAction extends BaseAction {
 
 	@RequestMapping(value = "/blastComments")
 	@ResponseBody
-	public Map<String, Object> blastComments(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> blastComments(HttpSession session,
+			HttpServletRequest request) {
 		Map<String, Object> resultObj = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = this.builderParams(request, true);
-			UlewoPaginationResult<BlastComment> result = this.blastCommentService.queryBlastCommentByPag(map);
+			UlewoPaginationResult<BlastComment> result = this.blastCommentService
+					.queryBlastCommentByPag(map);
 			resultObj.put("rows", result.getList());
 			resultObj.put("total", result.getPage().getCountTotal());
 			return resultObj;
@@ -255,7 +268,8 @@ public class AdminAction extends BaseAction {
 
 	@RequestMapping(value = "/deleteBlastComments")
 	@ResponseBody
-	public Map<String, Object> deleteBlastComments(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> deleteBlastComments(HttpSession session,
+			HttpServletRequest request) {
 		Map<String, Object> resultObj = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = this.builderParams(request, true);
@@ -270,15 +284,17 @@ public class AdminAction extends BaseAction {
 		}
 	}
 
-	/*******************主题***********************/
+	/******************* 主题 ***********************/
 	@RequestMapping(value = "/topics")
 	@ResponseBody
-	public Map<String, Object> topics(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> topics(HttpSession session,
+			HttpServletRequest request) {
 		Map<String, Object> resultObj = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = this.builderParams(request, true);
 			map.put("orderBy", "create_time desc");
-			UlewoPaginationResult<Topic> result = this.topicService.findTopics(map);
+			UlewoPaginationResult<Topic> result = this.topicService
+					.findTopics(map);
 			resultObj.put("rows", result.getList());
 			resultObj.put("total", result.getPage().getCountTotal());
 			return resultObj;
@@ -290,7 +306,8 @@ public class AdminAction extends BaseAction {
 
 	@RequestMapping(value = "/deleteTopics")
 	@ResponseBody
-	public Map<String, Object> deleteTopics(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> deleteTopics(HttpSession session,
+			HttpServletRequest request) {
 		Map<String, Object> resultObj = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = this.builderParams(request, true);
@@ -307,7 +324,8 @@ public class AdminAction extends BaseAction {
 
 	@RequestMapping(value = "/createHot")
 	@ResponseBody
-	public Map<String, Object> createHot(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> createHot(HttpSession session,
+			HttpServletRequest request) {
 		Map<String, Object> resultObj = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = this.builderParams(request, true);
@@ -323,14 +341,16 @@ public class AdminAction extends BaseAction {
 		}
 	}
 
-	/***************主题评论******************/
+	/*************** 主题评论 ******************/
 
 	@RequestMapping(value = "/topicComments")
 	@ResponseBody
-	public UlewoPaginationResult4Json<TopicComment> topicComments(HttpSession session, HttpServletRequest request) {
+	public UlewoPaginationResult4Json<TopicComment> topicComments(
+			HttpSession session, HttpServletRequest request) {
 		try {
 			Map<String, String> map = this.builderParams(request, true);
-			UlewoPaginationResult4Json<TopicComment> result = this.topicCommentService.queryComment4JsonByTopicId(map);
+			UlewoPaginationResult4Json<TopicComment> result = this.topicCommentService
+					.queryComment4JsonByTopicId(map);
 			return result;
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
@@ -340,7 +360,8 @@ public class AdminAction extends BaseAction {
 
 	@RequestMapping(value = "/deleteTopicComments")
 	@ResponseBody
-	public Map<String, Object> deleteTopicComments(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> deleteTopicComments(HttpSession session,
+			HttpServletRequest request) {
 		Map<String, Object> resultObj = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = this.builderParams(request, true);
@@ -355,15 +376,17 @@ public class AdminAction extends BaseAction {
 		}
 	}
 
-	/***************博客******************/
+	/*************** 博客 ******************/
 
 	@RequestMapping(value = "/blogs")
 	@ResponseBody
-	public Map<String, Object> blogs(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> blogs(HttpSession session,
+			HttpServletRequest request) {
 		Map<String, Object> resultObj = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = this.builderParams(request, true);
-			UlewoPaginationResult<Blog> result = this.blogService.queryLatestBlog(map);
+			UlewoPaginationResult<Blog> result = this.blogService
+					.queryLatestBlog(map);
 			resultObj.put("rows", result.getList());
 			resultObj.put("total", result.getPage().getCountTotal());
 			return resultObj;
@@ -375,7 +398,8 @@ public class AdminAction extends BaseAction {
 
 	@RequestMapping(value = "/deleteBlogs")
 	@ResponseBody
-	public Map<String, Object> deleteBlogs(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> deleteBlogs(HttpSession session,
+			HttpServletRequest request) {
 		Map<String, Object> resultObj = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = this.builderParams(request, true);
@@ -390,14 +414,16 @@ public class AdminAction extends BaseAction {
 		}
 	}
 
-	/*******************博客评论*************************/
+	/******************* 博客评论 *************************/
 	@RequestMapping(value = "/blogComments")
 	@ResponseBody
-	public Map<String, Object> blogComments(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> blogComments(HttpSession session,
+			HttpServletRequest request) {
 		Map<String, Object> resultObj = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = this.builderParams(request, true);
-			UlewoPaginationResult<BlogComment> result = this.blogCommentService.queryBlogCommentByBlogId(map);
+			UlewoPaginationResult<BlogComment> result = this.blogCommentService
+					.queryBlogCommentByBlogId(map);
 			resultObj.put("rows", result.getList());
 			resultObj.put("total", result.getPage().getCountTotal());
 			return resultObj;
@@ -409,7 +435,8 @@ public class AdminAction extends BaseAction {
 
 	@RequestMapping(value = "/deleteBlogComments")
 	@ResponseBody
-	public Map<String, Object> deleteBlogComments(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> deleteBlogComments(HttpSession session,
+			HttpServletRequest request) {
 		Map<String, Object> resultObj = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = this.builderParams(request, true);
@@ -433,11 +460,13 @@ public class AdminAction extends BaseAction {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/loadGroupCategory.action")
-	public Map<String, Object> loadCategory(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> loadCategory(HttpSession session,
+			HttpServletRequest request) {
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			Map<String, String> param = this.builderParams(request, false);
-			List<GroupCategory> categoryList = groupCategoryService.selectGroupCategoryList(param);
+			List<GroupCategory> categoryList = groupCategoryService
+					.selectGroupCategoryList(param);
 			modelMap.put("rows", categoryList);
 			modelMap.put("total", categoryList.size());
 			return modelMap;
@@ -451,11 +480,13 @@ public class AdminAction extends BaseAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/saveCategory.action")
-	public Map<String, Object> editItem(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> editItem(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
-			this.groupCategoryService.saveCategory(this.builderParams(request, true));
+			this.groupCategoryService.saveCategory(this.builderParams(request,
+					true));
 			modelMap.put("result", ResultCode.SUCCESS.getCode());
 		} catch (BusinessException e) {
 			log.error(e.getMessage(), e);
@@ -469,7 +500,8 @@ public class AdminAction extends BaseAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/spider.action")
-	public Map<String, Object> spider(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> spider(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -477,10 +509,8 @@ public class AdminAction extends BaseAction {
 			this.spiderService.spiderArticle(type);
 			modelMap.put("result", ResultCode.SUCCESS.getCode());
 		} catch (BusinessException e) {
-			log.error(e.getMessage(), e);
 			modelMap.put("msg", e.getMessage());
 		} catch (Exception e) {
-			log.error(e.getMessage(), e);
 			modelMap.put("msg", "系统异常!");
 		}
 		return modelMap;
@@ -488,7 +518,8 @@ public class AdminAction extends BaseAction {
 
 	@ResponseBody
 	@RequestMapping(value = "/getSpiderList.action")
-	public Map<String, Object> getSpiderList(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> getSpiderList(HttpSession session,
+			HttpServletRequest request) {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
@@ -509,12 +540,14 @@ public class AdminAction extends BaseAction {
 
 	@RequestMapping(value = "/allGroups.action")
 	@ResponseBody
-	public Map<String, Object> allGroups(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> allGroups(HttpSession session,
+			HttpServletRequest request) {
 		Map<String, Object> resultObj = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = this.builderParams(request, true);
 			map.put("rows", 150 + "");
-			UlewoPaginationResult<Group> result = this.groupService.findAllGroup(map);
+			UlewoPaginationResult<Group> result = this.groupService
+					.findAllGroup(map);
 			resultObj.put("list", result.getList());
 			return resultObj;
 		} catch (Exception e) {
@@ -525,7 +558,8 @@ public class AdminAction extends BaseAction {
 
 	@RequestMapping(value = "/sendTopic.action")
 	@ResponseBody
-	public Map<String, Object> sendTopic(HttpSession session, HttpServletRequest request) {
+	public Map<String, Object> sendTopic(HttpSession session,
+			HttpServletRequest request) {
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = this.builderParams(request, true);

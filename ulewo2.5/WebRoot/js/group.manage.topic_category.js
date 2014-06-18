@@ -93,10 +93,6 @@ topicCategoryManage.deleteRow = function(){
 	    if (r){  
 	    	$.each(checkRows,function(index,item){
 	    		$('#datagrid').datagrid('endEdit',index);
-	    		if(item.topicCount>0){
-	    			 ulewo_common.alert("该分类下有文章，不能删除",1);
-	    			 return false;
-	    		}
 	    		var rowIndex = $('#datagrid').datagrid('getRowIndex',item);
 	    		$('#datagrid').datagrid('deleteRow',rowIndex);
 	    	});
