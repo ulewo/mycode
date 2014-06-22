@@ -175,7 +175,6 @@ public class SpiderServiceImpl implements SpidrService {
 			TagNode h2 = li.getElementsByName("h2", true)[0];
 			TagNode a = h2.getElementsByName("a", true)[0];
 			String link = a.getAttributeByName("href");
-			System.out.println(link);
 			if (!link.contains("http://")) {
 				try {
 					Spider spider = getSpiderContent4Osc(SpiderType.OSCHINA
@@ -215,6 +214,10 @@ public class SpiderServiceImpl implements SpidrService {
 				"Body NewsContent TextContent", true, true)[0];
 		TagNode p = contentTag.getElementsByName("p", true)[0];
 		if (p.getText().toString().contains("开源中国")) {
+			contentTag.removeChild(p);
+		}
+		String style = p.getAttributeByName("style");
+		if (!StringUtils.isEmpty(style)) {
 			contentTag.removeChild(p);
 		}
 		String content = htmlCleaner.getInnerHtml(contentTag);
@@ -344,7 +347,6 @@ public class SpiderServiceImpl implements SpidrService {
 			TagNode node = divs[i];
 			TagNode a = node.getElementsByName("a", true)[0];
 			String link = a.getAttributeByName("href");
-			System.out.println(link);
 			Spider spider = getSpiderContent4Qilu(link);
 			if (spider == null) {
 				continue;
@@ -485,7 +487,7 @@ public class SpiderServiceImpl implements SpidrService {
 				String src = tag.getAttributeByName("src");
 				String newSrc = uploadImage(src);
 				if (StringUtils.isEmpty(newSrc)) {
-					allNode.removeChild(tag);
+					allNode.getChildTags()[1].removeChild(tag);
 				} else {
 					tag.setAttribute("src", newSrc);
 					// tag.getParent().setAttribute("style", "text-align:left");
@@ -494,7 +496,7 @@ public class SpiderServiceImpl implements SpidrService {
 		}
 		Topic topic = new Topic();
 		topic.setTitle(spider.getTitle());
-		topic.setContent(htmlCleaner.getInnerHtml(allNode));
+		topic.setContent(htmlCleaner.getInnerHtml(allNode.getChildTags()[1]));
 		return topic;
 	}
 
@@ -544,7 +546,11 @@ public class SpiderServiceImpl implements SpidrService {
 				e.printStackTrace();
 			}
 		}
-		return getRealPath() + "/" + filePath;
+		if (null != filePath) {
+			return getRealPath() + "/" + filePath;
+		} else {
+			return null;
+		}
 	}
 
 	/**
@@ -588,8 +594,8 @@ public class SpiderServiceImpl implements SpidrService {
 	 */
 	public String getFileType(String fileName) {
 
-		String[] fileType = {".gif", ".png", ".jpg", ".jpeg", ".bmp", ".GIF",
-				".PNG", ".JPG", ".JPEG", ".BMP"};
+		String[] fileType = { ".gif", ".png", ".jpg", ".jpeg", ".bmp", ".GIF",
+				".PNG", ".JPG", ".JPEG", ".BMP" };
 		Iterator<String> type = Arrays.asList(fileType).iterator();
 		while (type.hasNext()) {
 			String t = type.next();
