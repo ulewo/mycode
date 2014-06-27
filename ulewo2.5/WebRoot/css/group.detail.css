@@ -21,7 +21,7 @@
 .article_attached{border:1px solid #B2B3B2;padding:5px;margin-top:30px;}
 .attached_tit{font-size:16px;font-weight:bold;}
 .attached_con{margin-top:10px;}
-.filename{color:#3E62A6}
+.filename{color:#3E62A6;background:url("../images/icon_rar.gif") 0px -2px no-repeat;padding-left:16px;}
 .mark,.dccount{color:#666666}
 .recomment_tit{font-size:16px;font-weight:bold;border-bottom:1px solid #ccc;padding:10px;}
 
