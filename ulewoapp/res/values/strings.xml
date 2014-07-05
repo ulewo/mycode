@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">ulewoapp</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="app_name">有乐窝</string>
+    <string name="signin">签到</string>
+    <string name="blast">吐槽</string>
+    <string name="group">窝窝</string>
+    <string name="blog">博客</string>
+    <string name="user">个人中心</string>
+    <string name="setting">设置</string>
+    <string name="member">成员</string>
+    <string name="topic">话题</string>
+    <string name="commend_group">推荐窝窝</string>
+    <string name="like_group">关注的窝窝</string>
     <string name="action_settings">Settings</string>
-
+    <string name="hello_world">Hello world!</string>
+	<string name="desc"></string>
 </resources>
