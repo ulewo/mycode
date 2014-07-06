@@ -4,21 +4,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.SimpleAdapter;
-import android.widget.Toast;
 
 import com.ulewo.R;
 
-public class MainActivity extends Activity {
+public class MainActivity extends BaseActivity {
 	private String groupName[] = null;
 	private int topicCount[] = null;
     private int images[] = null;
+    private Button signinBtn;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -46,6 +49,31 @@ public class MainActivity extends Activity {
 	            new int[] { R.id.group_icon, R.id.group_name,R.id.group_topic_count }); 
 	    gridview_commend.setAdapter(saImageItems);
 	    gridview_commend.setOnItemClickListener(new ItemClickListener());
+	    
+	    initMenuBtn();
+	}
+	/**
+	 * 初始化菜单按钮
+	 */
+	private  void initMenuBtn(){
+		signinBtn = (Button)findViewById(R.id.signin);
+		signinBtn.setOnClickListener(new MenuBtnClick(signinBtn));
+	}
+	
+	class MenuBtnClick implements OnClickListener{
+		private Button btn;
+		MenuBtnClick(Button btn){
+			this.btn = btn;
+		}
+		@Override
+		public void onClick(View arg0) {
+			Intent intent = null;
+			if(btn==MainActivity.this.signinBtn){
+				 intent = new Intent(MainActivity.this,
+						MainActivity.class);
+			}
+			startActivity(intent);
+		}
 	}
 	
 	class ItemClickListener implements OnItemClickListener {

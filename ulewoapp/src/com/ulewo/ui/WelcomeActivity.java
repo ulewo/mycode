@@ -10,7 +10,7 @@ import android.widget.ImageView;
 
 import com.ulewo.R;
 
-public class WelcomeActivity extends Activity {
+public class WelcomeActivity extends BaseActivity {
 
 	private ImageView imageView = null;
 
@@ -23,12 +23,10 @@ public class WelcomeActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.welcom);
 		imageView = (ImageView) findViewById(R.id.wlecomelogo);
-		//appContext = (AppContext) getApplication();
 		AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
 		alphaAnimation.setDuration(time);
-
 		alphaAnimation.setAnimationListener(new AnimationListener() {
-
+			
 			@Override
 			public void onAnimationStart(Animation animation) {
 
