@@ -21,6 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.MainActivity" android:theme="@android:style/Theme.NoTitleBar"/>
+    	<activity android:name=".ui.SigninActivity" android:theme="@android:style/Theme.NoTitleBar"/>
     </application>
 
 </manifest>

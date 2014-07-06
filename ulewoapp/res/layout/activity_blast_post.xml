@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  	android:layout_width="fill_parent"
+  	android:layout_height="fill_parent"
+  	android:orientation="vertical"
+  	android:background="@color/white">
+	<include layout="@layout/activity_header"/>
+	<LinearLayout
+	    android:orientation="vertical"
+	    android:id="@+id/tweet_pub_form"
+	    android:layout_width="fill_parent"
+	    android:layout_height="0dp"
+	    android:layout_weight="1"
+	    android:visibility="visible" >
+	    <EditText
+	        android:id="@+id/tweet_pub_content"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:autoLink="web"
+	        android:gravity="top"
+	        android:hint="@string/blast_info"
+	        android:background="@null"/>
+	</LinearLayout>
+    <LinearLayout 
+		android:orientation="horizontal" 
+		android:layout_width="fill_parent" 
+		android:layout_height="wrap_content"
+		android:gravity="center_horizontal"
+		android:background="@drawable/widget_bar_bg_n">	
+	</LinearLayout>
+	
+	
+</LinearLayout>

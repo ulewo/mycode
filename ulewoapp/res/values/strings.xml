@@ -3,7 +3,13 @@
 
     <string name="app_name">有乐窝</string>
     <string name="signin">签到</string>
+    <string name="signin_do">我要签到</string>
+    <string name="signin_mine">我的签到</string>
+     <string name="signin_tody">今日签到</string>
     <string name="blast">吐槽</string>
+    <string name="blast_latest">最新吐槽</string>
+	<string name="blast_mine">我的吐槽</string>
+	<string name="blast_info">请输入吐槽内容</string>
     <string name="group">窝窝</string>
     <string name="blog">博客</string>
     <string name="user">个人中心</string>
