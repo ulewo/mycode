@@ -12,62 +12,73 @@
 	    android:layout_weight="1"
 	    android:scrollbars="vertical"
 	    android:fadingEdge="none">
+
 		<LinearLayout
 		    android:layout_width="fill_parent"
 		    android:layout_height="0dp"
-		    android:orientation="vertical">
-		    <LinearLayout
-		    	android:layout_width="fill_parent"
-		    	android:layout_height="wrap_content"
-		    	android:orientation="horizontal"
-		    	android:layout_marginLeft="2.0dip">
-			    <TextView 
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text="@string/title"
-			        android:textSize="@dimen/size_15"
-			        android:textColor="@color/black"/>
-			    <EditText
-			        android:id="@+id/question_pub_title"
-			        android:layout_width="0dp"
-			        android:layout_height="wrap_content"
-			        android:layout_weight="1"
-			        android:singleLine="true"
-			        android:hint=""/>
-		    </LinearLayout>
-	
+		    android:orientation="vertical" >
+
 		    <LinearLayout
 		        android:layout_width="fill_parent"
 		        android:layout_height="wrap_content"
-		        android:layout_marginLeft="2.0dip">
+		        android:layout_marginLeft="2.0dip"
+		        android:orientation="horizontal" >
+
+		        <TextView
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:text="@string/title"
+		            android:textColor="@color/black"
+		            android:textSize="@dimen/size_15" />
+
+		        <EditText
+		            android:id="@+id/question_pub_title"
+		            android:layout_width="0dp"
+		            android:layout_height="wrap_content"
+		            android:layout_weight="1"
+		            android:hint=""
+		            android:singleLine="true" />
+		    </LinearLayout>
+
+		    <LinearLayout
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_marginLeft="2.0dip" >
+
 		        <TextView
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
 		            android:layout_gravity="center_vertical"
 		            android:text="@string/category_info"
 		            android:textColor="@color/black"
-		           	android:textSize="@dimen/size_15" />
+		            android:textSize="@dimen/size_15" />
+
 		        <Spinner
 		            android:id="@+id/question_pub_catalog"
 		            android:layout_width="0dp"
 		            android:layout_height="wrap_content"
-		            android:layout_weight="1"/>
+		            android:layout_weight="1" />
 		    </LinearLayout>
+
 		    <TextView
 		        android:id="@+id/textView1"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_marginLeft="2.0dip"
 		        android:text="@string/content_info"
-		        android:textColor="@color/black" />
+		        android:textColor="@color/black"
+		        android:textSize="@dimen/size_15"  />
+
 		    <EditText
 		        android:id="@+id/question_pub_content"
 		        android:layout_width="fill_parent"
-		        android:layout_height="fill_parent"
+		        android:layout_height="0dp"
+		        android:layout_weight="0.83"
 		        android:autoLink="web"
 		        android:gravity="top"
-		        android:lines="8"
-		        android:hint=""/>
+		        android:hint=""
+		        android:lines="8" />
 		</LinearLayout>
+
 	</ScrollView>
 </LinearLayout>
