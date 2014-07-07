@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="AppBaseTheme" parent="android:Theme.Light">
     </style>
@@ -9,13 +9,16 @@
     <style name="Tag"/>
 	<style name="Tag.Btn">
 		<item name="android:layout_width">0dp</item>
-		<item name="android:layout_height">35dp</item>
+		<item name="android:layout_height">wrap_content</item>
 		<item name="android:layout_weight">1</item>
 		<item name="android:background">@drawable/main_btn_selector</item>
 		<item name="android:clickable">true</item>
 		<item name="android:paddingTop">5dp</item>
+		<item name="android:paddingBottom">5dp</item>
 		<item name="android:gravity">center_horizontal</item>
 		<item name="android:textColor">@color/black</item>
+		<item name="android:layout_marginLeft">20dp</item>
+		<item name="android:layout_marginRight">20dp</item>
 	</style>
 	
 	<style name="MainMenuBtn">
@@ -29,4 +32,5 @@
 		<item name="android:gravity">center_horizontal</item>
 		<item name="android:textColor">@color/black</item>
 	</style>
+	
 </resources>

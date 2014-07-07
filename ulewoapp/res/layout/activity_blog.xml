@@ -15,12 +15,19 @@
 			android:layout_height="wrap_content"
 			android:orientation="horizontal" >
 			<Button
-			    android:id="@+id/signin"
+			    android:id="@+id/blog_tag_btn01"
 			    style="@style/Tag.Btn"
 			    android:text="@string/blog_latest"/>
+			<View
+		        android:layout_width="1dp"
+		        android:layout_height="fill_parent"
+		       	android:layout_marginTop="5dp"
+		       	android:layout_marginBottom="5dp"
+		        android:background="@color/gray"/>
 			<Button
+			    android:id="@+id/blog_tag_btn02"
 			    android:layout_width="0dp"
-			     style="@style/Tag.Btn"
+			    style="@style/Tag.Btn"
 			    android:text="@string/blog_mine"/>
 		</LinearLayout>
 		<View 
