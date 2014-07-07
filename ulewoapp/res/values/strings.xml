@@ -21,4 +21,9 @@
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
 	<string name="desc"></string>
+	<string name="title">标题:</string>
+	<string name="title_info">请输入标题</string>
+	<string name="category_info">分类：</string>
+	<string name="content_info">内容：</string>
+	
 </resources>
