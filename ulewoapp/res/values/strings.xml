@@ -28,5 +28,5 @@
 	<string name="title_info">请输入标题</string>
 	<string name="category_info">分类：</string>
 	<string name="content_info">内容：</string>
-	
+	<string name="loading">正在加载......</string>
 </resources>

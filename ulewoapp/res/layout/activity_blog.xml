@@ -33,4 +33,5 @@
 		    android:visibility="visible"/>
 	</LinearLayout>
 	<include layout="@layout/activity_blog_post"/>
+	<include layout="@layout/frame_loading"/>
 </FrameLayout>
