@@ -13,24 +13,11 @@
 		android:orientation="horizontal" >
 		<Button
 		    android:id="@+id/signin"
-		    android:layout_width="0dp"
-		    android:layout_height="35dp"
-		    android:layout_weight="1"
-		    android:background="@drawable/main_btn_selector"
-		    android:clickable="true"
-		    android:paddingTop="5dp"
-		    android:gravity="center_horizontal"
-		    android:textColor="@color/black"
+		    style="@style/Tag.Btn"
 		    android:text="@string/signin"/>
 		<Button
 		    android:layout_width="0dp"
-		    android:layout_height="35dp"
-		    android:layout_weight="1"
-		    android:background="@drawable/main_btn_selector"
-		    android:paddingTop="5dp"
-		    android:layout_marginLeft="1dp"
-		    android:gravity="center_horizontal"
-		   	android:textColor="@color/black"
+		   	style="@style/Tag.Btn"
 		    android:text="@string/signin_mine"/>
 	</LinearLayout>
 	<View 
