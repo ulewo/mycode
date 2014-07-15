@@ -1,0 +1,1 @@
+#set($__nothing = $application.getRequestDispatcher("/user/checkUserName/123").forward($request,$response))

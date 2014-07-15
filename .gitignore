@@ -1,0 +1,7 @@
+/classes
+/.settings
+.project
+.classpath
+.git
+/META-INF
+rebel.xml

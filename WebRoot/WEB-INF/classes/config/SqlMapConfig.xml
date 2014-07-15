@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<mappers> 
+	     <mapper resource="com/ulewo/mapper/resources/AttachmentDownloadMapper.xml" />
+			<mapper resource="com/ulewo/mapper/resources/AttachmentMapper.xml" />
+			<mapper resource="com/ulewo/mapper/resources/BlastCommentMapper.xml" />
+		   <mapper resource="com/ulewo/mapper/resources/BlastMapper.xml" />
+		   <mapper resource="com/ulewo/mapper/resources/CollectionMapper.xml" />
+		   <mapper resource="com/ulewo/mapper/resources/PrivateLetterCommentMapper.xml" />
+		   <mapper resource="com/ulewo/mapper/resources/PrivateLetterMapper.xml" />
+		     <mapper resource="com/ulewo/mapper/resources/SigninMapper.xml" />
+			 <mapper resource="com/ulewo/mapper/resources/GroupMemberMapper.xml" />
+		   <mapper resource="com/ulewo/mapper/resources/BlogCategoryMapper.xml" />
+		   <mapper resource="com/ulewo/mapper/resources/BlogCommentMapper.xml" />
+		   <mapper resource="com/ulewo/mapper/resources/BlogMapper.xml" />
+		   <mapper resource="com/ulewo/mapper/resources/GroupMapper.xml" />
+		 <mapper resource="com/ulewo/mapper/resources/TopicCommentMapper.xml" />
+		   <mapper resource="com/ulewo/mapper/resources/TopicMapper.xml" />
+		    <mapper resource="com/ulewo/mapper/resources/TopicCategoryMapper.xml" />
+		   <mapper resource="com/ulewo/mapper/resources/TopicSurveyDtlMapper.xml" />
+		   <mapper resource="com/ulewo/mapper/resources/TopicSurveyMapper.xml" />
+		   <mapper resource="com/ulewo/mapper/resources/UserFriendMapper.xml" />
+		   <mapper resource="com/ulewo/mapper/resources/UserMapper.xml" />
+	</mappers> 
+</configuration>      
+

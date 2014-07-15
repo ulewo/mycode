@@ -1,0 +1,35 @@
+body{margin:0px auto;background-image:url("../images/bg.jpg");background-position-x:center;background-position-y:10px;background-repeat: no-repeat;background-color: #F0D5FE;font-size:13px;}
+.clear{clear:both}
+.top{width:100%;text-align:center;height:75px;background-image:url("../images/topbg.gif");background-repeat:repeat-x}
+.top_center{width:1000px;}
+.logo{width:150px;float:left;}
+.menues{float:right;width:600px;}
+.main{width:1000px;margin:0px auto;margin-top:440px;}
+.roll-imag{height:350px;background:#FFFFFF}
+.partcon{margin-top:20px;position:relative;}
+.partcon table td{position:relative;}
+.partcon div img{display:inline-block;float:left;}
+#showbox{height:200px;width:200px;background:#F5CFE6;display:none;position:absolute;background:url("images/");}
+#showbox a{display:block;}
+.news-map{padding-top:10px;background:#FFFFFF;}
+.news{width:600px;float:left;}
+.title{float:left;display:inline-block;height:20px;padding-left:15px;}
+.title a{color:#313131;text-decoration:none;}
+.title a:hover{color:red}
+.time{float:right;display:inline-block}
+.map{width:300px;float:left;}
+.contact{position:fixed;top:200px;right:0px;width:158px;height:554px;background:url("../images/xf2.png");}
+.flower{background:#ffffff}
+.flower-s{float:left;width:100px;text-align:left;}
+.foot-menue-con{background:#ffffff;padding-bottom:20px;}
+.foot-menue{background:#F19DB5;}
+.menue-s{float:left;width:83px;;margin-left:15px;margin-top:20px;margin-bottom:30px;text-align:center;}
+.menue-s_link{margin-top:15px;}
+.weibo{height:925px;background:#ffffff;border-top:3px solid #EF262E}
+.footer{height:100px;background:#8E2ABE;text-align:center;font-size:14px;color:#ffffff;padding-top:40px;}
+.footer_center{width:1000px;position:relative;margin:0px auto;}
+.footer_center a{color:#ffffff;text-decoration:none;}
+.company{margin-top:10px;}
+.bei{margin-top:10px;}
+.code{position:absolute;top:0px;right:100px;}
+.jiantou{position:absolute;top:85px;right:0px;display:none;}

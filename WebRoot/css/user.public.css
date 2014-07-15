@@ -1,0 +1,41 @@
+@import url("public.css");
+.main{margin:0px auto;width:1000px;text-align:left;font-size:13px;margin-top:10px;}
+.main2{width: 98%;margin: 10px auto 50px;text-align: left;padding: 0px 4px;}
+.left{width:220px;float:left;padding-bottom:20px;}
+.right{margin-left:240px;width:auto;text-align:left;background:#ffffff;min-height:600px;padding-bottom:20px;}
+.avatar_con{background:#4682B4;padding-bottom:10px;}
+.avatar_con img{border:0px;}
+.user_avatar{float:left;width:60px;margin:10px;background:#FFFFFF;padding:3px;}
+.user_edit_info{margin-top:5px;}
+.user_edit{float:left;width:130px;}
+.user_edit a.username{color:#FFFFFF;font-weight:bold;text-decoration: none;margin-top:15px;display:block;text-align:left;font-size:18px;overflow:hidden;}
+.user_edit span{display:inline-block;padding-top:8px;float:left;}
+.user_edit a.edit_info{color:#FFFFFF;text-decoration: none;margin-top:10px;display:inline-block;text-align:left;font-size:12px;float:left;margin-left:5px;font-weight:normal;}
+.user_edit a.edit_info:hover{background:#ffffff;color:#4682B4}
+.user_edit a.edit_icon{color:#FFFFFF;text-decoration: none;margin-top:10px;display:inline-block;text-align:left;font-size:12px;float:left;margin-left:5px;font-weight:normal;}
+.user_edit a.edit_icon:hover{background:#ffffff;color:#4682B4}
+.havefocus{color:#ffffff;padding-left:5px;}
+.user_other_info{padding-left:10px;color:#ffffff}
+.resume{background: #6E7B8B url('../images/resume24.png') no-repeat left bottom;margin: 10px 0 0 0;color: white;padding: 18px 10px 18px 40px;word-wrap: break-word;overflow: hidden;text-align:left;}
+.opts{margin-top:10px;text-align:center;}
+.opts a{text-decoration:none;}
+.opts .blog{background:#6495ED;width:105px;float:left;background-image:url('../images/space-opts.png');background-position: 18px -70px;background-repeat:no-repeat;display:block;color:#FFFFFF;padding-top:62px;height:17px;}
+.opts .blog:hover{background: #3676E8;background-image:url('../images/space-opts.png');background-position: 18px -70px;background-repeat:no-repeat;}
+.opts .manage{background:#5CACEE;width:105px;float:left;background-image:url('../images/space-opts.png');background-position: 18px -205px;background-repeat:no-repeat;display:block;margin-left:10px;color:#FFFFFF;padding-top:62px;height:17px;}
+.opts .manage:hover{background: #2E94E9;background-image:url('../images/space-opts.png');background-position: 18px -205px;background-repeat:no-repeat;}
+.opts .sendMsg{background:#5CACEE;display:block;height:40px;background-image:url('../images/space-opts.png');background-position: 15px -140px;background-repeat:no-repeat;color:#ffffff;padding-top:20px;padding-left:30px;font-size:14px;text-align:center;}
+.opts .sendMsg:hover{background: #2E94E9;background-image:url('../images/space-opts.png');background-position: 15px -140px;background-repeat:no-repeat;}
+.right_top_m{color:#999999}
+/****左侧模块*****/
+.left_item{background:#EAEAEA;margin-top:5px;}
+.left_item_tit{border-bottom:2px solid #6E7B8B;font-size:16px;font-weight:bold;padding-left:5px;padding:5px;color:#666666}
+.left_img_p{padding-top:5px;padding-bottom:10px;padding-left:1px;}
+.left_img_item{float:left;width:40px;margin-left:3px;margin-top:3px;}
+.left_noinfo{padding:10px;color:#999999;margin-top:5px;text-align:center;}
+.left_img_p_more{margin-top:10px;text-align:right;padding-right:5px;}
+
+
+#atpanel{margin-top:5px;height:20px;}
+#u_atpanel_userid{float:left;color:#3E79A2;background:#DDECF7;display:inline-block;padding:3px;border-radius: 4px;cursor:pointer;}
+#u_atpanel_close{float:left;display:inline-block;margin-left:5px;padding-top: 2px;};
+#atpanel{height:30px;}

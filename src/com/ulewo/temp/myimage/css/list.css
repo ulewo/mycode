@@ -1,0 +1,35 @@
+body{margin:0px auto;background-image:url("../images/lb_01.jpg");background-position-x:center;background-position-y:10px;background-repeat: no-repeat;background-color: #F0D5FE;font-size:13px;}
+.clear{clear:both}
+.top{width:100%;text-align:center;height:75px;background-image:url("../images/topbg.gif");background-repeat:repeat-x}
+.top_center{width:1000px;}
+.logo{width:150px;float:left;}
+.menues{float:right;width:600px;}
+.subbanner{width:1000px;margin:0px auto;padding-left:250px;margin-top:155px;}
+.subbanner a{color:#0D0012;text-decoration:none;}
+.main{width:1000px;margin:0px auto;margin-top:10px;padding-bottom:80px;}
+.left{float:left;width:230px;padding-bottom:20px;}
+.left a{background:url("../images/lb_02.png");display:block;height:35px;width:230px;text-align:center;padding-top:18px;font-size:18px;font-weight:bold;text-decoration:none;color:#ffffff;margin-top:10px;}
+.left a:hover,.left a.select{background:url("../images/lb_03.png");}
+.right{float:left;width:730px;margin-left:30px;margin-top:10px;position:relative;}
+.page{text-align:right;font-size:12px;margin-top:40px;}
+.page a{text-align:center;display:inline-block;text-decoration:none;border:1px solid #8E2ABE;padding:2px 8px;margin-left:5px;color:#8E2ABE}
+.page a:hover,.page a.select{color:#ffffff;background:#8E2ABE}
+.right-top{background:url("../images/rightbg1.jpg");height:47px;width:730px;}
+.right-center{background:#ffffff;padding:0px 25px;}
+.right-footer{background:url("../images/rightbg2.jpg");height:47px;width:730px;}
+.list-title{border-bottom:2px solid #621990;padding-left:10px;padding-bottom:8px;}
+.h-line{background:#621990;width:4px;float:left;height:18px;}
+.list-title-tit{float:left;color:#621990;float:left;margin-left:5px;font-size:14px;}
+.title-con{margin-top:15px;border:1px solid #ffffff;}
+.con-title{margin-top:15px;padding-left:10px;font-size:12px;}
+.con-title a{color:#343434;text-decoration:none;}
+.con-title a:hover{color:#8E2ABE}
+.time{float:right;padding-right:15px;color:#707070;}
+.top-img{position:absolute;top:4px;right:45px;}
+
+.footer{height:100px;background:#8E2ABE;text-align:center;font-size:14px;color:#ffffff;padding-top:40px;}
+.footer_center{width:1000px;position:relative;margin:0px auto;}
+.footer_center a{color:#ffffff;text-decoration:none;}
+.company{margin-top:10px;}
+.bei{margin-top:10px;}
+.code{position:absolute;top:0px;right:100px;}

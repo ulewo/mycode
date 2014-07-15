@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ulewo.mapper.GroupMapper" >
+  <resultMap id="BaseResultMap" type="com.ulewo.model.Group" >
+    <id column="gid" property="gid" jdbcType="INTEGER" />
+    <result column="group_name" property="groupName" jdbcType="VARCHAR" />
+    <result column="group_desc" property="groupDesc" jdbcType="VARCHAR" />
+    <result column="group_icon" property="groupIcon" jdbcType="VARCHAR" />
+    <result column="group_banner" property="groupBanner" jdbcType="VARCHAR" />
+    <result column="join_perm" property="joinPerm" jdbcType="VARCHAR" />
+    <result column="post_perm" property="postPerm" jdbcType="VARCHAR" />
+    <result column="group_userid" property="groupUserId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="commend_grade" property="commendGrade" jdbcType="VARCHAR" />
+    <result column="group_notice" property="groupNotice" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="base_condition" >
+      <if test="param!=null">
+	      <if test="null!=param.gid and ''!=param.gid" >
+	        	and gid = #{param.gid,jdbcType=VARCHAR}
+	      </if>
+	       <if test="null!=param.groupName and ''!=param.groupName" >
+	        	and group_name  like  '%${param.groupName}%'
+	      </if>
+	      <if test="null!=param.groupUserId and ''!=param.groupUserId" >
+	        	and group_userid = #{param.groupUserId,jdbcType=VARCHAR}
+	      </if>
+	      <if test="null!=param.commendGrade and ''!=param.commendGrade" >
+	        	and commend_grade = #{param.commendGrade,jdbcType=VARCHAR}
+	      </if>
+	      <if test="null!=param.categroyId and ''!=param.categroyId" >
+	        	and categroy_id = #{param.categroyId,jdbcType=VARCHAR}
+	      </if>
+	      <if test="null!=param.pCategroyId and ''!=param.pCategroyId" >
+	        	and p_categroy_id = #{param.pCategroyId,jdbcType=VARCHAR}
+	      </if>
+	      <if test="null!=param.startTm and ''!=param.startTm">
+	      	 <![CDATA[
+	        	and create_time >='${param.startTm} 00:00:00'
+	         ]]>
+	      </if>
+	      <if test="null!=param.startEnd and ''!=param.startEnd">
+	      	  <![CDATA[
+	        	and create_time <= '${param.startEnd} 23:59:59'
+	          ]]>
+	      </if>
+      </if>
+  </sql>
+  <sql id="Base_Column_List" >
+    gid, group_name, group_desc, group_icon, group_banner, join_perm, post_perm, group_userid, 
+    create_time, commend_grade, group_notice,categroy_id,p_categroy_id
+  </sql>
+  
+ 
+  
+   <select id="selectCommendGroup" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />,
+    (select count(1) from ulewo_topic c where c.gid = g.gid) topicCount
+    ,(select count(1) from ulewo_group_member u where u.gid = g.gid and u.member_type = 'Y') members
+    from ulewo_group g 
+    where commend_grade > 0 
+    order by commend_grade desc
+  </select>
+  
+  <select id="selectBaseInfo" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from ulewo_group
+    where 1 = 1
+    <include refid="base_condition" />
+  </select>
+  
+  <select id="selectBaseInfoCount" resultType="java.lang.Integer" parameterType="java.util.Map" >
+    select count(1)
+    from ulewo_group
+    where 1 = 1
+    <include refid="base_condition" />
+  </select>
+  
+   <select id="selectBaseInfoList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select 
+    <include refid="Base_Column_List" />
+    from ulewo_group
+    where 1=1
+    <include refid="base_condition" />
+    order by create_time desc limit #{page.start},#{page.end} 
+  </select>
+  
+   <select id="selectExtendInfo" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    ,(select count(1) from ulewo_group_member u where u.gid = g.gid and u.member_type = 'Y') members
+    ,(select count(1) from ulewo_topic t where t.gid = g.gid) topicCount
+    ,u.username authorName
+   from ulewo_group g inner join ulewo_user u on u.userid=g.group_userid
+    where 1 = 1
+    <include refid="base_condition" />
+    <if test="null!=param.orderBy and ''!=param.orderBy" >
+         order by ${param.orderBy} 
+    </if> 
+  </select>
+  
+   <select id="selectExtendInfoList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select 
+    <include refid="Base_Column_List" />
+    ,(select count(1) from ulewo_group_member u where u.gid = g.gid and u.member_type = 'Y') members
+    ,(select count(1) from ulewo_topic t where t.gid = g.gid) topicCount
+    ,(select name from ulewo_group_category c where c.group_Category_Id = g.p_categroy_id) pCategoryName
+    ,(select name from ulewo_group_category c where c.group_Category_Id = g.categroy_id) categoryName
+    ,u.username authorName
+    from ulewo_group g inner join ulewo_user u on u.userid=g.group_userid
+    where 1=1
+    <include refid="base_condition" />
+    <if test="null!=param.sort and ''!=param.sort" >
+       order by ${param.sort} ${param.order}
+    </if> 
+    <if test="null!=param.orderBy and ''!=param.orderBy" >
+         order by ${param.orderBy} 
+    </if> 
+   limit #{page.start},#{page.end} 
+  </select>
+  <insert id="insert" parameterType="com.ulewo.model.Group" >
+    <selectKey keyProperty="gid" resultType="int" order="AFTER">
+      	SELECT LAST_INSERT_ID()
+    </selectKey>
+     <![CDATA[
+    insert into ulewo_group (group_name, group_desc, 
+    join_perm, post_perm, group_userid, create_time,group_icon,p_categroy_id,categroy_id)
+    values (#{groupName,jdbcType=VARCHAR}, #{groupDesc,jdbcType=VARCHAR}, 
+     #{joinPerm,jdbcType=VARCHAR},#{postPerm,jdbcType=VARCHAR}, #{groupUserId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{groupIcon,jdbcType=VARCHAR},#{pCategroyId,jdbcType=INTEGER},#{categroyId,jdbcType=INTEGER})
+ 	   ]]>
+  </insert>
+  <update id="updateSelective" parameterType="com.ulewo.model.Group" >
+    update ulewo_group
+    <set >
+      <if test="groupName != null" >
+        group_name = #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="groupDesc != null" >
+        group_desc = #{groupDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="groupIcon != null" >
+        group_icon = #{groupIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="groupBanner != null" >
+        group_banner = #{groupBanner,jdbcType=VARCHAR},
+      </if>
+      <if test="joinPerm != null" >
+        join_perm = #{joinPerm,jdbcType=VARCHAR},
+      </if>
+      <if test="postPerm != null" >
+        post_perm = #{postPerm,jdbcType=VARCHAR},
+      </if>
+      <if test="groupUserId != null" >
+        group_userid = #{groupUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commendGrade != null" >
+        commend_grade = #{commendGrade,jdbcType=VARCHAR},
+      </if>
+      <if test="groupNotice != null" >
+        group_notice = #{groupNotice,jdbcType=VARCHAR},
+      </if>
+      <if test="categroyId != null" >
+        categroy_id = #{categroyId,jdbcType=VARCHAR},
+      </if>
+      <if test="pCategroyId != null" >
+        p_categroy_id = #{pCategroyId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where gid = #{gid,jdbcType=INTEGER}
+     <if test="null!=groupUserId and ''!=groupUserId" >
+	      and group_userid = #{groupUserId,jdbcType=INTEGER}
+	 </if>
+    
+  </update>
+  
+  <delete id="delete" parameterType="java.util.Map" >
+    delete from ulewo_group
+    where gid = #{param.gid,jdbcType=INTEGER}
+  </delete>
+  
+  <!-- 查询加入的窝窝 -->
+  <select id="selectJoinedGroupsCount" resultType="java.lang.Integer">
+      select count(1) from ulewo_group_member m inner join ulewo_group g on g.gid = m.gid
+      where m.userid= #{userId,jdbcType=INTEGER} and m.member_type='Y' and m.grade = 0
+  </select>
+  
+  <select id="selectJoinedGroups" resultMap="BaseResultMap">
+      select g.* from ulewo_group_member m inner join ulewo_group g on g.gid = m.gid
+      where m.userid= #{userId,jdbcType=INTEGER} and m.member_type='Y' and m.grade = 0 order by g.create_time desc limit #{page.start},#{page.end}
+  </select>
+  
+  <!-- 查询创建的窝窝 -->
+  <select id="selectCreatedGroupsCount" resultType="java.lang.Integer">
+       select count(1) from  ulewo_group g 
+      where g.group_userid= #{userId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectCreatedGroups" resultMap="BaseResultMap">
+      select g.* from  ulewo_group g 
+      where g.group_userid= #{userId,jdbcType=INTEGER} order by g.create_time desc limit #{page.start},#{page.end}
+  </select>
+  
+</mapper>

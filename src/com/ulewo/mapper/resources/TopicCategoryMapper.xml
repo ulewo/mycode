@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ulewo.mapper.TopicCategoryMapper" >
+  <resultMap id="BaseResultMap" type="com.ulewo.model.TopicCategory" >
+    <id column="category_id" property="categoryId" jdbcType="INTEGER" />
+    <result column="gid" property="gid" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="rang" property="rang" jdbcType="INTEGER" />
+    <result column="allow_post" property="allowPost" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+   *
+  </sql>
+  <sql id="base_condition" >
+      <if test="param!=null">
+	      <if test="null!=param.gid and ''!=param.gid" >
+	        	and c.gid = #{param.gid,jdbcType=INTEGER}
+	      </if>
+	      <if test="null!=param.categoryId and ''!=param.categoryId and param.categoryId!='0'.toString()" >
+	        	and c.category_id = #{param.categoryId,jdbcType=INTEGER}
+	      </if>
+	      <if test="null!=param.allowPost and ''!=param.allowPost" >
+	        	and c.allow_post = #{param.allowPost,jdbcType=INTEGER}
+	      </if>
+      </if>
+  </sql>
+  
+  <select id="selectCategoryAndTopicCount" resultMap="BaseResultMap" parameterType="com.ulewo.model.TopicCategory">
+    select 
+    <include refid="Base_Column_List" />
+    ,(select count(1) from ulewo_topic t where t.gid=c.gid  and t.category_id = c.category_id) topicCount
+    from ulewo_topic_category c 
+    where 1=1
+    <include refid="base_condition" />
+    order by rang desc
+  </select>
+  
+  <select id="selectCategory4ListAndTopicCount" resultMap="BaseResultMap" parameterType="com.ulewo.model.TopicCategory">
+    select 
+    <include refid="Base_Column_List" />
+    ,(select count(1) from ulewo_topic t where t.gid=c.gid  and t.category_id = c.category_id) topicCount
+    from ulewo_topic_category c 
+    where 1=1
+    <include refid="base_condition" />
+    order by rang
+  </select>
+  
+  <select id="selectBaseInfoCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+    select count(1)
+    from ulewo_topic_category c 
+    where 1=1
+    <include refid="base_condition" />
+  </select>
+  
+  <select id="selectBaseInfoList" resultMap="BaseResultMap" parameterType="com.ulewo.model.TopicCategory">
+    select 
+    <include refid="Base_Column_List" />
+    from ulewo_topic_category c
+    where 1=1
+    <include refid="base_condition" />
+    order by rang desc
+  </select>
+  
+  <select id="selectBaseInfo" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ulewo_topic_category c
+    where 1=1
+    <include refid="base_condition" />
+  </select>
+  <delete id="delete" parameterType="java.lang.Integer" >
+    delete from ulewo_topic_category 
+    where gid = #{param.gid,jdbcType=INTEGER} and category_id = #{param.categoryId,jdbcType=INTEGER}
+  </delete>
+ 
+  <insert id="insert" parameterType="com.ulewo.model.TopicCategory" >
+    insert into ulewo_topic_category  (gid, name, 
+      rang,allow_post)
+    values (#{gid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{rang,jdbcType=INTEGER}, #{allowPost,jdbcType=VARCHAR})
+  </insert>
+ 
+  <update id="updateSelective" parameterType="com.ulewo.model.TopicCategory" >
+    update ulewo_topic_category c
+    <set >
+      <if test="gid != null" >
+        gid = #{gid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="rang != null" >
+        rang = #{rang,jdbcType=INTEGER},
+      </if>
+      <if test="allowPost != null" >
+        allow_post = #{allowPost,jdbcType=INTEGER},
+      </if>
+    </set>
+   where gid = #{gid,jdbcType=INTEGER} and category_id = #{categoryId,jdbcType=INTEGER}
+  </update>
+</mapper>

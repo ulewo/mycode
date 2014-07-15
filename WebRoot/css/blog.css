@@ -1,0 +1,12 @@
+@IMPORT url("public.css");
+.selected3{text-decoration:none;background:#298CBA;}
+.blogtit{text-align:left;font-size:16px;color:#38A3DB;margin-top:10px;border-bottom:1px solid #38A3DB;padding:5px;}
+.blogitem{padding:10px 5px;border-bottom:1px dotted #DDDDDD;}
+.user_icon{float:left;width:50px;}
+.user_icon img{border:0px;width:50px;}
+.blog_con{float:left;width:930px;margin-left:10px;}
+.blog_title a{font-size:15px;font-weight:bold;text-decoration:none;}
+.blog_title a:hover{text-decoration:underline;}
+.blog_summary{margin-top:5px;line-height:20px;word-wrap:break-word;}
+.user_time{margin-top:5px;color:#666666}
+.pagination{margin-top:10px;}
