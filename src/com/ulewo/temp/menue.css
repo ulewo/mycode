@@ -1,6 +1,0 @@
-body{margin:0px;padding:0px;}
-.menue{height:40px;width:100%;background:#40B3E9;text-align:center;margin-top:80px;}
-.menue ul{width:1000px;margin:0px auto;list-style:none;padding:0px;height:40px;}
-.menue ul li{float:left;margin-left:1px;}
-.menue ul li a{display:block;color:#FFFFFF;width:100px;text-decoration:none;padding-top:10px;height:30px;font-weight:bold}
-.menue ul li a:hover{background:#298CBA;}

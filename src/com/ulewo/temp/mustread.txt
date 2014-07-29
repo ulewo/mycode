@@ -1,4 +1,0 @@
-2014-04-08  
-数据库  更新 ulewo_notice 字段status 
-UPDATE ULEWO_NOTICE SET STATUS ='0' WHERE STATUS  = 'N'
-然后默认设置为 0;
