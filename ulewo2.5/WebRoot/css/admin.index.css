@@ -1,0 +1,10 @@
+@import url("admin.public.css");
+.article_item{margin-top:10px;}
+.item_checkbox{width:20px;float:left;margin-top:2px;}
+.item_title{float:left;width:560px;}
+.item_time{float:left;width:100px}
+.item_user{float:left;width:100px;}
+#myform{margin-bottom:10px;}
+.titletag{background-color: #848C98;-webkit-border-radius: 2px;border-radius: 2px;margin-left:5px;display:inline-block;height:16px;padding:1px 2px;margin-top:5px;}
+.tag_title{display:inline-block;float:left;margin-top:2px;color:#ffffff}
+.del_tag{background:url("../images/icon.png") 0px -105px no-repeat;display:inline-block;height:15px;width:15px;float:right;cursor:pointer;}

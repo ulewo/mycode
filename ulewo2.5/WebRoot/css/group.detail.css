@@ -1,0 +1,79 @@
+@IMPORT url("group.public.css");
+
+.new_article_input{width:900px;}
+/**��������***/
+.author_info{margin-top:10px}
+.author_icon{float:left;width:60px;}
+.author_icon img{width:60px;border-radius:5px}
+.author_info_con{display:inline-block;margin-left:10px;width:910px;}
+.article_tit{margin-top:5px;}
+.article_tit_title{font-weight:bolder;font-size:20px;color:#494949}
+.article_count{color:#64C5E8}
+.author_info_content{margin-top:10px;color:#666666}
+.author_info_content_op{float:left;display:inline-block;}
+.op_favorite{float:left;display:inline-block;margin-left:20px;margin-top:8px;}
+.op_favorite a{color:#AA0000;}
+#favoriteCount{font-weight:bold;color:#AA0000;}
+#op_favorite a{color:#AA0000;}
+#op_favorite span{color:#666666}
+.article_detail{margin-top:10px;font-size:14px;line-height:25px;word-wrap:break-word;}
+.article_detail img,.comment_content_word img{max-width:900px;cursor: url(../images/cur_zin.cur), pointer;}  
+.article_attached{border:1px solid #B2B3B2;padding:5px;margin-top:30px;}
+.attached_tit{font-size:16px;font-weight:bold;}
+.attached_con{margin-top:10px;}
+.filename{color:#3E62A6;background:url("../images/icon_rar.gif") 0px -2px no-repeat;padding-left:16px;}
+.mark,.dccount{color:#666666}
+.recomment_tit{font-size:16px;font-weight:bold;border-bottom:1px solid #ccc;padding:10px;}
+
+/********�ظ����б�**********/
+#recomment{text-align:left;}
+.outerHeight{margin-top:10px;border-bottom:1px dashed #E0E0E0;padding-top:5px;padding-bottom:5px;}
+.ui_avatar{float:left;width:40px;}
+.ui_avatar img{border-radius:5px;}
+.reComent_Con{float:left;width:950px;margin-left:10px;}
+.comments_content a{color:#26709A;text-decoration:none;}
+.comment_content_word{line-height:20px;word-wrap:break-word;margin-top:5px;font-size:14px;}
+.comment_content_word_sub{line-height:20px;word-wrap:break-word;font-size:14px;padding:8px 0px;}
+.name_p a{font-weight:bolder;font-family: "simsun","Arial",HELVETICA;display:inline-block;}
+.com_op_time{color:#9B9B9B;display:inline-block;margin-left:10px;}
+a.com_op_link{background:url("../images/plbg.png") 0px -69px no-repeat;padding: 2px 0px 3px 15px;font-size:12px;color:gray}
+a.com_op_link:hover{background:url("../images/plbg.png") 0px -93px no-repeat;}
+.com_sub_op_time{color:#9B9B9B;display:inline-block;margin-left:10px;font-size:12px;}
+.re_icon{background:url("../images/plbg.png") 0px -68px no-repeat;display:inline-block;width:20px;height:15px;margin-left:8px;}
+.at_name{color:#455E85;font-size:12px;}
+.com_sub_op_link{margin-left:5px;}
+.comtent_sub{margin-top:15px;}
+.comtent_sub a{text-decoration:none;}
+.comments_content_sub{float:left;width:900px;margin-left:10px;}
+.recoment_form_panel{margin-top:5px;width:510px;position:relative;}
+.comment_form_at{height:20px;}
+.comment_form_at a{float:left;text-decoration:none;color:#3E79A2;background:#DDECF7;display:inline-block;padding:3px;border-radius: 4px;
+-moz-border-radius: 4px;
+-webkit-border-radius: 4px}
+.comment_form_at span{display:inline-block;float:right;cursor:pointer;padding-top:5px;}
+.comment_form_textarea textarea{width:500px;height:80px;border:1px solid #9B9B9B}
+.comment_form_panel{margin-top:2px;position:relative;}
+.comment_checkcode,.comment_checkcode_img,.comment_checkcode_link{float:left;width:70px;}
+.comment_form_name input{color:#9B9B9B;margin-left:0px;}
+.comment_checkcode input{width:60px;}
+.comment_checkcode_img{padding-top:2px;}
+.comment_checkcode_link{padding-top:9px;}
+.comment_checkcode_rebtn{float:right;margin-right:8px;}
+.comment_checkcode_rebtn a{display:inline-block;background:#4682B4;color:#FFFFFF;padding:2px 8px;text-decoration:none;}
+.pagination{margin-top:10px;}
+
+#attachedUser{position:absolute;width:200px;border:1px solid #B2B3B2;display:none;padding:5px;background:white;z-index:99999}
+.loading{margin-top:10px;text-align:center;}
+.attarchedUserCon{float:left;width:30px;margin-left:3px;margin-top:4px;}
+.attarchedUserCon a{border:0px;}
+.attarchedUserCon a img{width:30px;}
+
+/****************投票**********/
+.survey_detail_line{height:20px;background:none repeat scroll 0% 0% rgb(242, 246, 235);border-bottom:1px dotted rgb(211, 211, 211);padding-top:10px;padding-left:5px;}
+.survey_detail_op{float:left;width:15px;}
+.survey_detail_title{float:left;width:400px;margin-left:5px;}
+.survey_detail_color_p{float:left;display:inline-block;width:480px;height:15px;}
+.survey_detail_color{float:left;display:inline-block;height:15px;background:url("../images/nmLine_bg.png")}
+.survey_detail_percent{float:left;width:60px;margin-left:10px;}
+.survey_tit{color:#3E62A6}
+.surveycon{margin-top:15px;}

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ulewo.mapper.BlastMapper" >
+  <resultMap id="BaseResultMap" type="com.ulewo.model.Blast" >
+    <id column="blast_id" property="blastId" jdbcType="INTEGER" />
+    <result column="userid" property="userId" jdbcType="INTEGER" />
+    <result column="image_url" property="imageUrl" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="source_from" property="sourceFrom" jdbcType="VARCHAR" />
+    <result column="username" property="userName" jdbcType="VARCHAR" />
+    <result column="user_icon" property="userIcon" jdbcType="VARCHAR" />
+    <result column="image_url_small" property="smallImageUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.ulewo.model.Blast" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    b.blast_id, b.userid, b.image_url, b.create_time, b.source_from,content,image_url_small
+  </sql>
+  
+  <sql id="base_condition" >
+ 	 <if test="param!=null">
+	      <if test="null!=param.blastId and ''!=param.blastId" >
+	        	and b.blast_id = #{param.blastId,jdbcType=DECIMAL}
+	      </if>
+	      <if test="null!=param.userId and ''!=param.userId" >
+	        	and b.userid = #{param.userId,jdbcType=DECIMAL}
+	      </if>
+	      <if test="null!=param.startTm and ''!=param.startTm">
+	      	 <![CDATA[
+	        	and b.create_time >='${param.startTm} 00:00:00'
+	         ]]>
+	      </if>
+	      <if test="null!=param.startEnd and ''!=param.startEnd">
+	      	  <![CDATA[
+	        	and b.create_time <= '${param.startEnd} 23:59:59'
+	          ]]>
+	      </if>
+      </if>
+  </sql>
+  
+  <select id="selectBlastByBlastId" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ulewo_blast b inner join ulewo_user u on u.userid = b.userid
+    where b.blast_id = #{blastId}
+  </select>
+  
+   <select id="selectBaseInfo" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    ,u.username,u.user_icon
+    ,(select count(1) from ulewo_blast_comment c where c.blast_id = b.blast_id and  EXISTS(select 1 from ulewo_user u where u.userid=c.userid))commentCount
+    ,(select count(1) from ulewo_like li where li.op_id = b.blast_id and li.type='L') likeCount
+    from ulewo_blast b inner join ulewo_user u on u.userid = b.userid
+    where 1=1
+    <include refid="base_condition" />
+  </select>
+  
+  <select id ="selectBaseInfoCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+    select count(1)
+	  from ulewo_blast  b inner join ulewo_user u on u.userid = b.userid
+	  where 1=1
+	  <include refid="base_condition" />
+  </select>
+  
+  <select id="selectBaseInfoList" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    ,u.username,u.user_icon
+    ,(select count(1) from ulewo_blast_comment c where c.blast_id = b.blast_id and  EXISTS(select 1 from ulewo_user u where u.userid=c.userid))commentCount
+    from ulewo_blast b inner join ulewo_user u on u.userid = b.userid
+    where 1=1
+    <include refid="base_condition" />
+    order by b.create_time desc limit #{page.start},#{page.end}
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.Integer" >
+    delete from ulewo_blast
+    where blast_id = #{param.blastId,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.ulewo.model.Blast" >
+  	<selectKey keyProperty="blastId" resultType="int" order="AFTER">
+      	SELECT LAST_INSERT_ID()
+    </selectKey>
+      <![CDATA[
+		    insert into ulewo_blast (userid, image_url,image_url_small,
+		      create_time, source_from, content
+		      )
+		    values (#{userId,jdbcType=INTEGER}, #{imageUrl,jdbcType=VARCHAR}, #{smallImageUrl,jdbcType=VARCHAR},
+		      #{createTime,jdbcType=TIMESTAMP}, #{sourceFrom,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR}
+		      )
+        ]]>
+  </insert>
+</mapper>

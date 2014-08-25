@@ -1,0 +1,14 @@
+@import url("group.manage.public.css");
+.articleop{background:#EAEAEA;height:30px;margin-top:10px;padding-left:10px;padding-top:5px;}
+.articleop select{margin-top:5px;}
+.article_list{margin-top:10px;}
+.article_item{height:25px;padding-top:5px;padding-left:10px;}
+.article_item_check{float:left;width:20px;}
+.article_item_check input{margin:0px;padding:0px;}
+.article_item_tit{width:510px;float:left;overflow:hidden;}
+.article_item_tit a{display:inline-block;float:left;margin-left:5px;margin-top:2px;}
+.article_item_tit_icon{display:inline-block;float:left;margin-left:5px;}
+.article_item_itemname{width:80px;float:left;}
+.article_item_username{width:50px;float:left;}
+.article_item_time{width:80px;float:left;}
+.article_item_op{float:left;width:30px;}

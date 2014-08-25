@@ -1,0 +1,27 @@
+@IMPORT url("public.css");
+.main{text-align:center;margin:0px auto;width:1000px;}
+.talktit{text-align:left;font-size:16px;color:#38A3DB;margin-top:10px;border-bottom:1px solid #38A3DB;padding:5px;}
+#talklist{text-align:left;}
+.talkitem{margin-top:10px;}
+.itemicon{width:37px;float:left;border:1px solid #9A9A9A;}
+.main .itemcon{float:left;margin-left:10px;font-size:12px;width:950px;}
+.item_user{color:#6CABE1}
+.item_user a{color:#6CABE1;text-decoration:underline;font-size:12px;}
+.main .item_content{color:#666;line-height:20px;font-size:12px;font-family:微软雅黑,Verdana,sans-serif,宋体}
+.main .item_content a{color:#4466BB;text-decoration:underline;font-size:12px;}
+.main .item_content a:hover{color:#4466BB}
+.item_time{font-size:13px;display:block;margin-top:5px;color:#9A9A9A;height:18px;}
+.item_time .item_time_s{display:inline-block;float:left;margin-left:5px;}
+.item_time_time{float:left;}
+.item_time a{color:#6CABE1;text-decoration:none;}
+.item_time a:hover{color:#6CABE1}
+
+.item_time_t{float:left;display:inline-block;}
+.item_time_r{float:right;display: inline-block;margin-right:10px;}
+
+.re_line{border-bottom:1px solid #9A9A9A;margin-top:10px;padding:5px;font-size:16px;}
+
+.moretalk{margin-top:10px;text-align:right;}
+.main .moretalk a{color:#3E62A6;text-decoration:underline;font-size:12px;}
+.main .moretalk a:hover{color:#3E62A6}
+#loading{text-align:center;margin-top:10px;}

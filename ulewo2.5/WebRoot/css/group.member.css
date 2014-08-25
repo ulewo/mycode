@@ -1,0 +1,11 @@
+@IMPORT url("group.public.css");
+.member_item{width:250px;float:left;margin-top:20px;}
+.member_icon{width:60px;float:left}
+.member_icon img{width:60px;border:0px;}
+.member_info{float:left;margin-left:10px;width:130px;}
+.member_name a{text-decoration:none;}
+.article_count{margin-top:8px;color:#504F4F}
+.article_count span{color:#3E62A6}
+.jointime{margin-top:8px;color:#504F4F}
+.jointime span{color:#3E62A6}
+.pagination{margin-top:20px;}

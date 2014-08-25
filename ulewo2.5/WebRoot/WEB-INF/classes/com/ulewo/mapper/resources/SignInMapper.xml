@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ulewo.mapper.SignInMapper" >
+  <resultMap id="BaseResultMap" type="com.ulewo.model.SignIn" >
+    <id column="sign_date" property="signDate" jdbcType="DATE" />
+    <id column="userid" property="userId" jdbcType="INTEGER" />
+    <result column="sign_time" property="signTime" jdbcType="TIMESTAMP" />
+    <result column="source_from" property="sourceFrom" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    s.sign_date, s.userid,s.sign_time,s.source_from
+  </sql>
+  
+  <sql id="base_condition" >
+ 	 <if test="param!=null">
+	      <if test="null!=param.userId and ''!=param.userId" >
+	        	and s.userid = #{param.userId,jdbcType=DECIMAL}
+	      </if>
+	      <if test="null!=param.signDate and ''!=param.signDate" >
+	        	and s.sign_date = #{param.signDate,jdbcType=DECIMAL}
+	      </if>
+	      <if test="null!=param.startTm and ''!=param.startTm">
+	      	 <![CDATA[
+	        	and s.sign_date >='${param.startTm} 00:00:00'
+	         ]]>
+	      </if>
+	      <if test="null!=param.endTm and ''!=param.endTm">
+	      	  <![CDATA[
+	        	and s.sign_date <= '${param.endTm} 23:59:59'
+	          ]]>
+	      </if>
+	      <if test="null!=param.year and ''!=param.year">
+	      	  <![CDATA[
+	        	and s.sign_date >= '${param.year}-01-01 00:00:00'
+	        	and s.sign_date <= '${param.year}-12-31 23:59:59'
+	          ]]>
+	      </if>
+      </if>
+  </sql>
+  
+  <select id="selectAllSignInByYear" resultMap="BaseResultMap" parameterType="com.ulewo.model.SignIn" >
+    select 
+    <include refid="Base_Column_List" />
+    from ulewo_sign_in s where 1=1
+   <include refid="base_condition" />
+  </select>
+  
+  <select id="selectBaseInfo" resultMap="BaseResultMap" parameterType="com.ulewo.model.SignIn" >
+    select 
+    <include refid="Base_Column_List" />
+    from ulewo_sign_in s where 1=1
+   <include refid="base_condition" />
+  </select>
+  
+  <select id ="selectBaseInfoCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+    select count(1)
+	  from ulewo_sign_in s  where 1=1 
+	  <include refid="base_condition" />
+	  and  EXISTS(select 1 from ulewo_user u where u.userid=s.userid)
+  </select>
+  
+  <select id ="selectBaseInfoList" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select 
+    <include refid="Base_Column_List" />
+    ,u.username userName,user_icon userIcon
+     from ulewo_sign_in s inner join ulewo_user u on u.userid = s.userid where 1=1
+	  <include refid="base_condition" />
+	 order by sign_time asc
+  </select>
+  
+  <insert id="insert" parameterType="com.ulewo.model.SignIn" >
+    insert into ulewo_sign_in (sign_date, userid,sign_time,source_from)
+    values (#{signDate,jdbcType=DATE}, #{userId,jdbcType=INTEGER},#{signTime,jdbcType=TIMESTAMP},#{sourceFrom,jdbcType=VARCHAR})
+  </insert>
+</mapper>

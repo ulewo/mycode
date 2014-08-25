@@ -1,0 +1,11 @@
+@import url("public.css");
+.main{text-align:center;margin:0px auto;text-align: center;width:1000px;margin-top:55px;}
+.android_pic{margin-top:10px;}
+.android_pic img{width:470px;float:left;border:1px solid #C8C8C8;margin:10px;padding:2px}
+.myinfo{padding-left:10px;margin-top:10px;}
+.info{float:left;display: inline-block;text-align: left;}
+.info .title{font-size:16px;font-weight:bold;}
+.info .desc{float:left;width:70px;clear: left;margin-top: 10px;}
+.info .text{float:left;width:500px;margin-top: 10px;}
+.dlbutton{float:left;display:inline-block;padding-top:30px;margin-left:90px;}
+.code{float:left;margin-left:20px;display: inline-block;}

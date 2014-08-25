@@ -1,0 +1,8 @@
+/*****消息框******/
+.tips{width:150px;height:50px;position:fixed;top:400px;background:#40B3E9;padding:3px;font-size:13px;z-index:10000}
+.tipscon{border:1px solid #494949;text-align:center;background:#ffffff;height:33px;padding-top:15px;}
+.tipscon span{display:inline-block;}
+.tipscon img{display: inline-block;margin-left:5px;}
+.tips2{width:150px;height:50px;position:fixed;top:400px;background:#D4D4D4;padding:3px;font-size:13px;z-index:10000}
+.easyform textarea{font-size:13px;}
+.hilight{color:red}
