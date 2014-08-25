@@ -486,4 +486,20 @@ public class HomeAction extends BaseAction {
 			return modelMap;
 		}
 	}
+
+	/**
+	 * 快速发帖
+	 * 
+	 * @param session
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/goFastPostTopic.action")
+	public ModelAndView goFastPostTopic(HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("addarticlefast");
+		return mv;
+	}
 }

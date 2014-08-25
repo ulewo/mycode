@@ -5,12 +5,12 @@
 <script src="${realPath}/js/toolbar.js?vsersion=2.5"></script>
 <div class="tool-bar" id="tool-bar">
 	<c:if test="${user!=null}">
-		<div class="tool-bar-item tool-user-info">
+		<div class="tool-bar-item tool-user-info" id="tool-user-info">
 			<img src="${realPath}/upload/${user.userIcon}">
 		</div>
 	</c:if>
 	<c:if test="${user==null}">
-		<div class="tool-bar-item tool-user">
+		<div class="tool-bar-item tool-user" id="tool-user">
 			<div class="tool-icon user-icon"></div>
 			<div class="item-title">用户</div>
 		</div>
@@ -19,11 +19,11 @@
 		<div class="tool-icon topic-icon"></div>
 		<div class="item-title">发帖</div>
 	</div>
-	<div class="tool-bar-item tool-group">
+	<div class="tool-bar-item tool-group" id="tool-group">
 		<div class="tool-icon group-icon"></div>
 		<div class="item-title">窝窝</div>
 	</div>
-	<div class="tool-bar-item tool-notice">
+	<div class="tool-bar-item tool-notice" id="tool-notice">
 		<div class="tool-icon notice-icon"></div>
 		<div class="item-title">消息</div>
 		<div class="notice-info-count">20</div>
@@ -33,5 +33,10 @@
 	</div>
 </div>
 <div class="tool-bar-con" id="tool-bar-con">
-
+	<div class="tool-bar-con-sub" id="tool-user-info-con"></div>
+	<div class="tool-bar-con-sub" id="tool-user-con"></div>
+	<div class="tool-bar-con-sub" id="tool-post-topic-con"></div>
+	<div class="tool-bar-con-sub" id="tool-group-con"></div>
+	<div class="tool-bar-con-sub" id="tool-notice-con"></div>
+	<div id="bar-con-loading"><img src="${realPath}/images/load.gif">正在加载信息......</div>
 </div>

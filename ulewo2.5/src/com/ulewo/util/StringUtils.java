@@ -39,12 +39,10 @@ public class StringUtils {
     private static final long ONE_DAY = 86400000L;
     
     private static final String JUST_NOW = "刚刚";
-    private static final String ONE_SECOND_AGO = "秒前";
+	// private static final String ONE_SECOND_AGO = "秒前";
     private static final String ONE_MINUTE_AGO = "分钟前";
     private static final String ONE_HOUR_AGO = "小时前";
     private static final String ONE_DAY_AGO = "天前";
-	private static final SimpleDateFormat format = new SimpleDateFormat(
-			"yyyy-MM-dd HH:m:s");
 
 	// MD5加密
 	public static String encodeByMD5(String originString) {
