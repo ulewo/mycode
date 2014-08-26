@@ -29,7 +29,6 @@ public class NoticeServiceImpl implements NoticeService {
 			page_no = Integer.parseInt(map.get("page"));
 		}
 		map.put("userId", String.valueOf(userId));
-		map.put("status", null);
 		int count = queryNoticeCountByUserId(map);
 		int pageSize = PageSize.SIZE20.getSize();
 		if (StringUtils.isNumber(map.get("rows"))) {
