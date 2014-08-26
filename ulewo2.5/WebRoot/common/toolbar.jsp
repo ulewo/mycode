@@ -39,4 +39,5 @@
 	<div class="tool-bar-con-sub" id="tool-group-con"></div>
 	<div class="tool-bar-con-sub" id="tool-notice-con"></div>
 	<div id="bar-con-loading"><img src="${realPath}/images/load.gif">正在加载信息......</div>
+	<div id="bar-con-close"><a href="javascript:void(0)"></a></div>
 </div>

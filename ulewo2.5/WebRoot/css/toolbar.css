@@ -26,10 +26,11 @@ padding:10px 0;right:0;top:0;background:#535353;text-align:center;color:#fff;fon
 	z-index:1000;zoom:1;display:none;border-left:1px solid #ccc;
 	text-align:left;color:#555;box-shadow: -3px 0px 15px #555;
 	-webkit-box-shadow: -3px 0px 15px #555;-moz-box-shadow: -3px 0px 15px #555;overflow:auto;}
-.tool-bar-con-sub{display:none;position:relative;padding:10px;padding-left:20px;}
+.tool-bar-con-sub{display:none;position:relative;margin:30px;}
 #bar-con-loading{position:relative;width:100%;height:100%;text-align:center;margin-top:200px;z-index:2}
-
-
+#bar-con-close{position:absolute;top:0px;left:0px;z-index:10000}
+#bar-con-close a{display:inline-block;background:url('../images/bar-con-close-hover.png');width:32px;height:32px;}
+#bar-con-close a:hover{background:url('../images/bar-con-close.png');width:32px;height:32px;}
 .form_tit{margin-top:10px;}
 .form_tit_t{font-size:14px;}
 .form_tit_x{color:#ABADB3}
