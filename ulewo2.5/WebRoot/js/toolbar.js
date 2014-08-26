@@ -1,4 +1,5 @@
 var toolbar = {};
+toolbar.msgFlag = 0
 $(function(){
 	$(document).click(function() {
 		toolbar.closeToolbarCon();
@@ -9,7 +10,7 @@ $(function(){
 		}
 		//获取信息
 		toolbar.getInfo($(this));
-		var width = "300px";
+		var width = "400px";
 		if($(this).attr("id")=="tool-post-topic"&&global.userId!=""){
 			width = "900px";
 		}
@@ -32,7 +33,35 @@ $(function(){
 	$("#bar-con-close a").click(function(){
 		$("#tool-bar-con").hide();
 	});
+	toolbar.loadNotice();
 });
+toolbar.loadNotice = function() {
+	var url = global.realPath + "/manage/noticeCount.action";
+	if (global.userId != "") {
+		$.ajax({
+			async : true,
+			cache : false,
+			type : 'GET',
+			dataType : "json",
+			url : url,// 请求的action路径
+			success : function(data) {
+				if (parseInt(data.count) > 0) {
+					$("#notice-info-count").text(data.count);
+					$("#notice-info-count").show();
+					setInterval(function() {
+						if(toolbar.msgFlag==0){
+							$("#notice-info-count").hide();
+							toolbar.msgFlag = 1;
+						}else if(toolbar.msgFlag==1){
+							$("#notice-info-count").show();
+							toolbar.msgFlag = 0;
+						}
+					}, 500); 
+				}
+			}
+		});
+	}
+}
 
 //获取信息
 toolbar.getInfo = function(curObj){
@@ -74,7 +103,7 @@ toolbar.getInfo = function(curObj){
 		}
 	}else if(curObj.attr("id")=="tool-notice"){
 		if(barCon.html()==""){
-			
+			toolbar.getNotice(barCon);
 		}
 	}
 }
@@ -166,6 +195,25 @@ toolbar.getUserInfo = function(barCon){
 					$("<div class='noinfo'>你没有创建窝窝</div>").appendTo(box_createwowo_list);
 				}
 				$("<a href='javascript:createWoWo()' id='box_btn_create_wowo'>创建窝窝</a>").appendTo(barCon);
+		}
+	});
+}
+
+
+toolbar.getNotice = function(barCon){
+	$("#bar-con-loading").hide();
+	$.ajax({
+		async : true,
+		cache : false,
+		type : 'GET',
+		dataType : "json",
+		url : global.realPath + "/manage/notice.action?status=0",// 请求的action路径
+		success : function(data) {
+			$("#bar-con-loading").hide();
+			var rows = data.rows;
+			for(var i=0,_len=rows.length;i<_len;i++){
+				$("<div class='notice-item'><a href='"+global.realPath+"/manage/readNotice.action?id="+rows[i].id+"'>"+rows[i].title+"</a></div>").appendTo(barCon);
+			}
 		}
 	});
 }
