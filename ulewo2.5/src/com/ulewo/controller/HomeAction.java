@@ -499,7 +499,7 @@ public class HomeAction extends BaseAction {
 	public ModelAndView goFastPostTopic(HttpSession session,
 			HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("addarticlefast");
+		mv.setViewName("common/addarticlefast");
 		return mv;
 	}
 }
