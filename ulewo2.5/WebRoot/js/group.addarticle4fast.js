@@ -49,7 +49,7 @@ fastPost.loadGroup = function(){
 	if(fastPost.group.createdGroups==null||fastPost.group.joinedGroups==null){
 		$.ajax({
 			async : true,
-			cache : false,
+			cache : true,
 			type : 'GET',
 			dataType : "json",
 			url : global.realPath + "/user/loadGroup.action",// 请求的action路径

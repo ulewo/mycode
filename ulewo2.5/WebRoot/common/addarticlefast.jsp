@@ -83,8 +83,8 @@
 		<div class="form_editcontent">
 			<textarea name="content" id="editor4fast"></textarea>
 			<script type="text/javascript">
+				window.UEDITOR_CONFIG.initialFrameHeight=400
 				var editor4fast = UE.getEditor('editor4fast');
-				editor4fast.setHeight(100);
 			</script>
 		</div>
 		<div class="form_tit">

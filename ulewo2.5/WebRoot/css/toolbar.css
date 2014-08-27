@@ -16,7 +16,7 @@ padding:10px 0;right:0;top:0;background:#535353;text-align:center;color:#fff;fon
 
 .cur-bar-item .item-title{color:#3fccff}
 #tool-notice-con .notice-item{border-bottom:1px dashed #333;padding:5px 0px;}
-#tool-notice-con a{text-decoration:none;display:block;}
+#tool-notice-con a{text-decoration:none;}
 #tool-notice-con a:hover{text-decoration:underline}
 .tool-notice{position:relative;}
 .notice-info-count{z-index:10;position: absolute;top:3px;right:5px;min-width:15px;display:inline-block;padding:1px;background: #ef3f22;-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;display:none}
