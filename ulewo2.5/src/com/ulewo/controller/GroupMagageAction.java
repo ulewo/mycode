@@ -463,7 +463,7 @@ public class GroupMagageAction extends BaseGroupAction {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/category", method = RequestMethod.GET)
+	@RequestMapping(value = "/category")
 	@ResponseBody
 	public UlewoPaginationResult4Json<TopicCategory> category(HttpSession session, HttpServletRequest request) {
 		try {

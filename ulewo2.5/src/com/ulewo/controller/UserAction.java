@@ -510,4 +510,29 @@ public class UserAction extends BaseUserAction {
 			return modelMap;
 		}
 	}
+
+	@ResponseBody
+	@RequestMapping(value = "/loadUserInfo.action")
+	public Map<String, Object> loadUserInfo(HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
+
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		try {
+			Integer userId = this.getSessionUserId(session);
+			List<UserFriend> focusList = userFriendService
+					.queryFocus4List(userId);
+			List<UserFriend> fansList = userFriendService
+					.queryFans4List(userId);
+			UserVo userVo = checkUserInfo(userId.toString(), session);
+			modelMap.put("userVo", userVo);
+			modelMap.put("focusList", focusList);
+			modelMap.put("fansList", fansList);
+			modelMap.put("result", ResultCode.SUCCESS.getCode());
+			return modelMap;
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			modelMap.put("result", ResultCode.ERROR.getCode());
+			return modelMap;
+		}
+	}
 }
