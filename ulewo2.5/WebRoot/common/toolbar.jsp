@@ -28,8 +28,8 @@
 		<div class="item-title">消息</div>
 		<div class="notice-info-count" id="notice-info-count"></div>
 	</div>
-	<div id="gototop" class="tool-bar-item">
-		<div class="tool-icon gototop-icon" onclick="window.scrollTo(0,0);"></div>
+	<div id="gototop" class="tool-bar-item" onclick="window.scrollTo(0,0);">
+		<div class="tool-icon gototop-icon"></div>
 	</div>
 </div>
 <div class="tool-bar-con" id="tool-bar-con">
