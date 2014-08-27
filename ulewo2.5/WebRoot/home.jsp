@@ -20,7 +20,6 @@
 </head>
 <body>
 	<%@ include file="common/head.jsp" %>
-	<%@ include file="common/toolbar.jsp" %>
 	<div class="group_category">
 		<c:forEach var="category" items="${groupCateGroy}" begin="0" end="5">
 			<div class="category">

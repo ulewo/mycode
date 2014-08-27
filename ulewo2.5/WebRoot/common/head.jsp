@@ -24,14 +24,6 @@ global.type = "${type}";
 							<td style="padding-top:2px;padding-right:8px">${user.userName}，欢迎回来</td>
 							<td style="padding:0px 2px;"><img src="${realPath}/upload/${user.userIcon}" width="20"></td>
 							<td><div class="top_line"></div></td>
-							<td><a href="${realPath}/user/${user.userId}"  index="0" class="h_m" title="${user.userName}">个人中心</a></td>
-							<td><div class="top_line"></div></td>
-							<td>
-								<a href="javascript:void(0)" class="h_m" index="1">我的窝窝<i class="tri tri--dropdown"></i></a>
-							</td>
-							<td><div class="top_line"></div></td>
-							<td><a href="${realPath}/manage/main#notice" target="_blank" class="msg" id="noticCon">我的消息</a></td>
-							<td><div class="top_line"></div></td>
 							<td><a href="javascript:logout()" onFocus="this.blur()" class="n_m">退出</a></td>
 						</tr>
 				</table>
@@ -80,3 +72,4 @@ global.type = "${type}";
 		</ul>
 	</div>
 </div>
+<%@ include file="toolbar.jsp" %>

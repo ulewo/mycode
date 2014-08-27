@@ -5,7 +5,7 @@
 <script src="${realPath}/js/toolbar.js?vsersion=2.5"></script>
 <div class="tool-bar" id="tool-bar">
 	<c:if test="${user!=null}">
-		<div class="tool-bar-item tool-user-info" id="tool-user-info">
+		<div class="tool-bar-item tool-user-info" id="tool-user">
 			<img src="${realPath}/upload/${user.userIcon}">
 		</div>
 	</c:if>
@@ -33,11 +33,20 @@
 	</div>
 </div>
 <div class="tool-bar-con" id="tool-bar-con">
-	<div class="tool-bar-con-sub" id="tool-user-info-con"></div>
-	<div class="tool-bar-con-sub" id="tool-user-con"></div>
-	<div class="tool-bar-con-sub" id="tool-post-topic-con"></div>
-	<div class="tool-bar-con-sub" id="tool-group-con"></div>
-	<div class="tool-bar-con-sub" id="tool-notice-con"></div>
-	<div id="bar-con-loading"><img src="${realPath}/images/load.gif">正在加载信息......</div>
-	<div id="bar-con-close"><a href="javascript:void(0)"></a></div>
+	<c:if test="${user!=null}">
+		<div class="tool-bar-con-sub" id="tool-user-con"></div>
+		<div class="tool-bar-con-sub" id="tool-post-topic-con">
+			<%@ include file="addarticlefast.jsp" %>
+		</div>
+		<div class="tool-bar-con-sub" id="tool-group-con"></div>
+		<div class="tool-bar-con-sub" id="tool-notice-con"></div>
+		<div id="bar-con-loading"><img src="${realPath}/images/load.gif">正在加载信息......</div>
+		<div id="bar-con-close"><a href="javascript:void(0)"></a></div>
+	</c:if>
+	<c:if test="${user==null}">
+		<div style="padding:10px;">
+				<a href="javascript:goto_login()" class='bigbtn'>登陆</a>
+				<a href="javascript:goto_register()" class='bigbtn'>注册</a>
+		</div>
+	</c:if>
 </div>

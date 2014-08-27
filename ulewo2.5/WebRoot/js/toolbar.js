@@ -66,40 +66,25 @@ toolbar.loadNotice = function() {
 //获取信息
 toolbar.getInfo = function(curObj){
 	$(".tool-bar-con-sub").hide();
-	if(global.userId==""){
-		$("#bar-con-loading").hide();
-		$("<a href=''>登陆</a>").appendTo(curObj);
-		$("<a href=''>注册</a>").appendTo(curObj);
-		return;
-	}
 	var barCon = $("#"+curObj.attr("id")+"-con");
 	barCon.show();
-	if(curObj.attr("id")=="tool-user-info"){
+	if(global.userId==""){
+		return;
+	}
+	if(curObj.attr("id")=="tool-user"){
 		if(barCon.html()==""){
 			toolbar.getUserInfo(barCon);
-		}
-	}else if(curObj.attr("id")=="tool-user"){
-		if(barCon.html()==""){
-			
 		}
 	}else if(curObj.attr("id")=="tool-post-topic"){
-		if(barCon.html()==""){
-			$("#bar-con-loading").show();
-			$.ajax({
-				async : true,
-				cache : false,
-				type : 'POST',
-				dataType : "html",
-				url : global.realPath+"/goFastPostTopic.action",// 请求的action路径
-				success : function(data) {
-					$("#bar-con-loading").hide();
-					barCon.html(data);
-				}
-			});
+		if(window.location.href.indexOf("group")!='-1'){
+			cancelAdd();
 		}
+		fastPost.showAddForm();
+		fastPost.loadGroup();
+		$("#bar-con-loading").hide();
 	}else if(curObj.attr("id")=="tool-group"){
 		if(barCon.html()==""){
-			toolbar.getUserInfo(barCon);
+			toolbar.getGroupInfo(barCon);
 		}
 	}else if(curObj.attr("id")=="tool-notice"){
 		if(barCon.html()==""){
@@ -108,7 +93,6 @@ toolbar.getInfo = function(curObj){
 	}
 }
 
-
 toolbar.getUserInfo = function(barCon){
 	$("#bar-con-loading").show();
 	$.ajax({
@@ -116,12 +100,21 @@ toolbar.getUserInfo = function(barCon){
 		cache : true,
 		type : 'GET',
 		dataType : "json",
-		url : global.realPath + "/user/loadFansFocus.action",// 请求的action路径
+		url : global.realPath + "/user/loadUserInfo.action",// 请求的action路径
 		success : function(data) {
 			$("#bar-con-loading").hide();
 			var focusList = data.focusList;
 			var fansList = data.fansList;
+			var info  = data.userVo;
 			barCon.empty();
+			var bar_user_info = $("<div class='bar-user-info'></div>").appendTo(barCon);
+			$("<div class='bar-user-info-image'><img src='"+global.realPath+"/upload/"+info.userIcon+"'></div>").appendTo(bar_user_info);
+			var bar_user_info_con = $("<div class='bar-user-info-con'></div>").appendTo(bar_user_info);
+			$("<div class='clear'></div>").appendTo(bar_user_info);
+			$("<div class='bar-user-info-d'>关注："+info.focusCount+"</div>").appendTo(bar_user_info_con);
+			$("<div class='bar-user-info-d'>粉丝："+info.fansCount+"</div>").appendTo(bar_user_info_con);
+			$("<div class='bar-user-info-d'>积分："+info.mark+"</div>").appendTo(bar_user_info_con);
+			
 			$('<div class="box_focus_tit">关注</div>').appendTo(barCon);
 			var box_focus_list = $('<div id="box_focus_list"></div>').appendTo(barCon);
 			if(focusList!=null&&focusList.length>0&&data.result=="200"){
@@ -157,7 +150,7 @@ toolbar.getUserInfo = function(barCon){
 	});
 }
 
-toolbar.getUserInfo = function(barCon){
+toolbar.getGroupInfo = function(barCon){
 	$("#bar-con-loading").hide();
 	$.ajax({
 		async : true,
@@ -211,9 +204,14 @@ toolbar.getNotice = function(barCon){
 		success : function(data) {
 			$("#bar-con-loading").hide();
 			var rows = data.rows;
-			for(var i=0,_len=rows.length;i<_len;i++){
-				$("<div class='notice-item'><a href='"+global.realPath+"/manage/readNotice.action?id="+rows[i].id+"'>"+rows[i].title+"</a></div>").appendTo(barCon);
+			if(rows.length>0){
+				for(var i=0,_len=rows.length;i<_len;i++){
+					$("<div class='notice-item'><a href='"+global.realPath+"/manage/readNotice.action?id="+rows[i].id+"'>"+rows[i].title+"</a></div>").appendTo(barCon);
+				}
+			}else{
+				$("<div class='noinfo' style='margin-top:200px;'>没有发现消息</div>").appendTo(barCon);
 			}
+			
 		}
 	});
 }

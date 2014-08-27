@@ -65,3 +65,8 @@ padding:10px 0;right:0;top:0;background:#535353;text-align:center;color:#fff;fon
 .survey_input input{width:300px;height:20px;float:left;}
 .survey_input a{float:left;margin-top:3px;margin-left:5px;}
 .survey_type{margin-top:5px;}
+
+.bar-user-info{padding-bottom:10px;border-bottom:1px dashed #E4E4E4}
+.bar-user-info-image{float:left;width:60px;}
+.bar-user-info-con{margin-left:70px;}
+.bar-user-info-d{margin-top:10px;}

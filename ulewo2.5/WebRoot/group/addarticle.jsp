@@ -34,7 +34,7 @@
  	<div class="clear"></div>
 </div>
 
-<div class="form_tit">
+<div class="form_tit" id="topicType">
 <label for="topicType0"><input type="radio" id="topicType0" value="0" name="topicType" checked="checked"/>普通帖</label>
 <label for="topicType1"><input type="radio" id="topicType1" value="1" name="topicType"/>投票帖</label>
 </div>

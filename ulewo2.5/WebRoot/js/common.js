@@ -86,6 +86,17 @@ function warm(type,msg){
 	}
 }
 
+function warm4fast(type,msg){
+	if(type=="show"){
+		$(".result_info4fast").css({"display":"inline-block"});
+		$("#warm_icon4fast").removeClass("info");
+		$("#warm_icon4fast").css({"display":"inline-block","color":"red"});
+		$("#warm_info4fast").html(msg);
+	}else if(type=="hide"){
+		$('.result_info4fast').hide();
+	}
+}
+
 function tipsInfo(msg){
 	setTimeout(function(){
 		var tips;

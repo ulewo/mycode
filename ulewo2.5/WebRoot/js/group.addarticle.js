@@ -27,6 +27,9 @@ function deleteLine(){
 }
 
 function showAddForm(){
+	if(toolbar.closeToolbarCon()){
+		toolbar.closeToolbarCon();
+	}
 	$(this).hide();
 	warm("hide","");
 	$("#add_article").show();
@@ -139,11 +142,11 @@ function submitForm(){
 			infoError = false;
 		}
 	}
-	if(infoError&&$("input[name='topicType']:checked").val()=="0"){
+	if(infoError&&$("#topicType").find("input[name='topicType']:checked").val()=="0"){
 		warm("show","内容不能为空");
 		return ;
 	}
-	if($("input[name='topicType']:checked").val()=="1"){
+	if($("#topicType").find("input[name='topicType']:checked").val()=="1"){
 		if($("#wdate").val()==""){
 			warm("show","投票结束日期不能为空");
 			return ;
@@ -152,7 +155,7 @@ function submitForm(){
 			warm("show","投票结束日期必须大于当天");
 			return ;
 		}
-		var titles = $("input[name='surveyTitle']");
+		var titles = $("#surveyLine").find("input[name='surveyTitle']");
 		var notEmptyCount = 0;
 		for(var i=0,length=titles.length;i<length;i++){
 			if(titles.eq(i).val()!=""){
