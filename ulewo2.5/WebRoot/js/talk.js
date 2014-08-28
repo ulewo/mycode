@@ -79,7 +79,7 @@ function TalkItem(data,type) {
 					+ global.realPath + "/user/" + data.userId + "/blast/"
 					+ data.blastId + "' class='item_time_s'>(" + data.commentCount + "评)</a></span>")
 			.appendTo(talkcon);
-	if(data.smallImageUrl != null&&data.imageUrl != ""&&type=="list"){
+	if(data.smallImageUrl != null&&data.smallImageUrl != ""&&type=="list"){
 		var smallImageUrl = global.realPath+"/upload/"+data.smallImageUrl;
 		var realImageUrl = global.realPath+"/upload/"+data.imageUrl;
 		$("<div style='margin-bottom:5px;padding:5px;border:1px solid #9A9A9A;display:inline-block;'><a href='"+realImageUrl+"' target='_blank'><img src='"+smallImageUrl+"' style='max-width:100px'></a></div>").appendTo(talkcon);
