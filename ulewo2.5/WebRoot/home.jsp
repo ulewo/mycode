@@ -95,7 +95,7 @@
 	  				<div class="web-right-new">
 	  					<c:forEach var="topic" items="${topics.newsTopics4Life}">
 		  					<div class="n_article_title float">
-		  						<a href="${realPath}/group/${topic.gid}/topic/${topic.topicId}" target="_blank">${topic.title}</a>
+		  						<a href="${realPath}/group/${topic.gid}/topic/${topic.topicId}" <c:if test='${topic.newPost==true}'>class="new"</c:if> target="_blank">${topic.title}</a>
 		  						<span class="recount">${topic.showCreateTime}</span>
 		  					</div>
 	  					</c:forEach>
@@ -108,7 +108,7 @@
 	  				<div class="web-right-it">
 	  					<c:forEach var="topic" items="${topics.newsTopics4IT}">
 		  					<div class="n_article_title n_article_title_float">
-		  						<a href="${realPath}/group/${topic.gid}/topic/${topic.topicId}" target="_blank">${topic.title}</a>
+		  						<a href="${realPath}/group/${topic.gid}/topic/${topic.topicId}" <c:if test='${topic.newPost==true}'>class="it-new"</c:if> target="_blank">${topic.title}</a>
 		  					</div>
 	  					</c:forEach>
 	  				</div>
@@ -122,7 +122,7 @@
 	  				<c:forEach var="topic" items="${topics.itTopics}">
 	  					<div class="n_article_title">
 		  					<a href="${realPath}/group/${topic.gid}" target="_blank" class="wo">[${topic.groupName}]</a>
-	  						<a href="${realPath}/group/${topic.gid}/topic/${topic.topicId}" target="_blank" class="it-title">${topic.title}</a>
+	  						<a href="${realPath}/group/${topic.gid}/topic/${topic.topicId}" target="_blank" class="it-title<c:if test='${topic.newPost==true}'> it-new</c:if>">${topic.title}</a>
 	  						<a href="${realPath}/user/${topic.userId}" class="user" target="_blank">${topic.userName}</a>
 	  					</div>
 	  				</c:forEach>
@@ -144,7 +144,7 @@
 	  				<c:forEach var="topic" items="${topics.lifeTopics}">
 	  					<div class="n_article_title">
 		  					<a href="${realPath}/group/${topic.gid}" target="_blank" class="wo">[${topic.groupName}]</a>
-	  						<a href="${realPath}/group/${topic.gid}/topic/${topic.topicId}" target="_blank" class="life-title">${topic.title}</a>
+	  						<a href="${realPath}/group/${topic.gid}/topic/${topic.topicId}" target="_blank" class="life-title<c:if test='${topic.newPost==true}'> life-new</c:if>">${topic.title}</a>
 	  						<a href="${realPath}/user/${topic.userId}" class="user" target="_blank">${topic.userName}</a>
 	  					</div>
 	  				</c:forEach>
