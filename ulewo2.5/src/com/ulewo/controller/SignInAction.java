@@ -104,6 +104,8 @@ public class SignInAction extends BaseAction {
 			List<Calendar4Signin> list = signInService.queryUserSigin(
 					this.getSessionUser(session), param);
 			resultMap.put("list", list);
+			resultMap.put("year", param.get("year"));
+			resultMap.put("maxYear", maxYear);
 			resultMap.put("result", ResultCode.SUCCESS.getCode());
 			return resultMap;
 		} catch (BusinessException e) {
