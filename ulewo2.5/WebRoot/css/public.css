@@ -94,7 +94,7 @@ textarea{overflow:auto;padding:0px;margin:0px;resize:none;border:none;font-size:
 .head_search .head_search_input{height:20px;margin-top:5px;width:198px;border:0px;float:left;margin-left:10px;}
 .head_search .head_search_btn{float:left;display:block;width:25px;height:30px;text-decoration:none;}
 
-a.btn{background:#4682B4;display:inline-block;text-align:center;padding:5px 5px 0px 5px;height:20px;color:#ffffff;text-decoration:none;font-size:13px;}
+a.btn{background:#4682B4;display:inline-block;text-align:center;padding:5px 5px 5px 5px;height:20px;color:#ffffff;text-decoration:none;font-size:13px;}
 a.btn:hover{background:#38678F}
 a.btn img{border:0px;}
 /***��½���ֲ�****/

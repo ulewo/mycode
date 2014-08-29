@@ -7,7 +7,14 @@ $(function(){
 	    	search();
 	    }  
 	});
-	
+	$("a.op_like").live("click",function(){
+		if(global.userId==""){
+			goto_login();
+			alert("请先登录");
+			return;
+		}
+		likeArticle($(this));
+	});
 });
 
 // 登录跳转
