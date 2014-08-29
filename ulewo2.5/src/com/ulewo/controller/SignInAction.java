@@ -68,7 +68,8 @@ public class SignInAction extends BaseAction {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
-			this.signInService.doSignIn(this.getSessionUser(session), "P");
+			modelMap = this.signInService.doSignIn(
+					this.getSessionUser(session), "P");
 			modelMap.put("result", ResultCode.SUCCESS.getCode());
 			return modelMap;
 		} catch (BusinessException e) {

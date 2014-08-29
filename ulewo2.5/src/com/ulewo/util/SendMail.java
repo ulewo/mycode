@@ -49,13 +49,23 @@ public class SendMail {
 		return address;
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
+		for (int i = 0; i < 100; i++) {
 
-		String[] emilAddress = { "308106363@qq.com" };
-		try {
-			sendEmail("ssss", "hello", emilAddress);
-		} catch (Exception e) {
-			e.printStackTrace();
+			Thread thread = new Thread(new Runnable() {
+				@Override
+				public void run() {
+					String[] emilAddress = {"1226290449@qq.com"};
+					try {
+						sendEmail("有乐窝一周精选", "hello", emilAddress);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
+			thread.sleep(1000);
+			thread.start();
 		}
+
 	}
 }

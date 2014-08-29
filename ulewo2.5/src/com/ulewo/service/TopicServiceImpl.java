@@ -45,6 +45,7 @@ import com.ulewo.model.TopicSurveyDtl;
 import com.ulewo.model.User;
 import com.ulewo.util.Constant;
 import com.ulewo.util.ImageUtils;
+import com.ulewo.util.SendMailThread;
 import com.ulewo.util.SimplePage;
 import com.ulewo.util.StringUtils;
 import com.ulewo.util.UlewoPaginationResult;
@@ -476,8 +477,61 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 		String keyStr = map.get("key");
 		String[] keys = keyStr.split(",");
 		List<Topic> list = this.topicMapper.selectTopicByTopicids(keys);
+		StringBuffer sb = new StringBuffer();
+		sb.append("<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">");
+		for(Topic data:list){
+			sb.append("<tr>");
+			sb.append("<td style=\"padding:10px;\"><a href=\"http://ulewo.com/group/"
+					+ data.getGid()
+					+ "/topic/"
+					+ data.getTopicId()
+					+ "\" style=\"color:#3E62A6;text-decoration:none;font-size:16px;\">"
+					+ data.getTitle() + "</a></td>");
+			sb.append("<td style=\"color:#3E62A6;text-decoration:none;font-size:14px;\">"
+					+ data.getUserName() + "</td>");
+			sb.append("<td style=\"color:#666666;font-size:14px;\">发表于"
+					+ data.getShowCreateTime() + "</td>");
+		sb.append("</tr>");
+		
+		sb.append("<tr>");
+			sb.append("<td colspan=\"3\" style=\"color:#666666;font-size:14px;padding:5px;\">"
+					+ data.getSummary() + "</td>");
+		sb.append("</tr>");
+			if (data.getImages() != null && data.getImages().length > 0) {
+				sb.append("<tr>");
+				sb.append("<td colspan=\"3\" style=\"padding-top:5px;\">");
+				for (int i = 0; i < data.getImages().length; i++) {
+					sb.append("<a href=\"http://ulewo.com/group/"
+							+ data.getGid()
+							+ "/topic/"
+							+ data.getTopicId()
+							+ "\" style=\"display:inline-block;margin-right:10px;padding-left:10px;\"><img src=\""
+							+ data.getImages()[i]
+							+ "\" style=\"max-width:100px;border:null\"></a>");
+				}
+				sb.append("</td></tr>");
+			}
+		sb.append("<tr>");
+			sb.append("<td colspan=\"3\"><div style=\"border-bottom: 1px dashed #B2B3B2;height:10px;\"></div></td>");
+		sb.append("</tr>");
+		}
+		sb.append("</table>");
+		try {
+			sendMail(sb.toString());
+		} catch (Exception e) {
+			throw new BusinessException(e.getMessage());
+		}
+
 		return list;
 	}
+
+	private void sendMail(String content) throws Exception {
+		List<String> emailAddress = new ArrayList<String>();
+		emailAddress.add("308106363@qq.com");
+		Thread thread = new Thread(new SendMailThread(content, emailAddress));
+		thread.start();
+	}
+
 
 	@Override
 	public Map<String, Object> findTopics4Api(Map<String, String> map)

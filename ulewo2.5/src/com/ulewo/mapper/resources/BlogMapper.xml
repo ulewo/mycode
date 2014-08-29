@@ -7,7 +7,7 @@
     <result column="category_id" property="categoryId" jdbcType="INTEGER" />
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="read_count" property="readCount" jdbcType="INTEGER" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
     <result column="key_word" property="keyWord" jdbcType="VARCHAR" />
     <result column="allow_comment" property="allowComment" jdbcType="VARCHAR" />
   </resultMap>
