@@ -27,9 +27,6 @@ function deleteLine(){
 }
 
 function showAddForm(){
-	if(toolbar.closeToolbarCon()){
-		toolbar.closeToolbarCon();
-	}
 	$(this).hide();
 	warm("hide","");
 	$("#add_article").show();

@@ -12,14 +12,6 @@
 var topicmanage={};
 topicmanage.gid = "${param.gid}";
 </script>
-<script type="text/javascript">
-<!--
-	window.UEDITOR_HOME_URL = "${realPath}/ueditor/";
-//-->
-</script>
-<script type="text/javascript" src="${realPath}/ueditor/ueditor.config.js?version=2.5.1"></script>
-<script type="text/javascript" src="${realPath}/ueditor/ueditor.all.js?version=2.5.1"></script>
-<script type="text/javascript" src="${realPath}/ueditor/ueditor.parse.js?version=2.5.1"></script>
 <script type="text/javascript" src="${realPath}/js/user.manage.saveblog.js?version=2.5"></script>
 </head>
 <body class="easyui-layout">

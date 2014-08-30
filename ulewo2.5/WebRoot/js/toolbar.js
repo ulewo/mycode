@@ -2,7 +2,9 @@ var toolbar = {};
 toolbar.msgFlag = 0
 $(function(){
 	$(document).click(function() {
-		toolbar.closeToolbarCon();
+		if($("#tool-bar-con").css("width")!="900px"){
+			toolbar.closeToolbarCon();
+		}
 	});
 	$(".tool-bar-item").bind("click",function(){
 		if($(this).attr("id")=="gototop"){
@@ -13,6 +15,10 @@ $(function(){
 		var width = "400px";
 		if($(this).attr("id")=="tool-post-topic"&&global.userId!=""){
 			width = "900px";
+		}
+		if($(this).attr("class").indexOf("cur-bar-item")!=-1){
+			toolbar.closeToolbarCon();
+			return;
 		}
 		$(".tool-bar-item").removeClass("cur-bar-item");
 		$(this).addClass("cur-bar-item");
@@ -31,7 +37,7 @@ $(function(){
 		$(this).removeClass("tool-bar-item-hover");
 	});
 	$("#bar-con-close a").click(function(){
-		$("#tool-bar-con").hide();
+		toolbar.closeToolbarCon();
 	});
 	toolbar.loadNotice();
 });

@@ -23839,7 +23839,7 @@ UE.plugin.register('autoupload', function (){
 // plugins/autosave.js
 UE.plugin.register('autosave', function (){
 
-    var me = this,
+    /*var me = this,
         //无限循环保护
         lastSaveTime = new Date(),
         //最小保存间隔时间
@@ -23963,7 +23963,7 @@ UE.plugin.register('autosave', function (){
                 ignoreContentChange:true
             }
         }
-    }
+    }*/
 
 });
 

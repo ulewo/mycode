@@ -257,14 +257,10 @@ dynamic.userId = "${userVo.userId}";
 				<div id="loading" ><img src="${realPath}/images/load.gif" ></div>
 				<div id="pager" class="pagination" style="margin-top:10px;"></div>
 		  	</div>
-		  	
-		  	<!--
-		  	
 		</div>
   </div>
-  -->
   <script type="text/javascript" src="${realPath}/js/talk.js?version=2.6"></script>
   <script type="text/javascript" src="${realPath}/js/user.home.js?version=2.5"></script>
- <!-- <%@ include file="../common/foot.jsp" %>-->
+  <%@ include file="../common/toolbar.jsp" %> 
 </body>
 </html>

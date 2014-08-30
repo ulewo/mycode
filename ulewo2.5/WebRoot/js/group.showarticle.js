@@ -1,4 +1,4 @@
-//var s = {"highlightJsUrl":window.UEDITOR_HOME_URL+"third-party/SyntaxHighlighter/shCore.js","highlightCssUrl":window.UEDITOR_HOME_URL+"third-party/SyntaxHighlighter/shCoreDefault.css"}
+//var s = {"highlightJsUrl":window.Ueditor4re_HOME_URL+"third-party/SyntaxHighlighter/shCore.js","highlightCssUrl":window.Ueditor4re_HOME_URL+"third-party/SyntaxHighlighter/shCoreDefault.css"}
 $(function() {
 	$("#new_article_p").bind("click",showAddForm);
 	$("#sub_article_btn").bind("click",submitForm);
@@ -674,7 +674,7 @@ function showAboutArticle(keyWord, gid) {
 
 /***************回复*******************/
 function showAddForm(){
-	editor.setContent("");
+	editor4re.setContent("");
 	$(this).hide();
 	warm("hide","");
 	$("#add_article").show();
@@ -692,9 +692,9 @@ function submitForm(){
 		return;
 	}
 	var infoError = false;
-	if(UE.utils.trim(editor.getContentTxt())==""){
+	if(UE.utils.trim(editor4re.getContentTxt())==""){
 		infoError = true;
-		if(editor.getContent().haveContent()){
+		if(editor4re.getContent().haveContent()){
 			infoError = false;
 		}
 	}

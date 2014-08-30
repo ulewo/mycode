@@ -9,12 +9,6 @@
 <meta name="description" content="${blog.title} -有乐窝">
 <meta name="keywords" content="${blog.title} -有乐窝">
 <%@ include file="../common/path.jsp" %>
-<script type="text/javascript">
-<!--
-window.UEDITOR_HOME_URL = "${realPath}/ueditor/";
-//-->
-</script>
-
 <script type="text/javascript" src="${realPath}/css/codehighlight/brush.js?version=2.5"></script>
 <link type="text/css" rel="stylesheet" href="${realPath}/css/codehighlight/shCore.css?version=2.5"/>
 <link type="text/css" rel="stylesheet" href="${realPath}/css/codehighlight/shThemeDefault.css?version=2.5"/>

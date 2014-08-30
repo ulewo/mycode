@@ -72,4 +72,3 @@ global.type = "${type}";
 		</ul>
 	</div>
 </div>
-<%@ include file="toolbar.jsp" %>

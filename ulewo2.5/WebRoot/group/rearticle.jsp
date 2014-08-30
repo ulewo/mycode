@@ -10,7 +10,7 @@
 <div class="form_editcontent">
 	<textarea name="content" id="editor"></textarea>
 	<script type="text/javascript">
-		var editor = UE.getEditor('editor');
+		var editor4re = UE.getEditor('editor');
 	</script>
 </div>
 <input type="hidden" name="gid"  value="${topic.gid}"/>

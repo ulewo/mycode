@@ -6,15 +6,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-<script type="text/javascript">
-<!--
-	window.UEDITOR_HOME_URL = "${realPath}/ueditor/";
-//-->
-</script>
-<script type="text/javascript" src="${realPath}/ueditor/ueditor.config.js?version=2.5.1"></script>
-<script type="text/javascript" src="${realPath}/ueditor/ueditor.all.js?version=2.5.1"></script>
-<script type="text/javascript" src="${realPath}/ueditor/ueditor.parse.js?version=2.5.1"></script>
 <script type="text/javascript" src="${realPath}/js/group.addarticle4fast.js?version=2.5"></script>
 <script type="text/javascript" src="${realPath}/js/calender/WdatePicker.js?version=2.5"></script>
 </head>
@@ -83,7 +74,7 @@
 		<div class="form_editcontent">
 			<textarea name="content" id="editor4fast"></textarea>
 			<script type="text/javascript">
-				window.UEDITOR_CONFIG.initialFrameHeight=400
+				window.UEDITOR_CONFIG.initialFrameHeight=300
 				var editor4fast = UE.getEditor('editor4fast');
 			</script>
 		</div>
