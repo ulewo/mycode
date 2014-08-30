@@ -283,7 +283,7 @@ public class SpiderServiceImpl implements SpidrService {
 			String link = "http://news.cnblogs.com"
 					+ a.getAttributeByName("href");
 			Spider spider = getSpiderContent4Cnblog(link);
-			if(null==spider){
+			if (null == spider) {
 				continue;
 			}
 			spider.setType(SpiderType.CNBLOG.getType());
@@ -295,23 +295,23 @@ public class SpiderServiceImpl implements SpidrService {
 
 	private Spider getSpiderContent4Cnblog(String url)
 			throws ClientProtocolException, IOException {
-		try{
+		try {
 			String html = SpiderUtil.getHtml(url);
 			HtmlCleaner htmlCleaner = new HtmlCleaner();
 			TagNode allNode = htmlCleaner.clean(html);
-			TagNode titleNode = allNode.getElementsByAttValue("id", "news_title",
-					true, true)[0];
+			TagNode titleNode = allNode.getElementsByAttValue("id",
+					"news_title", true, true)[0];
 			TagNode alink = titleNode.getElementsByName("a", true)[0];
 			String title = String.valueOf(alink.getText());
 
-			TagNode contentTag = allNode.getElementsByAttValue("id", "news_body",
-					true, true)[0];
+			TagNode contentTag = allNode.getElementsByAttValue("id",
+					"news_body", true, true)[0];
 			String content = htmlCleaner.getInnerHtml(contentTag);
 			Spider spider = new Spider();
 			spider.setContent(content);
 			spider.setTitle(title);
 			return spider;
-		}catch(Exception e){
+		} catch (Exception e) {
 		}
 		return null;
 	}
@@ -482,11 +482,8 @@ public class SpiderServiceImpl implements SpidrService {
 				if (src.contains("http")) {
 					newSrc = uploadImage(src);
 				}
-				if (StringUtils.isEmpty(newSrc)) {
-					deleteNode(allNode, tag);
-				} else {
+				if (!StringUtils.isEmpty(newSrc)) {
 					tag.setAttribute("src", newSrc);
-					// tag.getParent().setAttribute("style", "text-align:left");
 				}
 			}
 		}
