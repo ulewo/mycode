@@ -89,10 +89,13 @@ public class GroupMemberServiceImp extends GroupAuthorityService implements
 		if (StringUtils.isEmpty(gid) || !StringUtils.isNumber(gid)) {
 			throw new BusinessException("参数错误!");
 		}
-		this.checkGroupOpAuthority(Integer.parseInt(gid), userId);
+		Group group = this.checkGroupOpAuthority(Integer.parseInt(gid), userId);
 		String keyStr = map.get("key");
 		String[] keys = keyStr.split(",");
 		for (String key : keys) {
+			if (group.getGroupUserId().toString().equals(key)) {
+				throw new BusinessException("管理员不能被删除!");
+			}
 			map.put("userId", key);
 			int count = this.groupMemberMapper.delete(map);
 			if (count == 0) {
@@ -155,6 +158,7 @@ public class GroupMemberServiceImp extends GroupAuthorityService implements
 		int pageSize = StringUtils.isEmpty(map.get("rows")) ? 15 : Integer
 				.parseInt(map.get("rows"));
 		int count = groupMemberMapper.selectBaseInfoCount(map);
+		map.put("orderBy", "grade desc");
 		SimplePage page = new SimplePage(page_no, count, pageSize);
 		List<GroupMember> list = this.groupMemberMapper.selectBaseInfoList(map,
 				page);

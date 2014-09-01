@@ -19,14 +19,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ulewo.enums.JoinPerm;
 import com.ulewo.enums.LengthEnums;
+import com.ulewo.enums.MemberGrade;
+import com.ulewo.enums.MemberType;
 import com.ulewo.enums.PageSize;
 import com.ulewo.enums.PostPerm;
 import com.ulewo.exception.BusinessException;
 import com.ulewo.mapper.GroupMapper;
-import com.ulewo.mapper.TopicMapper;
+import com.ulewo.mapper.GroupMemberMapper;
 import com.ulewo.model.Group;
+import com.ulewo.model.GroupMember;
 import com.ulewo.model.SessionUser;
-import com.ulewo.model.Topic;
 import com.ulewo.util.Constant;
 import com.ulewo.util.SimplePage;
 import com.ulewo.util.StringUtils;
@@ -40,9 +42,10 @@ public class GroupServiceImpl implements GroupService {
 	private GroupMapper<Group> groupMapper;
 
 	@Resource
-	private TopicMapper<Topic> topicMapper;
+	private GroupMemberMapper<GroupMember> groupMemberMapper;
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BusinessException.class)
 	public Group createGroup(Map<String, String> map, SessionUser sessionUser)
 			throws BusinessException {
 		String groupName = map.get("groupName");
@@ -73,6 +76,7 @@ public class GroupServiceImpl implements GroupService {
 		if (!StringUtils.isNumber(map.get("categroyId"))) {
 			throw new BusinessException("二级分类不能为空");
 		}
+		String date = StringUtils.dateFormater.format(new Date());
 		Group group = new Group();
 		group.setGroupName(groupName);
 		group.setGroupDesc(groupDesc);
@@ -80,10 +84,19 @@ public class GroupServiceImpl implements GroupService {
 		group.setPostPerm(postPerm);
 		group.setGroupIcon(Constant.DEFALUTICON);
 		group.setGroupUserId(sessionUser.getUserId());
-		group.setCreateTime(StringUtils.dateFormater.format(new Date()));
+		group.setCreateTime(date);
 		group.setpCategroyId(Integer.parseInt(map.get("pCategroyId")));
 		group.setCategroyId(Integer.parseInt(map.get("categroyId")));
 		this.groupMapper.insert(group);
+
+		// 插入成员
+		GroupMember member = new GroupMember();
+		member.setGid(group.getGid());
+		member.setGrade(MemberGrade.ADMIN.getValue());
+		member.setJoinTime(date);
+		member.setMemberType(MemberType.ISMEMBER.getValue());
+		member.setUserId(sessionUser.getUserId());
+		groupMemberMapper.insert(member);
 		return group;
 	}
 
