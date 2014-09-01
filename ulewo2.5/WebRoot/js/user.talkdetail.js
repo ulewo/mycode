@@ -43,6 +43,7 @@ function loadBlastComment(page) {
 					for ( var i = 0; i < length; i++) {
 						new ReTalkItem(list[i]).item.appendTo($("#talklist"));
 					}
+					$("<div class='clear'></div>").appendTo($("#talklist"));
 				}else{
 					$("<div class='noinfo'>暂无评论，赶紧抢沙发!</div>").appendTo($("#talklist"));
 				}
