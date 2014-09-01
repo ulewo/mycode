@@ -45,7 +45,7 @@
     	c.userid,u.username,u.user_icon,'' title,c.blast_id id,c.create_time,'L' type,c.content summary,'' gid,(select count(1) from ulewo_blast_comment t where t.blast_id=c.blast_id) comments,c.image_url_small images
 	</sql>
 	<sql id="column4group" >
-    	c.group_userid userid,u.user_icon,u.username,c.group_name title,c.gid id,c.create_time,'W' type,c.group_desc summary,c.gid,0,'' images
+    	c.group_userid userid,u.username,u.user_icon,c.group_name title,c.gid id,c.create_time,'W' type,c.group_desc summary,c.gid,0,'' images
 	</sql>
 	
 	<select id="selectFocusAllDynamicCount" parameterType="java.util.Map" resultType="java.lang.Integer">

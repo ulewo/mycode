@@ -173,6 +173,8 @@ function DynamicItem(data){
 	}else if(data.type=="L"){
 		realPath = global.realPath+"/upload/";
 		$("<span>&nbsp;&nbsp;发表吐槽&nbsp;&nbsp;</span><a href='"+global.realPath+"/user/"+data.userId+"/blast/"+data.id+"' target='_blank'>查看</a>").appendTo(rightName);
+	}else if(data.type=="W"){
+		$("<span>&nbsp;&nbsp;创建了窝窝&nbsp;&nbsp;</span><a href='"+global.realPath+"/group/"+data.gid+"' target='_blank'>"+data.title+"</a>").appendTo(rightName);
 	}
 	var rightTime = $("<div class='right-tiem'><span>"+data.showCreateTime+"</span><span>&nbsp;&nbsp;评论("+data.comments+")</span></div>").appendTo(iconRight);
 	var summary = data.summary;
