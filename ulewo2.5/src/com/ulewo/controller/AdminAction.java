@@ -329,7 +329,7 @@ public class AdminAction extends BaseAction {
 		Map<String, Object> resultObj = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = this.builderParams(request, true);
-			List<Topic> list = this.topicService.hotTopics(map);
+			List<Topic> list = this.topicService.hotTopics(map, request);
 			resultObj.put("result", ResultCode.SUCCESS.getCode());
 			resultObj.put("list", list);
 			return resultObj;
@@ -509,10 +509,14 @@ public class AdminAction extends BaseAction {
 			this.spiderService.spiderArticle(type);
 			modelMap.put("result", ResultCode.SUCCESS.getCode());
 		} catch (BusinessException e) {
-			log.error(this.getClass().getName()+"->spider.action "+e.getMessage(),e);
+			log.error(
+					this.getClass().getName() + "->spider.action "
+							+ e.getMessage(), e);
 			modelMap.put("msg", e.getMessage());
 		} catch (Exception e) {
-			log.error(this.getClass().getName()+"->spider.action "+e.getMessage(),e);
+			log.error(
+					this.getClass().getName() + "->spider.action "
+							+ e.getMessage(), e);
 			modelMap.put("msg", "系统异常!");
 		}
 		return modelMap;

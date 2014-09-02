@@ -1,5 +1,10 @@
 package com.ulewo.service;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -9,6 +14,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -74,6 +80,8 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 	private LikeService likeService;
 	@Resource
 	private CollectionMapper<Collection> collectionMapper;
+	@Log
+	Logger log;
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = BusinessException.class)
@@ -162,6 +170,9 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 		String markStr = map.get("mark");
 		if (!StringUtils.isNumber(markStr)) {
 			throw new BusinessException("积分必须是数字!");
+		}
+		if (Integer.parseInt(markStr) > 20) {
+			throw new BusinessException("最大积分不能超过20!");
 		}
 		if (StringUtils.isNotEmpty(attached_file)
 				&& StringUtils.isNotEmpty(attached_file_name)) {
@@ -469,8 +480,8 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 	}
 
 	@Override
-	public List<Topic> hotTopics(Map<String, String> map)
-			throws BusinessException {
+	public List<Topic> hotTopics(Map<String, String> map,
+			HttpServletRequest request) throws BusinessException {
 		if (StringUtils.isEmpty(map.get("key"))) {
 			throw new BusinessException("参数错误!");
 		}
@@ -479,7 +490,7 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 		List<Topic> list = this.topicMapper.selectTopicByTopicids(keys);
 		StringBuffer sb = new StringBuffer();
 		sb.append("<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">");
-		for(Topic data:list){
+		for (Topic data : list) {
 			sb.append("<tr>");
 			sb.append("<td style=\"padding:10px;\"><a href=\"http://ulewo.com/group/"
 					+ data.getGid()
@@ -491,12 +502,12 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 					+ data.getUserName() + "</td>");
 			sb.append("<td style=\"color:#666666;font-size:14px;\">发表于"
 					+ data.getShowCreateTime() + "</td>");
-		sb.append("</tr>");
-		
-		sb.append("<tr>");
+			sb.append("</tr>");
+
+			sb.append("<tr>");
 			sb.append("<td colspan=\"3\" style=\"color:#666666;font-size:14px;padding:5px;\">"
 					+ data.getSummary() + "</td>");
-		sb.append("</tr>");
+			sb.append("</tr>");
 			if (data.getImages() != null && data.getImages().length > 0) {
 				sb.append("<tr>");
 				sb.append("<td colspan=\"3\" style=\"padding-top:5px;\">");
@@ -511,13 +522,13 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 				}
 				sb.append("</td></tr>");
 			}
-		sb.append("<tr>");
+			sb.append("<tr>");
 			sb.append("<td colspan=\"3\"><div style=\"border-bottom: 1px dashed #B2B3B2;height:10px;\"></div></td>");
-		sb.append("</tr>");
+			sb.append("</tr>");
 		}
 		sb.append("</table>");
 		try {
-			sendMail(sb.toString());
+			sendMail(sb.toString(), request);
 		} catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}
@@ -525,13 +536,57 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 		return list;
 	}
 
-	private void sendMail(String content) throws Exception {
+	private void sendMail(String content, HttpServletRequest request)
+			throws Exception {
 		List<String> emailAddress = new ArrayList<String>();
-		emailAddress.add("308106363@qq.com");
-		Thread thread = new Thread(new SendMailThread(content, emailAddress));
-		thread.start();
-	}
+		String path = request.getSession().getServletContext().getRealPath("/")
+				+ "email/" + "address.txt";
+		BufferedReader read = null;
+		InputStreamReader inr = null;
+		InputStream in = null;
+		try {
+			in = new FileInputStream(path);
+			inr = new InputStreamReader(in);
+			read = new BufferedReader(inr);
+			String qq = null;
+			while (null != (qq = read.readLine())) {
+				emailAddress.add(qq);
+				if (emailAddress.size() % 50 == 0) {
+					Thread thread = new Thread(new SendMailThread(content,
+							emailAddress));
+					thread.start();
+					log.error("已经发送了" + emailAddress.size() + "封邮件");
+					Thread.sleep(5000);
+					emailAddress.clear();
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (in != null) {
+				try {
+					in.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if (inr != null) {
+				try {
+					inr.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if (read != null) {
+				try {
+					read.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 
+	}
 
 	@Override
 	public Map<String, Object> findTopics4Api(Map<String, String> map)

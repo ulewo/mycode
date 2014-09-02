@@ -109,10 +109,11 @@ public interface TopicService {
 	 * 热点文章
 	 * 
 	 * @param map
+	 * @param request TODO
 	 * @return
 	 * @throws BusinessException
 	 */
-	public List<Topic> hotTopics(Map<String, String> map)
+	public List<Topic> hotTopics(Map<String, String> map, HttpServletRequest request)
 			throws BusinessException;
 
 	/**
