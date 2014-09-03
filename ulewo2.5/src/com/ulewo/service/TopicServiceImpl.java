@@ -731,9 +731,13 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 		topic.setSummary(summary);
 		if (!StringUtils.isEmpty(map.get("imgUrl"))) {
 			String[] images = map.get("imgUrl").split(",");
-			for (String image : images) {
+			int count = images.length;
+			if (count > 5) {
+				count = 5;
+			}
+			for (int i = 0; i < count; i++) {
 				content = "<div style='text-align:left;margin-top:5px;'><img src='"
-						+ image + "'/></div>" + content;
+						+ images[i] + "'/></div>" + content;
 			}
 		}
 		List<Integer> userIds = new ArrayList<Integer>();
