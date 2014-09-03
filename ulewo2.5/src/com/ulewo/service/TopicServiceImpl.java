@@ -511,7 +511,11 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 			if (data.getImages() != null && data.getImages().length > 0) {
 				sb.append("<tr>");
 				sb.append("<td colspan=\"3\" style=\"padding-top:5px;\">");
-				for (int i = 0; i < data.getImages().length; i++) {
+				int count = data.getImages().length;
+				if (count > 5) {
+					count = 5;
+				}
+				for (int i = 0; i < count; i++) {
 					sb.append("<a href=\"http://ulewo.com/group/"
 							+ data.getGid()
 							+ "/topic/"
@@ -731,13 +735,9 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 		topic.setSummary(summary);
 		if (!StringUtils.isEmpty(map.get("imgUrl"))) {
 			String[] images = map.get("imgUrl").split(",");
-			int count = images.length;
-			if (count > 5) {
-				count = 5;
-			}
-			for (int i = 0; i < count; i++) {
+			for (String image : images) {
 				content = "<div style='text-align:left;margin-top:5px;'><img src='"
-						+ images[i] + "'/></div>" + content;
+						+ image + "'/></div>" + content;
 			}
 		}
 		List<Integer> userIds = new ArrayList<Integer>();
