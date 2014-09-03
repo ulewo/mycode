@@ -1,7 +1,5 @@
 package com.ulewo.util;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 import javax.mail.Address;
@@ -23,9 +21,9 @@ import javax.mail.internet.MimeMessage;
  */
 public class SendMailThread implements Runnable {
 	private String content;
-	private List<String> emailAddress = new ArrayList<String>();
+	private String emailAddress;
 
-	public SendMailThread(String content, List<String> emailAddress) {
+	public SendMailThread(String content, String emailAddress) {
 		this.content = content;
 		this.emailAddress = emailAddress;
 	}
@@ -39,18 +37,15 @@ public class SendMailThread implements Runnable {
 		}
 	}
 
-	private Address[] getAddress(List<String> emilAddress) throws Exception {
-
-		Address[] address = new Address[emilAddress.size()];
-		for (int i = 0; i < address.length; i++) {
-			address[i] = new InternetAddress(emilAddress.get(i));
-		}
+	private static Address[] getAddress(String emilAddress) throws Exception {
+		Address[] address = new Address[1];
+		address[0] = new InternetAddress(emilAddress);
 		return address;
 	}
 
-	public void sendMail(String title, String content, List<String> emilAddress)
+	public void sendMail(String title, String content, String emilAddress)
 			throws Exception {
-		String host = "121.127.253.10"; // 本机smtp服务器
+		String host = "localhost"; // 本机smtp服务器
 		String from = "ulewo@ulewo.com"; // 邮件发送人的邮件地址
 		final String username = " "; // 发件人的邮件帐户
 		final String password = " "; // 发件人的邮件密码
@@ -60,7 +55,6 @@ public class SendMailThread implements Runnable {
 
 		// 添加smtp服务器属性
 		props.put("mail.smtp.host", host);
-		props.put("mail.smtp.localhost", "localHostAdress");
 		props.put("mail.smtp.auth", "true");
 
 		// 创建邮件会话

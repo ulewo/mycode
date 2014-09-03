@@ -538,7 +538,6 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 
 	private void sendMail(String content, HttpServletRequest request)
 			throws Exception {
-		List<String> emailAddress = new ArrayList<String>();
 		String path = request.getSession().getServletContext().getRealPath("/")
 				+ "email/" + "address.txt";
 		BufferedReader read = null;
@@ -550,15 +549,10 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 			read = new BufferedReader(inr);
 			String qq = null;
 			while (null != (qq = read.readLine())) {
-				emailAddress.add(qq);
-				if (emailAddress.size() % 50 == 0) {
 					Thread thread = new Thread(new SendMailThread(content,
-							emailAddress));
+ qq));
 					thread.start();
-					log.error("已经发送了" + emailAddress.size() + "封邮件");
 					Thread.sleep(5000);
-					emailAddress.clear();
-				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

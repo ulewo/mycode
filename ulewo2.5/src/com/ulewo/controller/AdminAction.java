@@ -509,14 +509,10 @@ public class AdminAction extends BaseAction {
 			this.spiderService.spiderArticle(type);
 			modelMap.put("result", ResultCode.SUCCESS.getCode());
 		} catch (BusinessException e) {
-			log.error(
-					this.getClass().getName() + "->spider.action "
-							+ e.getMessage(), e);
+			log.error(this.getClass().getName()+"->spider.action "+e.getMessage(),e);
 			modelMap.put("msg", e.getMessage());
 		} catch (Exception e) {
-			log.error(
-					this.getClass().getName() + "->spider.action "
-							+ e.getMessage(), e);
+			log.error(this.getClass().getName()+"->spider.action "+e.getMessage(),e);
 			modelMap.put("msg", "系统异常!");
 		}
 		return modelMap;
