@@ -4,10 +4,12 @@ function btnLoading(obj,html){
 }
 
 function lazyLoadImage(imageBody){
-	$("."+imageBody+" img").each(function(){
-		loadImag($(this));
-	});
-	
+	/*$("."+imageBody+" img").lazyload({ 
+		placeholder: global.realPath+"/images/imgloading.gif", 
+		effect: fadeIn, 
+		failurelimit: 10 
+	})
+	*/
 }
 
 function loadImag(myImage){

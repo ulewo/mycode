@@ -12,6 +12,7 @@ global.realPath="${realPath}";
 global.userId="${user.userId}";
 </script>
 <script src="${realPath}/js/jquery.min.js?version=2.5"></script>
+<script type="text/javascript" src="${realPath}/js/jquery.lazyload.js?version=2.5"></script>
 <script src="${realPath}/js/util.js?version=2.5"></script>
 <script src="${realPath}/js/common.js?version=2.5"></script>
 <script src="${realPath}/js/emotion.data.js?version=2.5"></script>
@@ -25,5 +26,13 @@ global.userId="${user.userId}";
 </script>
 <script type="text/javascript" src="${realPath}/ueditor/ueditor.config.js?version=2.5.1"></script>
 <script type="text/javascript" src="${realPath}/ueditor/ueditor.all.js?version=2.5.3"></script>
-
+<script>
+$(function(){
+	$("img").lazyload({ 
+		placeholder: global.realPath+"/images/grey.gif", 
+		effect:"fadeIn", 
+		failurelimit: 10 
+	})
+});
+</script>
 

@@ -85,7 +85,7 @@
 						<c:if test="${article.images!=''&&article.images!=null}">
 							<div class="article_pic">
 								<c:forEach items="${article.images}" var="tech" begin="0" end="2">
-									<div class="article_attachedimg"><a href="${realPath}/group/${gid}/topic/${article.topicId}"><img src="${realPath}/images/imgloading.gif" name="${tech}" style="max-width:150px;"/></a></div>
+									<div class="article_attachedimg"><a href="${realPath}/group/${gid}/topic/${article.topicId}"><img src="${tech}" name="${tech}" style="max-width:150px;"/></a></div>
 								</c:forEach>
 								<div class="clear"></div>
 							</div>

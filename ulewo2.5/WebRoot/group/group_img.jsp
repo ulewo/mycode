@@ -36,7 +36,7 @@
 			  			<div class="single_center">
 				  			<div class="single_tit"><a href="${realPath}/group/${article.gid}/topic/${article.topicId}" target="_blank">${article.title}</a></div>
 				  			<c:if test="${article.images!=''&&article.images!=null}">
-				  				<div class="single_img"><a href="${realPath}/group/${article.gid}/topic/${article.topicId}" target="_blank"><img src="${realPath}/images/imgloading.gif" name="${article.images[0]}" style="max-width:150px;"/></a></div>
+				  				<div class="single_img"><a href="${realPath}/group/${article.gid}/topic/${article.topicId}" target="_blank"><img src="${article.images[0]}" name="${article.images[0]}" style="max-width:150px;"/></a></div>
 				  			</c:if>
 				  			<div class="readInfo"><span class="read_tit">回复</span><span class="read_count">(${article.commentCount})</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="read_tit">阅读</span><span class="read_count">(${article.readCount})</span></div>
 			  			</div>
@@ -51,7 +51,7 @@
 			  			<div class="single_center">
 				  			<div class="single_tit"><a href="${realPath}/group/${article.gid}/topic/${article.gid}" target="_blank">${article.title}</a></div>
 				  			<c:if test="${article.images!=''&&article.images!=null}">
-				  				<div class="single_img"><a href="${realPath}/group/${article.gid}/topic/${article.topicId}" target="_blank"><img src="${realPath}/images/imgloading.gif" name="${article.images[0]}" style="max-width:150px;"/></a></div>
+				  				<div class="single_img"><a href="${realPath}/group/${article.gid}/topic/${article.topicId}" target="_blank"><img src="${article.images[0]}" name="${article.images[0]}" style="max-width:150px;"/></a></div>
 				  			</c:if>
 				  			<div class="readInfo"><span class="read_tit">回复</span><span class="read_count">(${article.commentCount})</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="read_tit">阅读</span><span class="read_count">(${article.readCount})</span></div>
 			  			</div>
@@ -66,7 +66,7 @@
 			  			<div class="single_center">
 				  			<div class="single_tit"><a href="${realPath}/group/${article.gid}/topic/${article.gid}" target="_blank">${article.title}</a></div>
 				  			<c:if test="${article.images!=''&&article.images!=null}">
-				  				<div class="single_img"><a href="${realPath}/group/${article.gid}/topic/${article.topicId}" target="_blank"><img src="${realPath}/images/imgloading.gif" name="${article.images[0]}" style="max-width:150px;"/></a></div>
+				  				<div class="single_img"><a href="${realPath}/group/${article.gid}/topic/${article.topicId}" target="_blank"><img src="${article.images[0]}" name="${article.images[0]}" style="max-width:150px;"/></a></div>
 				  			</c:if>
 				  			<div class="readInfo"><span class="read_tit">回复</span><span class="read_count">(${article.commentCount})</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="read_tit">阅读</span><span class="read_count">(${article.readCount})</span></div>
 			  			</div>
@@ -81,7 +81,7 @@
 			  			<div class="single_center">
 				  			<div class="single_tit"><a href="${realPath}/group/${article.gid}/topic/${article.gid}" target="_blank">${article.title}</a></div>
 				  			<c:if test="${article.images!=''&&article.images!=null}">
-				  				<div class="single_img"><a href="${realPath}/group/${article.gid}/topic/${article.topicId}" target="_blank"><img src="${realPath}/images/imgloading.gif" name="${article.images[0]}" style="max-width:150px;"/></a></div>
+				  				<div class="single_img"><a href="${realPath}/group/${article.gid}/topic/${article.topicId}" target="_blank"><img src="${article.images[0]}" name="${article.images[0]}" style="max-width:150px;"/></a></div>
 				  			</c:if>
 				  			<div class="readInfo"><span class="read_tit">回复</span><span class="read_count">(${article.commentCount})</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="read_tit">阅读</span><span class="read_count">(${article.readCount})</span></div>
 			  			</div>
