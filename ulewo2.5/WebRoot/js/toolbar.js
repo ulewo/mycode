@@ -148,10 +148,10 @@ toolbar.getUserInfo = function(barCon){
 			}
 			$('<div class="box_set_tit">个人设置</div>').appendTo(barCon);
 			var box_set = $('<div class="box_set"></div>').appendTo(barCon);
-			$('<a href="'+global.realPath+'/user/'+global.userId+'" target="_blank">个人中心</a>').appendTo(box_set);
-			$('<a href="'+global.realPath+'/manage/main#userIcon" target="_blank">修改头像</a>').appendTo(box_set);
-			$('<a href="'+global.realPath+'/manage/main#userInfo" target="_blank">修改个人信息</a>').appendTo(box_set);
-			$('<a href="'+global.realPath+'/manage/main#newBlog" target="_blank">写博客</a>').appendTo(box_set);
+			$('<a href="'+global.realPath+'/user/'+global.userId+'">个人中心</a>').appendTo(box_set);
+			$('<a href="'+global.realPath+'/manage/main#userIcon">修改头像</a>').appendTo(box_set);
+			$('<a href="'+global.realPath+'/manage/main#userInfo">修改个人信息</a>').appendTo(box_set);
+			$('<a href="'+global.realPath+'/manage/main#newBlog">写博客</a>').appendTo(box_set);
 		}
 	});
 }
@@ -214,6 +214,7 @@ toolbar.getNotice = function(barCon){
 				for(var i=0,_len=rows.length;i<_len;i++){
 					$("<div class='notice-item'><a href='"+global.realPath+"/manage/readNotice.action?id="+rows[i].id+"'>"+rows[i].title+"</a></div>").appendTo(barCon);
 				}
+				$("<a href='"+global.realPath+"/manage/main#notice' class='bigbtn'>进入消息中心</a>").appendTo(barCon);
 			}else{
 				$("<div class='noinfo' style='margin-top:200px;'>没有发现消息</div>").appendTo(barCon);
 			}
