@@ -13,6 +13,8 @@ var adminTopicHot={};
 adminTopicHot.gid ="${gid}";
 </script>
 <script type="text/javascript" src="${realPath}/js/admin.topic_hot.js?version=2.5"></script>
+<script type="text/javascript" src="${realPath}/js/ZeroClipboard.js?version=2.5"></script>
+
 </head>
 <body class="easyui-layout">
 	<div data-options="region:'north',border:false">
