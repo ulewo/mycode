@@ -135,7 +135,7 @@
 	  			<div class="lief-image">
 	  				<div class="life-image-con">
 		  				<c:forEach var="topic" items="${topics.imageTopics4Life}">
-		  					<img src="${topic.defImage}">
+		  					<a href="${realPath}/group/${topic.gid}/topic/${topic.topicId}" target="_blank"><img src="${topic.defImage}"></a>
 		  					<div class="image-title"><a href="${realPath}/group/${topic.gid}/topic/${topic.topicId}" target="_blank">${topic.title}</a></div>
 		  				</c:forEach>
 	  				</div>
