@@ -13,9 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.concurrent.Callable;
 
-import javax.servlet.AsyncContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -503,40 +501,4 @@ public class HomeAction extends BaseAction {
 		mv.setViewName("common/addarticlefast");
 		return mv;
 	}
-
-	@RequestMapping("/responseBody")
-	 public @ResponseBody Callable<String> responseBody() {  
-	 return new Callable<String>() {
-            public String call() throws Exception {
-				// Do some work..
-				Thread test = new Thread();
-				test.sleep(5000);
-				return "The String ResponseBody";
-            }  
-		};
-	}
-
-	@RequestMapping("/view")
-	public String callableWithView(HttpServletRequest request,
-			HttpServletResponse response) {
-		AsyncContext actx = request.startAsync(); // 设置异步调用的超时时长
-		actx.setTimeout(30 * 1000); // 启动异步调用的线程
-		System.out.println("开始时间:" + System.currentTimeMillis());
-		actx.start(new Executor());
-		System.out.println("结束时间:" + System.currentTimeMillis());
-		return "common/addarticlefast";
-	}
-}
-
-class Executor implements Runnable {
-
-	@Override
-	public void run() {
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
-
 }
