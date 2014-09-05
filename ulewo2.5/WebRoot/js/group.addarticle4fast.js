@@ -1,6 +1,7 @@
 var fastPost = {};
 fastPost.group={};
 $(function(){
+	fastPost.loadGroup();
 	$("#sub_article_btn4fast").bind("click",fastPost.submitForm);
 	$("#topicType4fast").find('input:radio[name="topicType"]').bind("click",fastPost.showSurvey);
 	$(".deleteIcon4fast").live("click",fastPost.deleteLine);
@@ -93,7 +94,7 @@ fastPost.addSurveyLine = function(){
 		alert("最多只能添加20个选项!");
 		return ;
 	}
-	$('<div class="survey_input add"><input type="text" name="surveyTitle"><a href="javascript:void(0)" class="deleteIcon4fast"><img src="'+global.realPath+'/images/icon-del.png"></a></div>').appendTo($("#surveyLine"));
+	$('<div class="survey_input add"><input type="text" name="surveyTitle"><a href="javascript:void(0)" class="deleteIcon4fast"><img src="'+global.realPath+'/images/icon-del.png"></a></div>').appendTo($("#surveyLine4fast"));
 }
 fastPost.deleteLine = function(){
 	$(this).parent().remove();
@@ -113,17 +114,6 @@ fastPost.cancelAdd=function(){
 	toolbar.closeToolbarCon();
 }
 
-/*********附件上传回调函数***********/
-function showFile(filePath){
-	$("#attached_file4fast").val(filePath);
-	$("<div class='file_con'><a href='javascript:void(0)'>"+$("#attached_file_name4fast").val()+"</a>&nbsp;&nbsp;<a href='javascript:fastPost.deleteFile()'>删除</a><img src='"+global.realPath+"/images/load.gif' id='file_deleting'></div>").appendTo($("#file_upload"));
-	$("#uploadFrame4fast").hide();
-}
-
-function setFileName(fileName){
-	$("#attached_file_name4fast").val(fileName);
-}
-
 fastPost.deleteFile = function(){
 	$("#file_deleting").show();
 	$.ajax({
@@ -141,7 +131,7 @@ fastPost.deleteFile = function(){
 			$("#file_deleting").hide();
 			if(data.result="200"){
 				$(".file_con").remove();
-				$("#uploadFrame4fast").show();
+				$("#uploadFrame").show();
 			}else{
 				alert("删除失败");
 			}
@@ -238,10 +228,22 @@ fastPost.submitForm = function(){
 			if(data.result=="200"){
 				$(".noinfo").remove();
 				tipsInfo("5分已到碗里");
-				toolbar.closeToolbarCon();
+				setTimeout(function(){parent.closeToolbarCon()},2000);
 			}else{
 				warm4fast("show",data.msg);
 			}
 		}
 	});
+}
+
+
+/*********附件上传回调函数***********/
+function showFile(filePath){
+	$("#attached_file").val(filePath);
+	$("<div class='file_con'><a href='javascript:void(0)'>"+$("#attached_file_name").val()+"</a>&nbsp;&nbsp;<a href='javascript:fastPost.deleteFile()'>删除</a><img src='"+global.realPath+"/images/load.gif' id='file_deleting'></div>").appendTo($("#file_upload"));
+	$("#uploadFrame").hide();
+}
+
+function setFileName(fileName){
+	$("#attached_file_name").val(fileName);
 }

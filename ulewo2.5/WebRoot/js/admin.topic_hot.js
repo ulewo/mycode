@@ -106,7 +106,6 @@ function TopicLine(data){
 	var titlecon = $("<div></div>").appendTo(item);
 	var title =$("<div style='display:inline-block;float:left;font-size:14px;'></div>").appendTo(titlecon);
 		$('<a style="text-decoration:none;float:left;display:inline-block;color:#3E62A6;" href="http://ulewo.com/group/'+data.gid+'/topic/'+data.topicId+'">'+data.title+'</a>').appendTo(title)	;
-		$('<span style="color:#B2B3B2;padding-left:10px;">2/54</span>').appendTo(title)	;
 		$('<div style="clear:both"></div>').appendTo(title)	;	
 	var user= $('<div style="display:inline-block;float:right;font-size:14px;"></div>').appendTo(titlecon);
 		$('<a href="http://ulewo.com/user/'+data.userId+'" style="color:#3E62A6">'+data.userName+'</a>').appendTo(user);
@@ -115,7 +114,11 @@ function TopicLine(data){
 	$('<div style="margin-top:10px;line-height:20px;color:#666666">'+data.summary+'</div>').appendTo(item);
 	if(data.images!=null){
 		var imageDiv = $('<div></div>').appendTo(item);
-		for(var i=0,length=data.images.length;i<length;i++){
+		var count = 5;
+		if(data.images.length>5){
+			count = 5;
+		}
+		for(var i=0,length=count;i<length;i++){
 			$('<div style="display:inline-block;border:1px solid #B2B3B2;padding:2px;margin-top:10px;max-height:100px;max-width:150px;margin-right:5px;"><a href="http://ulewo.com/group/'+data.gid+'/topic/'+data.topicId+'"><img src="'+data.images[i]+'" style="max-width:150px;max-height:100px;"></a></div>').appendTo(imageDiv);
 		}
 		$('<div style="clear:both"></div>').appendTo(imageDiv);

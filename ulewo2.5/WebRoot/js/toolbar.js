@@ -85,8 +85,9 @@ toolbar.getInfo = function(curObj){
 		if(window.location.href.indexOf("group")!='-1'){
 			cancelAdd();
 		}
-		fastPost.showAddForm();
-		fastPost.loadGroup();
+		$("#fastpost").attr("src",global.realPath +"/goFastPostTopic.action?"+new Date());
+		//fastPost.showAddForm();
+		//fastPost.loadGroup();
 		$("#bar-con-loading").hide();
 	}else if(curObj.attr("id")=="tool-group"){
 		if(barCon.html()==""){
@@ -224,6 +225,12 @@ toolbar.getNotice = function(barCon){
 }
 
 toolbar.closeToolbarCon = function(){
+	$('#tool-bar-con').hide();
+	$("#tool-bar-con").css({"width":"0px"});
+	$(".tool-bar-item").removeClass("cur-bar-item");
+}
+
+function closeToolbarCon(){
 	$('#tool-bar-con').hide();
 	$("#tool-bar-con").css({"width":"0px"});
 	$(".tool-bar-item").removeClass("cur-bar-item");

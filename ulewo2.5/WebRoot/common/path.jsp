@@ -19,13 +19,6 @@ global.userId="${user.userId}";
 <link rel="shortcut icon" type="image/x-icon" href="${realPath}/images/favicon.ico?version=2.5">
 <script type="text/javascript" src="${realPath}/js/common.head.js?version=2.7"></script>
 <script type="text/javascript" src="${realPath}/js/ulewo.common.js?version=2.5"></script>
-<script type="text/javascript">
-<!--
-	window.UEDITOR_HOME_URL = "${realPath}/ueditor/";
-//-->
-</script>
-<script type="text/javascript" src="${realPath}/ueditor/ueditor.config.js?version=2.5.1"></script>
-<script type="text/javascript" src="${realPath}/ueditor/ueditor.all.js?version=2.5.3"></script>
 <script>
 $(function(){
 	$("img").lazyload({ 

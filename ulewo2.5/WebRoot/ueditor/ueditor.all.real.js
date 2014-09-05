@@ -11114,18 +11114,21 @@ UE.commands['insertimage'] = {
                     (ci.alt && ci.alt != "" ? ' alt="' + ci.alt + '"' : '') +
                     (ci.hspace && ci.hspace != "0" ? ' hspace = "' + ci.hspace + '"' : '') +
                     (ci.vspace && ci.vspace != "0" ? ' vspace = "' + ci.vspace + '"' : '') + '/>';
-                str = '<p style="text-align:left;">' + str + '</p></br>';
+                str = '<p style="text-align:left;">' + str + '</p>';
                 html.push(str);
 
             } else {
                 for (var i = 0; ci = opt[i++];) {
-                    str = '<p ' + (ci['floatStyle'] == 'center' ? 'style="text-align: center" ' : '') + '><img src="' + ci.src + '" ' +
-                        (ci.width ? 'width="' + ci.width + '" ' : '') + (ci._src ? ' _src="' + ci._src + '" ' : '') +
-                        (ci.height ? ' height="' + ci.height + '" ' : '') +
-                        ' style="' + (ci['floatStyle'] && ci['floatStyle'] != 'center' ? 'float:' + ci['floatStyle'] + ';' : '') +
-                        (ci.border || '') + '" ' +
-                        (ci.title ? ' title="' + ci.title + '"' : '') + ' /></p>';
-                    html.push(str);
+                	 str = '<img style="max-width:900px" src="' + ci.src + '" ' + (ci._src ? ' _src="' + ci._src + '" ' : '') +
+                     (ci.width ? 'width="' + ci.width + '" ' : '') +
+                     (ci.height ? ' height="' + ci.height + '" ' : '') +
+                     (ci.title && ci.title != "" ? ' title="' + ci.title + '"' : '') +
+                     (ci.border && ci.border != "0" ? ' border="' + ci.border + '"' : '') +
+                     (ci.alt && ci.alt != "" ? ' alt="' + ci.alt + '"' : '') +
+                     (ci.hspace && ci.hspace != "0" ? ' hspace = "' + ci.hspace + '"' : '') +
+                     (ci.vspace && ci.vspace != "0" ? ' vspace = "' + ci.vspace + '"' : '') + '/>';
+                	 str = '<p style="text-align:left;">' + str + '</p>';
+                	 html.push(str);
                 }
             }
 
@@ -16839,7 +16842,7 @@ UE.plugins['fiximgclick'] = (function () {
             [0, 0, 1, 1]
         ];
 
-        Scale.prototype = {
+        Scale.prototype = {/*
             init: function (editor) {
                 var me = this;
                 me.editor = editor;
@@ -16928,6 +16931,7 @@ UE.plugins['fiximgclick'] = (function () {
                     default:
                         break;
                 }
+                 
             },
             updateTargetElement: function () {
                 var me = this;
@@ -17033,7 +17037,7 @@ UE.plugins['fiximgclick'] = (function () {
                     'left': iframePos.x + imgPos.x - me.editor.document.body.scrollLeft - editorPos.x - parseInt(resizer.style.borderLeftWidth) + 'px',
                     'top': iframePos.y + imgPos.y - me.editor.document.body.scrollTop - editorPos.y - parseInt(resizer.style.borderTopWidth) + 'px'
                 });
-            }
+            }*/
         }
     })();
 
@@ -29393,22 +29397,7 @@ UE.registerUI('message', function(editor) {
 
 // adapter/autosave.js
 UE.registerUI('autosave', function(editor) {
-    var timer = null,uid = null;
-    editor.on('afterautosave',function(){
-        clearTimeout(timer);
-
-        timer = setTimeout(function(){
-            if(uid){
-                editor.trigger('hidemessage',uid);
-            }
-            uid = editor.trigger('showmessage',{
-                content : editor.getLang('autosave.success'),
-                timeout : 2000
-            });
-
-        },2000)
-    })
-
+    
 });
 
 

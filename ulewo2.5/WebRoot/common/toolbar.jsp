@@ -36,7 +36,7 @@
 	<c:if test="${user!=null}">
 		<div class="tool-bar-con-sub" id="tool-user-con"></div>
 		<div class="tool-bar-con-sub" id="tool-post-topic-con">
-			<%@ include file="addarticlefast.jsp" %>
+			<iframe width="850" height="800" frameborder="0" id="fastpost"></iframe>
 		</div>
 		<div class="tool-bar-con-sub" id="tool-group-con"></div>
 		<div class="tool-bar-con-sub" id="tool-notice-con"></div>

@@ -17,6 +17,13 @@ topic.topicId = "${topic.topicId}";
 topic.gid="${topic.gid}";
 topic.topicType="${topic.topicType}";
 </script>
+<script type="text/javascript">
+<!--
+	window.UEDITOR_HOME_URL = "${realPath}/ueditor/";
+//-->
+</script>
+<script type="text/javascript" src="${realPath}/ueditor/ueditor.config.js?version=2.5.1"></script>
+<script type="text/javascript" src="${realPath}/ueditor/ueditor.all.real.js?version=2.5.3"></script>
 <script type="text/javascript" src="${realPath}/css/codehighlight/brush.js?version=2.5"></script>
 <link type="text/css" rel="stylesheet" href="${realPath}/css/codehighlight/shCore.css?version=2.5"/>
 <link type="text/css" rel="stylesheet" href="${realPath}/css/codehighlight/shThemeDefault.css?version=2.5"/>
@@ -79,6 +86,7 @@ topic.topicType="${topic.topicType}";
 			<div class="article_detail">
 				${topic.content}
 				<a name="attached"></a>
+				<div class="clear"></div>
 			</div>
 			<c:if test="${topic.file!=''&&topic.file!=null}">
 			<div class="article_attached">
