@@ -70,3 +70,9 @@ padding:10px 0;right:0;top:0;background:#535353;text-align:center;color:#fff;fon
 .bar-user-info-image{float:left;width:60px;}
 .bar-user-info-con{margin-left:70px;}
 .bar-user-info-d{margin-top:10px;}
+
+.clear{clear:both}
+a.btn{background:#4682B4;display:inline-block;text-align:center;padding:5px 5px 5px 5px;height:20px;color:#ffffff;text-decoration:none;font-size:13px;}
+a.btn:hover{background:#38678F}
+a.btn img{border:0px;}
+.form_sub_btn a.cancelbtn{background:#ABADB3;margin-left:10px;}

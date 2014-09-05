@@ -9,6 +9,13 @@
 <title>管理文章-有乐窝</title>
 <%@ include file="../common/easyui_common.jsp" %>
 <script type="text/javascript">
+<!--
+	window.UEDITOR_HOME_URL = "${realPath}/ueditor/";
+//-->
+</script>
+<script type="text/javascript" src="${realPath}/ueditor/ueditor.config.js?version=2.5.1"></script>
+<script type="text/javascript" src="${realPath}/ueditor/ueditor.all.real.js?version=2.5.3"></script>
+<script type="text/javascript">
 var topicmanage={};
 topicmanage.gid = "${param.gid}";
 </script>
