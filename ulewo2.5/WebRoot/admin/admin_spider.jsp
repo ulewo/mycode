@@ -20,6 +20,7 @@
 							<td><label for="xwg"><input id="xwg" name="type" type="radio" value="xwg">新闻哥</label></td>
 							<td><label for="cnblog"><input id="cnblog" name="type" type="radio" value="cnblog">博客园</label></td>
 							<td><label for="qilu"><input id="qilu" name="type" type="radio" value="qilu">齐鲁网</label></td>
+							<td><label for="gb"><input id="gb" name="type" type="radio" value="gb">逛吧</label></td>
 						</tr>
 						<tr>
 							<td colspan="10"><a href="javascript:adminSpider.spider()" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">开始抓取</a></td>
@@ -64,6 +65,12 @@
 										<option value="qilu_new">齐鲁网-资讯快报</option>
 										<option value="qilu_life">齐鲁网-生活百态</option>
 										<option value="qilu_star">齐鲁网-八卦明星</option>
+										<option value="gb_pic">逛吧-图片</option>
+										<option value="gb_game">逛吧-游戏</option>
+										<option value="gb_movie">逛吧-视频</option>
+										<option value="gb_topic">逛吧-文章</option>
+										<option value="gb_talk">逛吧-杂谈</option>
+										<option value="gb_joke">逛吧-搞笑</option>
 									</select>
 								</td>
 								<td>创建日期</td>

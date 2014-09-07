@@ -20,6 +20,18 @@ adminSpider.typeFormate = function(value,rowData,index){
 		return "齐鲁网-生活百态";
 	}else if(value=="qilu_star"){
 		return "齐鲁网-八卦明星";
+	}else if(value=="gb_pic"){
+		return "逛吧-图片";
+	}else if(value=="gb_game"){
+		return "逛吧-游戏";
+	}else if(value=="gb_movie"){
+		return "逛吧-视频";
+	}else if(value=="gb_topic"){
+		return "逛吧-文章";
+	}else if(value=="gb_joke"){
+		return "逛吧-搞笑";
+	}else if(value=="gb_talk"){
+		return "逛吧-杂谈";
 	}
 };
 
