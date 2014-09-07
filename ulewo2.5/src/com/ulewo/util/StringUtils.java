@@ -34,15 +34,15 @@ public class StringUtils {
 
 	private static final SimpleDateFormat dateFormater5 = new SimpleDateFormat(
 			"yyyy-MM-dd HH:mm");
-    private static final long ONE_MINUTE = 60000L;
-    private static final long ONE_HOUR = 3600000L;
-    private static final long ONE_DAY = 86400000L;
-    
-    private static final String JUST_NOW = "刚刚";
+	private static final long ONE_MINUTE = 60000L;
+	private static final long ONE_HOUR = 3600000L;
+	private static final long ONE_DAY = 86400000L;
+
+	private static final String JUST_NOW = "刚刚";
 	// private static final String ONE_SECOND_AGO = "秒前";
-    private static final String ONE_MINUTE_AGO = "分钟前";
-    private static final String ONE_HOUR_AGO = "小时前";
-    private static final String ONE_DAY_AGO = "天前";
+	private static final String ONE_MINUTE_AGO = "分钟前";
+	private static final String ONE_HOUR_AGO = "小时前";
+	private static final String ONE_DAY_AGO = "天前";
 
 	// MD5加密
 	public static String encodeByMD5(String originString) {
@@ -192,49 +192,50 @@ public class StringUtils {
 		if (delta == 0) {
 			delta = curDate.getTime() - date.getTime();
 		}
-        if (delta < 1L * ONE_MINUTE) {
-            //long seconds = toSeconds(delta);
-           // return (seconds <= 0 ? 1 : seconds) + ONE_SECOND_AGO;
-        	return JUST_NOW;
-        }
-        if (delta < 45L * ONE_MINUTE) {
-            long minutes = toMinutes(delta);
-            return (minutes <= 0 ? 1 : minutes) + ONE_MINUTE_AGO;
-        }
-        if (delta < 24L * ONE_HOUR) {
-            long hours = toHours(delta);
-            return (hours <= 0 ? 1 : hours) + ONE_HOUR_AGO;
-        }
-        if (delta < 48L * ONE_HOUR) {
+		if (delta < 1L * ONE_MINUTE) {
+			// long seconds = toSeconds(delta);
+			// return (seconds <= 0 ? 1 : seconds) + ONE_SECOND_AGO;
+			return JUST_NOW;
+		}
+		if (delta < 45L * ONE_MINUTE) {
+			long minutes = toMinutes(delta);
+			return (minutes <= 0 ? 1 : minutes) + ONE_MINUTE_AGO;
+		}
+		if (delta < 24L * ONE_HOUR) {
+			long hours = toHours(delta);
+			return (hours <= 0 ? 1 : hours) + ONE_HOUR_AGO;
+		}
+		if (delta < 48L * ONE_HOUR) {
 			return "昨天" + "  " + dateFormater4.format(date);
-        }
+		}
 		if (delta < 72L * ONE_HOUR) {
 			return "前天" + "  " + dateFormater4.format(date);
 		}
-        if (delta < 30L * ONE_DAY) {
-            long days = toDays(delta);
+		if (delta < 30L * ONE_DAY) {
+			long days = toDays(delta);
 			if (days > 2 && days <= 7) {
 				return days + ONE_DAY_AGO;
 			}
-        }
+		}
 		return dateFormater5.format(date);
 	}
-	
-    private static long toSeconds(long date) {
-        return date / 1000L;
-    }
 
-    private static long toMinutes(long date) {
-        return toSeconds(date) / 60L;
-    }
+	private static long toSeconds(long date) {
+		return date / 1000L;
+	}
 
-    private static long toHours(long date) {
-        return toMinutes(date) / 60L;
-    }
+	private static long toMinutes(long date) {
+		return toSeconds(date) / 60L;
+	}
 
-    private static long toDays(long date) {
-        return toHours(date) / 24L;
-    }
+	private static long toHours(long date) {
+		return toMinutes(date) / 60L;
+	}
+
+	private static long toDays(long date) {
+		return toHours(date) / 24L;
+	}
+
 	/**
 	 * 判断给定字符串时间是否为今日
 	 * 
@@ -347,8 +348,19 @@ public class StringUtils {
 	}
 
 	public static void main(String[] args) {
-		System.out.print(beforeNowDate("2014-04-08"));
-
+		try {
+			Calendar c = Calendar.getInstance();
+			c.add(Calendar.DAY_OF_MONTH, 1);
+			Date curDate = c.getTime();
+			SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
+			String curDatestr = format.format(curDate);
+			curDate = format.parse(curDatestr);
+			Date d = format.parse("2014.09.06");
+			boolean flag = d.after(curDate);
+			System.out.println(flag);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static boolean beforeNowDate(String date) {

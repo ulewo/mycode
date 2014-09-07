@@ -63,6 +63,13 @@ public class SpiderServiceImpl implements SpidrService {
 	@Resource
 	private TopicMapper<Topic> topicMapper;
 
+	private static final String GBTYPE_1 = "type-1.html";
+	private static final String GBTYPE_2 = "type-2.html";
+	private static final String GBTYPE_3 = "type-3.html";
+	private static final String GBTYPE_4 = "type-4.html";
+	private static final String GBTYPE_5 = "type-5.html";
+	private static final String GBTYPE_6 = "type-6.html";
+
 	@Override
 	public UlewoPaginationResult<Spider> querySpiderList(Map<String, String> map)
 			throws BusinessException {
@@ -83,6 +90,7 @@ public class SpiderServiceImpl implements SpidrService {
 	@Override
 	public void spiderArticle(String type) throws BusinessException {
 		try {
+
 			List<Spider> list = new ArrayList<Spider>();
 			if (SpiderType.OSCHINA.getType().equals(type)) { // 开源中国
 				list = getSpiderList4Osc("http://www.oschina.net/news/list");
@@ -91,13 +99,20 @@ public class SpiderServiceImpl implements SpidrService {
 			} else if (SpiderType.CNBLOG.getType().equals(type)) { // 博客园
 				list = getSpiderList4Cnblog(SpiderType.CNBLOG.getUrl());
 			} else if (SpiderType.QILU.getType().equals(type)) {
-				// list = getSpiderList4Qilu("http://ent.iqilu.com/film/news",
+				// list =
+				// getSpiderList4Qilu("http://ent.iqilu.com/film/news",
 				// "qilu_new");
 				list.addAll(getSpiderList4Qilu(
 						"http://news.iqilu.com/shehui/huahuashijie",
 						"qilu_life"));
 				// list.addAll(getSpiderList4Qilu(
 				// "http://ent.iqilu.com/star/dongtai", "qilu_star"));
+			} else if (SpiderType.GB.getType().equals(type)) {
+
+				list.addAll(getSpiderList4Gb(SpiderType.GB.getUrl()
+						+ "Index/page-1.html"));
+				list.addAll(getSpiderList4Gb(SpiderType.GB.getUrl()
+						+ "Index/page-2.html"));
 			}
 			if (list.size() > 0) {
 				SimplePage page = new SimplePage();
@@ -293,6 +308,66 @@ public class SpiderServiceImpl implements SpidrService {
 		return spiderList;
 	}
 
+	/**
+	 * 爬去逛吧
+	 * 
+	 * @param url
+	 * @return
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 */
+	private List<Spider> getSpiderList4Gb(String url)
+			throws ClientProtocolException, IOException {
+		String html = SpiderUtil.getHtml(url);
+		HtmlCleaner htmlCleaner = new HtmlCleaner();
+		TagNode allNode = htmlCleaner.clean(html);
+		TagNode[] divs = allNode.getElementsByAttValue("class", "media", true,
+				true);
+		List<Spider> spiderList = new ArrayList<Spider>();
+		String date = StringUtils.dateFormater2.format(new Date());
+		for (TagNode li : divs) {
+			try {
+				TagNode[] media_body = li.getElementsByAttValue("class",
+						"media-body", true, true);
+				if (media_body.length == 0) {
+					continue;
+				}
+				TagNode h4 = media_body[0].getElementsByName("h4", true)[0];
+				TagNode parta = h4.getElementsByName("a", true)[0];
+				TagNode linka = h4.getElementsByName("a", true)[1];
+				String partUrl = parta.getAttributeByName("href");
+				String part = partUrl.substring(partUrl.lastIndexOf("/") + 1);
+				String linkUrl = linka.getAttributeByName("href");
+				String link = "http://www.gb1.cn/" + linkUrl;
+				String title = linka.getAttributeByName("title");
+				Spider spider = getSpiderContent4Gb(link);
+				if (null == spider) {
+					continue;
+				}
+				if (GBTYPE_1.equals(part)) {
+					spider.setType(SpiderType.GBPIC.getType());
+				} else if (GBTYPE_2.equals(part)) {
+					spider.setType(SpiderType.GBGAME.getType());
+				} else if (GBTYPE_3.equals(part)) {
+					spider.setType(SpiderType.GBMOVIE.getType());
+				} else if (GBTYPE_4.equals(part)) {
+					spider.setType(SpiderType.GBTOPIC.getType());
+				} else if (GBTYPE_5.equals(part)) {
+					spider.setType(SpiderType.GBTALK.getType());
+				} else if (GBTYPE_6.equals(part)) {
+					spider.setType(SpiderType.GBJOKE.getType());
+				}
+				spider.setTitle(title);
+				spider.setCreateTime(date);
+				spiderList.add(spider);
+			} catch (Exception e) {
+				continue;
+			}
+
+		}
+		return spiderList;
+	}
+
 	private Spider getSpiderContent4Cnblog(String url)
 			throws ClientProtocolException, IOException {
 		try {
@@ -413,6 +488,32 @@ public class SpiderServiceImpl implements SpidrService {
 		spider.setContent(spider.getContent() + content);
 	}
 
+	private Spider getSpiderContent4Gb(String url)
+			throws ClientProtocolException, IOException {
+		try {
+			System.out.println("抓取的url" + url);
+			String html = SpiderUtil.getHtml(url);
+			HtmlCleaner htmlCleaner = new HtmlCleaner();
+			TagNode allNode = htmlCleaner.clean(html);
+			TagNode[] contentNodes = allNode.getElementsByAttValue("class",
+					"list-group", true, true);
+			if (contentNodes.length == 0) {
+				return null;
+			}
+			TagNode[] contentTags = contentNodes[0].getElementsByName("div",
+					true);
+			if (contentTags.length == 0) {
+				return null;
+			}
+			String content = htmlCleaner.getInnerHtml(contentTags[1]);
+			Spider spider = new Spider();
+			spider.setContent(content);
+			return spider;
+		} catch (Exception e) {
+		}
+		return null;
+	}
+
 	/**
 	 * 发布文章
 	 */
@@ -471,22 +572,32 @@ public class SpiderServiceImpl implements SpidrService {
 	 */
 	private Topic getTopicFromSpider(Spider spider) {
 		String content = spider.getContent();
+
 		HtmlCleaner htmlCleaner = new HtmlCleaner();
 		TagNode allNode = htmlCleaner.clean(content);
 		TagNode[] images = allNode.getElementsByName("img", true);
 		if (images.length > 0) {
 			for (TagNode tag : images) {
-				String src = tag.getAttributeByName("src");
+				try {
+					String src = tag.getAttributeByName("src");
+					String newSrc = null;
+					if (src.contains("http")) {
+						newSrc = uploadImage(src);
+					} else if (spider.getType().contains("gb")) {
+						newSrc = uploadImage(SpiderType.GB.getUrl() + src);
+					}
+					if (!StringUtils.isEmpty(newSrc)) {
+						tag.setAttribute("src", newSrc);
+					}
+				} catch (Exception e) {
 
-				String newSrc = null;
-				if (src.contains("http")) {
-					newSrc = uploadImage(src);
+					e.printStackTrace();
+					continue;
 				}
-				if (!StringUtils.isEmpty(newSrc)) {
-					tag.setAttribute("src", newSrc);
-				}
+
 			}
 		}
+
 		Topic topic = new Topic();
 		topic.setTitle(spider.getTitle());
 		topic.setContent(htmlCleaner.getInnerHtml(allNode.getChildTags()[1]));
@@ -648,15 +759,77 @@ public class SpiderServiceImpl implements SpidrService {
 				BufferedImage src = null;
 				try {
 					src = ImageIO.read(new File(sourcePath));
+					if (src.getHeight() > 2000) {
+						continue;
+					}
 					BufferedImage dst = new ScaleFilter2(120).filter(src, null);
 					ImageIO.write(dst, "JPEG", new File(smallPath));
-				} catch (IOException e) {
+				} catch (Exception e) {
 					e.printStackTrace();
-					break;
+					continue;
 				}
 				topicImageSmall.append(smallSavePath).append("|");
 			}
 		}
 		return topicImageSmall.toString();
+	}
+
+	public void sendTopicLocal(Map<String, String> map,
+			HttpServletRequest request) throws BusinessException {
+		this.request = request;
+		String gidStr = map.get("gid");
+		String categoryIdStr = map.get("categoryId");
+		if (!StringUtils.isNumber(gidStr)) {
+			throw new BusinessException("参数错误");
+		}
+		if (!StringUtils.isNumber(categoryIdStr)) {
+			throw new BusinessException("参数错误");
+		}
+		Map<String, String> param = new HashMap<String, String>();
+		param.put("type", map.get("type"));
+		List<Spider> resultList = spiderMapper.selectBaseInfoList(param,
+				new SimplePage());
+		List<Topic> topicList = new ArrayList<Topic>();
+		List<Spider> spiderList = new ArrayList<Spider>();
+		Spider spider = null;
+		for (int i = 0, _len = resultList.size(); i < _len; i++) {
+			spider = resultList.get(i);
+			Topic topic = getTopicFromSpider(spider);
+			topic.setGid(Integer.parseInt(gidStr));
+			topic.setCategoryId(Integer.parseInt(categoryIdStr));
+			String content = topic.getContent();
+			String summary = StringUtils.clearHtml(content);
+			if (summary.length() > LengthEnums.Length200.getLength()) {
+				summary = summary.substring(0,
+						LengthEnums.Length100.getLength())
+						+ "......";
+			}
+			topic.setSummary(summary);
+			topic.setUserId(10000);
+			String curDate = StringUtils.dateFormater.format(new Date());
+			topic.setCreateTime(curDate);
+			topic.setLastCommentTime(curDate);
+			topic.setTopicType(TopicTypeEnums.COMMON.getValue());
+			String topicImage = StringUtils.getImages(content);
+			topic.setTopicImage(topicImage);
+			String topicImageSmall = getTopicImageSmall(topicImage, request);
+			topic.setTopicImageSmall(topicImageSmall);
+			topicList.add(topic);
+			spiderList.add(spider);
+			if (i > 0 && i % 100 == 0) {
+				topicMapper.insertBatch(topicList);
+				spiderMapper.updateBatch(resultList,
+						SpiderStatus.STATUS1.getStatus());
+				topicList.clear();
+				spiderList.clear();
+			}
+			if (i == _len - 1) {
+				topicMapper.insertBatch(topicList);
+				spiderMapper.updateBatch(resultList,
+						SpiderStatus.STATUS1.getStatus());
+				topicList.clear();
+				spiderList.clear();
+			}
+		}
 	}
 }

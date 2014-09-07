@@ -5,8 +5,8 @@ package com.ulewo.model;
  * 
  * @author luo.hl
  * @date 2014-6-4 上午9:47:48
- * @version 0.1.0 
- * @copyright 
+ * @version 0.1.0
+ * @copyright
  */
 public class Spider {
 	private Integer id;
@@ -16,7 +16,7 @@ public class Spider {
 	private String images;
 	private String imagesSmall;
 	private String createTime;
-	private String status; // 初始 0  已经发布1
+	private String status; // 初始 0 已经发布1
 
 	public String getTitle() {
 		return title;

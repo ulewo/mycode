@@ -44,6 +44,7 @@ import com.ulewo.service.GroupService;
 import com.ulewo.service.LikeService;
 import com.ulewo.service.Log;
 import com.ulewo.service.SignInService;
+import com.ulewo.service.SpidrService;
 import com.ulewo.service.TopicService;
 import com.ulewo.service.UserService;
 import com.ulewo.util.Constant;
@@ -79,6 +80,9 @@ public class HomeAction extends BaseAction {
 
 	@Autowired
 	LikeService likeService;
+
+	@Autowired
+	SpidrService spidrService;
 
 	@Log
 	Logger log;
@@ -501,4 +505,19 @@ public class HomeAction extends BaseAction {
 		mv.setViewName("common/addarticlefast");
 		return mv;
 	}
+
+	@RequestMapping(value = "/spiderLocal")
+	public ModelAndView spiderLocal(HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView();
+		/*
+		 * try { spidrService.sendTopicLocal(this.builderParams(request, false),
+		 * request); } catch (UnsupportedEncodingException e) {
+		 * e.printStackTrace(); } catch (BusinessException e) {
+		 * e.printStackTrace(); }
+		 */
+		mv.setViewName("spiderok");
+		return mv;
+	}
+
 }

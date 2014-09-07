@@ -13,14 +13,19 @@ import com.ulewo.util.UlewoPaginationResult;
  * 
  * @author luo.hl
  * @date 2014-6-4 上午10:39:29
- * @version 0.1.0 
- * @copyright yougou.com 
+ * @version 0.1.0
+ * @copyright yougou.com
  */
 public interface SpidrService {
 
-	public UlewoPaginationResult<Spider> querySpiderList(Map<String, String> map) throws BusinessException;
+	public UlewoPaginationResult<Spider> querySpiderList(Map<String, String> map)
+			throws BusinessException;
 
 	public void spiderArticle(String type) throws BusinessException;
 
-	public void sendTopic(Map<String, String> map, HttpServletRequest request) throws BusinessException;
+	public void sendTopic(Map<String, String> map, HttpServletRequest request)
+			throws BusinessException;
+
+	public void sendTopicLocal(Map<String, String> map,
+			HttpServletRequest request) throws BusinessException;
 }
