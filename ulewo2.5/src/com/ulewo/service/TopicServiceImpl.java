@@ -140,6 +140,7 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 		List<Integer> userIds = new ArrayList<Integer>();
 		String formatContent = FormatAt.getInstance(Constant.TYPE_TALK)
 				.GenerateRefererLinks(userMapper, content, userIds);
+		formatContent = formatContent.replace("iframe", "embed");
 		topic.setContent(formatContent);
 		topic.setUserId(sessionUser.getUserId());
 		String curDate = StringUtils.dateFormater.format(new Date());
@@ -282,7 +283,7 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 		topic.setTitle(StringUtils.clearHtml(title));
 		topic.setCategoryId(Integer.parseInt(categoryId));
 		topic.setKeyWord(StringUtils.clearHtml(keyWord));
-		topic.setContent(content);
+		content = content.replace("iframe", "embed");
 		String summary = StringUtils.clearHtml(content);
 		if (summary.length() > LengthEnums.Length100.getLength()) {
 			summary = summary.substring(0, LengthEnums.Length100.getLength())
@@ -536,10 +537,9 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 			read = new BufferedReader(inr);
 			String qq = null;
 			while (null != (qq = read.readLine())) {
-					Thread thread = new Thread(new SendMailThread(content,
- qq));
-					thread.start();
-					Thread.sleep(5000);
+				Thread thread = new Thread(new SendMailThread(content, qq));
+				thread.start();
+				Thread.sleep(5000);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

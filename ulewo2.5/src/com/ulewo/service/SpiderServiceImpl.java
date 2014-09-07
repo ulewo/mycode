@@ -539,6 +539,8 @@ public class SpiderServiceImpl implements SpidrService {
 			topic.setGid(Integer.parseInt(gidStr));
 			topic.setCategoryId(Integer.parseInt(categoryIdStr));
 			String content = topic.getContent();
+			content = content.replace("iframe", "embed");
+			topic.setContent(content);
 			String summary = StringUtils.clearHtml(content);
 			if (summary.length() > LengthEnums.Length200.getLength()) {
 				summary = summary.substring(0,
