@@ -587,6 +587,8 @@ public class SpiderServiceImpl implements SpidrService {
 						newSrc = uploadImage(src);
 					} else if (spider.getType().contains("gb")) {
 						newSrc = uploadImage(SpiderType.GB.getUrl() + src);
+					} else {
+						newSrc = getRealPath() + "/images/grey.gif";
 					}
 					if (!StringUtils.isEmpty(newSrc)) {
 						tag.setAttribute("src", newSrc);

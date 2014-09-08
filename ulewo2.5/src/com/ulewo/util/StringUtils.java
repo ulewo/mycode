@@ -308,6 +308,8 @@ public class StringUtils {
 			for (TagNode node : nodeList) {
 				image = String.valueOf(node.getAttributeByName("src")).trim();
 				if (!image.contains("emotion")
+						&& !image.contains("grey.gif")
+						&& image.contains(".")
 						&& ArrayUtils.contains(static_ext,
 								image.substring(image.lastIndexOf(".") + 1))) {
 					sbf.append(image + "|");
