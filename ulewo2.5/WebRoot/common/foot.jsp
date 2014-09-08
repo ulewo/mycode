@@ -2,7 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <link rel="stylesheet"  href="${realPath}/css/foot.css" type="text/css"  />
-<%@ include file="toolbar.jsp" %>
 <div class="footArea">
 <div id="footlink">
 				<div class="space_host"><a href="http://www.fjjsp.com" target="_blank">网站主机提供商</a></div>
