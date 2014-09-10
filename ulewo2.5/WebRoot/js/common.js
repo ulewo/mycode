@@ -110,6 +110,7 @@ function tipsInfo(msg){
 			tips.css({"left":(width-tipswidth)/2});
 		}else{
 			tips = $("#tips");
+			tips.find(".tipscon").find("span").text(msg);
 			tips.show();
 			tips.css({"top":"400px"});
 		}
