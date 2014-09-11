@@ -55,7 +55,7 @@ function saveBlast(){
 		},
 		url : global.realPath+"/user/saveBlast.action",// 请求的action路径
 		success : function(data) {
-			btnLoaded($("#talkBtn"),"发布");
+			btnLoaded($("#talkBtn"),"吐槽");
 			if(data.result=="200"){
 				info("发布成功");
 				$(".noinfo").remove();

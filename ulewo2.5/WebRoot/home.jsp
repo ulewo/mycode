@@ -192,7 +192,7 @@
   			<div class="talk">
 	  			<div>
 	  				<div class="talkarea"><textarea id="talkcontent">今天你吐槽了吗？</textarea></div>
-	  				<div class="talkbtn"><a href="javascript:void(0)" id="talkBtn">吐槽</a><img src="images/load.gif" id="talkload"></div>
+	  				<div class="talkbtn"><a href="javascript:void(0)" id="talkBtn">吐槽</a></div>
 	  				<div class="clear"></div>
 	  			</div>
 	  			<input type="hidden" id="imgUrl">
