@@ -114,7 +114,7 @@ function TopicLine(data){
 	$('<div style="margin-top:10px;line-height:20px;color:#666666">'+data.summary+'</div>').appendTo(item);
 	if(data.images!=null){
 		var imageDiv = $('<div></div>').appendTo(item);
-		var count = 5;
+		var count = data.images.length;
 		if(data.images.length>5){
 			count = 5;
 		}
