@@ -12,8 +12,7 @@
 	window.UEDITOR_HOME_URL = "${realPath}/ueditor/";
 //-->
 </script>
-<script type="text/javascript" src="${realPath}/ueditor/ueditor.config.js?version=2.5.2"></script>
-<script type="text/javascript" src="${realPath}/ueditor/ueditor.all.real.js?version=2.5.3"></script>
+<%@ include file="ueditorcommon.jsp" %>
 <script type="text/javascript" src="${realPath}/js/group.addarticle4fast.js?version=2.5"></script>
 <script type="text/javascript" src="${realPath}/js/calender/WdatePicker.js?version=2.5"></script>
 <link rel="stylesheet"  href="${realPath}/css/toolbar.css?vsersion=2.5" type="text/css"  />
