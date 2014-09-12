@@ -12,7 +12,7 @@ global.realPath="${realPath}";
 global.userId="${user.userId}";
 </script>
 <script src="${realPath}/js/jquery.min.js?version=2.5"></script>
-<script type="text/javascript" src="${realPath}/js/jquery.lazyload.js?version=2.5"></script>
+<script type="text/javascript" src="${realPath}/js/jquery.lazyload.js?version=2.6"></script>
 <script src="${realPath}/js/util.js?version=2.5"></script>
 <script src="${realPath}/js/common.js?version=2.5"></script>
 <script src="${realPath}/js/emotion.data.js?version=2.5"></script>

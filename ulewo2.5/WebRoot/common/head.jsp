@@ -38,7 +38,7 @@ global.type = "${type}";
 <div id="top_search">
 	<div class="top_search_center" style="position:relative;">
 		<div class="top_logo">
-				<a href="http://www.ulewo.com"><img alt="www.ulewo.com" src="${realPath}/images/logo.png"></a>
+				<a href="http://www.ulewo.com"><img alt="www.ulewo.com" src="${realPath}/images/logo.png" noLazyload="true"></a>
 		</div>
 		<div class="top_search_con" style="float:right;margin-right:8px;">
 			<div class="search_con">
@@ -57,7 +57,6 @@ global.type = "${type}";
 				<a href="javascript:search('视频')">视频</a>
 			</div>
 		</div>
-		<div style="position:absolute;left:150px;top:-3px;"><a href="ulewoapp" style="border:0"><img src="${realPath}/images/adapp.png"></a></div>
 		<div class="clear"></div>
 	</div>
 </div>

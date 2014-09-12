@@ -26,7 +26,6 @@
         if(options) {
             $.extend(settings, options);
         }
-
         /* Fire one scroll event per scroll. Not one scroll event per image. */
         var elements = this;
         if ("scroll" == settings.event) {
@@ -56,6 +55,9 @@
         
         this.each(function() {
             var self = this;
+            if($(this).attr("noLazyload")){
+            	return;
+            }
 				/* Save original only if it is not defined in HTML. */
 				if (undefined == $(self).attr("original")) {
 					$(self).attr("original", $(self).attr("src"));
