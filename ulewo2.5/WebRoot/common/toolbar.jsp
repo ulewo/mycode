@@ -5,8 +5,7 @@
 <script src="${realPath}/js/toolbar.js?vsersion=2.6"></script>
 <div class="tool-bar" id="tool-bar">
 	<c:if test="${user!=null}">
-		<div class="tool-bar-item tool-user-info" id="tool-user">
-			<img src="${realPath}/upload/${user.userIcon}">
+		<div class="tool-bar-item tool-user-info" id="tool-user" style="height:50px;background:url(${realPath}/upload/${user.userIcon})">
 		</div>
 	</c:if>
 	<c:if test="${user==null}">
