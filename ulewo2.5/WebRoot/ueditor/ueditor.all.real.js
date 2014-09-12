@@ -23205,7 +23205,7 @@ UE.plugins['catchremoteimage'] = function () {
         function catchremoteimage(imgs, callbacks) {
         	var submitStr = imgs.join("ue_separate_ue");
             var opt = {
-                    'timeout': 60000, //单位：毫秒，回调请求超时设置。目标用户如果网速不是很快的话此处建议设置一个较大的数值
+                    'timeout': 600000, //单位：毫秒，回调请求超时设置。目标用户如果网速不是很快的话此处建议设置一个较大的数值
                     'onsuccess': callbacks["success"],
                     'onerror': callbacks["error"]
                 };
