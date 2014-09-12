@@ -12,7 +12,7 @@
 	window.UEDITOR_HOME_URL = "${realPath}/ueditor/";
 //-->
 </script>
-<script type="text/javascript" src="${realPath}/ueditor/ueditor.config.js?version=2.5.1"></script>
+<script type="text/javascript" src="${realPath}/ueditor/ueditor.config.js?version=2.5.2"></script>
 <script type="text/javascript" src="${realPath}/ueditor/ueditor.all.js?version=2.5.1"></script>
 <script type="text/javascript" src="${realPath}/ueditor/ueditor.parse.js?version=2.5.1"></script>
 <script type="text/javascript" src="${realPath}/js/group.addarticle.js?version=2.5"></script>
