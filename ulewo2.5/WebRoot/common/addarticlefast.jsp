@@ -29,6 +29,12 @@
 .result_info span,.result_info4fast span{float:left;margin-left:2px;padding-top:13px;}
 *{font-size:14px;}
 .file_con a{text-decoration:underline;color:#3E62A6}
+.loading_con{display:inline-block;background:#40B3E9;padding:3px;font-size:13px;z-index:1000;position:fixed;}
+.loading_info{display:inline-block;border:1px solid #494949;text-align:center;background:#ffffff;height:15px;padding:10px;}
+.loading_msg{display:inline-block;float:left;}
+.loading_icon{display:inline-block;float:left;}
+#remote_load{position:fixed;width:100%;height:900px;z-index:999;top:0px;left:0px;background-color: #ccc;opacity: 0.3;filter: alpha(opacity = 30);}
+
 </style>
 </head>
 	<body>
