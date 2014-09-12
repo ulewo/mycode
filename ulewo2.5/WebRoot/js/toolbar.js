@@ -1,6 +1,9 @@
 var toolbar = {};
 toolbar.msgFlag = 0
 $(function(){
+	
+	$(".tool-bar").css({"top":($(window).height()-283)/2,"display":"block"});
+	
 	$(document).click(function() {
 		if($("#tool-bar-con").css("width")!="900px"){
 			toolbar.closeToolbarCon();
@@ -252,6 +255,7 @@ toolbar.scollPostion = function(){//滚动条位置
 	   return { top: t, left: l, width: w, height: h };
 	};
 
+	/*
 $(window).bind("scroll",function(){
     var scollPos =  toolbar.scollPostion();
     if(scollPos.top>200){
@@ -262,3 +266,4 @@ $(window).bind("scroll",function(){
     
 });
 
+*/
