@@ -15,7 +15,7 @@
 	window.UEDITOR_HOME_URL = "${realPath}/ueditor/";
 //-->
 </script>
-<script type="text/javascript" src="${realPath}/ueditor/ueditor.config.js?version=2.5.1"></script>
+<script type="text/javascript" src="${realPath}/ueditor/ueditor.config.js?version=2.5.2"></script>
 <script type="text/javascript" src="${realPath}/ueditor/ueditor.all.real.js?version=2.5.3"></script>
 <link rel="stylesheet" type="text/css" href="${realPath}/css/group.index.css?version=2.5">
 <script type="text/javascript" src="${realPath}/js/group.index.js?version=2.5"></script>
