@@ -2,7 +2,7 @@ var toolbar = {};
 toolbar.msgFlag = 0
 $(function(){
 	
-	$(".tool-bar").css({"top":($(window).height()-283)/2,"display":"block"});
+	$(".tool-bar").css({"top":($(window).height()-300)/2,"display":"block"});
 	
 	$(document).click(function() {
 		if($("#tool-bar-con").css("width")!="900px"){

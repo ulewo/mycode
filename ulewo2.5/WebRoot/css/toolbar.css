@@ -1,4 +1,4 @@
-.tool-bar{z-index:10000;width:50px;height:283px;position:fixed;_position:absolute;
+.tool-bar{z-index:10000;width:50px;position:fixed;_position:absolute;
 padding:0;right:0;top:0;background:#535353;text-align:center;color:#fff;font-weight:normal;display:none;}
 .tool-bar-item{cursor:pointer;padding:10px 0px 10px 0px;text-align:center;border-bottom:1px solid #ffffff}
 .tool-bar-item-hover{background:#878787;}

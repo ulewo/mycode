@@ -31,7 +31,7 @@
 		<div class="tool-icon gototop-icon"></div>
 	</div>
 </div>
-<div style="position:fixed;right:5px;z-index:99;bottom:150px;width:90px;">
+<div style="position:fixed;right:5px;z-index:99;bottom:100px;width:90px;">
 		<img src="${realPath}/images/qrcode.png" noLazyload="true">
 		<div style="color:#494949;margin-top:10px;">扫描下载有乐窝客户端</div>
 </div>
