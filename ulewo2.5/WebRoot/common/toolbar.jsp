@@ -34,6 +34,7 @@
 <div style="position:fixed;right:5px;z-index:99;bottom:50px;width:90px;">
 		<img src="${realPath}/images/qrcode.png" noLazyload="true">
 		<div style="color:#494949;margin-top:10px;">扫描下载有乐窝客户端</div>
+		<div class="qq_qun">有乐窝交流群:<span style="color:#3E62A6">321576517</span></div>
 </div>
 <div class="tool-bar-con" id="tool-bar-con">
 	<c:if test="${user!=null}">

@@ -7,7 +7,7 @@
 .pm_emotions_bd img{border: 1px solid white;width: 22px;height: 22px;margin: 0;padding: 3px;}
 .pm_emotions_bd a:hover img{border: 1px solid #0095CD;}
 
-#talk_img_con{position:absolute;border:1px solid #CCCCCC;width:270px;background:white;display:none;}
+#talk_img_con{position:absolute;border:1px solid #CCCCCC;width:270px;background:white;display:none;z-index:100}
 .talk_img_tit{background:#F2F2F2;height:15px;padding:5px;}
 .talk_img_tit_tit{display:block;float:left;text-align:center;}
 .talk_img_tit_close{display:block;float:right;margin-right:5px;}

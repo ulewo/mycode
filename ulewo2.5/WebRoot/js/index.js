@@ -1,7 +1,8 @@
 $(function(){
 	lazyLoadImage("article_pic");
+	setEmotions();
 	$("#talkBtn").bind("click",saveBlast);
-	loadBlast();
+	//loadBlast();
 	$("#talkcontent").bind("focus",function(){
 		if($(this).val()=="今天你吐槽了吗？"){
 			$(this).val("");
@@ -18,8 +19,51 @@ $(function(){
 	loadSignInInfo();
 	//设置今天的日期
 	setTodayInfo();
+	
 })
 
+function scollPostion(){//滚动条位置
+	   var t, l, w, h;
+	   if (document.documentElement && document.documentElement.scrollTop) {
+	       t = document.documentElement.scrollTop;
+	       l = document.documentElement.scrollLeft;
+	       w = document.documentElement.scrollWidth;
+	       h = document.documentElement.scrollHeight;
+	   } else if (document.body) {
+	       t = document.body.scrollTop;
+	       l = document.body.scrollLeft;
+	       w = document.body.scrollWidth;
+	       h = document.body.scrollHeight;
+	   }
+	   return { top: t, left: l, width: w, height: h };
+	}
+
+$(window).bind("scroll",function(){
+    var scollPos =  scollPostion();
+    var height = 325;
+    console.info(scollPos.top);
+    if(scollPos.top<=height){
+    	$("#keepshow").css({"position":"inherit"});
+    }else{
+   	    $("#keepshow").css({"position":"fixed","top":"-8px","border":"0px"});
+    }
+});
+
+
+function setEmotions(){
+	var item_contents = $(".item_content");
+	var item;
+	var content;
+	for(var i=0,_len=item_contents.length;i<_len;i++){
+		item = item_contents.eq(i);
+		content = item.html();
+		for ( var emo in emotion_data) {
+			content = content.replace(emo, "&nbsp;<img src='" + global.realPath
+					+ "/images/emotions/" + emotion_data[emo] + "'>&nbsp;");
+		}
+		item.html(content);
+	}
+}
 function setTodayInfo(){
 	$("#tody_time").html(YYMMDD()+"("+solarDay2()+")");
 	$("#tody_festival").html(weekday()+"&nbsp;&nbsp;<span style='color:#C00;font-weight:bold'>"+solarDay3()+"</span>");

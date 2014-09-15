@@ -74,7 +74,7 @@ a.day_pic_link:hover{border:1px solid red;}
 .itemicon{width:37px;float:left;border:1px solid #9A9A9A;}
 #talkcontent{color:#A9A9A9;height:44px;}
 .main{margin-top:0px;}
-.main .itemcon{float:left;margin-left:10px;width:210px;font-size:13px;}
+.main .itemcon{float:left;margin-left:10px;width:190px;font-size:13px;}
 .item_user{color:#6CABE1}
 .item_user a{color:#6CABE1;text-decoration:underline;font-size:12px;}
 .main .item_content{color:#666;line-height:20px;font-size:12px;word-wrap:break-word;font-family:微软雅黑,Verdana,sans-serif,宋体}
@@ -149,12 +149,6 @@ a.day_pic_link:hover{border:1px solid red;}
 .n_article_title a.new{width: 255px;background:url("../images/new.gif") 0px 5px no-repeat;padding-left:30px;}
 
 
-.n_blog{margin-top:5px;height:40px;}
-.n_blog{float:left;}
-.n_blog .blog-title a{text-decoration:none;color:#373737;text-decoration: none;font-size: 13px;display: inline-block;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;width:200px;}
-.n_blog .blog-title a:hover{color:#CC0000}
-.n_blog_info{float:right;width:220px;margin-right:5px;text-align:right;}
-
 .n_article_title a.new_title_link{background:url("../images/new.gif") 0px 2px no-repeat;padding-left:28px;width: 270px;}
 
 #remarkist td{color:#0479C8;text-align:center;width:65px;height:30px}
@@ -220,10 +214,18 @@ td.month{font-size:16px;font-weight:bold}
 .group_blue{color:#3E62A6}
 .group_content{margin-top:10px;font-size:13px;line-height:20px;height:80px;overflow:hidden;}
 
-.blog_icon{float:left;width:37px;}
-.blog_icon img{width:37px;height:37px;}
-.blog-info{margin-left:45px;}
+.blog_icon{float:left;width:50px}
+.blog_icon img{width:50px;height:50px;}
+.blog-info{margin-left:55px;}
 .blog-user-info-user{display:inline-block;float:left;}
 .blog-user-info-time{display:inline-block;float:right;padding-right:5px;}
 .notice-title a{text-decoration:none;color:#373737;text-decoration: none;font-size: 13px;display: inline-block;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;width:250px;padding:3px;}
 .notice-title a:hover{color:#CC0000}
+
+.n_blog{margin-top:5px;height:50px;}
+.n_blog .blog-title a{text-decoration:none;color:#373737;text-decoration: none;font-size: 13px;display: inline-block;margin-top:3px;}
+.n_blog .blog-title a:hover{color:#CC0000}
+.n_blog_info{float:right;width:220px;margin-right:5px;text-align:right;}
+
+.blog-user-info-user a{color:#6CABE1}
+.blog-user-info-time{color:#B2B3B2}
