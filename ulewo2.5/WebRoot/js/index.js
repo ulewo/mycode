@@ -41,7 +41,6 @@ function scollPostion(){//滚动条位置
 $(window).bind("scroll",function(){
     var scollPos =  scollPostion();
     var height = 325;
-    console.info(scollPos.top);
     if(scollPos.top<=height){
     	$("#keepshow").css({"position":"inherit"});
     }else{
