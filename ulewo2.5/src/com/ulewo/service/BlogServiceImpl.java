@@ -270,7 +270,7 @@ public class BlogServiceImpl implements BlogService {
 
 	@Override
 	public List<Blog> queryLatestBlog4Index() throws BusinessException {
-		SimplePage page = new SimplePage(0, PageSize.SIZE15.getSize());
+		SimplePage page = new SimplePage(0, PageSize.SIZE8.getSize());
 		return this.blogMapper.selectBaseInfoList(null, page);
 	}
 

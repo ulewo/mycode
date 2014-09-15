@@ -123,12 +123,13 @@ public class HomeAction extends BaseAction {
 			List<Blog> blogList = blogService.queryLatestBlog4Index();
 			List<GroupCategory> groupCateGroy = groupCategoryService
 					.selectGroupCategoryList4Index();
-
+			List<Blast> blastList = blastService.queryLatestBlast();
 			// 网事
 
 			mv.addObject("groups", groups);
 			mv.addObject("blogList", blogList);
 			mv.addObject("groupCateGroy", groupCateGroy);
+			mv.addObject("blastList", blastList);
 			mv.setViewName("home");
 			return mv;
 		} catch (Exception e) {
