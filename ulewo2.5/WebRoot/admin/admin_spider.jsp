@@ -65,12 +65,7 @@
 										<option value="qilu_new">齐鲁网-资讯快报</option>
 										<option value="qilu_life">齐鲁网-生活百态</option>
 										<option value="qilu_star">齐鲁网-八卦明星</option>
-										<option value="gb_pic">逛吧-图片</option>
-										<option value="gb_game">逛吧-游戏</option>
-										<option value="gb_movie">逛吧-视频</option>
-										<option value="gb_topic">逛吧-文章</option>
-										<option value="gb_talk">逛吧-杂谈</option>
-										<option value="gb_joke">逛吧-搞笑</option>
+										<option value="gb">逛吧</option>
 									</select>
 								</td>
 								<td>创建日期</td>

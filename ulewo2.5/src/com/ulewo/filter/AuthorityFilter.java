@@ -69,7 +69,7 @@ public class AuthorityFilter implements Filter {
 
 			if (null == userObj && ("action".equals(type) || req_uri.contains("manage")) || null == userObj
 					&& req_uri.contains("admin") || req_uri.contains("admin")
-					&& ((SessionUser) userObj).getUserId().intValue() != 10000) {
+					&& ((SessionUser) userObj).getUserId().intValue() != 10001) {
 				response.sendRedirect(Constant.ERRORPAGE);
 				return;
 			}

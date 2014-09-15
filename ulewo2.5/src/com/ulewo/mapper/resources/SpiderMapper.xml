@@ -17,7 +17,7 @@
 	        	and create_time = #{param.createTime,jdbcType=VARCHAR}
 	      </if>
 	      <if test="null!=param.type and ''!=param.type" >
-	        	and type = #{param.type,jdbcType=VARCHAR}
+	        	and type  like '%${param.type}%'
 	      </if>
 	      <if test="null!=param.status and ''!=param.status" >
 	        	and status = #{param.status,jdbcType=VARCHAR}
