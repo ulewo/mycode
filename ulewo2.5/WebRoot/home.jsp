@@ -349,8 +349,9 @@
 											<span class="item_time_time">
 												${blast.showCreateTime}
 											</span>
+											
 											<a href="${realPath}/user/${blast.userId}/blast/${blast.blastId}" class="item_time_s">
-												评论：(${blast.commentCount})
+												评论(${blast.commentCount})
 											</a>
 											<c:if test="${blast.sourceFrom=='A'}">
 												<span class='item_time_s'>&nbsp;Android&nbsp;</span>
