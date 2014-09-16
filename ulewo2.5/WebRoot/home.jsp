@@ -9,24 +9,18 @@
 <meta name="description" content="有乐窝 大型服务社区，让你的生活更精彩 学习经验交流，网络文摘分享 ，游戏娱乐 ......">
 <meta name="keywords" content="小窝窝 大世界 小智慧 大财富 — 有乐窝">
 <%@ include file="common/path.jsp" %>
-<script type="text/javascript" src="${realPath}/js/koala.min.1.5.js"></script>
+<script type="text/javascript" src="${realPath}/js/jquery.jscrollpane.js?version=2.7"></script>
+<script type="text/javascript" src="${realPath}/js/koala.min.1.5.js?version=2.7"></script>
 <script type="text/javascript" src="${realPath}/js/index.js?version=2.5"></script>
 <script type="text/javascript" src="${realPath}/js/talk.js?version=2.7"></script>
 <script type="text/javascript" src="${realPath}/js/emotion.data.js?version=2.5"></script>
 <script type="text/javascript" src="${realPath}/js/date.js?version=2.5"></script>
-<script type="text/javascript" src="${realPath}/js/scrollbar.js?version=2.5"></script>
-<link rel="stylesheet" type="text/css" href="${realPath}/css/index.css?version=2.7">
+<link rel="stylesheet" type="text/css" href="${realPath}/css/index.css?version=2.8">
 <link rel="stylesheet" type="text/css" href="${realPath}/css/talk.css?version=2.6">
 <link href="${realPath}/css/datouwang.css" rel="stylesheet" type="text/css" />
+
 <style type="text/css">
-/* scr_con style */
-.scr_con {position:relative;height:320px;border:solid 1px #ddd;margin:5px auto;}
-#dv_scroll{position:absolute;height:310px;overflow:hidden;width:100%}
-#dv_scroll .Scroller-Container{width:240px;padding:0px 5px;}
-#dv_scroll_bar {position:absolute;right:0;top:10px;width:5px;height:310px;border-left:1px solid #B5B5B5;}
-#dv_scroll_bar .Scrollbar-Track{position:absolute;left:0;top:20px;width:5px;height:270px;}
-#dv_scroll_bar .Scrollbar-Handle{position:absolute;left:-5px;top:0;width:10px;height:29px;overflow:hidden;cursor:pointer;background:#38A3DB}
-#talklists{position:absolute;}
+.jp-container{width:260px;height:400px;position:relative;background:#fff;padding-bottom:10px;}
 </style>
 </head>
 <body>
@@ -106,7 +100,7 @@
 	  				<div class="web-right-new">
 	  					<c:forEach var="topic" items="${topics.newsTopics4Life}">
 		  					<div class="n_article_title float">
-		  						<a href="${realPath}/group/${topic.gid}/topic/${topic.topicId}" <c:if test='${topic.newPost==true}'>class="new"</c:if> target="_blank">${topic.title}</a>
+		  						<a href="${realPath}/group/${topic.gid}/topic/${topic.topicId}" title="${topic.title}" <c:if test='${topic.newPost==true}'>class="new"</c:if> target="_blank">${topic.title}</a>
 		  						<span class="recount">${topic.showCreateTime}</span>
 		  					</div>
 	  					</c:forEach>
@@ -119,7 +113,7 @@
 	  				<div class="web-right-it">
 	  					<c:forEach var="topic" items="${topics.newsTopics4IT}">
 		  					<div class="n_article_title n_article_title_float">
-		  						<a href="${realPath}/group/${topic.gid}/topic/${topic.topicId}" <c:if test='${topic.newPost==true}'>class="it-new"</c:if> target="_blank">${topic.title}</a>
+		  						<a href="${realPath}/group/${topic.gid}/topic/${topic.topicId}" title="${topic.title}" <c:if test='${topic.newPost==true}'>class="it-new"</c:if> target="_blank">${topic.title}</a>
 		  					</div>
 	  					</c:forEach>
 	  				</div>
@@ -133,7 +127,7 @@
 	  				<c:forEach var="topic" items="${topics.itTopics}">
 	  					<div class="n_article_title">
 		  					<a href="${realPath}/group/${topic.gid}" target="_blank" class="wo">[${topic.groupName}]</a>
-	  						<a href="${realPath}/group/${topic.gid}/topic/${topic.topicId}" target="_blank" class="it-title<c:if test='${topic.newPost==true}'> it-new</c:if>">${topic.title}</a>
+	  						<a href="${realPath}/group/${topic.gid}/topic/${topic.topicId}" target="_blank" title="${topic.title}" class="it-title<c:if test='${topic.newPost==true}'> it-new</c:if>">${topic.title}</a>
 	  						<a href="${realPath}/user/${topic.userId}" class="user" target="_blank">${topic.userName}</a>
 	  					</div>
 	  				</c:forEach>
@@ -146,7 +140,7 @@
 	  			<div class="lief-image">
 	  				<div class="life-image-con">
 		  				<c:forEach var="topic" items="${topics.imageTopics4Life}">
-		  					<a href="${realPath}/group/${topic.gid}/topic/${topic.topicId}" target="_blank"><img src="${topic.defImage}"></a>
+		  					<a href="${realPath}/group/${topic.gid}/topic/${topic.topicId}" title="${topic.title}" target="_blank"><img src="${topic.defImage}"></a>
 		  					<div class="image-title"><a href="${realPath}/group/${topic.gid}/topic/${topic.topicId}" target="_blank">${topic.title}</a></div>
 		  				</c:forEach>
 	  				</div>
@@ -155,7 +149,7 @@
 	  				<c:forEach var="topic" items="${topics.lifeTopics}">
 	  					<div class="n_article_title">
 		  					<a href="${realPath}/group/${topic.gid}" target="_blank" class="wo">[${topic.groupName}]</a>
-	  						<a href="${realPath}/group/${topic.gid}/topic/${topic.topicId}" target="_blank" class="life-title<c:if test='${topic.newPost==true}'> life-new</c:if>">${topic.title}</a>
+	  						<a href="${realPath}/group/${topic.gid}/topic/${topic.topicId}" title="${topic.title}" target="_blank" class="life-title<c:if test='${topic.newPost==true}'> life-new</c:if>">${topic.title}</a>
 	  						<a href="${realPath}/user/${topic.userId}" class="user" target="_blank">${topic.userName}</a>
 	  					</div>
 	  				</c:forEach>
@@ -336,52 +330,43 @@
 							</div> 
 			  			</div>
 			  			</c:if>
-						<div class="scr_con">
-							<div id="dv_scroll">
-								<div id="talklists" class="Scroller-Container">
-									<c:forEach var="blast" items="${blastList}">
-										<div class="talkitem">
-											<div class="itemicon">
-												<img src="${realPath}/upload/${blast.userIcon}" noLazyload="true" width="37">
-											</div>
-											<div class="itemcon">
-												<span class="item_user">
-													<a href="${realPath}/user/${blast.userId}">
-														${blast.userName}
-													</a>
-												</span>
-												<span class="item_content">
-													：${blast.content}
-												</span>
-												<span class="item_time">
-													<span class="item_time_time">
-														${blast.showCreateTime}
-													</span>
-													<a href="${realPath}/user/${blast.userId}/blast/${blast.blastId}" class="item_time_s">
-														(${blast.commentCount})
-													</a>
-													<c:if test="${blast.sourceFrom=='A'}">
-														<span class='item_time_s'>&nbsp;Android&nbsp;</span>
-													</c:if>
-													<c:if test="${blast.imageUrl!=''&&blast.imageUrl!=null}">
-														<a class='item_time_s' href="${realPath}/user/${blast.userId}/blast/${blast.blastId}"><img src='${realPath}/images/img.gif' border=0></a>
-													</c:if>
-													<a href="javascript:void(0)" opid="${blast.blastId}" type="L" disable="false" class="op_like ok_like_small item_time_s"
-														style="display: none;" title="赞">
-													</a>
-												</span>
-											</div>
-											<div class="clear">
-											</div>
-										</div>
-									</c:forEach>
+						<div id="talklists" class="jp-container">
+							<c:forEach var="blast" items="${blastList}">
+								<div class="talkitem">
+									<div class="itemicon">
+										<img src="${realPath}/upload/${blast.userIcon}" noLazyload="true" width="37">
+									</div>
+									<div class="itemcon">
+										<span class="item_user">
+											<a href="${realPath}/user/${blast.userId}">
+												${blast.userName}
+											</a>
+										</span>
+										<span class="item_content">
+											：${blast.content}
+										</span>
+										<span class="item_time">
+											<span class="item_time_time">
+												${blast.showCreateTime}
+											</span>
+											<a href="${realPath}/user/${blast.userId}/blast/${blast.blastId}" class="item_time_s">
+												(${blast.commentCount})
+											</a>
+											<c:if test="${blast.sourceFrom=='A'}">
+												<span class='item_time_s'>&nbsp;Android&nbsp;</span>
+											</c:if>
+											<c:if test="${blast.imageUrl!=''&&blast.imageUrl!=null}">
+												<a class='item_time_s' href="${realPath}/user/${blast.userId}/blast/${blast.blastId}"><img src='${realPath}/images/img.gif' border=0></a>
+											</c:if>
+											<a href="javascript:void(0)" opid="${blast.blastId}" type="L" disable="false" class="op_like ok_like_small item_time_s"
+												style="display: none;" title="赞">
+											</a>
+										</span>
+									</div>
+									<div class="clear">
+									</div>
 								</div>
-							</div><!--dv_scroll end-->
-							<div id="dv_scroll_bar">
-								<div id="dv_scroll_track" class="Scrollbar-Track">
-									<div class="Scrollbar-Handle"></div>
-								</div>
-							</div>
+							</c:forEach>
 						</div>
 			  			<div class='moretalk'><a href='${realPath}/blast'>看看大家都在吐槽什么&gt;&gt;</a></div>
 		  			</div>
