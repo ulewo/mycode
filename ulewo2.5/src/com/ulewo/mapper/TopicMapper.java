@@ -45,4 +45,5 @@ public interface TopicMapper<T> extends BaseMapper<T> {
 	public List<T> selectTopic4Index(@Param("pCategroyId") int pCategroyId,
 			@Param("page") SimplePage page);
 
+	public List<T> selectTopicList4Search(@Param("topicId") String topicId);
 }

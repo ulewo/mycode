@@ -287,4 +287,20 @@
        order by create_time desc limit #{page.start},#{page.end} 
   </select>
   
+  
+  
+   <select id ="selectTopicList4Search" resultMap="BaseResultMap" parameterType="java.util.Map">
+	  select 
+	  <include refid="Base_Column_List" />
+	  ,(select count(1) from ulewo_topic_comment tc where tc.topic_id = t.topic_id and  EXISTS(select 1 from ulewo_user u where u.userid=tc.userid)) commentCount
+	  ,u.username userName,u.user_icon userIcon
+	  ,c.name categoryName
+	  from ulewo_topic t inner join ulewo_user u on u.userid = t.userid
+	  where 
+	   <![CDATA[
+	  	topic_id > #{topicId,jdbcType=VARCHAR} 
+	  ]]>
+	  order by create_time desc
+  </select>
+  
 </mapper>

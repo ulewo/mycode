@@ -401,12 +401,12 @@ public class HomeAction extends BaseAction {
 				keyWord = URLDecoder.decode(keyWord, "utf-8");
 			}
 			String page = request.getParameter("page");
-			UlewoPaginationResult<?> result = null;
+			List  result = null;
 			Map<String, String> map = new HashMap<String, String>();
 			map.put("keyWord", keyWord);
 			map.put("page", page);
 			if (SearchTypeEnums.BLOG.getValue().equals(type)) {
-				result = blogService.queryLatestBlog(map);
+				/*result = blogService.queryLatestBlog(map);
 				List<?> list = result.getList();
 				for (Object t : list) {
 					Blog blog = (Blog) t;
@@ -414,17 +414,10 @@ public class HomeAction extends BaseAction {
 							"<span class='hilight'>" + keyWord + "</span>"));
 					blog.setSummary(blog.getSummary().replaceAll(keyWord,
 							"<span class='hilight'>" + keyWord + "</span>"));
-				}
+				}*/
 			} else if (SearchTypeEnums.TOPIC.getValue().equals(type)) {
-				result = topicService.findTopics(map);
-				List<?> list = result.getList();
-				for (Object t : list) {
-					Topic topic = (Topic) t;
-					topic.setTitle(topic.getTitle().replaceAll(keyWord,
-							"<span class='hilight'>" + keyWord + "</span>"));
-					topic.setSummary(topic.getSummary().replaceAll(keyWord,
-							"<span class='hilight'>" + keyWord + "</span>"));
-				}
+				map.put("realPath", session.getServletContext().getRealPath("/"));
+				result = topicService.searchByLucene(map);
 			} else if (SearchTypeEnums.GROUP.getValue().equals(type)) {
 
 			} else {

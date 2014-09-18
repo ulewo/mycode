@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import com.ulewo.exception.BusinessException;
+import com.ulewo.model.SearchResult;
 import com.ulewo.model.SessionUser;
 import com.ulewo.model.Topic;
 import com.ulewo.util.UlewoPaginationResult;
@@ -132,4 +133,7 @@ public interface TopicService {
 			HttpServletRequest request) throws BusinessException;
 
 	public Map<String, List<Topic>> getTopic4Index();
+	
+	
+	public List<SearchResult> searchByLucene(Map<String,String> map);
 }
