@@ -14,7 +14,7 @@
 <link type="text/css" rel="stylesheet" href="${realPath}/css/codehighlight/shThemeDefault.css?version=2.5"/>
 <link rel="stylesheet" type="text/css" href="${realPath}/css/user.blog.css?version=2.5">
 <link rel="stylesheet" type="text/css" href="${realPath}/css/talk.css?version=2.5">
-<script type="text/javascript" src="${realPath}/js/share.js?version=2.5"></script>
+<script type="text/javascript" src="${realPath}/js/share.js?version=2.6"></script>
 <script type="text/javascript">
 window.onload = function(){
 	var leftH = parseInt($('#left').height());

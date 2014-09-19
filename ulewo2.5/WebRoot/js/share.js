@@ -38,7 +38,6 @@ function share_qzone(title,url) {
 	var _url = "http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
 	param[0] = "url=" + encodeURIComponent(url);
 	param[1] = "title=" + title;
-	param[2] = "summary=" + title;
 	_url += param.join("&");
 	forward(_url);
 }
@@ -59,8 +58,7 @@ function share_tx_wb(title,url) {
 function share_renren(title,url) {
 	var param = [];
 	param[0] = "link=" + encodeURIComponent(url);
-	param[1] = "description=" + title;
-	param[2] = "title=" + title;
+	param[1] = "title=" + title;
 	var _url = "http://widget.renren.com/dialog/share?";
 	_url += param.join("&");
 	forward(_url);
