@@ -383,9 +383,6 @@
 						</div>	
 					</c:forEach>	
 	  		 	 </div>
-				 <div style="margin-top:10px;margin-bottom:10px;">
-			 		<a href="http://weibo.com/u8china" target="_blank"><img src="images/wb_logo.png"></a>
-			 	</div>
  			</div>
  			<!-- 
   		 	  -->
