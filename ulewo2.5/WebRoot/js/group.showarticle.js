@@ -43,7 +43,7 @@ $(function() {
 	
 	$(".share a").each(function(index){
 		$(this).bind("click",function(){
-			dispatche(index);
+			dispatche(index,summary);
 		});
 	});
 	

@@ -20,6 +20,7 @@ topic.topicType="${topic.topicType}";
 <script type="text/javascript">
 <!--
 	window.UEDITOR_HOME_URL = "${realPath}/ueditor/";
+	var summary = "${topic.summary}";
 //-->
 </script>
 <%@ include file="../common/ueditorcommon.jsp" %>
@@ -29,9 +30,10 @@ topic.topicType="${topic.topicType}";
 <script type="text/javascript" src="${realPath}/js/group.showarticle.js?version=2.5"></script>
 <script type="text/javascript" src="${realPath}/js/emotion.data.js?version=2.5"></script>
 <script type="text/javascript" src="${realPath}/js/ulewo.common.js?version=2.5"></script>
-<script type="text/javascript" src="${realPath}/js/share.js?version=2.5"></script>
+<script type="text/javascript" src="${realPath}/js/share.js?version=2.8"></script>
 <link rel="stylesheet" type="text/css" href="${realPath}/css/group.detail.css?version=2.5">
 <link rel="stylesheet" type="text/css" href="${realPath}/css/talk.css?version=2.5">
+
 </head>
 <body>
 	<%@ include file="../common/head.jsp" %>

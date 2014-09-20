@@ -1,6 +1,6 @@
 var share_title = "(分享自 有乐窝 www.ulewo.com)";
 
-function dispatche(_type) {
+function dispatche(_type,summary) {
 	var title = document.title+share_title;
 	var url = window.location.href;
 	switch (_type) {
@@ -10,7 +10,7 @@ function dispatche(_type) {
 		break;
 	case 1:
 		// 1=分享到QQ空间
-		share_qzone(title,url);
+		share_qzone(title,url,summary);
 		
 		break;
 	case 2:
@@ -33,11 +33,12 @@ function share_sina_wb(title,url) {
 	forward(_url);
 }
 // 分享到QQ空间
-function share_qzone(title,url) {
+function share_qzone(title,url,summary) {
 	var param = [];
 	var _url = "http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
 	param[0] = "url=" + encodeURIComponent(url);
 	param[1] = "title=" + title;
+	param[2] = "summary=" + summary;
 	_url += param.join("&");
 	forward(_url);
 }
