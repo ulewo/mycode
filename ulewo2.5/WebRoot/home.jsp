@@ -9,7 +9,6 @@
 <meta name="description" content="有乐窝 大型服务社区，让你的生活更精彩 学习经验交流，网络文摘分享 ，游戏娱乐 ......">
 <meta name="keywords" content="小窝窝 大世界 小智慧 大财富 — 有乐窝">
 <%@ include file="common/path.jsp" %>
-<script type="text/javascript" src="${realPath}/js/jquery.jscrollpane.js?version=2.7"></script>
 <script type="text/javascript" src="${realPath}/js/koala.min.1.5.js?version=2.7"></script>
 <script type="text/javascript" src="${realPath}/js/index.js?version=2.5"></script>
 <script type="text/javascript" src="${realPath}/js/talk.js?version=2.7"></script>
@@ -18,10 +17,6 @@
 <link rel="stylesheet" type="text/css" href="${realPath}/css/index.css?version=2.8">
 <link rel="stylesheet" type="text/css" href="${realPath}/css/talk.css?version=2.6">
 <link href="${realPath}/css/datouwang.css" rel="stylesheet" type="text/css" />
-
-<style type="text/css">
-.jp-container{width:260px;height:400px;position:relative;background:#fff;padding-bottom:10px;}
-</style>
 </head>
 <body>
 	<%@ include file="common/head.jsp" %>
@@ -330,7 +325,7 @@
 							</div> 
 			  			</div>
 			  			</c:if>
-						<div id="talklists" class="jp-container">
+						<div id="talklist" class="talklist">
 							<c:forEach var="blast" items="${blastList}">
 								<div class="talkitem">
 									<div class="itemicon">

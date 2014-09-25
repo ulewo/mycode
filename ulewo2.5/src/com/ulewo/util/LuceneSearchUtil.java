@@ -7,14 +7,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.document.StringField;
-import org.apache.lucene.document.TextField;
-import org.apache.lucene.document.Field.Store;
-
-import com.ulewo.model.SearchResult;
-
 public class LuceneSearchUtil {
 	 public static String getId(String path) {
 	        String storeId = "";
@@ -55,6 +47,7 @@ public class LuceneSearchUtil {
 	        return b;
 	    }
 	    
+	    /*
 	    public static SearchResult getIndexResult(Document doc,String keyWord) {
 	    	SearchResult result = new SearchResult();
 	    	result.setId(doc.get("id"));
@@ -82,4 +75,5 @@ public class LuceneSearchUtil {
             doc.add(new StringField("summary",result.getId(), Store.YES)); 
 	        return doc;
 	    }
+	    */
 }

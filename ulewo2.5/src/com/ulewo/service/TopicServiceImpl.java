@@ -1,7 +1,6 @@
 package com.ulewo.service;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,27 +14,10 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.index.DirectoryReader;
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.index.IndexWriterConfig;
-import org.apache.lucene.index.Term;
-import org.apache.lucene.search.BooleanClause;
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.ScoreDoc;
-import org.apache.lucene.search.TermQuery;
-import org.apache.lucene.search.TopDocs;
-import org.apache.lucene.store.Directory;
-import org.apache.lucene.store.FSDirectory;
-import org.apache.lucene.util.Version;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.ulewo.enums.AllowPostEnums;
 import com.ulewo.enums.CollectionTypeEnums;
@@ -70,7 +52,6 @@ import com.ulewo.model.TopicSurveyDtl;
 import com.ulewo.model.User;
 import com.ulewo.util.Constant;
 import com.ulewo.util.ImageUtils;
-import com.ulewo.util.LuceneSearchUtil;
 import com.ulewo.util.SendMailThread;
 import com.ulewo.util.SimplePage;
 import com.ulewo.util.StringUtils;
@@ -830,8 +811,10 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 		return resultMap;
 	}
 
+	
 	@Override
 	public List<SearchResult> searchByLucene(Map<String, String> map){
+		/*
 		List<SearchResult> resultList = new ArrayList<SearchResult>();
 		try{
 			String realPath = map.get("realPath");
@@ -893,6 +876,8 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		return resultList;
+		*/
+		return null;
 	}
+	
 }
