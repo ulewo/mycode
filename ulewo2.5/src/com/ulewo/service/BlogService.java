@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.ulewo.exception.BusinessException;
 import com.ulewo.model.Blog;
+import com.ulewo.model.SearchResult;
 import com.ulewo.model.SessionUser;
 import com.ulewo.util.UlewoPaginationResult;
 
@@ -76,4 +77,6 @@ public interface BlogService {
 	public Map<String,Object> queryBlogByUserId4Api(Map<String, String> map,Integer userId) throws BusinessException;
 
 	public Map<String,Object> blogDetail4Api(Map<String, String> map, Integer userId) throws BusinessException;
+	
+	public List<SearchResult> searchByLucene(Map<String, String> map);
 }

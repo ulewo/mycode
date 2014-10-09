@@ -1,5 +1,6 @@
 package com.ulewo.mapper;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
@@ -16,4 +17,7 @@ public interface BlogMapper<T> extends BaseMapper<T> {
     public T selectDetail(@Param("param") Map<String, String> map);
 
     public T selectBlogByBlogId(@Param("blogId") Integer blogId);
+    
+    public List<T> selectBlogList4Search(@Param("blogId") String blogId);
+    
 }

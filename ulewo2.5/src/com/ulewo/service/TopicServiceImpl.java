@@ -842,16 +842,14 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 	@Override
 	public List<SearchResult> searchByLucene(Map<String, String> map){
 		List<SearchResult> resultList = new ArrayList<SearchResult>();
+		Directory  dir = null;
 		try{
 			String realPath = map.get("realPath");
 			String idPath = realPath+"/search/topic.txt";
 			String indexPath = realPath+"/search/topic";
 			String id = LuceneSearchUtil.getId(idPath);
 			List<Topic> topicList =  topicMapper.selectTopicList4Search(id);
-			Directory  dir = FSDirectory.open(new File(indexPath)); 
-			if (IndexWriter.isLocked(dir)) {
-				IndexWriter.unlock(dir);
-			}
+			dir =  FSDirectory.open(new File(indexPath)); 
 		    if(topicList!=null&&!topicList.isEmpty()){
 			    Analyzer analyzer=new IKAnalyzer(true);  
 			    IndexWriterConfig iwc=new IndexWriterConfig(Version.LUCENE_42, analyzer); 
@@ -861,13 +859,14 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 		    			result.setId(topic.getTopicId()+"");
 		    			result.setTitle(topic.getTitle());
 		    			result.setExtendId(topic.getGid()+"");
+		    			result.setUserId(topic.getUserId()+"");
 		    			result.setUserName(topic.getUserName());
 		    			result.setCreateTime(topic.getShowCreateTime());
 		    			result.setReadCount(topic.getReadCount()+"");
 		    			result.setCommentCount(topic.getCommentCount()+"");
 		    			result.setContent(topic.getContent());
 		    			result.setSummary(topic.getSummary());
-		    		 writer.addDocument(getDocument(result));
+		    		 writer.addDocument(LuceneSearchUtil.getDocument(result));
 		    		 if(topic.getTopicId()!=null&&topic.getTopicId().intValue()>Integer.parseInt(id)){
 		    			 id = topic.getTopicId()+"";
 		              }
@@ -883,7 +882,7 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 	        
 	        String keyWord = map.get("keyWord");
 	        
-	        List<String> keyWords = ik_CAnalyzer(keyWord);
+	        List<String> keyWords = LuceneSearchUtil.ik_CAnalyzer(keyWord);
 	       
 	        BooleanQuery m_BooleanQuery = new BooleanQuery();
 	        Term term= null;
@@ -898,91 +897,25 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 	 	        m_BooleanQuery.add(query,BooleanClause.Occur.SHOULD);
 	        }
 	        //取前50条，不做分页
-	        TopDocs topdocs=searcher.search(m_BooleanQuery,50);
+	        TopDocs topdocs=searcher.search(m_BooleanQuery,PageSize.SIZE100.getSize());
 	        ScoreDoc[] scoreDocs=topdocs.scoreDocs;  
 	        for(int i=0; i < scoreDocs.length; i++) { 
 	            int doc = scoreDocs[i].doc;  
 	            Document document = searcher.doc(doc);  
-	            resultList.add(getIndexResult(document,keyWords));
+	            resultList.add(LuceneSearchUtil.getIndexResult(document,keyWords));
 	        }  
 	        reader.close();
 		}catch(Exception e){
 			e.printStackTrace();
+		}finally{
+			try {
+				if (dir != null && IndexWriter.isLocked(dir)) {
+					IndexWriter.unlock(dir);
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		return resultList;
 	}
-	
-	
-	 private  SearchResult getIndexResult(Document doc,List<String> keyWords) {
-	    	SearchResult result = new SearchResult();
-	    	result.setId(doc.get("id"));
-	    	String title = doc.get("title");
-	    	for(String key:keyWords){
-	    		title = title.replace(key, "<span class='hilight'>"+key+"</span>");
-	    	}
-	    	result.setTitle(title);
-	    	result.setExtendId(doc.get("extendId"));
-	    	result.setUserName(doc.get("userName"));
-	    	result.setCreateTime(doc.get("createTime"));
-	    	result.setReadCount(doc.get("readCount"));
-	    	result.setCommentCount(doc.get("commentCount"));
-	    	result.setContent(doc.get("content"));
-	    	result.setSummary(doc.get("summary"));
-	    	return result;
-	    }
-	    
-	 private  Document getDocument(SearchResult result) {
-	      Document doc = new Document();
-	      doc.add(new StringField("id",result.getId(), Store.YES));  
-	      doc.add(new StringField("title",result.getTitle(), Store.YES));  
-          doc.add(new StringField("extendId",result.getExtendId(), Store.YES));  
-          doc.add(new StringField("userName",result.getUserName(), Store.YES)); 
-          doc.add(new StringField("createTime",result.getCreateTime(), Store.YES));  
-          doc.add(new StringField("readCount",result.getReadCount(), Store.YES)); 
-          doc.add(new StringField("commentCount",result.getCommentCount(), Store.YES));  
-          doc.add(new TextField("content",result.getContent(), Store.YES)); 
-          doc.add(new StringField("summary",result.getSummary(), Store.YES)); 
-	        return doc;
-	    }
-	    
-	 private  List<String> ik_CAnalyzer(String str) {
-	    	List<String> result = new ArrayList<String>();
-	    	//构建IK分词器，使用smart分词模式
-			Analyzer analyzer = new IKAnalyzer(true);
-			//获取Lucene的TokenStream对象
-		    TokenStream ts = null;
-			try {
-				ts = analyzer.tokenStream("myfield", new StringReader(str));
-				//获取词元位置属性
-			    OffsetAttribute  offset = ts.addAttribute(OffsetAttribute.class); 
-			    //获取词元文本属性
-			     CharTermAttribute term = ts.addAttribute(CharTermAttribute.class);
-			    //获取词元文本属性
-			    TypeAttribute type = ts.addAttribute(TypeAttribute.class);
-			    
-			    
-			    //重置TokenStream（重置StringReader）
-				ts.reset(); 
-				//迭代获取分词结果
-				while (ts.incrementToken()) {
-				   result.add(term.toString());
-				}
-				//关闭TokenStream（关闭StringReader）
-				ts.end();   // Perform end-of-stream operations, e.g. set the final offset.
-
-			} catch (IOException e) {
-				e.printStackTrace();
-			} finally {
-				//释放TokenStream的所有资源
-				if(ts != null){
-			      try {
-					ts.close();
-			      } catch (IOException e) {
-					e.printStackTrace();
-			      }
-				}
-		    }
-			return result;
-	    }
-	
 }

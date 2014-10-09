@@ -6,6 +6,7 @@ public class SearchResult {
 	private String extendId;
 	private String type;
 	private String userName;
+	private String userId;
 	private String createTime;
 	private String readCount;
 	private String commentCount;
@@ -71,6 +72,12 @@ public class SearchResult {
 	}
 	public void setSummary(String summary) {
 		this.summary = summary;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	
 }

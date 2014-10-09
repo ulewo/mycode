@@ -147,4 +147,19 @@
     </set>
     where blog_id = #{blogId,jdbcType=INTEGER} and userid = #{userId,jdbcType=INTEGER}
   </update>
+  
+  <select id ="selectBlogList4Search" resultMap="BaseResultMap" parameterType="java.util.Map">
+	  select 
+	  <include refid="Base_Column_List" />
+	  ,b.content
+	  ,(select count(1) from ulewo_blog_comment tc where tc.blog_id = b.blog_id and  EXISTS(select 1 from ulewo_user u where u.userid=tc.userid)) commentCount
+	  ,u.username userName,u.user_icon userIcon
+	  from ulewo_blog b inner join ulewo_user u on u.userid = b.userid
+	  where 
+	   <![CDATA[
+	  	blog_id > #{blogId,jdbcType=VARCHAR} 
+	  ]]>
+	  order by create_time desc
+  </select>
+  
 </mapper>

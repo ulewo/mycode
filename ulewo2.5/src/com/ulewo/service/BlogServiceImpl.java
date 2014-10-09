@@ -13,9 +13,26 @@ import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.document.Document;
+import org.apache.lucene.index.DirectoryReader;
+import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.index.Term;
+import org.apache.lucene.search.BooleanClause;
+import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.ScoreDoc;
+import org.apache.lucene.search.TermQuery;
+import org.apache.lucene.search.TopDocs;
+import org.apache.lucene.store.Directory;
+import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.util.Version;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.ulewo.enums.CollectionTypeEnums;
 import com.ulewo.enums.LengthEnums;
@@ -32,9 +49,12 @@ import com.ulewo.model.Blog;
 import com.ulewo.model.Collection;
 import com.ulewo.model.Like;
 import com.ulewo.model.NoticeParam;
+import com.ulewo.model.SearchResult;
 import com.ulewo.model.SessionUser;
+import com.ulewo.model.Topic;
 import com.ulewo.model.User;
 import com.ulewo.util.Constant;
+import com.ulewo.util.LuceneSearchUtil;
 import com.ulewo.util.ScaleFilter2;
 import com.ulewo.util.SimplePage;
 import com.ulewo.util.StringUtils;
@@ -417,4 +437,86 @@ public class BlogServiceImpl implements BlogService {
 		result.put("blog", vo);
 		return result;
 	}
+
+	@Override
+	public List<SearchResult> searchByLucene(Map<String, String> map) {
+		List<SearchResult> resultList = new ArrayList<SearchResult>();
+		Directory  dir = null;
+		try{
+			String realPath = map.get("realPath");
+			String idPath = realPath+"/search/blog.txt";
+			String indexPath = realPath+"/search/blog";
+			String id = LuceneSearchUtil.getId(idPath);
+			List<Blog> blogList =  blogMapper.selectBlogList4Search(id);
+			dir = FSDirectory.open(new File(indexPath)); 
+			
+		    if(blogList!=null&&!blogList.isEmpty()){
+			    Analyzer analyzer=new IKAnalyzer(true);  
+			    IndexWriterConfig iwc=new IndexWriterConfig(Version.LUCENE_42, analyzer); 
+			    IndexWriter writer =  new IndexWriter(dir, iwc);
+		    	 for(Blog blog:blogList){
+		    			SearchResult result = new SearchResult();
+		    			result.setId(blog.getBlogId()+"");
+		    			result.setTitle(blog.getTitle());
+		    			result.setExtendId(blog.getUserId()+"");
+		    			result.setUserId(blog.getUserId()+"");
+		    			result.setUserName(blog.getUserName());
+		    			result.setCreateTime(blog.getShowCreateTime());
+		    			result.setReadCount(blog.getReadCount()+"");
+		    			result.setCommentCount(blog.getCommentCount()+"");
+		    			result.setContent(blog.getContent());
+		    			result.setSummary(blog.getSummary());
+		    		 writer.addDocument(LuceneSearchUtil.getDocument(result));
+		    		 if(blog.getBlogId()!=null&&blog.getBlogId().intValue()>Integer.parseInt(id)){
+		    			 id = blog.getBlogId()+"";
+		              }
+				 }
+		    	 if(Integer.parseInt(id)!=0){
+		    		 LuceneSearchUtil.writeId(idPath, id);
+	             }
+		    	 writer.close();
+		    }
+		    
+	        IndexReader reader=DirectoryReader.open(dir);  
+	        IndexSearcher searcher=new IndexSearcher(reader);
+	        
+	        String keyWord = map.get("keyWord");
+	        
+	        List<String> keyWords = LuceneSearchUtil.ik_CAnalyzer(keyWord);
+	       
+	        BooleanQuery m_BooleanQuery = new BooleanQuery();
+	        Term term= null;
+	        TermQuery query = null;
+	        for(String key:keyWords){
+	        	term=new Term("title",key);  
+	 	        query=new TermQuery(term);  
+	 	        m_BooleanQuery.add(query,BooleanClause.Occur.SHOULD);
+	 	        
+	 	        term=new Term("content",key);  
+	 	        query=new TermQuery(term);
+	 	        m_BooleanQuery.add(query,BooleanClause.Occur.SHOULD);
+	        }
+	        //取前50条，不做分页
+	        TopDocs topdocs=searcher.search(m_BooleanQuery,PageSize.SIZE100.getSize());
+	        ScoreDoc[] scoreDocs=topdocs.scoreDocs;  
+	        for(int i=0; i < scoreDocs.length; i++) { 
+	            int doc = scoreDocs[i].doc;  
+	            Document document = searcher.doc(doc);  
+	            resultList.add(LuceneSearchUtil.getIndexResult(document,keyWords));
+	        }  
+	        reader.close();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			try {
+				if (dir != null && IndexWriter.isLocked(dir)) {
+					IndexWriter.unlock(dir);
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return resultList;
+	}
+	
 }

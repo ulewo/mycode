@@ -35,6 +35,7 @@ import com.ulewo.model.Blast;
 import com.ulewo.model.Blog;
 import com.ulewo.model.Group;
 import com.ulewo.model.GroupCategory;
+import com.ulewo.model.SearchResult;
 import com.ulewo.model.Topic;
 import com.ulewo.model.User;
 import com.ulewo.service.AttachmentService;
@@ -406,20 +407,13 @@ public class HomeAction extends BaseAction {
 				keyWord = URLDecoder.decode(keyWord, "utf-8");
 			}
 			String page = request.getParameter("page");
-			List  result = null;
+			List<SearchResult>  result = null;
 			Map<String, String> map = new HashMap<String, String>();
 			map.put("keyWord", keyWord);
 			map.put("page", page);
 			if (SearchTypeEnums.BLOG.getValue().equals(type)) {
-				/*result = blogService.queryLatestBlog(map);
-				List<?> list = result.getList();
-				for (Object t : list) {
-					Blog blog = (Blog) t;
-					blog.setTitle(blog.getTitle().replaceAll(keyWord,
-							"<span class='hilight'>" + keyWord + "</span>"));
-					blog.setSummary(blog.getSummary().replaceAll(keyWord,
-							"<span class='hilight'>" + keyWord + "</span>"));
-				}*/
+				map.put("realPath", session.getServletContext().getRealPath("/"));
+				result = blogService.searchByLucene(map);
 			} else if (SearchTypeEnums.TOPIC.getValue().equals(type)) {
 				map.put("realPath", session.getServletContext().getRealPath("/"));
 				result = topicService.searchByLucene(map);
