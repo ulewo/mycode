@@ -30,11 +30,11 @@
 			<div>
 				<c:forEach var="blog" items="${result}">
 					<div class="item">
-						<div class="title"><a href="${realPath}/user/${blog.userId}/blog/${blog.blogId}" target="_blank">${blog.title}</a></div>
-						<div class="url">http://ulewo.com/user/${blog.userId}/blog/${blog.blogId}</div>
+						<div class="title"><a href="${realPath}/user/${blog.extendId}/blog/${blog.id}" target="_blank">${blog.title}</a></div>
+						<div class="url">http://ulewo.com/user/${blog.userId}/blog/${blog.id}</div>
 						<div class="summary">${blog.summary}</div>
 						<div class="info">
-							<span>${blog.userName}</span>
+							<span><a href="${realPath}/user/${blog.extendId}" target="_blank">${blog.userName}</a></span>
 							<span>${blog.createTime}</span>
 							<span>阅读(${blog.readCount})</span>
 							<span>回复(${blog.commentCount})</span>
@@ -54,7 +54,7 @@
 						<div class="url">http://ulewo.com/group/${article.extendId}/topic/${article.id}</div>
 						<div class="summary">${article.summary}</div>
 						<div class="info">
-							<span>${article.userName}</span>
+							<span><a href="${realPath}/user/${article.userId}" target="_blank">${article.userName}</a></span>
 							<span>${article.createTime}</span>
 							<span>阅读(${article.readCount})</span>
 							<span>回复(${article.commentCount})</span>
@@ -65,6 +65,9 @@
 					<div class="noinfo">没有搜索到任何结果！</div>
 				</c:if>
 			</div>
+		</c:if>
+		<c:if test="${!empty result}">
+		<div style="margin-top:10px;color:#D70003">搜索结果只展示最新的100条</div>
 		</c:if>
   </div>
   <script type="text/javascript">
