@@ -6,6 +6,22 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
+import org.apache.lucene.analysis.tokenattributes.OffsetAttribute;
+import org.apache.lucene.analysis.tokenattributes.TypeAttribute;
+import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field.Store;
+import org.apache.lucene.document.StringField;
+import org.apache.lucene.document.TextField;
+import org.wltea.analyzer.lucene.IKAnalyzer;
+
+import com.ulewo.model.SearchResult;
 
 public class LuceneSearchUtil {
 	 public static String getId(String path) {
@@ -46,34 +62,5 @@ public class LuceneSearchUtil {
 	        }
 	        return b;
 	    }
-	    
-	    /*
-	    public static SearchResult getIndexResult(Document doc,String keyWord) {
-	    	SearchResult result = new SearchResult();
-	    	result.setId(doc.get("id"));
-	    	result.setTitle(doc.get("title").replace(keyWord, "<span class='hilight'>"+keyWord+"</span>"));
-	    	result.setExtendId(doc.get("extendId"));
-	    	result.setUserName(doc.get("userName"));
-	    	result.setCreateTime(doc.get("createTime"));
-	    	result.setReadCount(doc.get("readCount"));
-	    	result.setCommentCount(doc.get("commentCount"));
-	    	result.setContent(doc.get("content"));
-	    	result.setSummary(doc.get("summary"));
-	    	return result;
-	    }
-	    
-	    public static Document getDocument(SearchResult result) {
-	        Document doc = new Document();
-	        doc.add(new TextField("id",result.getId(), Store.YES));  
-            doc.add(new StringField("title",result.getTitle(), Store.YES));  
-            doc.add(new StringField("extendId",result.getId(), Store.YES));  
-            doc.add(new StringField("userName",result.getTitle(), Store.YES)); 
-            doc.add(new StringField("createTime",result.getId(), Store.YES));  
-            doc.add(new StringField("readCount",result.getTitle(), Store.YES)); 
-            doc.add(new StringField("commentCount",result.getId(), Store.YES));  
-            doc.add(new TextField("content",result.getTitle(), Store.YES)); 
-            doc.add(new StringField("summary",result.getId(), Store.YES)); 
-	        return doc;
-	    }
-	    */
+	 
 }

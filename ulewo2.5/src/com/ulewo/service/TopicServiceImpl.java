@@ -1,10 +1,12 @@
 package com.ulewo.service;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -14,10 +16,34 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
+import org.apache.lucene.analysis.tokenattributes.OffsetAttribute;
+import org.apache.lucene.analysis.tokenattributes.TypeAttribute;
+import org.apache.lucene.document.Document;
+import org.apache.lucene.document.StringField;
+import org.apache.lucene.document.TextField;
+import org.apache.lucene.document.Field.Store;
+import org.apache.lucene.index.DirectoryReader;
+import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.index.Term;
+import org.apache.lucene.search.BooleanClause;
+import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.ScoreDoc;
+import org.apache.lucene.search.TermQuery;
+import org.apache.lucene.search.TopDocs;
+import org.apache.lucene.store.Directory;
+import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.util.Version;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import com.ulewo.enums.AllowPostEnums;
 import com.ulewo.enums.CollectionTypeEnums;
@@ -52,6 +78,7 @@ import com.ulewo.model.TopicSurveyDtl;
 import com.ulewo.model.User;
 import com.ulewo.util.Constant;
 import com.ulewo.util.ImageUtils;
+import com.ulewo.util.LuceneSearchUtil;
 import com.ulewo.util.SendMailThread;
 import com.ulewo.util.SimplePage;
 import com.ulewo.util.StringUtils;
@@ -814,7 +841,6 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 	
 	@Override
 	public List<SearchResult> searchByLucene(Map<String, String> map){
-		/*
 		List<SearchResult> resultList = new ArrayList<SearchResult>();
 		try{
 			String realPath = map.get("realPath");
@@ -823,9 +849,12 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 			String id = LuceneSearchUtil.getId(idPath);
 			List<Topic> topicList =  topicMapper.selectTopicList4Search(id);
 			Directory  dir = FSDirectory.open(new File(indexPath)); 
+			if (IndexWriter.isLocked(dir)) {
+				IndexWriter.unlock(dir);
+			}
 		    if(topicList!=null&&!topicList.isEmpty()){
 			    Analyzer analyzer=new IKAnalyzer(true);  
-			    IndexWriterConfig iwc=new IndexWriterConfig(Version.LUCENE_4_9, analyzer);  
+			    IndexWriterConfig iwc=new IndexWriterConfig(Version.LUCENE_42, analyzer); 
 			    IndexWriter writer =  new IndexWriter(dir, iwc);
 		    	 for(Topic topic:topicList){
 		    			SearchResult result = new SearchResult();
@@ -838,15 +867,15 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 		    			result.setCommentCount(topic.getCommentCount()+"");
 		    			result.setContent(topic.getContent());
 		    			result.setSummary(topic.getSummary());
-		    		 writer.addDocument(LuceneSearchUtil.getDocument(result));
-		    		 if(topic.getTopicId().intValue()>Integer.parseInt(id)){
+		    		 writer.addDocument(getDocument(result));
+		    		 if(topic.getTopicId()!=null&&topic.getTopicId().intValue()>Integer.parseInt(id)){
 		    			 id = topic.getTopicId()+"";
 		              }
 				 }
 		    	 if(Integer.parseInt(id)!=0){
 		    		 LuceneSearchUtil.writeId(idPath, id);
 	             }
-		    	writer.close();
+		    	 writer.close();
 		    }
 		    
 	        IndexReader reader=DirectoryReader.open(dir);  
@@ -854,30 +883,106 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 	        
 	        String keyWord = map.get("keyWord");
 	        
-	        Term termTitle=new Term("title",keyWord);  
-	        TermQuery queryTitle=new TermQuery(termTitle);  
-	        
-	        Term termContent=new Term("content",keyWord);  
-	        TermQuery queryContent=new TermQuery(termContent);
-	        
+	        List<String> keyWords = ik_CAnalyzer(keyWord);
+	       
 	        BooleanQuery m_BooleanQuery = new BooleanQuery();
-	        m_BooleanQuery.add(queryTitle,BooleanClause.Occur.SHOULD);
-	        m_BooleanQuery.add(queryContent,BooleanClause.Occur.SHOULD);
-	        
+	        Term term= null;
+	        TermQuery query = null;
+	        for(String key:keyWords){
+	        	term=new Term("title",key);  
+	 	        query=new TermQuery(term);  
+	 	        m_BooleanQuery.add(query,BooleanClause.Occur.SHOULD);
+	 	        
+	 	        term=new Term("content",key);  
+	 	        query=new TermQuery(term);
+	 	        m_BooleanQuery.add(query,BooleanClause.Occur.SHOULD);
+	        }
 	        //取前50条，不做分页
 	        TopDocs topdocs=searcher.search(m_BooleanQuery,50);
 	        ScoreDoc[] scoreDocs=topdocs.scoreDocs;  
-	        for(int i=0; i < scoreDocs.length; i++) {  
+	        for(int i=0; i < scoreDocs.length; i++) { 
 	            int doc = scoreDocs[i].doc;  
 	            Document document = searcher.doc(doc);  
-	            resultList.add(LuceneSearchUtil.getIndexResult(document,keyWord));
+	            resultList.add(getIndexResult(document,keyWords));
 	        }  
 	        reader.close();
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		*/
-		return null;
+		return resultList;
 	}
+	
+	
+	 private  SearchResult getIndexResult(Document doc,List<String> keyWords) {
+	    	SearchResult result = new SearchResult();
+	    	result.setId(doc.get("id"));
+	    	String title = doc.get("title");
+	    	for(String key:keyWords){
+	    		title = title.replace(key, "<span class='hilight'>"+key+"</span>");
+	    	}
+	    	result.setTitle(title);
+	    	result.setExtendId(doc.get("extendId"));
+	    	result.setUserName(doc.get("userName"));
+	    	result.setCreateTime(doc.get("createTime"));
+	    	result.setReadCount(doc.get("readCount"));
+	    	result.setCommentCount(doc.get("commentCount"));
+	    	result.setContent(doc.get("content"));
+	    	result.setSummary(doc.get("summary"));
+	    	return result;
+	    }
+	    
+	 private  Document getDocument(SearchResult result) {
+	      Document doc = new Document();
+	      doc.add(new StringField("id",result.getId(), Store.YES));  
+	      doc.add(new StringField("title",result.getTitle(), Store.YES));  
+          doc.add(new StringField("extendId",result.getExtendId(), Store.YES));  
+          doc.add(new StringField("userName",result.getUserName(), Store.YES)); 
+          doc.add(new StringField("createTime",result.getCreateTime(), Store.YES));  
+          doc.add(new StringField("readCount",result.getReadCount(), Store.YES)); 
+          doc.add(new StringField("commentCount",result.getCommentCount(), Store.YES));  
+          doc.add(new TextField("content",result.getContent(), Store.YES)); 
+          doc.add(new StringField("summary",result.getSummary(), Store.YES)); 
+	        return doc;
+	    }
+	    
+	 private  List<String> ik_CAnalyzer(String str) {
+	    	List<String> result = new ArrayList<String>();
+	    	//构建IK分词器，使用smart分词模式
+			Analyzer analyzer = new IKAnalyzer(true);
+			//获取Lucene的TokenStream对象
+		    TokenStream ts = null;
+			try {
+				ts = analyzer.tokenStream("myfield", new StringReader(str));
+				//获取词元位置属性
+			    OffsetAttribute  offset = ts.addAttribute(OffsetAttribute.class); 
+			    //获取词元文本属性
+			     CharTermAttribute term = ts.addAttribute(CharTermAttribute.class);
+			    //获取词元文本属性
+			    TypeAttribute type = ts.addAttribute(TypeAttribute.class);
+			    
+			    
+			    //重置TokenStream（重置StringReader）
+				ts.reset(); 
+				//迭代获取分词结果
+				while (ts.incrementToken()) {
+				   result.add(term.toString());
+				}
+				//关闭TokenStream（关闭StringReader）
+				ts.end();   // Perform end-of-stream operations, e.g. set the final offset.
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				//释放TokenStream的所有资源
+				if(ts != null){
+			      try {
+					ts.close();
+			      } catch (IOException e) {
+					e.printStackTrace();
+			      }
+				}
+		    }
+			return result;
+	    }
 	
 }

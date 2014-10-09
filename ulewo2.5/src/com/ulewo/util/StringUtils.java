@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.htmlcleaner.HtmlCleaner;
@@ -350,7 +352,7 @@ public class StringUtils {
 	}
 
 	public static void main(String[] args) {
-		try {
+		/*try {
 			Calendar c = Calendar.getInstance();
 			c.add(Calendar.DAY_OF_MONTH, 1);
 			Date curDate = c.getTime();
@@ -362,9 +364,30 @@ public class StringUtils {
 			System.out.println(flag);
 		} catch (ParseException e) {
 			e.printStackTrace();
+		}*/
+		System.out.println(cleanJs("wewe<script type=\"text/javascript\" id=\"wumiiRelatedItems\"/>"));
+	}
+	
+	public static boolean isYesterday(String date) {
+
+		try {
+			Calendar c = Calendar.getInstance();
+			c.add(Calendar.DAY_OF_MONTH, -1);
+			Date curDate = c.getTime();
+			SimpleDateFormat format = dateFormater2;
+			String curDatestr = format.format(curDate);
+			curDate = format.parse(curDatestr);
+			Date d = format.parse(date);
+			int a = d.compareTo(curDate);
+			if(a==0){
+				return true;
+			}
+			return false;
+		} catch (ParseException e) {
+			return false;
 		}
 	}
-
+	
 	public static boolean beforeNowDate(String date) {
 
 		try {
@@ -396,5 +419,14 @@ public class StringUtils {
 		result.put("totalDay", dateOfMonth);
 		result.put("firstDay", w);
 		return result;
+	}
+	
+	public static String cleanJs(String htmlStr){
+		//String regEx_script = "<script[^>]*?>[\\s\\S]*?<\\/script>"; 
+		String regEx_script = "<script[^>]*?\\/>"; 
+		 Pattern p_script = Pattern.compile(regEx_script, Pattern.CASE_INSENSITIVE);  
+	        Matcher m_script = p_script.matcher(htmlStr);  
+	        htmlStr = m_script.replaceAll(""); // 过滤script标签  
+	        return htmlStr;
 	}
 }

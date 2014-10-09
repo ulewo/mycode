@@ -8,9 +8,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -110,9 +112,18 @@ public class SpiderServiceImpl implements SpidrService {
 			} else if (SpiderType.GB.getType().equals(type)) {
 
 				list.addAll(getSpiderList4Gb(SpiderType.GB.getUrl()
-						+ "Index/page-1.html"));
+						+ "article/type-1.html",GBTYPE_1));
 				list.addAll(getSpiderList4Gb(SpiderType.GB.getUrl()
-						+ "Index/page-2.html"));
+						+ "article/type-2.html",GBTYPE_2));
+				list.addAll(getSpiderList4Gb(SpiderType.GB.getUrl()
+						+ "article/type-3.html",GBTYPE_3));
+				list.addAll(getSpiderList4Gb(SpiderType.GB.getUrl()
+						+ "article/type-4.html",GBTYPE_4));
+				list.addAll(getSpiderList4Gb(SpiderType.GB.getUrl()
+						+ "article/type-5.html",GBTYPE_5));
+				list.addAll(getSpiderList4Gb(SpiderType.GB.getUrl()
+						+ "article/type-6.html",GBTYPE_6));
+				
 			}
 			if (list.size() > 0) {
 				SimplePage page = new SimplePage();
@@ -316,30 +327,38 @@ public class SpiderServiceImpl implements SpidrService {
 	 * @throws ClientProtocolException
 	 * @throws IOException
 	 */
-	private List<Spider> getSpiderList4Gb(String url)
+	private List<Spider> getSpiderList4Gb(String url,String part)
 			throws ClientProtocolException, IOException {
 		String html = SpiderUtil.getHtml(url);
 		HtmlCleaner htmlCleaner = new HtmlCleaner();
 		TagNode allNode = htmlCleaner.clean(html);
-		TagNode[] divs = allNode.getElementsByAttValue("class", "media", true,
+		TagNode[] divs = allNode.getElementsByAttValue("class", "feeds-item", true,
 				true);
 		List<Spider> spiderList = new ArrayList<Spider>();
 		String date = StringUtils.dateFormater2.format(new Date());
 		for (TagNode li : divs) {
 			try {
-				TagNode[] media_body = li.getElementsByAttValue("class",
-						"media-body", true, true);
-				if (media_body.length == 0) {
+				TagNode h3 = li.getElementsByName("h3", true)[0];
+				TagNode titleLink = h3.getElementsByName("a", true)[0];
+				String detailUrl = titleLink.getAttributeByName("href");
+				String link = "http://www.gb1.cn" + detailUrl;
+				String title = titleLink.getText().toString();
+				
+				String time = null;
+				TagNode[] createTimeNodes = li.getElementsByAttValue("class", "tm", true, true);
+				if(createTimeNodes.length>0){
+					time = createTimeNodes[0].getText().toString();
+				}
+				
+				if(null==time){
 					continue;
 				}
-				TagNode h4 = media_body[0].getElementsByName("h4", true)[0];
-				TagNode parta = h4.getElementsByName("a", true)[0];
-				TagNode linka = h4.getElementsByName("a", true)[1];
-				String partUrl = parta.getAttributeByName("href");
-				String part = partUrl.substring(partUrl.lastIndexOf("/") + 1);
-				String linkUrl = linka.getAttributeByName("href");
-				String link = "http://www.gb1.cn/" + linkUrl;
-				String title = linka.getAttributeByName("title");
+				if(time.contains("-")){
+					time = new SimpleDateFormat("yyyy").format(new Date())+"-"+time;
+					if(!StringUtils.isYesterday(time)){
+						continue;
+					}
+				}
 				Spider spider = getSpiderContent4Gb(link);
 				if (null == spider) {
 					continue;
@@ -491,21 +510,15 @@ public class SpiderServiceImpl implements SpidrService {
 	private Spider getSpiderContent4Gb(String url)
 			throws ClientProtocolException, IOException {
 		try {
-			System.out.println("抓取的url" + url);
 			String html = SpiderUtil.getHtml(url);
 			HtmlCleaner htmlCleaner = new HtmlCleaner();
 			TagNode allNode = htmlCleaner.clean(html);
 			TagNode[] contentNodes = allNode.getElementsByAttValue("class",
-					"list-group", true, true);
+					"article-detail", true, true);
 			if (contentNodes.length == 0) {
 				return null;
 			}
-			TagNode[] contentTags = contentNodes[0].getElementsByName("div",
-					true);
-			if (contentTags.length == 0) {
-				return null;
-			}
-			String content = htmlCleaner.getInnerHtml(contentTags[1]);
+			String content = htmlCleaner.getInnerHtml(contentNodes[0]);
 			Spider spider = new Spider();
 			spider.setContent(content);
 			return spider;
@@ -562,8 +575,10 @@ public class SpiderServiceImpl implements SpidrService {
 			// 更新spider状态
 		}
 		// 批量插入帖子
-		topicMapper.insertBatch(topicList);
-		spiderMapper.updateBatch(resultList, SpiderStatus.STATUS1.getStatus());
+		if(!topicList.isEmpty()){
+			topicMapper.insertBatch(topicList);
+			spiderMapper.updateBatch(resultList, SpiderStatus.STATUS1.getStatus());
+		}
 	}
 
 	/**
@@ -604,7 +619,9 @@ public class SpiderServiceImpl implements SpidrService {
 
 		Topic topic = new Topic();
 		topic.setTitle(spider.getTitle());
-		topic.setContent(htmlCleaner.getInnerHtml(allNode.getChildTags()[1]));
+		String reaContent = htmlCleaner.getInnerHtml(allNode.getChildTags()[1]);
+		reaContent = StringUtils.cleanJs(reaContent);
+		topic.setContent(reaContent);
 		return topic;
 	}
 
