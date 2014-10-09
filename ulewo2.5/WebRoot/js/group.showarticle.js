@@ -333,7 +333,7 @@ function RePanel(data) {
 					+ data.userName
 					+ "</a>").appendTo(name_p);
 	if (data.sourceFrom == "A") {
-		$("<span class='com_op_time'>" + data.showCreateTime + "(来自:android客户端)</span>")
+		$("<span class='com_op_time'>" + data.showCreateTime + "&nbsp;(Android)&nbsp;</span>")
 				.appendTo(name_p);
 	} else {
 		$("<span class='com_op_time'>" + data.showCreateTime + "</span>").appendTo(
@@ -392,7 +392,7 @@ function SubRePanel(data) {
 					+ "</a><span class='re_icon'></span><span class='at_name'>" + data.atUserName
 					+ "</span>").appendTo(name_p);
 	if (data.sourceFrom == "A") {
-		$("<span class='com_sub_op_time'>" + data.reTime + "(来自:android客户端)</span>")
+		$("<span class='com_sub_op_time'>" + data.showCreateTime + "&nbsp;(Android)&nbsp;</span>")
 				.appendTo(name_p);
 	} else {
 		$("<span class='com_sub_op_time'>" + data.showCreateTime + "</span>").appendTo(

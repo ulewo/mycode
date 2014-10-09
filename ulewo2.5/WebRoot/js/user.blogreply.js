@@ -208,8 +208,8 @@ function NotePanle(note) {
 	
 	if (note.sourceFrom == "A") {
 		$(
-				"<div class='reply_time'>" + note.postTime
-						+ "(来自:android客户端)</div>").appendTo(reply_info);
+				"<div class='reply_time'>" + note.showCreateTime
+						+ "&nbsp;(Android)&nbsp;</div>").appendTo(reply_info);
 	} else {
 		$("<div class='reply_time'>" + note.showCreateTime + "</div>")
 				.appendTo(reply_info);
