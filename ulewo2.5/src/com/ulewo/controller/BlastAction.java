@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ulewo.enums.PageSize;
 import com.ulewo.enums.ResultCode;
+import com.ulewo.enums.SourceFromEnums;
 import com.ulewo.exception.BusinessException;
 import com.ulewo.model.Blast;
 import com.ulewo.model.BlastComment;
@@ -197,8 +198,9 @@ public class BlastAction extends BaseUserAction {
 
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
-			BlastComment comment = blastCommentService.saveBlastComment(this.builderParams(request, true),
-					this.getSessionUserId(session));
+			Map<String,String> parms = this.builderParams(request, false);
+			parms.put("sourceFrom",SourceFromEnums.PC.getValue());
+			BlastComment comment = blastCommentService.saveBlastComment(parms,this.getSessionUserId(session));
 			modelMap.put("result", ResultCode.SUCCESS.getCode());
 			modelMap.put("comment", comment);
 			return modelMap;

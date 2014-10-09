@@ -135,5 +135,5 @@ public interface TopicService {
 	public Map<String, List<Topic>> getTopic4Index();
 	
 	
-	public List<SearchResult> searchByLucene(Map<String,String> map);
+	public List<SearchResult> searchByLucene(Map<String,String> map)throws BusinessException;
 }

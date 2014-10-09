@@ -78,5 +78,5 @@ public interface BlogService {
 
 	public Map<String,Object> blogDetail4Api(Map<String, String> map, Integer userId) throws BusinessException;
 	
-	public List<SearchResult> searchByLucene(Map<String, String> map);
+	public List<SearchResult> searchByLucene(Map<String, String> map)throws BusinessException;
 }

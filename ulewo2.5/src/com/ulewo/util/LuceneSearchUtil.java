@@ -68,8 +68,10 @@ public class LuceneSearchUtil {
 	    	SearchResult result = new SearchResult();
 	    	result.setId(doc.get("id"));
 	    	String title = doc.get("title");
+	    	String summary = doc.get("summary");
 	    	for(String key:keyWords){
 	    		title = title.replace(key, "<span class='hilight'>"+key+"</span>");
+	    		summary = summary.replace(key, "<span class='hilight'>"+key+"</span>");
 	    	}
 	    	result.setTitle(title);
 	    	result.setExtendId(doc.get("extendId"));
@@ -79,7 +81,7 @@ public class LuceneSearchUtil {
 	    	result.setReadCount(doc.get("readCount"));
 	    	result.setCommentCount(doc.get("commentCount"));
 	    	result.setContent(doc.get("content"));
-	    	result.setSummary(doc.get("summary"));
+	    	result.setSummary(summary);
 	    	return result;
 	    }
 	    

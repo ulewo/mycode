@@ -840,7 +840,7 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 
 	
 	@Override
-	public List<SearchResult> searchByLucene(Map<String, String> map){
+	public List<SearchResult> searchByLucene(Map<String, String> map)throws BusinessException{
 		List<SearchResult> resultList = new ArrayList<SearchResult>();
 		Directory  dir = null;
 		try{
@@ -906,7 +906,7 @@ public class TopicServiceImpl extends GroupAuthorityService implements
 	        }  
 	        reader.close();
 		}catch(Exception e){
-			e.printStackTrace();
+			throw new BusinessException("搜索出错了", e);
 		}finally{
 			try {
 				if (dir != null && IndexWriter.isLocked(dir)) {

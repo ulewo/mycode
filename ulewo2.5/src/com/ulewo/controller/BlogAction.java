@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ulewo.enums.ResultCode;
+import com.ulewo.enums.SourceFromEnums;
 import com.ulewo.exception.BusinessException;
 import com.ulewo.model.Blog;
 import com.ulewo.model.BlogCategory;
@@ -209,7 +210,9 @@ public class BlogAction extends BaseUserAction {
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 
 		try {
-			BlogComment comment = this.blogCommentService.addBlogComment(this.builderParams(request, false),
+			Map<String,String> map = this.builderParams(request, false);
+			map.put("sourceFrom", SourceFromEnums.PC.getValue());
+			BlogComment comment = this.blogCommentService.addBlogComment(map,
 					this.getSessionUser(session));
 			modelMap.put("result", ResultCode.SUCCESS.getCode());
 			modelMap.put("comment", comment);

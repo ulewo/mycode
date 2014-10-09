@@ -93,6 +93,8 @@ public class BlogCommentServiceImpl implements BlogCommentService {
 		comment.setContent(formatContent);
 		if (StringUtils.isEmpty(sourceFrom)) {
 			comment.setSourceFrom("P");
+		}else{
+			comment.setSourceFrom(sourceFrom);
 		}
 		comment.setBlogId(blogId);
 		blogCommentMapper.insert(comment);

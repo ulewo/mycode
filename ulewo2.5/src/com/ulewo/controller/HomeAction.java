@@ -21,7 +21,6 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -52,6 +51,7 @@ import com.ulewo.service.UserService;
 import com.ulewo.util.Constant;
 import com.ulewo.util.ErrorReport;
 import com.ulewo.util.SimplePage;
+import com.ulewo.util.StringUtils;
 import com.ulewo.util.UlewoPaginationResult;
 
 @Controller
@@ -427,7 +427,11 @@ public class HomeAction extends BaseAction {
 			mv.addObject("type", type);
 			mv.setViewName("search");
 			return mv;
-		} catch (Exception e) {
+		} catch (BusinessException e) {
+			log.error(e.getMessage(), e);
+			mv.setViewName("redirect:" + Constant.ERRORPAGE);
+			return mv;
+		}catch (Exception e) {
 			log.error(e.getMessage(), e);
 			mv.setViewName("redirect:" + Constant.ERRORPAGE);
 			return mv;

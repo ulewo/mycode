@@ -16,6 +16,7 @@ import com.ulewo.enums.MarkEnums;
 import com.ulewo.enums.MaxLengthEnums;
 import com.ulewo.enums.NoticeType;
 import com.ulewo.enums.PageSize;
+import com.ulewo.enums.SourceFromEnums;
 import com.ulewo.exception.BusinessException;
 import com.ulewo.mapper.BlastCommentMapper;
 import com.ulewo.mapper.UserMapper;
@@ -81,6 +82,7 @@ public class BlastCommentServiceImpl implements BlastCommentService {
 				.GenerateRefererLinks(userMapper, cotent, userIds);
 		comment.setContent(formatContent);
 		comment.setCreateTime(StringUtils.dateFormater.format(new Date()));
+		comment.setSourceFrom(map.get("sourceFrom"));
 		blastCommentMapper.insert(comment);
 
 		User user = this.userMapper.selectUserByUserId(userId);

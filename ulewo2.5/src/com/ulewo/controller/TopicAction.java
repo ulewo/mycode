@@ -26,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ulewo.enums.AllowPostEnums;
 import com.ulewo.enums.FileSizeEnums;
 import com.ulewo.enums.ResultCode;
+import com.ulewo.enums.SourceFromEnums;
 import com.ulewo.enums.TopicCommentTypeEnums;
 import com.ulewo.exception.BusinessException;
 import com.ulewo.model.AttachmentDownload;
@@ -483,7 +484,7 @@ public class TopicAction extends BaseGroupAction {
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		try {
 			Map<String, String> map = this.builderParams(request, false);
-
+			map.put("sourceFrom",SourceFromEnums.PC.getValue());
 			TopicComment comment = topicCmmentService.addComment(map, this.getSessionUser(session));
 			modelMap.put("comment", comment);
 			modelMap.put("result", ResultCode.SUCCESS.getCode());
@@ -516,6 +517,7 @@ public class TopicAction extends BaseGroupAction {
 		try {
 			Map<String, String> map = this.builderParams(request, false);
 			map.put("commentType", TopicCommentTypeEnums.SUBCOMMENT.getValue());
+			map.put("sourceFrom",SourceFromEnums.PC.getValue());
 			TopicComment comment = topicCmmentService.addComment(map, this.getSessionUser(session));
 			modelMap.put("comment", comment);
 			modelMap.put("result", ResultCode.SUCCESS.getCode());

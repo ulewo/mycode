@@ -107,7 +107,7 @@ public class TopicCommentServiceImpl extends GroupAuthorityService implements
 			comment.setAtUserIcon(user.getUserIcon());
 		}
 		comment.setAtUserId(atUserId_int);
-		comment.setSourceFrom(SourceFromEnums.PC.getValue());
+		comment.setSourceFrom(map.get("sourceFrom"));
 		String curDate = StringUtils.dateFormater.format(new Date());
 		comment.setCreateTime(curDate);
 		this.topicCommentMapper.insert(comment);

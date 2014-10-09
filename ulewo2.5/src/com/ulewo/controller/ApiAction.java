@@ -299,6 +299,7 @@ public class ApiAction extends BaseAction {
 				this.blastService.addBlast(parms, this.getSessionUser(session),
 						request);
 			} else {
+				parms.put("sourceFrom",SourceFromEnums.Android.getValue());
 				this.blastCommentService.saveBlastComment(parms,
 						this.getSessionUserId(session));
 			}
@@ -361,9 +362,9 @@ public class ApiAction extends BaseAction {
 			HttpServletRequest request) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		try {
-			blastCommentService.saveBlastComment(
-					this.builderParams(request, false),
-					this.getSessionUserId(session));
+			Map<String,String> parms = this.builderParams(request, false);
+			parms.put("sourceFrom",SourceFromEnums.Android.getValue());
+			blastCommentService.saveBlastComment(parms,this.getSessionUserId(session));
 			result.put("resultCode", ResultCode.SUCCESS.getCode());
 			return result;
 		} catch (BusinessException e) {
@@ -517,6 +518,7 @@ public class ApiAction extends BaseAction {
 				topicService.saveTopic4Api(parms, this.getSessionUser(session),
 						request);
 			} else {
+				parms.put("sourceFrom",SourceFromEnums.Android.getValue());
 				topicCommentService.addComment(parms,
 						this.getSessionUser(session));
 			}
@@ -666,6 +668,7 @@ public class ApiAction extends BaseAction {
 				uploadImage(session, request, map, true);
 				blogService.saveBlog(map, sessionUser, request);
 			} else {
+				map.put("sourceFrom", SourceFromEnums.Android.getValue());
 				blogCommentService.addBlogComment(map, sessionUser);
 			}
 			result.put("resultCode", ResultCode.SUCCESS.getCode());
