@@ -1,6 +1,11 @@
 body{margin:0px auto;text-align:center;font-size:13px;font-family:'Tahoma','Microsoft Yahei','Simsun'}
 
-img{background: url('../images/imgbgloading.gif') no-repeat scroll center center transparent}
+.fcon img,.life-image-con img,.blog_icon img,
+.group_icon img,.itemicon img,.user_icon img,
+.single_img img,.article_detail img,.article_attachedimg img,
+.left_img_item img,.icon-left img,.imageCon img,.itemcon img,
+.blog_content img,.reply_usericon img{background: url('../images/imgbgloading.gif') no-repeat scroll center center transparent}
+
 .main{margin:0px auto;width:1000px;text-align:left;font-size:13px;margin-top:10px;}
 .main a{color:#3E62A6}
 a{color:#4466BB}
