@@ -9,9 +9,9 @@
 <meta name="description" content="${blog.title} -有乐窝">
 <meta name="keywords" content="${blog.title} -有乐窝">
 <%@ include file="../common/path.jsp" %>
-<script type="text/javascript" src="${realPath}/css/codehighlight/brush.js?version=2.5"></script>
-<link type="text/css" rel="stylesheet" href="${realPath}/css/codehighlight/shCore.css?version=2.5"/>
-<link type="text/css" rel="stylesheet" href="${realPath}/css/codehighlight/shThemeDefault.css?version=2.5"/>
+<script type="text/javascript" src="${realPath}/syntaxhighlighter/scripts/shCore.js?version=2.6"></script>
+<script type="text/javascript" src="${realPath}/syntaxhighlighter/scripts/brush.js?version=2.6"></script>
+<link type="text/css" rel="stylesheet" href="${realPath}/syntaxhighlighter/styles/shCoreDefault.css?version=2.5"/>
 <link rel="stylesheet" type="text/css" href="${realPath}/css/user.blog.css?version=2.5">
 <link rel="stylesheet" type="text/css" href="${realPath}/css/talk.css?version=2.5">
 <script type="text/javascript" src="${realPath}/js/share.js?version=2.6"></script>
