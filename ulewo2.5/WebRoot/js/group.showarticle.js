@@ -35,7 +35,7 @@ $(function() {
 	});
 	lazyLoadImage("article_detail");
 	//代码高亮
-	SyntaxHighlighter.config.clipboardSwf = global.realPath+"/css/codehighlight/clipboard.swf";
+	//SyntaxHighlighter.config.clipboardSwf = global.realPath+"/css/codehighlight/clipboard.swf";
 	SyntaxHighlighter.all();
     
 	loadPage(1);

@@ -30,6 +30,8 @@
 	<mvc:resources location="/css2/" mapping="/css2/**"/>
 	<mvc:resources location="/upload/" mapping="/upload/**"/>
 	<mvc:resources location="/ueditor/" mapping="/ueditor/**"/>
+	<mvc:resources location="/syntaxhighlighter/" mapping="/syntaxhighlighter/**"/>
+	
 	<mvc:resources location="/jquery-easyui-1.3.5/" mapping="/jquery-easyui-1.3.5/**"/>
 
 	

@@ -52,8 +52,9 @@ $("#sendBtn").bind("click",subReply);
 	});
 	checkFavorite(blogId,"B");
 	lazyLoadImage("blog_content");
-	SyntaxHighlighter.config.clipboardSwf = global.realPath+"/css/codehighlight/clipboard.swf";
+	
 	SyntaxHighlighter.all();
+	
 	initReply(1);
 	$(".blog_content img").live("click",function(){
 		var imgsrc = $(this).attr("src");
